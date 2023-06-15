@@ -1,4 +1,4 @@
-package com.sm.persistence.b;
+package com.sm.persistence;
 
 public class StockImpl implements StockDAO{
 
