@@ -2,6 +2,9 @@
 
 import java.sql.Date;
 
+import lombok.Data;
+
+@Data
 public class Raw_orderVO {
 
 	private String raw_order_num;

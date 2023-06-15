@@ -1,5 +1,9 @@
 package com.sm.domain.b;
 
+
+import lombok.Data;
+
+@Data
 public class StockVO {
 
 	private String stock_num;

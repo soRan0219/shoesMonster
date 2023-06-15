@@ -2,6 +2,9 @@ package com.sm.domain.b;
 
 import java.sql.Date;
 
+import lombok.Data;
+
+@Data
 public class In_materialVO {
 
 	private String in_num;
