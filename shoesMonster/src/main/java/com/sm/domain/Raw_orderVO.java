@@ -2,7 +2,7 @@
 
 import java.sql.Date;
 
-public class raw_orderVO {
+public class Raw_orderVO {
 
 	private String raw_order_num;
 	private String raw_code;

@@ -2,7 +2,7 @@ package com.sm.domain;
 
 import java.sql.Date;
 
-public class out_materialVO {
+public class Out_materialVO {
 
 	private String out_num;
 	private String prod_code;

@@ -2,7 +2,7 @@ package com.sm.domain;
 
 import java.sql.Date;
 
-public class in_materialVO {
+public class In_materialVO {
 
 	private String in_num;
 	private String raw_order_num;

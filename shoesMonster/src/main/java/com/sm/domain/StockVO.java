@@ -1,6 +1,6 @@
 package com.sm.domain;
 
-public class stockVO {
+public class StockVO {
 
 	private String stock_num;
 	private String raw_code;
