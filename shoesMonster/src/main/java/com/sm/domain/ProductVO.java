@@ -1,5 +1,9 @@
 package com.sm.domain;
 
-public class ProductVO {
+import lombok.Data;
+import lombok.Getter;
 
+@Getter
+public class ProductVO {
+	private String prod_code;
 }
