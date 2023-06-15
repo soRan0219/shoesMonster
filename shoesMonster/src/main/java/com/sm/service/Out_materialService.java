@@ -1,4 +1,4 @@
-package com.sm.service.b;
+package com.sm.service;
 
 public interface Out_materialService {
 

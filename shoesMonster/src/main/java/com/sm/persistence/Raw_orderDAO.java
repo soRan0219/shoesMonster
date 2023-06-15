@@ -1,4 +1,4 @@
-package com.sm.persistence.b;
+package com.sm.persistence;
 
 public interface Raw_orderDAO {
 
