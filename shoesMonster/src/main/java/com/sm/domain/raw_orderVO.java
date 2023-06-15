@@ -9,5 +9,6 @@ public class raw_orderVO {
 	private String client_code;
 	private String emp_id;
 	private int raw_order_count;
+	private Date raw_order_date;
 			
 }
