@@ -1,4 +1,4 @@
-package com.sm.service;
+package com.sm.service.b;
 
 public class ProductServiceImpl implements ProductService {
 

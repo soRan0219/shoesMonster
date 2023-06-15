@@ -1,4 +1,4 @@
-package com.sm.persistence;
+package com.sm.persistence.b;
 
 public interface ProductDAO {
 
