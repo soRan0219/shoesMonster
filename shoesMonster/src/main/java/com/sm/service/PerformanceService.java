@@ -1,5 +1,7 @@
 package com.sm.service;
 
-public interface PerformanceService {
+import com.sm.domain.ProductVO;
 
+public interface PerformanceService {
+	public void insertProd(ProductVO vo) throws Exception;
 }

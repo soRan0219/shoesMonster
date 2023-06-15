@@ -4,5 +4,10 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sm.mapper.ProductMapper">
+	<insert id="prodIn">
+		insert into product 
+		values (#{prod_code},#{prod_name},#{prod_category},#{prod_unit},#{prod_size},
+		#{prod_color},#{client_code},#{prod_price},#{prod_note})
+	</insert>
 
 </mapper>
