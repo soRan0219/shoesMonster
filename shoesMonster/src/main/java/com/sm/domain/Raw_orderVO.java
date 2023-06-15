@@ -1,4 +1,4 @@
-	package com.sm.domain.a;
+	package com.sm.domain;
 
 import java.sql.Date;
 
