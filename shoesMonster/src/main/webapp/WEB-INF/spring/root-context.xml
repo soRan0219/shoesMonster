@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<!-- HikariCP - 설정정보 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
-		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://localhost:3306/springdb"/>
-		<property name="username" value="root"/>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://http://c7d2301t2.itwillbs.com"/>
+		<property name="username" value="c7d2301t2"/>
 		<property name="password" value="1234"/>
 	</bean>
 	<!-- HikariCP - 설정정보 -->
@@ -35,5 +37,8 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
 	<!-- SqlSessionTemplate: DB연결, MyBatis설정, 매퍼설정(SQL실행), DB종료 -->
+	
+	<context:component-scan base-package="com.sm.service"></context:component-scan>
+	<context:component-scan base-package="com.sm.persistence"></context:component-scan>
 		
 </beans>
