@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
 
 @Repository
@@ -20,19 +21,29 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	private static final String NAMESPACE = "com.sm.mapper.ProductMapper";
 	
-	// Ç°¸ñ°ü¸® ¸ñ·Ï ºÒ·¯¿À±â
-	@Override
-	public List<ProductVO> readProdList() throws Exception{
-		
-		return sqlSession.selectList(NAMESPACE+".readProd");
-	}
-
+	// í’ˆëª©ê´€ë¦¬ ì •ë³´ ë‹¤ì¤‘ ì €ì¥
 	@Override
 	public void insertProdList(ProductVO product) {
 		sqlSession.insert(NAMESPACE+".prodIn", product);
 	}
 	
+	// ë¼ì¸
+	@Override
+	public void insertLine(LineVO vo) throws Exception {
+		logger.debug("@@inser@@");
+		
+		int result = sqlSession.insert(NAMESPACE+".insertLine", vo);
+		
+		if(result != 0)
+			logger.debug("ë¼ì¸ ê¸€ì“°ê¸° ì™„ë£Œ");
+		
+	}
+	@Override
+	public List<LineVO> getLineList() throws Exception {
+		logger.debug("@@getLineList() í˜¸ì¶œ@@");
+		
+		return sqlSession.selectList(NAMESPACE+".lineList");
+	}
 
-	
 	
 }

@@ -1,19 +1,21 @@
 package com.sm.service;
 
 import java.util.List;
-
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
+import com.sm.domain.LineVO;
 
 public interface PerformanceService {
 		
-	// Ç°¸ñ°ü¸® ¸ñ·Ï ºÒ·¯¿À±â
+	// í’ˆëª©ê´€ë¦¬ ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸°
 	public List<ProductVO> getProdList() throws Exception; 
-	
-	// Ç°¸ñ°ü¸® µ¥ÀÌÅÍ ´ÙÁß ÀúÀå
+  
+  // í’ˆëª©ê´€ë¦¬ ì •ë³´ ë‹¤ì¤‘ ì €ì¥
 	public void insertProd(List<ProductVO> products); 
-		
-	
+
+	// ë¼ì¸ 
+	public void insertLine(LineVO vo) throws Exception;
+	public List<LineVO> getLineList() throws Exception;
 	
 }
 		

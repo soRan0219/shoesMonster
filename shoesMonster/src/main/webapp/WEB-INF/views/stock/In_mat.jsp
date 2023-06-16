@@ -35,19 +35,19 @@
 
 	<c:forEach var="in" items="${in_material}">
 
-		<tr>
-			<td>${in.in_num }</td>
-			<td>${in.client_code }</td>
-			<td>${in. }</td>
-			<td>${in. }</td>
-			<td>${in. }</td>
-			<td>${in. }</td>
-			<td>${in. }</td>
-			<td>${in. }</td>
-			<td>${in. }</td>
-			<td>${in. }</td>
-			<td>${in.in_YN }</td>
-		</tr>
+<!-- 		<tr> -->
+<%-- 			<td>${in.in_num }</td> --%>
+<%-- 			<td>${in.client_code }</td> --%>
+<%-- 			<td>${in. }</td> --%>
+<%-- 			<td>${in. }</td> --%>
+<%-- 			<td>${in. }</td> --%>
+<%-- 			<td>${in. }</td> --%>
+<%-- 			<td>${in. }</td> --%>
+<%-- 			<td>${in. }</td> --%>
+<%-- 			<td>${in. }</td> --%>
+<%-- 			<td>${in. }</td> --%>
+<%-- 			<td>${in.in_YN }</td> --%>
+<!-- 		</tr> -->
 	</c:forEach>
 
 </body>

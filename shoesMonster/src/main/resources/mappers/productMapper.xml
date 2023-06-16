@@ -17,5 +17,16 @@
 		values (#{prod_code},#{prod_name},#{prod_category},#{prod_unit},#{prod_size},
 		#{prod_color},#{client_code},#{prod_price},#{prod_note})
 	</insert>
+	
+	<!-- 라인 -->
+	<insert id="lineInsert">
+		insert into line
+		values (#{line_code}, #{line_name}, #{line_place}, 
+		#{line_use}, #{emp_id}, #{insert_date}, #{line_note})
+	</insert>
+	
+	<select id="lineList" resultType="com.sm.domain.LineVO">
+		select * from line
+	</select>
 
 </mapper>

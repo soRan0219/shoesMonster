@@ -1,15 +1,21 @@
 package com.sm.persistence;
 
 import java.util.List;
-
+import org.springframework.stereotype.Repository;
+import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
 
+@Repository
 public interface PerformanceDAO {
 	
-	// Ç°¸ñ°ü¸® ¸ñ·Ï ºÒ·¯¿À±â
+	// í’ˆëª©ê´€ë¦¬ ëª©ë¡ ë¶ˆëŸ¬ì˜¤ê¸°
 	public List<ProductVO> readProdList() throws Exception;
 		
+  // í’ˆëª©ê´€ë¦¬ ì •ë³´ ë‹¤ì¤‘ ì €ì¥
 	public void insertProdList(ProductVO product); 
 		
 	
+	// ë¼ì¸
+	public void insertLine(LineVO vo) throws Exception;
+	public List<LineVO> getLineList() throws Exception;
 }

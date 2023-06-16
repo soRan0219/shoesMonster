@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
 import com.sm.persistence.PerformanceDAO;
 
@@ -19,13 +20,13 @@ public class PerformanceServiceImpl implements PerformanceService {
 	private PerformanceDAO pdao;
 	
 	
-	// Ç°¸ñ°ü¸® ¸ñ·Ï ºÒ·¯¿À±â 
+	// í’ˆëª©ê´€ë¦¬ ë¦¬íŠ¸ìŠ¤ ë¶ˆëŸ¬ì˜¤ê¸°
 	@Override
-	public List<ProductVO> getProdList() throws Exception {
-		
+	public List<ProductVO> getProdList() throws Exception {		
 		return pdao.readProdList();
 	}
-
+  
+  // í’ˆëª©ê´€ë¦¬ ì •ë³´ ë‹¤ì¤‘ 
 	@Override
 	public void insertProd(List<ProductVO> products) {
 		for(ProductVO product : products) {
@@ -33,5 +34,18 @@ public class PerformanceServiceImpl implements PerformanceService {
 		}
 	}
 	
+
+	// ë¼ì¸
+	@Override
+	public void insertLine(LineVO vo) throws Exception {
+		
+		pdao.insertLine(vo);
+	}
+	@Override
+	public List<LineVO> getLineList() throws Exception {
+		
+		return pdao.getLineList();
+	}
+
 
 }
