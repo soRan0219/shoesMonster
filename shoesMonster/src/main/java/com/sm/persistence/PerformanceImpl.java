@@ -21,6 +21,12 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	private static final String NAMESPACE = "com.sm.mapper.ProductMapper";
 	
+	@Override
+	public List<ProductVO> readProdList() throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE+".readProd");
+	}
+
 	// 품목관리 정보 다중 저장
 	@Override
 	public void insertProdList(ProductVO product) {
