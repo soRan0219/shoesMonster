@@ -1,10 +1,13 @@
 package com.sm.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
 import com.sm.persistence.PerformanceDAO;
 
@@ -18,9 +21,21 @@ public class PerformanceServiceImpl implements PerformanceService {
 	
 	@Override
 	public void insertProd(ProductVO vo) throws Exception {
-		logger.debug("º≠∫ÒΩ∫ øµø™");
+		logger.debug("ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ");
 		
 		pdao.insetProd(vo);
+	}
+	
+	// ÎùºÏù∏
+	@Override
+	public void insertLine(LineVO vo) throws Exception {
+		
+		pdao.insertLine(vo);
+	}
+	@Override
+	public List<LineVO> getLineList() throws Exception {
+		
+		return pdao.getLineList();
 	}
 
 }

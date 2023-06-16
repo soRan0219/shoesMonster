@@ -1,12 +1,16 @@
 package com.sm.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
 import com.sm.service.PerformanceService;
 
@@ -45,6 +49,23 @@ public class PerfomanceController {
 		logger.debug("@@lineGET() 호출@@");
 	}
 	
+	@RequestMapping(value = "/line", method = RequestMethod.POST)
+	public void linePOST(LineVO vo) throws Exception{
+		logger.debug("@@linePOST() 호출@@");
+		
+		logger.debug("@@vo : "+vo);
+		
+		service.insertLine(vo);
+	}
 	
-	
+	// http://localhost:8088/performance/linelist
+	@RequestMapping(value = "/linelist", method = RequestMethod.GET)
+	public void lineListGET(Model model) throws Exception{
+		logger.debug("@@lineListGET() 호출@@");
+		
+		List<LineVO> boardList = service.getLineList();
+		logger.debug("boardList : "+boardList);
+		
+		model.addAttribute("boardList", boardList);
+	}
 }
