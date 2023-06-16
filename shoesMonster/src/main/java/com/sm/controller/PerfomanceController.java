@@ -14,28 +14,37 @@ import com.sm.service.PerformanceService;
 @RequestMapping(value = "/performance/*")
 public class PerfomanceController {
 	
-	// º≠∫ÒΩ∫ ∞¥√º ¡÷¿‘
+	// ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ√º ÔøΩÔøΩÔøΩÔøΩ
 	@Autowired
 	private PerformanceService service;
 
 	private static final Logger logger = LoggerFactory.getLogger(PerfomanceController.class);
 	
+	// http://localhost:8088/performance/product
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public void productGET() {
-		logger.debug("productGET() »£√‚");
+		logger.debug("productGET() »£ÔøΩÔøΩ");
 		
 	}
 	
-	@RequestMapping(value = "product", method = RequestMethod.POST)
+	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String productPOST(ProductVO vo) throws Exception {
 		
-		logger.debug("productPOST() »£√‚");
+		logger.debug("productPOST() »£ÔøΩÔøΩ");
 		logger.debug("vo : " + vo);
 		
 		service.insertProd(vo);
 		
 		return "";
 	}
+	
+	// ÎùºÏù∏ - /line 
+	// http://localhost:8088/performance/line
+	@RequestMapping(value = "/line", method = RequestMethod.GET)
+	public void lineGET() throws Exception{
+		logger.debug("@@lineGET() Ìò∏Ï∂ú@@");
+	}
+	
 	
 	
 }
