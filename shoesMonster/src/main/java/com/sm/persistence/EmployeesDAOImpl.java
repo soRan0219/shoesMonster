@@ -1,10 +1,9 @@
 package com.sm.persistence;
 
-import javax.inject.Inject;
-
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.EmployeesVO;
@@ -12,7 +11,7 @@ import com.sm.domain.EmployeesVO;
 @Repository
 public class EmployeesDAOImpl implements EmployeesDAO{
 	
-	@Inject
+	@Autowired
 	private SqlSession sqlSession;
 	
 	private static final String NAMESPACE = "com.sm.mapper.productMapper";
