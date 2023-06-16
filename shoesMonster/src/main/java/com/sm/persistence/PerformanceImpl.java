@@ -21,6 +21,8 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	private static final String NAMESPACE = "com.sm.mapper.ProductMapper";
 	
+	
+	// 품목 리스트 불러오기
 	@Override
 	public List<ProductVO> readProdList() throws Exception {
 		
