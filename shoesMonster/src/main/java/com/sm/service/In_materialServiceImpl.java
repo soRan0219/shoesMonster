@@ -13,13 +13,14 @@ import com.sm.persistence.In_materialDAO;
 @Service
 public class In_materialServiceImpl implements In_materialService{
 
-	@Autowired
-	private In_materialDAO idao;
+//	@Autowired
+//	private In_materialDAO idao;
 	
 	
 	@Override
 	public List<In_materialVO> getIn_mat() throws Exception {
-		return idao.readBoardIn_mat();
+//		return idao.readBoardIn_mat();
+		return null;
 	}
 
 	
