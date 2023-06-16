@@ -3,10 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
   
+
  <!-- mybatis 관련 설정정보 저장 -->
   <configuration>
   	<typeAliases>
   		<package name="com.sm.domain"/>
   	</typeAliases>
   </configuration>
+
   

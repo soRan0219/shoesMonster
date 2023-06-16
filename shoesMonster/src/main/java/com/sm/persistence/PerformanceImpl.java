@@ -21,12 +21,10 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	private static final String NAMESPACE = "com.sm.mapper.ProductMapper";
 	
+	// 품목관리 정보 다중 저장
 	@Override
-	public void insetProd(ProductVO vo) {
-		logger.debug("DAO ����");
-		
-		sqlSession.insert(NAMESPACE+".prodIn", vo);
-		
+	public void insertProdList(ProductVO product) {
+		sqlSession.insert(NAMESPACE+".prodIn", product);
 	}
 	
 	// 라인
@@ -46,5 +44,6 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return sqlSession.selectList(NAMESPACE+".lineList");
 	}
+
 	
 }
