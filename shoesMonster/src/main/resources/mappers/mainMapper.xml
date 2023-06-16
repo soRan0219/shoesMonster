@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+  <mapper namespace="com.sm.mapper.mainMapper">
+  		
+  		<!-- 로그인 -->
+  		<select id="smLogin" resultType="com.sm.domain.EmployeesVO">
+  			select * from employees
+  			where emp_id=#{emp_id} and emp_pw=#{emp_pw}
+  		</select>
+  		<!-- 로그인 -->
+  		
+  		
+<!--   		회원정보 수정 -->
+<!-- 		<update id="update"> -->
+<!-- 			update tbl_member set username=#{username}, useremail=#{useremail}, updatedate=now() -->
+<!-- 			where userid=#{userid} and userpw=#{userpw} -->
+<!-- 		</update>  		 -->
+<!--   		회원정보 수정 -->
+  		
+  		
+<!--   		회원정보 삭제 -->
+<!--   		<delete id="delete"> -->
+<!--   			delete from tbl_member -->
+<!--   			where userid=#{userid} and userpw=#{userpw} -->
+<!--   		</delete> -->
+<!--   		회원정보 삭제 -->
+  		
+  		
+<!--   		회원정보 조회 -->
+<!--   		<select id="getMember" resultType="com.itwillbs.domain.MemberVO"> -->
+<!-- 			select * from tbl_member -->
+<!-- 			where userid = #{userid} -->
+<!--   		</select> -->
+<!--   		회원정보 조회 -->
+  		
+  		
+<!--   		회원정보 목록 -->
+<!--   		<select id="memberList" resultType="com.itwillbs.domain.MemberVO"> -->
+<!--   			select * from tbl_member -->
+<!--   		</select> -->
+<!--   		회원정보 목록 -->
+  		
+  		
+  		
+  </mapper>

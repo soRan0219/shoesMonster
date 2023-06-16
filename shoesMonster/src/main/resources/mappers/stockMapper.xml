@@ -20,9 +20,14 @@
 	join employees e on e.emp_id = i.emp_id 
 	</select>
 	<!-- 글 목록 조회 -->
+
 <!-- 	<select id="In_material" resultType="com.sm.domain.In_materialVO"> -->
 <!-- 		select * from in_material -->
 <!-- 	</select> -->
+
+	
+	
+
 
 </mapper>
 

@@ -4,10 +4,29 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sm.mapper.ProductMapper">
+
+	<!-- 품목관리 목록 불러오기 -->
+	<select id="readProd" resultType="ProductVO">
+		select * from product
+	</select>
+	 
+	<!-- 품목관리 목록 불러오기 --> 
+
 	<insert id="prodIn">
 		insert into product 
 		values (#{prod_code},#{prod_name},#{prod_category},#{prod_unit},#{prod_size},
 		#{prod_color},#{client_code},#{prod_price},#{prod_note})
 	</insert>
+	
+	<!-- 라인 -->
+	<insert id="lineInsert">
+		insert into line
+		values (#{line_code}, #{line_name}, #{line_place}, 
+		#{line_use}, #{emp_id}, #{insert_date}, #{line_note})
+	</insert>
+	
+	<select id="lineList" resultType="com.sm.domain.LineVO">
+		select * from line
+	</select>
 
 </mapper>
