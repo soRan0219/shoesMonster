@@ -20,6 +20,8 @@
 	join employees e on e.emp_id = i.emp_id 
 	</select>
 	<!-- 글 목록 조회 -->
+	
+	
 
 
 </mapper>

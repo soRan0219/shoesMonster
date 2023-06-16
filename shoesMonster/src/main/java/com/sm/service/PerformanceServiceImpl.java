@@ -1,5 +1,7 @@
 package com.sm.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,20 @@ public class PerformanceServiceImpl implements PerformanceService {
 	@Autowired
 	private PerformanceDAO pdao;
 	
+	
+	// 품목관리 목록 불러오기 
 	@Override
-	public void insertProd(ProductVO vo) throws Exception {
-		logger.debug("서비스 영역");
+	public List<ProductVO> getProdList() throws Exception {
 		
-		pdao.insetProd(vo);
+		return pdao.readProdList();
 	}
+
+	@Override
+	public void insertProd(List<ProductVO> products) {
+		for(ProductVO product : products) {
+			pdao.insertProdList(product);
+		}
+	}
+	
 
 }

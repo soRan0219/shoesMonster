@@ -1,5 +1,7 @@
 package com.sm.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +20,19 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	private static final String NAMESPACE = "com.sm.mapper.ProductMapper";
 	
+	// 前格包府 格废 阂矾坷扁
 	@Override
-	public void insetProd(ProductVO vo) {
-		logger.debug("DAO 康开");
+	public List<ProductVO> readProdList() throws Exception{
 		
-		sqlSession.insert(NAMESPACE+".prodIn", vo);
-		
+		return sqlSession.selectList(NAMESPACE+".readProd");
 	}
+
+	@Override
+	public void insertProdList(ProductVO product) {
+		sqlSession.insert(NAMESPACE+".prodIn", product);
+	}
+	
+
+	
 	
 }
