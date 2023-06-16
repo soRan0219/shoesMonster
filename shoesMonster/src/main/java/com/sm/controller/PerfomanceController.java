@@ -1,12 +1,16 @@
 package com.sm.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
 import com.sm.service.PerformanceService;
 
@@ -14,22 +18,23 @@ import com.sm.service.PerformanceService;
 @RequestMapping(value = "/performance/*")
 public class PerfomanceController {
 	
-	// º≠∫ÒΩ∫ ∞¥√º ¡÷¿‘
+	// ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ√º ÔøΩÔøΩÔøΩÔøΩ
 	@Autowired
 	private PerformanceService service;
 
 	private static final Logger logger = LoggerFactory.getLogger(PerfomanceController.class);
 	
+	// http://localhost:8088/performance/product
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public void productGET() {
-		logger.debug("productGET() »£√‚");
+		logger.debug("productGET() »£ÔøΩÔøΩ");
 		
 	}
 	
-	@RequestMapping(value = "product", method = RequestMethod.POST)
+	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String productPOST(ProductVO vo) throws Exception {
 		
-		logger.debug("productPOST() »£√‚");
+		logger.debug("productPOST() »£ÔøΩÔøΩ");
 		logger.debug("vo : " + vo);
 		
 		service.insertProd(vo);
@@ -37,5 +42,30 @@ public class PerfomanceController {
 		return "";
 	}
 	
+	// ÎùºÏù∏ - /line 
+	// http://localhost:8088/performance/line
+	@RequestMapping(value = "/line", method = RequestMethod.GET)
+	public void lineGET() throws Exception{
+		logger.debug("@@lineGET() Ìò∏Ï∂ú@@");
+	}
 	
+	@RequestMapping(value = "/line", method = RequestMethod.POST)
+	public void linePOST(LineVO vo) throws Exception{
+		logger.debug("@@linePOST() Ìò∏Ï∂ú@@");
+		
+		logger.debug("@@vo : "+vo);
+		
+		service.insertLine(vo);
+	}
+	
+	// http://localhost:8088/performance/linelist
+	@RequestMapping(value = "/linelist", method = RequestMethod.GET)
+	public void lineListGET(Model model) throws Exception{
+		logger.debug("@@lineListGET() Ìò∏Ï∂ú@@");
+		
+		List<LineVO> boardList = service.getLineList();
+		logger.debug("boardList : "+boardList);
+		
+		model.addAttribute("boardList", boardList);
+	}
 }
