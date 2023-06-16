@@ -40,6 +40,12 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 		
 	}
 
+	@Override
+	public EmployeesVO getEmloyees(String id) {
+		logger.debug(" getEmployees() 호출 @@@@@ ");
+		return sqlSession.selectOne(NAMESPACE+".getEmployees", id);
+	}
+
 	
 	
 	

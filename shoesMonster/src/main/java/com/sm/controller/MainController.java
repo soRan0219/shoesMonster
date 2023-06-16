@@ -19,7 +19,7 @@ public class MainController {
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	@Autowired
-	private EmployeesService eService;
+	private EmployeesService empService;
 	
 	
 	// http://localhost:8088/smmain/smLogin
@@ -36,7 +36,7 @@ public class MainController {
 		logger.debug(id+"", pw+"");
 		logger.debug(empvo+"");
 		
-		EmployeesVO resultVO = eService.empLogin(empvo);
+		EmployeesVO resultVO = empService.empLogin(empvo);
 		
 		logger.debug(resultVO+"");
 		
