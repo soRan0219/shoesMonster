@@ -15,4 +15,5 @@ public class In_materialVO {
 	private Date in_date;
 	private int in_count ;
 	private String in_YN;
+	
 }

@@ -7,19 +7,24 @@
 
 
 	<!-- 글 목록 조회 -->
-<!-- 	<select id="listAll" resultType="com.sm.domain.In_materialVO"> -->
-<!-- 	select i.in_num , c.client_actname , rm.raw_code ,  -->
-<!-- 	rm.raw_name , r.raw_order_count , s.stock_raw_count ,  -->
-<!-- 	 rm.raw_price , raw_price * raw_order_count,  -->
-<!-- 	 i.in_date , e.emp_id , i.in_YN  -->
-<!-- 	from in_material i  -->
-<!-- 	join raw_order r on i.raw_order_num = r.raw_order_num  -->
-<!-- 	join raw_material rm on rm.raw_code = r.raw_code  -->
-<!-- 	join clients c on c.client_code = i.client_code  -->
-<!-- 	join stock s on s.in_num  = i.in_num  -->
-<!-- 	join employees e on e.emp_id = i.emp_id  -->
-<!-- 	</select> -->
+	<select id="In_material" resultType="com.sm.domain.In_materialVO">
+	select i.in_num , c.client_actname , rm.raw_code , 
+	rm.raw_name , r.raw_order_count , s.stock_raw_count , 
+	 rm.raw_price , raw_price * raw_order_count, 
+	 i.in_date , e.emp_id , i.in_YN 
+	from in_material i 
+	join raw_order r on i.raw_order_num = r.raw_order_num 
+	join raw_material rm on rm.raw_code = r.raw_code 
+	join clients c on c.client_code = i.client_code 
+	join stock s on s.in_num  = i.in_num 
+	join employees e on e.emp_id = i.emp_id 
+	</select>
 	<!-- 글 목록 조회 -->
+
+<!-- 	<select id="In_material" resultType="com.sm.domain.In_materialVO"> -->
+<!-- 		select * from in_material -->
+<!-- 	</select> -->
+
 	
 	
 
