@@ -42,7 +42,7 @@ public class PerfomanceController {
 		return "";
 	}
 	
-	// 라인 - /line 
+	//======== 라인 - /line ================================ 
 	// http://localhost:8088/performance/line
 	@RequestMapping(value = "/line", method = RequestMethod.GET)
 	public void lineGET() throws Exception{
@@ -68,4 +68,22 @@ public class PerfomanceController {
 		
 		model.addAttribute("boardList", boardList);
 	}
+	
+	// 라인 - 검색
+	@RequestMapping(value = "/linelist", method = RequestMethod.GET)
+	public void lineSearchGET(Model model) throws Exception{
+		logger.debug("lineSearchGET() 호출");
+		
+		List<LineVO> boardList = service.getLineList();
+		logger.debug("boardList : "+boardList);
+		
+		model.addAttribute("boardList", boardList);
+	}
+	
+	//======== 라인 - /line ================================
 }
+
+
+
+
+

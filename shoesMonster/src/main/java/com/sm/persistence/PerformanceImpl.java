@@ -32,7 +32,7 @@ public class PerformanceImpl implements PerformanceDAO {
 	// 라인
 	@Override
 	public void insertLine(LineVO vo) throws Exception {
-		logger.debug("@@inser@@");
+		logger.debug("@@insert@@");
 		
 		int result = sqlSession.insert(NAMESPACE+".insertLine", vo);
 		
