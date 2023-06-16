@@ -78,6 +78,7 @@ public class PerfomanceController {
 		logger.debug("boardList : "+boardList);
 		
 		model.addAttribute("boardList", boardList);
+		
 	}
 	
 	//======== 라인 - /line ================================
