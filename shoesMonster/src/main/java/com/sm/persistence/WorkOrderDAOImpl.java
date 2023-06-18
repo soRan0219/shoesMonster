@@ -1,5 +1,6 @@
 package com.sm.persistence;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -25,5 +26,27 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 		
 		return sqlSession.selectList(NAMESPACE + ".allWorkOrder");
 	} //readAllWorkOrder()
+
+	@Override
+	public void insertWorkOrder(WorkOrderVO vo) throws Exception {
+		logger.debug("##### DAO: updateWorkOrder() 호출");
+		int result = sqlSession.insert(NAMESPACE + ".insertWorkOrder", vo);
+		logger.debug("##### DAO: insert 결과 ====> " + result);
+	} //updateWorkOrder()
+
+	@Override
+	public void deleteWorkOrder(List<String> checked) throws Exception {
+		logger.debug("##### DAO: deleteWorkOrder() 호출");
+		
+		Iterator<String> it = checked.iterator();
+		int result = 0;
+		
+		while(it.hasNext()) {
+			String work_code = it.next();
+			result += sqlSession.delete(NAMESPACE + ".deleteWorkOrder", work_code);
+		}
+		
+		logger.debug("##### DAO: delete 결과 ===> " + result);
+	} //deleteWorkOrder()
 
 } //WorkOrderDAOImpl
