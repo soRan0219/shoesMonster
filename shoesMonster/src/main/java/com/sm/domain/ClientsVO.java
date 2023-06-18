@@ -19,6 +19,6 @@ public class ClientsVO {
 	private String client_fax;
 	private String client_email;
 	private String client_note;
-	private String client_useyn;
+	private String client_useyn; // 그냥 체크박스인데 컬럼이 필요한가
 	
 } // ClientsVO

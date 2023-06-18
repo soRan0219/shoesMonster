@@ -51,12 +51,14 @@ public class PersonController {
 	// http://localhost:8088/person/Clients
 	// 거래처 목록 조회 - /Person/Clients (GET)
 	@RequestMapping(value="/Clients", method = RequestMethod.GET)
-	public void ClientsGET() throws Exception {
+	public void ClientsGET(Model model) throws Exception {
 		logger.debug("ClientsGET() 호출");
 		
 		// service - DB에 저장된 글 정보 가져오기
 		List<ClientsVO> clientsList = clService.getListAll();
 		logger.debug("clientsList : " + clientsList);
+		
+		model.addAttribute("clientsList", clientsList);
 	}
 	
 	

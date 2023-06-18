@@ -14,6 +14,7 @@ public class ClientsServiceImpl implements ClientsService {
 	@Autowired
 	private ClientsDAO cldao;
 	
+	// 거래처 목록 불러오기
 	@Override
 	public List<ClientsVO> getListAll() throws Exception {
 		
