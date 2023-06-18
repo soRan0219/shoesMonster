@@ -11,4 +11,20 @@
 	</select>
 	<!-- 작업지시 목록 -->
 	
+	<!-- 작업지시 등록 -->
+	<insert id="insertWorkOrder">
+		INSERT INTO work_order (work_code,prod_code,order_code,work_date,line_code,work_qt,work_state)
+		VALUES (#{work_code},#{prod_code},#{order_code},now(),#{line_code},#{work_qt},#{work_state}) 
+	</insert>
+	<!-- 작업지시 등록 -->
+	
+	<!-- 작업지시 삭제 -->
+	<delete id="deleteWorkOrder">
+		DELETE FROM work_order 
+		WHERE work_code=#{work_code}
+	</delete>
+	<!-- 작업지시 삭제 -->
+	
+	
+	
 </mapper>
