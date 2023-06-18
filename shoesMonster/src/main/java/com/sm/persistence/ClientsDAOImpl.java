@@ -22,6 +22,7 @@ public class ClientsDAOImpl implements ClientsDAO {
 	
 	private static final String NameSpace = "com.sm.mapper.PersonMapper";
 
+	// 거래처 목록 불러오기
 	@Override
 	public List<ClientsVO> readClientsListAll() throws Exception {
 		logger.debug("readClientsListAll() 호출");
