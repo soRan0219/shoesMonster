@@ -37,6 +37,44 @@
             $('#addButton').click(function() {
                 addRow();
             });
+            
+            
+            // 필터링 기능
+            $('#filterButton').click(function(event) {
+            	 
+            	event.preventDefault(); // 페이지 이동 막기
+            	 
+                var searchCode = $('#searchCode').val().toLowerCase();
+                var searchName = $('#searchName').val().toLowerCase();
+                var searchCategory = $('#searchCategory').val().toLowerCase();
+                var searchUnit = $('#searchUnit').val().toLowerCase();
+                
+                $('#productTable tr').each(function() {
+                    var code = $(this).find('td:nth-child(1)').text().toLowerCase();
+                    var name = $(this).find('td:nth-child(2)').text().toLowerCase();
+                    var category = $(this).find('td:nth-child(3)').text().toLowerCase();
+                    var unit = $(this).find('td:nth-child(4)').text().toLowerCase();
+                    
+                    if (code.includes(searchCode) 
+                    	&& name.includes(searchName) 
+                    	&& category.includes(searchCategory) 
+                    	&& unit.includes(searchUnit)){
+                    	
+                        $(this).show();
+                        
+                    } else {
+                    	
+                        $(this).hide();
+                        
+                    }
+                });
+            });
+            
+            // 저장 버튼 클릭 시 페이지 이동
+            $('form').submit(function() {
+               return true;
+            });
+            
         });
     </script>
 
@@ -44,9 +82,23 @@
 <body>
 
 	<h1>product</h1>
-	<form action="" method="post">
+	<form action="" method="post" >
 		<button id="addButton">추가</button>
 		<input type="submit" value="저장">
+		
+		<br>
+        <label>품번:</label>
+        <input type="text" id="searchCode">
+        <label>품명:</label>
+        <input type="text" id="searchName">
+        <br>
+        <label>카테고리:</label>
+        <input type="text" id="searchCategory">
+        <label>품목 단위:</label>
+        <input type="text" id="searchUnit">
+        <button id="filterButton">검색</button>
+        <br>
+		
 	
 		<table border="1" id="productTable">
 				<tr>
@@ -77,30 +129,6 @@
 		</table>
 		
 	</form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
