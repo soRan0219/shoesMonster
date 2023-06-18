@@ -48,7 +48,7 @@ public class PerfomanceController {
 		service.insertProd(products.getProducts());
 //		service.insertProd(vo);
 		
-		return "";
+		return "redirect:/performance/product";
 	}
 	
 	// 라인 - /line 
