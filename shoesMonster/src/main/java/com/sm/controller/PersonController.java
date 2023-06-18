@@ -60,7 +60,7 @@ public class PersonController {
 		
 		model.addAttribute("clientsList", clientsList);
 	}
-	
-	
 	// 거래처 목록 조회
+	
+	
 }
