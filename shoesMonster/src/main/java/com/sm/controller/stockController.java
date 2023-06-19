@@ -34,19 +34,21 @@ public class stockController {
 	// 발주 목록 조회
     // http://localhost:8080/stock/raw_order
 	// http://localhost:8088/stock/raw_order
-//    @RequestMapping(value = "/raw_order", method = RequestMethod.GET)
-//    public void ro_ListGET(Model model) throws Exception {
-//        logger.debug("ro_ListGET() 호출");
-//        
-//        // Service - DB에 저장된 발주 목록 가져오기
-//        List<Raw_orderVO> ro_List = ro_service.getRaw_Order_List();
-//        logger.debug("ro_List : " + ro_List);
-//        
-//        model.addAttribute("ro_List", ro_List);
-//        
-////        return "/stock/raw_order";
-//    }
-    // 발주 목록 조회 
+
+    @RequestMapping(value = "/raw_order", method = RequestMethod.GET)
+    public String ro_ListGET(Model model) throws Exception {
+        logger.debug("ro_ListGET() 호출");
+        
+        // Service - DB에 저장된 발주 목록 가져오기
+        List<Raw_orderVO> ro_List = ro_service.getRaw_Order_List();
+        logger.debug("ro_List : " + ro_List);
+        
+        model.addAttribute("ro_List", ro_List);
+        
+        return "/stock/raw_order";
+    }
+    // 발주 목록 조회
+	
 	
 	// 발주 페이징 처리
 	 // http://localhost:8080/stock/raw_order

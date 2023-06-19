@@ -9,14 +9,39 @@
 	<select id="readProd" resultType="ProductVO">
 		select * from product
 	</select>
+	<!-- 품목관리 목록 불러오기 -->
+	
+	<!-- 품목관리 검색리스트 불러오기 --> 
+	<select id="readSearchProd" resultType="ProductVO">
+		<bind name="prod_code" value="'%'+ prod_code +'%'"/>
+		<bind name="prod_name" value="'%'+ prod_name +'%'"/>
+		<bind name="prod_category" value="'%'+ prod_category +'%'"/>
+		<bind name="prod_unit" value="'%'+ prod_unit +'%'"/>
+		select * from product
+		<where>
+			<if test="prod_code != ''">
+				prod_code like #{prod_code}
+			</if>
+			<if test="prod_name != ''">
+				and prod_name like #{prod_name}
+			</if>
+			<if test="prod_category != ''">
+				and prod_category like #{prod_category}
+			</if>
+			<if test="prod_unit != ''">
+				and prod_unit like #{prod_unit}
+			</if>
+		</where>
+	</select>
+	<!-- 품목관리 검색리스트 불러오기 -->
 	 
-	<!-- 품목관리 목록 불러오기 --> 
-
+	<!-- 품목관리 정보 다중 입력 -->
 	<insert id="prodIn">
 		insert into product 
 		values (#{prod_code},#{prod_name},#{prod_category},#{prod_unit},#{prod_size},
 		#{prod_color},#{client_code},#{prod_price},#{prod_note})
 	</insert>
+	<!-- 품목관리 정보 다중 입력 -->
 	
 	<!-- 라인 -->
 	<insert id="lineInsert">

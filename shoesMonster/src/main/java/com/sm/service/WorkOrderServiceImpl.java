@@ -10,7 +10,7 @@ import com.sm.persistence.WorkOrderDAO;
 
 @Service
 public class WorkOrderServiceImpl implements WorkOrderService {
-
+	
 	@Autowired
 	private WorkOrderDAO wdao;
 	
@@ -20,5 +20,17 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 		
 		return wdao.readAllWorkOrder();
 	} //getAllWorkOrder()
+
+	@Override
+	public void regWorkOrder(WorkOrderVO vo) throws Exception {
+		// DAO - 작업지시 등록
+		wdao.insertWorkOrder(vo);
+	} //regWorkOrder()
+
+	@Override
+	public void removeWorkOrder(List<String> checked) throws Exception {
+		// DAO - 작업지시 삭제
+		wdao.deleteWorkOrder(checked);
+	} //removeWorkOrder()
 
 } //WorkOrderServiceImpl
