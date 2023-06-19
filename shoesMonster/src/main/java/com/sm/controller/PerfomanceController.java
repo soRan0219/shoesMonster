@@ -60,24 +60,9 @@ public class PerfomanceController {
 		return "redirect:/performance/product";
 	}
 	
-	// 라인 - /line 
+	//======== 라인 - /line ================================ 
 	// http://localhost:8088/performance/line
 	@RequestMapping(value = "/line", method = RequestMethod.GET)
-	public void lineGET() throws Exception{
-		logger.debug("@@lineGET() 호출@@");
-	}
-	
-	@RequestMapping(value = "/line", method = RequestMethod.POST)
-	public void linePOST(LineVO vo) throws Exception{
-		logger.debug("@@linePOST() 호출@@");
-		
-		logger.debug("@@vo : "+vo);
-		
-		service.insertLine(vo);
-	}
-	
-	// http://localhost:8088/performance/linelist
-	@RequestMapping(value = "/linelist", method = RequestMethod.GET)
 	public void lineListGET(Model model) throws Exception{
 		logger.debug("@@lineListGET() 호출@@");
 		
@@ -86,4 +71,12 @@ public class PerfomanceController {
 		
 		model.addAttribute("boardList", boardList);
 	}
+	
+	
+	//======== 라인 - /line ================================
 }
+
+
+
+
+

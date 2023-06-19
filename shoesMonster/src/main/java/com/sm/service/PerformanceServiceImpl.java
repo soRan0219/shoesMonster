@@ -43,16 +43,17 @@ public class PerformanceServiceImpl implements PerformanceService {
 	}
 	
 
-	// 라인
-	@Override
-	public void insertLine(LineVO vo) throws Exception {
-		
-		pdao.insertLine(vo);
-	}
+	// 라인 조회
 	@Override
 	public List<LineVO> getLineList() throws Exception {
 		
 		return pdao.getLineList();
+	}
+	
+	// 라인 검색
+	@Override
+	public List<LineVO> getSearchLine() throws Exception {
+		return null;
 	}
 
 

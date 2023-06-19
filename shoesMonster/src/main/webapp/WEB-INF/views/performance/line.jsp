@@ -52,6 +52,7 @@
 <h2>라인관리</h2>
 
 	<form action="" method="get">
+		
 		<label>라인코드</label>
 			<input type="text" id="searchCode" placeholder="검색어를 입력해주세요">
 		

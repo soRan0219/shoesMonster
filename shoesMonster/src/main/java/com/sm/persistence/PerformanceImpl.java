@@ -42,22 +42,19 @@ public class PerformanceImpl implements PerformanceDAO {
 		sqlSession.insert(NAMESPACE+".prodIn", product);
 	}
 	
-	// 라인
-	@Override
-	public void insertLine(LineVO vo) throws Exception {
-		logger.debug("@@inser@@");
-		
-		int result = sqlSession.insert(NAMESPACE+".insertLine", vo);
-		
-		if(result != 0)
-			logger.debug("라인 글쓰기 완료");
-		
-	}
+	// 라인 조회
 	@Override
 	public List<LineVO> getLineList() throws Exception {
 		logger.debug("@@getLineList() 호출@@");
 		
 		return sqlSession.selectList(NAMESPACE+".lineList");
+	}
+	
+	// 라인 검색
+	@Override
+	public List<LineVO> getSearchLine() throws Exception {
+		
+		return null;
 	}
 
 	
