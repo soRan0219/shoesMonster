@@ -13,5 +13,8 @@ public class Raw_orderVO {
 	private String emp_id;
 	private int raw_order_count;
 	private Date raw_order_date;
-			
+	
+	private RawMaterialVO rawMaterial;
+	private ClientsVO clients;
+	private StockVO stock;
 }

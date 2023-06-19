@@ -34,7 +34,7 @@ public class stockController {
     // http://localhost:8080/stock/raw_order
 	// http://localhost:8088/stock/raw_order
     @RequestMapping(value = "/raw_order", method = RequestMethod.GET)
-    public void ro_ListGET(Model model) throws Exception {
+    public String ro_ListGET(Model model) throws Exception {
         logger.debug("ro_ListGET() 호출");
         
         // Service - DB에 저장된 발주 목록 가져오기
@@ -43,7 +43,7 @@ public class stockController {
         
         model.addAttribute("ro_List", ro_List);
         
-//        return "/stock/raw_order";
+        return "/stock/raw_order";
     }
     // 발주 목록 조회
 	
