@@ -4,6 +4,14 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sm.mapper.ProductMapper">
+
+	<!-- 품목관리 목록 불러오기 -->
+	<select id="readProd" resultType="ProductVO">
+		select * from product
+	</select>
+	 
+	<!-- 품목관리 목록 불러오기 --> 
+
 	<insert id="prodIn">
 		insert into product 
 		values (#{prod_code},#{prod_name},#{prod_category},#{prod_unit},#{prod_size},

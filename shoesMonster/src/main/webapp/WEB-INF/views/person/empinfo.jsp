@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +8,10 @@
 </head>
 <body>
 	
-	<h1>http://localhost:8088/smmain/smMain</h1>
-	<h1>smMain.jsp</h1>
+	<h1> http://localhost:8088/person/empinfo</h1>
+	<h1> /person/empinfo.jsp </h1>
+	
+	
 	
 </body>
 </html>

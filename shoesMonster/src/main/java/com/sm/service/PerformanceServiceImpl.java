@@ -19,13 +19,22 @@ public class PerformanceServiceImpl implements PerformanceService {
 	@Autowired
 	private PerformanceDAO pdao;
 	
+	
+	// 품목관리 리트스 불러오기
 	@Override
-	public void insertProd(ProductVO vo) throws Exception {
-		logger.debug("���� ����");
-		
-		pdao.insetProd(vo);
+	public List<ProductVO> getProdList() throws Exception {		
+		return pdao.readProdList();
+	}
+  
+  // 품목관리 정보 다중 
+	@Override
+	public void insertProd(List<ProductVO> products) {
+		for(ProductVO product : products) {
+			pdao.insertProdList(product);
+		}
 	}
 	
+
 	// 라인
 	@Override
 	public void insertLine(LineVO vo) throws Exception {
@@ -37,5 +46,6 @@ public class PerformanceServiceImpl implements PerformanceService {
 		
 		return pdao.getLineList();
 	}
+
 
 }

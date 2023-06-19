@@ -21,12 +21,18 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	private static final String NAMESPACE = "com.sm.mapper.ProductMapper";
 	
+	
+	// 품목 리스트 불러오기
 	@Override
-	public void insetProd(ProductVO vo) {
-		logger.debug("DAO ����");
+	public List<ProductVO> readProdList() throws Exception {
 		
-		sqlSession.insert(NAMESPACE+".prodIn", vo);
-		
+		return sqlSession.selectList(NAMESPACE+".readProd");
+	}
+
+	// 품목관리 정보 다중 저장
+	@Override
+	public void insertProdList(ProductVO product) {
+		sqlSession.insert(NAMESPACE+".prodIn", product);
 	}
 	
 	// 라인
@@ -46,5 +52,6 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return sqlSession.selectList(NAMESPACE+".lineList");
 	}
+
 	
 }

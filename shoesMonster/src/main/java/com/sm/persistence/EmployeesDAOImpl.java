@@ -1,5 +1,8 @@
 package com.sm.persistence;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,15 +17,38 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private static final String NAMESPACE = "com.sm.mapper.productMapper";
+	private static final String NAMESPACE = "com.sm.mapper.MainMapper";
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeesDAOImpl.class);
 	
 	@Override
 	public EmployeesVO loginEmp(EmployeesVO empvo) {
 		logger.debug(" loginEmp() 호출@@@@@ ");
+		
 		return sqlSession.selectOne(NAMESPACE + ".smLogin", empvo);
 	}
+
+	@Override
+	public EmployeesVO loginEmp(String id, String pw) {
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("userid", id);
+		params.put("userpw", pw);
+		
+		return sqlSession.selectOne(NAMESPACE + ".smlogin", params);
+		
+	}
+
+	@Override
+	public EmployeesVO getEmloyees(String id) {
+		logger.debug(" getEmployees() 호출 @@@@@ ");
+		return sqlSession.selectOne(NAMESPACE+".getEmployees", id);
+	}
+
+	
+	
+	
 	
 	
 	

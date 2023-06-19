@@ -17,6 +17,11 @@ public class EmployeesServiceImpl implements EmployeesService{
 		EmployeesVO resultVO = empdao.loginEmp(empvo);
 		return resultVO;
 	}
+
+	@Override
+	public EmployeesVO getEmployees(String id) {
+		return empdao.getEmloyees(id);
+	}
 	
 	
 	
