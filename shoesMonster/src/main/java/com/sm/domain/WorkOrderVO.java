@@ -2,6 +2,8 @@ package com.sm.domain;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -9,6 +11,7 @@ public class WorkOrderVO {
 	private String work_code;
 	private String prod_code;
 	private String order_code;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date work_date;
 	private String line_code;
 	private int work_qt;
