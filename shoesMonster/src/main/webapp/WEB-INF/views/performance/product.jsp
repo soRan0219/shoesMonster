@@ -99,7 +99,7 @@
 	</form>
 	
 	
-	<form action="" method="post" >
+	<form action="" method="post" onsubmit="return false">
 		<button id="addButton">추가</button>
 		<input type="submit" value="저장">
 		
