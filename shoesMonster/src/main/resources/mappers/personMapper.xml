@@ -6,18 +6,26 @@
 <mapper namespace="com.sm.mapper.PersonMapper">
 	
 	
-	<!-- 회원정보 조회 -->
-	<select id="getEmployees" resultType="com.sm.domain.EmployeesVO">
+	<!-- 사원 목록 조회 -->
+	<select id="empList" resultType="com.sm.domain.EmployeesVO"> 
 		select * from employees
-		where emp_id = #{emp_id}
 	</select>	
-	<!-- 회원정보 조회 -->
+	<!-- 사원 목록 조회 -->
+
 	
+	<!-- 사원 목록 상세 조회 -->
+	<select id="getEmpRead" resultType="com.sm.domain.EmployeesVO">
+		select * from employees
+		where empbno = #{empbno}
+	</select>
+	<!-- 사원 목록 상세 조회 -->
+
 	
 	<!-- 거래처 조회 -->
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
 		select * from clients
 	</select>
 	<!-- 거래처 조회 -->
+	
 	
 </mapper>

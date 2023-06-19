@@ -1,5 +1,7 @@
 package com.sm.persistence;
 
+import java.util.List;
+
 import com.sm.domain.EmployeesVO;
 
 public interface EmployeesDAO {
@@ -8,9 +10,12 @@ public interface EmployeesDAO {
 	public EmployeesVO loginEmp(EmployeesVO empvo);
 	
 	public EmployeesVO loginEmp(String id, String pw);
-
-	// 회원정보 조회
-	public EmployeesVO getEmloyees(String id);
-
-
+	
+	// 사원 목록 조회 - R
+	public List<EmployeesVO> readEmpList() throws Exception;
+	
+	// 사원 목록 상세 조회 - R
+	public EmployeesVO readEmp(Integer empbno) throws Exception;
+	
+	
 }

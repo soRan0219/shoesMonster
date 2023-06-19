@@ -32,20 +32,27 @@ public class PersonController {
 	
 	
 	// http://localhost:8088/person/empinfo
-	// 사원 조회
+	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
-	public void empinfoGET(Model model, HttpSession session) {
+	public void empInfoGET(Model model) throws Exception {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
-		String id = (String)(session.getAttribute("id"));
-		EmployeesVO resultVO = empService.getEmployees(id);
+		List<EmployeesVO> empList = empService.getEmpList();
+		logger.debug("empList : " + empList);
 		
-		logger.debug(" @@@@@ resultVO : " + resultVO);
-		
-		model.addAttribute(empService.getEmployees(id));
-		
-		logger.debug(" /person/empinfo.jsp 페이지로 이동 ");
+		model.addAttribute("empList", empList);
 	}
+	// 사원 목록 상세조회 (GET)
+	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
+	public void empReadGET(Model model, Integer empbno) throws Exception{
+		logger.debug(" empReadGET() 호출@@@@@ ");
+		logger.debug("empbno : "+empbno);
+		
+		EmployeesVO resultVO  = empService.getEmpRead(empbno);
+		
+		model.addAttribute("resultVO", resultVO);
+	}
+	
 	
 	
 	// http://localhost:8088/person/Clients

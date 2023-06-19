@@ -1,5 +1,7 @@
 package com.sm.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +21,19 @@ public class EmployeesServiceImpl implements EmployeesService{
 	}
 
 	@Override
-	public EmployeesVO getEmployees(String id) {
-		return empdao.getEmloyees(id);
+	public List<EmployeesVO> getEmpList() throws Exception {
+		return empdao.readEmpList();
 	}
+
+	@Override
+	public EmployeesVO getEmpRead(Integer empbno) throws Exception {
+		return empdao.readEmp(empbno);
+	}
+	
+	
+	
+	
+
 	
 	
 	
