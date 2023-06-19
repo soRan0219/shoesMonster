@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<style type="text/css">
+	.selected {
+		background-color: #ccc;
+	}
+</style>
+
 <script type="text/javascript">
 	
 	//오늘 날짜 yyyy-mm-dd
@@ -41,64 +47,69 @@
 			
 			let today = getToday();
 			
-			var tbl = "<tr>";
-			// 번호
-			tbl += " <td>"; 
-			tbl += " </td>";
-			// 작업지시코드
-			tbl += " <td>";
-			tbl += "  <input type='text' name='work_code' id='workCode' readonly value='";
-			tbl += "WO" + wCodeNum;
-			tbl += "'>";
-			tbl += " </td>";
-			// 라인코드
-			tbl += " <td>";
-			tbl += "  <input type='text' name='line_code' id='lineCode'>";
-			tbl += " </td>";
-			// 품번
-			tbl += " <td>";
-			tbl += "  <input type='text' name='prod_code' id='prodCode'>";
-			tbl += " </td>";
-			// 수주코드
-			tbl += " <td>";
-			tbl += "  <input type='text' name='order_code' id='orderCode'>";
-			tbl += " </td>";
-			// 지시상태
-			tbl += " <td>";
-			tbl += "  <select name='work_state' id='workState'>";
-			tbl += "   <option>지시</option>";
-			tbl += "   <option>진행</option>";
-			tbl += "   <option>마감</option>";
-			tbl += "  </select>"
-			tbl += " </td>";
-			// 지시일
-			tbl += " <td>";
-			tbl += "  <input type='text' name='work_date' id='workDate' readonly value='";
-			tbl += today;
-			tbl += "'>";
-			tbl += " </td>";
-			// 지시수량
-			tbl += " <td>";
-			tbl += "  <input type='text' name='work_qt' id='workQt'>";
-			tbl += " </td>";
-			tbl += "</tr>";
+			if($(this).hasClass('true')) {
+				
+				var tbl = "<tr>";
+				// 번호
+				tbl += " <td>"; 
+				tbl += " </td>";
+				// 작업지시코드
+				tbl += " <td>";
+				tbl += "  <input type='text' name='work_code' id='workCode' readonly value='";
+				tbl += "WO" + wCodeNum;
+				tbl += "'>";
+				tbl += " </td>";
+				// 라인코드
+				tbl += " <td>";
+				tbl += "  <input type='text' name='line_code' id='lineCode'>";
+				tbl += " </td>";
+				// 품번
+				tbl += " <td>";
+				tbl += "  <input type='text' name='prod_code' id='prodCode'>";
+				tbl += " </td>";
+				// 수주코드
+				tbl += " <td>";
+				tbl += "  <input type='text' name='order_code' id='orderCode'>";
+				tbl += " </td>";
+				// 지시상태
+				tbl += " <td>";
+				tbl += "  <select name='work_state' id='workState'>";
+				tbl += "   <option>지시</option>";
+				tbl += "   <option>진행</option>";
+				tbl += "   <option>마감</option>";
+				tbl += "  </select>"
+				tbl += " </td>";
+				// 지시일
+				tbl += " <td>";
+				tbl += "  <input type='text' name='work_date' id='workDate' readonly value='";
+				tbl += today;
+				tbl += "'>";
+				tbl += " </td>";
+				// 지시수량
+				tbl += " <td>";
+				tbl += "  <input type='text' name='work_qt' id='workQt'>";
+				tbl += " </td>";
+				tbl += "</tr>";
+				
+				$('table').append(tbl);
+				
+				//라인코드 검색
+				$('#lineCode').click(function(){
+					window.open("/workorder/search?type=line", "", popupOpt);
+				}); //lineCode click
+				
+				//품번 검색 
+				$('#prodCode').click(function(){
+					window.open("/workorder/search?type=prod", "", popupOpt);
+				}); //prodCode click
+				
+				//수주코드 검색
+				$('#orderCode').click(function(){
+					window.open("/workorder/search?type=order", "", popupOpt);
+				}); //orderCode click
 			
-			$('table').append(tbl);
-			
-			//라인코드 검색
-			$('#lineCode').click(function(){
-				window.open("/workorder/search?type=line", "", popupOpt);
-			}); //lineCode click
-			
-			//품번 검색
-			$('#prodCode').click(function(){
-				window.open("/workorder/search?type=prod", "", popupOpt);
-			}); //prodCode click
-			
-			//수주코드 검색
-			$('#orderCode').click(function(){
-				window.open("/workorder/search?type=order", "", popupOpt);
-			}); //orderCode click
+				$(this).removeClass('true');
+			} //true 클래스 있을 때
 			
 			// 저장 -> 아작스로 보내고 저장함
 			$('#save').click(function(){
@@ -139,6 +150,89 @@
 			
 		}); //add click
 		
+		
+		
+		
+		
+		/////////////// 수정 //////////////////////////////
+		$('table tr:not(:first-child)').click(function(){
+			
+			//하나씩만 선택 가능 - 하나 누르고 다른거 눌렀을 때 색 바뀜,,
+			$('table tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+			
+			//작업지시 코드 저장
+			let updateCode = $(this).find('#workCode').text().trim();
+			console.log(updateCode);
+			
+			let preLine;
+			let preProd;
+			let preOrder;
+			let preState;
+			let workDate;
+			let preQt;
+			
+			var self = $(this);
+			
+			//수정버튼 클릭
+			$('#modify').click(function(){
+				
+				$.ajax({
+					url: "/workorder/modify",
+					type: "get",
+					contentType: "application/json; charset=UTF-8",
+					data: {updateCode:updateCode},
+					success: function(data) {
+// 						alert("*** 아작스 성공 ***");
+// 						alert(data);
+						
+						var preVO = JSON.parse(data);
+						alert(preVO.work_date);
+						
+// 						preLine = preVO.line_code;
+// 						preProd = preVO.prod_code;
+// 						preOrder = preVO.order_code;
+// 						preState = preVO.work_state;
+// 						workDate = preVO.work_date;
+// 						preQt = preVO.work_qt;
+						
+						var preVOs = [];
+						
+						alert(preVO.work_state);
+						
+// 						var bDate = new Date(preVO.work_date);
+// 						var workDate = bDate.toISOString().slice(0, 10);
+						
+// 						alert(workDate);
+						
+						preVOs.push(preVO.line_code);
+						preVOs.push(preVO.prod_code);
+						preVOs.push(preVO.order_code);
+						preVOs.push(preVO.work_state);
+						preVOs.push(preVO.work_date);
+						preVOs.push(preVO.work_qt);
+						
+// 						alert(preVOs);
+						
+						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+// 						self.find('td').each(function(idx, item) {
+							
+// 							if(idx > 1) {
+								
+// 							}
+							
+// 						}); // self.find(~~)
+						
+					},
+					error: function(data) {
+						alert("아작스 실패 ~~");
+					}
+				}); //ajax
+				
+			}); //modify click
+			
+			
+		}); //tr click
 		
 		
 		
@@ -185,7 +279,9 @@
 					}); //ajax
 					
 				} //체크된거 있을대
-				
+				else {
+					alert("선택된 글이 없습니다.");
+				} //체크된거 없을때
 				
 			}); //save
 			
@@ -201,7 +297,7 @@
 <body>
 	<h1> /workorder/workOrderList.jsp </h1>
 	
-	<button id="add">추가</button>
+	<button id="add" class="true">추가</button>
 	<button id="modify">수정</button>
 	<button id="delete">삭제</button>
 	<button id="cancle">취소</button>
@@ -221,7 +317,7 @@
 		<c:forEach var="w" items="${workList }">
 			<tr>
 				<td></td>
-				<td>${w.work_code }</td>
+				<td id="workCode">${w.work_code }</td>
 				<td>${w.line_code }</td>
 				<td>${w.prod_code }</td>
 				<td>${w.order_code }</td>

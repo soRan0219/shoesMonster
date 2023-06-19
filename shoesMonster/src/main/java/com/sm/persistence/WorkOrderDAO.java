@@ -15,4 +15,7 @@ public interface WorkOrderDAO {
 	//작업지시 삭제
 	public void deleteWorkOrder(List<String> checked) throws Exception;
 	
+	//작업지시 조회
+	public WorkOrderVO readWorkOrder(String work_code) throws Exception;
+	
 } //WorkOrderDAO
