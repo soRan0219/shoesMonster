@@ -35,13 +35,13 @@ public class PerfomanceController {
 		model.addAttribute("products", products);
 		logger.debug("vo : " + vo);
 		
-		if (vo.getProd_code() != "" || vo.getProd_name() !="" || 
-			vo.getProd_category() !="" || vo.getProd_unit() !="" ) {
+		if (vo.getProd_code() != null || vo.getProd_name() !=null || 
+			vo.getProd_category() !=null || vo.getProd_unit() !=null ) {
 			List<ProductVO> list = service.getProdList(vo);
 			model.addAttribute("prodList", list);
 			logger.debug("검색 리스트 가져감");
 			
-		} else {
+		}else {
 			List<ProductVO> list = service.getProdList();
 			model.addAttribute("prodList", list);
 			logger.debug(" 모든 리스트 가져감");
