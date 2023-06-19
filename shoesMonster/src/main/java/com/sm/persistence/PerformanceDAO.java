@@ -10,8 +10,11 @@ public interface PerformanceDAO {
 	
 	// 품목관리 목록 불러오기
 	public List<ProductVO> readProdList() throws Exception;
+	
+	// 품목관리 검색리스트 불러오기
+		public List<ProductVO> readProdList(ProductVO vo) throws Exception;
 		
-  // 품목관리 정보 다중 저장
+	// 품목관리 정보 다중 저장
 	public void insertProdList(ProductVO product); 
 		
 	

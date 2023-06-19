@@ -82,22 +82,28 @@
 <body>
 
 	<h1>product</h1>
-	<form action="" method="post" >
+	
+	<form action="" method="get">
+		<fieldset>
+       		<label>품번:</label>
+        	<input type="text" name="prod_code">
+        	<label>품명:</label>
+        	<input type="text" name="prod_name">
+        	<br>
+        	<label>카테고리:</label>
+        	<input type="text" name="prod_category"> 
+        	<label>품목 단위:</label>
+        	<input type="text" name="prod_unit">
+        	<input type="submit" value="검색">
+		</fieldset>
+	</form>
+	
+	
+	<form action="" method="post" onsubmit="return false">
 		<button id="addButton">추가</button>
 		<input type="submit" value="저장">
 		
-		<br>
-        <label>품번:</label>
-        <input type="text" id="searchCode">
-        <label>품명:</label>
-        <input type="text" id="searchName">
-        <br>
-        <label>카테고리:</label>
-        <input type="text" id="searchCategory">
-        <label>품목 단위:</label>
-        <input type="text" id="searchUnit">
-        <button id="filterButton">검색</button>
-        <br>
+	
 		
 	
 		<table border="1" id="productTable">

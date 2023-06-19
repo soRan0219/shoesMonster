@@ -25,8 +25,15 @@ public class PerformanceImpl implements PerformanceDAO {
 	// 품목 리스트 불러오기
 	@Override
 	public List<ProductVO> readProdList() throws Exception {
-		
+		logger.debug(" 품목관리 전체리스트 DAO ");
 		return sqlSession.selectList(NAMESPACE+".readProd");
+	}
+	
+	// 품목 검색리스트 불러오기
+	@Override
+	public List<ProductVO> readProdList(ProductVO vo) throws Exception {
+		logger.debug(" 품목관리 검색리스트 DAO ");
+		return sqlSession.selectList(NAMESPACE+".readSearchProd",vo);
 	}
 
 	// 품목관리 정보 다중 저장

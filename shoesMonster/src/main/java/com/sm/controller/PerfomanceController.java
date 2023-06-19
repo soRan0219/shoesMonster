@@ -9,12 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import com.sm.domain.ProductList;
+
 import com.sm.domain.LineVO;
+import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
 import com.sm.service.PerformanceService;
 
@@ -30,13 +29,23 @@ public class PerfomanceController {
 	
 	// http://localhost:8088/performance/product
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
-	public void productGET(Model model) throws Exception{
+	public void productGET(Model model, ProductVO vo) throws Exception{
 		logger.debug("productGET() 호출");
-		
-		List<ProductVO> list = service.getProdList();
 		List<ProductVO> products = new ArrayList<ProductVO>();
-		model.addAttribute("prodList", list);
 		model.addAttribute("products", products);
+		logger.debug("vo : " + vo);
+		
+		if (vo.getProd_code() != null || vo.getProd_name() !=null || 
+			vo.getProd_category() !=null || vo.getProd_unit() !=null ) {
+			List<ProductVO> list = service.getProdList(vo);
+			model.addAttribute("prodList", list);
+			logger.debug("검색 리스트 가져감");
+			
+		}else {
+			List<ProductVO> list = service.getProdList();
+			model.addAttribute("prodList", list);
+			logger.debug(" 모든 리스트 가져감");
+		}
 		
 	}
 	
