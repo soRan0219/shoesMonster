@@ -40,31 +40,31 @@ public class WorkOrderController {
 	} //workOrderListGET()
 	
 	//라인, 품목, 수주 검색
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String lineGET(Model model, @RequestParam("type") String type) throws Exception {
-		logger.debug("@@@@@ CONTROLLER: lineGET() 호출");
-		logger.debug("@@@@@ CONTROLLER: type = " + type);
-		
-		if(type.equals("line")) {
-			model.addAttribute("lineList", pService.getLineList());
-			return "/workorder/lineSearch";
-		}
-		
-		else if(type.equals("prod")) {
-			model.addAttribute("prodList", pService.getProdList());
-			return "/workorder/prodSearch";
-		}
-		
-		else /* if(type.equals("order"))*/ {
-			
-			/////// 수주 리스트 메서드 아직 없음 만들면 추가하기 ////////
-			
-			model.addAttribute("prodList", pService.getProdList());
-			return "/workorder/orderSearch";
-		}
+//	@RequestMapping(value = "/search", method = RequestMethod.GET)
+//	public String lineGET(Model model, @RequestParam("type") String type) throws Exception {
+//		logger.debug("@@@@@ CONTROLLER: lineGET() 호출");
+//		logger.debug("@@@@@ CONTROLLER: type = " + type);
+//		
+//		if(type.equals("line")) {
+//			model.addAttribute("lineList", pService.getLineList());
+//			return "/workorder/lineSearch";
+//		}
+//		
+//		else if(type.equals("prod")) {
+//			model.addAttribute("prodList", pService.getProdList());
+//			return "/workorder/prodSearch";
+//		}
+//		
+//		else /* if(type.equals("order"))*/ {
+//			
+//			/////// 수주 리스트 메서드 아직 없음 만들면 추가하기 ////////
+//			
+//			model.addAttribute("prodList", pService.getProdList());
+//			return "/workorder/orderSearch";
+//		}
 		
 //		return "";
-	} //lineGET()
+//	} //lineGET()
 	
 	//작업지시 추가
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

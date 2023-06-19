@@ -3,13 +3,17 @@ package com.sm.persistence;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.sm.domain.LineVO;
+import com.sm.domain.PagingVO;
 import com.sm.domain.ProductVO;
 
 @Repository
 public interface PerformanceDAO {
 	
+	// 품목관리 리스트 총갯수
+	public int countProd();
+		
 	// 품목관리 목록 불러오기
-	public List<ProductVO> readProdList() throws Exception;
+	public List<ProductVO> readProdList(PagingVO pvo) throws Exception;
 	
 	// 품목관리 검색리스트 불러오기
 		public List<ProductVO> readProdList(ProductVO vo) throws Exception;

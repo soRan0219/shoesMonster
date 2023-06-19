@@ -5,9 +5,16 @@
 
 <mapper namespace="com.sm.mapper.ProductMapper">
 
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countProd" resultType="int">
+		SELECT COUNT(*) FROM product
+	</select>
+	<!-- 총 게시글 갯수 출력 -->
+
 	<!-- 품목관리 목록 불러오기 -->
 	<select id="readProd" resultType="ProductVO">
-		select * from product
+		SELECT * from product where limit #{start}, #{end}
+		
 	</select>
 	<!-- 품목관리 목록 불러오기 -->
 	
