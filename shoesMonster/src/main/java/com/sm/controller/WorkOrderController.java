@@ -1,5 +1,6 @@
 package com.sm.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.sm.domain.WorkOrderVO;
 import com.sm.service.PerformanceService;
 import com.sm.service.WorkOrderService;
@@ -92,23 +92,26 @@ public class WorkOrderController {
 		return "redirect:/workorder/workOrderList";
 	} //deleteWorkOrder()
 	
-	//작업지시 수정 GET
+	//작업지시 수정 POST
 	@ResponseBody
-	@RequestMapping(value = "/modify", method = RequestMethod.GET, produces = "application/text; charset=utf8")
-	public String modifyWorkOrderGET(@RequestParam("updateCode") String updateCode) throws Exception {
+	@RequestMapping(value = "/modify", method = RequestMethod.POST/*, produces = "application/text; charset=utf8"*/)
+	public /*HashMap<String, Object>*/WorkOrderVO modifyWorkOrderGET(@RequestBody WorkOrderVO vo) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: modifyWorkOrderGET() 호출");
-		logger.debug("@@@@@ CONTROLLER: workCode  " + updateCode);
+		logger.debug("@@@@@ CONTROLLER: workCode = " + vo.getWork_code());
 		
 		//서비스 - 작업지시 정보 가져오기
-		WorkOrderVO vo = wService.getWorkOrder(updateCode);
-		logger.debug("@@@@@ CONTROLLER: vo = " + vo);
+		WorkOrderVO preVO = wService.getWorkOrder(vo.getWork_code());
+		logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
 		
 		//정보 가지고 돌아감
-		Gson gson = new Gson();
-		String preVO = gson.toJson(vo);
+//		Gson gson = new Gson();
+//		String preVO = gson.toJson(vo);
 		
+//		HashMap<String, Object> voMap = new HashMap<String, Object>();
+//		voMap.put("preVO", preVO);
+		
+//		return voMap;
 		return preVO;
-//		return "redirect:/workorder/workOrderList";
 	} //modifyWorkOrderGET()
 	
 	

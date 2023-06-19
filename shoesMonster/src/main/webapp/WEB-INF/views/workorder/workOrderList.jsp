@@ -165,6 +165,8 @@
 			let updateCode = $(this).find('#workCode').text().trim();
 			console.log(updateCode);
 			
+			var jsonData = {work_code:updateCode};
+			
 			let preLine;
 			let preProd;
 			let preOrder;
@@ -179,38 +181,23 @@
 				
 				$.ajax({
 					url: "/workorder/modify",
-					type: "get",
+					type: "post",
 					contentType: "application/json; charset=UTF-8",
-					data: {updateCode:updateCode},
+					dataType: "json",
+					data: JSON.stringify(jsonData),
 					success: function(data) {
 // 						alert("*** 아작스 성공 ***");
-// 						alert(data);
-						
-						var preVO = JSON.parse(data);
-						alert(preVO.work_date);
-						
-// 						preLine = preVO.line_code;
-// 						preProd = preVO.prod_code;
-// 						preOrder = preVO.order_code;
-// 						preState = preVO.work_state;
-// 						workDate = preVO.work_date;
-// 						preQt = preVO.work_qt;
+						console.log(data.work_date);
+						console.log(data.work_state);
 						
 						var preVOs = [];
 						
-						alert(preVO.work_state);
-						
-// 						var bDate = new Date(preVO.work_date);
-// 						var workDate = bDate.toISOString().slice(0, 10);
-						
-// 						alert(workDate);
-						
-						preVOs.push(preVO.line_code);
-						preVOs.push(preVO.prod_code);
-						preVOs.push(preVO.order_code);
-						preVOs.push(preVO.work_state);
-						preVOs.push(preVO.work_date);
-						preVOs.push(preVO.work_qt);
+						preVOs.push(data.line_code);
+						preVOs.push(data.prod_code);
+						preVOs.push(data.order_code);
+						preVOs.push(data.work_state);
+						preVOs.push(data.work_date);
+						preVOs.push(data.work_qt);
 						
 // 						alert(preVOs);
 						
