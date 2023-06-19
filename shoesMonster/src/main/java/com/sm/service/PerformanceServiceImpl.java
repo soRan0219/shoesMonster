@@ -16,6 +16,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PerformanceServiceImpl.class);
 	
+	
 	@Autowired
 	private PerformanceDAO pdao;
 	
@@ -24,6 +25,13 @@ public class PerformanceServiceImpl implements PerformanceService {
 	@Override
 	public List<ProductVO> getProdList() throws Exception {		
 		return pdao.readProdList();
+	}
+	
+	// 품목관리 검색리스트 불러오기
+	@Override
+	public List<ProductVO> getProdList(ProductVO vo) throws Exception {
+		
+		return pdao.readProdList(vo);
 	}
   
   // 품목관리 정보 다중 
