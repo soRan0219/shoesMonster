@@ -25,6 +25,11 @@
 	</delete>
 	<!-- 작업지시 삭제 -->
 	
+	<!-- 작업지시 조회 -->
+	<select id="readWorkOrder" resultType="WorkOrderVO">
+		SELECT * FROM work_order WHERE work_code=#{work_code}
+	</select>
+	<!-- 작업지시 조회 -->
 	
 	
 </mapper>

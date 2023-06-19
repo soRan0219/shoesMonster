@@ -15,4 +15,7 @@ public interface WorkOrderService {
 	//작업지시 삭제
 	public void removeWorkOrder(List<String> checked) throws Exception;
 	
+	//작업지시 조회
+	public WorkOrderVO getWorkOrder(String work_code) throws Exception;
+	
 } //WorkOrderService
