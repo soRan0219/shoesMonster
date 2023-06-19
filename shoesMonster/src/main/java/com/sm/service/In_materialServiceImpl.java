@@ -29,7 +29,33 @@ public class In_materialServiceImpl implements In_materialService{
 		return idao.readBoardIn_mat();
 	}
 	
+
+	@Override
+	public int count() throws Exception {
+		
+		return idao.count();
+	}
+
 	
+
+
+	@Override
+	public List<In_materialVO> getIn_matPage(int displayPost, int postNum) throws Exception {
+		
+		return idao.In_matPage(displayPost, postNum);
+	}
+
+
+
+//	@Override
+//	public List<In_materialVO> In_matSearch(
+//			int displayPost, int postNum, String keyword) throws Exception {
+//
+//		
+//		return idao.In_matSearch(displayPost, postNum, keyword);
+//	}
+	
+
 	
 
 	
