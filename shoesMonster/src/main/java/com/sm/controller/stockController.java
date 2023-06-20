@@ -2,6 +2,7 @@ package com.sm.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sm.domain.In_materialVO;
+import com.sm.domain.LineVO;
 import com.sm.domain.Raw_orderVO;
 import com.sm.service.In_materialService;
 import com.sm.service.Raw_orderService;
@@ -109,59 +111,162 @@ public class stockController {
 	
 	
 	// 입고 페이징
+    
+    //http://localhost:8088/stock/In_material
     //http://localhost:8088/stock/In_material?num=1
   	//http://localhost:8080/stock/In_material?num=1
     @RequestMapping(value = "/In_material",	method = RequestMethod.GET)
-    public void In_matPage(Model model, @RequestParam("num") int num ,
-    		@RequestParam(value = "searchType" ,required = false, defaultValue = "title") String searchType 
-    		, @RequestParam(value = "keyword" , required = false , defaultValue="") String keyword) throws Exception {
+    public void In_matPage(HttpServletRequest request, Model model,  In_materialVO ivo) throws Exception {
         
+    	// 검색
+    	
     	
     	// 게시물 총 갯수
-        int count = service.count();
+//        int count = service.count();
+        
+//        int count2 = service.count(ivo);
 
         // 한 페이지 출력 갯수
-        int postNum = 5;
-
-        // 하단 페이지 번호
-        int pageNum = (int) Math.ceil((double) count / postNum);
-
-        // 출력 게시물
-        int displayPost = (num - 1) * postNum;
-
-        // 한번에 표시할 페이징 번호의 갯수
-        int pageNum_cnt = 10;
-
-        // 표시되는 페이지 번호 중 첫번째 번호
-        int startPageNum = (int) (Math.ceil((double) num / pageNum_cnt) * pageNum_cnt) - pageNum_cnt + 1;
-
-        // 표시되는 페이지 번호 중 마지막 번호
-        int endPageNum = startPageNum + pageNum_cnt - 1;
-        if (endPageNum > pageNum) {
-            endPageNum = pageNum;
-        }
-
-        // 이전 및 다음
-        boolean prev = startPageNum != 1;
-        boolean next = endPageNum != pageNum;
+//        int postNum = 2;
+//
+//        // 하단 페이지 번호
+////        int pageNum = (int) Math.ceil((double) count / postNum);
+//        String pageNum = request.getParameter("num");
+//        if(pageNum == null) {
+//            pageNum = "1";
+//        }
+        
+        ///////////////////////////////////////////////////////
+        
+     // 행번호
+//        int currentPage = Integer.parseInt(pageNum);
+//        int displayPost = (currentPage - 1) * postNum ;
+//         
+//        
+//        // 페이징 처리 2 - 하단
+//         int pageCount = count/postNum + (count%postNum == 0? 0 : 1);
+//         int pageBlock = 1;
+//
+//         // 페이지 번호
+//         int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
+//         int endPage = startPage+pageBlock-1;
+//         if(endPage > pageCount) {
+//             endPage = pageCount;
+//         } 
+        
+        
+        ///////////////////////////////////////////////////////
+//        // 출력 게시물
+//        int displayPost = (num - 1) * postNum;
+//
+//        // 한번에 표시할 페이징 번호의 갯수
+//        int pageNum_cnt = 2;
+//
+//        // 표시되는 페이지 번호 중 첫번째 번호
+//        int startPageNum = (int) (Math.ceil((double) num / pageNum_cnt) * pageNum_cnt) - pageNum_cnt + 1;
+//
+//        // 표시되는 페이지 번호 중 마지막 번호
+//        int endPageNum = startPageNum + pageNum_cnt - 1;
+//        if (endPageNum > pageNum) {
+//            endPageNum = pageNum;
+//        }
+//
+//        // 이전 및 다음
+//        boolean prev = startPageNum != 1;
+//        boolean next = endPageNum != pageNum;
     
         
-        List<In_materialVO> In_materialList = service.getIn_matPage(displayPost, postNum ,searchType, keyword);
+        if(ivo.getClient_code() != null || ivo.getIn_num() != null ||
+        		ivo.getRaw_order_num() != null ) {
+     			
+        	 int count = service.count(ivo);
+        	
+        	 int postNum = 1;
+
+             // 하단 페이지 번호
+//             int pageNum = (int) Math.ceil((double) count / postNum);
+             String pageNum = request.getParameter("num");
+             if(pageNum == null) {
+                 pageNum = "1";
+             }
+        	
+        	  int currentPage = Integer.parseInt(pageNum);
+              int displayPost = (currentPage - 1) * postNum ;
+               
+              
+              // 페이징 처리 2 - 하단
+               int pageCount = count/postNum + (count%postNum == 0? 0 : 1);
+               int pageBlock = 2;
+
+               // 페이지 번호
+               int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
+               int endPage = startPage+pageBlock-1;
+               if(endPage > pageCount) {
+                   endPage = pageCount;
+               } 
+        	
+        	List<In_materialVO> In_materialList2 = service.getIn_matPage(displayPost, postNum , ivo);
+        	 model.addAttribute("In_materialList2", In_materialList2);
+        	  model.addAttribute("startPage", startPage);
+              model.addAttribute("endPage", endPage);
+              model.addAttribute("pageBlock", pageBlock);
+        	 model.addAttribute("pageNum", pageNum);
+        	 model.addAttribute("count",count);
+     			
+     		
+     		}else {// 검색어 null 일때
+     			
+     			int count = service.count();
+     			
+     			 int postNum = 1;
+
+     	        // 하단 페이지 번호
+//     	        int pageNum = (int) Math.ceil((double) count / postNum);
+     	        String pageNum = request.getParameter("num");
+     	        if(pageNum == null) {
+     	            pageNum = "1";
+     	        }
+     			
+     			  int currentPage = Integer.parseInt(pageNum);
+     		        int displayPost = (currentPage - 1) * postNum ;
+     		         
+     		        
+     		        // 페이징 처리 2 - 하단
+     		         int pageCount = count/postNum + (count%postNum == 0? 0 : 1);
+     		         int pageBlock = 2;
+     		         
+     		         // 페이지 번호
+     		         int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
+     		         int endPage = startPage+pageBlock-1;
+     		         if(endPage > pageCount) {
+     		             endPage = pageCount;
+     		         } 
+     			
+     			
+     			 List<In_materialVO> In_materialList = service.getIn_matPage(displayPost, postNum );
+     			 model.addAttribute("In_materialList", In_materialList);
+     			  model.addAttribute("startPage", startPage);
+     	         model.addAttribute("endPage", endPage);
+     	         model.addAttribute("pageBlock", pageBlock);
+     			model.addAttribute("pageNum", pageNum);
+     			 model.addAttribute("count",count);
+     		}
+     
+
         
-        
-        model.addAttribute("In_materialList", In_materialList);
-        model.addAttribute("pageNum", pageNum);
         
         // 시작 및 끝 번호
-        model.addAttribute("startPageNum", startPageNum);
-        model.addAttribute("endPageNum", endPageNum);
-
-        // 이전 및 다음 
-        model.addAttribute("prev", prev);
-        model.addAttribute("next", next);
-        
+//        model.addAttribute("startPageNum", startPageNum);
+//        model.addAttribute("endPageNum", endPageNum);
+//
+//        // 이전 및 다음 
+//        model.addAttribute("prev", prev);
+//        model.addAttribute("next", next);
+//        
         // 현재 페이지
-        model.addAttribute("select",num);
+        
+        
+
     }
     // 입고 페이징
 }

@@ -100,28 +100,52 @@ select count(client_code) from in_material
 
 <!-- 페이징 -->
 <select id="in_matPage" parameterType="hashMap" resultType="com.sm.domain.In_materialVO">
-	select client_code from in_material 		
-	<if test='searchType.equals("client_code")'>
-  WHERE client_code LIKE concat('%', #{keyword}, '%')
- </if>
- 
- <if test='searchType.equals("content")'>
-  WHERE content LIKE concat('%', #{keyword}, '%')
- </if>
- 
- <if test='searchType.equals("title_content")'>
-  WHERE title LIKE concat('%', #{keyword}, '%') 
-   or content LIKE concat('%', #{keyword}, '%')
- </if>
- 
- <if test='searchType.equals("writer")'>
-  WHERE writer LIKE concat('%', #{keyword}, '%')
- </if>
+	select * from in_material 		
 	 order by client_code desc 
 	  limit #{displayPost}, #{postNum}  
 </select>
 
 <!-- 페이징 -->
+
+
+<!-- 검색어   -->
+<select id="countSearch" resultType="int">
+	<bind name="client_code"
+		value="'%' + (client_code != null ? client_code : '') + '%'" />
+	<bind name="in_num"
+		value="'%' + (in_num != null ? in_num : '') + '%'" />
+	<bind name="raw_order_num"
+		value="'%' + (raw_order_num != null ? raw_order_num : '') + '%'" />
+	select count(client_code) from in_material 
+</select> 
+
+<select id="in_matPageSearch" parameterType="hashMap"
+	resultType="com.sm.domain.In_materialVO">
+	<bind name="client_code"
+		value="'%' + (client_code != null ? client_code : '') + '%'" />
+	<bind name="in_num"
+		value="'%' + (in_num != null ? in_num : '') + '%'" />
+	<bind name="raw_order_num"
+		value="'%' + (raw_order_num != null ? raw_order_num : '') + '%'" />
+
+	SELECT * FROM in_material
+	<where>
+		<if test="client_code != null and client_code != ''">
+			AND client_code LIKE #{client_code}
+		</if>
+		<if test="in_num != null and in_num != ''">
+			AND in_num LIKE #{in_num}
+		</if>
+		<if test="raw_order_num != null and raw_order_num != ''">
+			AND raw_order_num LIKE #{raw_order_num}
+		</if>
+	</where>
+	order by client_code desc  
+	limit #{displayPost}, #{postNum} 
+</select>
+
+
+<!-- 검색어   -->
 
 
 
