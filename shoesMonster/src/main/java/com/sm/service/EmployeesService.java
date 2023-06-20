@@ -12,8 +12,6 @@ public interface EmployeesService {
 	// 사원 목록 조회 - Read
 	public List<EmployeesVO> getEmpList() throws Exception;
 	
-	// 사원 목록 상세 조회 - Read
-	public EmployeesVO getEmpRead(Integer empbno) throws Exception;
 	
 	
 }

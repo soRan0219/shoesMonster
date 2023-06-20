@@ -25,10 +25,6 @@ public class EmployeesServiceImpl implements EmployeesService{
 		return empdao.readEmpList();
 	}
 
-	@Override
-	public EmployeesVO getEmpRead(Integer empbno) throws Exception {
-		return empdao.readEmp(empbno);
-	}
 	
 	
 	

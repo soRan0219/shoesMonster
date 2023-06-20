@@ -49,11 +49,6 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 		return sqlSession.selectList(NAMESPACE2 + ".empList");
 	}
 
-	@Override
-	public EmployeesVO readEmp(Integer empbno) throws Exception {
-		logger.debug(" readEmp() 호출@@@@@ ");
-		return sqlSession.selectOne(NAMESPACE2 + ".getEmpRead", empbno);
-	}
 	
 	
 	

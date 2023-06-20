@@ -14,8 +14,6 @@ public interface EmployeesDAO {
 	// 사원 목록 조회 - R
 	public List<EmployeesVO> readEmpList() throws Exception;
 	
-	// 사원 목록 상세 조회 - R
-	public EmployeesVO readEmp(Integer empbno) throws Exception;
 	
 	
 }

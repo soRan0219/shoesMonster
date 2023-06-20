@@ -42,17 +42,6 @@ public class PersonController {
 		
 		model.addAttribute("empList", empList);
 	}
-	// 사원 목록 상세조회 (GET)
-	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
-	public void empReadGET(Model model, Integer empbno) throws Exception{
-		logger.debug(" empReadGET() 호출@@@@@ ");
-		logger.debug("empbno : "+empbno);
-		
-		EmployeesVO resultVO  = empService.getEmpRead(empbno);
-		
-		model.addAttribute("resultVO", resultVO);
-	}
-	
 	
 	
 	// http://localhost:8088/person/Clients
