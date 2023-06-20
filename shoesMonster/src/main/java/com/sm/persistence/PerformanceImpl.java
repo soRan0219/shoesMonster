@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
+import com.sm.domain.WarehouseVO;
 
 @Repository
 public class PerformanceImpl implements PerformanceDAO {
@@ -58,6 +59,14 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("@@getSearchLine(LineVO lvo) 호출@@");
 		
 		return sqlSession.selectList(NAMESPACE+".searchLine", lvo);
+	}
+	
+	// 창고 조회
+	@Override
+	public List<WarehouseVO> readWhList() throws Exception {
+		logger.debug("@@readWhList() 호출@@");
+		
+		return sqlSession.selectList(NAMESPACE+".whlist");
 	}
 
 	

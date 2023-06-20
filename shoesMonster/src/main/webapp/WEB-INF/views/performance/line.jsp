@@ -8,10 +8,10 @@
 	<form action="" method="get">
 		
 		<label>라인코드</label>
-			<input type="text" name="line_code" id="searchCode" placeholder="검색어를 입력해주세요">
+			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요">
 		
 		<label>사용여부</label>
-			<select name="line_use"  id="searchUse">
+			<select name="line_use" >
 				<option selected value="3">전 체</option>
 				<option value="1">Y</option>
 				<option value="2">N</option>
@@ -20,16 +20,16 @@
 		<br>
 		
 		<label>라인명</label>
-		<input type="text" id="searchName" name="line_name" placeholder="검색어를 입력해주세요">
+		<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
 		
 		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
 		<label>작업장</label>
-		<input type="text" id="searchPlace" name="line_place" placeholder="검색어를 입력해주세요">
+		<input type="text" name="line_place" placeholder="검색어를 입력해주세요">
 			
-		<input type="submit" id="searchButton" value="검색">
+		<input type="submit" value="검색">
 	</form>
 	
-	<table border="1" id="lineTable">
+	<table border="1">
 		<thead>
 		<tr>
 			<td>라인코드</td>

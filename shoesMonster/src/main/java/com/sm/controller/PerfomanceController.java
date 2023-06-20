@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sm.domain.LineVO;
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
+import com.sm.domain.WarehouseVO;
 import com.sm.service.PerformanceService;
 
 @Controller
@@ -68,10 +69,6 @@ public class PerfomanceController {
 	public void lineGET(Model model, LineVO lvo) throws Exception{
 		logger.debug("@@lineGET() 호출@@");
 		
-//		List<LineVO> boardList = service.getLineList();
-//		logger.debug("boardList : "+boardList);
-		
-//		model.addAttribute("boardList", boardList);
 		logger.debug("lvo : "+lvo);
 		
 		// 검색
@@ -108,10 +105,17 @@ public class PerfomanceController {
 	//======== 라인 - /line ================================
 	
 	//======== 창고 - /warehouse ===========================
+	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-	public void warehouseGET() throws Exception{
+	public void warehouseGET(Model model) throws Exception{
 		logger.debug("warehouseGET() 호출");
 		
+		List<WarehouseVO> whList = service.getWhList();
+		model.addAttribute("whList", whList);
+		
+		logger.debug("whList : "+whList);
+		
+		logger.debug("@@ 모든 리스트 호출 @@");
 	}
 	//======== 창고 - /warehouse ===========================
 	
