@@ -5,6 +5,7 @@ import java.util.List;
 import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
+import com.sm.domain.Wh_prodVO;
 
 public interface PerformanceService {
 		
@@ -27,6 +28,9 @@ public interface PerformanceService {
 	
 	// 창고 조회
 	public List<WarehouseVO> getWhList() throws Exception;
+	
+	// 창고 조회 처리 
+	public List<Wh_prodVO> getWh_prodList() throws Exception;
 	
 	
 }

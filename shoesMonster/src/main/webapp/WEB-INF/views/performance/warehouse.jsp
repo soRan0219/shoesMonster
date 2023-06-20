@@ -11,7 +11,7 @@
 			<input type="text" name="wh_code"  placeholder="검색어를 입력해주세요">
 		
 		<label>품번</label>
-			<input type="text" name="prod_code" placeholder="검색어를 입력해주세요">
+			<input type="text" name="" placeholder="검색어를 입력해주세요">
 		
 		<br>
 		
@@ -49,26 +49,30 @@
 		</tr>
 		
 		<c:forEach var="ww" items="${whList }">
-		<tr>
-			<td>${ww.wh_code}</td>
-			<td>${ww.wh_name}</td>
-			<td>${ww.wh_dv}</td>
-			
-			<c:choose>
-				<c:when test="${empty ww.prod_code && ww.raw_code}">
-					<td>${ww.raw.raw_name }</td>
-				</c:when>
+			<tr>
+				<td>${ww.wh_code}</td>
+				<td>${ww.wh_name}</td>
+				<td>${ww.wh_dv}</td>
 				
-				<c:when test="${empty ww.raw_code && ww.prod_code}">
-					<td>${ww.prod.prod_name }</td>
-				</c:when>
-			</c:choose>
-			
-			<td>${ww.wh_addr}</td>
-			<td>${ww.wh_tel}</td>
-			<td>${ww.wh_use}</td>
-			<td>${ww.wh_note}</td>
-		</tr>
+        <c:choose>
+            <c:when test="${empty ww.prod_code && !empty ww.raw_code}">
+                <c:set var="itemName" value="${ww.raw.raw_name}" />
+            </c:when>
+
+            <c:when test="${empty ww.raw_code && !empty ww.prod_code}">
+                <c:set var="itemName" value="${ww.prod.prod_name}" />
+            </c:when>
+            
+            <c:otherwise>
+                <c:set var="itemName" value="" />
+            </c:otherwise>
+        </c:choose>
+				
+				<td>${ww.wh_addr}</td>
+				<td>${ww.wh_tel}</td>
+				<td>${ww.wh_use}</td>
+				<td>${ww.wh_note}</td>
+			</tr>
 		</c:forEach>
 	</table>
 ${whList}

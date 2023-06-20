@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
+import com.sm.domain.Wh_prodVO;
 import com.sm.persistence.PerformanceDAO;
 
 @Repository
@@ -61,6 +62,12 @@ public class PerformanceServiceImpl implements PerformanceService {
 	@Override
 	public List<WarehouseVO> getWhList() throws Exception {
 		return pdao.readWhList();
+	}
+	
+	// 창고 조회 처리 
+	@Override
+	public List<Wh_prodVO> getWh_prodList() throws Exception {
+		return pdao.readWh_prodList();
 	}
 
 
