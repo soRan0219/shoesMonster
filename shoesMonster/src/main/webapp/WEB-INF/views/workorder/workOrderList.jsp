@@ -28,6 +28,12 @@
 	//팝업창 옵션
 	const popupOpt = "top=60,left=140,width=600,height=600";
 	
+	//input으로 바꾸기 
+	function inputCng(obj, type, name, value) {
+		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+		obj.html(inputBox);
+	} //inputCng
+	
 	$(function() {
 		
 		//테이블 항목들 인덱스 부여
@@ -40,6 +46,9 @@
 		
 		/////////////// 추가 /////////////////////////////////////
 		$('#add').click(function() {
+			
+			$('#modify').attr("disabled", true);
+			$('#delete').attr("disabled", true);
 			
 			//작업지시코드 부여(임시로 그냥 1 증가로 해놓음)
 			let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
@@ -55,25 +64,25 @@
 				tbl += " </td>";
 				// 작업지시코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='work_code' id='workCode' readonly value='";
+				tbl += "  <input type='text' name='work_code' id='work_code' readonly value='";
 				tbl += "WO" + wCodeNum;
 				tbl += "'>";
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='line_code' id='lineCode'>";
+				tbl += "  <input type='text' name='line_code' id='line_code'>";
 				tbl += " </td>";
 				// 품번
 				tbl += " <td>";
-				tbl += "  <input type='text' name='prod_code' id='prodCode'>";
+				tbl += "  <input type='text' name='prod_code' id='prod_code'>";
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='order_code' id='orderCode'>";
+				tbl += "  <input type='text' name='order_code' id='order_code'>";
 				tbl += " </td>";
 				// 지시상태
 				tbl += " <td>";
-				tbl += "  <select name='work_state' id='workState'>";
+				tbl += "  <select name='work_state' id='work_state'>";
 				tbl += "   <option>지시</option>";
 				tbl += "   <option>진행</option>";
 				tbl += "   <option>마감</option>";
@@ -81,30 +90,30 @@
 				tbl += " </td>";
 				// 지시일
 				tbl += " <td>";
-				tbl += "  <input type='text' name='work_date' id='workDate' readonly value='";
+				tbl += "  <input type='text' name='work_date' id='work_date' readonly value='";
 				tbl += today;
 				tbl += "'>";
 				tbl += " </td>";
 				// 지시수량
 				tbl += " <td>";
-				tbl += "  <input type='text' name='work_qt' id='workQt'>";
+				tbl += "  <input type='text' name='work_qt' id='work_qt'>";
 				tbl += " </td>";
 				tbl += "</tr>";
 				
 				$('table').append(tbl);
 				
 				//라인코드 검색
-				$('#lineCode').click(function(){
+				$('#line_code').click(function(){
 					window.open("/workorder/search?type=line", "", popupOpt);
 				}); //lineCode click
 				
 				//품번 검색 
-				$('#prodCode').click(function(){
+				$('#prod_code').click(function(){
 					window.open("/workorder/search?type=prod", "", popupOpt);
 				}); //prodCode click
 				
 				//수주코드 검색
-				$('#orderCode').click(function(){
+				$('#order_code').click(function(){
 					window.open("/workorder/search?type=order", "", popupOpt);
 				}); //orderCode click
 			
@@ -114,12 +123,12 @@
 			// 저장 -> 아작스로 보내고 저장함
 			$('#save').click(function(){
 				
-				let work_code = $('#workCode').val();
-				let line_code = $('#lineCode').val();
-				let prod_code = $('#prodCode').val();
-				let order_code = $('#orderCode').val();
-				let work_state = $('#workState').val();
-				let work_qt = $('#workQt').val();
+				let work_code = $('#work_code').val();
+				let line_code = $('#line_code').val();
+				let prod_code = $('#prod_code').val();
+				let order_code = $('#order_code').val();
+				let work_state = $('#work_state').val();
+				let work_qt = $('#work_qt').val();
 				
 				var jsonData = {
 						work_code: work_code,
@@ -179,42 +188,121 @@
 			//수정버튼 클릭
 			$('#modify').click(function(){
 				
+				$('#add').attr("disabled", true);
+				$('#delete').attr("disabled", true);
+				
 				$.ajax({
-					url: "/workorder/modify",
+					url: "/workorder/detail",
 					type: "post",
 					contentType: "application/json; charset=UTF-8",
 					dataType: "json",
 					data: JSON.stringify(jsonData),
 					success: function(data) {
 // 						alert("*** 아작스 성공 ***");
-						console.log(data.work_date);
-						console.log(data.work_state);
 						
-						var preVOs = [];
+						var preVOs = [
+							data.line_code,
+							data.prod_code,
+							data.order_code,
+							data.work_state,
+							data.work_date,
+							data.work_qt,
+						];
 						
-						preVOs.push(data.line_code);
-						preVOs.push(data.prod_code);
-						preVOs.push(data.order_code);
-						preVOs.push(data.work_state);
-						preVOs.push(data.work_date);
-						preVOs.push(data.work_qt);
-						
-// 						alert(preVOs);
+						var names = [
+							"line_code",
+							"prod_code",
+							"order_code",
+							"work_state",
+							"work_date",
+							"work_qt",
+						];
 						
 						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
-// 						self.find('td').each(function(idx, item) {
+						self.find('td').each(function(idx, item) {
 							
-// 							if(idx > 1) {
-								
-// 							}
+							if(idx > 1) {
+								inputCng($(this), "text", names[idx-2], preVOs[idx-2]);
+								if(idx == 5) {
+									var dropDown = "<select id='work_state'>";
+									dropDown += "<option value='지시'>지시</option>";
+									dropDown += "<option value='진행'>진행</option>";
+									dropDown += "<option value='마감'>마감</option>";
+									dropDown += "</select>";
+									$(this).html(dropDown);
+									$(this).find('option').each(function(){
+										if(this.value == preVOs[idx-2]) {
+											$(this).attr("selected", true);
+										}
+									}); //option이 work_state와 일치하면 선택된 상태로
+								} //지시상태 - select
+							} //라인코드부터 다 수정 가능하게
 							
-// 						}); // self.find(~~)
+						}); // self.find(~~)
 						
+				
+				//라인코드 검색
+				$('#line_code').click(function(){
+					window.open("/workorder/search?type=line", "", popupOpt);
+				}); //lineCode click
+				
+				//품번 검색 
+				$('#prod_code').click(function(){
+					window.open("/workorder/search?type=prod", "", popupOpt);
+				}); //prodCode click
+				
+				//수주코드 검색
+				$('#order_code').click(function(){
+					window.open("/workorder/search?type=order", "", popupOpt);
+				}); //orderCode click
+				
 					},
 					error: function(data) {
 						alert("아작스 실패 ~~");
 					}
 				}); //ajax
+				
+				
+				
+				//저장버튼
+				$('#save').click(function(){
+					let work_code = $('table tr.selected').find('td:nth-child(2)').text().trim();
+					let line_code = $('#line_code').val();
+					let prod_code = $('#prod_code').val();
+					let order_code = $('#order_code').val();
+					let work_state = $('#work_state').val();
+					let change_date = getToday();
+					let work_qt = $('#work_qt').val();
+					
+					var jsonData = {
+							work_code: work_code,
+							line_code: line_code,
+							prod_code: prod_code,
+							order_code: order_code,
+							work_state: work_state,
+							change_date: change_date,
+							work_qt: work_qt
+					}
+					
+// 	 				alert(work_code+","+line_code+","+prod_code+","+order_code+","+work_state+","+work_date+","+work_qt);
+					
+					
+					$.ajax({
+						url: "/workorder/modify",
+						type: "post",
+						data: JSON.stringify(jsonData),
+						dataType: "text",
+						contentType: "application/json",
+						success: function() {
+							alert("*** 아작스 성공 ***");
+							
+						},
+						error: function() {
+							alert("아작스실패~~");
+						}
+					}); //ajax
+
+				}); //save
 				
 			}); //modify click
 			
@@ -227,6 +315,9 @@
 		
 		/////////////// 삭제 //////////////////////////////
 		$('#delete').click(function(){
+			
+			$('#add').attr("disabled", true);
+			$('#modify').attr("disabled", true);
 			
 			// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
 			$('table tr:not(:first-child)').each(function(){
