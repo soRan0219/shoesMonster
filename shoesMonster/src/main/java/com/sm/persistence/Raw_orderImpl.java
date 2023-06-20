@@ -29,7 +29,10 @@ public class Raw_orderImpl implements Raw_orderDAO{
 
 
     @Override
+    public List<Raw_orderVO> Raw_orderPage(int displayPost, int postNum) throws Exception {
+
     public List<Raw_orderVO> Raw_order(int startRow, int pageSize) throws Exception {
+
     	HashMap<String, Integer> data = new HashMap<String, Integer>();
         
         data.put("startRow", startRow);

@@ -26,12 +26,29 @@
 	</select>
 	<!-- 거래처 목록 불러오기 -->
 	
+	
 	<!-- 수주 현황 목록 불러오기 -->
-	<select id="orderStatusList" resultType="com.sm.domain.orderStatusVO">
+	<select id="orderStatusList" resultType="com.sm.domain.OrderStatusVO">
 		select * from orders
-		join 
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
+	
+	
+	<!-- 수주 권한 조회 -->
+	<resultMap type="com.sm.domain.OrderStatusVO" id="order_ManageList">
+		<result column="order_code" property="order_code"/>
+		<result column="client_actname" property="client_actname"/>
+		<result column="order_date" property="order_date"/>
+		<result column="order_deliveryDate" property="order_deliveryDate"/>
+		<result column="emp_id" property="emp_name"/>
+		<result column="" property=""/>
+	</resultMap>
+	
+	<select id="orderManageList" resultMap="order_ManageList">
+		
+	</select>
+	<!-- 수주 권한 조회 -->
+	
 	
 	
 </mapper>
