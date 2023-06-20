@@ -1,5 +1,6 @@
 package com.sm.controller;
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.orderStatusVO;
 import com.sm.service.ClientsService;
 import com.sm.service.EmployeesService;
+import com.sm.service.orderStatusService;
+
 
 @Controller
 @RequestMapping(value="/person/*")
@@ -26,6 +30,8 @@ public class PersonController {
 	private ClientsService clService;
 	@Autowired
 	private EmployeesService empService;
+	@Autowired
+	private orderStatusService osService;
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
@@ -49,18 +55,35 @@ public class PersonController {
 	
 	
 	// http://localhost:8088/person/Clients
-	// 거래처 목록 조회 - /Person/Clients (GET)
+	// 거래처 목록 불러오기 - /Person/Clients (GET)
 	@RequestMapping(value="/Clients", method = RequestMethod.GET)
 	public void ClientsGET(Model model) throws Exception {
-		logger.debug("ClientsGET() 호출");
+		logger.debug("ClientsGET(Model model) 호출");
 		
 		// service - DB에 저장된 글 정보 가져오기
 		List<ClientsVO> clientsList = clService.getListAll();
 		logger.debug("clientsList : " + clientsList);
 		
 		model.addAttribute("clientsList", clientsList);
+		
+		
 	}
-	// 거래처 목록 조회
+	// 거래처 목록 불러오기
+	
+	// http://localhost:8088/person/orderStatus
+	// 수주 현황 목록 불러오기
+	@RequestMapping(value="/orderStatus", method = RequestMethod.GET)
+	public void orderStatusGET(Model model) throws Exception {
+		logger.debug("orderStatusGET(Model model) 호출");
+		
+		// service - DB에 저장된 글 정보 가져오기
+		List<orderStatusVO> orderStatusList = osService.getOsList();
+		logger.debug("orderStatusList : "+ orderStatusList );
+		
+		model.addAttribute("orderStatusList", orderStatusList);
+	}
+	
+	// 수주 현황 목록 불러오기
 	
 	
 }

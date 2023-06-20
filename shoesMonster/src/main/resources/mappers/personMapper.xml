@@ -14,10 +14,17 @@
 	<!-- 회원정보 조회 -->
 	
 	
-	<!-- 거래처 조회 -->
+	<!-- 거래처 목록 불러오기 -->
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
 		select * from clients
 	</select>
-	<!-- 거래처 조회 -->
+	<!-- 거래처 목록 불러오기 -->
+	
+	<!-- 수주 현황 목록 불러오기 -->
+	<select id="orderStatusList" resultType="com.sm.domain.orderStatusVO">
+		select * from orders
+		join 
+	</select>
+	<!-- 수주 현황 목록 불러오기 -->
 	
 </mapper>
