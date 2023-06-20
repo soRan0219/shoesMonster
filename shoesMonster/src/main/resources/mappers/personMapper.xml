@@ -28,9 +28,13 @@
 	
 	
 	<!-- 수주 현황 목록 불러오기 -->
-	<select id="orderStatusList" resultType="com.sm.domain.OrderStatusVO">
-		select * from orders
-	</select>
+	<select id="orderStatusList" resultType="com.sm.domain.orderStatusVO">
+		select o.order_code, o.order_date, c.client_code, e.emp_id, prod_code, prod_name, 
+			   prod_unit, o.order_deliveryDate, o.order_count, o.order_finish
+		from orders o
+		JOIN clients c ON c.client_code = o.client_code
+		JOIN employees e ON e.emp_id = o.emp_id
+		JOIN product p ON p.client_code = o.client_code
 	<!-- 수주 현황 목록 불러오기 -->
 	
 	
