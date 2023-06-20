@@ -11,18 +11,21 @@
 	
 	$(function(){
 		
+// 		window.addEventListener('message', function(event){
 		
-		$('table tr:not(:first-child)').click(function(){
+			$('table tr:not(:first-child)').click(function(){
+				
+				$(this).css('background', '#ccc');
+				
+				let orderCode = $(this).find('#orderCode').text();
+				
+				$('#order_code', opener.document).val(orderCode);
+				
+				window.close();
+				
+			}); //테이블 행 클릭
 			
-			$(this).css('background', '#ccc');
-			
-			let prodCode = $(this).find('#prodCode').text();
-			
-			$('#order_code', opener.document).val(prodCode);
-			
-			window.close();
-			
-		}); //테이블 행 클릭
+// 		}); //addEventListener
 		
 	}) //jQuery
 	
@@ -41,12 +44,12 @@
 			<th>수주 수량</th>
 			<th>거래처코드</th>
 		</tr>
-		<c:forEach var="prod" items="${prodList }">
+		<c:forEach var="order" items="${orderList }">
 			<tr>
-				<td id="prodCode">${prod.prod_code }</td>
-				<td>${prod.prod_name }</td>
-				<td>${prod.prod_category }</td>
-				<td>${prod.client_code }</td>
+				<td id="orderCode">${order.order_code }</td>
+				<td>${order.order_deliveryDate }</td>
+				<td>${order.order_count }</td>
+				<td>${order.client_code }</td>
 			</tr>
 		</c:forEach>
 	</table>

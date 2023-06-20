@@ -11,32 +11,28 @@
 	
 	$(function(){
 		
-		$('table tr:not(:first-child)').click(function(){
-			$(this).css('background', '#ccc');
+		window.addEventListener('message', function(event){
 			
-			let lineCode = $(this).find('#lineCode').text();
-			
-// 			window.opener.document.getElementById('lineCode').value = lineCode;
-			
-			
-			window.addEventListener('msg', function(event){
-				var value = event.data;
+			$('table tr:not(:first-child)').click(function(){
+				$(this).css('background', '#ccc');
 				
-				console.log(value);
+				let lineCode = $(this).find('#lineCode').text();
 				
-				if(value==="line_code") {
+				var inputId = event.data.inputId;
+				
+// 				alert(inputId);
+				
+				if(inputId==="line_code") {
+// 					window.opener.document.getElementById('lineCode').value = lineCode;
 					$('#line_code', opener.document).val(lineCode);
-				} else if(value==="search_line") {
+				} else if(inputId==="search_line") {
 					$('#search_line', opener.document).val(lineCode);
 				}
-			});
-			
-			
-			
-			
-// 			window.close();
-			
-		}); //테이블 행 클릭
+				
+				window.close();
+				
+			}); //테이블 행 클릭(라인 선택)
+		}); //addEventListener
 		
 	}) //jQuery
 	
