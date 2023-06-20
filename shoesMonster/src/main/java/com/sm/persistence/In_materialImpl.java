@@ -41,12 +41,15 @@ public class In_materialImpl implements In_materialDAO {
 
 
 	@Override
-	public List<In_materialVO> In_matPage(int displayPost, int postNum) throws Exception {
+	public List<In_materialVO> In_matPage(int displayPost, int postNum ,
+			String searchType, String keyword) throws Exception {
 		
-		HashMap<String, Integer> data = new HashMap<String, Integer>();
+		HashMap<String, Object> data = new HashMap<String, Object>();
 		
 		data.put("displayPost", displayPost);
 		data.put("postNum", postNum);
+		data.put("searchType", searchType);
+		data.put("keyword", keyword);
 		
 		return sqlSession.selectList(NAMESPACE+".in_matPage",data);
 	}
