@@ -35,6 +35,11 @@ public class In_materialServiceImpl implements In_materialService{
 		
 		return idao.count();
 	}
+	@Override
+	public int count(In_materialVO ivo) throws Exception {
+		
+		return idao.count(ivo);
+	}
 
 	
 
@@ -43,6 +48,14 @@ public class In_materialServiceImpl implements In_materialService{
 	public List<In_materialVO> getIn_matPage(int displayPost, int postNum) throws Exception {
 		
 		return idao.In_matPage(displayPost, postNum);
+	}
+
+
+	@Override
+	public List<In_materialVO> getIn_matPage(int displayPost, int postNum , 
+			In_materialVO ivo) throws Exception {
+		
+		return idao.In_matPage(displayPost, postNum, ivo);
 	}
 
 

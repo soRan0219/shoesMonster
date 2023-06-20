@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
+import com.sm.domain.WarehouseVO;
 import com.sm.persistence.PerformanceDAO;
 
 @Repository
@@ -42,7 +43,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 		}
 	}
 	
-
+	//==========================================================================
 	// 라인 조회
 	@Override
 	public List<LineVO> getLineList() throws Exception {
@@ -52,8 +53,14 @@ public class PerformanceServiceImpl implements PerformanceService {
 	
 	// 라인 검색
 	@Override
-	public List<LineVO> getSearchLine() throws Exception {
-		return null;
+	public List<LineVO> getSearchLine(LineVO lvo) throws Exception {
+		return pdao.getSearchLine(lvo);
+	}
+	
+	// 창고 조회
+	@Override
+	public List<WarehouseVO> getWhList() throws Exception {
+		return pdao.readWhList();
 	}
 
 

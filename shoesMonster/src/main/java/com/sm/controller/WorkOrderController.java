@@ -70,7 +70,7 @@ public class WorkOrderController {
 	
 	//작업지시 추가
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addWorkOrder(@RequestBody WorkOrderVO vo) throws Exception {
+	public String addWorkOrder(/*@RequestBody */WorkOrderVO vo) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: addWorkOrder() 호출");
 		logger.debug("@@@@@ CONTROLLER: vo = " + vo);
 		
@@ -112,7 +112,7 @@ public class WorkOrderController {
 	
 	//작업지시 수정 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyWorkOrder(@RequestBody WorkOrderVO uvo) throws Exception {
+	public String modifyWorkOrder(/*@RequestBody */WorkOrderVO uvo) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: modifyWorkOrder() 호출");
 		logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
 		

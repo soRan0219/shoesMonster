@@ -21,74 +21,49 @@
 <!-- 	</select> -->
 	<!-- 글 목록 조회 -->
 	
-	<!-- 발주 목록 조회 -->
-<!-- 	<select id="getRaw_Order" resultType="com.sm.domain.Raw_orderVO"> -->
-<!-- 		select ro.raw_order_num, c.client_actname, s.raw_code, rm.raw_name, ro.raw_order_count, -->
-<!-- 			   s.stock_raw_count, rm.raw_price, s.stock_raw_count*rm.raw_price AS sum, ro.raw_order_date, e.emp_id -->
-<!-- 		from raw_order ro -->
-<!-- 		JOIN raw_material rm ON ro.raw_code = rm.raw_code -->
-<!-- 		JOIN clients c ON c.client_code = rm.client_code -->
-<!-- 		JOIN employees e ON e.emp_id = ro.emp_id -->
-<!-- 		JOIN stock s ON s.raw_code = s.raw_code -->
-<!-- 	</select> -->
+
+	<!-- ========== 발주 목록 조회 - 시작 ========== -->
+	<resultMap id="ro_List" type="com.sm.domain.Raw_orderVO">
+	    <id property="raw_order_num" column="raw_order_num" />
+	    <result property="raw_order_count" column="raw_order_count" />
+	    <result property="raw_order_date" column="raw_order_date" />
+	    <result property="emp_id" column="emp_id" />
 	
+	    <collection property="rawMaterial" ofType="com.sm.domain.RawMaterialVO">
+	        <id property="raw_code" column="raw_code" />
+	        <result property="raw_name" column="raw_name" />
+	        <result property="raw_color" column="raw_color"/>
+	        <result property="raw_price" column="raw_price" />
+	    </collection>
 	
+	    <collection property="clients" ofType="com.sm.domain.ClientsVO">
+	        <result property="client_actname" column="client_actname" />
+	    </collection>
+	
+	    <collection property="stock" ofType="com.sm.domain.StockVO">
+	        <result property="stock_raw_count" column="stock_raw_count" />
+	    </collection>
+	</resultMap>
+	
+	<select id="getRaw_Order" resultMap="ro_List">
+	    select ro.raw_order_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
+	           ro.raw_order_count, s.stock_raw_count, rm.raw_price, ro.raw_order_date, ro.emp_id
+	    from raw_order ro
+	    JOIN raw_material rm ON ro.raw_code = rm.raw_code
+	    JOIN clients c ON c.client_code = rm.client_code
+	    JOIN stock s ON s.raw_code = rm.raw_code
+	    order by ro.raw_order_num desc
+	    limit #{startRow}, #{pageSize};
+	</select>
+	
+	<!-- 발주 목록 개수 -->
+	<select id="count1" resultType="int">
+		select count(*) from raw_order 
+	</select>
+	<!-- 발주 목록 개수 -->
 
+	<!-- ========== 발주 목록 조회 - 끝 ========== -->
 
-
-
-
-<resultMap id="ro_List" type="com.sm.domain.Raw_orderVO">
-    <id property="raw_order_num" column="raw_order_num" />
-    <result property="raw_order_count" column="raw_order_count" />
-    <result property="raw_order_date" column="raw_order_date" />
-    <result property="emp_id" column="emp_id" />
-
-    <collection property="rawMaterial" ofType="com.sm.domain.RawMaterialVO">
-        <id property="raw_code" column="raw_code" />
-        <result property="raw_name" column="raw_name" />
-        <result property="raw_color" column="raw_color"/>
-        <result property="raw_price" column="raw_price" />
-    </collection>
-
-    <collection property="clients" ofType="com.sm.domain.ClientsVO">
-        <result property="client_actname" column="client_actname" />
-    </collection>
-
-    <collection property="stock" ofType="com.sm.domain.StockVO">
-        <result property="stock_raw_count" column="stock_raw_count" />
-    </collection>
-</resultMap>
-
-<!-- 게시물 총 갯수 -->
-<select id="count1" resultType="int">
-select count(raw_order_num) from raw_order 
-</select>
-<!-- 게시물 총 갯수 -->
-
-<select id="getRaw_Order" resultMap="ro_List">
-	select ro.raw_order_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
-		   ro.raw_order_count, s.stock_raw_count, rm.raw_price, ro.raw_order_date, ro.emp_id
-	from raw_order ro
-	JOIN raw_material rm ON ro.raw_code = rm.raw_code
-	JOIN clients c ON c.client_code = rm.client_code
-	JOIN stock s ON s.raw_code = rm.raw_code
-	order by raw_order_num desc 
-	 limit #{displayPost}, #{postNum} ;
-</select>
-
-
-<!-- <select id="getRaw_Order" resultMap="ro_List"> -->
-<!--     SELECT ro.raw_order_num, ro.raw_order_date, ro.raw_order_count, rm.raw_name, rm.raw_price -->
-<!--     FROM raw_order ro -->
-<!--     JOIN raw_material rm ON ro.raw_code = rm.raw_code -->
-<!-- </select> -->
-
-
-
-
-
-	<!-- 발주 목록 조회 -->
 	
 
 
@@ -100,12 +75,52 @@ select count(client_code) from in_material
 
 <!-- 페이징 -->
 <select id="in_matPage" parameterType="hashMap" resultType="com.sm.domain.In_materialVO">
-	select client_code from in_material 		
+	select * from in_material 		
 	 order by client_code desc 
 	  limit #{displayPost}, #{postNum}  
 </select>
 
 <!-- 페이징 -->
+
+
+<!-- 검색어   -->
+<select id="countSearch" resultType="int">
+	<bind name="client_code"
+		value="'%' + (client_code != null ? client_code : '') + '%'" />
+	<bind name="in_num"
+		value="'%' + (in_num != null ? in_num : '') + '%'" />
+	<bind name="raw_order_num"
+		value="'%' + (raw_order_num != null ? raw_order_num : '') + '%'" />
+	select count(client_code) from in_material 
+</select> 
+
+<select id="in_matPageSearch" parameterType="hashMap"
+	resultType="com.sm.domain.In_materialVO">
+	<bind name="client_code"
+		value="'%' + (client_code != null ? client_code : '') + '%'" />
+	<bind name="in_num"
+		value="'%' + (in_num != null ? in_num : '') + '%'" />
+	<bind name="raw_order_num"
+		value="'%' + (raw_order_num != null ? raw_order_num : '') + '%'" />
+
+	SELECT * FROM in_material
+	<where>
+		<if test="client_code != null and client_code != ''">
+			AND client_code LIKE #{client_code}
+		</if>
+		<if test="in_num != null and in_num != ''">
+			AND in_num LIKE #{in_num}
+		</if>
+		<if test="raw_order_num != null and raw_order_num != ''">
+			AND raw_order_num LIKE #{raw_order_num}
+		</if>
+	</where>
+	order by client_code desc  
+	limit #{displayPost}, #{postNum} 
+</select>
+
+
+<!-- 검색어   -->
 
 
 
