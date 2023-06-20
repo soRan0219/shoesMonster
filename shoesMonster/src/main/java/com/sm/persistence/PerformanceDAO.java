@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
+import com.sm.domain.WarehouseVO;
 
 @Repository
 public interface PerformanceDAO {
@@ -25,5 +26,7 @@ public interface PerformanceDAO {
 	// 라인 검색 - getSearchLine
 	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
 	
+	// 창고 조회 - R
+	public List<WarehouseVO> readWhList() throws Exception;
 	
 }
