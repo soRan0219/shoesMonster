@@ -35,23 +35,45 @@ public class In_materialImpl implements In_materialDAO {
 	@Override
 	public int count() throws Exception {
 		
+		
 		return sqlSession.selectOne(NAMESPACE+".count");
 	}
+	
 
 
 
 	@Override
-	public List<In_materialVO> In_matPage(int displayPost, int postNum ,
-			String searchType, String keyword) throws Exception {
+	public List<In_materialVO> In_matPage(int displayPost, int postNum) throws Exception {
+		
+		HashMap<String, Integer> data = new HashMap<String, Integer>();
+		
+		data.put("displayPost", displayPost);
+		data.put("postNum", postNum);
+		
+		return sqlSession.selectList(NAMESPACE+".in_matPage",data);
+	}
+
+	
+	
+	
+	
+	@Override
+	public int count(In_materialVO vo) throws Exception {
+		
+		
+		return sqlSession.selectOne(NAMESPACE+".countSearch");
+	}
+	
+	@Override
+	public List<In_materialVO> In_matPage(int displayPost, int postNum , In_materialVO ivo) throws Exception {
 		
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
 		data.put("displayPost", displayPost);
 		data.put("postNum", postNum);
-		data.put("searchType", searchType);
-		data.put("keyword", keyword);
 		
-		return sqlSession.selectList(NAMESPACE+".in_matPage",data);
+		
+		return sqlSession.selectList(NAMESPACE+".in_matPageSearch",data);
 	}
 
 
