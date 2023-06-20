@@ -91,7 +91,7 @@
 	
 	<select id="whlist" resultMap="whm_list">
 		select wh_code, wh_name, wh_dv,w.prod_code, p.prod_name,
-		w.raw_code, r.raw_name, wh_addr, wh_tel, wh_use, wh_note 
+			   w.raw_code, r.raw_name, wh_addr, wh_tel, wh_use, wh_note 
 		from warehouse w
 		left join product p on p.prod_code = w.prod_code
 		left join raw_material r on r.raw_code = w.raw_code

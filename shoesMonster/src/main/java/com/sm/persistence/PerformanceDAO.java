@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
+import com.sm.domain.Wh_prodVO;
 
 @Repository
 public interface PerformanceDAO {
@@ -28,5 +29,8 @@ public interface PerformanceDAO {
 	
 	// 창고 조회 - R
 	public List<WarehouseVO> readWhList() throws Exception;
+	
+	// 창고 조회 처리 
+	public List<Wh_prodVO> readWh_prodList() throws Exception;
 	
 }

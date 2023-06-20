@@ -11,11 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sm.domain.LineVO;
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
+import com.sm.domain.Wh_prodVO;
 import com.sm.service.PerformanceService;
 
 @Controller
@@ -107,8 +109,24 @@ public class PerfomanceController {
 	//======== 창고 - /warehouse ===========================
 	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-	public void warehouseGET(Model model) throws Exception{
+	public void warehouseGET(Model model, 
+					@RequestParam(required = false) String prod_code,
+					@RequestParam(required = false) String raw_code
+					/*, Wh_prodVO wh_prod*/) throws Exception{
+		
 		logger.debug("warehouseGET() 호출");
+		
+		if(prod_code == null && raw_code != null) {
+			// raw_code 처리
+			List<Wh_prodVO> wh_prod = service.getWh_prodList();
+			
+			if(wh_prod != null) {
+				
+			}
+			
+		}else if(raw_code == null && prod_code != null) {
+			
+		}
 		
 		List<WarehouseVO> whList = service.getWhList();
 		model.addAttribute("whList", whList);
