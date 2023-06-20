@@ -18,7 +18,7 @@
 			
 			let prodCode = $(this).find('#prodCode').text();
 			
-			$('#orderCode', opener.document).val(prodCode);
+			$('#order_code', opener.document).val(prodCode);
 			
 			window.close();
 			

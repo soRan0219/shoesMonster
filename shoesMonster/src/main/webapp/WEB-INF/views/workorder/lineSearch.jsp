@@ -17,7 +17,7 @@
 			let lineCode = $(this).find('#lineCode').text();
 			
 // 			window.opener.document.getElementById('lineCode').value = lineCode;
-			$('#lineCode', opener.document).val(lineCode);
+			$('#line_code', opener.document).val(lineCode);
 			
 			window.close();
 			

@@ -39,4 +39,10 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 		return wdao.readWorkOrder(work_code);
 	} //getWorkOrder()
 
+	@Override
+	public void modifyWorkOrder(WorkOrderVO uvo) throws Exception {
+		// DAO - 작업지시 수정
+		wdao.updateWorkOrder(uvo);
+	} //modifyWorkOrder()
+
 } //WorkOrderServiceImpl
