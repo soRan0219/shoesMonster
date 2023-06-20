@@ -1,7 +1,9 @@
 package com.sm.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
 
-import com.sm.domain.orderStatusVO;
+import com.sm.domain.OrderStatusVO;
 import com.sm.domain.ManagementVO;
 
 import com.sm.service.ClientsService;
 import com.sm.service.EmployeesService;
-import com.sm.service.orderStatusService;
+import com.sm.service.OrderStatusService;
 
 
 @Controller
@@ -34,7 +36,7 @@ public class PersonController {
 	@Autowired
 	private EmployeesService empService;
 	@Autowired
-	private orderStatusService osService;
+	private OrderStatusService osService;
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
@@ -84,6 +86,7 @@ public class PersonController {
 	}
 	// 거래처 목록 불러오기
 	
+	
 	// http://localhost:8088/person/orderStatus
 	// 수주 현황 목록 불러오기
 	@RequestMapping(value="/orderStatus", method = RequestMethod.GET)
@@ -91,13 +94,38 @@ public class PersonController {
 		logger.debug("orderStatusGET(Model model) 호출");
 		
 		// service - DB에 저장된 글 정보 가져오기
-		List<orderStatusVO> orderStatusList = osService.getOsList();
+		List<OrderStatusVO> orderStatusList = osService.getOsList();
 		logger.debug("orderStatusList : "+ orderStatusList );
 		
 		model.addAttribute("orderStatusList", orderStatusList);
 	}
-	
 	// 수주 현황 목록 불러오기
+	
+	
+	// http://localhost:8088/person/orderManage
+	// 수주 관리 목록 조회
+	@RequestMapping(value = "/orderManage", method = RequestMethod.GET)
+	public void orderManageGET(Model model) throws Exception {
+		logger.debug(" orderManageGET() 호출@@@@@ ");
+		
+		List<OrderStatusVO> orderStatusList = osService.getOsList();
+		List<EmployeesVO> empList = empService.getEmpList();
+		List<ClientsVO> clientsList = clService.getListAll();
+		logger.debug("orderStatusList : " + orderStatusList);
+		logger.debug("empList : " + empList);
+		logger.debug("clientsList : " + clientsList);
+		
+		model.addAttribute("orderStatusList", orderStatusList);
+		model.addAttribute("empList", empList);
+		model.addAttribute("clientsList", clientsList);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

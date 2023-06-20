@@ -38,7 +38,7 @@ public class Raw_orderImpl implements Raw_orderDAO{
 
     @Override
     public List<Raw_orderVO> Raw_orderPage(int displayPost, int postNum) throws Exception {
-HashMap<String, Integer> data = new HashMap<String, Integer>();
+    	HashMap<String, Integer> data = new HashMap<String, Integer>();
         
         data.put("displayPost", displayPost);
         data.put("postNum", postNum);
