@@ -60,28 +60,20 @@
 <%--     </c:if> --%>
     
     
-    <div>
-<c:if test="${prev}">
- <span>[ <a href="/stock/raw_order?num=${startPageNum - 1}">이전</a> ] 
-</c:if>
-
-<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
- <span>
- 
-  <c:if test="${select != num}">
-   <a href="/stock/raw_order?num=${num}">${num}</a>
+<div>
+ <c:forEach begin="1" end="${pageNum}" var="num">
+    <span>
+     <c:if test="${select != num }">
+   <a href="/stock/raw_order?num=${num }">${num }</a>
   </c:if>    
   
-  <c:if test="${select == num}">
-   <b>${num}</b>
-  </c:if>
-    
   
-</c:forEach>
-
-<c:if test="${next}">
- <span>[ <a href="/stock/raw_order?num=${endPageNum + 1}">다음</a> ] 
-</c:if>
+  
+  <c:if test="${select == num }">
+   <b>${num }</b>
+  </c:if>
+  </span>
+ </c:forEach>
 </div>
     
 </body>
