@@ -15,8 +15,7 @@
 	    <button value="1">발주 등록</button>
     </form>
     
-<%-- 	<c:if test="${param.ro == 0}"> --%>
-	    
+
     <hr>
     <form action="">
 	    발주 번호 <input type="text" placeholder="발주 번호를 입력하세요">
@@ -57,32 +56,24 @@
             </tr>
         </c:forEach>
     </table>
-<%--     </c:if> --%>
     
     
-    <div>
-<c:if test="${prev}">
- <span>[ <a href="/stock/raw_order?num=${startPageNum - 1}">이전</a> ] 
-</c:if>
-
-<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
- <span>
- 
-  <c:if test="${select != num}">
-   <a href="/stock/raw_order?num=${num}">${num}</a>
-  </c:if>    
-  
-  <c:if test="${select == num}">
-   <b>${num}</b>
-  </c:if>
-    
-  
-</c:forEach>
-
-<c:if test="${next}">
- <span>[ <a href="/stock/raw_order?num=${endPageNum + 1}">다음</a> ] 
-</c:if>
+<div>
+    <c:if test="${count1 > 0 }">
+    	<c:if test="${startPage > pageBlock }">
+    		<span><a href="/stock/raw_order?num=${startPage - pageBlock}">이전</a></span>
+    	</c:if>
+	
+		<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+			<a href="/stock/raw_order?num=${i }">${i }</a>
+		</c:forEach>
+		
+		<c:if test="${endPage < count1 }">
+			<a href="/stock/raw_order?num=${startPage + pageBlock}">다음</a>
+		</c:if>
+    </c:if>
+	
 </div>
-    
+
 </body>
 </html>

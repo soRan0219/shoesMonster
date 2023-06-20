@@ -23,10 +23,19 @@ public class Raw_orderImpl implements Raw_orderDAO{
     
     
     @Override
-    public List<Raw_orderVO> readRaw_Order() throws Exception {
-        logger.debug("발주 목록 조회 mapper 호출");
+    public int count1() throws Exception {
+        return sqlSession.selectOne(NAMESPACE+".count1");
+    }
+
+
+    @Override
+    public List<Raw_orderVO> Raw_order(int startRow, int pageSize) throws Exception {
+    	HashMap<String, Integer> data = new HashMap<String, Integer>();
         
-        return sqlSession.selectList(NAMESPACE + ".getRaw_Order");
+        data.put("startRow", startRow);
+        data.put("pageSize", pageSize);
+        
+        return sqlSession.selectList(NAMESPACE+".getRaw_Order",data);
     }
 
 
