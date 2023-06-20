@@ -11,9 +11,13 @@ public interface In_materialService {
 	// 입고 총 갯수
 		public int count() throws Exception;
 		
+		public int count(In_materialVO ivo) throws Exception;
+		
+		
+		public List<In_materialVO> getIn_matPage(int displayPost,int postNum) throws Exception;
+		
 		// 입고 페이지
-		public List<In_materialVO> getIn_matPage(int displayPost,int postNum
-				, String searchType, String keyword) throws Exception;
+		public List<In_materialVO> getIn_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
 		
 //		// 입고 검색
 //		public List<In_materialVO> In_matSearch(

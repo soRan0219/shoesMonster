@@ -5,7 +5,7 @@
 
 <h2>라인관리</h2>
 
-	<form action="" method="get">
+	
 		
 		<label>라인코드</label>
 			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요">
@@ -26,8 +26,10 @@
 		<label>작업장</label>
 		<input type="text" name="line_place" placeholder="검색어를 입력해주세요">
 			
+
 		<input type="submit" value="검색">
 	</form>
+
 	
 	<table border="1">
 		<thead>

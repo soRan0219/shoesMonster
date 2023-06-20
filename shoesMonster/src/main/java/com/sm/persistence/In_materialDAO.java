@@ -12,9 +12,16 @@ public interface In_materialDAO {
 	// 글 총 갯수
 		public int count() throws Exception;
 		
+		public List<In_materialVO> In_matPage(int displayPost,int postNum ) throws Exception;
+
+		
+		
+		public int count(In_materialVO ivo) throws Exception;
+		
 		// 페이징처리 + 검색어
-		public List<In_materialVO> In_matPage(int displayPost,int postNum ,
-				String searchType, String keyword) throws Exception;
+		public List<In_materialVO> In_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
+		
+		// 페이징처리 
 		
 //		// 검색 기능
 //		public List<In_materialVO> In_matSearch(
