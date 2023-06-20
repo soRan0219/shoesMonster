@@ -49,4 +49,17 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 		logger.debug("##### DAO: delete 결과 ===> " + result);
 	} //deleteWorkOrder()
 
+	@Override
+	public WorkOrderVO readWorkOrder(String work_code) throws Exception {
+		logger.debug("##### DAO: readWorkOrder() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".readWorkOrder", work_code);
+	} //readWorkOrder()
+
+	@Override
+	public void updateWorkOrder(WorkOrderVO uvo) throws Exception {
+		logger.debug("##### DAO: updateWorkOrder() 호출");
+		int result = sqlSession.update(NAMESPACE + ".updateWorkOrder", uvo);
+		logger.debug("##### DAO: update 결과 ===> " + result);
+	} //updateWorkOrder()
+
 } //WorkOrderDAOImpl

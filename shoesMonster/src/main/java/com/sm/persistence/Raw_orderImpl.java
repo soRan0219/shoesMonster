@@ -30,6 +30,23 @@ public class Raw_orderImpl implements Raw_orderDAO{
     }
 
 
-	
-	
+    @Override
+    public int count1() throws Exception {
+        return sqlSession.selectOne(NAMESPACE+".count1");
+    }
+
+
+    @Override
+    public List<Raw_orderVO> Raw_orderPage(int displayPost, int postNum) throws Exception {
+HashMap<String, Integer> data = new HashMap<String, Integer>();
+        
+        data.put("displayPost", displayPost);
+        data.put("postNum", postNum);
+        
+        return sqlSession.selectList(NAMESPACE+".getRaw_Order",data);
+    }
+
+
+    
+    
 }

@@ -60,13 +60,21 @@
     </collection>
 </resultMap>
 
+<!-- 게시물 총 갯수 -->
+<select id="count1" resultType="int">
+select count(raw_order_num) from raw_order 
+</select>
+<!-- 게시물 총 갯수 -->
+
 <select id="getRaw_Order" resultMap="ro_List">
 	select ro.raw_order_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
 		   ro.raw_order_count, s.stock_raw_count, rm.raw_price, ro.raw_order_date, ro.emp_id
 	from raw_order ro
 	JOIN raw_material rm ON ro.raw_code = rm.raw_code
 	JOIN clients c ON c.client_code = rm.client_code
-	JOIN stock s ON s.raw_code = rm.raw_code;
+	JOIN stock s ON s.raw_code = rm.raw_code
+	order by raw_order_num desc 
+	 limit #{displayPost}, #{postNum} ;
 </select>
 
 

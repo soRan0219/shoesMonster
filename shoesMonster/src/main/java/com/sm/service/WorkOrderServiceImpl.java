@@ -33,4 +33,16 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 		wdao.deleteWorkOrder(checked);
 	} //removeWorkOrder()
 
+	@Override
+	public WorkOrderVO getWorkOrder(String work_code) throws Exception {
+		// DAO - 작업지시 조회
+		return wdao.readWorkOrder(work_code);
+	} //getWorkOrder()
+
+	@Override
+	public void modifyWorkOrder(WorkOrderVO uvo) throws Exception {
+		// DAO - 작업지시 수정
+		wdao.updateWorkOrder(uvo);
+	} //modifyWorkOrder()
+
 } //WorkOrderServiceImpl

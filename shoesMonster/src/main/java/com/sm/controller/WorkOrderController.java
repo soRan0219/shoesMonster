@@ -1,5 +1,6 @@
 package com.sm.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sm.domain.WorkOrderVO;
 import com.sm.service.PerformanceService;
@@ -90,9 +92,35 @@ public class WorkOrderController {
 		return "redirect:/workorder/workOrderList";
 	} //deleteWorkOrder()
 	
+	//작업지시 조회 POST
+	@ResponseBody
+	@RequestMapping(value = "/detail", method = RequestMethod.POST/*, produces = "application/text; charset=utf8"*/)
+	public /*HashMap<String, Object>*/WorkOrderVO getWorkOrder(@RequestBody WorkOrderVO vo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: getWorkOrder() 호출");
+		logger.debug("@@@@@ CONTROLLER: workCode = " + vo.getWork_code());
+		
+		//서비스 - 작업지시 정보 가져오기
+		WorkOrderVO preVO = wService.getWorkOrder(vo.getWork_code());
+		logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
+		
+		//정보 가지고 돌아감
+//		HashMap<String, Object> voMap = new HashMap<String, Object>();
+//		voMap.put("preVO", preVO);
+		
+		return preVO;
+	} //getWorkOrder()
 	
-	
-	
+	//작업지시 수정 
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modifyWorkOrder(@RequestBody WorkOrderVO uvo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: modifyWorkOrder() 호출");
+		logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
+		
+		//서비스 - 작업지시 수정
+		wService.modifyWorkOrder(uvo);
+		
+		return "redirect:/workorder/workOrderList";
+	} //modifyWorkOrder()
 	
 	
 	

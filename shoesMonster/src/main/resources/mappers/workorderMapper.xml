@@ -25,6 +25,21 @@
 	</delete>
 	<!-- 작업지시 삭제 -->
 	
+	<!-- 작업지시 조회 -->
+	<select id="readWorkOrder" resultType="WorkOrderVO">
+		SELECT * FROM work_order WHERE work_code=#{work_code}
+	</select>
+	<!-- 작업지시 조회 -->
+	
+	<!-- 작업지시 수정 -->
+	<update id="updateWorkOrder">
+		UPDATE work_order 
+		SET line_code=#{line_code}, prod_code=#{prod_code}, order_code=#{order_code}, 
+			work_state=#{work_state}, change_date=#{change_date}, work_qt=#{work_qt} 
+		WHERE work_code=#{work_code}
+	</update>
+	<!-- 작업지시 수정 -->
+	
 	
 	
 </mapper>
