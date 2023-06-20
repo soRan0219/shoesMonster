@@ -11,18 +11,27 @@
 	
 	$(function(){
 		
+		window.addEventListener('message', function(event){
 		
-		$('table tr:not(:first-child)').click(function(){
-			
-			$(this).css('background', '#ccc');
-			
-			let prodCode = $(this).find('#prodCode').text();
-			
-			$('#prod_code', opener.document).val(prodCode);
-			
-			window.close();
-			
-		}); //테이블 행 클릭
+			$('table tr:not(:first-child)').click(function(){
+				
+				$(this).css('background', '#ccc');
+				
+				let prodCode = $(this).find('#prodCode').text();
+				
+				var inputId = event.data.inputId;
+				
+				if(inputId==="prod_code") {
+					$('#prod_code', opener.document).val(prodCode);
+				} else if(inputId==="search_prod") {
+					$('#search_prod', opener.document).val(prodCode);
+				}
+				
+				window.close();
+				
+			}); //테이블 행 클릭
+		
+		}); //addEventListener
 		
 	}) //jQuery
 	

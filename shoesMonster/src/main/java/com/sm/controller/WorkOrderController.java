@@ -1,6 +1,5 @@
 package com.sm.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sm.domain.WorkOrderVO;
+import com.sm.service.OrderStatusService;
 import com.sm.service.PerformanceService;
 import com.sm.service.WorkOrderService;
 
@@ -28,6 +28,9 @@ public class WorkOrderController {
 	
 	@Autowired
 	private PerformanceService pService;
+	
+	@Autowired
+	private OrderStatusService osService;
 	
 	//작업지시 목록
 	//http://localhost:8088/workorder/workOrderList
@@ -61,7 +64,7 @@ public class WorkOrderController {
 			
 			/////// 수주 리스트 메서드 아직 없음 만들면 추가하기 ////////
 			
-			model.addAttribute("prodList", pService.getProdList());
+			model.addAttribute("orderList", osService.getOsList());
 			return "/workorder/orderSearch";
 		}
 		

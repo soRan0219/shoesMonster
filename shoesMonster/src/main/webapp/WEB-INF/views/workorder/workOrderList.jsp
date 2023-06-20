@@ -25,24 +25,45 @@
 		return year + "-" + month + "-" + day;
 	} //getToday()
 	
-	//팝업창 옵션
-	const popupOpt = "top=60,left=140,width=600,height=600";
-	
 	//input으로 바꾸기 
 	function inputCng(obj, type, name, value) {
 		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
 		obj.html(inputBox);
 	} //inputCng
 	
+	//팝업창 옵션
+	const popupOpt = "top=60,left=140,width=600,height=600";
+	
+	
+	
+	
+	
+	
 	//검색 팝업
-	function openWindow(search, value) {
+	function openWindow(search, inputId) {
 		var url = "/workorder/search?type="+search;
 		var popup = window.open(url, "", popupOpt);
 		
 		popup.onload = function() {
-			popup.postMessage(value, '*');
-		}
+// 			popup.postMessage(value, '*');
+			popup.postMessage({inputId:inputId}, '*');
+		};
 	} //openWindow()
+	
+	window.addEventListener('message', function(event){
+		var data = event.data;
+		var inputId = data.inputId;
+		var value = data.value;
+		
+		$('#'+inputId).val(value);
+	});
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	$(function() {
@@ -120,12 +141,12 @@
 				
 				//품번 검색 
 				$('#prod_code').click(function(){
-					openWindow("prod");
+					openWindow("prod", "prod_code");
 				}); //prodCode click
 				
 				//수주코드 검색
 				$('#order_code').click(function(){
-					openWindow("order");
+					openWindow("order", "order_code");
 				}); //orderCode click
 			
 				$(this).removeClass('true');
@@ -247,17 +268,17 @@
 				
 						//라인코드 검색
 						$('#line_code').click(function(){
-							openWindow("line");
+							openWindow("line", "line_code");
 						}); //lineCode click
 						
 						//품번 검색 
 						$('#prod_code').click(function(){
-							openWindow("prod");
+							openWindow("prod", "prod_code");
 						}); //prodCode click
 						
 						//수주코드 검색
 						$('#order_code').click(function(){
-							openWindow("order");
+							openWindow("order", "order_code");
 						}); //orderCode click
 				
 					},
@@ -378,7 +399,7 @@
 		
 		//품번 검색 
 		$('#search_prod').click(function(){
-			openWindow("prod");
+			openWindow("prod", "search_prod");
 		}); //prodCode click
 		
 		
