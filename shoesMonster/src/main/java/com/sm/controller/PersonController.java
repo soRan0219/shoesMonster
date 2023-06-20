@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.ManagementVO;
 import com.sm.service.ClientsService;
 import com.sm.service.EmployeesService;
 
@@ -40,6 +41,21 @@ public class PersonController {
 		List<EmployeesVO> empList = empService.getEmpList();
 		logger.debug("empList : " + empList);
 		
+		model.addAttribute("empList", empList);
+	}
+	
+	// http://localhost:8088/person/management
+	// 사원 권한 정보 조회 (GET)
+	@RequestMapping(value = "/management", method = RequestMethod.GET)
+	public void empManageGET(Model model) throws Exception {
+		logger.debug(" empManageGET() 호출@@@@@ ");
+		
+		List<ManagementVO> management = empService.getManagement();
+		List<EmployeesVO> empList = empService.getEmpList();
+		logger.debug("management : " + management);
+		logger.debug("empList : " + empList);
+		
+		model.addAttribute("management", management);
 		model.addAttribute("empList", empList);
 	}
 	

@@ -3,6 +3,7 @@ package com.sm.service;
 import java.util.List;
 
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.ManagementVO;
 
 public interface EmployeesService {
 	
@@ -12,6 +13,8 @@ public interface EmployeesService {
 	// 사원 목록 조회 - Read
 	public List<EmployeesVO> getEmpList() throws Exception;
 	
+	// 사원 관리 정보 조회 - Read
+	public List<ManagementVO> getManagement() throws Exception;
 	
 	
 }

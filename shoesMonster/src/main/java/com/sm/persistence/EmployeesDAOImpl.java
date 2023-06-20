@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.ManagementVO;
 
 @Repository
 public class EmployeesDAOImpl implements EmployeesDAO{
@@ -47,6 +48,12 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	public List<EmployeesVO> readEmpList() throws Exception {
 		logger.debug(" readEmpList() 호출@@@@@ ");
 		return sqlSession.selectList(NAMESPACE2 + ".empList");
+	}
+
+	@Override
+	public List<ManagementVO> readManagement() throws Exception {
+		logger.debug(" readManagement() 호출@@@@@ ");
+		return sqlSession.selectList(NAMESPACE2 + ".management");
 	}
 
 	

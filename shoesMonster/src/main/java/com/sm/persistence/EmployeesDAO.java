@@ -3,6 +3,7 @@ package com.sm.persistence;
 import java.util.List;
 
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.ManagementVO;
 
 public interface EmployeesDAO {
 	
@@ -14,6 +15,8 @@ public interface EmployeesDAO {
 	// 사원 목록 조회 - R
 	public List<EmployeesVO> readEmpList() throws Exception;
 	
+	// 사원 권한 정보 조회 - R
+	public List<ManagementVO> readManagement() throws Exception;
 	
 	
 }

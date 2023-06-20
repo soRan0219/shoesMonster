@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.ManagementVO;
 import com.sm.persistence.EmployeesDAO;
 
 @Service
@@ -23,6 +24,11 @@ public class EmployeesServiceImpl implements EmployeesService{
 	@Override
 	public List<EmployeesVO> getEmpList() throws Exception {
 		return empdao.readEmpList();
+	}
+
+	@Override
+	public List<ManagementVO> getManagement() throws Exception {
+		return empdao.readManagement();
 	}
 
 	
