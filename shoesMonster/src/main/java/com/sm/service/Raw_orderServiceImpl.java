@@ -26,22 +26,7 @@ public class Raw_orderServiceImpl implements Raw_orderService{
     public List<Raw_orderVO> getRaw_order(int startRow, int pageSize) throws Exception {
         return rodao.Raw_order(startRow, pageSize);
     }
-
-
-    @Override
-    public int count1() throws Exception {
-        return rodao.count1();
-    }
-
-
-    @Override
-    public List<Raw_orderVO> getRaw_orderPage(int displayPost, int postNum) throws Exception {
-        return rodao.Raw_orderPage(displayPost, postNum);
-    }
-
-
-
-    
+ 
     
     
 
