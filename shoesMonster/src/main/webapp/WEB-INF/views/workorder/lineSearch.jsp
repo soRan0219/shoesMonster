@@ -17,9 +17,24 @@
 			let lineCode = $(this).find('#lineCode').text();
 			
 // 			window.opener.document.getElementById('lineCode').value = lineCode;
-			$('#line_code', opener.document).val(lineCode);
 			
-			window.close();
+			
+			window.addEventListener('msg', function(event){
+				var value = event.data;
+				
+				console.log(value);
+				
+				if(value==="line_code") {
+					$('#line_code', opener.document).val(lineCode);
+				} else if(value==="search_line") {
+					$('#search_line', opener.document).val(lineCode);
+				}
+			});
+			
+			
+			
+			
+// 			window.close();
 			
 		}); //테이블 행 클릭
 		
