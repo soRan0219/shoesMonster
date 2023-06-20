@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.ManagementVO;
 import com.sm.service.ClientsService;
 import com.sm.service.EmployeesService;
 
@@ -32,19 +33,30 @@ public class PersonController {
 	
 	
 	// http://localhost:8088/person/empinfo
-	// 사원 조회
+	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
-	public void empinfoGET(Model model, HttpSession session) {
+	public void empInfoGET(Model model) throws Exception {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
-		String id = (String)(session.getAttribute("id"));
-		EmployeesVO resultVO = empService.getEmployees(id);
+		List<EmployeesVO> empList = empService.getEmpList();
+		logger.debug("empList : " + empList);
 		
-		logger.debug(" @@@@@ resultVO : " + resultVO);
+		model.addAttribute("empList", empList);
+	}
+	
+	// http://localhost:8088/person/management
+	// 사원 권한 정보 조회 (GET)
+	@RequestMapping(value = "/management", method = RequestMethod.GET)
+	public void empManageGET(Model model) throws Exception {
+		logger.debug(" empManageGET() 호출@@@@@ ");
 		
-		model.addAttribute(empService.getEmployees(id));
+		List<ManagementVO> management = empService.getManagement();
+		List<EmployeesVO> empList = empService.getEmpList();
+		logger.debug("management : " + management);
+		logger.debug("empList : " + empList);
 		
-		logger.debug(" /person/empinfo.jsp 페이지로 이동 ");
+		model.addAttribute("management", management);
+		model.addAttribute("empList", empList);
 	}
 	
 	
