@@ -15,15 +15,38 @@
 	<button type="submit">전체</button>
 	<button type="submit">미입고</button>
 	<button type="submit">입고 완료</button>
+
+	
 	
 	<hr>
-
-	입고 번호 <input type="text" placeholder="입고 번호를 입력하세요.">
-	거래처명 <input type="text"  placeholder="거래처명을 입력하세요.">
-	품명 <input type="text"  placeholder="품명을 입력하세요.">
-	입고 날짜 <input type="date"> ~ <input type="date">
-	<button type="submit">검색</button>
 	
+<!-- 	입고 번호 <input type="text" valeu="in_num" placeholder="입고 번호를 입력하세요."> -->
+<!-- 	거래처명 <input type="text"  valeu="clien_name" placeholder="거래처명을 입력하세요."> -->
+<!-- 	품명 <input type="text" valeu="raw_name" placeholder="품명을 입력하세요."> -->
+<!-- 	입고 날짜 <input type="date"> ~ <input type="date"> -->
+<!-- 	<button type="submit">검색</button> -->
+
+	<div>
+		<select name="searchType">
+			<option value="client_code">사원번호</option>
+			<option value="client_name">거래처명</option>
+			<option value="raw_material">품명</option>
+		</select> <input type="text" name="keyword" />
+
+		<button type="button" id="searchBtn">검색</button>
+	</div>
+
+<script>
+document.getElementById("searchBtn").onclick = function () {
+    
+	  let searchType = document.getElementsByName("searchType")[0].value;
+	  let keyword =  document.getElementsByName("keyword")[0].value;
+	  
+	  location.href = "/stock/In_material?num=1" + "&searchType=" + searchType + "&keyword=" + keyword;
+	 };
+</script>
+
+
 	<hr>
 	
  <table border="1">

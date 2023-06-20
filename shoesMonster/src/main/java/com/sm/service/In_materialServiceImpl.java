@@ -40,9 +40,10 @@ public class In_materialServiceImpl implements In_materialService{
 
 
 	@Override
-	public List<In_materialVO> getIn_matPage(int displayPost, int postNum) throws Exception {
+	public List<In_materialVO> getIn_matPage(int displayPost, int postNum , 
+			String searchType, String keyword) throws Exception {
 		
-		return idao.In_matPage(displayPost, postNum);
+		return idao.In_matPage(displayPost, postNum, searchType,keyword);
 	}
 
 
