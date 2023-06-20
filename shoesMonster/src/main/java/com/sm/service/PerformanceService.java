@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sm.domain.LineVO;
 import com.sm.domain.ProductVO;
+import com.sm.domain.WarehouseVO;
 
 public interface PerformanceService {
 		
@@ -23,6 +24,10 @@ public interface PerformanceService {
 	
 	// 라인 검색
 	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
+	
+	// 창고 조회
+	public List<WarehouseVO> getWhList() throws Exception;
+	
 	
 }
 		

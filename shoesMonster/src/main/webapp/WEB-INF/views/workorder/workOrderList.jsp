@@ -34,6 +34,17 @@
 		obj.html(inputBox);
 	} //inputCng
 	
+	//검색 팝업
+	function openWindow(search, value) {
+		var url = "/workorder/search?type="+search;
+		var popup = window.open(url, "", popupOpt);
+		
+		popup.onload = function() {
+			popup.postMessage(value, '*');
+		}
+	} //openWindow()
+	
+	
 	$(function() {
 		
 		//테이블 항목들 인덱스 부여
@@ -104,17 +115,17 @@
 				
 				//라인코드 검색
 				$('#line_code').click(function(){
-					window.open("/workorder/search?type=line", "", popupOpt);
+					openWindow("line", "line_code");
 				}); //lineCode click
 				
 				//품번 검색 
 				$('#prod_code').click(function(){
-					window.open("/workorder/search?type=prod", "", popupOpt);
+					openWindow("prod");
 				}); //prodCode click
 				
 				//수주코드 검색
 				$('#order_code').click(function(){
-					window.open("/workorder/search?type=order", "", popupOpt);
+					openWindow("order");
 				}); //orderCode click
 			
 				$(this).removeClass('true');
@@ -236,17 +247,17 @@
 				
 						//라인코드 검색
 						$('#line_code').click(function(){
-							window.open("/workorder/search?type=line", "", popupOpt);
+							openWindow("line");
 						}); //lineCode click
 						
 						//품번 검색 
 						$('#prod_code').click(function(){
-							window.open("/workorder/search?type=prod", "", popupOpt);
+							openWindow("prod");
 						}); //prodCode click
 						
 						//수주코드 검색
 						$('#order_code').click(function(){
-							window.open("/workorder/search?type=order", "", popupOpt);
+							openWindow("order");
 						}); //orderCode click
 				
 					},
@@ -353,6 +364,30 @@
 		
 		
 		
+		
+		
+		
+		//============================ 검색 =========================================//
+		
+		
+		
+		//라인코드 검색
+		$('#search_line').click(function(){
+			openWindow("line", "search_line");
+		}); //lineCode click
+		
+		//품번 검색 
+		$('#search_prod').click(function(){
+			openWindow("prod");
+		}); //prodCode click
+		
+		
+		
+		
+		
+		
+		
+		
 	}) //jQuery
 	
 </script>
@@ -360,6 +395,23 @@
 </head>
 <body>
 	<h1> /workorder/workOrderList.jsp </h1>
+	
+	<div>
+		<fieldset>
+			라인코드: <input type="text" name="search_line" id="search_line"> 
+			지시일자: <input type="text" name="search_fromDate" id="search_fromDate"> ~ 
+					  <input type="text" name="search_toDate" id="search_toDate"> 
+			<br>
+			지시상태: <input type="radio" name="search_state" id="search_state" value="지시"> 지시 
+					  <input type="radio" name="search_state" id="search_state" value="진행"> 진행 
+					  <input type="radio" name="search_state" id="search_state" value="마감"> 마감 
+			품번: <input type="text" name="search_prod" id="search_prod">
+			<br>
+			<button id="search">조회</button> 
+		</fieldset>
+	</div>
+	
+	<br><br><br>
 	
 	<button id="add" class="true">추가</button>
 	<button id="modify">수정</button>

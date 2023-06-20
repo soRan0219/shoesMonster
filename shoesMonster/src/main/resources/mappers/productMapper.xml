@@ -76,5 +76,28 @@
 	<!-- 라인 검색 -->
 	
 	
+	<!-- 창고 조회 -->
+	<resultMap type="com.sm.domain.Wh_prodVO" id="whm_list">
+		<result property="prod_code" column="prod_code"/>
+		<result property="raw_code" column="raw_code"/>
+		<result property="wh_code" column="wh_code"/>
+		<result property="wh_name" column="wh_name"/>
+		<result property="wh_dv" column="wh_dv"/>
+		<result property="wh_addr" column="wh_addr"/>
+		<result property="wh_tel" column="wh_tel"/>
+		<result property="wh_use" column="wh_use"/>
+		<result property="wh_note" column="wh_note"/>
+	</resultMap>
+	
+	<select id="whlist" resultMap="whm_list">
+		select wh_code, wh_name, wh_dv,w.prod_code, p.prod_name,
+		w.raw_code, r.raw_name, wh_addr, wh_tel, wh_use, wh_note 
+		from warehouse w
+		left join product p on p.prod_code = w.prod_code
+		left join raw_material r on r.raw_code = w.raw_code
+	</select>
+
+	<!-- 창고 조회 -->
+	
 	
 </mapper>

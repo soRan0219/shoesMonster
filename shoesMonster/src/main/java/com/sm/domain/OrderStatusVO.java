@@ -5,16 +5,17 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class orderStatusVO {
+public class OrderStatusVO {
 	private String order_code;
 	private Date order_date;
-	private String client_code;
-	private String emp_id;
-	private String prod_code;
-	private String prod_name;
-	private String prod_unit;
 	private Date order_deliveryDate;
+	private String emp_id;
 	private int order_count;
+	private String client_code;
 	private String order_finish;
-
-} // oderStatusVO
+	private String oreder_note;
+	
+	private ClientsVO clients;
+	private EmployeesVO employees;
+	
+}

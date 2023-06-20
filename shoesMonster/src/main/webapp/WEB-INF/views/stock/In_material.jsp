@@ -26,42 +26,40 @@
 <!-- 	입고 날짜 <input type="date"> ~ <input type="date"> -->
 <!-- 	<button type="submit">검색</button> -->
 
-	<div>
-		<select name="searchType">
-			<option value="client_code">사원번호</option>
-			<option value="client_name">거래처명</option>
-			<option value="raw_material">품명</option>
-		</select> <input type="text" name="keyword" />
+<form action="" method="get">
+		
+		<label>사원코드</label>
+			<input type="text" name="client_code"  placeholder="검색어를 입력해주세요">
+		
+		
+		<label>입고번호</label>
+		<input type="text"  name="in_num" placeholder="검색어를 입력해주세요">
+		
+		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
+		<label>발주번호</label>
+		<input type="text"  name="raw_order_num" placeholder="검색어를 입력해주세요">
+			
+		<input type="submit" id="searchButton" value="검색">
+	</form>
 
-		<button type="button" id="searchBtn">검색</button>
-	</div>
 
-<script>
-document.getElementById("searchBtn").onclick = function () {
-    
-	  let searchType = document.getElementsByName("searchType")[0].value;
-	  let keyword =  document.getElementsByName("keyword")[0].value;
-	  
-	  location.href = "/stock/In_material?num=1" + "&searchType=" + searchType + "&keyword=" + keyword;
-	 };
-</script>
 
 
 	<hr>
 	
  <table border="1">
 	<tr>
-		<th>입고 번호</th>
-		<th>거래처명</th>
-		<th>상세보기</th>
-		<th>품번</th>
-		<th>품명</th>
-		<th>발주 수량</th>
-		<th>재고 수량</th>
-		<th>단가</th>
-		<th>총액</th>
-		<th>입고일</th>
-		<th>담당자</th>
+		<th>사원코드</th>
+		<th>입고번호</th>
+		<th>발주번호</th>
+		<th>사원코드</th>
+		<th>입고번호</th>
+		<th>발주번호</th>
+		<th>사원코드</th>
+		<th>입고번호</th>
+		<th>발주번호</th>
+		<th>사원코드</th>
+		<th>입고번호</th>
 		<th>입고 버튼</th>
 	</tr>
 
@@ -69,42 +67,37 @@ document.getElementById("searchBtn").onclick = function () {
 
 		<tr>
 			<td>${in.client_code }</td>
+			<td>${in.in_num }</td>
+			<td>${in.raw_order_num }</td>
 			<td>${in.client_code }</td>
+			<td>${in.in_num }</td>
+			<td>${in.raw_order_num }</td>
 			<td>${in.client_code }</td>
+			<td>${in.in_num }</td>
+			<td>${in.raw_order_num }</td>
 			<td>${in.client_code }</td>
-			<td>${in.client_code }</td>
-			<td>${in.client_code }</td>
-			<td>${in.client_code }</td>
-			<td>${in.client_code }</td>
-			<td>${in.client_code }</td>
-			<td>${in.client_code }</td>
-			<td>${in.client_code }</td>
+			<td>${in.in_num }</td>
 			<td><button type="submit">미입고</button></td>
 		</tr>
 	</c:forEach>
 </table>
 
-<c:if test="${prev}">
- <span>[ <a href="/stock/In_material?num=${startPageNum - 1}">이전</a> ] 
-</c:if>
-
-<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
- <span>
- 
-  <c:if test="${select != num}">
-   <a href="/stock/In_material?num=${num}">${num}</a>
-  </c:if>    
-  
-  <c:if test="${select == num}">
-   <b>${num}</b>
-  </c:if>
+<div>
+    <c:if test="${count > 0 }">
+        <c:if test="${startPage > pageBlock }">
+            <span><a href="/stock/In_material?num=${startPage - pageBlock}">이전</a></span>
+        </c:if>
     
- </span>
-</c:forEach>
-
-<c:if test="${next}">
- <span>[ <a href="/stock/In_material?num=${endPageNum + 1}">다음</a> ] 
-</c:if>
+        <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+            <a href="/stock/In_material?num=${i }">${i }</a>
+        </c:forEach>
+        
+        <c:if test="${endPage < count }">
+            <a href="/stock/In_material?num=${startPage + pageBlock}">다음</a>
+        </c:if>
+    </c:if>
+    
+</div>
 
 </body>
 </html>
