@@ -17,6 +17,7 @@ public class WorkOrderVO {
 	private int work_qt;
 	private String emp_id;
 	private String change_id;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date change_date;
 	private String work_state;
 	

@@ -31,5 +31,15 @@
 	</select>
 	<!-- 작업지시 조회 -->
 	
+	<!-- 작업지시 수정 -->
+	<update id="updateWorkOrder">
+		UPDATE work_order 
+		SET line_code=#{line_code}, prod_code=#{prod_code}, order_code=#{order_code}, 
+			work_state=#{work_state}, change_date=now(), work_qt=#{work_qt} 
+		WHERE work_code=#{work_code}
+	</update>
+	<!-- 작업지시 수정 -->
+	
+	
 	
 </mapper>

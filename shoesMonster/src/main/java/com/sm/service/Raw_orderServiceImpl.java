@@ -28,9 +28,21 @@ public class Raw_orderServiceImpl implements Raw_orderService{
     }
 
 
+    @Override
+    public int count1() throws Exception {
+        return rodao.count1();
+    }
+
+
+    @Override
+    public List<Raw_orderVO> getRaw_orderPage(int displayPost, int postNum) throws Exception {
+        return rodao.Raw_orderPage(displayPost, postNum);
+    }
+
+
 
     
-	
+    
     
 
 }

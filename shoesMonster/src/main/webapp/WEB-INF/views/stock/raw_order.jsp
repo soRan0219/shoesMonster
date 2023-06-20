@@ -56,7 +56,7 @@
             </tr>
         </c:forEach>
     </table>
-    
+   
     
 <div>
     <c:if test="${count1 > 0 }">
@@ -73,6 +73,7 @@
 		</c:if>
     </c:if>
 	
+
 </div>
 
 </body>

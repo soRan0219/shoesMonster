@@ -12,7 +12,8 @@ public interface In_materialService {
 		public int count() throws Exception;
 		
 		// 입고 페이지
-		public List<In_materialVO> getIn_matPage(int displayPost,int postNum) throws Exception;
+		public List<In_materialVO> getIn_matPage(int displayPost,int postNum
+				, String searchType, String keyword) throws Exception;
 		
 //		// 입고 검색
 //		public List<In_materialVO> In_matSearch(

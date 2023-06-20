@@ -42,7 +42,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 		}
 	}
 	
-
+	//==========================================================================
 	// 라인 조회
 	@Override
 	public List<LineVO> getLineList() throws Exception {
@@ -52,8 +52,8 @@ public class PerformanceServiceImpl implements PerformanceService {
 	
 	// 라인 검색
 	@Override
-	public List<LineVO> getSearchLine() throws Exception {
-		return null;
+	public List<LineVO> getSearchLine(LineVO lvo) throws Exception {
+		return pdao.getSearchLine(lvo);
 	}
 
 

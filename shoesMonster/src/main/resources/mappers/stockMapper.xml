@@ -63,6 +63,7 @@
 	<!-- 발주 목록 개수 -->
 
 	<!-- ========== 발주 목록 조회 - 끝 ========== -->
+
 	
 
 
@@ -75,6 +76,22 @@ select count(client_code) from in_material
 <!-- 페이징 -->
 <select id="in_matPage" parameterType="hashMap" resultType="com.sm.domain.In_materialVO">
 	select client_code from in_material 		
+	<if test='searchType.equals("client_code")'>
+  WHERE client_code LIKE concat('%', #{keyword}, '%')
+ </if>
+ 
+ <if test='searchType.equals("content")'>
+  WHERE content LIKE concat('%', #{keyword}, '%')
+ </if>
+ 
+ <if test='searchType.equals("title_content")'>
+  WHERE title LIKE concat('%', #{keyword}, '%') 
+   or content LIKE concat('%', #{keyword}, '%')
+ </if>
+ 
+ <if test='searchType.equals("writer")'>
+  WHERE writer LIKE concat('%', #{keyword}, '%')
+ </if>
 	 order by client_code desc 
 	  limit #{displayPost}, #{postNum}  
 </select>

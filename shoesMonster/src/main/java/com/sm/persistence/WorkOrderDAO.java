@@ -18,4 +18,7 @@ public interface WorkOrderDAO {
 	//작업지시 조회
 	public WorkOrderVO readWorkOrder(String work_code) throws Exception;
 	
+	//작업지시 수정
+	public void updateWorkOrder(WorkOrderVO uvo) throws Exception;
+	
 } //WorkOrderDAO

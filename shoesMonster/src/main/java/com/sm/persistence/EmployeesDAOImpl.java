@@ -1,6 +1,7 @@
 package com.sm.persistence;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.ManagementVO;
 
 @Repository
 public class EmployeesDAOImpl implements EmployeesDAO{
@@ -18,6 +20,8 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	private SqlSession sqlSession;
 	
 	private static final String NAMESPACE = "com.sm.mapper.MainMapper";
+	
+	private static final String NAMESPACE2 = "com.sm.mapper.PersonMapper";
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeesDAOImpl.class);
 	
@@ -41,10 +45,20 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	}
 
 	@Override
-	public EmployeesVO getEmloyees(String id) {
-		logger.debug(" getEmployees() 호출 @@@@@ ");
-		return sqlSession.selectOne(NAMESPACE+".getEmployees", id);
+	public List<EmployeesVO> readEmpList() throws Exception {
+		logger.debug(" readEmpList() 호출@@@@@ ");
+		return sqlSession.selectList(NAMESPACE2 + ".empList");
 	}
+
+	@Override
+	public List<ManagementVO> readManagement() throws Exception {
+		logger.debug(" readManagement() 호출@@@@@ ");
+		return sqlSession.selectList(NAMESPACE2 + ".management");
+	}
+
+	
+	
+	
 
 	
 	

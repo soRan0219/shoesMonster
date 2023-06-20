@@ -32,6 +32,7 @@ public class stockController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(stockController.class);
 	
+
 	
 	// 발주 목록 + 페이징 처리 - 시작
     // http://localhost:8080/stock/raw_order
@@ -78,80 +79,48 @@ public class stockController {
 	
 	
     
-	
-	// 입고 관리 
-		//http://localhost:8088/stock/In_mat
-	//http://localhost:8080/stock/In_mat
-//		@RequestMapping(value="/In_mat",method = RequestMethod.GET)
-//		public String In_matGET(Model model,@ModelAttribute("result!@#$%^&*()_") String result) throws Exception{
-//			logger.debug(" In_matGET() 호출 ");
-//			logger.debug(" result!@#$%^&*()_" +result);
-//			
-//			// 서비스 - DB에 저장된 글 정보를 가져오기
-//			List<In_materialVO> In_materialList = service.getIn_mat();
-//			logger.debug("In_materialList : " + In_materialList);
-//			// 연결된 뷰페이지로 전달 (뷰 - 출력)
-//			model.addAttribute("In_materialList", In_materialList);
-//			
-//			return "/stock/In_mat";
-//		}
-	
-	// 입고 관리 
-		//http://localhost:8088/stock/In_material
-		//http://localhost:8080/stock/In_material
-//	@RequestMapping(value = "/In_material",method = RequestMethod.GET)
-//	public void In_matGET(Model model) throws Exception {
-//		
-//		List<In_materialVO> In_materialList = service.getIn_mat();
-//		
-//		logger.debug("In_materialList : " + In_materialList);
-//		
-//		model.addAttribute("In_materialList", In_materialList);
-//	}
-	// 입고 목록
+
 	
 	
 	// 입고 페이징
     //http://localhost:8088/stock/In_material?num=1
   	//http://localhost:8080/stock/In_material?num=1
-    @RequestMapping(value = "/In_material",method = RequestMethod.GET)
-    public void In_matPage(Model model, @RequestParam("num") int num) throws Exception {
+    @RequestMapping(value = "/In_material",	method = RequestMethod.GET)
+    public void In_matPage(Model model, @RequestParam("num") int num ,
+    		@RequestParam(value = "searchType" ,required = false, defaultValue = "title") String searchType 
+    		, @RequestParam(value = "keyword" , required = false , defaultValue="") String keyword) throws Exception {
         
-        // 게시물 총 갯수
+    	
+    	// 게시물 총 갯수
         int count = service.count();
-        
-        // 한 페이지 출력 갯수
-        int postNum = 1;
-        
-        // 하단 페이지 번호
-        int pageNum = (int)Math.ceil((double)count/postNum);
-        
-        // 출력 게시물
-    
-        
-        int displayPost = (num - 1) * postNum;
-        
-        // 한번에 표시할 페이징 번호의 갯수
-        int pageNum_cnt = 2;
 
-        // 표시되는 페이지 번호 중 마지막 번호
-        int endPageNum = (int)(Math.ceil((double) num / (double)pageNum_cnt) * pageNum_cnt);
+        // 한 페이지 출력 갯수
+        int postNum = 5;
+
+        // 하단 페이지 번호
+        int pageNum = (int) Math.ceil((double) count / postNum);
+
+        // 출력 게시물
+        int displayPost = (num - 1) * postNum;
+
+        // 한번에 표시할 페이징 번호의 갯수
+        int pageNum_cnt = 10;
 
         // 표시되는 페이지 번호 중 첫번째 번호
-        int startPageNum = endPageNum - (pageNum_cnt - 1);
-        
-        // 마지막 번호 재계산
-        int endPageNum_tmp = (int)(Math.ceil((double)count / (double)pageNum_cnt));
-         
-        if(endPageNum > endPageNum_tmp) {
-         endPageNum = endPageNum_tmp;
+        int startPageNum = (int) (Math.ceil((double) num / pageNum_cnt) * pageNum_cnt) - pageNum_cnt + 1;
+
+        // 표시되는 페이지 번호 중 마지막 번호
+        int endPageNum = startPageNum + pageNum_cnt - 1;
+        if (endPageNum > pageNum) {
+            endPageNum = pageNum;
         }
-        
-        boolean prev = startPageNum == 1 ? false : true;
-        boolean next = endPageNum * pageNum_cnt >= count ? false : true;
+
+        // 이전 및 다음
+        boolean prev = startPageNum != 1;
+        boolean next = endPageNum != pageNum;
     
         
-        List<In_materialVO> In_materialList = service.getIn_matPage(displayPost, postNum);
+        List<In_materialVO> In_materialList = service.getIn_matPage(displayPost, postNum ,searchType, keyword);
         
         
         model.addAttribute("In_materialList", In_materialList);

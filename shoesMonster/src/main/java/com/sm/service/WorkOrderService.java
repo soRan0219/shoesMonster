@@ -18,4 +18,7 @@ public interface WorkOrderService {
 	//작업지시 조회
 	public WorkOrderVO getWorkOrder(String work_code) throws Exception;
 	
+	//작업지시 수정
+	public void modifyWorkOrder(WorkOrderVO uvo) throws Exception;
+	
 } //WorkOrderService

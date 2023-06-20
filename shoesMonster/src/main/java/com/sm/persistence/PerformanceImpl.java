@@ -42,6 +42,8 @@ public class PerformanceImpl implements PerformanceDAO {
 		sqlSession.insert(NAMESPACE+".prodIn", product);
 	}
 	
+	//==========================================================================
+	
 	// 라인 조회
 	@Override
 	public List<LineVO> getLineList() throws Exception {
@@ -52,9 +54,10 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	// 라인 검색
 	@Override
-	public List<LineVO> getSearchLine() throws Exception {
+	public List<LineVO> getSearchLine(LineVO lvo) throws Exception {
+		logger.debug("@@getSearchLine(LineVO lvo) 호출@@");
 		
-		return null;
+		return sqlSession.selectList(NAMESPACE+".searchLine", lvo);
 	}
 
 	
