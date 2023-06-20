@@ -17,12 +17,13 @@ public interface PerformanceDAO {
 	// 품목관리 정보 다중 저장
 	public void insertProdList(ProductVO product); 
 		
+	//==========================================================================
 	
 	// 라인 조회 - getLineList
 	public List<LineVO> getLineList() throws Exception;
 	
 	// 라인 검색 - getSearchLine
-	public List<LineVO> getSearchLine() throws Exception;
+	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
 	
 	
 }
