@@ -7,41 +7,7 @@
 <meta charset="UTF-8">
 <title>거래처 정보 관리</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script>
-			$(document).ready(function() {
-				
-				// 필터링 기능
-				$('#searchButton').click(function(event) {
-	            	 
-	            	event.preventDefault(); // 페이지 이동 막기
-	            	
-// 	            	var tableHeader = $('#clientsTable tr').var();
-	            	
-	                var searchCode = $('#searchCode').val().toLowerCase();
-	                var searchName = $('#searchName').val().toLowerCase();
-	                var searchType = $('#searchType option:selected').text();
-	                
-	                $('#clientsTable tr').each(function() {
-	                    var code = $(this).find('td:nth-child(2)').text().toLowerCase();
-	                    var name = $(this).find('td:nth-child(3)').text().toLowerCase();
-	                    var type = $(this).find('td:nth-child(4)').text().toLowerCase();
-	                    
-	                    if (code.includes(searchCode) 
-	                    	&& name.includes(searchName) 
-	                    	&& type.includes(searchType)
-	                    	){
-	                    	
-	                        $(this).show();
-	                        
-	                    } else {
-	                    	
-	                        $(this).hide();
-	                        
-	                    }
-	                });
-	            });
-			});
-		</script>
+
 </head>
 <body>
 	
@@ -91,7 +57,6 @@
 			<th>팩스번호</th>
 			<th>email</th>
 			<th>비고</th>
-			<th></th>
 		</tr>
 		
 		<c:forEach var="vo" items="${clientsList }" varStatus="i">
@@ -111,7 +76,6 @@
 				<td>${vo.client_fax}</td>
 				<td>${vo.client_email}</td>
 				<td>${vo.client_note}</td>
-				<td><input type="checkbox"></td>
 			</tr>
 		</c:forEach>
 		
