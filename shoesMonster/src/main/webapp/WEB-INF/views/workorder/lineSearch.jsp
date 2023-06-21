@@ -11,6 +11,7 @@
 	
 	$(function(){
 		
+		//이벤트 리스너 - 팝업 호출한 부모창 input 아이디 가져와서 해당 input에 넣기
 		window.addEventListener('message', function(event){
 			
 			$('table tr:not(:first-child)').click(function(){

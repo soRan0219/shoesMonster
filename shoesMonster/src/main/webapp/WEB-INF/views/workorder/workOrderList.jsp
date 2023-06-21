@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <style type="text/css">
 	.selected {
@@ -14,6 +16,9 @@
 </style>
 
 <script type="text/javascript">
+	
+	
+	//========================= 함수, 상수 ==================================//
 	
 	//오늘 날짜 yyyy-mm-dd
 	function getToday() {
@@ -34,11 +39,6 @@
 	//팝업창 옵션
 	const popupOpt = "top=60,left=140,width=600,height=600";
 	
-	
-	
-	
-	
-	
 	//검색 팝업
 	function openWindow(search, inputId) {
 		var url = "/workorder/search?type="+search;
@@ -50,6 +50,7 @@
 		};
 	} //openWindow()
 	
+	//이벤트리스너 - 팝업 호출하는 input 아이디 저장
 	window.addEventListener('message', function(event){
 		var data = event.data;
 		var inputId = data.inputId;
@@ -59,10 +60,7 @@
 	});
 	
 	
-	
-	
-	
-	
+	//========================= 함수, 상수 ==================================//
 	
 	
 	
@@ -75,6 +73,8 @@
 		});
 
 		
+		
+		//============================ 버튼 구현 ====================================//
 		
 		/////////////// 추가 /////////////////////////////////////
 		$('#add').click(function() {
@@ -384,6 +384,7 @@
 		}); //delete click
 		
 		
+		//============================ 버튼 구현 ====================================//
 		
 		
 		
@@ -392,20 +393,95 @@
 		
 		
 		
-		//라인코드 검색
+		//라인코드 검색 팝업
 		$('#search_line').click(function(){
 			openWindow("line", "search_line");
 		}); //lineCode click
 		
-		//품번 검색 
+		//품번 검색 팝업
 		$('#search_prod').click(function(){
 			openWindow("prod", "search_prod");
 		}); //prodCode click
 		
+		$('#search_fromDate').datepicker({
+			showOn:'both',
+			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+			buttonImageOnly:'true',
+			changeMonth:'true',
+			changeYear:'true',
+			nextText:'다음달',
+			prevText:'이전달',
+			showButtonPanel:'true',
+			currentText:'오늘',
+			closeText:'닫기',
+			dateFormat:'yy-mm-dd',
+			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+// 			minDate:,
+// 			maxDate:+30,
+			onSelect: function(date, inst) {
+				$('#search_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
+			}
+		});
+		$('#search_toDate').datepicker({
+			showOn:'both',
+			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+			buttonImageOnly:'true',
+			changeMonth:'true',
+			changeYear:'true',
+			nextText:'다음달',
+			prevText:'이전달',
+			showButtonPanel:'true',
+			currentText:'오늘',
+			closeText:'닫기',
+			dateFormat:'yy-mm-dd',
+			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+// 			maxDate:+30
+		});
+		
+		$('#search').click(function(){
+		
+			let search = {
+					line_code:$('#search_line').val(),
+					from_date:$('#search_fromDate').val(),
+					to_date:$('#search_toDate').val(),
+					work_state:$('#search_state:checked').val(),
+					prod_code:$('#search_prod').val()
+			};
+			
+// 			console.log(search);
+			
+			$.ajax({
+				url:"/workorder/search",
+				type: "post",
+				contentType: "application/json; charset=UTF-8",
+				dataType: "json",
+				data: JSON.stringify(search),
+				success: function(data) {
+// 					alert(data[0].work_code);
+					
+					for(var i=0; i<data.length; i++) {
+						alert(data[i].work_code);
+						
+						$('table tr').find('td:not(:first-child)').each(function(){
+							
+						});
+						
+					} //for
+					
+				},
+				error: function() {
+					alert("조회 실패~~");
+				}
+			});
+			
+		});
 		
 		
-		
-		
+		//============================ 검색 =========================================//
 		
 		
 		
@@ -426,6 +502,7 @@
 			지시상태: <input type="radio" name="search_state" id="search_state" value="지시"> 지시 
 					  <input type="radio" name="search_state" id="search_state" value="진행"> 진행 
 					  <input type="radio" name="search_state" id="search_state" value="마감"> 마감 
+					  <input type="radio" name="search_state" id="search_state" value="전체"> 전체 
 			품번: <input type="text" name="search_prod" id="search_prod">
 			<br>
 			<button id="search">조회</button> 

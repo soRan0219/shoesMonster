@@ -40,6 +40,29 @@
 	</update>
 	<!-- 작업지시 수정 -->
 	
+	<!-- 작업지시 검색 -->
+	<select id="searchWorkOrder" resultType="WorkOrderVO">
+		
+		SELECT * FROM work_order 
+		<where>
+			<if test="line_code!=null and !line_code.isEmpty()">
+				line_code=#{line_code}
+			</if> 
+			<if test="(from_date!=null and !from_date.equals('')) and (to_date!=null and !to_date.equals(''))">
+				AND (work_date &gt;= #{from_date} AND work_date &lt;= #{to_date}) 
+			</if> 
+			<if test="work_state!=null and !work_state.isEmpty()">
+				AND work_state=#{work_state} 
+			</if> 
+			<if test="prod_code!=null and !prod_code.isEmpty()">
+				AND prod_code=#{prod_code}
+			</if> 
+		</where>
+	</select>
+	<!-- 작업지시 검색 -->
+	
+	
+	
 	
 	
 </mapper>
