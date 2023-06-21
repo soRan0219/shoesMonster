@@ -46,43 +46,43 @@
 
 
 	<hr>
-	
- <table border="1">
-	<tr>
-		<th>사원코드</th>
-		<th>입고번호</th>
-		<th>발주번호</th>
-		<th>사원코드</th>
-		<th>입고번호</th>
-		<th>발주번호</th>
-		<th>사원코드</th>
-		<th>입고번호</th>
-		<th>발주번호</th>
-		<th>사원코드</th>
-		<th>입고번호</th>
-		<th>입고 버튼</th>
-	</tr>
 
-	<c:forEach var="in" items="${In_materialList }">
-
+	<table border="1">
 		<tr>
-			<td>${in.client_code }</td>
-			<td>${in.in_num }</td>
-			<td>${in.raw_order_num }</td>
-			<td>${in.client_code }</td>
-			<td>${in.in_num }</td>
-			<td>${in.raw_order_num }</td>
-			<td>${in.client_code }</td>
-			<td>${in.in_num }</td>
-			<td>${in.raw_order_num }</td>
-			<td>${in.client_code }</td>
-			<td>${in.in_num }</td>
-			<td><button type="submit">미입고</button></td>
+			<th>사원코드</th>
+			<th>입고번호</th>
+			<th>발주번호</th>
+			<th>사원코드</th>
+			<th>입고번호</th>
+			<th>발주번호</th>
+			<th>사원코드</th>
+			<th>입고번호</th>
+			<th>발주번호</th>
+			<th>사원코드</th>
+			<th>입고번호</th>
+			<th>입고 버튼</th>
 		</tr>
-	</c:forEach>
-</table>
 
-<div>
+		<c:forEach var="in" items="${In_materialList }">
+
+			<tr>
+				<td>${in.client_code }</td>
+				<td>${in.in_num }</td>
+				<td>${in.raw_order_num }</td>
+				<td>${in.client_code }</td>
+				<td>${in.in_num }</td>
+				<td>${in.raw_order_num }</td>
+				<td>${in.client_code }</td>
+				<td>${in.in_num }</td>
+				<td>${in.raw_order_num }</td>
+				<td>${in.client_code }</td>
+				<td>${in.in_num }</td>
+				<td><button type="submit">미입고</button></td>
+			</tr>
+		</c:forEach>
+	</table>
+
+	<div>
     <c:if test="${count > 0 }">
         <c:if test="${startPage > pageBlock }">
             <span><a href="/stock/In_material?num=${startPage - pageBlock}">이전</a></span>
