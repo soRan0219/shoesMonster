@@ -403,6 +403,7 @@
 			openWindow("prod", "search_prod");
 		}); //prodCode click
 		
+		//지시일자 이날부터
 		$('#search_fromDate').datepicker({
 			showOn:'both',
 			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
@@ -424,6 +425,7 @@
 				$('#search_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
 			}
 		});
+		//이날까지
 		$('#search_toDate').datepicker({
 			showOn:'both',
 			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
@@ -442,6 +444,8 @@
 // 			maxDate:+30
 		});
 		
+		
+		//조회버튼
 		$('#search').click(function(){
 		
 			let search = {
@@ -461,24 +465,45 @@
 				dataType: "json",
 				data: JSON.stringify(search),
 				success: function(data) {
-// 					alert(data[0].work_code);
 					
-					for(var i=0; i<data.length; i++) {
-						alert(data[i].work_code);
-						
-						$('table tr').find('td:not(:first-child)').each(function(){
+					//data => List 객체
+					if(data.length != 0) {
+						//검색 결과 있을 때
+						for(var i=0; i<data.length; i++) {
+							console.log(data[i].work_code);
 							
-						});
-						
-					} //for
+							//th 밑에 있던 줄 모두 제거하고 검색결과 append
+							var tbl = "<tr>";
+							tbl += " <td>" + (i+1) + "</td>";
+							tbl += " <td>" + data[i].work_code + "</td>";
+							tbl += " <td>" + data[i].line_code + "</td>";
+							tbl += " <td>" + data[i].prod_code + "</td>";
+							tbl += " <td>" + data[i].order_code + "</td>";
+							tbl += " <td>" + data[i].work_state + "</td>";
+							tbl += " <td>" + data[i].work_date + "</td>";
+							tbl += " <td>" + data[i].work_qt + "</td>";
+							tbl += "</tr>";
+							
+							if(i==0) {
+								$('table tr:gt(0)').remove();
+								$('table').append(tbl);
+							} else {
+								$('table').append(tbl);
+							}
+							
+						} //for
+					} else {
+						//검색 결과 없을 때
+						$('#body').html("검색 결과가 없습니다.");
+					} //if(검색결과 있없)
 					
 				},
 				error: function() {
 					alert("조회 실패~~");
 				}
-			});
+			}); //ajax
 			
-		});
+		}); //search click
 		
 		
 		//============================ 검색 =========================================//
@@ -517,33 +542,34 @@
 	<button type="reset" id="cancle">취소</button>
 	<button type="submit" id="save">저장</button>
 	
-	<form id="fr">
-	<table border="1">
-		<tr>
-			<th>번호</th>
-			<th>작업지시코드</th>
-			<th>라인코드</th>
-			<th>품번</th>
-			<th>수주코드</th>
-			<th>지시상태</th>
-			<th>지시일</th>
-			<th>지시수량</th>
-		</tr>
-		<c:forEach var="w" items="${workList }">
-			<tr>
-				<td></td>
-				<td id="workCode">${w.work_code }</td>
-				<td>${w.line_code }</td>
-				<td>${w.prod_code }</td>
-				<td>${w.order_code }</td>
-				<td>${w.work_state }</td>
-				<td>${w.work_date }</td>
-				<td>${w.work_qt }</td>
-			</tr>
-		</c:forEach>
-	</table>
-	</form>
-	
+	<div id="body">
+		<form id="fr">
+			<table border="1">
+				<tr>
+					<th>번호</th>
+					<th>작업지시코드</th>
+					<th>라인코드</th>
+					<th>품번</th>
+					<th>수주코드</th>
+					<th>지시상태</th>
+					<th>지시일</th>
+					<th>지시수량</th>
+				</tr>
+				<c:forEach var="w" items="${workList }">
+					<tr>
+						<td></td>
+						<td id="workCode">${w.work_code }</td>
+						<td>${w.line_code }</td>
+						<td>${w.prod_code }</td>
+						<td>${w.order_code }</td>
+						<td>${w.work_state }</td>
+						<td>${w.work_date }</td>
+						<td>${w.work_qt }</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</form>
+	</div>
 	
 </body>
 </html>
