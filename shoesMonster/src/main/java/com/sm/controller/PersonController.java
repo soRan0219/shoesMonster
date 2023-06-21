@@ -114,7 +114,7 @@ public class PersonController {
 		logger.debug("orderManageList : " + orderManageList);
 		logger.debug("empList : " + empList);
 		logger.debug("clientsList : " + clientsList);
-		
+		 
 		model.addAttribute("orderStatusList", orderManageList);
 		model.addAttribute("empList", empList);
 		model.addAttribute("clientsList", clientsList);
