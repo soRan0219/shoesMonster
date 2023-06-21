@@ -20,7 +20,6 @@ public class In_materialVO {
 	private ClientsVO clients;
 	private RawMaterialVO raw_mat;
 	private StockVO stock;
-	private EmployeesVO employees;
 	
 	
 	
