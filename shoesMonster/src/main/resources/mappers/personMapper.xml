@@ -28,16 +28,32 @@
 	
 	
 	<!-- 수주 현황 목록 불러오기 -->
-	<select id="orderStatusList" resultType="com.sm.domain.OrderStatusVO">
-		select o.order_code, o.order_date, c.client_code, e.emp_id, prod_code, prod_name, 
-			   prod_unit, o.order_deliveryDate, o.order_count, o.order_finish
+	
+	<resultMap type="com.sm.domain.ProductVO" id="productList">
+			<result column="prod_code" property="prod_code" />
+			<result column="prod_name" property="prod_name" />
+			<result column="prod_unit" property="prod_unit" />
+	
+		<collection property="orders" ofType="com.sm.domain.OrderStatusVO">
+			<result column="order_code" property="order_code" />
+			<result column="order_date" property="order_date" />
+			<result column="order_deliveryDate" property="order_deliveryDate" />
+			<result column="emp_id" property="emp_id" />
+			<result column="order_count" property="order_count" />
+			<result column="client_code" property="client_code" />
+			<result column="order_finish" property="order_finish" />
+			<result column="oreder_note" property="oreder_note" />
+		</collection>
+	</resultMap>
+	
+	<select id="orderStatusList" resultType="com.sm.domain.ProductVO" resultMap="productList">
+		select o.order_code, o.order_date, o.client_code, o.emp_id, p.prod_code, p.prod_name, 
+			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_finish
 		from orders o
-		JOIN clients c ON c.client_code = o.client_code
-		JOIN employees e ON e.emp_id = o.emp_id
 		JOIN product p ON p.client_code = o.client_code
 	</select>
-	<!-- 수주 현황 목록 불러오기 -->
 	
+	<!-- 수주 현황 목록 불러오기 -->
 	
 	<!-- 수주 관리 조회 -->
 	<resultMap type="com.sm.domain.OrderStatusVO" id="order_ManageList">
