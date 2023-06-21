@@ -77,9 +77,9 @@
 	
 	
 	<!-- 창고 조회 -->
-	<resultMap type="com.sm.domain.Wh_prodVO" id="whm_list">
-		<result property="prod_code" column="prod_code"/>
-		<result property="raw_code" column="raw_code"/>
+	<resultMap id="whm_list" type="com.sm.domain.Wh_prodVO">
+	    <result property="raw_code" column="raw_code" />
+	    <result property="prod_code" column="prod_code" />
 		<result property="wh_code" column="wh_code"/>
 		<result property="wh_name" column="wh_name"/>
 		<result property="wh_dv" column="wh_dv"/>
@@ -87,6 +87,15 @@
 		<result property="wh_tel" column="wh_tel"/>
 		<result property="wh_use" column="wh_use"/>
 		<result property="wh_note" column="wh_note"/>
+	
+	    <collection property="raw" ofType="com.sm.domain.RawMaterialVO">
+	        <result property="raw_name" column="raw_name" />
+	    </collection>
+	
+	    <collection property="prod" ofType="com.sm.domain.ProductVO">
+	        <result property="prod_name" column="prod_name" />
+	    </collection>
+	
 	</resultMap>
 	
 	<select id="whlist" resultMap="whm_list">
