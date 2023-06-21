@@ -58,7 +58,7 @@ public class In_materialImpl implements In_materialDAO {
 	
 	
 	@Override
-	public int count(In_materialVO vo) throws Exception {
+	public int count(In_materialVO ivo) throws Exception {
 		
 		
 		return sqlSession.selectOne(NAMESPACE+".countSearch");
