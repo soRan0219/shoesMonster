@@ -111,7 +111,7 @@ public class PerfomanceController {
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
 	public void warehouseGET(Model model) throws Exception{
 		
-		logger.debug("warehouseGET() 호출");
+		logger.debug("@@ warehouseGET() 호출 @@");
 		
 		List<WarehouseVO> whList = service.getWhList();
 		model.addAttribute("whList", whList);
@@ -120,6 +120,20 @@ public class PerfomanceController {
 		
 		logger.debug("@@ 모든 리스트 호출 @@");
 	}
+	
+	// 코드 품번 창고명 검색
+	// http://localhost:8088/performance/wh_search
+//	@RequestMapping(value = "/wh_search", method = RequestMethod.GET)
+//	public String whSearchGET(@RequestParam("type") String type, 
+//							  Model model) throws Exception{
+//		
+//		logger.debug("@@ whSearchGET() 호출 @@");
+		
+//		if()
+		
+		
+//		return "";
+//	}
 	//======== 창고 - /warehouse ===========================
 	
 }//PerfomanceController

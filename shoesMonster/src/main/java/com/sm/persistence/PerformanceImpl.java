@@ -1,5 +1,6 @@
 package com.sm.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -62,6 +63,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectList(NAMESPACE+".searchLine", lvo);
 	}
 	
+	
 	// 창고 조회
 	@Override
 	public List<WarehouseVO> readWhList() throws Exception {
@@ -76,6 +78,14 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("@@readWh_prodList() 호출@@");
 		
 		return sqlSession.selectList(NAMESPACE+".whlist");
+	}
+	
+	// 창고 검색
+	@Override
+	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
+		logger.debug("@@ searchWarehouse(HashMap<String, Object> search) 호출 @@");
+		
+		return sqlSession.selectList(NAMESPACE+".searchWarehouse", search);
 	}
 
 	

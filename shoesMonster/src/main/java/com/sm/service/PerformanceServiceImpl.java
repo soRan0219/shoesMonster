@@ -1,5 +1,6 @@
 package com.sm.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -58,6 +59,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return pdao.getSearchLine(lvo);
 	}
 	
+	
 	// 창고 조회
 	@Override
 	public List<WarehouseVO> getWhList() throws Exception {
@@ -68,6 +70,12 @@ public class PerformanceServiceImpl implements PerformanceService {
 	@Override
 	public List<Wh_prodVO> getWh_prodList() throws Exception {
 		return pdao.readWh_prodList();
+	}
+	
+	// 창고 검색
+	@Override
+	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
+		return pdao.searchWarehouse(search);
 	}
 
 
