@@ -37,6 +37,7 @@
 	
 	<table border="1">
 		<tr>
+			<td></td>
 			<td>창고코드</td>
 			<td>창고명</td>
 			<td>창고유형</td>
@@ -48,10 +49,11 @@
 			<td>비고</td>
 		</tr>
 		
-		<c:forEach var="ww" items="${whList }">
+		<c:forEach var="ww" items="${whList }" varStatus="i">
 			
 			<c:if test="${ww.wh_dv == '원자재'}">
-				<tr>
+				<tr>	
+					<td>${i.count }</td>
 					<td>${ww.wh_code}</td>
 					<td>${ww.wh_name}</td>
 					<td>${ww.wh_dv}</td>
@@ -66,6 +68,7 @@
 			
 			<c:if test="${ww.wh_dv == '완제품'}">
 				<tr>
+					<td>${i.count }</td>
 					<td>${ww.wh_code}</td>
 					<td>${ww.wh_name}</td>
 					<td>${ww.wh_dv}</td>
