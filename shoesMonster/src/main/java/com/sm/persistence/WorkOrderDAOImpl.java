@@ -1,5 +1,6 @@
 package com.sm.persistence;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -61,5 +62,15 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 		int result = sqlSession.update(NAMESPACE + ".updateWorkOrder", uvo);
 		logger.debug("##### DAO: update 결과 ===> " + result);
 	} //updateWorkOrder()
+
+	@Override
+	public List<WorkOrderVO> selectWorkOrder(HashMap<String, Object> search) throws Exception {
+		logger.debug("##### DAO: selectWorkOrder() 호출");
+		
+		List<WorkOrderVO> searchList = sqlSession.selectList(NAMESPACE + ".searchWorkOrder", search);
+		logger.debug("##### DAO: search 결과 ===> " + searchList);
+		
+		return searchList;
+	} //selectWorkOrder()
 
 } //WorkOrderDAOImpl

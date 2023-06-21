@@ -1,5 +1,7 @@
 package com.sm.controller;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -23,12 +25,15 @@ import com.sm.service.WorkOrderService;
 public class WorkOrderController {
 	private static final Logger logger = LoggerFactory.getLogger(WorkOrderController.class);
 	
+	//작업지시 service
 	@Autowired
 	private WorkOrderService wService;
 	
+	//품목, 라인 service
 	@Autowired
 	private PerformanceService pService;
 	
+	//수주 service
 	@Autowired
 	private OrderStatusService osService;
 	
@@ -61,8 +66,6 @@ public class WorkOrderController {
 		}
 		
 		else /* if(type.equals("order"))*/ {
-			
-			/////// 수주 리스트 메서드 아직 없음 만들면 추가하기 ////////
 			
 			model.addAttribute("orderList", osService.getOsList());
 			return "/workorder/orderSearch";
@@ -125,7 +128,25 @@ public class WorkOrderController {
 		return "redirect:/workorder/workOrderList";
 	} //modifyWorkOrder()
 	
-	
+	//작업지시 검색
+	@ResponseBody
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public List<WorkOrderVO> searchWorkOrder(@RequestBody HashMap<String, Object> search) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: searchWorkOrder() 호출");
+		
+		for(String key : search.keySet()) {
+			if(search.get(key)==null) {
+				search.replace(key, "");
+			}
+		}
+		logger.debug("@@@@@ CONTROLLER: 조회할 정보 - " + search);
+		
+		//서비스 - 작업지시 검색
+		List<WorkOrderVO> searchList = wService.searchWorkOrder(search);
+		logger.debug("@@@@@ CONTROLLER: 검색결과list = " + searchList);
+		
+		return searchList;
+	} //searchWorkOrder()
 	
 	
 	
