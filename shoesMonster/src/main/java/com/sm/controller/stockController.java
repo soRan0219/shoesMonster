@@ -84,6 +84,7 @@ public class stockController {
          model.addAttribute("pageBlock", pageBlock);
          model.addAttribute("count1",count1);
     }
+	
 	// 발주 목록 + 페이징 처리 - 끝
 	
 	

@@ -170,7 +170,7 @@ select count(in_num) from in_material
 	</select> 
 
 	<select id="stockPage" resultType="com.sm.domain.StockVO"> 
-		select * from stock 
+		 
 		order by stock_num desc 
 		limit #{startRow}, #{pageSize};
 	</select>
@@ -178,13 +178,49 @@ select count(in_num) from in_material
 <!-- 재고 목록 조회 -->
 
 <!-- 출고 목록 조회 -->
-<select id="count2" resultType="int">
-	select count(*) from out_material
+
+
+	<resultMap id="out_List" type="com.sm.domain.Out_materialVO">
+	    <result property="out_num" column="out_num" />
+	    <result property="out_count" column="out_count" />
+	    <result property="out_YN" column="out_YN" />
+	    <result property="out_date" column="out_date" />
+	
+	    <collection property="product" ofType="com.sm.domain.ProductVO">
+	        <result property="prod_code" column="prod_code" />
+	        <result property="prod_name" column="prod_name" />
+	        <result property="prod_price" column="prod_price" />
+	    </collection>
+	    
+	    <collection property="client" ofType="com.sm.domain.ClientsVO">
+	    	<result property="client_actname" column="client_actname"/>
+	    </collection>
+	
+	    <collection property="orders" ofType="com.sm.domain.OrderStatusVO">
+	        <result property="order_count" column="order_count" />
+	    </collection>
+	
+	    <collection property="emp" ofType="com.sm.domain.EmployeesVO">
+	        <result property="emp_name" column="emp_name" />
+	    </collection>
+
+	</resultMap>
+
+
+<select id="count2" resultType="int" >
+	select count(out_num) from out_material
 	</select>
 
-	<select id="out_matPage" resultType="com.sm.domain.Out_materialVO"> 
-		select * from out_material 
-		order by out_num desc 
+	<select id="out_matPage" parameterType="hashMap" resultType="com.sm.domain.Out_materialVO" resultMap="out_List">
+		select o.out_num , c.client_actname, p.prod_code , p.prod_name ,
+		ord.order_count , o.out_count
+		, p.prod_price , e.emp_name ,o.out_YN
+		from out_material o
+		join product p on p.prod_code = o.prod_code
+		join clients c on c.client_code = p.client_code
+		join orders ord on ord.client_code = c.client_code
+		join employees e on e.emp_id = o.emp_id
+		order by out_num desc
 		limit #{startRow}, #{pageSize}; 
 	</select>
 <!-- 출고 목록 조회 -->
