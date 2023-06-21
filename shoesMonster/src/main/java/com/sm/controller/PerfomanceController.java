@@ -112,21 +112,19 @@ public class PerfomanceController {
 	public void warehouseGET(Model model, 
 					@RequestParam(required = false) String prod_code,
 					@RequestParam(required = false) String raw_code
-					/*, Wh_prodVO wh_prod*/) throws Exception{
+					, Wh_prodVO wh_prod) throws Exception{
 		
 		logger.debug("warehouseGET() 호출");
 		
-		if(prod_code == null && raw_code != null) {
-			// raw_code 처리
-			List<Wh_prodVO> wh_prod = service.getWh_prodList();
-			
-			if(wh_prod != null) {
-				
-			}
-			
-		}else if(raw_code == null && prod_code != null) {
-			
-		}
+//		String itemName = null;
+//		
+//		if(prod_code == null && raw_code != null) {
+//			// raw_code 처리
+//			
+//			
+//		}else if(raw_code == null && prod_code != null) {
+//			
+//		}
 		
 		List<WarehouseVO> whList = service.getWhList();
 		model.addAttribute("whList", whList);
