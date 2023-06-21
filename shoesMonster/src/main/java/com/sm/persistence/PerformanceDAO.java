@@ -1,5 +1,6 @@
 package com.sm.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.sm.domain.LineVO;
@@ -27,10 +28,15 @@ public interface PerformanceDAO {
 	// 라인 검색 - getSearchLine
 	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
 	
+	
 	// 창고 조회 - R
 	public List<WarehouseVO> readWhList() throws Exception;
 	
 	// 창고 조회 처리 
 	public List<Wh_prodVO> readWh_prodList() throws Exception;
+	
+	// 창고 검색
+	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception;
+	
 	
 }

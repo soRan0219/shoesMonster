@@ -1,5 +1,6 @@
 package com.sm.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.sm.domain.LineVO;
@@ -26,11 +27,15 @@ public interface PerformanceService {
 	// 라인 검색
 	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
 	
+	
 	// 창고 조회
 	public List<WarehouseVO> getWhList() throws Exception;
 	
 	// 창고 조회 처리 
 	public List<Wh_prodVO> getWh_prodList() throws Exception;
+	
+	// 창고 검색
+	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception;
 	
 	
 }
