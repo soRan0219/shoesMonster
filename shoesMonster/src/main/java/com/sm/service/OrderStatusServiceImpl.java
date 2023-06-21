@@ -22,7 +22,7 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
 	@Override
 	public List<OrderStatusVO> getOrderManageList() throws Exception {
-		return null;
+		return osdao.readOrderManageList();
 	}
 	
 	

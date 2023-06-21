@@ -8,9 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%-- 	${empList } --%>
-<%-- 	${clientsList } --%>
-<%-- 	${orderStatusList } --%>
 
 	<h1>수주 관리</h1>
 	<div>
@@ -35,15 +32,15 @@
 				<th>담당자</th>
 			</tr>
 
-			<c:forEach var="vo" items="${orderStatusList }" varStatus="i">
+			<c:forEach var="vo" items="${orderManageList }" varStatus="i">
 				<tr>
 					<td>${i.count }</td>
 					<td>${vo.clients.client_code}</td>
-					<td>${vo.getclients().getclient_actname()}</td>
+					<td>${vo.clients.client_actname}</td>
 					<td>${vo.order_date}</td>
 					<td>${vo.order_deliveryDate}</td>
-					<td>${vo.getemployees().getemp_id()}</td>
-					<td>${vo.getemployees().getemp_name()}</td>
+					<td>${vo.employees.emp_id}</td>
+					<td>${vo.employees.emp_name}</td>
 				</tr>
 			</c:forEach>
 		</table>

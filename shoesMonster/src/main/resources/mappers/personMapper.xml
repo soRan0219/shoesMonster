@@ -39,20 +39,29 @@
 	<!-- 수주 현황 목록 불러오기 -->
 	
 	
-	<!-- 수주 권한 조회 -->
+	<!-- 수주 관리 조회 -->
 	<resultMap type="com.sm.domain.OrderStatusVO" id="order_ManageList">
-		<result column="order_code" property="order_code"/>
+		<result column="client_code" property="client_code"/>
 		<result column="client_actname" property="client_actname"/>
 		<result column="order_date" property="order_date"/>
 		<result column="order_deliveryDate" property="order_deliveryDate"/>
-		<result column="emp_id" property="emp_name"/>
-		<result column="" property=""/>
+		<result column="emp_id" property="emp_id"/>
+		<result column="emp_name" property="emp_name"/>
+		<result column="prod_code" property="prod_code"/>
+		<result column="prod_name" property="prod_name"/>
+		<result column="prod_unit" property="prod_unit"/>
+		<result column="order_count" property="order_count"/>
 	</resultMap>
 	
 	<select id="orderManageList" resultMap="order_ManageList">
-		
+		select c.client_code, c.client_actname, order_date, order_deliveryDate,
+				e.emp_id, e.emp_name, p.prod_code, p.prod_name, p.prod_unit, order_count
+		from orders o
+		left join product p on p.prod_code = o.prod_code
+		left join employees e on e.emp_id = o.emp_id
+		left join clients c on c.client_code = o.client_code
 	</select>
-	<!-- 수주 권한 조회 -->
+	<!-- 수주 관리 조회 -->
 	
 	
 	

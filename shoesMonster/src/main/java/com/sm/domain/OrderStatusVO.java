@@ -17,5 +17,6 @@ public class OrderStatusVO {
 	
 	private ClientsVO clients;
 	private EmployeesVO employees;
+	private ProductVO product;
 	
 }
