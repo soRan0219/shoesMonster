@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	
+
 	<h1>수주 현황</h1>
 	
 	업체 <input type="text">
@@ -42,19 +45,18 @@
 		<c:forEach var="vo" items="${orderStatusList }" varStatus="i">
 			<tr>
 				<td>${i.count }</td>
-				<td>${vo.order_code}"</td>
-				<td>${vo.client_code}</td>
-				<td>${vo.order_date}</td>
-				<td>${vo.emp_id}</td>
+				<td>${vo.orders.order_code}</td>
+				<td>${vo.orders.client_code}</td>
+				<td>${vo.orders.order_date}</td>
+				<td>${vo.orders.emp_id}</td>
 				<td>${vo.prod_code}</td>
 				<td>${vo.prod_name}</td>
 				<td>${vo.prod_unit}</td>
-				<td>${vo.order_deliveryDate}</td>
-				<td>${vo.order_count}</td>
-				<td>${vo.order_finish}</td>
+				<td>${vo.orders.order_deliveryDate}</td>
+				<td>${vo.orders.order_count}</td>
+				<td><input type="checkbox">${vo.orders.order_finish}</td>
 			</tr>
 		</c:forEach>
-		
 	</table>
 	
 </body>

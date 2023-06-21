@@ -16,5 +16,6 @@ public class ProductVO {
 	private float prod_price;
 	private String prod_note;
 	
+	private OrderStatusVO orders;
 	
 } //productVO
