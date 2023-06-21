@@ -49,35 +49,35 @@
 
 	<table border="1">
 		<tr>
-			<th>사원코드</th>
 			<th>입고번호</th>
-			<th>발주번호</th>
-			<th>사원코드</th>
-			<th>입고번호</th>
-			<th>발주번호</th>
-			<th>사원코드</th>
-			<th>입고번호</th>
-			<th>발주번호</th>
-			<th>사원코드</th>
-			<th>입고번호</th>
+			<th>거래처명</th>
+			<th>품번</th>
+			<th>품명</th>
+			<th>색상</th>
+			<th>발주 수량</th>
+			<th>재고 수량</th>
+			<th>단가</th>
+			<th>총액</th>
+			<th>입고일</th>
+			<th>담당자</th>
 			<th>입고 버튼</th>
 		</tr>
 
 		<c:forEach var="in" items="${In_materialList }">
 
 			<tr>
-				<td>${in.client_code }</td>
 				<td>${in.in_num }</td>
-				<td>${in.raw_order_num }</td>
-				<td>${in.client_code }</td>
-				<td>${in.in_num }</td>
-				<td>${in.raw_order_num }</td>
-				<td>${in.client_code }</td>
-				<td>${in.in_num }</td>
-				<td>${in.raw_order_num }</td>
-				<td>${in.client_code }</td>
-				<td>${in.in_num }</td>
-				<td><button type="submit">미입고</button></td>
+				<td>${in.clients.client_actname }</td>
+				<td>${in.rawOrder.raw_code }</td>
+				<td>${in.raw_mat.raw_name }</td>
+				<td>${in.rawOrder.raw_color }</td>
+				<td>${in.rawOrder.raw_order_count }</td>
+				<td>${in.stock.stock_raw_count }</td>
+				<td><fmt:formatNumber value=" ${in.rawOrder.raw_price}"/>원</td>
+        		<td><fmt:formatNumber value=" ${in.rawOrder.raw_price*in.rawOrder.raw_order_count}"/>원</td>
+				<td>${in.in_date }</td>
+				<td>${in.employees.emp_id }</td>
+				<td><button type="submit">${in.in_YN }</button></td>
 			</tr>
 		</c:forEach>
 	</table>
