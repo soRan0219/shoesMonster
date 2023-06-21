@@ -51,7 +51,7 @@
 			<if test="(from_date!=null and !from_date.equals('')) and (to_date!=null and !to_date.equals(''))">
 				AND (work_date &gt;= #{from_date} AND work_date &lt;= #{to_date}) 
 			</if> 
-			<if test="work_state!=null and !work_state.isEmpty()">
+			<if test="work_state!=null and !work_state.isEmpty() and !work_state.equals('전체')">
 				AND work_state=#{work_state} 
 			</if> 
 			<if test="prod_code!=null and !prod_code.isEmpty()">
