@@ -54,7 +54,7 @@
 				<td>${ww.wh_name}</td>
 				<td>${ww.wh_dv}</td>
 				
-        <c:choose>
+        <td><c:choose>
             <c:when test="${empty ww.prod_code && !empty ww.raw_code}">
                 <c:set var="itemName" value="${ww.raw.raw_name}" />
             </c:when>
@@ -66,7 +66,8 @@
             <c:otherwise>
                 <c:set var="itemName" value="" />
             </c:otherwise>
-        </c:choose>
+        </c:choose></td>
+				
 				
 				<td>${ww.wh_addr}</td>
 				<td>${ww.wh_tel}</td>
