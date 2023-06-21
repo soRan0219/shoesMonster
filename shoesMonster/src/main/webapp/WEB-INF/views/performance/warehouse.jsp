@@ -49,31 +49,35 @@
 		</tr>
 		
 		<c:forEach var="ww" items="${whList }">
-			<tr>
-				<td>${ww.wh_code}</td>
-				<td>${ww.wh_name}</td>
-				<td>${ww.wh_dv}</td>
-				
-        <td><c:choose>
-            <c:when test="${empty ww.prod_code && !empty ww.raw_code}">
-                <c:set var="itemName" value="${ww.raw.raw_name}" />
-            </c:when>
-
-            <c:when test="${empty ww.raw_code && !empty ww.prod_code}">
-                <c:set var="itemName" value="${ww.prod.prod_name}" />
-            </c:when>
-            
-            <c:otherwise>
-                <c:set var="itemName" value="" />
-            </c:otherwise>
-        </c:choose></td>
-				
-				
-				<td>${ww.wh_addr}</td>
-				<td>${ww.wh_tel}</td>
-				<td>${ww.wh_use}</td>
-				<td>${ww.wh_note}</td>
-			</tr>
+			
+			<c:if test="${ww.wh_dv == '원자재'}">
+				<tr>
+					<td>${ww.wh_code}</td>
+					<td>${ww.wh_name}</td>
+					<td>${ww.wh_dv}</td>
+					<td>${ww.raw_code }</td>
+					<td>${ww.raw.raw_name }</td>
+					<td>${ww.wh_addr}</td>
+					<td>${ww.wh_tel}</td>
+					<td>${ww.wh_use}</td>
+					<td>${ww.wh_note}</td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${ww.wh_dv == '완제품'}">
+				<tr>
+					<td>${ww.wh_code}</td>
+					<td>${ww.wh_name}</td>
+					<td>${ww.wh_dv}</td>
+					<td>${ww.prod_code }</td>
+					<td>${ww.prod.prod_name }</td>
+					<td>${ww.wh_addr}</td>
+					<td>${ww.wh_tel}</td>
+					<td>${ww.wh_use}</td>
+					<td>${ww.wh_note}</td>
+				</tr>
+			</c:if>
+			
 		</c:forEach>
 	</table>
-${whList}
+<%-- ${whList} --%>
