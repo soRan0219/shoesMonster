@@ -33,7 +33,8 @@
 	
 	<table border="1">
 		<thead>
-		<tr>
+		<tr>	
+			<td></td>
 			<td>라인코드</td>
 			<td>라인명</td>
 			<td>작업장</td>
@@ -44,8 +45,9 @@
 		</tr>
 		</thead>
 		
-		<c:forEach var="vo" items="${boardList }">
+		<c:forEach var="vo" items="${boardList }" varStatus="i">
 		<tr>
+			<td>${i.count}</td>
 			<td>${vo.line_code}</td>
 			<td>${vo.line_name}</td>
 			<td>${vo.line_place}</td>
