@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.sm.domain.LineVO;
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
@@ -33,6 +34,9 @@ public interface PerformanceService {
 	
 	// 라인 조회 
 	public List<LineVO> getLineList() throws Exception;
+	
+	// 라인 조회(페이징처리)
+	public List<LineVO> getLineListPage(LineWhPageVO vo) throws Exception;
 	
 	// 라인 검색
 	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;

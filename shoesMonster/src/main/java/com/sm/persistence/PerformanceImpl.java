@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.LineVO;
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
@@ -95,6 +96,26 @@ public class PerformanceImpl implements PerformanceDAO {
 
 		return sqlSession.selectList(NAMESPACE + ".lineList");
 	}
+	
+	// 라인 조회(페이징처리)
+//	@Override
+//	public List<LineVO> getLineListPage(Integer page) throws Exception {
+//		logger.debug("@@getLineListPage(Integer page) 호출@@");
+//		
+//		if(page <= 0) {
+//			page = 1;
+//		}
+//		page = (page - 1) * 10;
+//		
+//		return sqlSession.selectList(NAMESPACE+".lineListPage", page);
+//	}
+	
+	@Override
+	public List<LineVO> getLineListPage(LineWhPageVO vo) throws Exception {
+		logger.debug("@@getLineListPage(LineWhPageVO vo) 호출@@");
+		
+		return sqlSession.selectList(NAMESPACE+".lineListPage", vo);
+	}
 
 	// 라인 검색
 	@Override
@@ -127,5 +148,9 @@ public class PerformanceImpl implements PerformanceDAO {
 
 		return sqlSession.selectList(NAMESPACE + ".searchWarehouse", search);
 	}
+
+
+
+
 
 }

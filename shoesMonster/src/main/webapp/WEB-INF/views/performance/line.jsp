@@ -30,6 +30,7 @@
 		<input type="submit" value="검색">
 	</form>
 
+	${lwpm }
 	
 	<table border="1">
 		<thead>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.LineVO;
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
@@ -67,12 +68,17 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 	
 	//==========================================================================
+	
 	// 라인 조회
-
 	@Override
 	public List<LineVO> getLineList() throws Exception {
-
 		return pdao.getLineList();
+	}
+	
+	// 라인 조회 (페이징처리)
+	@Override
+	public List<LineVO> getLineListPage(LineWhPageVO vo) throws Exception {
+		return pdao.getLineListPage(vo);
 	}
 	
 	// 라인 검색
@@ -99,5 +105,6 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
 		return pdao.searchWarehouse(search);
 	}
+
 
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.sm.domain.LineVO;
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
@@ -34,6 +35,11 @@ public interface PerformanceDAO {
 	
 	// 라인 조회 - getLineList
 	public List<LineVO> getLineList() throws Exception;
+	
+	// 라인 조회(페이징처리) - getLineListPage
+//	public List<LineVO> getLineListPage(Integer page) throws Exception;
+	
+	public List<LineVO> getLineListPage(LineWhPageVO vo) throws Exception;
 	
 	// 라인 검색 - getSearchLine
 	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
