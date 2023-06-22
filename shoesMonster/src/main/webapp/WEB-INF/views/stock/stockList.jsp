@@ -29,36 +29,44 @@
     
     <table border="1">
     <tr>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
- 		<th>재고 번호</th>
+ 		<th>창고 이름</th>
+ 		<th>제품 상태</th>
+ 		<th>제품 코드</th>
+ 		<th>제품 이름</th>
+ 		<th>창고 이름</th>
+ 		<th>창고 주소</th>
+ 		<th>창고 코드</th>
+ 		
  	</tr>
         <c:forEach var="s" items="${stockList }">
+        
+        <c:if test="${s.wh_dv  == '완제품'}">
             <tr>
-                <td>${s.stock_num}</td>
-                <td>${s.stock_num}</td>
-        		<td>${s.stock_num}</td>
-        		<td>${s.stock_num}</td>
-        		<td>${s.stock_num}</td>
-        		<td>${s.stock_num}</td>
-        		<td>${s.stock_num}</td>
-        		<td>${s.stock_num}</td>
-        		<td>${s.stock_num}</td>
-        		<td>${s.stock_num}</td>
-        		<td>${s.stock_num}</td>	
+                <td>${s.wh_name}</td>
+                <td>${s.wh_dv}</td>
+                <td>${s.product.prod_code}</td>
+        		<td>${s.product.prod_name}</td>
+        		<td>${s.wh_name}</td>
+        		<td>${s.wh_addr}</td>
+        		<td>${s.wh_code}</td>
             </tr>
+            </c:if>
+            
+            <c:if test="${s.wh_dv  == '원자재'}">
+            <tr>
+                <td>${s.wh_name}</td>
+                <td>${s.wh_dv}</td>
+                <td>${s.raw_mat.raw_code}</td>
+        		<td>${s.raw_mat.raw_name}</td>
+        		<td>${s.wh_name}</td>
+        		<td>${s.wh_addr}</td>
+        		<td>${s.wh_code}</td>
+            </tr>
+            </c:if>
         </c:forEach>
     </table>
    
-    
+           		
 <div>
     <c:if test="${count3 > 0 }">
     	<c:if test="${startPage > pageBlock }">

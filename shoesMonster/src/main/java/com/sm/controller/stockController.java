@@ -192,7 +192,7 @@ public class stockController {
             int count3 = s_service.count3();
             
             // 한 페이지에 출력할 게시물 개수
-            int pageSize = 1;
+            int pageSize = 2;
             
             String pageNum = request.getParameter("num");
             if(pageNum == null) {
