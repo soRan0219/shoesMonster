@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>슈몬 작업지시</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -68,8 +68,7 @@
 		
 		//테이블 항목들 인덱스 부여
 		$('table tr').each(function(index){
-			index -= 1;
-			$(this).find('td:first').text(index + 1);
+			$(this).find('td:first').text(index);
 		});
 
 		
@@ -187,33 +186,27 @@
 		
 		
 		/////////////// 수정 //////////////////////////////
-		$('table tr:not(:first-child)').click(function(){
+		//수정버튼 클릭
+		$('#modify').click(function(){
 			
-			//하나씩만 선택 가능 - 하나 누르고 다른거 눌렀을 때 색 바뀜,,
-			$('table tr.selected').removeClass('selected');
-			$(this).addClass('selected');
-			
-			//작업지시 코드 저장
-			let updateCode = $(this).find('#workCode').text().trim();
-			console.log(updateCode);
-			
-			var jsonData = {work_code:updateCode};
-			
-			let preLine;
-			let preProd;
-			let preOrder;
-			let preState;
-			let workDate;
-			let preQt;
-			
-			var self = $(this);
-			
-			//수정버튼 클릭
-			$('#modify').click(function(){
+			$('#add').attr("disabled", true);
+			$('#delete').attr("disabled", true);
 				
-				$('#add').attr("disabled", true);
-				$('#delete').attr("disabled", true);
+			//행 하나 클릭했을 때	
+			$('table tr:not(:first-child)').one('click', function(){
 				
+				//하나씩만 선택 가능 - 하나 누르고 다른거 눌렀을 때 색 바뀜,,
+				$('table tr.selected').removeClass('selected');
+				$(this).addClass('selected');
+				
+				//작업지시 코드 저장
+				let updateCode = $(this).find('#workCode').text().trim();
+				console.log(updateCode);
+				
+				var jsonData = {work_code:updateCode};
+				
+				var self = $(this);
+			
 				$.ajax({
 					url: "/workorder/detail",
 					type: "post",
@@ -280,7 +273,9 @@
 						$('#order_code').click(function(){
 							openWindow("order", "order_code");
 						}); //orderCode click
-				
+						
+// 						self.removeClass('true');
+						
 					},
 					error: function(data) {
 						alert("아작스 실패 ~~");
@@ -302,12 +297,13 @@
 					$('#fr').each(function(){
 						this.reset();
 					});
-				}); //cacle click
+				}); //cancle click
 				
-			}); //modify click
+				self.off('click');
+				
+			}); //tr click
 			
-			
-		}); //tr click
+		}); //modify click
 		
 		
 		
@@ -447,7 +443,9 @@
 		
 		//조회버튼
 		$('#search').click(function(){
-		
+			
+			$('#add').attr("disabled", true);
+			
 			let search = {
 					line_code:$('#search_line').val(),
 					from_date:$('#search_fromDate').val(),
@@ -569,6 +567,10 @@
 				</c:forEach>
 			</table>
 		</form>
+	</div>
+	
+	<div id="details">
+	
 	</div>
 	
 </body>
