@@ -33,7 +33,7 @@
 			</tr>
 
 			<c:forEach var="vo" items="${orderManageList }" varStatus="i">
-				<tr>
+				<tr> 
 					<td>${i.count }</td>
 					<td>${vo.client_code}</td>
 					<td>${vo.client_actname}</td>
