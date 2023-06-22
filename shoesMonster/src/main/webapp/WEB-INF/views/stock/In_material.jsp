@@ -10,6 +10,106 @@
 </head>
 <body>
 	
+	<script type="text/javascript">
+	
+	//팝업창 옵션
+	const popupOpt = "top=60,left=140,width=600,height=600";
+	
+	//검색 팝업
+	function openWindow(search, inputId) {
+		var url = "/stock/In_material?type="+search;
+		var popup = window.open(url, "", popupOpt);
+		
+		popup.onload = function() {
+// 			popup.postMessage(value, '*');
+			popup.postMessage({inputId:inputId}, '*');
+		};
+	} //openWindow()
+	
+	
+	
+		//라인코드 검색 팝업
+		$('#search_in_num').click(function(){
+			openWindow("in_num", "search_in_num");
+		}); //lineCode click
+		
+		//품번 검색 팝업
+		$('#search_raw_name').click(function(){
+			openWindow("raw_name", "search_raw_name");
+		}); //prodCode click
+
+		//발주 번호 검색 팝업
+		$('#search_raw_order_num').click(function(){
+			openWindow("raw_order_num", "search_raw_order_num");
+		}); //raw_order_num click
+		
+		//조회버튼	
+		$('#search').click(function(){
+		
+			let search = {
+					in_num:$('#search_in_num').val(),
+					raw_name:$('#search_raw_name)').val(),
+					to_date:$('#search_toDate').val(),
+					work_state:$('#search_state:checked').val(),
+					prod_code:$('#search_prod').val()
+			};
+			
+// 			console.log(search);
+			
+			$.ajax({
+				url:"/stock/search",
+				type: "post",
+				contentType: "application/json; charset=UTF-8",
+				dataType: "json",
+				data: JSON.stringify(search),
+				success: function(data) {
+					
+					//data => List 객체
+					if(data.length != 0) {
+						//검색 결과 있을 때
+						for(var i=0; i<data.length; i++) {
+							console.log(data[i].in_material);
+							
+							//th 밑에 있던 줄 모두 제거하고 검색결과 append
+							var tbl = "<tr>";
+							tbl += " <td>" + data[i].in_num + "</td>";
+							tbl += " <td>" + data[i].client_actname + "</td>";
+							tbl += " <td>" + data[i].raw_code + "</td>";
+							tbl += " <td>" + data[i].raw_color + "</td>";
+							tbl += " <td>" + data[i].raw_order_count + "</td>";
+							tbl += " <td>" + data[i].stock_raw_count + "</td>";
+							tbl += " <td>" + data[i].raw_price + "</td>";
+							tbl += " <td>" + data[i].raw_price*raw_order_count + "</td>";
+							tbl += " <td>" + data[i].in_date + "</td>";
+							tbl += " <td>" + data[i].emp_id + "</td>";
+							tbl += " <td>" + data[i].in_YN + "</td>";
+							tbl += "</tr>";
+							
+							if(i==0) {
+								$('table tr:gt(0)').remove();
+								$('table').append(tbl);
+							} else {
+								$('table').append(tbl);
+							}
+							
+						} //for
+					} else {
+						//검색 결과 없을 때
+						$('#body').html("검색 결과가 없습니다.");
+					} //if(검색결과 있없)
+					
+				},
+				error: function() {
+					alert("조회 실패~~");
+				}
+			}); //ajax
+			
+		}); //search click
+	</script>
+	
+	
+	
+	
 	<h1>입고 관리</h1>
 
 	<button type="submit">전체</button>
@@ -28,8 +128,8 @@
 
 <form action="" method="get">
 		
-		<label>사원코드</label>
-			<input type="text" name="client_code"  placeholder="검색어를 입력해주세요">
+		<label>품명</label>
+			<input type="text" name="raw_name"  placeholder="검색어를 입력해주세요">
 		
 		
 		<label>입고번호</label>
