@@ -130,31 +130,42 @@ select count(in_num) from in_material
 
 <!-- 검색어   -->
 <select id="countSearch" resultType="int">
-	
 	select count(*) from in_material 
+	<where>
+			<if test="raw_name!=null and !raw_name.isEmpty()">
+				raw_name=#{raw_name}
+			</if> 
+			<if test="in_date!=null and !in_date.equals('')">
+				in_date = #{in_date}  
+			</if> 
+			<if test="in_num!=null and !in_num.isEmpty() ">
+				AND in_num=#{in_num} 
+			</if> 
+			<if test="raw_order_num!=null and !raw_order_num.isEmpty()">
+				AND raw_order_num=#{raw_order_num}
+			</if> 
+		</where>
 </select> 
 
-<select id="in_matPageSearch" parameterType="hashMap"
-	resultType="com.sm.domain.In_materialVO">
-	<bind name="client_code"
-		value="'%' + (client_code != null ? client_code : '') + '%'" />
-	<bind name="in_num"
-		value="'%' + (in_num != null ? in_num : '') + '%'" />
-	<bind name="raw_order_num"
-		value="'%' + (raw_order_num != null ? raw_order_num : '') + '%'" />
-
-	SELECT * FROM in_material
+<select id="in_matPageSearch" parameterType="hashMap">
+select i.in_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
+	           ro.raw_order_count, s.stock_raw_count, rm.raw_price, i.in_date,ro.emp_id,i.in_YN
+	    from raw_order ro
+	    JOIN raw_material rm ON ro.raw_code = rm.raw_code
+	    JOIN clients c ON c.client_code = rm.client_code
+	    JOIN stock s ON s.raw_code = rm.raw_code
+	   	JOIN in_material i ON i.raw_order_num = ro.raw_order_num
 	<where>
-		<if test="client_code != ''">
-			AND client_code LIKE #{client_code}
-		</if>
-		<if test="in_num != ''">
-			AND in_num LIKE #{in_num}
-		</if>
-		<if test="raw_order_num != ''">
-			AND raw_order_num LIKE #{raw_order_num}
-		</if>
-	</where>
+			<if test="raw_name!=null and !raw_name.isEmpty()">
+				raw_name=#{raw_name}
+			</if> 
+			<if test="in_num!=null and !in_num.isEmpty() ">
+				AND in_num=#{in_num} 
+			</if> 
+			<if test="raw_order_num!=null and !raw_order_num.isEmpty()">
+				AND raw_order_num=#{raw_order_num}
+			</if> 
+		</where>
 	order by client_code desc  
 	limit #{displayPost}, #{postNum} 
 </select>
