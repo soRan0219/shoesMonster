@@ -171,6 +171,8 @@ select count(in_num) from in_material
 	    <result property="wh_name" column="wh_name" />
 	    <result property="wh_addr" column="wh_addr" />
 	    <result property="wh_dv" column="wh_dv" />
+	    
+	   
 	
 	    <collection property="product" ofType="com.sm.domain.ProductVO">
 	        <result property="prod_code" column="prod_code" />
