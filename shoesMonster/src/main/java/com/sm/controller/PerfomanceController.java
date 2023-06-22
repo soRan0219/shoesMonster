@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sm.domain.LineVO;
+import com.sm.domain.PagingVO;
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
@@ -34,21 +35,42 @@ public class PerfomanceController {
 	
 	// http://localhost:8088/performance/product
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
-	public void productGET(Model model, ProductVO vo) throws Exception{
+	public void productGET(Model model, ProductVO vo,PagingVO pvo,
+						   @RequestParam(value = "nowPage", required = false)String nowPage,
+						   @RequestParam(value = "cntPerPage", required = false)String cntPerPage) throws Exception{
 		logger.debug("productGET() 호출");
 		List<ProductVO> products = new ArrayList<ProductVO>();
 		model.addAttribute("products", products);
 		logger.debug("vo : " + vo);
 		
+		
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "5";
+		}
+		
+		
 		if (vo.getProd_code() != null || vo.getProd_name() !=null || 
 			vo.getProd_category() !=null || vo.getProd_unit() !=null ) {
-			List<ProductVO> list = service.getProdList(vo);
+			int total = service.countProd(vo);
+			pvo = new PagingVO(total,Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			List<ProductVO> list = service.getProdList(vo,pvo);
 			model.addAttribute("prodList", list);
+			model.addAttribute("paging", pvo);
+			model.addAttribute("vo", vo);
 			logger.debug("검색 리스트 가져감");
 			
 		}else {
-			List<ProductVO> list = service.getProdList();
+			int total = service.countProd();
+			pvo = new PagingVO(total,Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			logger.debug("pvo : " +pvo);
+			List<ProductVO> list = service.getProdList(pvo);
 			model.addAttribute("prodList", list);
+			model.addAttribute("paging", pvo);
 			logger.debug(" 모든 리스트 가져감");
 		}
 		
