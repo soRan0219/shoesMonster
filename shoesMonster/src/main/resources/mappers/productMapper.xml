@@ -14,7 +14,7 @@
 	<!-- 품목관리 목록 불러오기 -->
 	<select id="readProd" resultType="ProductVO">
 		SELECT * from product limit
-		#{start}, #{end}
+		#{start}, #{cntPerPage}
 	</select>
 	<!-- 품목관리 목록 불러오기 -->
 
