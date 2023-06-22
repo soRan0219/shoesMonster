@@ -25,6 +25,9 @@ public interface PerformanceService {
 	
 	// 품목관리 정보 다중 저장
 	public void insertProd(List<ProductVO> products); 
+	
+	// 품목관리 삭제
+	public void removeProd(List<String> checked) throws Exception;
 
 	//==========================================================================
 	

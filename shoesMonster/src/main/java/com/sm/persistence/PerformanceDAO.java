@@ -26,6 +26,9 @@ public interface PerformanceDAO {
 		
 	// 품목관리 정보 다중 저장
 	public void insertProdList(ProductVO product); 
+	
+	// 품목관리  삭제
+	public void deleteProd(List<String> checked) throws Exception;
 		
 	//==========================================================================
 	

@@ -18,6 +18,7 @@ import com.sm.persistence.PerformanceDAO;
 @Repository
 public class PerformanceServiceImpl implements PerformanceService {
 
+
 	private static final Logger logger = LoggerFactory.getLogger(PerformanceServiceImpl.class);
 
 	@Autowired
@@ -56,6 +57,12 @@ public class PerformanceServiceImpl implements PerformanceService {
 		for (ProductVO product : products) {
 			pdao.insertProdList(product);
 		}
+	}
+	
+	// 품목관리 삭제
+	@Override
+	public void removeProd(List<String> checked) throws Exception {
+		pdao.deleteProd(checked);
 	}
 
 	

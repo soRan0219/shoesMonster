@@ -83,6 +83,17 @@ public class PerfomanceController {
 
 		return "redirect:/performance/product";
 	}
+	
+	@RequestMapping(value = "/prodDelete", method = RequestMethod.POST)
+	public String deleteProd(@RequestParam(value="checked[]") List<String> checked) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: deleteProd() 호출");
+		logger.debug("@@@@@ CONTROLLER: checked = " + checked);
+		
+		//서비스 - 작업지시 삭제 
+		service.removeProd(checked);
+		
+		return "redirect:/performance/product";
+	} //deleteWorkOrder()
 
 	// ======== 라인 - /line ================================
 	// http://localhost:8088/performance/line
