@@ -76,6 +76,13 @@
 		#{prod_color},#{client_code},#{prod_price},#{prod_note})
 	</insert>
 	<!-- 품목관리 정보 다중 입력 -->
+	
+	<!-- 작업지시 삭제 -->
+	<delete id="deleteProd">
+		DELETE FROM product 
+		WHERE prod_code=#{prod_code}
+	</delete>
+	<!-- 작업지시 삭제 -->
 
 	<!-- 라인 목록 조회 -->
 	<select id="lineList" resultType="com.sm.domain.LineVO">

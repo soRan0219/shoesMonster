@@ -9,6 +9,12 @@
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+        	
+        	//테이블 항목들 인덱스 부여
+    		$('table tr').each(function(index){
+    			$(this).find('td:first').text(index);
+    		});
+        	
             var counter = 0;
 
             // 추가 버튼 클릭 시 row 생성
@@ -40,42 +46,88 @@
             
             // =============================================================================================================
             
-            
-            // 필터링 기능
-            $('#filterButton').click(function(event) {
-            	 
-            	event.preventDefault(); // 페이지 이동 막기
-            	 
-                var searchCode = $('#searchCode').val().toLowerCase();
-                var searchName = $('#searchName').val().toLowerCase();
-                var searchCategory = $('#searchCategory').val().toLowerCase();
-                var searchUnit = $('#searchUnit').val().toLowerCase();
-                
-                $('#productTable tr').each(function() {
-                    var code = $(this).find('td:nth-child(1)').text().toLowerCase();
-                    var name = $(this).find('td:nth-child(2)').text().toLowerCase();
-                    var category = $(this).find('td:nth-child(3)').text().toLowerCase();
-                    var unit = $(this).find('td:nth-child(4)').text().toLowerCase();
-                    
-                    if (code.includes(searchCode) 
-                    	&& name.includes(searchName) 
-                    	&& category.includes(searchCategory) 
-                    	&& unit.includes(searchUnit)){
-                    	
-                        $(this).show();
-                        
-                    } else {
-                    	
-                        $(this).hide();
-                        
-                    }
-                });
-            });
-            
             // 저장 버튼 클릭 시 페이지 이동
             $('form').submit(function() {
                return true;
             });
+            
+        	//취소버튼 -> 리셋
+			$('#cancle').click(function(){
+				$('#fr').each(function(){
+					this.reset();
+				});
+			}); //cacle click
+			
+			
+			// 삭제 기능
+			$('#delete').click(function(){
+				
+				$('#addButton').attr("disabled", true);
+				$('#modify').attr("disabled", true);
+				
+				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
+				$('table tr').each(function(){
+					var code = $(this).find('td:nth-child(2)').text();
+					
+					var tbl = "<input type='checkbox' name='selected' value='";
+					tbl += code;
+					tbl += "'>";
+					
+					$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
+					$(this).find('td:first').html(tbl);
+				});
+				
+				$('#selectAll').click(function() {
+					var checkAll = $(this).is(":checked");
+					
+					if(checkAll) {
+						$('input:checkbox').prop('checked', true);
+					} else {
+						$('input:checkbox').prop('checked', false);
+					}
+				});
+				
+				
+				//저장 -> 삭제
+				$('#save').click(function() {
+					
+					var checked = [];
+					
+					$('input[name=selected]:checked').each(function(){
+						checked.push($(this).val());
+					});
+					
+//	 				alert(checked);
+					
+					if(checked.length > 0) {
+						
+						$.ajax({
+							url: "/performance/prodDelete",
+							type: "post",
+							data: {checked:checked},
+							dataType: "text",
+							success: function() {
+								alert("삭제 성공");
+								location.reload();
+							},
+							error: function() {
+								alert("삭제 실패");
+							}
+						}); //ajax
+						
+					} //체크된거 있을대
+					else {
+						alert("선택된 글이 없습니다.");
+					} //체크된거 없을때
+					
+				}); //save
+				
+				//취소 -> 리셋
+				$('#cancle').click(function(){
+					$('input:checkbox').prop('checked', false);
+				});
+				
+			}); //delete click
             
         });
     </script>
@@ -101,15 +153,16 @@
 	</form>
 	
 	
-	<form action="" method="post" onsubmit="return false">
+	<form action="" method="post" onsubmit="return false" id="fr">
 		<button id="addButton">추가</button>
-		<input type="submit" value="저장">
-		
-	
-		
+		<button id="modify">수정</button>
+		<button id="delete">삭제</button>
+		<button type="reset" id="cancle">취소</button>
+		<input type="submit" value="저장" id="save">
 	
 		<table border="1" id="productTable">
 				<tr>
+					<th>번호</th>
 					<th>품번</th>
 					<th>품명</th>
 					<th>카테고리</th>
@@ -122,6 +175,7 @@
 				</tr>
 			<c:forEach var="vo" items="${prodList}">
 					<tr>
+						<td></td>
 						<td>${vo.prod_code }</td>
 						<td>${vo.prod_name }</td>
 						<td>${vo.prod_category }</td>
