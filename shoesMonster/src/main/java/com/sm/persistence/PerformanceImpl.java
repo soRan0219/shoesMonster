@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import com.sm.domain.LineVO;
 import com.sm.domain.PagingVO;
 import com.sm.domain.ProductVO;
+import com.sm.domain.WarehouseVO;
+import com.sm.domain.Wh_prodVO;
 
 @Repository
 public class PerformanceImpl implements PerformanceDAO {
@@ -69,22 +71,47 @@ public class PerformanceImpl implements PerformanceDAO {
 		sqlSession.insert(NAMESPACE+".prodIn", product);
 	}
 	
-	// 라인
-	@Override
-	public void insertLine(LineVO vo) throws Exception {
-		logger.debug("@@inser@@");
-		
-		int result = sqlSession.insert(NAMESPACE+".insertLine", vo);
-		
-		if(result != 0)
-			logger.debug("라인 글쓰기 완료");
-		
-	}
+	//==========================================================================
+	
+	// 라인 조회
 	@Override
 	public List<LineVO> getLineList() throws Exception {
 		logger.debug("@@getLineList() 호출@@");
 		
 		return sqlSession.selectList(NAMESPACE+".lineList");
+	}
+	
+	// 라인 검색
+	@Override
+	public List<LineVO> getSearchLine(LineVO lvo) throws Exception {
+		logger.debug("@@getSearchLine(LineVO lvo) 호출@@");
+		
+		return sqlSession.selectList(NAMESPACE+".searchLine", lvo);
+	}
+	
+	
+	// 창고 조회
+	@Override
+	public List<WarehouseVO> readWhList() throws Exception {
+		logger.debug("@@readWhList() 호출@@");
+		
+		return sqlSession.selectList(NAMESPACE+".whlist");
+	}
+	
+	// 창고 조회 처리 
+	@Override
+	public List<Wh_prodVO> readWh_prodList() throws Exception {
+		logger.debug("@@readWh_prodList() 호출@@");
+		
+		return sqlSession.selectList(NAMESPACE+".whlist");
+	}
+	
+	// 창고 검색
+	@Override
+	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
+		logger.debug("@@ searchWarehouse(HashMap<String, Object> search) 호출 @@");
+		
+		return sqlSession.selectList(NAMESPACE+".searchWarehouse", search);
 	}
 
 	

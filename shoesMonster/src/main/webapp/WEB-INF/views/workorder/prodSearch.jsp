@@ -11,18 +11,28 @@
 	
 	$(function(){
 		
+		//이벤트 리스너 - 팝업 호출한 부모창 input 아이디 가져와서 해당 input에 넣기
+		window.addEventListener('message', function(event){
 		
-		$('table tr:not(:first-child)').click(function(){
-			
-			$(this).css('background', '#ccc');
-			
-			let prodCode = $(this).find('#prodCode').text();
-			
-			$('#prodCode', opener.document).val(prodCode);
-			
-			window.close();
-			
-		}); //테이블 행 클릭
+			$('table tr:not(:first-child)').click(function(){
+				
+				$(this).css('background', '#ccc');
+				
+				let prodCode = $(this).find('#prodCode').text();
+				
+				var inputId = event.data.inputId;
+				
+				if(inputId==="prod_code") {
+					$('#prod_code', opener.document).val(prodCode);
+				} else if(inputId==="search_prod") {
+					$('#search_prod', opener.document).val(prodCode);
+				}
+				
+				window.close();
+				
+			}); //테이블 행 클릭
+		
+		}); //addEventListener
 		
 	}) //jQuery
 	

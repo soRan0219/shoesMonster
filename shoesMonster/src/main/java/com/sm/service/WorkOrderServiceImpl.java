@@ -1,5 +1,6 @@
 package com.sm.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,23 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 		// DAO - 작업지시 삭제
 		wdao.deleteWorkOrder(checked);
 	} //removeWorkOrder()
+
+	@Override
+	public WorkOrderVO getWorkOrder(String work_code) throws Exception {
+		// DAO - 작업지시 조회
+		return wdao.readWorkOrder(work_code);
+	} //getWorkOrder()
+
+	@Override
+	public void modifyWorkOrder(WorkOrderVO uvo) throws Exception {
+		// DAO - 작업지시 수정
+		wdao.updateWorkOrder(uvo);
+	} //modifyWorkOrder()
+
+	@Override
+	public List<WorkOrderVO> searchWorkOrder(HashMap<String, Object> search) throws Exception {
+		// DAO - 작업지시 검색
+		return wdao.selectWorkOrder(search);
+	} //searchWorkOrder()
 
 } //WorkOrderServiceImpl

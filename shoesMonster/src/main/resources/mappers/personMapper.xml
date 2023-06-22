@@ -6,18 +6,79 @@
 <mapper namespace="com.sm.mapper.PersonMapper">
 	
 	
-	<!-- 회원정보 조회 -->
-	<select id="getEmployees" resultType="com.sm.domain.EmployeesVO">
+	<!-- 사원 목록 조회 -->
+	<select id="empList" resultType="com.sm.domain.EmployeesVO"> 
 		select * from employees
-		where emp_id = #{emp_id}
 	</select>	
-	<!-- 회원정보 조회 -->
+	<!-- 사원 목록 조회 -->
 	
 	
-	<!-- 거래처 조회 -->
+	<!-- 사원 권한 정보 조회 -->
+	<select id="management" resultType="com.sm.domain.ManagementVO">
+		select * from management
+	</select>
+	<!-- 사원 권한 정보 조회 -->
+	
+	
+	<!-- 거래처 목록 불러오기 -->
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
 		select * from clients
 	</select>
-	<!-- 거래처 조회 -->
+	<!-- 거래처 목록 불러오기 -->
+	
+	
+	<!-- 수주 현황 목록 불러오기 -->
+	
+	<resultMap type="com.sm.domain.ProductVO" id="productList">
+			<result column="prod_code" property="prod_code" />
+			<result column="prod_name" property="prod_name" />
+			<result column="prod_unit" property="prod_unit" />
+	
+		<collection property="orders" ofType="com.sm.domain.OrderStatusVO">
+			<result column="order_code" property="order_code" />
+			<result column="order_date" property="order_date" />
+			<result column="order_deliveryDate" property="order_deliveryDate" />
+			<result column="emp_id" property="emp_id" />
+			<result column="order_count" property="order_count" />
+			<result column="client_code" property="client_code" />
+			<result column="order_finish" property="order_finish" />
+			<result column="oreder_note" property="oreder_note" />
+		</collection>
+	</resultMap>
+	
+	<select id="orderStatusList" resultType="com.sm.domain.ProductVO" resultMap="productList">
+		select o.order_code, o.order_date, o.client_code, o.emp_id, p.prod_code, p.prod_name, 
+			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_finish
+		from orders o
+		JOIN product p ON p.client_code = o.client_code
+	</select>
+	
+	<!-- 수주 현황 목록 불러오기 -->
+	
+	<!-- 수주 관리 조회 -->
+	<resultMap type="com.sm.domain.OrderStatusVO" id="order_ManageList">
+		<result column="client_code" property="client_code"/>
+		<result column="client_actname" property="client_actname"/>
+		<result column="order_date" property="order_date"/>
+		<result column="order_deliveryDate" property="order_deliveryDate"/>
+		<result column="emp_id" property="emp_id"/>
+		<result column="emp_name" property="emp_name"/>
+		<result column="prod_code" property="prod_code"/>
+		<result column="prod_name" property="prod_name"/>
+		<result column="prod_unit" property="prod_unit"/>
+		<result column="order_count" property="order_count"/>
+	</resultMap>
+	
+	<select id="orderManageList" resultMap="order_ManageList">
+		select c.client_code, c.client_actname, order_date, order_deliveryDate,
+				e.emp_id, e.emp_name, p.prod_code, p.prod_name, p.prod_unit, order_count
+		from orders o
+		left join product p on p.prod_code = o.prod_code
+		left join employees e on e.emp_id = o.emp_id
+		left join clients c on c.client_code = o.client_code
+	</select>
+	<!-- 수주 관리 조회 -->
+	
+	
 	
 </mapper>

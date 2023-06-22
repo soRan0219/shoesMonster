@@ -1,5 +1,6 @@
 package com.sm.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import com.sm.domain.LineVO;
 import com.sm.domain.PagingVO;
 import com.sm.domain.ProductVO;
+import com.sm.domain.WarehouseVO;
+import com.sm.domain.Wh_prodVO;
 import com.sm.persistence.PerformanceDAO;
 
 @Repository
@@ -55,17 +58,39 @@ public class PerformanceServiceImpl implements PerformanceService {
 		}
 	}
 
-	// 라인
-	@Override
-	public void insertLine(LineVO vo) throws Exception {
-
-		pdao.insertLine(vo);
-	}
+	
+	//==========================================================================
+	// 라인 조회
 
 	@Override
 	public List<LineVO> getLineList() throws Exception {
 
 		return pdao.getLineList();
+	}
+	
+	// 라인 검색
+	@Override
+	public List<LineVO> getSearchLine(LineVO lvo) throws Exception {
+		return pdao.getSearchLine(lvo);
+	}
+	
+	
+	// 창고 조회
+	@Override
+	public List<WarehouseVO> getWhList() throws Exception {
+		return pdao.readWhList();
+	}
+	
+	// 창고 조회 처리 
+	@Override
+	public List<Wh_prodVO> getWh_prodList() throws Exception {
+		return pdao.readWh_prodList();
+	}
+	
+	// 창고 검색
+	@Override
+	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
+		return pdao.searchWarehouse(search);
 	}
 
 }

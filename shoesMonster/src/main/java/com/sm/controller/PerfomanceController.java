@@ -17,6 +17,8 @@ import com.sm.domain.LineVO;
 import com.sm.domain.PagingVO;
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
+import com.sm.domain.WarehouseVO;
+import com.sm.domain.Wh_prodVO;
 import com.sm.service.PerformanceService;
 
 @Controller
@@ -28,6 +30,8 @@ public class PerfomanceController {
 	private PerformanceService service;
 
 	private static final Logger logger = LoggerFactory.getLogger(PerfomanceController.class);
+	
+	//======================================================================================
 	
 	// http://localhost:8088/performance/product
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
@@ -83,30 +87,80 @@ public class PerfomanceController {
 		return "redirect:/performance/product";
 	}
 	
-	// 라인 - /line 
+	//======== 라인 - /line ================================ 
 	// http://localhost:8088/performance/line
 	@RequestMapping(value = "/line", method = RequestMethod.GET)
-	public void lineGET() throws Exception{
+	public void lineGET(Model model, LineVO lvo) throws Exception{
 		logger.debug("@@lineGET() 호출@@");
+		
+		logger.debug("lvo : "+lvo);
+		
+		// 검색
+		if(lvo.getLine_code() != null || lvo.getLine_name() != null ||
+		   lvo.getLine_place() != null || lvo.getLine_use() != 0) {
+			
+			List<LineVO> searchlist = service.getSearchLine(lvo);
+			model.addAttribute("boardList", searchlist );
+			
+			logger.debug("searchlist : "+searchlist);
+			
+			logger.debug("@@ 검색 리스트 호출 @@");
+		
+		}else {
+			List<LineVO> boardList = service.getLineList();
+			model.addAttribute("boardList", boardList);
+			
+			logger.debug("@@ 모든 리스트 호출 @@");
+		}
 	}
 	
-	@RequestMapping(value = "/line", method = RequestMethod.POST)
-	public void linePOST(LineVO vo) throws Exception{
-		logger.debug("@@linePOST() 호출@@");
+//	@RequestMapping(value = "/line", method = RequestMethod.POST)
+//	public void linePOST()throws Exception{
+//		logger.debug("linePOST() 호출");
+//		
+//		List<LineVO> boardList = service.getLineList();
+//		logger.debug("boardList : "+boardList);
+//		
+//		model.addAttribute("boardList", boardList);
+//		
+//	}
+	
+	
+	//======== 라인 - /line ================================
+	
+	//======== 창고 - /warehouse ===========================
+	// http://localhost:8088/performance/warehouse
+	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
+	public void warehouseGET(Model model) throws Exception{
 		
-		logger.debug("@@vo : "+vo);
+		logger.debug("@@ warehouseGET() 호출 @@");
 		
-		service.insertLine(vo);
+		List<WarehouseVO> whList = service.getWhList();
+		model.addAttribute("whList", whList);
+		
+		logger.debug("whList : "+whList);
+		
+		logger.debug("@@ 모든 리스트 호출 @@");
 	}
 	
-	// http://localhost:8088/performance/linelist
-	@RequestMapping(value = "/linelist", method = RequestMethod.GET)
-	public void lineListGET(Model model) throws Exception{
-		logger.debug("@@lineListGET() 호출@@");
+	// 코드 품번 창고명 검색
+	// http://localhost:8088/performance/wh_search
+//	@RequestMapping(value = "/wh_search", method = RequestMethod.GET)
+//	public String whSearchGET(@RequestParam("type") String type, 
+//							  Model model) throws Exception{
+//		
+//		logger.debug("@@ whSearchGET() 호출 @@");
 		
-		List<LineVO> boardList = service.getLineList();
-		logger.debug("boardList : "+boardList);
+//		if()
 		
-		model.addAttribute("boardList", boardList);
-	}
-}
+		
+//		return "";
+//	}
+	//======== 창고 - /warehouse ===========================
+	
+}//PerfomanceController
+
+
+
+
+

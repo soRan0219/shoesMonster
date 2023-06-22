@@ -11,17 +11,29 @@
 	
 	$(function(){
 		
-		$('table tr:not(:first-child)').click(function(){
-			$(this).css('background', '#ccc');
+		//이벤트 리스너 - 팝업 호출한 부모창 input 아이디 가져와서 해당 input에 넣기
+		window.addEventListener('message', function(event){
 			
-			let lineCode = $(this).find('#lineCode').text();
-			
-// 			window.opener.document.getElementById('lineCode').value = lineCode;
-			$('#lineCode', opener.document).val(lineCode);
-			
-			window.close();
-			
-		}); //테이블 행 클릭
+			$('table tr:not(:first-child)').click(function(){
+				$(this).css('background', '#ccc');
+				
+				let lineCode = $(this).find('#lineCode').text();
+				
+				var inputId = event.data.inputId;
+				
+// 				alert(inputId);
+				
+				if(inputId==="line_code") {
+// 					window.opener.document.getElementById('lineCode').value = lineCode;
+					$('#line_code', opener.document).val(lineCode);
+				} else if(inputId==="search_line") {
+					$('#search_line', opener.document).val(lineCode);
+				}
+				
+				window.close();
+				
+			}); //테이블 행 클릭(라인 선택)
+		}); //addEventListener
 		
 	}) //jQuery
 	

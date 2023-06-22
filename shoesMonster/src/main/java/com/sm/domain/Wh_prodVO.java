@@ -1,9 +1,10 @@
 package com.sm.domain;
 
+
 import lombok.Data;
 
 @Data
-public class WarehouseVO {
+public class Wh_prodVO {
 	private String wh_code;
 	private String wh_name;
 	private String wh_dv;
@@ -14,8 +15,7 @@ public class WarehouseVO {
 	private String prod_code;
 	private String raw_code;
 	
+	private ProductVO prod;
+	private RawMaterialVO raw;
 	
-	private ProductVO product;
-	private RawMaterialVO raw_mat;
-	
-} //Warehouse
+}

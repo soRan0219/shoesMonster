@@ -16,4 +16,9 @@ public class Out_materialVO {
 	private int out_price;
 	private Date out_redate;
 	private Date out_date;
+	
+	private OrderStatusVO orders;
+	private ClientsVO client;
+	private ProductVO product;
+	private EmployeesVO emp;
 }

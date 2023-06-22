@@ -77,16 +77,86 @@
 	</insert>
 	<!-- 품목관리 정보 다중 입력 -->
 
-	<!-- 라인 -->
-	<insert id="lineInsert">
-		insert into line
-		values (#{line_code}, #{line_name},
-		#{line_place},
-		#{line_use}, #{emp_id}, #{insert_date}, #{line_note})
-	</insert>
-
+	<!-- 라인 목록 조회 -->
 	<select id="lineList" resultType="com.sm.domain.LineVO">
-		select * from line
+		SELECT * FROM line
 	</select>
+	<!-- 라인 목록 조회 -->
+	
+	<!-- 라인 검색 -->
+	<select id="searchLine" resultType="com.sm.domain.LineVO">
+		<bind name="line_code" value="'%' + line_code +'%'"/>
+		<bind name="line_name" value="'%' + line_name +'%'"/>
+		<bind name="line_place" value="'%' + line_place +'%'"/>
+<!-- 		<bind name="line_use" value="'%' + line_use +'%'"/> -->
+		SELECT * FROM line
+		<where>
+			<if test="line_code != ''">
+				line_code LIKE #{line_code}
+			</if>		
+			<if test="line_name != ''">
+				AND line_name LIKE #{line_name}
+			</if>
+			<if test="line_place != ''">
+				AND line_place LIKE #{line_place}
+			</if>
+			<if test="line_use != 3">
+				AND line_use= #{line_use}
+			</if>
+		</where>
+	</select>	
+	<!-- 라인 검색 -->
+	
+	
+	<!-- 창고 조회 -->
+	<resultMap id="whm_list" type="com.sm.domain.Wh_prodVO">
+	    <result property="raw_code" column="raw_code" />
+	    <result property="prod_code" column="prod_code" />
+		<result property="wh_code" column="wh_code"/>
+		<result property="wh_name" column="wh_name"/>
+		<result property="wh_dv" column="wh_dv"/>
+		<result property="wh_addr" column="wh_addr"/>
+		<result property="wh_tel" column="wh_tel"/>
+		<result property="wh_use" column="wh_use"/>
+		<result property="wh_note" column="wh_note"/>
+	
+	    <collection property="raw" ofType="com.sm.domain.RawMaterialVO">
+	        <result property="raw_name" column="raw_name" />
+	    </collection>
+	
+	    <collection property="prod" ofType="com.sm.domain.ProductVO">
+	        <result property="prod_name" column="prod_name" />
+	    </collection>
+	
+	</resultMap>
+	
+	<select id="whlist" resultMap="whm_list">
+		SELECT wh_code, wh_name, wh_dv,w.prod_code, p.prod_name,
+			   w.raw_code, r.raw_name, wh_addr, wh_tel, wh_use, wh_note 
+		FROM warehouse w
+		LEFT JOIN product p on p.prod_code = w.prod_code
+		LEFT JOIN raw_material r on r.raw_code = w.raw_code
+	</select>
+	<!-- 창고 조회 -->
 
+	<!-- 창고 검색 -->	
+	<select id="searchWareHouse" resultType="WarehouseVO">
+		SELECT * FROM warehouse
+		<where>
+			<if test="wh_code != null and !wh_code.isEmpty()">
+				wh_code = #{wh_code}
+			</if>		
+			<if test="prod_code != null and !prod_code.isEmpty()">
+				prod_code = #{prod_code}
+			</if>
+			<if test="raw_code != null and !raw_code.isEmpty()">
+				raw_code = #{raw_code}
+			</if>
+			<if test="wh_name != null and !wh_name.isEmpty()">
+				AND wh_name = #{wh_name}
+			</if>
+		</where>
+	</select>
+	<!-- 창고 검색 -->	
+	
 </mapper>

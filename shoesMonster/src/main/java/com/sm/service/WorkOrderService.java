@@ -1,5 +1,6 @@
 package com.sm.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.sm.domain.WorkOrderVO;
@@ -14,5 +15,14 @@ public interface WorkOrderService {
 	
 	//작업지시 삭제
 	public void removeWorkOrder(List<String> checked) throws Exception;
+	
+	//작업지시 조회
+	public WorkOrderVO getWorkOrder(String work_code) throws Exception;
+	
+	//작업지시 수정
+	public void modifyWorkOrder(WorkOrderVO uvo) throws Exception;
+	
+	//작업지시 검색
+	public List<WorkOrderVO> searchWorkOrder(HashMap<String, Object> search) throws Exception;
 	
 } //WorkOrderService

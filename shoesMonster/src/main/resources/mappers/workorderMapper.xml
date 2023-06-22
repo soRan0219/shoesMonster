@@ -25,6 +25,44 @@
 	</delete>
 	<!-- 작업지시 삭제 -->
 	
+	<!-- 작업지시 조회 -->
+	<select id="readWorkOrder" resultType="WorkOrderVO">
+		SELECT * FROM work_order WHERE work_code=#{work_code}
+	</select>
+	<!-- 작업지시 조회 -->
+	
+	<!-- 작업지시 수정 -->
+	<update id="updateWorkOrder">
+		UPDATE work_order 
+		SET line_code=#{line_code}, prod_code=#{prod_code}, order_code=#{order_code}, 
+			work_state=#{work_state}, change_date=now(), work_qt=#{work_qt} 
+		WHERE work_code=#{work_code}
+	</update>
+	<!-- 작업지시 수정 -->
+	
+	<!-- 작업지시 검색 -->
+	<select id="searchWorkOrder" resultType="WorkOrderVO">
+		
+		SELECT * FROM work_order 
+		<where>
+			<if test="line_code!=null and !line_code.isEmpty()">
+				line_code=#{line_code}
+			</if> 
+			<if test="(from_date!=null and !from_date.equals('')) and (to_date!=null and !to_date.equals(''))">
+				AND (work_date &gt;= #{from_date} AND work_date &lt;= #{to_date}) 
+			</if> 
+			<if test="work_state!=null and !work_state.isEmpty() and !work_state.equals('전체')">
+				AND work_state=#{work_state} 
+			</if> 
+			<if test="prod_code!=null and !prod_code.isEmpty()">
+				AND prod_code=#{prod_code}
+			</if> 
+		</where>
+	</select>
+	<!-- 작업지시 검색 -->
+	
+	
+	
 	
 	
 </mapper>
