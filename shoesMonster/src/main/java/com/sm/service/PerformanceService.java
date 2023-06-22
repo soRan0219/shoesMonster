@@ -14,8 +14,11 @@ public interface PerformanceService {
 	// 품목관리 리스트 불러오기
 	public List<ProductVO> getProdList(PagingVO pvo) throws Exception; 
 	
+	// 품목관리 게시물 검색 갯수
+	public int countProd(ProductVO vo);
+	
 	// 품목관리 검색리스트 불러오기
-	public List<ProductVO> getProdList(ProductVO vo) throws Exception;
+	public List<ProductVO> getProdList(ProductVO vo,PagingVO pvo) throws Exception;
 	
 	// 품목관리 정보 다중 저장
 	public void insertProd(List<ProductVO> products); 

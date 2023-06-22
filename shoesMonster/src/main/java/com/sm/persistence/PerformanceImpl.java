@@ -1,7 +1,9 @@
 package com.sm.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,15 +36,31 @@ public class PerformanceImpl implements PerformanceDAO {
 	@Override
 	public List<ProductVO> readProdList(PagingVO pvo) throws Exception {
 		logger.debug(" 품목관리 전체리스트 DAO ");
-		return sqlSession.selectList(NAMESPACE+".readProd");
+		return sqlSession.selectList(NAMESPACE+".readProd",pvo);
 	}
 	
+	// 품목관리 검색 리스트 총 갯수
+	@Override
+	public int countProd(ProductVO vo) {
+		return sqlSession.selectOne(NAMESPACE+".countSearchProd", vo);
+	}
 
 	// 품목 검색리스트 불러오기
 	@Override
-	public List<ProductVO> readProdList(ProductVO vo) throws Exception {
-		logger.debug(" 품목관리 검색리스트 DAO ");
-		return sqlSession.selectList(NAMESPACE+".readSearchProd",vo);
+	public List<ProductVO> readProdList(ProductVO vo,PagingVO pvo) throws Exception {
+//		logger.debug(" 품목관리 검색리스트 DAO ");
+//		RowBounds row = new RowBounds(pvo.getStart(), pvo.getCntPerPage());
+//		return sqlSession.selectList(NAMESPACE+".readSearchProd",vo,row);
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("start",pvo.getStart());
+		data.put("cntPerPage",pvo.getCntPerPage());
+		data.put("prod_code", vo.getProd_code());
+		data.put("prod_name", vo.getProd_name());
+		data.put("prod_category", vo.getProd_category());
+		data.put("prod_unit", vo.getProd_unit());
+		
+		return sqlSession.selectList(NAMESPACE+".readSearchProd",data);
 	}
 
 	// 품목관리 정보 다중 저장

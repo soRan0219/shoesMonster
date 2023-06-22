@@ -23,7 +23,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 	// 품목관리 총 갯수
 	@Override
 	public int countProd() {
-		return 0;
+		return pdao.countProd();
 	}
 
 	// 품목관리 리스트 불러오기
@@ -31,13 +31,21 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public List<ProductVO> getProdList(PagingVO pvo) throws Exception {
 		return pdao.readProdList(pvo);
 	}
+	
+	//품목관리 검색리스트 갯수 불러오기
+	@Override
+	public int countProd(ProductVO vo) {
+		return pdao.countProd(vo);
+	}
 
 	// 품목관리 검색리스트 불러오기
 	@Override
-	public List<ProductVO> getProdList(ProductVO vo) throws Exception {
+	public List<ProductVO> getProdList(ProductVO vo,PagingVO pvo) throws Exception {
 
-		return pdao.readProdList(vo);
+		return pdao.readProdList(vo,pvo);
 	}
+
+	
 
 	// 품목관리 정보 다중
 	@Override
