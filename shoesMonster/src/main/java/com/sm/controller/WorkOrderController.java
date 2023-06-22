@@ -56,13 +56,15 @@ public class WorkOrderController {
 		logger.debug("@@@@@ CONTROLLER: type = " + type);
 		
 		if(type.equals("line")) {
-			model.addAttribute("lineList", pService.getLineList());
-			return "/workorder/lineSearch";
+//			model.addAttribute("lineList", pService.getLineList());
+//			return "/workorder/lineSearch";
+			return "redirect:/performance/line";
 		}
 		
 		else if(type.equals("prod")) {
-			model.addAttribute("prodList", pService.getProdList());
-			return "/workorder/prodSearch";
+//			model.addAttribute("prodList", pService.getProdList());
+//			return "/workorder/prodSearch";
+			return "redirect:/performance/product";
 		}
 		
 		else /* if(type.equals("order"))*/ {
