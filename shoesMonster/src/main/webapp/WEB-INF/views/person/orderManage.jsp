@@ -35,10 +35,10 @@
 			<c:forEach var="vo" items="${orderManageList }" varStatus="i">
 				<tr>
 					<td>${i.count }</td>
-					<td>${vo.clients.client_code}</td>
-					<td>${vo.clients.client_actname}</td>
-					<td>${vo.order_date}</td>
-					<td>${vo.order_deliveryDate}</td>
+					<td>${vo.client_code}</td>
+					<td>${vo.client_actname}</td>
+					<td>${vo.orders.order_date}</td>
+					<td>${vo.orders.order_deliveryDate}</td>
 					<td>${vo.employees.emp_id}</td>
 					<td>${vo.employees.emp_name}</td>
 				</tr>
