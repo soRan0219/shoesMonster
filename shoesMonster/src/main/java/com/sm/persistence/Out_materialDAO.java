@@ -3,6 +3,7 @@ package com.sm.persistence;
 import java.util.List;
 
 import com.sm.domain.Out_materialVO;
+import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
 
 public interface Out_materialDAO {
@@ -13,4 +14,9 @@ public interface Out_materialDAO {
 			
 			// 발주 목록 조회
 			public List<Out_materialVO> Out_matList(int startRow,int pageSize) throws Exception;
-}
+			
+			// 발주 검색
+			public List<Out_materialVO> searchOut_mat(Out_materialVO ovo) throws Exception;
+			
+			
+ }

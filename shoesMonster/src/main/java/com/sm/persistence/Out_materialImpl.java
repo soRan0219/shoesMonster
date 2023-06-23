@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.Out_materialVO;
+import com.sm.domain.ProductVO;
 
 @Repository
 public class Out_materialImpl implements Out_materialDAO {
@@ -36,6 +37,12 @@ public class Out_materialImpl implements Out_materialDAO {
         data.put("pageSize", pageSize);
 		
 		return sqlSession.selectList(NAMESPACE+".out_matPage",data);
+	}
+
+	@Override
+	public List<Out_materialVO> searchOut_mat(Out_materialVO ovo) throws Exception {
+
+		return sqlSession.selectList(NAMESPACE+".searchOut");
 	}
 
 	

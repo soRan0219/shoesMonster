@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sm.domain.ClientsVO;
 import com.sm.domain.In_materialVO;
+import com.sm.domain.LineVO;
 import com.sm.domain.Out_materialVO;
+import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
 import com.sm.domain.StockVO;
 import com.sm.service.In_materialService;
@@ -254,7 +257,7 @@ public class stockController {
 		int count2 = o_service.count2();
 
 		// 한 페이지에 출력할 게시물 개수
-		int pageSize = 1;
+		int pageSize = 10;
 
 		String pageNum = request.getParameter("num");
 		if (pageNum == null) {
@@ -267,7 +270,7 @@ public class stockController {
 
 		// 페이징 처리 - 하단
 		int pageCount = count2/ pageSize + (count2 % pageSize == 0 ? 0 : 1);
-		int pageBlock = 1;
+		int pageBlock = 5;
 
 		// 페이지 번호
 		int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
@@ -286,6 +289,26 @@ public class stockController {
     		
     	}
     	
+    	// 출고 검색
+//    	@RequestMapping(value="/Out_material",method=RequestMethod.POST)
+//    	public void searchOut_mat(Model model , Out_materialVO ovo 
+//    			,ClientsVO cvo , ProductVO pvo) throws Exception{
+//    		
+//    		if (ovo.getOut_num() != null || cvo.getClient_actname() != null || pvo.getProd_name() != null
+//    				) {
+//
+////    			List<Out_materialVO> searchList = o_service.searchOut_mat(ovo);
+//    			model.addAttribute("searchlist", searchList);
+//
+//    			logger.debug("searchlist : " + searchList);
+//
+//    			logger.debug("@@ 검색 리스트 호출 @@");
+//
+//    		} 
+//    		
+//    		
+//    		
+//    	}
     	
     	//////////////////////////// 출고 페이지 ///////////////////////////////////////
 }

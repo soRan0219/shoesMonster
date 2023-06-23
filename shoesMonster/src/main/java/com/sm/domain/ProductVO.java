@@ -17,5 +17,7 @@ public class ProductVO {
 	private String prod_note;
 	
 	private OrderStatusVO orders;
+	private ClientsVO client;
+	private Out_materialVO out_mat;
 	
 } //productVO
