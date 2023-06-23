@@ -148,6 +148,14 @@ public class PerformanceImpl implements PerformanceDAO {
 
 		return sqlSession.selectList(NAMESPACE + ".searchWarehouse", search);
 	}
+	
+	// 게시판 총 글개수 계산
+	@Override
+	public int getTotalCount() throws Exception {
+		logger.debug("@@ getTotalCount() 호출 @@");
+		
+		return sqlSession.selectOne(NAMESPACE+".totalCnt");
+	}
 
 
 
