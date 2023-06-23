@@ -13,39 +13,39 @@
         $(document).ready(function() {
         	
 
-        	let popVal;
+//         	let popVal;
         	
-        	window.addEventListener('message', function(event){
+//         	window.addEventListener('message', function(event){
         		
-        		if(event) {
-// 	        		alert(event);
+//         		if(event) {
+// // 	        		alert(event);
 	        		
-	        		$('#addButton').hide();
-	        		$('#save').hide();
+// 	        		$('#addButton').hide();
+// 	        		$('#save').hide();
 	        		
-	       			$('#productTable tr:not(:first-child)').click(function(){
-	         			$(this).css('background', '#ccc');
+// 	       			$('#productTable tr:not(:first-child)').click(function(){
+// 	         			$(this).css('background', '#ccc');
 	         			
-	         			var prodCode = $(this).find('#prodCode').text();
+// 	         			var prodCode = $(this).find('#prodCode').text();
 	         			
-	         			var inputId = event.data.inputId;
+// 	         			var inputId = event.data.inputId;
 	         			
-	         			if(inputId==="prod_code") {
-	         				$('#prod_code', opener.document).val(prodCode);
-	         			} else if(inputId==="search_prod") {
-	         				$('#search_prod', opener.document).val(prodCode);
-	         			}
+// 	         			if(inputId==="prod_code") {
+// 	         				$('#prod_code', opener.document).val(prodCode);
+// 	         			} else if(inputId==="search_prod") {
+// 	         				$('#search_prod', opener.document).val(prodCode);
+// 	         			}
 	         			
-	         			window.close();
-	         		}); 
+// 	         			window.close();
+// 	         		}); 
 	        		
-	        		popVal = event;
-        		} else {
-        			alert("null");
-        		}
+// 	        		popVal = event;
+//         		} else {
+//         			alert("null");
+//         		}
         		
         	
-        	}); //addEventListener
+//         	}); //addEventListener
 
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
@@ -86,93 +86,93 @@
             
 
             
-            // 필터링 기능
-            $('#filterButton').click(function(event) {
+//             // 필터링 기능
+//             $('#filterButton').click(function(event) {
 
                 
-            	//================ 기존코드 ========================
+//             	//================ 기존코드 ========================
             	
             	
-                var searchCode = $('#searchCode').val().toLowerCase();
-                var searchName = $('#searchName').val().toLowerCase();
-                var searchCategory = $('#searchCategory').val().toLowerCase();
-                var searchUnit = $('#searchUnit').val().toLowerCase();
+//                 var searchCode = $('#searchCode').val().toLowerCase();
+//                 var searchName = $('#searchName').val().toLowerCase();
+//                 var searchCategory = $('#searchCategory').val().toLowerCase();
+//                 var searchUnit = $('#searchUnit').val().toLowerCase();
             	
-//             	alert(searchName);
+// //             	alert(searchName);
             		
-            	var jsonData = {
-            			prod_code:searchCode,
-            			prod_name:searchName,
-            			prod_category:searchCategory,
-            			prod_unit:searchUnit
-            	};
+//             	var jsonData = {
+//             			prod_code:searchCode,
+//             			prod_name:searchName,
+//             			prod_category:searchCategory,
+//             			prod_unit:searchUnit
+//             	};
             	
-            	$.ajax({
-            		url: "/performance/search",
-            		type: "post",
-            		contentType: "application/json; charset=UTF-8",
-    				dataType: "json",
-    				data: JSON.stringify(jsonData),
-    				success: function(data) {
-    					//data => List 객체
-    					if(data.length != 0) {
-    						//검색 결과 있을 때
-    						for(var i=0; i<data.length; i++) {
-    							console.log(data[i].prod_code);
+//             	$.ajax({
+//             		url: "/performance/search",
+//             		type: "post",
+//             		contentType: "application/json; charset=UTF-8",
+//     				dataType: "json",
+//     				data: JSON.stringify(jsonData),
+//     				success: function(data) {
+//     					//data => List 객체
+//     					if(data.length != 0) {
+//     						//검색 결과 있을 때
+//     						for(var i=0; i<data.length; i++) {
+//     							console.log(data[i].prod_code);
     							
-    							//th 밑에 있던 줄 모두 제거하고 검색결과 append
-    							var tbl = "<tr>";
-    							tbl += " <td id='prodCode'>" + data[i].prod_code + "</td>";
-    							tbl += " <td>" + data[i].prod_name + "</td>";
-    							tbl += " <td>" + data[i].prod_category + "</td>";
-    							tbl += " <td>" + data[i].prod_unit + "</td>";
-    							tbl += " <td>" + data[i].prod_color + "</td>";
-    							tbl += " <td>" + data[i].prod_size + "</td>";
-    							tbl += " <td>" + data[i].client_code + "</td>";
-    							tbl += " <td>" + data[i].prod_price + "</td>";
-    							tbl += " <td>" + data[i].prod_note + "</td>";
-    							tbl += "</tr>";
+//     							//th 밑에 있던 줄 모두 제거하고 검색결과 append
+//     							var tbl = "<tr>";
+//     							tbl += " <td id='prodCode'>" + data[i].prod_code + "</td>";
+//     							tbl += " <td>" + data[i].prod_name + "</td>";
+//     							tbl += " <td>" + data[i].prod_category + "</td>";
+//     							tbl += " <td>" + data[i].prod_unit + "</td>";
+//     							tbl += " <td>" + data[i].prod_color + "</td>";
+//     							tbl += " <td>" + data[i].prod_size + "</td>";
+//     							tbl += " <td>" + data[i].client_code + "</td>";
+//     							tbl += " <td>" + data[i].prod_price + "</td>";
+//     							tbl += " <td>" + data[i].prod_note + "</td>";
+//     							tbl += "</tr>";
     							
-    							if(i==0) {
-    								$('#productTable tr:gt(0)').remove();
-    								$('#productTable').append(tbl);
-    							} else {
-    								$('#productTable').append(tbl);
-    							}
+//     							if(i==0) {
+//     								$('#productTable tr:gt(0)').remove();
+//     								$('#productTable').append(tbl);
+//     							} else {
+//     								$('#productTable').append(tbl);
+//     							}
     							
-    						} //for
-    					} //if(검색결과 있을 때)
+//     						} //for
+//     					} //if(검색결과 있을 때)
     					
-    					//팝업으로 열었을 때
-    					if(popVal) {
+//     					//팝업으로 열었을 때
+//     					if(popVal) {
     						
-    			   			$('#productTable tr:not(:first-child)').click(function(){
-    			     			$(this).css('background', '#ccc');
+//     			   			$('#productTable tr:not(:first-child)').click(function(){
+//     			     			$(this).css('background', '#ccc');
     			     			
-    			     			var prodCode = $(this).find('#prodCode').text();
+//     			     			var prodCode = $(this).find('#prodCode').text();
     			     			
-    			     			var inputId = popVal.data.inputId;
+//     			     			var inputId = popVal.data.inputId;
     			     			
-    			     			if(inputId==="prod_code") {
-    			     				$('#prod_code', opener.document).val(prodCode);
-    			     			} else if(inputId==="search_prod") {
-    			     				$('#search_prod', opener.document).val(prodCode);
-    			     			}
+//     			     			if(inputId==="prod_code") {
+//     			     				$('#prod_code', opener.document).val(prodCode);
+//     			     			} else if(inputId==="search_prod") {
+//     			     				$('#search_prod', opener.document).val(prodCode);
+//     			     			}
     			     			
-    			     			window.close();
-    			     		}); 
+//     			     			window.close();
+//     			     		}); 
     						
-    					} //if(popVal)
+//     					} //if(popVal)
     					
     					
     					
-    				},
-    				error: function() {
-    					alert(" ****** 실패 *******");
-    				}
-            	}); //ajax
+//     				},
+//     				error: function() {
+//     					alert(" ****** 실패 *******");
+//     				}
+//             	}); //ajax
             		
-            }); //검색
+//             }); //검색
             
         	
         	
@@ -282,7 +282,7 @@
         	<input type="text" name="prod_category" id="searchCategory"> 
         	<label>품목 단위:</label>
         	<input type="text" name="prod_unit" id="searchUnit">
-<!--         	<input type="submit" value="검색"> -->
+        	<input type="submit" value="검색">
         	<input type="button" value="검색" id="filterButton">
 		</fieldset>
 	</form>
@@ -312,8 +312,7 @@
 			<c:forEach var="vo" items="${prodList}">
 					<tr>
 						<td></td>
-						<td>${vo.prod_code }</td>
-            <td id="prodCode">${vo.prod_code }</td>
+         			    <td id="prodCode">${vo.prod_code }</td>
 						<td>${vo.prod_name }</td>
 						<td>${vo.prod_category }</td>
 						<td>${vo.prod_unit }</td>
