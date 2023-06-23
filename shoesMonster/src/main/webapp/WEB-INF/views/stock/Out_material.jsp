@@ -10,23 +10,30 @@
 <body>
 		<h1> 출고 관리 </h1>
 		
-		<form action="" method="POST">
-		<label>출고 번호</label>
-			<input type="text" name="out_num"  placeholder="검색어를 입력해주세요">
-		
-		
-		<label>거래처명</label>
-		<input type="text" name="client_actname" placeholder="검색어를 입력해주세요">
-		
-		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
-		<label>품명</label>
-		<input type="text" name="prod_name" placeholder="검색어를 입력해주세요">
-			
 
-		<input type="submit" value="검색">
 		
+		
+<!-- 		<label>출고 번호</label> -->
+<!-- 			<input type="text" name="out_num" value="out_num" placeholder="검색어를 입력해주세요"> -->
+		<form action="" method="get">
+		<fieldset>
+       		<label>출고번호:</label>
+        	<input type="text" name="out_num" value="">
+        	<label>품명:</label>
+        	<input type="text" name="prod_name" value="">
+        	<label>거래처명:</label>
+        	<input type="text" name="client_actname" value=""> 
+        	<input type="submit" value="검색">
+		</fieldset>
 		</form>
 		
+<!-- 		<!-- 이것도 옵션으로 바꿀까 생각해보기 --> 
+<!-- 		<label>품명</label> -->
+<!-- 		<input type="text" name="prod_name" value="prod_name" placeholder="검색어를 입력해주세요"> -->
+			
+
+		
+
 		
 		 <table border="1">
     <tr>
@@ -52,7 +59,7 @@
                 <td>${out.orders.order_deliveryDate}</td>
                 <td>${out.orders.client_code}</td>
                 <td>${out.client.client_actname}</td>
-                <td>${out.orders.emp_id}</td>
+                <td>${out.out_mat.emp_id}</td>
                 <td>${out.prod_code}</td>
                 <td>${out.prod_name}</td>
                 <td>${out.prod_price}원</td>
@@ -68,15 +75,18 @@
 <div>
     <c:if test="${count2 > 0 }">
     	<c:if test="${startPage > pageBlock }">
-    		<span><a href="/stock/Out_material?num=${startPage - pageBlock}">이전</a></span>
+    		<span><a href="/stock/Out_material?num=${startPage - pageBlock}&client_actname=${out.client.client_actname}
+    		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">이전</a></span>
     	</c:if>
 	
 		<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-			<a href="/stock/Out_material?num=${i }">${i }</a>
+			<a href="/stock/Out_material?num=${i }&client_actname=${out.client.client_actname}
+    		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">${i }</a>
 		</c:forEach>
 		
 		<c:if test="${endPage < count2 }">
-			<a href="/stock/Out_material?num=${startPage + pageBlock}">다음</a>
+			<a href="/stock/Out_material?num=${startPage + pageBlock}&client_actname=${out.client.client_actname}
+    		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">다음</a>
 		</c:if>
     </c:if>
 </div>

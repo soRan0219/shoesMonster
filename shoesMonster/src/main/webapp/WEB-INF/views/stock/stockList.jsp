@@ -13,17 +13,15 @@
 	
 	<hr>
 	
-	<form action="">
-	        재고 번호 <input type="text" placeholder="발주 번호를 입력하세요">
+	<div>
+	        재고 번호 <input type="text"  placeholder="발주 번호를 입력하세요">
 	   	품명 <input type="text" placeholder="품명을 입력하세요">
 	   	거래처명 <input type="text" placeholder="거래처명을 입력하세요"> 
 	   	<button type="submit">검색</button>
-    </form>
+    </div>
     
     
-    	<hr>    
-    	${count3 } , ${stockList }
-        <hr>
+    
     
     
     
