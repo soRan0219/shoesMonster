@@ -45,7 +45,6 @@
 		var popup = window.open(url, "", popupOpt);
 		
 		popup.onload = function() {
-// 			popup.postMessage(value, '*');
 			popup.postMessage({inputId:inputId}, '*');
 		};
 	} //openWindow()

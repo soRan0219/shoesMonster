@@ -8,9 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
@@ -43,6 +44,34 @@ public class PerfomanceController {
 		model.addAttribute("products", products);
 		logger.debug("vo : " + vo);
 
+		
+		
+		
+		// ************************* 기존 코드 ********************************* //
+		
+		
+//		if (vo.getProd_code() != null || vo.getProd_name() !=null || 
+//			vo.getProd_category() !=null || vo.getProd_unit() !=null ) {
+//			List<ProductVO> list = service.getProdList(vo);
+//			model.addAttribute("prodList", list);
+//			logger.debug("검색 리스트 가져감");
+//			
+//		}else {
+//			List<ProductVO> list = service.getProdList();
+//			model.addAttribute("prodList", list);
+//			logger.debug(" 모든 리스트 가져감");
+//		}
+		
+		
+		// ************************* 기존 코드 ********************************* //
+		
+		
+		List<ProductVO> list = service.getProdList();
+		model.addAttribute("prodList", list);
+		logger.debug(" 모든 리스트 가져감");
+		
+		
+
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "5";
@@ -74,6 +103,45 @@ public class PerfomanceController {
 
 	}
 
+  
+  
+  
+  
+  
+  
+  
+  	////////////////////// 검색 ajax /////////////////////////
+	@ResponseBody
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public List<ProductVO> searchPOST(@RequestBody ProductVO vo) throws Exception {
+		logger.debug("searchPOST() 호출");
+		
+		List<ProductVO> list = new ArrayList<>();
+		
+		if (vo.getProd_code() != null || vo.getProd_name() !=null || 
+			vo.getProd_category() !=null || vo.getProd_unit() !=null ) {
+			list = service.getProdList(vo);
+			logger.debug("검색 리스트 가져감");
+		}
+		
+		return list;
+	} //searchPOST()
+	////////////////////// 검색 ajax /////////////////////////
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 	@RequestMapping(value = "product", method = RequestMethod.POST)
 	public String productPOST(ProductList products) throws Exception {
 
