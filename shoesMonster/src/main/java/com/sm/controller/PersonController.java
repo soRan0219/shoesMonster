@@ -67,10 +67,10 @@ public class PersonController {
 	}
 	
 	
+	// ========== 거래처 - /Person/Clients (GET) =========
 	// http://localhost:8088/person/Clients
-	// 거래처 목록 불러오기 - /Person/Clients (GET)
 	@RequestMapping(value="/Clients", method = RequestMethod.GET)
-	public void ClientsGET(Model model) throws Exception {
+	public void ClientsGET(Model model, ClientsVO cvo) throws Exception {
 		logger.debug("ClientsGET(Model model) 호출");
 		
 		// service - DB에 저장된 글 정보 가져오기
@@ -79,9 +79,21 @@ public class PersonController {
 		
 		model.addAttribute("clientsList", clientsList);
 		
+		logger.debug("cvo : " + cvo);
+		
+		// 검색
+		if(cvo.getClient_code() != null || cvo.getClient_name() != null || cvo.getClient_type() != null ) {
+			List<ClientsVO> searchClientsList = clService.getSearchClientsList(cvo);
+			model.addAttribute("clientsList", searchClientsList);
+			
+			logger.debug("searchClientsList : " + searchClientsList);
+			
+			logger.debug("@@@ 거래처 검색 리스트 호출 @@@");
+		}
+		
 		
 	}
-	// 거래처 목록 불러오기
+	// ========== 거래처 ===================================
 	
 	
 	// http://localhost:8088/person/orderStatus

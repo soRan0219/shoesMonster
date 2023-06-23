@@ -25,10 +25,18 @@ public class ClientsDAOImpl implements ClientsDAO {
 	// 거래처 목록 불러오기
 	@Override
 	public List<ClientsVO> readClientsListAll() throws Exception {
-		logger.debug("readClientsListAll() 호출");
+		logger.debug("@@@ readClientsListAll() 호출 @@@");
 		
 		return sqlSession.selectList(NameSpace+".listAll");
 	}
+
+	@Override
+	public List<ClientsVO> getSearchClientsList(ClientsVO cvo) throws Exception {
+		logger.debug("@@@ getSearchClientsList(ClientsVO cvo) 호출 @@@");
+		
+		return sqlSession.selectList(NameSpace+".searchClientsList", cvo);
+	}
+	
 	
 	
 }
