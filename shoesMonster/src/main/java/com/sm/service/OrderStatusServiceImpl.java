@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sm.domain.ClientsVO;
 import com.sm.domain.OrderStatusVO;
 import com.sm.persistence.OrderStatusDAO;
 
@@ -21,7 +22,7 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 	}
 
 	@Override
-	public List<OrderStatusVO> getOrderManageList() throws Exception {
+	public List<ClientsVO> getOrderManageList() throws Exception {
 		return osdao.readOrderManageList();
 	}
 	

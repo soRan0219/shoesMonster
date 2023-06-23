@@ -20,4 +20,7 @@ public class ClientsVO {
 	private String client_email;
 	private String client_note;
 	
+	private EmployeesVO employees;
+	private OrderStatusVO orders;
+	
 } // ClientsVO

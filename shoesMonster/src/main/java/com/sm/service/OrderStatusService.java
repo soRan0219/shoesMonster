@@ -2,6 +2,7 @@ package com.sm.service;
 
 import java.util.List;
 
+import com.sm.domain.ClientsVO;
 import com.sm.domain.OrderStatusVO;
 
 public interface OrderStatusService {
@@ -11,7 +12,7 @@ public interface OrderStatusService {
 	public List<OrderStatusVO> getOsList() throws Exception;
 	
 	// 수주 관리 조회
-	public List<OrderStatusVO> getOrderManageList() throws Exception;
+	public List<ClientsVO> getOrderManageList() throws Exception;
 	
 	
 }

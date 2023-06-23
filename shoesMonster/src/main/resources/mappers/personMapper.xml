@@ -56,26 +56,26 @@
 	<!-- 수주 현황 목록 불러오기 -->
 	
 	<!-- 수주 관리 조회 -->
-	<resultMap type="com.sm.domain.OrderStatusVO" id="order_ManageList">
+	<resultMap type="com.sm.domain.ClientsVO" id="Client_order_ManageList">
 		<result column="client_code" property="client_code"/>
 		<result column="client_actname" property="client_actname"/>
-		<result column="order_date" property="order_date"/>
-		<result column="order_deliveryDate" property="order_deliveryDate"/>
-		<result column="emp_id" property="emp_id"/>
-		<result column="emp_name" property="emp_name"/>
-		<result column="prod_code" property="prod_code"/>
-		<result column="prod_name" property="prod_name"/>
-		<result column="prod_unit" property="prod_unit"/>
-		<result column="order_count" property="order_count"/>
+		
+		<collection property="orders" ofType="com.sm.domain.OrderStatusVO">
+			<result column="order_date" property="order_date"/>
+			<result column="order_deliveryDate" property="order_deliveryDate"/>
+		</collection>
+		<collection property="employees" ofType="com.sm.domain.EmployeesVO">
+			<result column="emp_id" property="emp_id"/>
+			<result column="emp_name" property="emp_name"/>
+		</collection>
 	</resultMap>
 	
-	<select id="orderManageList" resultMap="order_ManageList">
-		select c.client_code, c.client_actname, order_date, order_deliveryDate,
-				e.emp_id, e.emp_name, p.prod_code, p.prod_name, p.prod_unit, order_count
-		from orders o
-		left join product p on p.prod_code = o.prod_code
-		left join employees e on e.emp_id = o.emp_id
-		left join clients c on c.client_code = o.client_code
+	<select id="orderManageList" resultMap="Client_order_ManageList">
+		select c.client_code, c.client_actname, o.order_date, o.order_deliveryDate,
+				e.emp_id, e.emp_name
+		from clients c
+		join orders o on o.client_code = c.client_code
+        join employees e on e.emp_id = o.emp_id;
 	</select>
 	<!-- 수주 관리 조회 -->
 	

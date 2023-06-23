@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.ClientsVO;
 import com.sm.domain.OrderStatusVO;
 
 @Repository
@@ -32,7 +33,7 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
 	
 	// 수주 관리 조회
 	@Override
-	public List<OrderStatusVO> readOrderManageList() throws Exception {
+	public List<ClientsVO> readOrderManageList() throws Exception {
 		logger.debug(" readOrderManageList() 호출@@@@@ ");
 		return sqlSession.selectList(NameSpace + ".orderManageList");
 	}

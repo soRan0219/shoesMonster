@@ -15,4 +15,7 @@ public class WarehouseVO {
 	private String raw_code;
 	
 	
+	private ProductVO product;
+	private RawMaterialVO raw_mat;
+	
 } //Warehouse

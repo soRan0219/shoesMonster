@@ -1,5 +1,6 @@
 package com.sm.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -36,9 +37,9 @@ public class In_materialServiceImpl implements In_materialService{
 		return idao.count();
 	}
 	@Override
-	public int count(In_materialVO ivo) throws Exception {
+	public int count(HashMap<String, Object> search) throws Exception {
 		
-		return idao.count(ivo);
+		return idao.count(search);
 	}
 
 	
@@ -53,20 +54,14 @@ public class In_materialServiceImpl implements In_materialService{
 
 	@Override
 	public List<In_materialVO> getIn_matPage(int displayPost, int postNum , 
-			In_materialVO ivo) throws Exception {
+			HashMap<String, Object> search) throws Exception {
 		
-		return idao.In_matPage(displayPost, postNum, ivo);
+		return idao.In_matPage(displayPost, postNum, search);
 	}
 
 
 
-//	@Override
-//	public List<In_materialVO> In_matSearch(
-//			int displayPost, int postNum, String keyword) throws Exception {
-//
-//		
-//		return idao.In_matSearch(displayPost, postNum, keyword);
-//	}
+
 	
 
 	

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sm.domain.PagingVO;
+import com.sm.domain.ProductVO;
 import com.sm.domain.WorkOrderVO;
 import com.sm.service.OrderStatusService;
 import com.sm.service.PerformanceService;
@@ -51,9 +53,21 @@ public class WorkOrderController {
 	
 	//라인, 품목, 수주 검색
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String lineGET(Model model, @RequestParam("type") String type) throws Exception {
+	public String lineGET(Model model, @RequestParam("type") String type, PagingVO pvo,
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage
+			) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: lineGET() 호출");
 		logger.debug("@@@@@ CONTROLLER: type = " + type);
+		
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
 		
 		if(type.equals("line")) {
 //			model.addAttribute("lineList", pService.getLineList());
@@ -62,9 +76,13 @@ public class WorkOrderController {
 		}
 		
 		else if(type.equals("prod")) {
-//			model.addAttribute("prodList", pService.getProdList());
-//			return "/workorder/prodSearch";
+
+			int total = pService.countProd();
+			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			model.addAttribute("prodList", pService.getProdList(pvo));
+			model.addAttribute("paging", pvo);
 			return "redirect:/performance/product";
+
 		}
 		
 		else /* if(type.equals("order"))*/ {
@@ -72,9 +90,10 @@ public class WorkOrderController {
 			model.addAttribute("orderList", osService.getOsList());
 			return "/workorder/orderSearch";
 		}
+	}
 		
 //		return "";
-	} //lineGET()
+//	} //lineGET()
 	
 	//작업지시 추가
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

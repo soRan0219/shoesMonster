@@ -2,6 +2,7 @@ package com.sm.persistence;
 
 import java.util.List;
 
+import com.sm.domain.ClientsVO;
 import com.sm.domain.OrderStatusVO;
 
 public interface OrderStatusDAO {
@@ -11,6 +12,6 @@ public interface OrderStatusDAO {
 	public List<OrderStatusVO> readOrderStatusList() throws Exception;
 	
 	// 수주 관리 조회
-	public List<OrderStatusVO> readOrderManageList() throws Exception;
+	public List<ClientsVO> readOrderManageList() throws Exception;
 	
 }

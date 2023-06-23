@@ -30,6 +30,7 @@
 		<input type="submit" value="검색">
 	</form>
 
+
 	
 	<table border="1">
 		<thead>
@@ -46,15 +47,51 @@
 		</thead>
 		
 		<c:forEach var="vo" items="${boardList }" varStatus="i">
-		<tr>
-			<td>${i.count}</td>
-			<td>${vo.line_code}</td>
-			<td>${vo.line_name}</td>
-			<td>${vo.line_place}</td>
-			<td>${vo.line_use}</td>
-			<td>${vo.emp_id}</td>
-			<td>${vo.insert_date}</td>
-			<td>${vo.line_note}</td>
-		</tr>
+			<c:if test="${vo.line_use == 1 }">
+				<tr>
+					<td>${i.count}</td>
+					<td>${vo.line_code}</td>
+					<td>${vo.line_name}</td>
+					<td>${vo.line_place}</td>
+					<td>Y</td>
+					<td>${vo.emp_id}</td>
+					<td>${vo.insert_date}</td>
+					<td>${vo.line_note}</td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${vo.line_use == 2 }">
+				<tr>
+					<td>${i.count}</td>
+					<td>${vo.line_code}</td>
+					<td>${vo.line_name}</td>
+					<td>${vo.line_place}</td>
+					<td>N</td>
+					<td>${vo.emp_id}</td>
+					<td>${vo.insert_date}</td>
+					<td>${vo.line_note}</td>
+				</tr>
+			</c:if>
+			
 		</c:forEach>
 	</table>
+	
+	<div>
+<%-- 	${lwpm} --%>
+		<c:if test="${lwpm.prev }">
+			<a href="/performance/line?page=${lwpm.startPage-1 }">이 전</a>
+		</c:if>
+		
+		<c:forEach begin="${lwpm.startPage }" 
+				   end="${lwpm.endPage }" step="1"
+				   varStatus="i">
+			
+				<a href="/performance/line?page=${i.count }">${i.count }</a>
+				   
+		</c:forEach>	   
+				
+		<c:if test="${lwpm.next && lwpm.endPage>0 }">   
+			<a href="/performance/line?page=${lwpm.endPage+1 }">다 음</a>
+		</c:if>
+		
+	</div>

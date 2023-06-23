@@ -105,16 +105,10 @@ public class PersonController {
 	public void orderManageGET(Model model) throws Exception {
 		logger.debug(" orderManageGET() 호출@@@@@ ");
 		
-		List<OrderStatusVO> orderManageList = osService.getOrderManageList();
-		List<EmployeesVO> empList = empService.getEmpList();
-		List<ClientsVO> clientsList = clService.getListAll();
+		List<ClientsVO> orderManageList = osService.getOrderManageList();
 		logger.debug("orderManageList : " + orderManageList);
-		logger.debug("empList : " + empList);
-		logger.debug("clientsList : " + clientsList);
-		 
-		model.addAttribute("orderStatusList", orderManageList);
-		model.addAttribute("empList", empList);
-		model.addAttribute("clientsList", clientsList);
+
+		model.addAttribute("orderManageList", orderManageList);
 	}
 	
 	
