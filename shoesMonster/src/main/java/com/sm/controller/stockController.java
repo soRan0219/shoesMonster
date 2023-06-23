@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sm.domain.ClientsVO;
 import com.sm.domain.In_materialVO;
+import com.sm.domain.LineVO;
 import com.sm.domain.Out_materialVO;
+import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
 import com.sm.domain.StockVO;
 import com.sm.service.In_materialService;
@@ -42,6 +45,7 @@ public class stockController {
 	
 	@Autowired
 	private Out_materialService o_service;
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(stockController.class);
 	
@@ -212,6 +216,7 @@ public class stockController {
     
     ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
    
+	//http://localhost:8080/stock/stockList
     	//http://localhost:8088/stock/stockList
     	@RequestMapping(value="/stockList" ,method = RequestMethod.GET)
     	public void stockList(HttpServletRequest request , Model model) throws Exception {
@@ -253,19 +258,64 @@ public class stockController {
     	}
     
     
-    ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
+      ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
     	
     	//////////////////////////// 출고 페이지 ///////////////////////////////////////
     	//http://localhost:8088/stock/Out_material
+    	//http://localhost:8088/stock/Out_material
     	//http://localhost:8080/stock/Out_material
     	@RequestMapping(value="/Out_material" ,method = RequestMethod.GET)
-    	public void out_matList(HttpServletRequest request , Model model) throws Exception {
+    	public void out_matList(HttpServletRequest request , Model model, 
+    			Out_materialVO ovo) throws Exception {
+    		
+    		
+    	if(ovo.getClient() != null && ovo.getClient().getClient_actname() != null || 
+    		ovo.getOut_num() != null || ovo.getClient() != null && ovo.getProduct().getProd_name() != null	) {
+    	
+
+    		
+    		// 게시물 총 개수
+    		int count2 = o_service.count2(ovo);
+
+    		// 한 페이지에 출력할 게시물 개수
+    		int pageSize = 10;
+
+    		String pageNum = request.getParameter("num");
+    		if (pageNum == null) {
+    			pageNum = "1";
+    		}
+
+    		// 행번호
+    		int currentPage = Integer.parseInt(pageNum);
+    		int startRow = (currentPage - 1) * pageSize;
+
+    		// 페이징 처리 - 하단
+    		int pageCount = count2/ pageSize + (count2 % pageSize == 0 ? 0 : 1);
+    		int pageBlock = 5;
+
+    		// 페이지 번호
+    		int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
+    		int endPage = startPage + pageBlock - 1;
+    		if (endPage > pageCount) {
+    			endPage = pageCount;
+    		}
+
+    		List<Out_materialVO> out_matList = o_service.searchOut_mat(startRow, pageSize, ovo);
+
+    		model.addAttribute("out_matList", out_matList);
+    		model.addAttribute("startPage", startPage);
+    		model.addAttribute("endPage", endPage);
+    		model.addAttribute("pageBlock", pageBlock);
+    		model.addAttribute("count2", count2);
+    		model.addAttribute("ovo", ovo);
+    		
+    	}	
     		
 		// 게시물 총 개수
 		int count2 = o_service.count2();
 
 		// 한 페이지에 출력할 게시물 개수
-		int pageSize = 1;
+		int pageSize = 10;
 
 		String pageNum = request.getParameter("num");
 		if (pageNum == null) {
@@ -278,7 +328,7 @@ public class stockController {
 
 		// 페이징 처리 - 하단
 		int pageCount = count2/ pageSize + (count2 % pageSize == 0 ? 0 : 1);
-		int pageBlock = 1;
+		int pageBlock = 5;
 
 		// 페이지 번호
 		int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
@@ -287,7 +337,7 @@ public class stockController {
 			endPage = pageCount;
 		}
 
-		List<Out_materialVO> out_matList = o_service.getOut_matList(startRow, pageSize);
+		List<Out_materialVO> out_matList = o_service.getOut_matList(startRow, pageSize );
 
 		model.addAttribute("out_matList", out_matList);
 		model.addAttribute("startPage", startPage);
@@ -297,6 +347,27 @@ public class stockController {
     		
     	}
     	
+    	
+    	// 출고 검색
+//    	@RequestMapping(value="/Out_material",method=RequestMethod.POST)
+//    	public void searchOut_mat(Model model , Out_materialVO ovo 
+//    			,ClientsVO cvo , ProductVO pvo) throws Exception{
+//    		
+//    		if (ovo.getOut_num() != null || cvo.getClient_actname() != null || pvo.getProd_name() != null
+//    				) {
+//
+////    			List<Out_materialVO> searchList = o_service.searchOut_mat(ovo);
+//    			model.addAttribute("searchlist", searchList);
+//
+//    			logger.debug("searchlist : " + searchList);
+//
+//    			logger.debug("@@ 검색 리스트 호출 @@");
+//
+//    		} 
+//    		
+//    		
+//    		
+//    	}
     	
     	//////////////////////////// 출고 페이지 ///////////////////////////////////////
 }

@@ -105,6 +105,19 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
 		return pdao.searchWarehouse(search);
 	}
+	
+	// 게시판 총 글 개수 계산
+	@Override
+	public int getTotalCount() throws Exception {
+
+		return pdao.getTotalCount();
+	}
+	//  게시판 총 글 개수 계산 (서치)
+	@Override
+	public int getSearchTotalCount(LineVO lvo) throws Exception {
+
+		return pdao.getSearchTotalCount(lvo);
+	}
 
 
 }

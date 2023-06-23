@@ -70,16 +70,19 @@ public class WorkOrderController {
 		}
 		
 		if(type.equals("line")) {
-			model.addAttribute("lineList", pService.getLineList());
-			return "/workorder/lineSearch";
+//			model.addAttribute("lineList", pService.getLineList());
+//			return "/workorder/lineSearch";
+			return "redirect:/performance/line";
 		}
 		
 		else if(type.equals("prod")) {
+
 			int total = pService.countProd();
 			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 			model.addAttribute("prodList", pService.getProdList(pvo));
 			model.addAttribute("paging", pvo);
-			return "/workorder/prodSearch";
+			return "redirect:/performance/product";
+
 		}
 		
 		else /* if(type.equals("order"))*/ {

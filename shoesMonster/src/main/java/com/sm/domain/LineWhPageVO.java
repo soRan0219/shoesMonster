@@ -10,7 +10,7 @@ public class LineWhPageVO {
 		this.page = 1;
 		this.pageSize = 10;
 	}
-	
+
 	// 제어설정
 	public void setPage(int page) {
 		if(page <= 0) {
@@ -45,5 +45,7 @@ public class LineWhPageVO {
 	public String toString() {
 		return "LineWhPageVO [page=" + page + ", pageSize=" + pageSize + "]";
 	}
+	
+	
 	
 }

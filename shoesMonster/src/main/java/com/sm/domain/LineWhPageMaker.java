@@ -32,15 +32,15 @@ public class LineWhPageMaker {
 		endPage
 			= (int)(Math.ceil(lwPageVO.getPage()/(double)pageBlock) * pageBlock);
 		
+		startPage
+			= (endPage - pageBlock) + 1;
+		
 		int tmpEndPage
 			= (int)(Math.ceil(totalCount/(double)lwPageVO.getPageSize()));
 		
 		if(endPage > tmpEndPage) {
 			endPage = tmpEndPage;
 		}
-		
-		startPage
-			= (endPage - pageBlock) + 1;
 		
 		// prev = (startPage == 1)? false : true;
 		prev = startPage != 1; // 1이 아니면 true
@@ -100,7 +100,10 @@ public class LineWhPageMaker {
 		this.pageBlock = pageBlock;
 	}
 
-
-	
+	@Override
+	public String toString() {
+		return "LineWhPageMaker [totalCount=" + totalCount + ", startPage=" + startPage + ", endPage=" + endPage
+				+ ", prev=" + prev + ", next=" + next + ", pageBlock=" + pageBlock + ", lwPageVO=" + lwPageVO + "]";
+	}
 	
 }

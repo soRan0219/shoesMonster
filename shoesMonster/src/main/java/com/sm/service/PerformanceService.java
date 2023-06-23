@@ -41,6 +41,12 @@ public interface PerformanceService {
 	// 라인 검색
 	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
 	
+	// 총 글 개수 계산
+	public int getTotalCount() throws Exception;
+	
+	// 서치시 총 글 개수 계산
+	public int getSearchTotalCount(LineVO lvo) throws Exception;
+	
 	
 	// 창고 조회
 	public List<WarehouseVO> getWhList() throws Exception;

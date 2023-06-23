@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.mysql.cj.xdevapi.Result;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
@@ -110,6 +111,7 @@ public class PerformanceImpl implements PerformanceDAO {
 //		return sqlSession.selectList(NAMESPACE+".lineListPage", page);
 //	}
 	
+	// 라인조회 (페이징처리)
 	@Override
 	public List<LineVO> getLineListPage(LineWhPageVO vo) throws Exception {
 		logger.debug("@@getLineListPage(LineWhPageVO vo) 호출@@");
@@ -147,6 +149,24 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("@@ searchWarehouse(HashMap<String, Object> search) 호출 @@");
 
 		return sqlSession.selectList(NAMESPACE + ".searchWarehouse", search);
+	}
+	
+	// 게시판 총 글개수 계산
+	@Override
+	public int getTotalCount() throws Exception {
+		logger.debug("@@ getTotalCount() 호출 @@");
+		
+		return sqlSession.selectOne(NAMESPACE+".totalCnt");
+	}
+	
+	// 게시판 총 글개수 계산 (서치)
+	@Override
+	public int getSearchTotalCount(LineVO lvo) throws Exception {
+		logger.debug("@@ getSearchTotalCount(LineVO lvo) 호출 @@");
+		int result = sqlSession.selectOne(NAMESPACE+".searchTotalCnt",lvo);
+		logger.debug("result :"+result);
+		return result;
+		
 	}
 
 

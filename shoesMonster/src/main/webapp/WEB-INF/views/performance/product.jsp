@@ -6,17 +6,55 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
+    	
         $(document).ready(function() {
         	
+
+//         	let popVal;
+        	
+//         	window.addEventListener('message', function(event){
+        		
+//         		if(event) {
+// // 	        		alert(event);
+	        		
+// 	        		$('#addButton').hide();
+// 	        		$('#save').hide();
+	        		
+// 	       			$('#productTable tr:not(:first-child)').click(function(){
+// 	         			$(this).css('background', '#ccc');
+	         			
+// 	         			var prodCode = $(this).find('#prodCode').text();
+	         			
+// 	         			var inputId = event.data.inputId;
+	         			
+// 	         			if(inputId==="prod_code") {
+// 	         				$('#prod_code', opener.document).val(prodCode);
+// 	         			} else if(inputId==="search_prod") {
+// 	         				$('#search_prod', opener.document).val(prodCode);
+// 	         			}
+	         			
+// 	         			window.close();
+// 	         		}); 
+	        		
+// 	        		popVal = event;
+//         		} else {
+//         			alert("null");
+//         		}
+        		
+        	
+//         	}); //addEventListener
+
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
     			$(this).find('td:first').text(index);
     		});
+
         	
             var counter = 0;
-
+            
             // 추가 버튼 클릭 시 row 생성
             function addRow() {
                 var row = '<tr>' +
@@ -46,11 +84,106 @@
             
             // =============================================================================================================
             
+
+            
+//             // 필터링 기능
+//             $('#filterButton').click(function(event) {
+
+                
+//             	//================ 기존코드 ========================
+            	
+            	
+//                 var searchCode = $('#searchCode').val().toLowerCase();
+//                 var searchName = $('#searchName').val().toLowerCase();
+//                 var searchCategory = $('#searchCategory').val().toLowerCase();
+//                 var searchUnit = $('#searchUnit').val().toLowerCase();
+            	
+// //             	alert(searchName);
+            		
+//             	var jsonData = {
+//             			prod_code:searchCode,
+//             			prod_name:searchName,
+//             			prod_category:searchCategory,
+//             			prod_unit:searchUnit
+//             	};
+            	
+//             	$.ajax({
+//             		url: "/performance/search",
+//             		type: "post",
+//             		contentType: "application/json; charset=UTF-8",
+//     				dataType: "json",
+//     				data: JSON.stringify(jsonData),
+//     				success: function(data) {
+//     					//data => List 객체
+//     					if(data.length != 0) {
+//     						//검색 결과 있을 때
+//     						for(var i=0; i<data.length; i++) {
+//     							console.log(data[i].prod_code);
+    							
+//     							//th 밑에 있던 줄 모두 제거하고 검색결과 append
+//     							var tbl = "<tr>";
+//     							tbl += " <td id='prodCode'>" + data[i].prod_code + "</td>";
+//     							tbl += " <td>" + data[i].prod_name + "</td>";
+//     							tbl += " <td>" + data[i].prod_category + "</td>";
+//     							tbl += " <td>" + data[i].prod_unit + "</td>";
+//     							tbl += " <td>" + data[i].prod_color + "</td>";
+//     							tbl += " <td>" + data[i].prod_size + "</td>";
+//     							tbl += " <td>" + data[i].client_code + "</td>";
+//     							tbl += " <td>" + data[i].prod_price + "</td>";
+//     							tbl += " <td>" + data[i].prod_note + "</td>";
+//     							tbl += "</tr>";
+    							
+//     							if(i==0) {
+//     								$('#productTable tr:gt(0)').remove();
+//     								$('#productTable').append(tbl);
+//     							} else {
+//     								$('#productTable').append(tbl);
+//     							}
+    							
+//     						} //for
+//     					} //if(검색결과 있을 때)
+    					
+//     					//팝업으로 열었을 때
+//     					if(popVal) {
+    						
+//     			   			$('#productTable tr:not(:first-child)').click(function(){
+//     			     			$(this).css('background', '#ccc');
+    			     			
+//     			     			var prodCode = $(this).find('#prodCode').text();
+    			     			
+//     			     			var inputId = popVal.data.inputId;
+    			     			
+//     			     			if(inputId==="prod_code") {
+//     			     				$('#prod_code', opener.document).val(prodCode);
+//     			     			} else if(inputId==="search_prod") {
+//     			     				$('#search_prod', opener.document).val(prodCode);
+//     			     			}
+    			     			
+//     			     			window.close();
+//     			     		}); 
+    						
+//     					} //if(popVal)
+    					
+    					
+    					
+//     				},
+//     				error: function() {
+//     					alert(" ****** 실패 *******");
+//     				}
+//             	}); //ajax
+            		
+//             }); //검색
+            
+        	
+        	
+        	
+
             // 저장 버튼 클릭 시 페이지 이동
             $('form').submit(function() {
                return true;
             });
             
+
         	//취소버튼 -> 리셋
 			$('#cancle').click(function(){
 				$('#fr').each(function(){
@@ -128,6 +261,7 @@
 				});
 				
 			}); //delete click
+
             
         });
     </script>
@@ -140,15 +274,16 @@
 	<form action="" method="get">
 		<fieldset>
        		<label>품번:</label>
-        	<input type="text" name="prod_code" value="">
+        	<input type="text" name="prod_code" id="searchCode">
         	<label>품명:</label>
-        	<input type="text" name="prod_name" value="">
+        	<input type="text" name="prod_name" id="searchName">
         	<br>
         	<label>카테고리:</label>
-        	<input type="text" name="prod_category" value=""> 
+        	<input type="text" name="prod_category" id="searchCategory"> 
         	<label>품목 단위:</label>
-        	<input type="text" name="prod_unit" value="">
+        	<input type="text" name="prod_unit" id="searchUnit">
         	<input type="submit" value="검색">
+        	<input type="button" value="검색" id="filterButton">
 		</fieldset>
 	</form>
 	
@@ -159,6 +294,7 @@
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save">
+
 	
 		<table border="1" id="productTable">
 				<tr>
@@ -176,7 +312,7 @@
 			<c:forEach var="vo" items="${prodList}">
 					<tr>
 						<td></td>
-						<td>${vo.prod_code }</td>
+         			    <td id="prodCode">${vo.prod_code }</td>
 						<td>${vo.prod_name }</td>
 						<td>${vo.prod_category }</td>
 						<td>${vo.prod_unit }</td>
