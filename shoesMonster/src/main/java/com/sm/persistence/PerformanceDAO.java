@@ -44,6 +44,8 @@ public interface PerformanceDAO {
 	// 라인 검색 - getSearchLine
 	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
 	
+	// 총 글 개수 계산
+	public int getTotalCount() throws Exception;
 	
 	// 창고 조회 - R
 	public List<WarehouseVO> readWhList() throws Exception;
@@ -53,6 +55,5 @@ public interface PerformanceDAO {
 	
 	// 창고 검색
 	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception;
-	
 	
 }

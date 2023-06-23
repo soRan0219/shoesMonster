@@ -19,7 +19,6 @@ import com.sm.domain.PagingVO;
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
-import com.sm.domain.Wh_prodVO;
 import com.sm.service.PerformanceService;
 
 @Controller
@@ -99,10 +98,14 @@ public class PerfomanceController {
 
 	// ======== 라인 - /line ================================
 	// http://localhost:8088/performance/line
+	// http://localhost:8088/performance/line?page=1
 	@RequestMapping(value = "/line", method = RequestMethod.GET)
-	public void lineGET(Model model, LineVO lvo, LineWhPageVO vo) throws Exception {
+	public void lineGET(Model model, LineVO lvo, 
+				        LineWhPageVO vo, LineWhPageMaker lwpm) throws Exception {
 		logger.debug("@@lineGET() 호출@@");
-
+//		List<LineVO> boardList = service.getLineList();
+//		model.addAttribute("boardList", boardList);
+		
 		logger.debug("lvo : " + lvo);
 
 		// 검색
@@ -125,42 +128,12 @@ public class PerfomanceController {
 		}
 		
 		// 페이징처리 (하단부) 저장
-		LineWhPageMaker lwpm = new LineWhPageMaker();
 		lwpm.setLwPageVO(vo);
-		lwpm.setTotalCount(11);
+		lwpm.setTotalCount(service.getTotalCount());
+		logger.debug("lwpm : "+lwpm.getTotalCount());
+		model.addAttribute("lwpm", lwpm);
 	}
 	
-	// 페이징처리
-	// http://localhost:8088/performance/line?page=1
-//	@RequestMapping(value = "/line?page", method = RequestMethod.GET)
-//	public void linePageGET(Model model, LineVO lvo, LineWhPageVO vo) throws Exception {
-//		logger.debug("@@linePageGET() 호출@@");
-
-		// 검색
-//		if (lvo.getLine_code() != null || lvo.getLine_name() != null || lvo.getLine_place() != null
-//				|| lvo.getLine_use() != 0) {
-//
-//			List<LineVO> searchlist = service.getSearchLine(lvo);
-//			model.addAttribute("boardList", searchlist);
-//
-//			logger.debug("searchlist : " + searchlist);
-//
-//			logger.debug("@@ 검색 리스트 호출 @@");
-
-//		} else {
-		
-			// 페이징처리된 리스트정보
-//			List<LineVO> boardList = service.getLineListPage(vo);
-//			model.addAttribute("boardList", boardList);
-//			
-//			// 페이징처리 (하단부) 저장
-//			LineWhPageMaker lwpm = new LineWhPageMaker();
-//			lwpm.setLwPageVO(vo);
-//			lwpm.setTotalCount(11);
-//			
-//			logger.debug("@@ 모든 리스트 호출 @@");
-//		}
-//	}
 
 //	@RequestMapping(value = "/line", method = RequestMethod.POST)
 //	public void linePOST()throws Exception{
