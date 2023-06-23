@@ -20,6 +20,13 @@ public class ClientsServiceImpl implements ClientsService {
 		
 		return cldao.readClientsListAll();
 	}
+
+	@Override
+	public List<ClientsVO> getSearchClientsList(ClientsVO cvo) throws Exception {
+
+		return cldao.getSearchClientsList(cvo);
+	}
+	
 	
 	
 

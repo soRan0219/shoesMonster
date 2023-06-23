@@ -9,4 +9,7 @@ public interface ClientsDAO {
 	
 	// 거래처 목록 불러오기
 	public List<ClientsVO> readClientsListAll() throws Exception;
+	
+	// 거래처 검색
+	public List<ClientsVO> getSearchClientsList(ClientsVO cvo) throws Exception;
 }
