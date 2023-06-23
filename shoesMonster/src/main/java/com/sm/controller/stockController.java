@@ -87,9 +87,19 @@ public class stockController {
          model.addAttribute("pageBlock", pageBlock);
          model.addAttribute("count1",count1);
     }
-	
 	// 발주 목록 + 페이징 처리 - 끝
-	
+	// 발주 등록
+	@RequestMapping(value="/raw_order", method = RequestMethod.POST)
+	public String roRegist(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+		
+		String emp_id = (String)session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
+		
+		request.setAttribute("emp_id", emp_id);
+		
+		
+		return "";
+	}
+	// 발주 등록
 	
 	
     
@@ -246,7 +256,8 @@ public class stockController {
     ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
     	
     	//////////////////////////// 출고 페이지 ///////////////////////////////////////
-    	 //http://localhost:8088/stock/Out_material
+    	//http://localhost:8088/stock/Out_material
+    	//http://localhost:8080/stock/Out_material
     	@RequestMapping(value="/Out_material" ,method = RequestMethod.GET)
     	public void out_matList(HttpServletRequest request , Model model) throws Exception {
     		
