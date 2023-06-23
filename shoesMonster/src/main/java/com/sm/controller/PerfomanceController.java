@@ -118,6 +118,18 @@ public class PerfomanceController {
 			logger.debug("searchlist : " + searchlist);
 
 			logger.debug("@@ 검색 리스트 호출 @@");
+			
+			// 페이징처리 (하단부) 저장
+//			lwpm.setLwPageVO(vo);
+//			lwpm.setTotalCount(service.getTotalCount());
+//			logger.debug("lwpm 검색 : "+lwpm.getTotalCount());
+//			model.addAttribute("lwpm", lwpm);
+			
+			lwpm.setLwPageVO(vo);
+			logger.debug("확니!!!!!!!!!!!!!!!!!!!!!용");
+			lwpm.setTotalCount(service.getSearchTotalCount(lvo));
+			logger.debug("lwpm (제발서치서치) : "+lwpm.getTotalCount());
+//			model.addAttribute("lwpm", lwpm);
 
 		} else {
 			// 페이징처리된 리스트정보로 수정함!

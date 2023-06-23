@@ -112,6 +112,12 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 		return pdao.getTotalCount();
 	}
+	//  게시판 총 글 개수 계산 (서치)
+	@Override
+	public int getSearchTotalCount(LineVO lvo) throws Exception {
+
+		return pdao.getSearchTotalCount(lvo);
+	}
 
 
 }
