@@ -1,5 +1,6 @@
 package com.sm.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,22 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 		return osdao.readOrderStatusList();
 	}
 
+	// 수주 현황 검색
+	@Override
+	public List<OrderStatusVO> getSearchOrderStatus(HashMap<String, Object> search) throws Exception {
+		return osdao.getSearchOrderStatus(search);
+	}
+//	@Override
+//	public List<OrderStatusVO> getSearchOrderStatus2(HashMap<String, Object> search) throws Exception {
+//		return osdao.getSearchOrderStatus2(search);
+//	}
+	
 	@Override
 	public List<ClientsVO> getOrderManageList() throws Exception {
 		return osdao.readOrderManageList();
 	}
+
+
 	
 	
 	

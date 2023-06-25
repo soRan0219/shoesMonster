@@ -6,6 +6,97 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script type="text/javascript">
+
+$(function(){
+	
+
+// ========================================= 검색 ===================================================
+	// 수주 일자 이날부터
+	$('#order_date_fromDate').datepicker({
+		showOn:'both',
+		buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+		buttonImageOnly:'true',
+		changeMonth:'true',
+		changeYear:'true',
+		nextText:'다음달',
+		prevText:'이전달',
+		showButtonPanel:'true',
+		currentText:'오늘',
+		closeText:'닫기',
+		dateFormat:'yy-mm-dd',
+		dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+		dayNamesMin:['월','화','수','목','금','토','일'],
+		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		onSelect: function(date, inst) {
+			$('#order_deliveryDate_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
+		}
+	});
+	
+	// 이날까지
+	$('#order_date_toDate').datepicker({
+		showOn:'both',
+		buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+		buttonImageOnly:'true',
+		changeMonth:'true',
+		changeYear:'true',
+		nextText:'다음달',
+		prevText:'이전달',
+		showButtonPanel:'true',
+		currentText:'오늘',
+		closeText:'닫기',
+		dateFormat:'yy-mm-dd',
+		dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+		dayNamesMin:['월','화','수','목','금','토','일'],
+		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	});
+	
+	// 납품 예정일 이날부터
+	$('#order_deliveryDate_fromDate').datepicker({
+		showOn:'both',
+		buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+		buttonImageOnly:'true',
+		changeMonth:'true',
+		changeYear:'true',
+		nextText:'다음달',
+		prevText:'이전달',
+		showButtonPanel:'true',
+		currentText:'오늘',
+		closeText:'닫기',
+		dateFormat:'yy-mm-dd',
+		dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+		dayNamesMin:['월','화','수','목','금','토','일'],
+		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		onSelect: function(date, inst) {
+			$('#order_deliveryDate_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
+		}
+	});
+	
+	// 이날까지
+	$('#order_deliveryDate_toDate').datepicker({
+		showOn:'both',
+		buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+		buttonImageOnly:'true',
+		changeMonth:'true',
+		changeYear:'true',
+		nextText:'다음달',
+		prevText:'이전달',
+		showButtonPanel:'true',
+		currentText:'오늘',
+		closeText:'닫기',
+		dateFormat:'yy-mm-dd',
+		dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+		dayNamesMin:['월','화','수','목','금','토','일'],
+		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	});
+// ========================================= 검색 ===================================================
+});
+</script>
+
 </head>
 <body>
 
@@ -13,18 +104,23 @@
 
 	<h1>수주 현황</h1>
 	
-	업체 <input type="text">
-	수주 일자 <input type="text">
-	품번 <input type="text">
-	<input type="button" value="조회">
+	<form action="" method="get">
+	업체 <input type="text" name="client_code">
+	수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
+			  <input type="text" name="order_date_toDate" id="order_date_toDate">
+	품번 <input type="text" name="prod_code">
+	<input type="submit" value="조회">
 	<br>
-	담당자 <input type="text">
-	납품 예정일 <input type="text">
+	담당자 <input type="text" name="emp_id">
+	납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate">
+			    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
 	출하완료여부 
-	<select>
-		<option>Y</option>
-		<option>N</option>
+	<select name="order_finish">
+		<option selected value= "전체">전체</option>
+		<option value="Y">Y</option>
+		<option value="N">N</option>
 	</select>
+	</form>
 	
 	
 	<table border="1" id="">
@@ -43,19 +139,53 @@
 		</tr>
 		
 		<c:forEach var="vo" items="${orderStatusList }" varStatus="i">
-			<tr>
-				<td>${i.count }</td>
-				<td>${vo.orders.order_code}</td>
-				<td>${vo.orders.client_code}</td>
-				<td>${vo.orders.order_date}</td>
-				<td>${vo.orders.emp_id}</td>
-				<td>${vo.prod_code}</td>
-				<td>${vo.prod_name}</td>
-				<td>${vo.prod_unit}</td>
-				<td>${vo.orders.order_deliveryDate}</td>
-				<td>${vo.orders.order_count}</td>
-				<td><input type="checkbox">${vo.orders.order_finish}</td>
-			</tr>
+			<c:if test="${vo.orders.order_finish == '전체' }">
+				<tr>
+					<td>${i.count }</td>
+					<td>${vo.orders.order_code}</td>
+					<td>${vo.orders.client_code}</td>
+					<td>${vo.orders.order_date}</td>
+					<td>${vo.orders.emp_id}</td>
+					<td>${vo.prod_code}</td>
+					<td>${vo.prod_name}</td>
+					<td>${vo.prod_unit}</td>
+					<td>${vo.orders.order_deliveryDate}</td>
+					<td>${vo.orders.order_count}</td>
+					<td><input type="checkbox">${vo.orders.order_finish}</td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${vo.orders.order_finish == 'Y' }">
+				<tr>
+					<td>${i.count }</td>
+					<td>${vo.orders.order_code}</td>
+					<td>${vo.orders.client_code}</td>
+					<td>${vo.orders.order_date}</td>
+					<td>${vo.orders.emp_id}</td>
+					<td>${vo.prod_code}</td>
+					<td>${vo.prod_name}</td>
+					<td>${vo.prod_unit}</td>
+					<td>${vo.orders.order_deliveryDate}</td>
+					<td>${vo.orders.order_count}</td>
+					<td><input type="checkbox">${vo.orders.order_finish}</td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${vo.orders.order_finish == 'N' }">
+				<tr>
+					<td>${i.count }</td>
+					<td>${vo.orders.order_code}</td>
+					<td>${vo.orders.client_code}</td>
+					<td>${vo.orders.order_date}</td>
+					<td>${vo.orders.emp_id}</td>
+					<td>${vo.prod_code}</td>
+					<td>${vo.prod_name}</td>
+					<td>${vo.prod_unit}</td>
+					<td>${vo.orders.order_deliveryDate}</td>
+					<td>${vo.orders.order_count}</td>
+					<td><input type="checkbox">${vo.orders.order_finish}</td>
+				</tr>
+			</c:if>
 		</c:forEach>
 	</table>
 	

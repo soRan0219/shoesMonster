@@ -1,5 +1,6 @@
 package com.sm.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.sm.domain.ClientsVO;
@@ -11,7 +12,13 @@ public interface OrderStatusDAO {
 	// 수주 현황 목록 불러오기
 	public List<OrderStatusVO> readOrderStatusList() throws Exception;
 	
+	// 수주 현황 검색
+	public List<OrderStatusVO> getSearchOrderStatus(HashMap<String, Object> search) throws Exception;
+//	public List<OrderStatusVO> getSearchOrderStatus2(HashMap<String, Object> search) throws Exception;
+	
 	// 수주 관리 조회
 	public List<ClientsVO> readOrderManageList() throws Exception;
+	
+	
 	
 }

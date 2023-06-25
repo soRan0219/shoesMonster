@@ -30,6 +30,7 @@ public class ClientsDAOImpl implements ClientsDAO {
 		return sqlSession.selectList(NameSpace+".listAll");
 	}
 
+	// 거래처 검색
 	@Override
 	public List<ClientsVO> getSearchClientsList(ClientsVO cvo) throws Exception {
 		logger.debug("@@@ getSearchClientsList(ClientsVO cvo) 호출 @@@");
