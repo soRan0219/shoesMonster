@@ -44,6 +44,15 @@ public interface PerformanceDAO {
 	// 라인 검색 - getSearchLine
 	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
 	
+//	// 라인 검색(페이징처리)
+//	public List<LineVO> getSearchLinePage(LineWhPageVO vo) throws Exception;
+	
+	// 라인 검색(페이징처리) ++ 도전
+	public List<LineVO> getSearchLinePage(LineWhPageVO vo, LineVO lvo) throws Exception;
+	
+//	// 라인 검색(페이징처리) ++ 도전 두번째
+//	public List<LineVO> getSearchLinePage(LineVO lvo) throws Exception;
+	
 	// 총 글 개수 계산
 	public int getTotalCount() throws Exception;
 	

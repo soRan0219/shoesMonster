@@ -87,6 +87,23 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return pdao.getSearchLine(lvo);
 	}
 	
+//	// 라인 검색 (페이징 처리)
+//	@Override
+//	public List<LineVO> getSearchLinePage(LineWhPageVO vo) throws Exception {
+//		return pdao.getSearchLinePage(vo);
+//	}
+	
+	// 라인 검색 (페이징 처리) ++ 도전
+	@Override
+	public List<LineVO> getSearchLinePage(LineWhPageVO vo, LineVO lvo) throws Exception {
+		return pdao.getSearchLinePage(vo, lvo);
+	}
+	
+//	// 라인 검색 (페이징 처리) ++ 도전 두번째
+//	@Override
+//	public List<LineVO> getSearchLinePage(LineVO lvo) throws Exception {
+//		return pdao.getSearchLinePage(lvo);
+//	}
 	
 	// 창고 조회
 	@Override
@@ -118,6 +135,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 		return pdao.getSearchTotalCount(lvo);
 	}
+
 
 
 }

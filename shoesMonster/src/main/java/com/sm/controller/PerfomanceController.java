@@ -161,17 +161,19 @@ public class PerfomanceController {
 
 			logger.debug("@@ 검색 리스트 호출 @@");
 			
-			// 페이징처리 (하단부) 저장
-//			lwpm.setLwPageVO(vo);
-//			lwpm.setTotalCount(service.getTotalCount());
-//			logger.debug("lwpm 검색 : "+lwpm.getTotalCount());
-//			model.addAttribute("lwpm", lwpm);
+//			List<LineVO> searchListPage = service.getLineListPage(vo);
+			List<LineVO> searchListPage = service.getSearchLinePage(vo, lvo);
+//			List<LineVO> searchListPage = service.getSearchLinePage(lvo); // 두번째 도전
+			model.addAttribute("searchlist", searchListPage);
+			logger.debug("searchListPage : "+searchListPage);
+			
+			logger.debug("@@!!@@ 검색 리스트 (페이징처리) 불러옴 @@!!@@");
 			
 			lwpm.setLwPageVO(vo);
 			logger.debug("확니!!!!!!!!!!!!!!!!!!!!!용");
 			lwpm.setTotalCount(service.getSearchTotalCount(lvo));
 			logger.debug("lwpm (제발서치서치) : "+lwpm.getTotalCount());
-//			model.addAttribute("lwpm", lwpm);
+			model.addAttribute("lwpm", lwpm);
 
 		} else {
 			// 페이징처리된 리스트정보로 수정함!
@@ -179,26 +181,29 @@ public class PerfomanceController {
 			model.addAttribute("boardList", boardList);
 
 			logger.debug("@@ 모든 리스트 호출 @@");
+			
+			// 페이징처리 하단부 객체 저장
+			lwpm.setLwPageVO(vo);
+			lwpm.setTotalCount(service.getTotalCount());
+			logger.debug("lwpm : "+lwpm.getTotalCount());
+			model.addAttribute("lwpm",lwpm);
+			
 		}
 		
-		// 페이징처리 (하단부) 저장
-		lwpm.setLwPageVO(vo);
-		lwpm.setTotalCount(service.getTotalCount());
-		logger.debug("lwpm : "+lwpm.getTotalCount());
-		model.addAttribute("lwpm", lwpm);
+
 	}
 	
 
-//	@RequestMapping(value = "/line", method = RequestMethod.POST)
-//	public void linePOST()throws Exception{
-//		logger.debug("linePOST() 호출");
-//		
-//		List<LineVO> boardList = service.getLineList();
-//		logger.debug("boardList : "+boardList);
-//		
+	@RequestMapping(value = "/line", method = RequestMethod.POST)
+	public void linePOST(Model model)throws Exception{
+		logger.debug("linePOST() 호출");
+		
+		List<LineVO> boardList = service.getLineList();
+		logger.debug("boardList : "+boardList);
+		
 //		model.addAttribute("boardList", boardList);
-//		
-//	}
+		
+	}
 
 	// ======== 라인 - /line ================================
 
