@@ -8,18 +8,22 @@
 <head>
 <meta charset="UTF-8">
 <title>슈몬 발주</title>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		
+		function roPopup() {
+			
+			window.open("roPopup","거래처 목록","width=500, height=500, left=300, top=150 location=no");
+		}
+		
+		function result() {
+			
+		}
+		
+	</script>
 </head>
 <body>
-<script type="text/javascript">
-	
-	function client_actname() {
-		window.open("/stock/client_actnamePop.jsp","거래처 목록","width=500, height=500");
-	}
-	
-	
-	
-	
-</script>
+
 	
 	<%
 // 		String emp_id = (String)session.getAttribute("emp_id");
@@ -48,20 +52,19 @@
     </form>
     
     <table border="1">
-    <tr>
- 		<th>발주 번호</th>
- 		<th>거래처명</th>
- 		<th>품번</th>
- 		<th>품명</th>
- 		<th>색상</th>
- 		<th>발주 수량</th>
- 		<th>재고 수량</th>
- 		<th>단가</th>
- 		<th>총액</th>
- 		<th>발주일</th>
- 		<th>담당자</th>
-
- 	</tr>
+	    <tr>
+	 		<th>발주 번호</th>
+	 		<th>거래처명</th>
+	 		<th>품번</th>
+	 		<th>품명</th>
+	 		<th>색상</th>
+	 		<th>발주 수량</th>
+	 		<th>재고 수량</th>
+	 		<th>단가</th>
+	 		<th>총액</th>
+	 		<th>발주일</th>
+	 		<th>담당자</th>
+	 	</tr>
         <c:forEach var="vo" items="${ro_List }">
             <tr>
                 <td>${vo.raw_order_num}</td>
@@ -101,24 +104,24 @@
 		<h1>발주 등록</h1>
 		<c:set var="today" value="<%=new Date() %>" />
 		
-		<table border="1">
+		<table border="1" id="table">
 			<tr>
 				<th>발주일</th>
 				<th>거래처명</th>
 				<th>품번</th>
 				<th>품명</th>
 				<th>발주 수량</th>
-				<th>창고 수량</th>
+				<th>재고 수량</th>
 				<th>단가</th>
 				<th>총액</th>
-				<th>담당자</th>
+				<th>담당자</th> <!-- 발주번호처럼 '발주 신청' 버튼 눌렀을 때 저장하기 -->
 			</tr>
 			<tr>
 				<td><fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/></td>
-				<td><input type="text" id="client_actname" onclick="client_actname()"></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td onclick="roPopup();"><input type="text" name="roPopup" id="roPopup"></td>
+				<td onclick="roPopup();"></td>
+				<td onclick="roPopup();"></td>
+				<td><input type="number" min="1" required></td> <!-- CSS할 때 증감버튼 없애기 -->
 				<td></td>
 				<td></td>
 				<td></td>

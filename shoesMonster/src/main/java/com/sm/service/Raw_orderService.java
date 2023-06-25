@@ -12,6 +12,10 @@ public interface Raw_orderService {
 	// 발주 목록 개수
 	public int count1() throws Exception;
 	
+	// 발주 등록(팝업)
+	public List<Raw_orderVO> getPopup() throws Exception;
+	
+	// 발주 재고 개수(팝업)
 
 
 }

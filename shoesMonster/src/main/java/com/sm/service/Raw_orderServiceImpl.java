@@ -26,6 +26,12 @@ public class Raw_orderServiceImpl implements Raw_orderService{
     public List<Raw_orderVO> getRaw_order(int startRow, int pageSize) throws Exception {
         return rodao.Raw_order(startRow, pageSize);
     }
+
+
+	@Override
+	public List<Raw_orderVO> getPopup() throws Exception {
+		return rodao.Popup();
+	}
  
     
     
