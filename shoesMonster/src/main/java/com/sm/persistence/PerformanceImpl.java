@@ -3,6 +3,7 @@ package com.sm.persistence;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.mysql.cj.util.DnsSrv.SrvRecord;
 import com.mysql.cj.xdevapi.Result;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageVO;
@@ -127,6 +129,38 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectList(NAMESPACE + ".searchLine", lvo);
 	}
 
+//	// 라인 검색 (페이징처리)
+//	@Override
+//	public List<LineVO> getSearchLinePage(LineWhPageVO vo) throws Exception {
+//		logger.debug("@@ getSearchLinePage(LineWhPageVO vo) 호출 @@");
+//		
+//		return sqlSession.selectList(NAMESPACE+".searchLinePage", vo);
+//	}
+	
+	// 라인 검색 (페이징처리) ++ 도전
+	@Override
+	public List<LineVO> getSearchLinePage(LineWhPageVO vo, LineVO lvo) throws Exception {
+		logger.debug("@@ getSearchLinePage(LineWhPageVO vo, LineVO lvo) 호출 @@");
+		
+		Map<String, Object> params = new HashMap<>();
+		params.put("vo", vo);
+		params.put("lvo", lvo);
+		
+		return sqlSession.selectList(NAMESPACE+".searchLinePage", params);
+	}
+	
+//	// 라인 검색 (페이징처리) ++ 도전 두번째 
+//	@Override
+//	public List<LineVO> getSearchLinePage(LineVO lvo) throws Exception {
+//		logger.debug("@@ getSearchLinePage(LineVO lvo) 호출 @@");
+//		
+////		Map<String, Object> params = new HashMap<>();
+////		params.put("vo", vo);
+////		params.put("lvo", lvo);
+//		
+//		return sqlSession.selectList(NAMESPACE+".searchLinePage", lvo);
+//	}
+
 	// 창고 조회
 	@Override
 	public List<WarehouseVO> readWhList() throws Exception {
@@ -168,6 +202,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		return result;
 		
 	}
+
 
 
 

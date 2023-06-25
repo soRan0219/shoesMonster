@@ -134,7 +134,6 @@
 				AND line_use= #{line_use}
 			</if>
 		</where>
-		limit #{startPage}, #{pageSize}
 		</select>
 	<!-- 라인 전체 글개수 계산 (서치) -->
 	
@@ -161,6 +160,32 @@
 		</where>
 	</select>	
 	<!-- 라인 검색 -->
+	
+	<!-- 라인 검색(페이징처리) -->
+	<select id="searchLinePage" resultType="com.sm.domain.LineVO" parameterType="java.util.Map">
+<!-- 		<bind name="line_code" value="'%' + line_code +'%'"/> -->
+<!-- 		<bind name="line_name" value="'%' + line_name +'%'"/> -->
+<!-- 		<bind name="line_place" value="'%' + line_place +'%'"/> -->
+<!-- 		<![CDATA[ -->
+		SELECT * FROM line
+  <where>
+    <if test="lvo.line_code != null and lvo.line_code != ''">
+      AND line_code LIKE CONCAT('%', #{lvo.line_code}, '%')
+    </if>
+    <if test="lvo.line_name != null and lvo.line_name != ''">
+      AND line_name LIKE CONCAT('%', #{lvo.line_name}, '%')
+    </if>
+    <if test="lvo.line_place != null and lvo.line_place != ''">
+      AND line_place LIKE CONCAT('%', #{lvo.line_place}, '%')
+    </if>
+    <if test="lvo.line_use != 0">
+      AND line_use = #{lvo.line_use}
+    </if>
+  </where>
+		limit #{vo.startPage}, #{vo.pageSize}
+<!-- 		]]> -->
+	</select>	
+	<!-- 라인 검색(페이징처리) -->
 	
 	
 	<!-- 창고 조회 -->
