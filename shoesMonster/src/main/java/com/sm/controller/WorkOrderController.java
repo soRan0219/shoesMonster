@@ -1,8 +1,8 @@
 package com.sm.controller;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sm.domain.LineWhPageMaker;
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
-import com.sm.domain.ProductVO;
 import com.sm.domain.WorkOrderVO;
 import com.sm.service.OrderStatusService;
 import com.sm.service.PerformanceService;
@@ -42,18 +43,31 @@ public class WorkOrderController {
 	//작업지시 목록
 	//http://localhost:8088/workorder/workOrderList
 	@RequestMapping(value = "/workOrderList", method = RequestMethod.GET)
-	public void workOrderListGET(Model model) throws Exception {
+	public void workOrderListGET(LineWhPageVO pvo, Model model) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: workOrderListGET() 호출");
 		
-		List<WorkOrderVO> workList = wService.getAllWorkOrder();
+		//페이지 정보
+		pvo.setPageSize(2);
+		
+		//페이징 하단부 정보
+		LineWhPageMaker pm = new LineWhPageMaker();
+		pm.setLwPageVO(pvo);
+		pm.setPageBlock(2);
+		pm.setTotalCount(wService.getTotalWorkOrder());
+		
+		logger.debug("@@@@@ CONTROLLER: 전체 작업지시 수 = " + wService.getTotalWorkOrder());
+		
+		List<WorkOrderVO> workList = wService.getAllWorkOrder(pvo);
 		
 		model.addAttribute("workList", workList);
+		model.addAttribute("pm", pm);
 		
 	} //workOrderListGET()
 	
 	//라인, 품목, 수주 검색
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String lineGET(Model model, @RequestParam("type") String type, PagingVO pvo,
+			@RequestParam("input") String input,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage
 			) throws Exception {
@@ -81,7 +95,7 @@ public class WorkOrderController {
 			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 			model.addAttribute("prodList", pService.getProdList(pvo));
 			model.addAttribute("paging", pvo);
-			return "redirect:/performance/product";
+			return "redirect:/performance/product?input="+input;
 
 		}
 		
@@ -152,7 +166,7 @@ public class WorkOrderController {
 	//작업지시 검색
 	@ResponseBody
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public List<WorkOrderVO> searchWorkOrder(@RequestBody HashMap<String, Object> search) throws Exception {
+	public HashMap<String, Object> searchWorkOrder(@RequestBody HashMap<String, Object> search, LineWhPageVO pvo) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: searchWorkOrder() 호출");
 		
 		for(String key : search.keySet()) {
@@ -161,12 +175,34 @@ public class WorkOrderController {
 			}
 		}
 		logger.debug("@@@@@ CONTROLLER: 조회할 정보 - " + search);
+		logger.debug("@@@@@ CONTROLLER: 페이지 정보 page = " + search.get("page"));
+		logger.debug("@@@@@ CONTROLLER: 페이지 정보 pageSize = " + search.get("pageSize"));
+		
+		pvo.setPage((int)search.get("page"));
+		pvo.setPageSize((int)search.get("pageSize"));
+		
+		logger.debug("@@@@@ CONTROLLER: 페이지 정보 pvo = " + pvo);
+		
+		//페이징 하단부 정보
+		LineWhPageMaker pm = new LineWhPageMaker();
+		pm.setLwPageVO(pvo);
+		pm.setPageBlock(2);
+		pm.setTotalCount(wService.getSearchWorkOrder(search));
+		
+		logger.debug("@@@@@ CONTROLLER: 검색 결과 수 = " + wService.getSearchWorkOrder(search));
+		
+		search.put("startPage", pvo.getStartPage());
+		search.put("pageSize", pvo.getPageSize());
 		
 		//서비스 - 작업지시 검색
 		List<WorkOrderVO> searchList = wService.searchWorkOrder(search);
 		logger.debug("@@@@@ CONTROLLER: 검색결과list = " + searchList);
 		
-		return searchList;
+		HashMap<String, Object> searchMap = new HashMap<>();
+		searchMap.put("searchList", searchList);
+		searchMap.put("pm", pm);
+		
+		return searchMap;
 	} //searchWorkOrder()
 	
 	

@@ -18,4 +18,5 @@ public class PerformanceVO {
 	private String defect_note;
 	private String perform_note;
 	
+	private WorkOrderVO workOrder;
 } //Performance

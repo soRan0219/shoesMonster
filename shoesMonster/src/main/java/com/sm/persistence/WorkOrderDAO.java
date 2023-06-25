@@ -3,12 +3,13 @@ package com.sm.persistence;
 import java.util.HashMap;
 import java.util.List;
 
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.WorkOrderVO;
 
 public interface WorkOrderDAO {
 	
 	//작업지시 목록
-	public List<WorkOrderVO> readAllWorkOrder() throws Exception;
+	public List<WorkOrderVO> readAllWorkOrder(LineWhPageVO pvo) throws Exception;
 	
 	//작업지시 등록
 	public void insertWorkOrder(WorkOrderVO vo) throws Exception;
@@ -24,5 +25,11 @@ public interface WorkOrderDAO {
 	
 	//작업지시 검색
 	public List<WorkOrderVO> selectWorkOrder(HashMap<String, Object> search) throws Exception;
+	
+	//작업지시 전체 개수
+	public int getTotalWorkOrder() throws Exception;
+	
+	//작업지시 검색 개수
+	public int getSearchWOrkOrder(HashMap<String, Object> search) throws Exception;
 	
 } //WorkOrderDAO

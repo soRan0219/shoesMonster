@@ -3,12 +3,13 @@ package com.sm.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.WorkOrderVO;
 
 public interface WorkOrderService {
 	
 	//작업지시 목록 조회 
-	public List<WorkOrderVO> getAllWorkOrder() throws Exception;
+	public List<WorkOrderVO> getAllWorkOrder(LineWhPageVO pvo) throws Exception;
 	
 	//작업지시 등록
 	public void regWorkOrder(WorkOrderVO vo) throws Exception;
@@ -24,5 +25,11 @@ public interface WorkOrderService {
 	
 	//작업지시 검색
 	public List<WorkOrderVO> searchWorkOrder(HashMap<String, Object> search) throws Exception;
+	
+	//작업지시 전체 개수
+	public int getTotalWorkOrder() throws Exception;
+	
+	//작업지시 검색 개수
+	public int getSearchWorkOrder(HashMap<String, Object> search) throws Exception;
 	
 } //WorkOrderService
