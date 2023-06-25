@@ -13,7 +13,9 @@ public interface Raw_orderDAO {
 	// 글 총 갯수
     public int count1() throws Exception;
     
+    // 발주 등록(팝업)
+    public List<Raw_orderVO> Popup() throws Exception;
     
-	
+    
 }
 

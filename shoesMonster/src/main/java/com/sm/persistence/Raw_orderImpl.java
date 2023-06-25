@@ -37,9 +37,19 @@ public class Raw_orderImpl implements Raw_orderDAO{
         data.put("startRow", startRow);
         data.put("pageSize", pageSize);
         
-        return sqlSession.selectList(NAMESPACE+".getRaw_Order",data);
+        return sqlSession.selectList(NAMESPACE + ".getRaw_Order", data);
     }
 
+
+
+	@Override
+	public List<Raw_orderVO> Popup() throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE + ".roPopup");
+	}
+
+    
+    
 
 
 

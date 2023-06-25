@@ -104,7 +104,15 @@ public class stockController {
 		return "";
 	}
 	// 발주 등록
-	
+	// 발주 팝업창(발주 정보 가져오기) - 시작
+	@RequestMapping(value = "/roPopup", method = RequestMethod.GET)
+	public void getClient(Model model) throws Exception {
+		
+		List<Raw_orderVO> roPopup = ro_service.getPopup();
+		
+		model.addAttribute("roPopup", roPopup);
+	}
+	// 발주 팝업창(발주 정보 가져오기) - 끝
 	
     
 
