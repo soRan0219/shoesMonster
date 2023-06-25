@@ -62,11 +62,20 @@ public interface PerformanceDAO {
 	// 서치시 총 글 개수 계산
 	public int getSearchTotalCount(LineVO lvo) throws Exception;
 	
+	//================창고==========================
+	
 	// 창고 조회 - R
 	public List<WarehouseVO> readWhList() throws Exception;
 	
 	// 창고 조회 처리 
 	public List<Wh_prodVO> readWh_prodList() throws Exception;
+	
+	// 창고 조회 처리 (페이징처리)
+//	public List<Wh_prodVO> getWh_prodListPage(LineWhPageVO vo) throws Exception;
+	public List<WarehouseVO> getWh_prodListPage(LineWhPageVO vo) throws Exception;
+	
+	// 창고 조회 총 게시판 글 개수 계산
+	public int getWh_TotalCount() throws Exception;
 	
 	// 창고 검색
 	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception;

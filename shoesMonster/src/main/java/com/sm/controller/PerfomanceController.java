@@ -1,7 +1,9 @@
 package com.sm.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
+import com.sm.domain.Wh_prodVO;
 import com.sm.service.PerformanceService;
 
 @Controller
@@ -158,7 +161,8 @@ public class PerfomanceController {
 	// http://localhost:8088/performance/line?page=1
 	@RequestMapping(value = "/line", method = RequestMethod.GET)
 	public void lineGET(Model model, LineVO lvo, 
-				        LineWhPageVO vo, LineWhPageMaker lwpm) throws Exception {
+				        LineWhPageVO vo, LineWhPageMaker lwpm,
+				        Map<String, Object> params) throws Exception {
 		logger.debug("@@lineGET() 호출@@");
 //		List<LineVO> boardList = service.getLineList();
 //		model.addAttribute("boardList", boardList);
@@ -205,9 +209,7 @@ public class PerfomanceController {
 			
 		}
 		
-
 	}
-	
 
 	@RequestMapping(value = "/line", method = RequestMethod.POST)
 	public void linePOST(Model model)throws Exception{
@@ -225,16 +227,27 @@ public class PerfomanceController {
 	// ======== 창고 - /warehouse ===========================
 	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-	public void warehouseGET(Model model) throws Exception {
+	public void warehouseGET(Model model, LineWhPageVO vo,
+							 LineWhPageMaker lwpm) throws Exception {
 
 		logger.debug("@@ warehouseGET() 호출 @@");
-
+		
 		List<WarehouseVO> whList = service.getWhList();
 		model.addAttribute("whList", whList);
 
 		logger.debug("whList : " + whList);
 
+		// 모든 목록(+페이징)
+//		List<Wh_prodVO> whListPage = service.getWh_prodListPage(vo);
+		List<WarehouseVO> whListPage = service.getWh_prodListPage(vo);
+		model.addAttribute("whList", whListPage);
+		
 		logger.debug("@@ 모든 리스트 호출 @@");
+		
+		// 페이징처리(하단부) 저장
+		lwpm.setLwPageVO(vo);
+		lwpm.setTotalCount(service.getWh_TotalCount());
+		model.addAttribute("lwpm", lwpm);
 	}
 
 	// 코드 품번 창고명 검색
