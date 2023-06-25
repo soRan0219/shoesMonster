@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
@@ -118,6 +119,15 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 		return pdao.getSearchTotalCount(lvo);
 	}
+
+	
+	//==========================================================================
+	
+	
+	@Override
+	public List<PerformanceVO> getAllPerf() throws Exception {
+		return pdao.readAllPerf();
+	} //getAllPerf()
 
 
 }

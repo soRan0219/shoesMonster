@@ -8,16 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
@@ -39,12 +38,18 @@ public class PerfomanceController {
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public void productGET(Model model, ProductVO vo, PagingVO pvo,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
-			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) throws Exception {
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+			@RequestParam(value = "input", required = false) String input) throws Exception {
 		logger.debug("productGET() 호출");
 		List<ProductVO> products = new ArrayList<ProductVO>();
 		model.addAttribute("products", products);
 		logger.debug("vo : " + vo);
-
+		
+		
+		logger.debug(" @@@@@@@@@@ input: " + input + "@@@@@@@@@@@@@@@");
+		
+		
+		
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "5";
@@ -66,7 +71,17 @@ public class PerfomanceController {
 			logger.debug("vo : " + vo);
 			
 			logger.debug("검색 리스트 가져감");
+			
+			
+			
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
+			}
 
+			
+			
+			
 		} else {
 			int total = service.countProd();
 			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
@@ -230,5 +245,62 @@ public class PerfomanceController {
 //		return "";
 //	}
 	// ======== 창고 - /warehouse ===========================
-
+	
+	
+	
+	
+	//// ************************* 생산실적 ************************* ////
+	
+	//http://localhost:8088/performance/performList
+	@RequestMapping(value = "/performList", method = RequestMethod.GET)
+	public void performanceList(Model model) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: performanceList() 호출");
+		
+		//서비스 - 실적목록
+		List<PerformanceVO> perfList = service.getAllPerf();
+		logger.debug("@@@@@ CONTROLLER: perfList = " + perfList);
+		
+		model.addAttribute("perfList", perfList);
+	} //performanceList()
+	
+	
+	//작업지시 검색
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String workOrderGET(Model model, @RequestParam("type") String type,
+								@RequestParam("input") String input, PagingVO pvo
+			/*@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage*/
+			) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: workOrderGET() 호출");
+		logger.debug("@@@@@ CONTROLLER: type = " + type);
+		
+		/*
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+		*/
+		
+		if(type.equals("work")) {
+			return "redirect:/workorder/workOrderList?input=" + input;
+		}
+		return "";
+	} //workOrderGET()
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }// PerfomanceController

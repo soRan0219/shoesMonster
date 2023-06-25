@@ -6,6 +6,7 @@ import java.util.List;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
@@ -56,6 +57,13 @@ public interface PerformanceService {
 	
 	// 창고 검색
 	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception;
+	
+	
+	//==========================================================================
+	
+	//생산실적 목록
+	public List<PerformanceVO> getAllPerf() throws Exception;
+	
 	
 	
 }

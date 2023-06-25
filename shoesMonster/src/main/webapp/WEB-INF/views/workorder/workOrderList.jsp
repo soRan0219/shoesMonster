@@ -41,7 +41,7 @@
 	
 	//검색 팝업
 	function openWindow(search, inputId) {
-		var url = "/workorder/search?type="+search;
+		var url = "/workorder/search?type="+search+"&input="+inputId;
 		var popup = window.open(url, "", popupOpt);
 		
 		popup.onload = function() {
@@ -50,13 +50,163 @@
 	} //openWindow()
 	
 	//이벤트리스너 - 팝업 호출하는 input 아이디 저장
-	window.addEventListener('message', function(event){
-		var data = event.data;
-		var inputId = data.inputId;
-		var value = data.value;
+// 	window.addEventListener('message', function(event){
+// 		var data = event.data;
+// 		var inputId = data.inputId;
+// 		var value = data.value;
 		
-		$('#'+inputId).val(value);
-	});
+// 		$('#'+inputId).val(value);
+// 	});
+	
+	
+	
+	// 팝업으로 열었을 때
+	function popUp() {
+		var queryString = window.location.search;
+		var urlParams = new URLSearchParams(queryString);
+		
+		var isPop = urlParams.get("input");
+		
+			
+		$('#pagination a').each(function(){
+			
+	   		var prHref = $(this).attr("href");
+	   			
+   			var newHref = prHref + "&input=" + isPop;
+   			$(this).attr("href", newHref);
+				
+		}); //페이징 요소	
+				
+   			
+    	if(isPop) {
+// 	       	alert(event);
+        	
+        	$('#add').hide();
+        	$('#modify').hide();
+        	$('#delete').hide();
+        	$('#save').hide();
+        	
+       		$('table tr:not(:first-child)').click(function(){
+       			$(this).css('background', '#ccc');
+        			
+        		var workCode = $(this).find('#workCode').text();
+        			
+        		$('#'+isPop, opener.document).val(workCode);
+        			
+        		window.close();
+        	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+        		
+         		
+   		} else {
+    		alert("팝업아님");
+    	} //if(팝업으로 열었을 때)
+    		
+	} //popUp()
+	
+	
+	
+	
+	var currentPage = 1;
+	var pageSize = 3;
+	
+	function changePage(page) {
+		currentPage = page;
+		search();
+	} //changePage()
+	
+	
+	
+	function renderPagination(pageInfo) {
+		var totalPages = Math.ceil(pageInfo.totalCount / pageInfo.lwPageVO.pageSize);
+		
+		var pageHTML = "";
+		
+// 		if(pageInfo.prev) {
+// 			pageHTML += "<a href='#' onclick='changePage(" + (pageInfo.startPage-1) + ")'" + ⏪ + "</a>";
+// 		}
+		
+		for(var i=1; i<=totalPages; i++) {
+			pageHTML += "<a href='#' onclick='changePage(" + i + ")'>" + i + "</a>";
+		}
+		
+		$('#pagination').html(pageHTML);
+		
+	} //renderPagination()
+	
+	
+	
+	function search() {
+		
+		let searchList = {
+				line_code:$('#search_line').val(),
+				from_date:$('#search_fromDate').val(),
+				to_date:$('#search_toDate').val(),
+				work_state:$('#search_state:checked').val(),
+				prod_code:$('#search_prod').val(),
+				page:currentPage,
+				pageSize:pageSize
+		};
+		
+		
+		$.ajax({
+			url:"/workorder/search",
+			type: "post",
+			contentType: "application/json; charset=UTF-8",
+			dataType: "json",
+			data: JSON.stringify(searchList),
+			success: function(data) {
+			
+				var map = data;
+				var list = map[Object.keys(map)[0]];
+				var pageInfo = map.pm;
+				
+// 				alert(list.length);
+// 				alert(pageInfo.lwPageVO.pageSize);
+			
+				//data => List 객체
+				if(list.length != 0) {
+					//검색 결과 있을 때
+					for(var i=0; i<list.length; i++) {
+						console.log(list[i].work_code);
+					
+						//th 밑에 있던 줄 모두 제거하고 검색결과 append
+						var tbl = "<tr>";
+						tbl += " <td>" + (i+1) + "</td>";
+						tbl += " <td id='workCode'>" + list[i].work_code + "</td>";
+						tbl += " <td>" + list[i].line_code + "</td>";
+						tbl += " <td>" + list[i].prod_code + "</td>";
+						tbl += " <td>" + list[i].order_code + "</td>";
+						tbl += " <td>" + list[i].work_state + "</td>";
+						tbl += " <td>" + list[i].work_date + "</td>";
+						tbl += " <td>" + list[i].work_qt + "</td>";
+						tbl += "</tr>";
+					
+						if(i==0) {
+							$('table tr:gt(0)').remove();
+							$('table').append(tbl);
+						} else {
+							$('table').append(tbl);
+						}
+					
+					} //for
+					
+					popUp();
+					
+						
+				} else {
+					//검색 결과 없을 때
+					$('#body').html("검색 결과가 없습니다.");
+				} //if(검색결과 있없)
+				
+				renderPagination(pageInfo);
+				
+			},
+			error: function() {
+				alert("조회 실패~~");
+			}
+		}); //ajax
+	} //search()
+	
 	
 	
 	//========================= 함수, 상수 ==================================//
@@ -70,6 +220,8 @@
 			$(this).find('td:first').text(index);
 		});
 
+// 		let popVal;
+		popUp();
 		
 		
 		//============================ 버튼 구현 ====================================//
@@ -440,65 +592,22 @@
 		});
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//조회버튼
 		$('#search').click(function(){
 			
 			$('#add').attr("disabled", true);
 			
-			let search = {
-					line_code:$('#search_line').val(),
-					from_date:$('#search_fromDate').val(),
-					to_date:$('#search_toDate').val(),
-					work_state:$('#search_state:checked').val(),
-					prod_code:$('#search_prod').val()
-			};
+			search();
 			
-// 			console.log(search);
-			
-			$.ajax({
-				url:"/workorder/search",
-				type: "post",
-				contentType: "application/json; charset=UTF-8",
-				dataType: "json",
-				data: JSON.stringify(search),
-				success: function(data) {
-					
-					//data => List 객체
-					if(data.length != 0) {
-						//검색 결과 있을 때
-						for(var i=0; i<data.length; i++) {
-							console.log(data[i].work_code);
-							
-							//th 밑에 있던 줄 모두 제거하고 검색결과 append
-							var tbl = "<tr>";
-							tbl += " <td>" + (i+1) + "</td>";
-							tbl += " <td>" + data[i].work_code + "</td>";
-							tbl += " <td>" + data[i].line_code + "</td>";
-							tbl += " <td>" + data[i].prod_code + "</td>";
-							tbl += " <td>" + data[i].order_code + "</td>";
-							tbl += " <td>" + data[i].work_state + "</td>";
-							tbl += " <td>" + data[i].work_date + "</td>";
-							tbl += " <td>" + data[i].work_qt + "</td>";
-							tbl += "</tr>";
-							
-							if(i==0) {
-								$('table tr:gt(0)').remove();
-								$('table').append(tbl);
-							} else {
-								$('table').append(tbl);
-							}
-							
-						} //for
-					} else {
-						//검색 결과 없을 때
-						$('#body').html("검색 결과가 없습니다.");
-					} //if(검색결과 있없)
-					
-				},
-				error: function() {
-					alert("조회 실패~~");
-				}
-			}); //ajax
 			
 		}); //search click
 		
@@ -566,6 +675,21 @@
 				</c:forEach>
 			</table>
 		</form>
+	</div>
+	
+	
+	<div id="pagination">
+		<c:if test="${pm.prev }">
+			<a href="/workorder/workOrderList?page=${pm.startPage - 1 }"> ⏪ </a>
+		</c:if>
+		
+		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+			<a href="/workorder/workOrderList?page=${page }">${page }</a>
+		</c:forEach>
+		
+		<c:if test="${pm.next }">
+			<a href="/workorder/workOrderList?page=${pm.endPage + 1 }"> ⏩ </a>
+		</c:if>
 	</div>
 	
 	<div id="details">

@@ -14,6 +14,7 @@ import com.mysql.cj.xdevapi.Result;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
@@ -170,6 +171,14 @@ public class PerformanceImpl implements PerformanceDAO {
 	}
 
 
+	// ==========================================================================
+
+	@Override
+	public List<PerformanceVO> readAllPerf() throws Exception {
+		logger.debug("##### DAO: readAllPerf() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + ".performList");
+	} //readAllPerf()
 
 
 
