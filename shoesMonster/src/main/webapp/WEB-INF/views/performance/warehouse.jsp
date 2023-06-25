@@ -21,8 +21,13 @@
 		<label>지역</label>
 			<select name="wh_addr" >
 				<option selected value="3">전 체</option>
-				<option value="1">부산</option>
-				<option value="2">창원</option>
+				
+					<c:forEach var="addr" items="${whList }">
+						<option>${addr.wh_addr.substring(0, 2)}</option>
+					</c:forEach>
+					<!-- 중복 처리 해야하는뎁 쩝 -->
+<!-- 				<option value="1">부산</option> -->
+<!-- 				<option value="2">창원</option> -->
 			</select>
 		
 		<label>사용여부</label>
@@ -83,4 +88,24 @@
 			
 		</c:forEach>
 	</table>
+	
+	<div>
+		<c:if test="${lwpm.prev }">
+			<a href="/performance/warehouse?page=${lwpm.startPage-1 }">이 전</a>
+		</c:if>
+		
+		<c:forEach begin="${lwpm.startPage }" 
+				   end="${lwpm.endPage }" step="1"
+				   varStatus="i">
+			
+				<a href="/performance/warehouse?page=${i.count }">${i.count }</a>
+				   
+		</c:forEach>	   
+				
+		<c:if test="${lwpm.next && lwpm.endPage>0 }">   
+			<a href="/performance/warehouse?page=${lwpm.endPage+1 }">다 음</a>
+		</c:if>
+		
+	</div>
+	
 <%-- ${whList} --%>

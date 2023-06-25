@@ -105,6 +105,19 @@ public class PerformanceServiceImpl implements PerformanceService {
 //		return pdao.getSearchLinePage(lvo);
 //	}
 	
+	// 게시판 총 글 개수 계산
+	@Override
+	public int getTotalCount() throws Exception {
+
+		return pdao.getTotalCount();
+	}
+	//  게시판 총 글 개수 계산 (서치)
+	@Override
+	public int getSearchTotalCount(LineVO lvo) throws Exception {
+
+		return pdao.getSearchTotalCount(lvo);
+	}
+	
 	// 창고 조회
 	@Override
 	public List<WarehouseVO> getWhList() throws Exception {
@@ -123,18 +136,22 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return pdao.searchWarehouse(search);
 	}
 	
-	// 게시판 총 글 개수 계산
+	// 창고 조회 처리(페이징처리)
 	@Override
-	public int getTotalCount() throws Exception {
+//	public List<Wh_prodVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
+	public List<WarehouseVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
 
-		return pdao.getTotalCount();
+		return pdao.getWh_prodListPage(vo);
 	}
-	//  게시판 총 글 개수 계산 (서치)
+	
+	// 창고 조회 총 글 개수 계산
 	@Override
-	public int getSearchTotalCount(LineVO lvo) throws Exception {
+	public int getWh_TotalCount() throws Exception {
 
-		return pdao.getSearchTotalCount(lvo);
+		return pdao.getWh_TotalCount();
 	}
+
+
 
 
 

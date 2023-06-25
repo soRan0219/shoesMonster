@@ -143,8 +143,19 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("@@ getSearchLinePage(LineWhPageVO vo, LineVO lvo) 호출 @@");
 		
 		Map<String, Object> params = new HashMap<>();
-		params.put("vo", vo);
-		params.put("lvo", lvo);
+//		params.put("vo", vo);
+//		params.put("lvo", lvo);
+		// 추가해봄
+		params.put("line_code",lvo.getLine_code());
+		params.put("line_name", lvo.getLine_name());
+		
+		if(lvo.getLine_use() != 3) {
+			params.put("line_use", lvo.getLine_use());
+		}
+		
+		params.put("line_place", lvo.getLine_place());
+		params.put("startPage", vo.getStartPage());
+		params.put("pageSize", vo.getPageSize());
 		
 		return sqlSession.selectList(NAMESPACE+".searchLinePage", params);
 	}
@@ -161,29 +172,7 @@ public class PerformanceImpl implements PerformanceDAO {
 //		return sqlSession.selectList(NAMESPACE+".searchLinePage", lvo);
 //	}
 
-	// 창고 조회
-	@Override
-	public List<WarehouseVO> readWhList() throws Exception {
-		logger.debug("@@readWhList() 호출@@");
 
-		return sqlSession.selectList(NAMESPACE + ".whlist");
-	}
-
-	// 창고 조회 처리
-	@Override
-	public List<Wh_prodVO> readWh_prodList() throws Exception {
-		logger.debug("@@readWh_prodList() 호출@@");
-
-		return sqlSession.selectList(NAMESPACE + ".whlist");
-	}
-
-	// 창고 검색
-	@Override
-	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
-		logger.debug("@@ searchWarehouse(HashMap<String, Object> search) 호출 @@");
-
-		return sqlSession.selectList(NAMESPACE + ".searchWarehouse", search);
-	}
 	
 	// 게시판 총 글개수 계산
 	@Override
@@ -200,8 +189,52 @@ public class PerformanceImpl implements PerformanceDAO {
 		int result = sqlSession.selectOne(NAMESPACE+".searchTotalCnt",lvo);
 		logger.debug("result :"+result);
 		return result;
-		
 	}
+	
+	//===========창고==============================================
+	
+	// 창고 조회
+	@Override
+	public List<WarehouseVO> readWhList() throws Exception {
+		logger.debug("@@readWhList() 호출@@");
+
+		return sqlSession.selectList(NAMESPACE + ".whlist");
+	}
+
+	// 창고 조회 처리
+	@Override
+	public List<Wh_prodVO> readWh_prodList() throws Exception {
+		logger.debug("@@readWh_prodList() 호출@@");
+
+		return sqlSession.selectList(NAMESPACE + ".whlist");
+	}
+	
+	// 창고 조회 처리(페이징처리)
+	@Override
+//	public List<Wh_prodVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
+	public List<WarehouseVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
+		logger.debug("@@ getWh_prodListPage() 호출 @@");
+		
+		return sqlSession.selectList(NAMESPACE+".whlistPage", vo);
+	}
+
+	// 창고 조회 총 글 개수 계산
+	@Override
+	public int getWh_TotalCount() throws Exception {
+		logger.debug("@@ getWh_TotalCount() 호출 @@");
+		
+		return sqlSession.selectOne(NAMESPACE+".whTotalCnt");
+	}
+
+	// 창고 검색
+	@Override
+	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
+		logger.debug("@@ searchWarehouse(HashMap<String, Object> search) 호출 @@");
+
+		return sqlSession.selectList(NAMESPACE + ".searchWarehouse", search);
+	}
+	
+
 
 
 

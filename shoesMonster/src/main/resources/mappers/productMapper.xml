@@ -162,31 +162,32 @@
 	<!-- 라인 검색 -->
 	
 	<!-- 라인 검색(페이징처리) -->
-	<select id="searchLinePage" resultType="com.sm.domain.LineVO" parameterType="java.util.Map">
+	<select id="searchLinePage" resultType="com.sm.domain.LineVO" parameterType="hashMap">
 <!-- 		<bind name="line_code" value="'%' + line_code +'%'"/> -->
 <!-- 		<bind name="line_name" value="'%' + line_name +'%'"/> -->
 <!-- 		<bind name="line_place" value="'%' + line_place +'%'"/> -->
 <!-- 		<![CDATA[ -->
 		SELECT * FROM line
   <where>
-    <if test="lvo.line_code != null and lvo.line_code != ''">
-      AND line_code LIKE CONCAT('%', #{lvo.line_code}, '%')
+    <if test="line_code != ''">
+      AND line_code LIKE CONCAT('%', #{line_code}, '%')
     </if>
-    <if test="lvo.line_name != null and lvo.line_name != ''">
-      AND line_name LIKE CONCAT('%', #{lvo.line_name}, '%')
+    <if test="line_name != ''">
+      AND line_name LIKE CONCAT('%', #{line_name}, '%')
     </if>
-    <if test="lvo.line_place != null and lvo.line_place != ''">
-      AND line_place LIKE CONCAT('%', #{lvo.line_place}, '%')
+    <if test="line_place != ''">
+      AND line_place LIKE CONCAT('%', #{line_place}, '%')
     </if>
-    <if test="lvo.line_use != 0">
-      AND line_use = #{lvo.line_use}
+    <if test="line_use != 0">
+      AND line_use = #{line_use}
     </if>
   </where>
-		limit #{vo.startPage}, #{vo.pageSize}
+		limit #{startPage}, #{pageSize}
 <!-- 		]]> -->
 	</select>	
 	<!-- 라인 검색(페이징처리) -->
 	
+	<!-- ///////////////////////////////////////////////////////// -->
 	
 	<!-- 창고 조회 -->
 	<resultMap id="whm_list" type="com.sm.domain.Wh_prodVO">
@@ -218,6 +219,46 @@
 		LEFT JOIN raw_material r on r.raw_code = w.raw_code
 	</select>
 	<!-- 창고 조회 -->
+	
+	<!-- 창고 조회 (페이징처리) -->
+		<resultMap id="whm_listPage" type="com.sm.domain.Wh_prodVO">
+	    <result property="raw_code" column="raw_code" />
+	    <result property="prod_code" column="prod_code" />
+		<result property="wh_code" column="wh_code"/>
+		<result property="wh_name" column="wh_name"/>
+		<result property="wh_dv" column="wh_dv"/>
+		<result property="wh_addr" column="wh_addr"/>
+		<result property="wh_tel" column="wh_tel"/>
+		<result property="wh_use" column="wh_use"/>
+		<result property="wh_note" column="wh_note"/>
+	
+	    <collection property="raw" ofType="com.sm.domain.RawMaterialVO">
+	        <result property="raw_name" column="raw_name" />
+	    </collection>
+	
+	    <collection property="prod" ofType="com.sm.domain.ProductVO">
+	        <result property="prod_name" column="prod_name" />
+	    </collection>
+	
+	</resultMap>
+	
+	<select id="whlistPage" resultMap="whm_listPage">
+		SELECT wh_code, wh_name, wh_dv,w.prod_code, p.prod_name,
+			   w.raw_code, r.raw_name, wh_addr, wh_tel, wh_use, wh_note 
+		FROM warehouse w
+		LEFT JOIN product p on p.prod_code = w.prod_code
+		LEFT JOIN raw_material r on r.raw_code = w.raw_code
+		
+		limit #{startPage}, #{pageSize}
+	</select>
+	<!-- 창고 조회 (페이징처리) -->
+	
+	<!-- 창고 조회 (전체 글개수 계산) -->
+	<select id="whTotalCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM warehouse 
+	</select>
+	<!-- 창고 조회 (전체 글개수 계산) -->
 
 	<!-- 창고 검색 -->	
 	<select id="searchWareHouse" resultType="WarehouseVO">
@@ -236,6 +277,7 @@
 				AND wh_name = #{wh_name}
 			</if>
 		</where>
+		
 	</select>
 	<!-- 창고 검색 -->	
 	
