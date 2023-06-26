@@ -21,6 +21,8 @@ import com.sm.domain.PagingVO;
 import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
+import com.sm.domain.RawMaterialList;
+import com.sm.domain.RawMaterialVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
 import com.sm.service.PerformanceService;
@@ -145,16 +147,91 @@ public class PerfomanceController {
 		return "redirect:/performance/product";
 	}
 	
+	// 품목관리 삭제
 	@RequestMapping(value = "/prodDelete", method = RequestMethod.POST)
 	public String deleteProd(@RequestParam(value="checked[]") List<String> checked) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: deleteProd() 호출");
 		logger.debug("@@@@@ CONTROLLER: checked = " + checked);
 		
-		//서비스 - 작업지시 삭제 
+		//서비스 - 품목관리 삭제 
 		service.removeProd(checked);
 		
 		return "redirect:/performance/product";
-	} //deleteWorkOrder()
+	} //deleteProd()
+	
+	
+	// 원자재관리
+		// http://localhost:8088/performance/rawMaterial
+		@RequestMapping(value = "/rawMaterial", method = RequestMethod.GET)
+		public void rawMaterialGET(Model model, RawMaterialVO vo, PagingVO pvo,
+				@RequestParam(value = "nowPage", required = false) String nowPage,
+				@RequestParam(value = "cntPerPage", required = false) String cntPerPage) throws Exception {
+			
+			logger.debug("rawMaterialGET() 호출");
+			List<RawMaterialVO> raws = new ArrayList<RawMaterialVO>();
+			model.addAttribute("raws", raws);
+			if (nowPage == null && cntPerPage == null) {
+				nowPage = "1";
+				cntPerPage = "5";
+			} else if (nowPage == null) {
+				nowPage = "1";
+			} else if (cntPerPage == null) {
+				cntPerPage = "5";
+			}
+			logger.debug("vo : " + vo);
+
+			if (vo.getRaw_code() != null || vo.getClients().getClient_actname() != null || vo.getRaw_name() != null) {
+				
+				logger.debug("if문 호출");
+				int total = service.countRaw(vo);
+				pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+				List<RawMaterialVO> list = service.getRawList(vo, pvo);
+				model.addAttribute("rawList", list);
+				model.addAttribute("paging", pvo);
+				model.addAttribute("vo", vo);
+				logger.debug("pvo : " + pvo);
+				logger.debug("vo : " + vo);
+
+				logger.debug("검색 리스트 가져감");
+
+			} else {
+				logger.debug("else문 호출");
+				int total = service.countRaw();
+				pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+				logger.debug("pvo : " + pvo);
+				List<RawMaterialVO> list = service.getRawList(pvo);
+				model.addAttribute("rawList", list);
+				model.addAttribute("paging", pvo);
+				logger.debug(" 모든 리스트 가져감");
+			}
+
+		}
+
+		// 원자재관리 정보 추가
+		@RequestMapping(value = "rawMaterial", method = RequestMethod.POST)
+		public String rawMaterialPOST(RawMaterialList raws) throws Exception {
+
+			logger.debug("rawMaterialPOST() 호출");
+			logger.debug("raws : " + raws.getRaws());
+			service.insertRaw(raws.getRaws());
+			// service.insertProd(vo);
+
+			return "redirect:/performance/rawMaterial";
+		}
+
+		// 원자재관리 정보 삭제
+		@RequestMapping(value = "/rawMaterialDelete", method = RequestMethod.POST)
+		public String deleteRawMaterial(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
+			logger.debug("@@@@@ CONTROLLER: deleteRawMaterial() 호출");
+			logger.debug("@@@@@ CONTROLLER: checked = " + checked);
+
+			// 서비스 - 원자재관리 삭제
+			service.removeRaw(checked);
+
+			return "redirect:/performance/rawMaterial";
+		} // deleteRawMaterial()
+	
+	
 
 	// ======== 라인 - /line ================================
 	// http://localhost:8088/performance/line
