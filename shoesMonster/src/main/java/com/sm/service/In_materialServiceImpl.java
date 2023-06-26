@@ -37,26 +37,26 @@ public class In_materialServiceImpl implements In_materialService{
 		return idao.count();
 	}
 	@Override
-	public int count(HashMap<String, Object> search) throws Exception {
-		
-		return idao.count(search);
-	}
-
-	
-
-
-	@Override
 	public List<In_materialVO> getIn_matPage(int displayPost, int postNum) throws Exception {
 		
 		return idao.In_matPage(displayPost, postNum);
 	}
 
+	
+	
+	@Override
+	public int count(In_materialVO ivo) throws Exception {
+		
+		return idao.count(ivo);
+	}
+
+
 
 	@Override
 	public List<In_materialVO> getIn_matPage(int displayPost, int postNum , 
-			HashMap<String, Object> search) throws Exception {
+			In_materialVO ivo) throws Exception {
 		
-		return idao.In_matPage(displayPost, postNum, search);
+		return idao.In_matPage(displayPost, postNum, ivo);
 	}
 
 

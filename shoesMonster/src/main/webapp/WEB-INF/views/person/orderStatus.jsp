@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+<%@ include file="../include/header.jsp"%>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -146,10 +144,8 @@ $(function(){
 });
 </script>
 
-</head>
-<body>
-
-	
+<!-- page content -->
+<div class="right_col" role="main">
 
 	<h1>수주 현황</h1>
 	
@@ -239,5 +235,7 @@ $(function(){
 		</c:forEach>
 	</table>
 	
-</body>
-</html>
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>
+

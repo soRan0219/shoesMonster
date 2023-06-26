@@ -85,6 +85,102 @@
 	<!-- 작업지시 삭제 -->
 
 	<!-- //////////////////////////////////////////////////////////////// -->
+	
+	<!-- 원자재관리 총 게시글 갯수 출력 -->
+	<select id="countRaw" resultType="int">
+		SELECT COUNT(*) FROM
+		raw_material
+	</select>
+	<!-- 원자재관리 총 게시글 갯수 출력 -->
+
+	<!-- 원자재관리 목록 불러오기 -->
+	<resultMap id="rawMaterial"
+		type="com.sm.domain.RawMaterialVO">
+		
+		<id property="raw_name" column="raw_name" />
+		<result property="raw_code" column="raw_code" />
+		<result property="raw_color" column="raw_color" />
+		<result property="raw_price" column="raw_price" />
+		<result property="raw_color" column="raw_color" />
+		<result property="raw_unit" column="raw_unit" />
+		<result property="raw_size" column="raw_size" />
+		<result property="raw_note" column="raw_note" />
+		<result property="client_code" column="client_code" />
+	
+		<collection property="clients" ofType="com.sm.domain.ClientsVO">
+			<result property="client_actname" column="client_actname" />
+		</collection>
+		
+	</resultMap>
+
+	<select id="readRaw" resultMap="rawMaterial" resultType="RawMaterialVO">
+		SELECT r.*, c.client_actname
+		from raw_material r
+		join clients c
+		on r.client_code = c.client_code limit
+		#{start}, #{cntPerPage}
+	</select>
+	<!-- 원자재관리 목록 불러오기 -->
+
+	<!-- 원자재관리 검색 게시글 갯수 출력 -->
+	<select id="countSearchRaw" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) FROM raw_material r
+		join clients c
+		on r.client_code = c.client_code
+		<where>
+			<if test="raw_code != ''">
+				r.raw_code like concat ('%', #{raw_code}, '%')
+			</if>
+			<if test="raw_name != ''">
+				and r.raw_code like concat ('%', #{raw_code}, '%')
+			</if>
+			<if test="client_actname != null">
+				and c.client_actname like concat ('%', #{client_actname}, '%')
+			</if>
+		</where>
+	</select>
+	<!-- 원자재관리 검색 게시글 갯수 출력 -->
+
+	<!-- 원자재관리 검색리스트 불러오기 -->
+	<select id="readSearchRaw" parameterType="hashMap" resultMap="rawMaterial"
+		resultType="RawMaterialVO">
+		SELECT r.*, c.client_actname
+		from raw_material r
+		join clients c
+		on r.client_code = c.client_code
+		<where>
+			<if test="raw_code != ''">
+				r.raw_code like concat ('%', #{raw_code}, '%')
+			</if>
+			<if test="raw_name != ''">
+				and r.raw_code like concat ('%', #{raw_code}, '%')
+			</if>
+			<if test="client_actname != ''">
+				and c.client_actname like concat ('%', #{client_actname}, '%')
+			</if>
+		</where>
+		limit #{start},#{cntPerPage}
+
+	</select>
+	<!-- 원자재관리 검색리스트 불러오기 -->
+
+	<!-- 원자재관리 정보 다중 입력 -->
+	<insert id="rawIn">
+		insert into raw_material
+		values
+		(#{raw_code},#{raw_name},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{raw_note})
+	</insert>
+	<!-- 원자재관리 정보 다중 입력 -->
+
+	<!-- 원자재관리 삭제 -->
+	<delete id="deleteRaw">
+		DELETE FROM raw_material
+		WHERE raw_code=#{raw_code}
+	</delete>
+	<!-- 원자재관리 삭제 -->
+
+	<!-- //////////////////////////////////////////////////////////////// -->
+	
 
 	<!-- 라인 목록 조회 -->
 	<select id="lineList" resultType="com.sm.domain.LineVO">

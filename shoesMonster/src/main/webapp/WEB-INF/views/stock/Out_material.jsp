@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
+<%@ include file="../include/header.jsp"%>
+
+<!-- page content -->
+<div class="right_col" role="main">
+
 		<h1> 출고 관리 </h1>
 		
 
@@ -18,11 +17,11 @@
 		<form action="" method="get">
 		<fieldset>
        		<label>출고번호:</label>
-        	<input type="text" name="out_num" value="">
+        	<input type="text" name="out_mat.out_num" value="">
         	<label>품명:</label>
         	<input type="text" name="prod_name" value="">
         	<label>거래처명:</label>
-        	<input type="text" name="client_actname" value=""> 
+        	<input type="text" name="client.client_actname" value=""> 
         	<input type="submit" value="검색">
 		</fieldset>
 		</form>
@@ -83,11 +82,11 @@
 							<c:when test="${out.orders.order_finish == 'Y'}">
 								<c:choose>
 									<c:when test="${out.out_mat.out_YN == '미출고'}">
-              		    미출고
-                </c:when>
+              						 	   미출고
+            					    </c:when>
 									<c:otherwise>
-               		   출고 취소
-                </c:otherwise>
+               							 출고 취소
+               						 </c:otherwise>
 								</c:choose>
 							</c:when>
 						</c:choose>
@@ -141,5 +140,10 @@
 		</c:if>
     </c:if>
 </div>
-</body>
-</html>
+
+
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>
+
+

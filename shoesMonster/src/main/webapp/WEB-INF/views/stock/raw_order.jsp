@@ -3,27 +3,61 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>슈몬 발주</title>
+
+<%@ include file="../include/header.jsp"%>
+
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		
 		function roPopup() {
 			
 			window.open("roPopup","거래처 목록","width=500, height=500, left=300, top=150 location=no");
+		
 		}
 		
-		function result() {
-			
+		function totalAmount() {
+			var rawOrderCount = parseInt(document.getElementById("raw_order_count").value);
+			var rawPrice = parseFloat(document.getElementById("raw_price").value);
+			var totalAmount = rawOrderCount * rawPrice;
+			var fmtAmount = totalAmount.toLocaleString() + "원";
+		  	document.getElementById("total_amount").textContent = fmtAmount;
 		}
 		
 	</script>
+<<<<<<< HEAD
+	
+<!-- page content -->
+<div class="right_col" role="main">
+=======
 </head>
 <body>
 
+<script type="text/javascript">
+	function toggleDiv(divId) {
+	    var listDiv = document.getElementById("list");
+	    var registDiv = document.getElementById("regist");
+	    
+	    if(divId === "list"){
+	    	listDiv.style.display = "block";
+	   		registDiv.style.display = "none";
+	    } else if(divId === "regist"){
+	    	listDiv.style.display = "none";
+	   	 	registDiv.style.display = "block";
+	    }
+	    
+	}
+
+	window.onload = function() {
+		var listDiv = document.getElementById("list");
+		var registDiv = document.getElementById("regist");
+	
+		listDiv.style.display = "block";
+		registDiv.style.display = "none";
+				
+	};
+</script>
+
+>>>>>>> branch 'develop' of https://github.com/eon2258/shoesMonster.git
 	
 	<%
 // 		String emp_id = (String)session.getAttribute("emp_id");
@@ -35,20 +69,22 @@
 	%>
 	
 
-    <h1>발주 관리</h1>
+    <div>
     <form action="" name="ro">
-	    <button value="0">발주 현황</button>
-	    <button value="1">발주 등록</button>
+	    <input type="button" value="발주 현황" onclick="toggleDiv('list')"></input>
+	    <input type="button"value="발주 등록" onclick="toggleDiv('regist')"></input>
     </form>
-    
+    </div>
 
     <hr>
-    <form action="">
-	    발주 번호 <input type="text" placeholder="발주 번호를 입력하세요">
-	   	품명 <input type="text" placeholder="품명을 입력하세요">
-	   	거래처명 <input type="text" placeholder="거래처명을 입력하세요"> <br>
-	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18">
-	   	<button type="submit">검색</button>
+
+    <form action="" method="get">
+	    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
+	   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
+	   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> <br>
+<!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
+	   	<input type="submit" value="검색"></input>
+
     </form>
     
     <table border="1">
@@ -99,7 +135,12 @@
 	    </c:if>
 	</div>
 	
-	<hr>
+	</div>
+	<!-- ============================ 발주 현황 ============================ -->
+	
+	<!-- ============================ 발주 등록 ============================ -->
+	<div id="regist">
+	
 	<form role="form" method="post">
 		<h1>발주 등록</h1>
 		<c:set var="today" value="<%=new Date() %>" />
@@ -110,6 +151,7 @@
 				<th>거래처명</th>
 				<th>품번</th>
 				<th>품명</th>
+				<th>색상</th>
 				<th>발주 수량</th>
 				<th>재고 수량</th>
 				<th>단가</th>
@@ -118,13 +160,14 @@
 			</tr>
 			<tr>
 				<td><fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/></td>
-				<td onclick="roPopup();"><input type="text" name="roPopup" id="roPopup"></td>
-				<td onclick="roPopup();"></td>
-				<td onclick="roPopup();"></td>
-				<td><input type="number" min="1" required></td> <!-- CSS할 때 증감버튼 없애기 -->
-				<td></td>
-				<td></td>
-				<td></td>
+				<td onclick="roPopup();"><input type="text" name="client_actname" id="client_actname" readonly></td>
+				<td onclick="roPopup();"><input type="text" name="raw_code" id="raw_code" readonly></td>
+				<td onclick="roPopup();"><input type="text" name="raw_name" id="raw_name" readonly></td>
+				<td onclick="roPopup();"><input type="text" name="raw_color" id="raw_color" readonly></td>
+				<td><input type="number" min="1" id="raw_order_count" oninput="totalAmount()" required></td> <!-- CSS할 때 증감버튼 없애기 -->
+				<td><input type="text" name="stock_raw_count" id="stock_raw_count" readonly></td>
+				<td><input type="text" name="raw_price" id="raw_price" readonly></td>
+				<td id="total_amount"></td>
 				<td>${sessionScope.emp_id }</td>
 			</tr>
 		</table>
@@ -132,10 +175,19 @@
 		<input type="submit" value="발주 신청">
 	</form>
 	
+	
+	
+	얼마 : ${raw_price*raw_order_count} <br>
 	로그인 아이디 : ${emp_id }
 	
+<<<<<<< HEAD
 	
-	
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>
+=======
+	</div>
+	<!-- ============================ 발주 등록 ============================ -->
+>>>>>>> branch 'develop' of https://github.com/eon2258/shoesMonster.git
 
-</body>
-</html>
+

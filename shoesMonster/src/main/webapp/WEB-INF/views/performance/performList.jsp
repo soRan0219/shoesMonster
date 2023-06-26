@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>슈몬 생산실적</title>
+
+<%@ include file="../include/header.jsp"%>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -244,8 +242,9 @@
 	
 </script>
 
-</head>
-<body>
+<!-- page content -->
+<div class="right_col" role="main">
+
 	<h1> /performance/performList </h1>
 	
 	<div>
@@ -277,6 +276,7 @@
 				<th>불량사유</th>
 				<th>비고</th>
 			</tr>
+
 			<c:forEach var="vo" items="${perfList }">
 				<tr>
 					<td></td>
@@ -303,5 +303,6 @@
 	</form>
 	
 	
-</body>
-</html>
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>

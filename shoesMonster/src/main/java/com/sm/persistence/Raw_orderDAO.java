@@ -16,6 +16,11 @@ public interface Raw_orderDAO {
     // 발주 등록(팝업)
     public List<Raw_orderVO> Popup() throws Exception;
     
+    // 발주 검색 총 갯수 
+    public int count1(Raw_orderVO rvo) throws Exception;
+    
+    // 발주 검색 목록
+    public List<Raw_orderVO> Raw_order(int startRow,int pageSize , Raw_orderVO rvo) throws Exception;
     
 }
 
