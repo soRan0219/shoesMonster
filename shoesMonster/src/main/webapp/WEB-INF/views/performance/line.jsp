@@ -72,6 +72,11 @@
 		
 		<label>라인코드</label>
 			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요">
+			
+		<label>라인명</label>
+			<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
+		
+		<br>
 		
 		<label>사용여부</label>
 			<select name="line_use" >
@@ -80,28 +85,11 @@
 				<option value="2">N</option>
 			</select>
 		
-		<br>
-		
-		<label>라인명</label>
-		<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
-		
-		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
 		<label>작업장</label>
-		<input type="text" name="line_place" placeholder="검색어를 입력해주세요">
-			
+			<input type="text" name="line_place" placeholder="검색어를 입력해주세요">
+				
 
-		<label>라인코드</label> <input type="text" name="line_code"
-			placeholder="검색어를 입력해주세요"> <label>사용여부</label> <select
-			name="line_use">
-			<option selected value="3">전 체</option>
-			<option value="1">Y</option>
-			<option value="2">N</option>
-		</select> <br> <label>라인명</label> <input type="text" name="line_name"
-			placeholder="검색어를 입력해주세요">
-
-		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
-		<label>작업장</label> <input type="text" name="line_place"
-			placeholder="검색어를 입력해주세요"> <input type="submit" value="검색">
+		 <input type="submit" value="검색">
 	</form>
 
 
@@ -142,27 +130,56 @@
 	</table>
 	
 	<div id="pagination">
+		<!-- http://localhost:8088/performance/line?input=line_code=W&line_use=3&line_name=&line_place= -->
+		<!-- http://localhost:8088/performance/line?page=2&line_code=&line_use=&line_name=&line_place=&input= -->
+		<!-- http://localhost:8088/performance/line?page=2&line_code=&line_use=&line_name=&line_place=&input=null -->
+		
+<%-- 		<c:if test="${lwpm.prev }"> --%>
+<%-- <%-- 			<a href="/performance/line?page=${lwpm.startPage-1 }&line_code=${line_code }&line_name=${line_name }&line_use=${line_use }&line_place=${line_place}">이 전</a> --%> --%>
+<%-- <%-- 			<a href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">이 전</a> --%> --%>
+<%-- 			<a href="/performance/line?page=${lwpm.startPage-1 }">이 전</a> --%>
+<%-- 		</c:if> --%>
 
-		<c:if test="${lwpm.prev }">
-			<a href="/performance/line?page=${lwpm.startPage-1 }">이 전</a>
+<%-- 		<c:forEach begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1" var="page"> --%>
+
+<%-- <%-- 			<a href="/performance/line?page=${page }&line_code=${line_code }&line_name=${line_name }&line_use=${line_use }&line_place=${line_place}&input=">${page }</a> --%> --%>
+<%-- 			<a href="/performance/line?page=${page }&line_code=${params.line_code }&line_name=${params.line_name }&line_use=${params.line_use }&line_place=${params.line_place}">${page }</a> --%>
+
+<%-- 		</c:forEach> --%>
+
+<%-- 		<c:if test="${lwpm.next && lwpm.endPage>0 }"> --%>
+<%-- <%-- 			<a href="/performance/line?page=${lwpm.endPage+1 }&line_code=${line_code }&line_name=${line_name }&line_use=${line_use }&line_place=${line_place}">다 음</a> --%> --%>
+<%-- <%-- 			<a href="/performance/line?page=${lvo.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">다 음</a> --%> --%>
+<%-- 			<a href="/performance/line?page=${lvo.endPage+1 }">다 음</a> --%>
+<%-- 		</c:if>  --%>
+
+		
+		
+		<c:if test="${lwpm.startPage != 1 }"> <!-- pageSize 없는 버전 -->
+			<a href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">이 전</a>
 		</c:if>
-
-		<c:forEach begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1"
-			varStatus="i">
-
-			<a href="/performance/line?page=${i.count }">${i.count }</a>
-
+		
+		<c:forEach begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1" var="page">
+			<c:choose>
+				<c:when test="${page == lwpm.startPage }">
+					<b>${page }</b>
+				</c:when>
+				<c:when test="${page != lwpm.startPage }">
+					<a href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
+				</c:when>
+			</c:choose>
 		</c:forEach>
-
+		
 		<c:if test="${lwpm.next && lwpm.endPage>0 }">
-			<a href="/performance/line?page=${lwpm.endPage+1 }">다 음</a>
+			<a href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">다 음</a>
 		</c:if>
+		
+		
+		
+		
 
 	</div>
-	서치리스트 : ${searchlist} <br> 서치리스트페이지 : ${searchListPage} <br>
 
-
-	${lwpm}
 
 
 </div>

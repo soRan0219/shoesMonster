@@ -100,7 +100,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 		pdao.deleteRaw(checked);
 	}
 
-	// ==========================================================================
+	// 라인=======================================================================
 
 	// 라인 조회
 	@Override
@@ -114,29 +114,11 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return pdao.getLineListPage(vo);
 	}
 
-	// 라인 검색
-	@Override
-	public List<LineVO> getSearchLine(LineVO lvo) throws Exception {
-		return pdao.getSearchLine(lvo);
-	}
-
-//	// 라인 검색 (페이징 처리)
-//	@Override
-//	public List<LineVO> getSearchLinePage(LineWhPageVO vo) throws Exception {
-//		return pdao.getSearchLinePage(vo);
-//	}
-
-	// 라인 검색 (페이징 처리) ++ 도전
+	// 라인 검색 (페이징 처리)
 	@Override
 	public List<LineVO> getSearchLinePage(LineWhPageVO vo, LineVO lvo) throws Exception {
 		return pdao.getSearchLinePage(vo, lvo);
 	}
-
-//	// 라인 검색 (페이징 처리) ++ 도전 두번째
-//	@Override
-//	public List<LineVO> getSearchLinePage(LineVO lvo) throws Exception {
-//		return pdao.getSearchLinePage(lvo);
-//	}
 
 	// 게시판 총 글 개수 계산
 	@Override
@@ -151,28 +133,11 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 		return pdao.getSearchTotalCount(lvo);
 	}
+	
+	// 창고=======================================================================
 
-	// 창고 조회
+	// 창고 목록 조회 + 페이징처리
 	@Override
-	public List<WarehouseVO> getWhList() throws Exception {
-		return pdao.readWhList();
-	}
-
-	// 창고 조회 처리
-	@Override
-	public List<Wh_prodVO> getWh_prodList() throws Exception {
-		return pdao.readWh_prodList();
-	}
-
-	// 창고 검색
-	@Override
-	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
-		return pdao.searchWarehouse(search);
-	}
-
-	// 창고 조회 처리(페이징처리)
-	@Override
-//	public List<Wh_prodVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
 	public List<WarehouseVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
 
 		return pdao.getWh_prodListPage(vo);
@@ -183,6 +148,20 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public int getWh_TotalCount() throws Exception {
 
 		return pdao.getWh_TotalCount();
+	}
+	
+	// 창고 검색 + 페이징처리
+	@Override
+	public List<WarehouseVO> searchWarehousePage(LineWhPageVO vo, Wh_prodVO wvo) throws Exception {
+
+		return pdao.searchWarehousePage(vo, wvo);
+	}
+	
+	// 검색시 총 글 개수 계산
+	@Override
+	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception {
+		
+		return pdao.searchWh_TotalCount(wvo);
 	}
 
 	// ==========================================================================
@@ -202,6 +181,10 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public void removePerformance(List<String> checked) throws Exception {
 		pdao.deletePerformance(checked);
 	} //removePerformance()
+
+
+	
+
 
 
 
