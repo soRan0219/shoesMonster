@@ -161,8 +161,8 @@ public class stockController {
 	
 	// 입고 페이징
     
-    //http://localhost:8088/stock/In_material
-  	//http://localhost:8080/stock/In_material
+  //http://localhost:8088/stock/In_material
+  //http://localhost:8080/stock/In_material
 	@RequestMapping(value = "/In_material", method = RequestMethod.GET)
 	public void In_matPage(HttpServletRequest request, Model model , In_materialVO ivo ) throws Exception {
 
