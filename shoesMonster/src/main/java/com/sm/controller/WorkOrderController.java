@@ -63,8 +63,6 @@ public class WorkOrderController {
 		
 		List<WorkOrderVO> workList = new ArrayList<>();
 		
-		logger.debug("@@@@@@@@@@@@@@@@@@@@@@ "+ (search.get("search_line")!=null && !search.get("search_line").equals("")));
-		
 		//검색 있을 때
 		if((search.get("search_line")!=null && !search.get("search_line").equals("")) || (search.get("search_fromDate")!=null && !search.get("search_fromDate").equals("")) || (search.get("search_toDate")!=null && !search.get("search_toDate").equals("")) 
 				|| (search.get("search_state")!=null && !search.get("search_state").equals("")) || (search.get("search_prod")!=null && !search.get("search_prod").equals(""))) {
