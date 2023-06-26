@@ -5,14 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-	function noBack(){window.history.forward();}
-</script>
 </head>
-<body    onload="noBack();" 
-    onpageshow="if(event.persisted) noBack();" 
-    onunload="">
-
+<body>
 
 	<h1>http://localhost:8088/smmain/smLogin</h1>
 	<h1>smLogin.jsp</h1>
@@ -25,9 +19,6 @@
 			<input type="submit" value="로그인">
 		</form>
 	</fieldset>
-
-
-
 
 </body>
 </html>

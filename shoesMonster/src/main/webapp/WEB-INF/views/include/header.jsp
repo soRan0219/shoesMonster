@@ -14,10 +14,6 @@
 
 <title>Shoes Monster!</title>
 
-<script type="text/javascript">
-	function noBack(){window.history.forward();}
-</script>
-
 <!-- Bootstrap -->
 <link href="../resources/vendors/bootstrap/dist/css/bootstrap.min.css"
 	rel="stylesheet">
