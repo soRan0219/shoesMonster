@@ -164,19 +164,6 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectList(NAMESPACE + ".lineList");
 	}
 	
-	// 라인 조회(페이징처리)
-//	@Override
-//	public List<LineVO> getLineListPage(Integer page) throws Exception {
-//		logger.debug("@@getLineListPage(Integer page) 호출@@");
-//		
-//		if(page <= 0) {
-//			page = 1;
-//		}
-//		page = (page - 1) * 10;
-//		
-//		return sqlSession.selectList(NAMESPACE+".lineListPage", page);
-//	}
-	
 	// 라인조회 (페이징처리)
 	@Override
 	public List<LineVO> getLineListPage(LineWhPageVO vo) throws Exception {
@@ -185,31 +172,13 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectList(NAMESPACE+".lineListPage", vo);
 	}
 
-	// 라인 검색
-	@Override
-	public List<LineVO> getSearchLine(LineVO lvo) throws Exception {
-		logger.debug("@@getSearchLine(LineVO lvo) 호출@@");
-
-		return sqlSession.selectList(NAMESPACE + ".searchLine", lvo);
-	}
-
-//	// 라인 검색 (페이징처리)
-//	@Override
-//	public List<LineVO> getSearchLinePage(LineWhPageVO vo) throws Exception {
-//		logger.debug("@@ getSearchLinePage(LineWhPageVO vo) 호출 @@");
-//		
-//		return sqlSession.selectList(NAMESPACE+".searchLinePage", vo);
-//	}
-	
-	// 라인 검색 (페이징처리) ++ 도전
+	// 라인 검색 (페이징처리) 
 	@Override
 	public List<LineVO> getSearchLinePage(LineWhPageVO vo, LineVO lvo) throws Exception {
 		logger.debug("@@ getSearchLinePage(LineWhPageVO vo, LineVO lvo) 호출 @@");
 		
 		Map<String, Object> params = new HashMap<>();
-//		params.put("vo", vo);
-//		params.put("lvo", lvo);
-		// 추가해봄
+
 		params.put("line_code",lvo.getLine_code());
 		params.put("line_name", lvo.getLine_name());
 		
@@ -223,21 +192,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return sqlSession.selectList(NAMESPACE+".searchLinePage", params);
 	}
-	
-//	// 라인 검색 (페이징처리) ++ 도전 두번째 
-//	@Override
-//	public List<LineVO> getSearchLinePage(LineVO lvo) throws Exception {
-//		logger.debug("@@ getSearchLinePage(LineVO lvo) 호출 @@");
-//		
-////		Map<String, Object> params = new HashMap<>();
-////		params.put("vo", vo);
-////		params.put("lvo", lvo);
-//		
-//		return sqlSession.selectList(NAMESPACE+".searchLinePage", lvo);
-//	}
 
-
-	
 	// 게시판 총 글개수 계산
 	@Override
 	public int getTotalCount() throws Exception {
@@ -257,25 +212,8 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	//===========창고==============================================
 	
-	// 창고 조회
+	// 창고 목록 조회 + 페이징처리
 	@Override
-	public List<WarehouseVO> readWhList() throws Exception {
-		logger.debug("@@readWhList() 호출@@");
-
-		return sqlSession.selectList(NAMESPACE + ".whlist");
-	}
-
-	// 창고 조회 처리
-	@Override
-	public List<Wh_prodVO> readWh_prodList() throws Exception {
-		logger.debug("@@readWh_prodList() 호출@@");
-
-		return sqlSession.selectList(NAMESPACE + ".whlist");
-	}
-	
-	// 창고 조회 처리(페이징처리)
-	@Override
-//	public List<Wh_prodVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
 	public List<WarehouseVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
 		logger.debug("@@ getWh_prodListPage() 호출 @@");
 		
@@ -290,15 +228,35 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectOne(NAMESPACE+".whTotalCnt");
 	}
 
-	// 창고 검색
+	// 창고 검색 + 페이징처리
 	@Override
-	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
-		logger.debug("@@ searchWarehouse(HashMap<String, Object> search) 호출 @@");
-
-		return sqlSession.selectList(NAMESPACE + ".searchWarehouse", search);
+	public List<WarehouseVO> searchWarehousePage(LineWhPageVO vo, Wh_prodVO wvo) throws Exception {
+		logger.debug("@@ searchWarehousePage(LineWhPageVO vo, Wh_prodVO wvo) 호출 @@");
+		
+		Map<String, Object> params = new HashMap<>();
+		
+		params.put("wh_code", wvo.getWh_code());
+		params.put("prod_code", wvo.getProd_code());
+		params.put("raw_code", wvo.getRaw_code());
+		params.put("wh_name", wvo.getWh_name());
+		
+		if(wvo.getWh_use() != 0) {
+			params.put("wh_use", wvo.getWh_use());
+		}
+		
+		params.put("startPage", vo.getStartPage());
+		params.put("pageSize", vo.getPageSize());
+		
+		return sqlSession.selectList(NAMESPACE+".searchWareHouse", params);
 	}
 	
-
+	// 검색시 총 글 개수 계산
+	@Override
+	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception {
+		logger.debug("@@ searchWh_TotalCount(Wh_prodVO wvo) 호출 @@");
+		
+		return sqlSession.selectOne(NAMESPACE+".searchWhTotalCnt", wvo);
+	}
 
 
 	// ==========================================================================
@@ -329,6 +287,10 @@ public class PerformanceImpl implements PerformanceDAO {
 		}
 		logger.debug("##### DAO: delete 결과 ===> " + result);
 	} //deletePerformance()
+
+	
+
+
 
 
 

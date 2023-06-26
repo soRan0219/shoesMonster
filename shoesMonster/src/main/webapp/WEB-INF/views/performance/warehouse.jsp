@@ -14,14 +14,12 @@
 		<label>창고코드</label>
 			<input type="text" name="wh_code"  placeholder="검색어를 입력해주세요">
 		
-		<label>품번</label>
-			<input type="text" name="" placeholder="검색어를 입력해주세요">
+		<label>품번</label> <!-- 품번 팝업창 + 라디오버튼 완제품/원자재 구분 한번 더 -->
+			<input type="text" name="prod_code" placeholder="검색어를 입력해주세요">
+			<!-- /////수정필요////////////////////////////////////////// -->
 		
 		<br>
-		
-		<label>창고명</label>
-		<input type="text" name="wh_name" placeholder="검색어를 입력해주세요">
-				
+
 		<label>지역</label>
 			<select name="wh_addr" >
 				<option selected value="3">전 체</option>
@@ -57,42 +55,42 @@
 			<td>사용여부</td>
 			<td>비고</td>
 		</tr>
-		
+	  
 		<c:forEach var="ww" items="${whList }" varStatus="i">
-			
-			<c:if test="${ww.wh_dv == '원자재'}">
 				<tr>	
 					<td>${i.count }</td>
 					<td>${ww.wh_code}</td>
 					<td>${ww.wh_name}</td>
 					<td>${ww.wh_dv}</td>
-					<td>${ww.raw_code }</td>
-					<td>${ww.raw.raw_name }</td>
+					
+					<c:choose>
+						<c:when test="${ww.wh_dv == '원자재'}">
+							<td>${ww.raw_code }</td>
+							<td>${ww.raw.raw_name }</td>
+						</c:when>
+						<c:when test="${ww.wh_dv == '완제품'}">
+							<td>${ww.prod_code }</td>
+							<td>${ww.prod.prod_name }</td>
+						</c:when>
+					</c:choose>
+					
 					<td>${ww.wh_addr}</td>
 					<td>${ww.wh_tel}</td>
-					<td>${ww.wh_use}</td>
+				
+					<c:choose>	
+						<c:when test="${ww.wh_use == 1}">
+							<td>Y</td>
+						</c:when>
+						<c:when test="${ww.wh_use == 2}">
+							<td>N</td>
+						</c:when>
+					</c:choose>
+				
 					<td>${ww.wh_note}</td>
 				</tr>
-			</c:if>
-			
-			<c:if test="${ww.wh_dv == '완제품'}">
-				<tr>
-					<td>${i.count }</td>
-					<td>${ww.wh_code}</td>
-					<td>${ww.wh_name}</td>
-					<td>${ww.wh_dv}</td>
-					<td>${ww.prod_code }</td>
-					<td>${ww.prod.prod_name }</td>
-					<td>${ww.wh_addr}</td>
-					<td>${ww.wh_tel}</td>
-					<td>${ww.wh_use}</td>
-					<td>${ww.wh_note}</td>
-				</tr>
-			</c:if>
-			
 		</c:forEach>
 	</table>
-	
+
 	<div>
 		<c:if test="${lwpm.prev }">
 			<a href="/performance/warehouse?page=${lwpm.startPage-1 }">이 전</a>

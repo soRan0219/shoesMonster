@@ -196,49 +196,34 @@ public class PerfomanceController {
 	@RequestMapping(value = "/line", method = RequestMethod.GET)
 	public void lineGET(Model model, LineVO lvo, 
 				        LineWhPageVO vo, LineWhPageMaker lwpm,
-				        Map<String, Object> params,
+				        @RequestParam Map<String, Object> params,
 				        @RequestParam(value = "input", required = false) String input) throws Exception {
 		logger.debug("@@lineGET() 호출@@");
-//		List<LineVO> boardList = service.getLineList();
-//		model.addAttribute("boardList", boardList);
 		
 		logger.debug("lvo : " + lvo);
 		
 		List<LineVO> boardList = new ArrayList<>();
-		
 
 		// 검색
 		if (lvo.getLine_code() != null || lvo.getLine_name() != null || lvo.getLine_place() != null
 				|| lvo.getLine_use() != 0) {
-
-			List<LineVO> searchlist = service.getSearchLine(lvo);
-			model.addAttribute("boardList", searchlist);
-
-			logger.debug("searchlist : " + searchlist);
-
-			logger.debug("@@ 검색 리스트 호출 @@");
-			
-//			List<LineVO> searchListPage = service.getLineListPage(vo);
 			
 			// 페이징처리 + 검색
-//			List<LineVO> searchListPage = service.getSearchLinePage(vo, lvo);
 			boardList = service.getSearchLinePage(vo, lvo);
-//			List<LineVO> searchListPage = service.getSearchLinePage(lvo); // 두번째 도전
+			model.addAttribute("boardList", boardList); 
 			
-//			model.addAttribute("searchlist", searchListPage);
-
-			model.addAttribute("boardList", boardList); // 0626 10:43 도전중
-			
-//			logger.debug("searchListPage : "+searchListPage);
+			// 객체 다 넘기기
+			model.addAttribute("lvo", lvo);
+			model.addAttribute("vo", vo);
+			model.addAttribute("params", params);
 			
 			logger.debug("@@!!@@ 검색 리스트 (페이징처리) 불러옴 @@!!@@");
 			
+			// 페이징처리 하단부 객체 저장
 			lwpm.setLwPageVO(vo);
-			logger.debug("확니!!!!!!!!!!!!!!!!!!!!!용");
 			lwpm.setTotalCount(service.getSearchTotalCount(lvo));
-			logger.debug("lwpm (제발서치서치) : "+lwpm.getTotalCount());
+			logger.debug("lwpm (서치) : "+lwpm.getTotalCount());
 			model.addAttribute("lwpm", lwpm);
-			
 			
 			if(input != null && !input.equals("")) {
 				model.addAttribute("input", input);
@@ -246,7 +231,7 @@ public class PerfomanceController {
 			}
 			
 		} else {
-			// 페이징처리된 리스트정보로 수정함!
+			// 페이징처리된 리스트정보
 			boardList = service.getLineListPage(vo);
 			model.addAttribute("boardList", boardList);
 
@@ -279,19 +264,38 @@ public class PerfomanceController {
 	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
 	public void warehouseGET(Model model, LineWhPageVO vo,
-							 LineWhPageMaker lwpm) throws Exception {
+							 LineWhPageMaker lwpm, Wh_prodVO wvo,
+							 @RequestParam Map<String, Object> params) throws Exception {
 
 		logger.debug("@@ warehouseGET() 호출 @@");
 		
-		List<WarehouseVO> whList = service.getWhList();
-		model.addAttribute("whList", whList);
-
-		logger.debug("whList : " + whList);
-
+		List<WarehouseVO> whList = new ArrayList<>();
+		
+		// 검색(+페이징)
+		if(wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null ||
+				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
+			
+			whList = service.searchWarehousePage(vo, wvo);
+			model.addAttribute("whList", whList);
+			
+			// 객체 다 넘기기
+			model.addAttribute("wvo", wvo);
+			model.addAttribute("vo", vo);
+			model.addAttribute("params", params);
+			
+			logger.debug("@@!!@@ 검색 리스트 (페이징처리) 불러옴 @@!!@@");
+			
+			// 페이징처리(하단부) 저장
+			lwpm.setLwPageVO(vo);
+			lwpm.setTotalCount(service.searchWh_TotalCount(wvo));
+			logger.debug("lwpm (서치) : "+lwpm.getTotalCount());
+			model.addAttribute("lwpm", lwpm);
+			
+		}
+		
 		// 모든 목록(+페이징)
-//		List<Wh_prodVO> whListPage = service.getWh_prodListPage(vo);
-		List<WarehouseVO> whListPage = service.getWh_prodListPage(vo);
-		model.addAttribute("whList", whListPage);
+		whList = service.getWh_prodListPage(vo);
+		model.addAttribute("whList", whList);
 		
 		logger.debug("@@ 모든 리스트 호출 @@");
 		
@@ -301,18 +305,6 @@ public class PerfomanceController {
 		model.addAttribute("lwpm", lwpm);
 	}
 
-	// 코드 품번 창고명 검색
-	// http://localhost:8088/performance/wh_search
-//	@RequestMapping(value = "/wh_search", method = RequestMethod.GET)
-//	public String whSearchGET(@RequestParam("type") String type, 
-//							  Model model) throws Exception{
-//		
-//		logger.debug("@@ whSearchGET() 호출 @@");
-
-//		if()
-
-//		return "";
-//	}
 	// ======== 창고 - /warehouse ===========================
 	
 	
