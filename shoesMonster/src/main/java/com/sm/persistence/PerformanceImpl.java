@@ -150,7 +150,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		params.put("line_code",lvo.getLine_code());
 		params.put("line_name", lvo.getLine_name());
 		
-		if(lvo.getLine_use() != 3) {
+		if(lvo.getLine_use() != 0) {
 			params.put("line_use", lvo.getLine_use());
 		}
 		

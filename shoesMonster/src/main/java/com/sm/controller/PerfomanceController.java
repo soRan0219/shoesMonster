@@ -168,6 +168,9 @@ public class PerfomanceController {
 //		model.addAttribute("boardList", boardList);
 		
 		logger.debug("lvo : " + lvo);
+		
+		List<LineVO> boardList = new ArrayList<>();
+		
 
 		// 검색
 		if (lvo.getLine_code() != null || lvo.getLine_name() != null || lvo.getLine_place() != null
@@ -181,10 +184,17 @@ public class PerfomanceController {
 			logger.debug("@@ 검색 리스트 호출 @@");
 			
 //			List<LineVO> searchListPage = service.getLineListPage(vo);
-			List<LineVO> searchListPage = service.getSearchLinePage(vo, lvo);
+			
+			// 페이징처리 + 검색
+//			List<LineVO> searchListPage = service.getSearchLinePage(vo, lvo);
+			boardList = service.getSearchLinePage(vo, lvo);
 //			List<LineVO> searchListPage = service.getSearchLinePage(lvo); // 두번째 도전
-			model.addAttribute("searchlist", searchListPage);
-			logger.debug("searchListPage : "+searchListPage);
+			
+//			model.addAttribute("searchlist", searchListPage);
+
+			model.addAttribute("boardList", boardList); // 0626 10:43 도전중
+			
+//			logger.debug("searchListPage : "+searchListPage);
 			
 			logger.debug("@@!!@@ 검색 리스트 (페이징처리) 불러옴 @@!!@@");
 			
@@ -196,7 +206,7 @@ public class PerfomanceController {
 
 		} else {
 			// 페이징처리된 리스트정보로 수정함!
-			List<LineVO> boardList = service.getLineListPage(vo);
+			boardList = service.getLineListPage(vo);
 			model.addAttribute("boardList", boardList);
 
 			logger.debug("@@ 모든 리스트 호출 @@");

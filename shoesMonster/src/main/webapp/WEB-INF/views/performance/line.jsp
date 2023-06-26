@@ -77,7 +77,7 @@
 	</table>
 	
 	<div>
-<%-- 	${lwpm} --%>
+
 		<c:if test="${lwpm.prev }">
 			<a href="/performance/line?page=${lwpm.startPage-1 }">이 전</a>
 		</c:if>
@@ -95,3 +95,8 @@
 		</c:if>
 		
 	</div>
+		서치리스트 : ${searchlist} <br>
+		서치리스트페이지 : ${searchListPage} <br>
+		
+		
+		${lwpm}
