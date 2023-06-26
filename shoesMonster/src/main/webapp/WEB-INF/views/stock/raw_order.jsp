@@ -3,11 +3,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>슈몬 발주</title>
+
+<%@ include file="../include/header.jsp"%>
+
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		
@@ -21,9 +19,9 @@
 		}
 		
 	</script>
-</head>
-<body>
-
+	
+<!-- page content -->
+<div class="right_col" role="main">
 	
 	<%
 // 		String emp_id = (String)session.getAttribute("emp_id");
@@ -135,7 +133,8 @@
 	로그인 아이디 : ${emp_id }
 	
 	
-	
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>
 
-</body>
-</html>
+

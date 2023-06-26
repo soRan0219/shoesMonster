@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>rawMaterial</title>
+
+<%@ include file="../include/header.jsp"%>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
     	
@@ -132,8 +130,8 @@
         });
     </script>
 
-</head>
-<body>
+<!-- page content -->
+<div class="right_col" role="main">
 
 	<h1>rawMaterial</h1>
 	
@@ -209,7 +207,7 @@
 			<a href="/performance/rawMaterial?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&gt;</a>
 		</c:if>
 	</div>
-
-
-</body>
-</html>
+	
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>

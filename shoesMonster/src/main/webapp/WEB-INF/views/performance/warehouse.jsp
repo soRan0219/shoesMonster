@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ include file="../include/header.jsp"%>
+
+<!-- page content -->
+<div class="right_col" role="main">
 
 <h2>창고관리</h2>
 
@@ -109,3 +113,9 @@
 	</div>
 	
 <%-- ${whList} --%>
+
+
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>
+
