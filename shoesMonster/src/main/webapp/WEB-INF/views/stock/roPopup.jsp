@@ -11,14 +11,23 @@
 	<script type="text/javascript">
 	
 	function select(row) {
-		alert("dddd");
-// 		window.opener.result();
-// 		var table = window.opener.getElementById("table");
-		var table = document.getElementById("table");
-		var newRow = table.insertRow(-1);
+		
+		var clientName = row.cells[0].innerText;
+		var rawCode = row.cells[1].innerText;
+        var rawName = row.cells[2].innerText;
+        var rawColor = row.cells[3].innerText;
+        var stockCount = row.cells[4].innerText;
+        var rawPrice = row.cells[5].innerText;
+		
+      	opener.document.getElementById("client_actname").value = clientName;
+      	opener.document.getElementById("raw_code").value = rawCode;
+      	opener.document.getElementById("raw_name").value = rawName;
+      	opener.document.getElementById("raw_color").value = rawColor;
+      	opener.document.getElementById("stock_raw_count").value = stockCount;
+      	opener.document.getElementById("raw_price").value = rawPrice;
+        
 		window.close();
 	}
-	
 	
 	</script>
 </head>
@@ -31,16 +40,18 @@
 			<th>거래처명</th>
 			<th>품번</th>
 			<th>품명</th>
+			<th>색상</th>
 			<th>재고 수량</th>
 			<th>단가</th>
 		</tr>
 		<c:forEach var="ro" items="${roPopup }">
-			<tr onclick = "select();">
+			<tr onclick = "select(this);">
 				<td>${ro.clients.client_actname }</td>
 				<td>${ro.rawMaterial.raw_code }</td>
 				<td>${ro.rawMaterial.raw_name }</td>
+				<td>${ro.rawMaterial.raw_color }</td>
 				<td>${ro.stock.stock_raw_count }</td>
-				<td><fmt:formatNumber value=" ${ro.rawMaterial.raw_price }"/>원</td>
+				<td><fmt:formatNumber value=" ${ro.rawMaterial.raw_price }"/></td>
 			</tr>
 		</c:forEach>
 	</table>

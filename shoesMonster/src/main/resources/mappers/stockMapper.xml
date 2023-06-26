@@ -51,7 +51,7 @@
 	
 	<!-- 발주 등록 팝업 -->
 	<select id="roPopup" resultMap="ro_List">
-		select c.client_actname, rm.raw_code, rm.raw_name, rm.raw_price, COALESCE(s.stock_raw_count, 0) AS stock_raw_count
+		select c.client_actname, rm.raw_code, rm.raw_name, rm.raw_price, rm.raw_color, COALESCE(s.stock_raw_count, 0) AS stock_raw_count
 		from raw_material rm
 		LEFT join stock s on s.raw_code = rm.raw_code
 		join clients c on c.client_code = rm.client_code;
