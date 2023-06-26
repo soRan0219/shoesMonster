@@ -85,7 +85,11 @@ public interface PerformanceDAO {
 	//생산실적 목록
 	public List<PerformanceVO> readAllPerf() throws Exception;
 	
+	//생산실적 등록
+	public void createPerformance(PerformanceVO vo) throws Exception;
 	
+	//생산실적 삭제
+	public void deletePerformance(List<String> checked) throws Exception;
 	
 	
 	

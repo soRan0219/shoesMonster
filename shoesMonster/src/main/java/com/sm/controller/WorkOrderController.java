@@ -1,8 +1,8 @@
 package com.sm.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,72 +43,97 @@ public class WorkOrderController {
 	//작업지시 목록
 	//http://localhost:8088/workorder/workOrderList
 	@RequestMapping(value = "/workOrderList", method = RequestMethod.GET)
-	public void workOrderListGET(LineWhPageVO pvo, Model model) throws Exception {
+	public void workOrderListGET(LineWhPageVO pvo, 
+								@RequestParam HashMap<String, Object> search, 
+								@RequestParam(value = "input", required = false) Object input, 
+								Model model) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: workOrderListGET() 호출");
+		
 		
 		//페이지 정보
 		pvo.setPageSize(2);
+//		pvo.setPage((int)search.get("page"));
+//		pvo.setPageSize((int)search.get("pageSize"));
+		
 		
 		//페이징 하단부 정보
 		LineWhPageMaker pm = new LineWhPageMaker();
 		pm.setLwPageVO(pvo);
 		pm.setPageBlock(2);
-		pm.setTotalCount(wService.getTotalWorkOrder());
 		
-		logger.debug("@@@@@ CONTROLLER: 전체 작업지시 수 = " + wService.getTotalWorkOrder());
+		List<WorkOrderVO> workList = new ArrayList<>();
 		
-		List<WorkOrderVO> workList = wService.getAllWorkOrder(pvo);
+		logger.debug("@@@@@@@@@@@@@@@@@@@@@@ "+ (search.get("search_line")!=null && !search.get("search_line").equals("")));
 		
-		model.addAttribute("workList", workList);
-		model.addAttribute("pm", pm);
+		//검색 있을 때
+		if((search.get("search_line")!=null && !search.get("search_line").equals("")) || (search.get("search_fromDate")!=null && !search.get("search_fromDate").equals("")) || (search.get("search_toDate")!=null && !search.get("search_toDate").equals("")) 
+				|| (search.get("search_state")!=null && !search.get("search_state").equals("")) || (search.get("search_prod")!=null && !search.get("search_prod").equals(""))) {
+			
+			logger.debug("@@@@@ CONTROLLER: 검색 service 호출");
+			
+			search.put("startPage", pvo.getStartPage());
+			search.put("pageSize", pvo.getPageSize());
+			
+			//서비스 - 작업지시 검색
+			workList = wService.searchWorkOrder(search);
+			logger.debug("@@@@@ CONTROLLER: 검색결과list = " + workList);
+			
+			logger.debug("@@@@@ CONTROLLER: 검색 결과 수 = " + wService.getSearchWorkOrder(search));
+			pm.setTotalCount(wService.getSearchWorkOrder(search));
+			
+			model.addAttribute("search", search);
+			model.addAttribute("workList", workList);
+			model.addAttribute("pm", pm);
+			
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@ CONTROLLER: input 정보 전달");
+			}
+			
+		} //if(검색)
+		//검색 없을 때
+		else {
+			
+			logger.debug("@@@@@ CONTROLLER: 전체 작업지시 수 = " + wService.getTotalWorkOrder());
+			
+			pm.setTotalCount(wService.getTotalWorkOrder());
+			
+			workList = wService.getAllWorkOrder(pvo);
+			
+			model.addAttribute("workList", workList);
+			model.addAttribute("pm", pm);
+			
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@ CONTROLLER: input 정보 전달");
+			}
+		} //else(모든)
+		
 		
 	} //workOrderListGET()
 	
 	//라인, 품목, 수주 검색
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String lineGET(Model model, @RequestParam("type") String type, PagingVO pvo,
-			@RequestParam("input") String input,
-			@RequestParam(value = "nowPage", required = false) String nowPage,
-			@RequestParam(value = "cntPerPage", required = false) String cntPerPage
-			) throws Exception {
-		logger.debug("@@@@@ CONTROLLER: lineGET() 호출");
+	public String popUpGET(Model model, @RequestParam("type") String type, 
+			@RequestParam("input") String input) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: popUpGET() 호출");
 		logger.debug("@@@@@ CONTROLLER: type = " + type);
 		
-		if (nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "5";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) {
-			cntPerPage = "5";
-		}
 		
 		if(type.equals("line")) {
-//			model.addAttribute("lineList", pService.getLineList());
-//			return "/workorder/lineSearch";
 			return "redirect:/performance/line?input="+input;
 		}
 		
 		else if(type.equals("prod")) {
-
-			int total = pService.countProd();
-			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-			model.addAttribute("prodList", pService.getProdList(pvo));
-			model.addAttribute("paging", pvo);
 			return "redirect:/performance/product?input="+input;
 
 		}
 		
 		else /* if(type.equals("order"))*/ {
-			
-			model.addAttribute("orderList", osService.getOsList());
 			return "redirect:/person/orderStatus?input="+input;
 		}
-	}
+	} //popUpGET()
 		
-//		return "";
-//	} //lineGET()
-	
 	//작업지시 추가
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addWorkOrder(/*@RequestBody */WorkOrderVO vo) throws Exception {

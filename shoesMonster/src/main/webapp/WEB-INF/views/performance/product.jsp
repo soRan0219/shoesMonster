@@ -16,6 +16,10 @@
 		
 		var isPop = urlParams.get("input");
 		
+		if(isPop==="null") {
+			isPop = null;
+		}
+		
 		$('#pagination a').each(function(){
 			
 	   		var prHref = $(this).attr("href");
@@ -45,7 +49,7 @@
          	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
         		
     	} else {
-    		alert("null");
+    		console.log("팝업아님");
     	} //if(팝업으로 열었을 때)
     		
 	} //popUp()
@@ -207,7 +211,6 @@
         	<label>품목 단위:</label>
         	<input type="text" name="prod_unit" id="searchUnit">
         	<input type="submit" value="검색">
-        	<input type="button" value="검색" id="filterButton">
 		</fieldset>
 	</form>
 	

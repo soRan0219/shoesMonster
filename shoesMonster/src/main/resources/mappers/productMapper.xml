@@ -305,11 +305,24 @@
 	
 	<select id="performList" resultMap="perfList" resultType="PerformanceVO">
 		SELECT p.perform_code, p.work_code, w.line_code, w.prod_code, p.perform_date,
-				p.perform_qt, p.perform_fair, p.perform_defect, p.defect_note 
+				p.perform_qt, p.perform_fair, p.perform_defect, p.defect_note, p.perform_note 
 		FROM performance p JOIN work_order w 
 		ON p.work_code = w.work_code
 	</select>
 	<!-- 생산실적 목록 -->
+	
+	<!-- 생산실적 등록 -->
+	<insert id="insertPerform">
+		INSERT INTO performance (perform_code,work_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_note) 
+		VALUES (#{perform_code},#{work_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},#{perform_note});
+	</insert>
+	<!-- 생산실적 등록 -->
+	
+	<!-- 생산실적 삭제 -->
+	<delete id="deletePerformance">
+		DELETE FROM performance WHERE perform_code=#{perform_code}
+	</delete>
+	<!-- 생산실적 삭제 -->
 	
 	
 	
