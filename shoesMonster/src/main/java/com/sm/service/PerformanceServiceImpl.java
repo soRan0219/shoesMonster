@@ -200,7 +200,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 	@Override
 	public void removePerformance(List<String> checked) throws Exception {
-		
+		pdao.deletePerformance(checked);
 	} //removePerformance()
 
 
