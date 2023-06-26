@@ -1,6 +1,5 @@
 package com.sm.persistence;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.sm.domain.In_materialVO;
@@ -18,15 +17,10 @@ public interface In_materialDAO {
 		
 		// 페이징처리 + 검색어
 		
-		public int count(HashMap<String, Object> search) throws Exception;
+		public int count(In_materialVO ivo) throws Exception;
 		
-		public List<In_materialVO> In_matPage(int displayPost,int postNum ,HashMap<String, Object> search) throws Exception;
+		public List<In_materialVO> In_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
 		
-		// 페이징처리 
-		
-//		// 검색 기능
-//		public List<In_materialVO> In_matSearch(
-//				int displayPost , int postNum , String keyword) throws Exception;
 	
 
 }

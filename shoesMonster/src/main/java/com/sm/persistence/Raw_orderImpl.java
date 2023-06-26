@@ -48,6 +48,39 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		return sqlSession.selectList(NAMESPACE + ".roPopup");
 	}
 
+
+
+	@Override
+	public int count1(Raw_orderVO rvo) throws Exception {
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("raw_order_num", rvo.getRaw_order_num());
+		data.put("raw_name", rvo.getRawMaterial().getRaw_name());
+		data.put("client_actname", rvo.getClients().getClient_actname());
+		
+		
+		
+		return sqlSession.selectOne(NAMESPACE+".searchCount1",data);
+	}
+
+
+
+	@Override
+	public List<Raw_orderVO> Raw_order(int startRow, int pageSize, Raw_orderVO rvo) throws Exception {
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("startRow", startRow);
+        data.put("pageSize", pageSize);
+		data.put("raw_order_num", rvo.getRaw_order_num());
+		data.put("raw_name", rvo.getRawMaterial().getRaw_name());
+		data.put("client_actname", rvo.getClients().getClient_actname());
+		
+		return sqlSession.selectList(NAMESPACE+".getRaw_OrderSearch",data);
+		
+	}
+
     
     
 
