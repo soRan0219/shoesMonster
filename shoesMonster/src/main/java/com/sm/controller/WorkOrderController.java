@@ -86,7 +86,7 @@ public class WorkOrderController {
 		if(type.equals("line")) {
 //			model.addAttribute("lineList", pService.getLineList());
 //			return "/workorder/lineSearch";
-			return "redirect:/performance/line";
+			return "redirect:/performance/line?input="+input;
 		}
 		
 		else if(type.equals("prod")) {
@@ -102,7 +102,7 @@ public class WorkOrderController {
 		else /* if(type.equals("order"))*/ {
 			
 			model.addAttribute("orderList", osService.getOsList());
-			return "/workorder/orderSearch";
+			return "redirect:/person/orderStatus?input="+input;
 		}
 	}
 		

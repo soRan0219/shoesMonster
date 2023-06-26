@@ -121,8 +121,7 @@ public class stockController {
 	// 입고 페이징
     
     //http://localhost:8088/stock/In_material
-    //http://localhost:8088/stock/In_material?num=1
-  	//http://localhost:8080/stock/In_material?num=1
+  	//http://localhost:8080/stock/In_material
 	@RequestMapping(value = "/In_material", method = RequestMethod.GET)
 	public void In_matPage(HttpServletRequest request, Model model ) throws Exception {
 
@@ -224,7 +223,7 @@ public class stockController {
     
     ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
    
-	//http://localhost:8080/stock/stockList
+		//http://localhost:8080/stock/stockList
     	//http://localhost:8088/stock/stockList
     	@RequestMapping(value="/stockList" ,method = RequestMethod.GET)
     	public void stockList(HttpServletRequest request , Model model) throws Exception {
@@ -269,16 +268,15 @@ public class stockController {
       ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
     	
     	//////////////////////////// 출고 페이지 ///////////////////////////////////////
-    	//http://localhost:8088/stock/Out_material
-    	//http://localhost:8088/stock/Out_material
     	//http://localhost:8080/stock/Out_material
+    	//http://localhost:8088/stock/Out_material
     	@RequestMapping(value="/Out_material" ,method = RequestMethod.GET)
     	public void out_matList(HttpServletRequest request , Model model, 
-    			Out_materialVO ovo) throws Exception {
+    			ProductVO ovo) throws Exception {
     		
     		
     	if(ovo.getClient() != null && ovo.getClient().getClient_actname() != null || 
-    		ovo.getOut_num() != null || ovo.getClient() != null && ovo.getProduct().getProd_name() != null	) {
+    		ovo.getOut_mat().getOut_num() != null || ovo.getOut_mat() != null && ovo.getProd_name() != null	) {
     	
 
     		

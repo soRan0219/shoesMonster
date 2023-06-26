@@ -10,13 +10,13 @@ public interface Out_materialService {
 	
 			// 출고 목록 개수
 			public int count2() throws Exception;
-			
-			// 검색 총 갯수
-			public int count2(Out_materialVO ovo) throws Exception;
-			
+						
 			// 출고 목록 조회
 			public List<Out_materialVO> getOut_matList(int startRow, int pageSize ) throws Exception;
 			
+			// 검색 총 갯수
+			public int count2(ProductVO ovo) throws Exception;
+			
 			// 출고 검색
-			public List<Out_materialVO> searchOut_mat(int startRow, int pageSize , Out_materialVO ovo) throws Exception;
+			public List<Out_materialVO> searchOut_mat(int startRow, int pageSize , ProductVO ovo) throws Exception;
 }

@@ -43,25 +43,16 @@ public class Out_materialImpl implements Out_materialDAO {
 	
 	
 	@Override
-	public int count2(Out_materialVO ovo) throws Exception {
+	public int count2(ProductVO ovo) throws Exception {
 		
-		HashMap<String, Object> data = new HashMap<String, Object>();
 		
-		 if (ovo.getClient() != null) {
-		        data.put("client_actname", ovo.getClient().getClient_actname());
-		    }
-		    if (ovo.getOut_num() != null) {
-		        data.put("out_num", ovo.getOut_num());
-		    }
-		    if (ovo.getProduct() != null && ovo.getProduct().getProd_name() != null) {
-		        data.put("prod_name", ovo.getProduct().getProd_name());
-		    }
 		
-		return sqlSession.selectOne(NAMESPACE+".searchCount2",data);
+		 
+		return sqlSession.selectOne(NAMESPACE+".searchCount2",ovo);
 	}
 
 	@Override
-	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, Out_materialVO ovo) throws Exception {
+	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, ProductVO ovo) throws Exception {
 
 		HashMap<String , Object> data = new HashMap<String, Object>();
 		
@@ -69,8 +60,8 @@ public class Out_materialImpl implements Out_materialDAO {
         data.put("pageSize", pageSize);
 		
 		data.put("client_actname",ovo.getClient().getClient_actname());
-		data.put("out_num", ovo.getOut_num());
-		data.put("prod_name", ovo.getProduct().getProd_name());
+		data.put("out_num", ovo.getOut_mat().getOut_num());
+		data.put("prod_name", ovo.getProd_name());
 
 	
 		return sqlSession.selectList(NAMESPACE+".searchOut",data);
