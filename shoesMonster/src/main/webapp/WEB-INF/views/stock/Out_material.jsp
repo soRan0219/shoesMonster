@@ -18,11 +18,11 @@
 		<form action="" method="get">
 		<fieldset>
        		<label>출고번호:</label>
-        	<input type="text" name="out_num" value="">
+        	<input type="text" name="out_mat.out_num" value="">
         	<label>품명:</label>
         	<input type="text" name="prod_name" value="">
         	<label>거래처명:</label>
-        	<input type="text" name="client_actname" value=""> 
+        	<input type="text" name="client.client_actname" value=""> 
         	<input type="submit" value="검색">
 		</fieldset>
 		</form>
@@ -83,11 +83,11 @@
 							<c:when test="${out.orders.order_finish == 'Y'}">
 								<c:choose>
 									<c:when test="${out.out_mat.out_YN == '미출고'}">
-              		    미출고
-                </c:when>
+              						 	   미출고
+            					    </c:when>
 									<c:otherwise>
-               		   출고 취소
-                </c:otherwise>
+               							 출고 취소
+               						 </c:otherwise>
 								</c:choose>
 							</c:when>
 						</c:choose>

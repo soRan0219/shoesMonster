@@ -12,20 +12,15 @@
 	<h1> 재고 관리 </h1>
 	
 	<hr>
-	
-	<div>
-	        재고 번호 <input type="text"  placeholder="발주 번호를 입력하세요">
-	   	품명 <input type="text" placeholder="품명을 입력하세요">
-	   	거래처명 <input type="text" placeholder="거래처명을 입력하세요"> 
-	   	<button type="submit">검색</button>
-    </div>
-    
-    
-    
-    
-    
-    
-    <table border="1">
+
+		<form action="" method="get">
+<!-- 		품명 <input type="text" placeholder="품명을 입력하세요">  -->
+		창고 코드 <input type="text" name="wh_code" placeholder="창고코드를 입력하세요">
+		<button type="submit">검색</button>
+		</form>
+
+
+	<table border="1">
     <tr>
  		<th>창고 이름</th>
  		<th>제품 상태</th>
