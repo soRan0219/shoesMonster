@@ -42,161 +42,70 @@
 	function openWindow(search, inputId) {
 		var url = "/workorder/search?type=" + search + "&input=" + inputId;
 		var popup = window.open(url, "", popupOpt);
-
-		popup.onload = function() {
-			popup.postMessage({
-				inputId : inputId
-			}, '*');
-		};
 	} //openWindow()
-
-	//이벤트리스너 - 팝업 호출하는 input 아이디 저장
-	// 	window.addEventListener('message', function(event){
-	// 		var data = event.data;
-	// 		var inputId = data.inputId;
-	// 		var value = data.value;
-
-	// 		$('#'+inputId).val(value);
-	// 	});
+	
+	
 
 	// 팝업으로 열었을 때
 	function popUp() {
 		var queryString = window.location.search;
 		var urlParams = new URLSearchParams(queryString);
-
 		var isPop = urlParams.get("input");
-
-		$('#pagination a').each(function() {
-
-			var prHref = $(this).attr("href");
-
-			var newHref = prHref + "&input=" + isPop;
-			$(this).attr("href", newHref);
-
-		}); //페이징 요소	
-
-		if (isPop) {
-			// 	       	alert(event);
-
-			$('#add').hide();
-			$('#modify').hide();
-			$('#delete').hide();
-			$('#save').hide();
-
-			$('table tr:not(:first-child)').click(function() {
-				$(this).css('background', '#ccc');
-
-				var workCode = $(this).find('#workCode').text();
-
-				$('#' + isPop, opener.document).val(workCode);
-
-				window.close();
-			}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
-
-		} else {
-			alert("팝업아님");
-		} //if(팝업으로 열었을 때)
-
-	} //popUp()
-
-	var currentPage = 1;
-	var pageSize = 3;
-
-	function changePage(page) {
-		currentPage = page;
-		search();
-	} //changePage()
-
-	function renderPagination(pageInfo) {
-		var totalPages = Math.ceil(pageInfo.totalCount
-				/ pageInfo.lwPageVO.pageSize);
-
-		var pageHTML = "";
-
-		// 		if(pageInfo.prev) {
-		// 			pageHTML += "<a href='#' onclick='changePage(" + (pageInfo.startPage-1) + ")'" + ⏪ + "</a>";
-		// 		}
-
-		for (var i = 1; i <= totalPages; i++) {
-			pageHTML += "<a href='#' onclick='changePage(" + i + ")'>" + i
-					+ "</a>";
+		
+		if(isPop==="null") {
+			isPop = null;
 		}
+		
+		$('#pagination a').each(function(){
+			
+	   		var prHref = $(this).attr("href");
+	   			
+   			var newHref = prHref + "&input=" + isPop;
+   			$(this).attr("href", newHref);
+				
+		}); //페이징 요소	
+		
+		$('#input').val(isPop);
+		
+    	if(isPop!=null && isPop!="") {
+			
+        	$('#add').hide();
+        	$('#modify').hide();
+        	$('#delete').hide();
+        	$('#save').hide();
+        	
+       		$('table tr:not(:first-child)').click(function(){
+       			$(this).css('background', '#ccc');
+        		
+       			if(isPop==="work_code") {
+	        		var workCode = $(this).find('#workCode').text();
+	        		var lineCode = $(this).find('#lineCode').text();
+	        		var prodCode = $(this).find('#prodCode').text();
+	        		
+	        		$('#'+isPop, opener.document).val(workCode);
+	        		$('#line_code', opener.document).val(lineCode);
+	        		$('#prod_code', opener.document).val(prodCode);
+	        		
+       			} else {
+	        		var workCode = $(this).find('#workCode').text();
+	        		
+	        		$('#'+isPop, opener.document).val(workCode);
+       			}
+        		
+        		window.close();
+        	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+        		
+         		
+   		} //if 
+   		
+   		else {
+   			console.log("팝업아님");
+    	} //if(팝업으로 열었을 때)
+    		
+	} //popUp()
+	
 
-		$('#pagination').html(pageHTML);
-
-	} //renderPagination()
-
-	function search() {
-
-		let searchList = {
-			line_code : $('#search_line').val(),
-			from_date : $('#search_fromDate').val(),
-			to_date : $('#search_toDate').val(),
-			work_state : $('#search_state:checked').val(),
-			prod_code : $('#search_prod').val(),
-			page : currentPage,
-			pageSize : pageSize
-		};
-
-		$.ajax({
-			url : "/workorder/search",
-			type : "post",
-			contentType : "application/json; charset=UTF-8",
-			dataType : "json",
-			data : JSON.stringify(searchList),
-			success : function(data) {
-
-				var map = data;
-				var list = map[Object.keys(map)[0]];
-				var pageInfo = map.pm;
-
-				// 				alert(list.length);
-				// 				alert(pageInfo.lwPageVO.pageSize);
-
-				//data => List 객체
-				if (list.length != 0) {
-					//검색 결과 있을 때
-					for (var i = 0; i < list.length; i++) {
-						console.log(list[i].work_code);
-
-						//th 밑에 있던 줄 모두 제거하고 검색결과 append
-						var tbl = "<tr>";
-						tbl += " <td>" + (i + 1) + "</td>";
-						tbl += " <td id='workCode'>" + list[i].work_code
-								+ "</td>";
-						tbl += " <td>" + list[i].line_code + "</td>";
-						tbl += " <td>" + list[i].prod_code + "</td>";
-						tbl += " <td>" + list[i].order_code + "</td>";
-						tbl += " <td>" + list[i].work_state + "</td>";
-						tbl += " <td>" + list[i].work_date + "</td>";
-						tbl += " <td>" + list[i].work_qt + "</td>";
-						tbl += "</tr>";
-
-						if (i == 0) {
-							$('table tr:gt(0)').remove();
-							$('table').append(tbl);
-						} else {
-							$('table').append(tbl);
-						}
-
-					} //for
-
-					popUp();
-
-				} else {
-					//검색 결과 없을 때
-					$('#body').html("검색 결과가 없습니다.");
-				} //if(검색결과 있없)
-
-				renderPagination(pageInfo);
-
-			},
-			error : function() {
-				alert("조회 실패~~");
-			}
-		}); //ajax
-	} //search()
-
+	
 	//========================= 함수, 상수 ==================================//
 
 	$(function() {
@@ -205,9 +114,10 @@
 		$('table tr').each(function(index) {
 			$(this).find('td:first').text(index);
 		});
-
-		// 		let popVal;
-		popUp();
+		
+		
+		popUp();			
+		
 
 		//============================ 버튼 구현 ====================================//
 
@@ -611,68 +521,50 @@
 		}); //prodCode click
 
 		//지시일자 이날부터
-		$('#search_fromDate')
-				.datepicker(
-						{
-							showOn : 'both',
-							buttonImage : 'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-							buttonImageOnly : 'true',
-							changeMonth : 'true',
-							changeYear : 'true',
-							nextText : '다음달',
-							prevText : '이전달',
-							showButtonPanel : 'true',
-							currentText : '오늘',
-							closeText : '닫기',
-							dateFormat : 'yy-mm-dd',
-							dayNames : [ '월요일', '화요일', '수요일', '목요일', '금요일',
-									'토요일', '일요일' ],
-							dayNamesMin : [ '월', '화', '수', '목', '금', '토', '일' ],
-							monthNamesShort : [ '1월', '2월', '3월', '4월', '5월',
-									'6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
-							// 			minDate:,
-							// 			maxDate:+30,
-							onSelect : function(date, inst) {
-								$('#search_toDate').datepicker('option',
-										'minDate',
-										$(this).datepicker('getDate'));
-							}
-						});
+		$('#search_fromDate').datepicker({
+			showOn:'both',
+			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+			buttonImageOnly:'true',
+			changeMonth:'true',
+			changeYear:'true',
+			nextText:'다음달',
+			prevText:'이전달',
+			showButtonPanel:'true',
+			currentText:'오늘',
+			closeText:'닫기',
+			dateFormat:'yy-mm-dd',
+			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			onSelect: function(date, inst) {
+				$('#search_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
+			}
+		});
 		//이날까지
-		$('#search_toDate')
-				.datepicker(
-						{
-							showOn : 'both',
-							buttonImage : 'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-							buttonImageOnly : 'true',
-							changeMonth : 'true',
-							changeYear : 'true',
-							nextText : '다음달',
-							prevText : '이전달',
-							showButtonPanel : 'true',
-							currentText : '오늘',
-							closeText : '닫기',
-							dateFormat : 'yy-mm-dd',
-							dayNames : [ '월요일', '화요일', '수요일', '목요일', '금요일',
-									'토요일', '일요일' ],
-							dayNamesMin : [ '월', '화', '수', '목', '금', '토', '일' ],
-							monthNamesShort : [ '1월', '2월', '3월', '4월', '5월',
-									'6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
-						// 			maxDate:+30
-						});
-
-		//조회버튼
-		$('#search').click(function() {
-
-			$('#add').attr("disabled", true);
-
-			search();
-
-		}); //search click
-
+		$('#search_toDate').datepicker({
+			showOn:'both',
+			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+			buttonImageOnly:'true',
+			changeMonth:'true',
+			changeYear:'true',
+			nextText:'다음달',
+			prevText:'이전달',
+			showButtonPanel:'true',
+			currentText:'오늘',
+			closeText:'닫기',
+			dateFormat:'yy-mm-dd',
+			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		});
+		
+		
 		//============================ 검색 =========================================//
-
-	}) //jQuery
+		
+		
+		
+	}); //jQuery
+	
 </script>
 
 <!-- page content -->
@@ -680,19 +572,23 @@
 	<h1>/workorder/workOrderList.jsp</h1>
 
 	<div>
-		<fieldset>
-			라인코드: <input type="text" name="search_line" id="search_line">
-			지시일자: <input type="text" name="search_fromDate" id="search_fromDate">
-			~ <input type="text" name="search_toDate" id="search_toDate">
-			<br> 지시상태: <input type="radio" name="search_state"
-				id="search_state" value="지시"> 지시 <input type="radio"
-				name="search_state" id="search_state" value="진행"> 진행 <input
-				type="radio" name="search_state" id="search_state" value="마감">
-			마감 <input type="radio" name="search_state" id="search_state"
-				value="전체"> 전체 품번: <input type="text" name="search_prod"
-				id="search_prod"> <br>
-			<button id="search">조회</button>
-		</fieldset>
+		<form method="get">
+			<fieldset>
+				<input type="hidden" name="input" id="input" value="${input }">
+				라인코드: <input type="text" name="search_line" id="search_line"> 
+				지시일자: <input type="text" name="search_fromDate" id="search_fromDate"> ~ 
+						  <input type="text" name="search_toDate" id="search_toDate"> 
+				<br>
+				지시상태: <input type="radio" name="search_state" id="search_state" value="지시"> 지시 
+						  <input type="radio" name="search_state" id="search_state" value="진행"> 진행 
+						  <input type="radio" name="search_state" id="search_state" value="마감"> 마감 
+						  <input type="radio" name="search_state" id="search_state" value="전체"> 전체 
+				품번: <input type="text" name="search_prod" id="search_prod">
+				<br>
+				<input type="submit" value="조회"> 
+<!-- 				<button id="search">조회</button>  -->
+			</fieldset>
+		</form>
 	</div>
 
 	<br>
@@ -722,8 +618,8 @@
 					<tr>
 						<td></td>
 						<td id="workCode">${w.work_code }</td>
-						<td>${w.line_code }</td>
-						<td>${w.prod_code }</td>
+						<td id="lineCode">${w.line_code }</td>
+						<td id="prodCode">${w.prod_code }</td>
 						<td>${w.order_code }</td>
 						<td>${w.work_state }</td>
 						<td>${w.work_date }</td>
@@ -734,19 +630,17 @@
 		</form>
 	</div>
 
-
 	<div id="pagination">
 		<c:if test="${pm.prev }">
-			<a href="/workorder/workOrderList?page=${pm.startPage - 1 }"> ⏪ </a>
+			<a href="/workorder/workOrderList?page=${pm.startPage - 1 }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏪ </a>
 		</c:if>
-
-		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }"
-			step="1">
-			<a href="/workorder/workOrderList?page=${page }">${page }</a>
+		
+		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+			<a href="/workorder/workOrderList?page=${page }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}">${page }</a>
 		</c:forEach>
 
 		<c:if test="${pm.next }">
-			<a href="/workorder/workOrderList?page=${pm.endPage + 1 }"> ⏩ </a>
+			<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏩ </a>
 		</c:if>
 	</div>
 

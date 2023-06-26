@@ -100,5 +100,12 @@ public interface PerformanceService {
 
 	// 생산실적 목록
 	public List<PerformanceVO> getAllPerf() throws Exception;
+	
+	//생산실적 등록
+	public void regPerformance(PerformanceVO vo) throws Exception;
+	
+	//생산실적 삭제
+	public void removePerformance(List<String> checked) throws Exception;
+	
 
 }

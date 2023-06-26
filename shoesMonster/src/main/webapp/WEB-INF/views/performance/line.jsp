@@ -4,12 +4,91 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+	// 팝업으로 열었을 때
+	function popUp() {
+		var queryString = window.location.search;
+		var urlParams = new URLSearchParams(queryString);
+		
+		var isPop = urlParams.get("input");
+		
+		if(isPop==="null") {
+			isPop = null;
+		}
+			
+		$('#pagination a').each(function(){
+			
+	   		var prHref = $(this).attr("href");
+	   			
+				var newHref = prHref + "&input=" + isPop;
+				$(this).attr("href", newHref);
+				
+		}); //페이징 요소	
+		
+		$('#input').val(isPop);
+				
+		if(isPop) {
+	    	
+// 	    	$('#add').hide();
+// 	    	$('#modify').hide();
+// 	    	$('#delete').hide();
+// 	    	$('#save').hide();
+	    	
+	   		$('table tr:not(:first-child)').click(function(){
+	   			
+	   			$(this).css('background', '#ccc');
+	    			
+	    		var lineCode = $(this).find('#lineCode').text();
+	    			
+	    		$('#'+isPop, opener.document).val(lineCode);
+	    			
+	    		window.close();
+	    	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+	    		
+	     		
+			} else {
+				console.log("팝업아님");
+		} //if(팝업으로 열었을 때)
+			
+	} //popUp()
+	
+	$(function() {
+		popUp();
+	});
+</script>
+
+
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 
 	<h2>라인관리</h2>
 
 	<form action="" method="get">
+		
+		<input type="hidden" name="input" id="input" value="${input}">
+		
+		<label>라인코드</label>
+			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요">
+		
+		<label>사용여부</label>
+			<select name="line_use" >
+				<option selected value="3">전 체</option>
+				<option value="1">Y</option>
+				<option value="2">N</option>
+			</select>
+		
+		<br>
+		
+		<label>라인명</label>
+		<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
+		
+		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
+		<label>작업장</label>
+		<input type="text" name="line_place" placeholder="검색어를 입력해주세요">
+			
 
 		<label>라인코드</label> <input type="text" name="line_code"
 			placeholder="검색어를 입력해주세요"> <label>사용여부</label> <select
@@ -28,50 +107,41 @@
 
 
 	<table border="1">
-		<thead>
-			<tr>
-				<td></td>
-				<td>라인코드</td>
-				<td>라인명</td>
-				<td>작업장</td>
-				<td>사용여부</td>
-				<td>등록자</td>
-				<td>등록일</td>
-				<td>비고</td>
-			</tr>
-		</thead>
-
+		<tr>	
+			<th></th>
+			<th>라인코드</th>
+			<th>라인명</th>
+			<th>작업장</th>
+			<th>사용여부</th>
+			<th>등록자</th>
+			<th>등록일</th>
+			<th>비고</th>
+		</tr>
+		
 		<c:forEach var="vo" items="${boardList }" varStatus="i">
-			<c:if test="${vo.line_use == 1 }">
 				<tr>
 					<td>${i.count}</td>
-					<td>${vo.line_code}</td>
+					<td id="lineCode">${vo.line_code}</td>
 					<td>${vo.line_name}</td>
 					<td>${vo.line_place}</td>
-					<td>Y</td>
+					
+					<c:choose>
+						<c:when test="${vo.line_use == 1 }">
+							<td>Y</td>
+						</c:when>
+						<c:when test="${vo.line_use == 2 }">
+							<td>N</td>
+						</c:when>
+					</c:choose>
+					
 					<td>${vo.emp_id}</td>
 					<td>${vo.insert_date}</td>
 					<td>${vo.line_note}</td>
 				</tr>
-			</c:if>
-
-			<c:if test="${vo.line_use == 2 }">
-				<tr>
-					<td>${i.count}</td>
-					<td>${vo.line_code}</td>
-					<td>${vo.line_name}</td>
-					<td>${vo.line_place}</td>
-					<td>N</td>
-					<td>${vo.emp_id}</td>
-					<td>${vo.insert_date}</td>
-					<td>${vo.line_note}</td>
-				</tr>
-			</c:if>
-
 		</c:forEach>
 	</table>
-
-	<div>
+	
+	<div id="pagination">
 
 		<c:if test="${lwpm.prev }">
 			<a href="/performance/line?page=${lwpm.startPage-1 }">이 전</a>

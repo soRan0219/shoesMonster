@@ -49,11 +49,7 @@ public class PerfomanceController {
 		List<ProductVO> products = new ArrayList<ProductVO>();
 		model.addAttribute("products", products);
 		logger.debug("vo : " + vo);
-		
-		
 		logger.debug(" @@@@@@@@@@ input: " + input + "@@@@@@@@@@@@@@@");
-		
-		
 		
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -77,14 +73,10 @@ public class PerfomanceController {
 			
 			logger.debug("검색 리스트 가져감");
 			
-			
-			
 			if(input != null && !input.equals("")) {
 				model.addAttribute("input", input);
 				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
 			}
-
-			
 			
 			
 		} else {
@@ -99,41 +91,6 @@ public class PerfomanceController {
 
 	}
   
-  	////////////////////// 검색 ajax /////////////////////////
-//	@ResponseBody
-//	@RequestMapping(value = "/search", method = RequestMethod.POST)
-//	public List<ProductVO> searchPOST(Model model,
-//			PagingVO pvo,
-//			@RequestBody ProductVO vo,
-//			@RequestParam(value = "nowPage", required = false) String nowPage,
-//			@RequestParam(value = "cntPerPage", required = false) String cntPerPage
-//			) throws Exception {
-//		logger.debug("searchPOST() 호출");
-//		
-//		if (nowPage == null && cntPerPage == null) {
-//			nowPage = "1";
-//			cntPerPage = "5";
-//		} else if (nowPage == null) {
-//			nowPage = "1";
-//		} else if (cntPerPage == null) {
-//			cntPerPage = "5";
-//		}
-//		
-//		List<ProductVO> list = new ArrayList<>();
-//		
-//		if (vo.getProd_code() != null || vo.getProd_name() !=null || 
-//			vo.getProd_category() !=null || vo.getProd_unit() !=null ) {
-//			int total = service.countProd(vo);
-//			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-//			list = service.getProdList(vo,pvo);
-//			logger.debug("검색 리스트 가져감");
-//			model.addAttribute("paging", pvo);
-//			model.addAttribute("vo",vo);
-//		}
-//		
-//		return list;
-//	} //searchPOST()
-	////////////////////// 검색 ajax /////////////////////////
   
 	// 품목관리 정보 추가 
 	@RequestMapping(value = "product", method = RequestMethod.POST)
@@ -239,7 +196,8 @@ public class PerfomanceController {
 	@RequestMapping(value = "/line", method = RequestMethod.GET)
 	public void lineGET(Model model, LineVO lvo, 
 				        LineWhPageVO vo, LineWhPageMaker lwpm,
-				        Map<String, Object> params) throws Exception {
+				        Map<String, Object> params,
+				        @RequestParam(value = "input", required = false) String input) throws Exception {
 		logger.debug("@@lineGET() 호출@@");
 //		List<LineVO> boardList = service.getLineList();
 //		model.addAttribute("boardList", boardList);
@@ -280,7 +238,13 @@ public class PerfomanceController {
 			lwpm.setTotalCount(service.getSearchTotalCount(lvo));
 			logger.debug("lwpm (제발서치서치) : "+lwpm.getTotalCount());
 			model.addAttribute("lwpm", lwpm);
-
+			
+			
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
+			}
+			
 		} else {
 			// 페이징처리된 리스트정보로 수정함!
 			boardList = service.getLineListPage(vo);
@@ -372,23 +336,9 @@ public class PerfomanceController {
 	//작업지시 검색
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String workOrderGET(Model model, @RequestParam("type") String type,
-								@RequestParam("input") String input, PagingVO pvo
-			/*@RequestParam(value = "nowPage", required = false) String nowPage,
-			@RequestParam(value = "cntPerPage", required = false) String cntPerPage*/
-			) throws Exception {
+								@RequestParam("input") String input, PagingVO pvo) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: workOrderGET() 호출");
 		logger.debug("@@@@@ CONTROLLER: type = " + type);
-		
-		/*
-		if (nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "5";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) {
-			cntPerPage = "5";
-		}
-		*/
 		
 		if(type.equals("work")) {
 			return "redirect:/workorder/workOrderList?input=" + input;
@@ -396,8 +346,29 @@ public class PerfomanceController {
 		return "";
 	} //workOrderGET()
 	
+	//생산실적 등록
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String addPerformance(PerformanceVO vo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: addPerformance() 호출");
+		logger.debug("@@@@@ CONTROLLER: vo = " + vo);
+		
+		//서비스 - 작업지시 등록
+		service.regPerformance(vo);
+		
+		return "redirect:/performance/performList";
+	} //addPerformance()
 	
-	
+	//생산실적 삭제
+	@RequestMapping(value = "/deletePerform", method = RequestMethod.POST)
+	public String deletePerformance(@RequestParam(value="checked[]") List<String> checked) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: deletePerformance() 호출");
+		logger.debug("@@@@@ CONTROLLER: checked = " + checked);
+		
+		//서비스 - 작업지시 삭제 
+		service.removePerformance(checked);
+		
+		return "redirect:/performance/performList";
+	} //deletePerformance()
 	
 	
 	

@@ -310,6 +310,26 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectList(NAMESPACE + ".performList");
 	} //readAllPerf()
 
+	@Override
+	public void createPerformance(PerformanceVO vo) throws Exception {
+		logger.debug("##### DAO: createPerformance() 호출");
+		sqlSession.insert(NAMESPACE + ".insertPerform", vo);
+	} //createPerformance()
+
+	@Override
+	public void deletePerformance(List<String> checked) throws Exception {
+		logger.debug("##### DAO: deletePerformance() 호출");
+		
+		Iterator<String> it = checked.iterator();
+		int result = 0;
+		
+		while(it.hasNext()) {
+			String perform_code = it.next();
+			result += sqlSession.delete(NAMESPACE + ".deletePerformance", perform_code);
+		}
+		logger.debug("##### DAO: delete 결과 ===> " + result);
+	} //deletePerformance()
+
 
 
 

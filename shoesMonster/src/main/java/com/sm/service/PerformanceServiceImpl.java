@@ -190,6 +190,20 @@ public class PerformanceServiceImpl implements PerformanceService {
 	@Override
 	public List<PerformanceVO> getAllPerf() throws Exception {
 		return pdao.readAllPerf();
-	} // getAllPerf()
+
+	} //getAllPerf()
+
+	@Override
+	public void regPerformance(PerformanceVO vo) throws Exception {
+		pdao.createPerformance(vo);
+	} //regPerformance()
+
+	@Override
+	public void removePerformance(List<String> checked) throws Exception {
+		
+	} //removePerformance()
+
+
+
 
 }
