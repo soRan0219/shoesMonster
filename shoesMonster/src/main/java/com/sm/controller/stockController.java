@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,11 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sm.domain.ClientsVO;
 import com.sm.domain.In_materialVO;
-import com.sm.domain.LineVO;
 import com.sm.domain.Out_materialVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
 import com.sm.domain.StockVO;
+import com.sm.domain.WarehouseVO;
 import com.sm.service.In_materialService;
 import com.sm.service.Out_materialService;
 import com.sm.service.Raw_orderService;
@@ -226,44 +224,88 @@ public class stockController {
 		//http://localhost:8080/stock/stockList
     	//http://localhost:8088/stock/stockList
     	@RequestMapping(value="/stockList" ,method = RequestMethod.GET)
-    	public void stockList(HttpServletRequest request , Model model) throws Exception {
+    	public void stockList(HttpServletRequest request , Model model ,WarehouseVO wvo) throws Exception {
     		
-    		 // 게시물 총 개수
-            int count3 = s_service.count3();
-            
-            // 한 페이지에 출력할 게시물 개수
-            int pageSize = 2;
-            
-            String pageNum = request.getParameter("num");
-            if(pageNum == null) {
-           	 pageNum = "1";
-            }
-            
-            // 행번호
-            int currentPage = Integer.parseInt(pageNum);
-            int startRow = (currentPage - 1) * pageSize;
-            
-            // 페이징 처리 - 하단
-    		 int pageCount = count3/pageSize + (count3%pageSize == 0? 0 : 1);
-    		 int pageBlock = 1;
+    		
+    		if(wvo.getWh_code() != null) {
+    			
+    			 // 게시물 총 개수
+                int count3 = s_service.count3(wvo);
+                
+                // 한 페이지에 출력할 게시물 개수
+                int pageSize = 10;
+                
+                String pageNum = request.getParameter("num");
+                if(pageNum == null) {
+               	 pageNum = "1";
+                }
+                
+                // 행번호
+                int currentPage = Integer.parseInt(pageNum);
+                int startRow = (currentPage - 1) * pageSize;
+                
+                // 페이징 처리 - 하단
+        		 int pageCount = count3/pageSize + (count3%pageSize == 0? 0 : 1);
+        		 int pageBlock = 5;
 
-    		 // 페이지 번호
-    		 int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
-    		 int endPage = startPage+pageBlock-1;
-    		 if(endPage > pageCount) {
-    			 endPage = pageCount;
-    		 } 
-            
-            List<StockVO> stockList = s_service.getStockList(startRow, pageSize);
-           
-            model.addAttribute("stockList", stockList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("pageBlock", pageBlock);
-            model.addAttribute("count3",count3);
+        		 // 페이지 번호
+        		 int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
+        		 int endPage = startPage+pageBlock-1;
+        		 if(endPage > pageCount) {
+        			 endPage = pageCount;
+        		 } 
+                
+                List<StockVO> stockList = s_service.getStockList(startRow, pageSize, wvo);
+               
+                model.addAttribute("stockList", stockList);
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+                model.addAttribute("pageBlock", pageBlock);
+                model.addAttribute("count3",count3);
+        		
     		
+    			} else {
+    			 // 게시물 총 개수
+                int count3 = s_service.count3();
+                
+                // 한 페이지에 출력할 게시물 개수
+                int pageSize = 10;
+                
+                String pageNum = request.getParameter("num");
+                if(pageNum == null) {
+               	 pageNum = "1";
+                }
+                
+                // 행번호
+                int currentPage = Integer.parseInt(pageNum);
+                int startRow = (currentPage - 1) * pageSize;
+                
+                // 페이징 처리 - 하단
+        		 int pageCount = count3/pageSize + (count3%pageSize == 0? 0 : 1);
+        		 int pageBlock = 5;
+
+        		 // 페이지 번호
+        		 int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
+        		 int endPage = startPage+pageBlock-1;
+        		 if(endPage > pageCount) {
+        			 endPage = pageCount;
+        		 } 
+                
+                List<StockVO> stockList = s_service.getStockList(startRow, pageSize);
+               
+                model.addAttribute("stockList", stockList);
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+                model.addAttribute("pageBlock", pageBlock);
+                model.addAttribute("count3",count3);
+        		
+    		}
+            
     	}
+    		
+    		
     
+    		
     
       ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
     	
@@ -271,88 +313,85 @@ public class stockController {
     	//http://localhost:8080/stock/Out_material
     	//http://localhost:8088/stock/Out_material
     	@RequestMapping(value="/Out_material" ,method = RequestMethod.GET)
-    	public void out_matList(HttpServletRequest request , Model model, 
-    			ProductVO ovo) throws Exception {
-    		
-    		
-    	if(ovo.getClient() != null && ovo.getClient().getClient_actname() != null || 
-    		ovo.getOut_mat().getOut_num() != null || ovo.getOut_mat() != null && ovo.getProd_name() != null	) {
-    	
+    	public void out_matList(HttpServletRequest request, Model model, ProductVO ovo) throws Exception {
 
-    		
-    		// 게시물 총 개수
-    		int count2 = o_service.count2(ovo);
+    		if (ovo.getClient() != null && ovo.getClient().getClient_actname() != null
+    				|| ovo.getOut_mat().getOut_num() != null || ovo.getOut_mat() != null && ovo.getProd_name() != null) {
 
-    		// 한 페이지에 출력할 게시물 개수
-    		int pageSize = 10;
+    			logger.debug("ovo : " + ovo);
+    			// 게시물 총 개수
+    			int count2 = o_service.count2(ovo);
 
-    		String pageNum = request.getParameter("num");
-    		if (pageNum == null) {
-    			pageNum = "1";
+    			// 한 페이지에 출력할 게시물 개수
+    			int pageSize = 10;
+
+    			String pageNum = request.getParameter("num");
+    			if (pageNum == null) {
+    				pageNum = "1";
+    			}
+
+    			// 행번호
+    			int currentPage = Integer.parseInt(pageNum);
+    			int startRow = (currentPage - 1) * pageSize;
+
+    			// 페이징 처리 - 하단
+    			int pageCount = count2 / pageSize + (count2 % pageSize == 0 ? 0 : 1);
+    			int pageBlock = 5;
+
+    			// 페이지 번호
+    			int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
+    			int endPage = startPage + pageBlock - 1;
+    			if (endPage > pageCount) {
+    				endPage = pageCount;
+    			}
+
+    			List<Out_materialVO> out_matList = o_service.searchOut_mat(startRow, pageSize, ovo);
+
+    			model.addAttribute("out_matList", out_matList);
+    			model.addAttribute("startPage", startPage);
+    			model.addAttribute("endPage", endPage);
+    			model.addAttribute("pageBlock", pageBlock);
+    			model.addAttribute("count2", count2);
+    			model.addAttribute("ovo", ovo);
+
+    		} else {
+
+    			// 게시물 총 개수
+    			int count2 = o_service.count2();
+
+    			// 한 페이지에 출력할 게시물 개수
+    			int pageSize = 10;
+
+    			String pageNum = request.getParameter("num");
+    			if (pageNum == null) {
+    				pageNum = "1";
+    			}
+
+    			// 행번호
+    			int currentPage = Integer.parseInt(pageNum);
+    			int startRow = (currentPage - 1) * pageSize;
+
+    			// 페이징 처리 - 하단
+    			int pageCount = count2 / pageSize + (count2 % pageSize == 0 ? 0 : 1);
+    			int pageBlock = 5;
+
+    			// 페이지 번호
+    			int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
+    			int endPage = startPage + pageBlock - 1;
+    			if (endPage > pageCount) {
+    				endPage = pageCount;
+    			}
+
+    			List<Out_materialVO> out_matList = o_service.getOut_matList(startRow, pageSize);
+
+    			model.addAttribute("out_matList", out_matList);
+    			model.addAttribute("startPage", startPage);
+    			model.addAttribute("endPage", endPage);
+    			model.addAttribute("pageBlock", pageBlock);
+    			model.addAttribute("count2", count2);
+
     		}
-
-    		// 행번호
-    		int currentPage = Integer.parseInt(pageNum);
-    		int startRow = (currentPage - 1) * pageSize;
-
-    		// 페이징 처리 - 하단
-    		int pageCount = count2/ pageSize + (count2 % pageSize == 0 ? 0 : 1);
-    		int pageBlock = 5;
-
-    		// 페이지 번호
-    		int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
-    		int endPage = startPage + pageBlock - 1;
-    		if (endPage > pageCount) {
-    			endPage = pageCount;
-    		}
-
-    		List<Out_materialVO> out_matList = o_service.searchOut_mat(startRow, pageSize, ovo);
-
-    		model.addAttribute("out_matList", out_matList);
-    		model.addAttribute("startPage", startPage);
-    		model.addAttribute("endPage", endPage);
-    		model.addAttribute("pageBlock", pageBlock);
-    		model.addAttribute("count2", count2);
-    		model.addAttribute("ovo", ovo);
-    		
-    	}	
-    		
-		// 게시물 총 개수
-		int count2 = o_service.count2();
-
-		// 한 페이지에 출력할 게시물 개수
-		int pageSize = 10;
-
-		String pageNum = request.getParameter("num");
-		if (pageNum == null) {
-			pageNum = "1";
-		}
-
-		// 행번호
-		int currentPage = Integer.parseInt(pageNum);
-		int startRow = (currentPage - 1) * pageSize;
-
-		// 페이징 처리 - 하단
-		int pageCount = count2/ pageSize + (count2 % pageSize == 0 ? 0 : 1);
-		int pageBlock = 5;
-
-		// 페이지 번호
-		int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
-		int endPage = startPage + pageBlock - 1;
-		if (endPage > pageCount) {
-			endPage = pageCount;
-		}
-
-		List<Out_materialVO> out_matList = o_service.getOut_matList(startRow, pageSize );
-
-		model.addAttribute("out_matList", out_matList);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
-		model.addAttribute("pageBlock", pageBlock);
-		model.addAttribute("count2", count2);
-    		
     	}
-    	
     	
     	// 출고 검색
 //    	@RequestMapping(value="/Out_material",method=RequestMethod.POST)
@@ -376,4 +415,7 @@ public class stockController {
 //    	}
     	
     	//////////////////////////// 출고 페이지 ///////////////////////////////////////
+    
+    	
+    	
 }

@@ -181,13 +181,11 @@ select i.in_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
 	    	<result property="raw_code" column="raw_code"/>
 	    	<result property="raw_name" column="raw_name"/>
 	    </collection>
-	
-
 	</resultMap>
 
 
 
-	<select id="count3" resultType="int"> 
+	<select id="count3" resultType="int" > 
 		 select count(*) from stock 
 	</select> 
 
@@ -201,6 +199,37 @@ select i.in_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
 	</select>
 
 <!-- 재고 목록 조회 -->
+
+
+<!-- 재고 검색 목록 조회 -->
+<select id="searchCount3" resultType="int" parameterType="hashMap" > 
+		 select count(*)
+		 from warehouse w
+		left join product p on p.prod_code = w.prod_code
+		left join raw_material r on r.raw_code = w.raw_code
+		 <where>
+       		 <if test="wh_code != ''">
+            	 wh_code like concat ( '%' ,#{wh_code},'%' )
+       		 </if>
+   		 </where>
+	</select> 
+
+	<select id="searchStockPage" resultType="com.sm.domain.WarehouseVO" 
+	parameterType="hashMap" resultMap="stock_List" > 
+		 select w.wh_name,w.wh_dv,w.prod_code, p.prod_name,
+			   w.raw_code, r.raw_name, wh_addr ,wh_code, w.raw_code
+		from warehouse w
+		left join product p on p.prod_code = w.prod_code
+		left join raw_material r on r.raw_code = w.raw_code
+		 <where>
+       		 <if test="wh_code != ''">
+            	 wh_code like concat ( '%' ,#{wh_code},'%' )
+       		 </if>
+   		 </where>
+		limit #{startRow}, #{pageSize};
+	</select>
+<!-- 재고 검색 목록 조회 -->
+
 
 
 <!-- ////////////////////////////////////////////// 출고 ///////////////////////////////////////////// -->
@@ -254,23 +283,23 @@ select i.in_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
 
 <!-- 출고 검색 -->
 
-<select id="searchCount2" resultType="int" resultMap="out_List">
-	select count(*) 
-	from product p
-	JOIN orders o ON p.client_code = o.client_code
-	join clients c on c.client_code = p.client_code
-	left join out_material om on om.prod_code = p.prod_code
-	<where>
-		<if test="prod_name != ''">
-			p.prod_name like concat ( '%' ,#{prod_name},'%' )
-		</if>
-		<if test="out_num != null || out_num != ''">
-			and i.out_num like concat ( '%' ,#{out_num},'%' )
-		</if>
-		<if test="client_actname != ''">
-			and c.client_actname like concat ( '%' ,#{client_actname},'%' )
-		</if>
-	</where>
+<select id="searchCount2" resultType="int"  parameterType="hashMap">
+    select count(*) 
+    from product p
+    JOIN orders o ON p.client_code = o.client_code
+    join clients c on c.client_code = p.client_code
+    left join out_material om on om.prod_code = p.prod_code
+    <where>
+        <if test="prod_name != ''">
+            p.prod_name like concat ( '%' ,#{prod_name},'%' )
+        </if>
+        <if test="out_num != null || out_num != ''">
+            and om.out_num like concat ( '%' ,#{out_num},'%' )
+        </if>
+        <if test="client_actname != ''">
+            and c.client_actname like concat ( '%' ,#{client_actname},'%' )
+        </if>
+    </where>
 </select>
 
 	<select id="searchOut"  parameterType="hashMap" resultType="com.sm.domain.ProductVO" resultMap="out_List">
@@ -287,10 +316,10 @@ select i.in_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
 				prod_name like concat ( '%' ,#{prod_name},'%' )
 			</if>
 			<if test="out_num != null || out_num != ''">
-  				  and i.out_num like concat('%', #{out_num}, '%')
+  				  and om.out_num like concat('%', #{out_num}, '%')
 			</if>
 			<if test="client_actname != ''">
-				and client_actname like concat ( '%', #{client_actname} ,'%'}
+				and client_actname like concat ( '%', #{client_actname} ,'%')
 			</if>
 		</where>
 	
