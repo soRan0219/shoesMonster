@@ -45,10 +45,14 @@ public class Out_materialImpl implements Out_materialDAO {
 	@Override
 	public int count2(ProductVO ovo) throws Exception {
 		
-		
-		
-		 
-		return sqlSession.selectOne(NAMESPACE+".searchCount2",ovo);
+		HashMap<String , Object> data = new HashMap<String, Object>();
+        
+        data.put("client_actname",ovo.getClient().getClient_actname());
+        data.put("out_num", ovo.getOut_mat().getOut_num());
+        data.put("prod_name", ovo.getProd_name());
+        
+         
+        return sqlSession.selectOne(NAMESPACE+".searchCount2",data);
 	}
 
 	@Override

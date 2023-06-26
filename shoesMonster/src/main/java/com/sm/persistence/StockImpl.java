@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.StockVO;
+import com.sm.domain.WarehouseVO;
 
 @Repository
 public class StockImpl implements StockDAO{
@@ -37,6 +38,32 @@ public class StockImpl implements StockDAO{
         data.put("pageSize", pageSize);
         
 		return sqlSession.selectList(NAMESPACE+".stockPage",data);
+	}
+
+	@Override
+	public int count3(WarehouseVO wvo) throws Exception {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("wh_code", wvo.getWh_code());
+		data.put("prod_name", wvo.getProduct().getProd_name());
+		data.put("raw_name", wvo.getRaw_mat().getRaw_name());
+		
+		return sqlSession.selectOne(NAMESPACE+".searchCount3",data);
+	}
+
+	@Override
+	public List<StockVO> StockList(int startRow, int pageSize, WarehouseVO wvo) throws Exception {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("startRow", startRow);
+	    data.put("pageSize", pageSize);
+		data.put("wh_code", wvo.getWh_code());
+		data.put("prod_name", wvo.getProduct().getProd_name());
+		data.put("raw_name", wvo.getRaw_mat().getRaw_name());
+		
+		return sqlSession.selectList(NAMESPACE+ ".searchStockPage",data);
 	}
 
 	
