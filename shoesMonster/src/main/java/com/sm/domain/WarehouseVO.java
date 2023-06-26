@@ -18,4 +18,10 @@ public class WarehouseVO {
 	private ProductVO product;
 	private RawMaterialVO raw_mat;
 	
+	
+	public WarehouseVO() {
+		product = new ProductVO();
+		raw_mat = new RawMaterialVO();
+	}
+	
 } //Warehouse

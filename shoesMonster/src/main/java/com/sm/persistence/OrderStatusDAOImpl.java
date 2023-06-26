@@ -1,5 +1,6 @@
 package com.sm.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -26,10 +27,26 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
 	// 수주 현황 목록 불러오기 
 	@Override
 	public List<OrderStatusVO> readOrderStatusList() throws Exception {
-		logger.debug("readOrderStatusList() 호출");
+		logger.debug("@@@ readOrderStatusList() 호출 @@@");
 		return sqlSession.selectList(NameSpace +".orderStatusList");
 	}
-
+	
+	// 수주 현황 검색
+	@Override
+	public List<OrderStatusVO> getSearchOrderStatus(HashMap<String, Object> search) throws Exception {
+		logger.debug("@@@ getSearchOrderStatus(HashMap<String, Object> search) 호출 @@@");
+		
+		return sqlSession.selectList(NameSpace + ".searchOrderStatusList", search);
+	}
+//	@Override
+//	public List<OrderStatusVO> getSearchOrderStatus2(HashMap<String, Object> search) throws Exception {
+//		logger.debug("@@@ getSearchOrderStatus2(HashMap<String, Object> search) 호출 @@@");
+//
+//		List<OrderStatusVO> searchOsList = sqlSession.selectList(NameSpace + ".searchOrderStatusList", search);
+//		logger.debug("@@@ searchOsList : " + searchOsList);
+//		
+//		return null;
+//	}
 	
 	// 수주 관리 조회
 	@Override
@@ -37,6 +54,9 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
 		logger.debug(" readOrderManageList() 호출@@@@@ ");
 		return sqlSession.selectList(NameSpace + ".orderManageList");
 	}
+
+
+
 	
 	
 	

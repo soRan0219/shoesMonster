@@ -1,26 +1,30 @@
 package com.sm.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductList;
 import com.sm.domain.ProductVO;
+import com.sm.domain.RawMaterialList;
+import com.sm.domain.RawMaterialVO;
 import com.sm.domain.WarehouseVO;
+import com.sm.domain.Wh_prodVO;
 import com.sm.service.PerformanceService;
 
 @Controller
@@ -39,12 +43,18 @@ public class PerfomanceController {
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public void productGET(Model model, ProductVO vo, PagingVO pvo,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
-			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) throws Exception {
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+			@RequestParam(value = "input", required = false) String input) throws Exception {
 		logger.debug("productGET() 호출");
 		List<ProductVO> products = new ArrayList<ProductVO>();
 		model.addAttribute("products", products);
 		logger.debug("vo : " + vo);
-
+		
+		
+		logger.debug(" @@@@@@@@@@ input: " + input + "@@@@@@@@@@@@@@@");
+		
+		
+		
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "5";
@@ -66,7 +76,17 @@ public class PerfomanceController {
 			logger.debug("vo : " + vo);
 			
 			logger.debug("검색 리스트 가져감");
+			
+			
+			
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
+			}
 
+			
+			
+			
 		} else {
 			int total = service.countProd();
 			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
@@ -127,28 +147,107 @@ public class PerfomanceController {
 		return "redirect:/performance/product";
 	}
 	
+	// 품목관리 삭제
 	@RequestMapping(value = "/prodDelete", method = RequestMethod.POST)
 	public String deleteProd(@RequestParam(value="checked[]") List<String> checked) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: deleteProd() 호출");
 		logger.debug("@@@@@ CONTROLLER: checked = " + checked);
 		
-		//서비스 - 작업지시 삭제 
+		//서비스 - 품목관리 삭제 
 		service.removeProd(checked);
 		
 		return "redirect:/performance/product";
-	} //deleteWorkOrder()
+	} //deleteProd()
+	
+	
+	// 원자재관리
+		// http://localhost:8088/performance/rawMaterial
+		@RequestMapping(value = "/rawMaterial", method = RequestMethod.GET)
+		public void rawMaterialGET(Model model, RawMaterialVO vo, PagingVO pvo,
+				@RequestParam(value = "nowPage", required = false) String nowPage,
+				@RequestParam(value = "cntPerPage", required = false) String cntPerPage) throws Exception {
+			
+			logger.debug("rawMaterialGET() 호출");
+			List<RawMaterialVO> raws = new ArrayList<RawMaterialVO>();
+			model.addAttribute("raws", raws);
+			if (nowPage == null && cntPerPage == null) {
+				nowPage = "1";
+				cntPerPage = "5";
+			} else if (nowPage == null) {
+				nowPage = "1";
+			} else if (cntPerPage == null) {
+				cntPerPage = "5";
+			}
+			logger.debug("vo : " + vo);
+
+			if (vo.getRaw_code() != null || vo.getClients().getClient_actname() != null || vo.getRaw_name() != null) {
+				
+				logger.debug("if문 호출");
+				int total = service.countRaw(vo);
+				pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+				List<RawMaterialVO> list = service.getRawList(vo, pvo);
+				model.addAttribute("rawList", list);
+				model.addAttribute("paging", pvo);
+				model.addAttribute("vo", vo);
+				logger.debug("pvo : " + pvo);
+				logger.debug("vo : " + vo);
+
+				logger.debug("검색 리스트 가져감");
+
+			} else {
+				logger.debug("else문 호출");
+				int total = service.countRaw();
+				pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+				logger.debug("pvo : " + pvo);
+				List<RawMaterialVO> list = service.getRawList(pvo);
+				model.addAttribute("rawList", list);
+				model.addAttribute("paging", pvo);
+				logger.debug(" 모든 리스트 가져감");
+			}
+
+		}
+
+		// 원자재관리 정보 추가
+		@RequestMapping(value = "rawMaterial", method = RequestMethod.POST)
+		public String rawMaterialPOST(RawMaterialList raws) throws Exception {
+
+			logger.debug("rawMaterialPOST() 호출");
+			logger.debug("raws : " + raws.getRaws());
+			service.insertRaw(raws.getRaws());
+			// service.insertProd(vo);
+
+			return "redirect:/performance/rawMaterial";
+		}
+
+		// 원자재관리 정보 삭제
+		@RequestMapping(value = "/rawMaterialDelete", method = RequestMethod.POST)
+		public String deleteRawMaterial(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
+			logger.debug("@@@@@ CONTROLLER: deleteRawMaterial() 호출");
+			logger.debug("@@@@@ CONTROLLER: checked = " + checked);
+
+			// 서비스 - 원자재관리 삭제
+			service.removeRaw(checked);
+
+			return "redirect:/performance/rawMaterial";
+		} // deleteRawMaterial()
+	
+	
 
 	// ======== 라인 - /line ================================
 	// http://localhost:8088/performance/line
 	// http://localhost:8088/performance/line?page=1
 	@RequestMapping(value = "/line", method = RequestMethod.GET)
 	public void lineGET(Model model, LineVO lvo, 
-				        LineWhPageVO vo, LineWhPageMaker lwpm) throws Exception {
+				        LineWhPageVO vo, LineWhPageMaker lwpm,
+				        Map<String, Object> params) throws Exception {
 		logger.debug("@@lineGET() 호출@@");
 //		List<LineVO> boardList = service.getLineList();
 //		model.addAttribute("boardList", boardList);
 		
 		logger.debug("lvo : " + lvo);
+		
+		List<LineVO> boardList = new ArrayList<>();
+		
 
 		// 검색
 		if (lvo.getLine_code() != null || lvo.getLine_name() != null || lvo.getLine_place() != null
@@ -162,10 +261,17 @@ public class PerfomanceController {
 			logger.debug("@@ 검색 리스트 호출 @@");
 			
 //			List<LineVO> searchListPage = service.getLineListPage(vo);
-			List<LineVO> searchListPage = service.getSearchLinePage(vo, lvo);
+			
+			// 페이징처리 + 검색
+//			List<LineVO> searchListPage = service.getSearchLinePage(vo, lvo);
+			boardList = service.getSearchLinePage(vo, lvo);
 //			List<LineVO> searchListPage = service.getSearchLinePage(lvo); // 두번째 도전
-			model.addAttribute("searchlist", searchListPage);
-			logger.debug("searchListPage : "+searchListPage);
+			
+//			model.addAttribute("searchlist", searchListPage);
+
+			model.addAttribute("boardList", boardList); // 0626 10:43 도전중
+			
+//			logger.debug("searchListPage : "+searchListPage);
 			
 			logger.debug("@@!!@@ 검색 리스트 (페이징처리) 불러옴 @@!!@@");
 			
@@ -177,7 +283,7 @@ public class PerfomanceController {
 
 		} else {
 			// 페이징처리된 리스트정보로 수정함!
-			List<LineVO> boardList = service.getLineListPage(vo);
+			boardList = service.getLineListPage(vo);
 			model.addAttribute("boardList", boardList);
 
 			logger.debug("@@ 모든 리스트 호출 @@");
@@ -190,9 +296,7 @@ public class PerfomanceController {
 			
 		}
 		
-
 	}
-	
 
 	@RequestMapping(value = "/line", method = RequestMethod.POST)
 	public void linePOST(Model model)throws Exception{
@@ -210,16 +314,27 @@ public class PerfomanceController {
 	// ======== 창고 - /warehouse ===========================
 	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-	public void warehouseGET(Model model) throws Exception {
+	public void warehouseGET(Model model, LineWhPageVO vo,
+							 LineWhPageMaker lwpm) throws Exception {
 
 		logger.debug("@@ warehouseGET() 호출 @@");
-
+		
 		List<WarehouseVO> whList = service.getWhList();
 		model.addAttribute("whList", whList);
 
 		logger.debug("whList : " + whList);
 
+		// 모든 목록(+페이징)
+//		List<Wh_prodVO> whListPage = service.getWh_prodListPage(vo);
+		List<WarehouseVO> whListPage = service.getWh_prodListPage(vo);
+		model.addAttribute("whList", whListPage);
+		
 		logger.debug("@@ 모든 리스트 호출 @@");
+		
+		// 페이징처리(하단부) 저장
+		lwpm.setLwPageVO(vo);
+		lwpm.setTotalCount(service.getWh_TotalCount());
+		model.addAttribute("lwpm", lwpm);
 	}
 
 	// 코드 품번 창고명 검색
@@ -235,5 +350,62 @@ public class PerfomanceController {
 //		return "";
 //	}
 	// ======== 창고 - /warehouse ===========================
-
+	
+	
+	
+	
+	//// ************************* 생산실적 ************************* ////
+	
+	//http://localhost:8088/performance/performList
+	@RequestMapping(value = "/performList", method = RequestMethod.GET)
+	public void performanceList(Model model) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: performanceList() 호출");
+		
+		//서비스 - 실적목록
+		List<PerformanceVO> perfList = service.getAllPerf();
+		logger.debug("@@@@@ CONTROLLER: perfList = " + perfList);
+		
+		model.addAttribute("perfList", perfList);
+	} //performanceList()
+	
+	
+	//작업지시 검색
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String workOrderGET(Model model, @RequestParam("type") String type,
+								@RequestParam("input") String input, PagingVO pvo
+			/*@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage*/
+			) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: workOrderGET() 호출");
+		logger.debug("@@@@@ CONTROLLER: type = " + type);
+		
+		/*
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+		*/
+		
+		if(type.equals("work")) {
+			return "redirect:/workorder/workOrderList?input=" + input;
+		}
+		return "";
+	} //workOrderGET()
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }// PerfomanceController

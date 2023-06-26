@@ -10,43 +10,56 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
     	
+	function popUp() {
+		var queryString = window.location.search;
+		var urlParams = new URLSearchParams(queryString);
+		
+		var isPop = urlParams.get("input");
+		
+		$('#pagination a').each(function(){
+			
+	   		var prHref = $(this).attr("href");
+	   		
+	   		var newHref = prHref + "&input=" + isPop;
+	   			$(this).attr("href", newHref);
+				
+		}); //페이징 요소	
+				
+		$('#input').val(isPop);
+   			
+   		if(isPop) {
+        		
+        	$('#addButton').hide();
+        	$('#modify').hide();
+        	$('#delete').hide();
+        	$('#save').hide();
+        		
+       		$('table tr:not(:first-child)').click(function(){
+       			$(this).css('background', '#ccc');
+        			
+       			var prodCode = $(this).find('#prodCode').text();
+         			
+     			$('#'+isPop, opener.document).val(prodCode);
+         			
+         		window.close();
+         	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+        		
+    	} else {
+    		alert("null");
+    	} //if(팝업으로 열었을 때)
+    		
+	} //popUp()
+    	
+	
+		
+		
+		//jQuery
         $(document).ready(function() {
         	
 
-//         	let popVal;
+        	popUp();
+			
         	
-//         	window.addEventListener('message', function(event){
-        		
-//         		if(event) {
-// // 	        		alert(event);
-	        		
-// 	        		$('#addButton').hide();
-// 	        		$('#save').hide();
-	        		
-// 	       			$('#productTable tr:not(:first-child)').click(function(){
-// 	         			$(this).css('background', '#ccc');
-	         			
-// 	         			var prodCode = $(this).find('#prodCode').text();
-	         			
-// 	         			var inputId = event.data.inputId;
-	         			
-// 	         			if(inputId==="prod_code") {
-// 	         				$('#prod_code', opener.document).val(prodCode);
-// 	         			} else if(inputId==="search_prod") {
-// 	         				$('#search_prod', opener.document).val(prodCode);
-// 	         			}
-	         			
-// 	         			window.close();
-// 	         		}); 
-	        		
-// 	        		popVal = event;
-//         		} else {
-//         			alert("null");
-//         		}
-        		
-        	
-//         	}); //addEventListener
-
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
     			$(this).find('td:first').text(index);
@@ -84,98 +97,6 @@
             
             // =============================================================================================================
             
-
-            
-//             // 필터링 기능
-//             $('#filterButton').click(function(event) {
-
-                
-//             	//================ 기존코드 ========================
-            	
-            	
-//                 var searchCode = $('#searchCode').val().toLowerCase();
-//                 var searchName = $('#searchName').val().toLowerCase();
-//                 var searchCategory = $('#searchCategory').val().toLowerCase();
-//                 var searchUnit = $('#searchUnit').val().toLowerCase();
-            	
-// //             	alert(searchName);
-            		
-//             	var jsonData = {
-//             			prod_code:searchCode,
-//             			prod_name:searchName,
-//             			prod_category:searchCategory,
-//             			prod_unit:searchUnit
-//             	};
-            	
-//             	$.ajax({
-//             		url: "/performance/search",
-//             		type: "post",
-//             		contentType: "application/json; charset=UTF-8",
-//     				dataType: "json",
-//     				data: JSON.stringify(jsonData),
-//     				success: function(data) {
-//     					//data => List 객체
-//     					if(data.length != 0) {
-//     						//검색 결과 있을 때
-//     						for(var i=0; i<data.length; i++) {
-//     							console.log(data[i].prod_code);
-    							
-//     							//th 밑에 있던 줄 모두 제거하고 검색결과 append
-//     							var tbl = "<tr>";
-//     							tbl += " <td id='prodCode'>" + data[i].prod_code + "</td>";
-//     							tbl += " <td>" + data[i].prod_name + "</td>";
-//     							tbl += " <td>" + data[i].prod_category + "</td>";
-//     							tbl += " <td>" + data[i].prod_unit + "</td>";
-//     							tbl += " <td>" + data[i].prod_color + "</td>";
-//     							tbl += " <td>" + data[i].prod_size + "</td>";
-//     							tbl += " <td>" + data[i].client_code + "</td>";
-//     							tbl += " <td>" + data[i].prod_price + "</td>";
-//     							tbl += " <td>" + data[i].prod_note + "</td>";
-//     							tbl += "</tr>";
-    							
-//     							if(i==0) {
-//     								$('#productTable tr:gt(0)').remove();
-//     								$('#productTable').append(tbl);
-//     							} else {
-//     								$('#productTable').append(tbl);
-//     							}
-    							
-//     						} //for
-//     					} //if(검색결과 있을 때)
-    					
-//     					//팝업으로 열었을 때
-//     					if(popVal) {
-    						
-//     			   			$('#productTable tr:not(:first-child)').click(function(){
-//     			     			$(this).css('background', '#ccc');
-    			     			
-//     			     			var prodCode = $(this).find('#prodCode').text();
-    			     			
-//     			     			var inputId = popVal.data.inputId;
-    			     			
-//     			     			if(inputId==="prod_code") {
-//     			     				$('#prod_code', opener.document).val(prodCode);
-//     			     			} else if(inputId==="search_prod") {
-//     			     				$('#search_prod', opener.document).val(prodCode);
-//     			     			}
-    			     			
-//     			     			window.close();
-//     			     		}); 
-    						
-//     					} //if(popVal)
-    					
-    					
-    					
-//     				},
-//     				error: function() {
-//     					alert(" ****** 실패 *******");
-//     				}
-//             	}); //ajax
-            		
-//             }); //검색
-            
-        	
-        	
         	
 
             // 저장 버튼 클릭 시 페이지 이동
@@ -273,6 +194,9 @@
 	
 	<form action="" method="get">
 		<fieldset>
+       		
+       		<input type="hidden" name="input" id="input" value="${input }">
+       		
        		<label>품번:</label>
         	<input type="text" name="prod_code" id="searchCode">
         	<label>품명:</label>
@@ -328,7 +252,7 @@
 		
 	</form>
 	
-	<div style="display: block; text-align: center;">		
+	<div id="pagination" style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
 			<a href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&prod_unit=${vo.prod_unit }">&lt;</a>
 		</c:if>

@@ -16,7 +16,9 @@ import com.mysql.cj.xdevapi.Result;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductVO;
+import com.sm.domain.RawMaterialVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
 
@@ -91,7 +93,69 @@ public class PerformanceImpl implements PerformanceDAO {
 	}
 
 	// ==========================================================================
+	
+	@Override
+	public int countRaw() {
+		logger.debug(" 원자재관리 리스트 갯수 확인 ");
+		return sqlSession.selectOne(NAMESPACE + ".countRaw");
+	}
 
+	@Override
+	public List<RawMaterialVO> readRawList(PagingVO pvo) throws Exception {
+		logger.debug(" 원자재관리 전체리스트 DAO ");
+		return sqlSession.selectList(NAMESPACE + ".readRaw", pvo);
+	}
+
+	@Override
+	public int countRaw(RawMaterialVO vo) {
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("raw_code", vo.getRaw_code());
+		data.put("raw_name", vo.getRaw_name());
+		logger.debug(" vo.getClients().getClient_actname()"+vo.getClients().getClient_actname());
+		if (vo.getClients().getClient_actname() != null) {
+			data.put("client_actname", vo.getClients().getClient_actname());
+		}
+		
+		return sqlSession.selectOne(NAMESPACE + ".countSearchRaw", data);
+	}
+
+	@Override
+	public List<RawMaterialVO> readRawList(RawMaterialVO vo, PagingVO pvo) throws Exception {
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+		data.put("start", pvo.getStart());
+		data.put("cntPerPage", pvo.getCntPerPage());
+		data.put("raw_code", vo.getRaw_code());
+		data.put("raw_name", vo.getRaw_name());
+		data.put("client_actname", vo.getClients().getClient_actname());
+
+		return sqlSession.selectList(NAMESPACE + ".readSearchRaw", data);
+	}
+
+	@Override
+	public void insertRawList(RawMaterialVO raw) {
+		sqlSession.insert(NAMESPACE + ".rawIn", raw);
+	}
+
+	@Override
+	public void deleteRaw(List<String> checked) throws Exception {
+		logger.debug("##### DAO: deleteRaw() 호출");
+
+		Iterator<String> it = checked.iterator();
+		int result = 0;
+
+		while (it.hasNext()) {
+			String raw_code = it.next();
+			result += sqlSession.delete(NAMESPACE + ".deleteRaw", raw_code);
+		}
+
+		logger.debug("##### DAO: delete 결과 ===> " + result);
+		
+	}
+	
+	// ==========================================================================
+	
 	// 라인 조회
 	@Override
 	public List<LineVO> getLineList() throws Exception {
@@ -143,8 +207,19 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("@@ getSearchLinePage(LineWhPageVO vo, LineVO lvo) 호출 @@");
 		
 		Map<String, Object> params = new HashMap<>();
-		params.put("vo", vo);
-		params.put("lvo", lvo);
+//		params.put("vo", vo);
+//		params.put("lvo", lvo);
+		// 추가해봄
+		params.put("line_code",lvo.getLine_code());
+		params.put("line_name", lvo.getLine_name());
+		
+		if(lvo.getLine_use() != 0) {
+			params.put("line_use", lvo.getLine_use());
+		}
+		
+		params.put("line_place", lvo.getLine_place());
+		params.put("startPage", vo.getStartPage());
+		params.put("pageSize", vo.getPageSize());
 		
 		return sqlSession.selectList(NAMESPACE+".searchLinePage", params);
 	}
@@ -161,29 +236,7 @@ public class PerformanceImpl implements PerformanceDAO {
 //		return sqlSession.selectList(NAMESPACE+".searchLinePage", lvo);
 //	}
 
-	// 창고 조회
-	@Override
-	public List<WarehouseVO> readWhList() throws Exception {
-		logger.debug("@@readWhList() 호출@@");
 
-		return sqlSession.selectList(NAMESPACE + ".whlist");
-	}
-
-	// 창고 조회 처리
-	@Override
-	public List<Wh_prodVO> readWh_prodList() throws Exception {
-		logger.debug("@@readWh_prodList() 호출@@");
-
-		return sqlSession.selectList(NAMESPACE + ".whlist");
-	}
-
-	// 창고 검색
-	@Override
-	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
-		logger.debug("@@ searchWarehouse(HashMap<String, Object> search) 호출 @@");
-
-		return sqlSession.selectList(NAMESPACE + ".searchWarehouse", search);
-	}
 	
 	// 게시판 총 글개수 계산
 	@Override
@@ -200,10 +253,62 @@ public class PerformanceImpl implements PerformanceDAO {
 		int result = sqlSession.selectOne(NAMESPACE+".searchTotalCnt",lvo);
 		logger.debug("result :"+result);
 		return result;
-		
+	}
+	
+	//===========창고==============================================
+	
+	// 창고 조회
+	@Override
+	public List<WarehouseVO> readWhList() throws Exception {
+		logger.debug("@@readWhList() 호출@@");
+
+		return sqlSession.selectList(NAMESPACE + ".whlist");
 	}
 
+	// 창고 조회 처리
+	@Override
+	public List<Wh_prodVO> readWh_prodList() throws Exception {
+		logger.debug("@@readWh_prodList() 호출@@");
 
+		return sqlSession.selectList(NAMESPACE + ".whlist");
+	}
+	
+	// 창고 조회 처리(페이징처리)
+	@Override
+//	public List<Wh_prodVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
+	public List<WarehouseVO> getWh_prodListPage(LineWhPageVO vo) throws Exception {
+		logger.debug("@@ getWh_prodListPage() 호출 @@");
+		
+		return sqlSession.selectList(NAMESPACE+".whlistPage", vo);
+	}
+
+	// 창고 조회 총 글 개수 계산
+	@Override
+	public int getWh_TotalCount() throws Exception {
+		logger.debug("@@ getWh_TotalCount() 호출 @@");
+		
+		return sqlSession.selectOne(NAMESPACE+".whTotalCnt");
+	}
+
+	// 창고 검색
+	@Override
+	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception {
+		logger.debug("@@ searchWarehouse(HashMap<String, Object> search) 호출 @@");
+
+		return sqlSession.selectList(NAMESPACE + ".searchWarehouse", search);
+	}
+	
+
+
+
+	// ==========================================================================
+
+	@Override
+	public List<PerformanceVO> readAllPerf() throws Exception {
+		logger.debug("##### DAO: readAllPerf() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + ".performList");
+	} //readAllPerf()
 
 
 

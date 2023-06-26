@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.WorkOrderVO;
 
 @Repository
@@ -22,10 +23,10 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<WorkOrderVO> readAllWorkOrder() throws Exception {
+	public List<WorkOrderVO> readAllWorkOrder(LineWhPageVO pvo) throws Exception {
 		logger.debug("##### DAO: readAllWorkOrder() 호출");
 		
-		return sqlSession.selectList(NAMESPACE + ".allWorkOrder");
+		return sqlSession.selectList(NAMESPACE + ".allWorkOrder", pvo);
 	} //readAllWorkOrder()
 
 	@Override
@@ -72,5 +73,17 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 		
 		return searchList;
 	} //selectWorkOrder()
+
+	@Override
+	public int getTotalWorkOrder() throws Exception {
+		logger.debug("##### DAO: getTotalWorkOrder() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".workOrderAllCnt");
+	} //getTotalWorkOrder()
+
+	@Override
+	public int getSearchWOrkOrder(HashMap<String, Object> search) throws Exception {
+		logger.debug("#####DAO: getSearchWorkOrder() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".searchWorkOrderCnt", search);
+	} //getSearchWorkOrder()
 
 } //WorkOrderDAOImpl

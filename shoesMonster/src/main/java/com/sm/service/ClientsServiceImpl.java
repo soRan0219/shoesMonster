@@ -17,13 +17,12 @@ public class ClientsServiceImpl implements ClientsService {
 	// 거래처 목록 불러오기
 	@Override
 	public List<ClientsVO> getListAll() throws Exception {
-		
 		return cldao.readClientsListAll();
 	}
 
+	// 거래처 검색
 	@Override
 	public List<ClientsVO> getSearchClientsList(ClientsVO cvo) throws Exception {
-
 		return cldao.getSearchClientsList(cvo);
 	}
 	

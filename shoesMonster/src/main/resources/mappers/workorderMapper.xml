@@ -7,9 +7,18 @@
 	
 	<!-- 작업지시 목록 -->
 	<select id="allWorkOrder" resultType="WorkOrderVO">
-		SELECT * FROM work_order
+		SELECT * FROM work_order 
+		WHERE work_code != '' 
+		ORDER BY work_code DESC 
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 작업지시 목록 -->
+	
+	<!-- 작업지시 전체 개수 -->
+	<select id="workOrderAllCnt" resultType="int">
+		SELECT count(*) FROM work_order
+	</select>
+	<!-- 작업지시 전체 개수 -->
 	
 	<!-- 작업지시 등록 -->
 	<insert id="insertWorkOrder">
@@ -41,12 +50,12 @@
 	<!-- 작업지시 수정 -->
 	
 	<!-- 작업지시 검색 -->
-	<select id="searchWorkOrder" resultType="WorkOrderVO">
+	<select id="searchWorkOrder" parameterType="hashMap" resultType="WorkOrderVO">
 		
 		SELECT * FROM work_order 
 		<where>
 			<if test="line_code!=null and !line_code.isEmpty()">
-				line_code=#{line_code}
+				line_code=#{line_code} 
 			</if> 
 			<if test="(from_date!=null and !from_date.equals('')) and (to_date!=null and !to_date.equals(''))">
 				AND (work_date &gt;= #{from_date} AND work_date &lt;= #{to_date}) 
@@ -55,12 +64,32 @@
 				AND work_state=#{work_state} 
 			</if> 
 			<if test="prod_code!=null and !prod_code.isEmpty()">
-				AND prod_code=#{prod_code}
+				AND prod_code=#{prod_code} 
 			</if> 
 		</where>
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 작업지시 검색 -->
 	
+	<!-- 작업지시 검색 개수 -->
+	<select id="searchWorkOrderCnt" resultType="int">
+		SELECT count(*) FROM work_order 
+		<where>
+			<if test="line_code!=null and !line_code.isEmpty()">
+				line_code=#{line_code} 
+			</if> 
+			<if test="(from_date!=null and !from_date.equals('')) and (to_date!=null and !to_date.equals(''))">
+				AND (work_date &gt;= #{from_date} AND work_date &lt;= #{to_date}) 
+			</if> 
+			<if test="work_state!=null and !work_state.isEmpty() and !work_state.equals('전체')">
+				AND work_state=#{work_state} 
+			</if> 
+			<if test="prod_code!=null and !prod_code.isEmpty()">
+				AND prod_code=#{prod_code} 
+			</if> 
+		</where>
+	</select>
+	<!-- 작업지시 검색 개수 -->
 	
 	
 	
