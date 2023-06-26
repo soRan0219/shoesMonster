@@ -20,4 +20,12 @@ public class ProductVO {
 	private ClientsVO client;
 	private Out_materialVO out_mat;
 	
+	public ProductVO() {
+		orders = new OrderStatusVO();
+		client = new ClientsVO();
+		out_mat = new Out_materialVO();
+	
+	
+	}
+	
 } //productVO

@@ -20,5 +20,7 @@ public class Out_materialVO {
 	private OrderStatusVO orders;
 	private ClientsVO client;
 	private ProductVO product;
-	private EmployeesVO emp;
+	
+	
+	
 }

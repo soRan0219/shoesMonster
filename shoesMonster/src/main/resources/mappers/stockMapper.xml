@@ -254,7 +254,7 @@ select i.in_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
 
 <!-- 출고 검색 -->
 
-<select id="searchCount2" resultType="int">
+<select id="searchCount2" resultType="int" resultMap="out_List">
 	select count(*) 
 	from product p
 	JOIN orders o ON p.client_code = o.client_code
@@ -264,7 +264,7 @@ select i.in_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
 		<if test="prod_name != ''">
 			p.prod_name like concat ( '%' ,#{prod_name},'%' )
 		</if>
-		<if test="out _num != ''">
+		<if test="out_num != null || out_num != ''">
 			and i.out_num like concat ( '%' ,#{out_num},'%' )
 		</if>
 		<if test="client_actname != ''">
