@@ -17,5 +17,12 @@ public interface Raw_orderService {
 	
 	// 발주 재고 개수(팝업)
 
+	
+	
+	// 발주 검색 목록 갯수
+	public int count1(Raw_orderVO rvo) throws Exception;
+	
+	// 발주 검색 목록 조회
+	public List<Raw_orderVO> getRaw_order(int startRow, int pageSize, Raw_orderVO rvo) throws Exception;
 
 }

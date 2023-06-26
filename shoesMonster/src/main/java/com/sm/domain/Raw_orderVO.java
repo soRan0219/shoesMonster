@@ -17,4 +17,14 @@ public class Raw_orderVO {
 	private RawMaterialVO rawMaterial;
 	private ClientsVO clients;
 	private StockVO stock;
+	
+	public Raw_orderVO () {
+		
+		rawMaterial = new RawMaterialVO();
+		clients = new ClientsVO();
+		stock = new StockVO();
+	}
+	
+	
+	
 }

@@ -43,12 +43,12 @@
     
 
     <hr>
-    <form action="">
-	    발주 번호 <input type="text" placeholder="발주 번호를 입력하세요">
-	   	품명 <input type="text" placeholder="품명을 입력하세요">
-	   	거래처명 <input type="text" placeholder="거래처명을 입력하세요"> <br>
-	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18">
-	   	<button type="submit">검색</button>
+    <form action="" method="get">
+	    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
+	   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
+	   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> <br>
+<!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
+	   	<input type="submit" value="검색"></input>
     </form>
     
     <table border="1">
