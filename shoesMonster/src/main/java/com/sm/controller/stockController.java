@@ -56,15 +56,14 @@ public class stockController {
 	@RequestMapping(value="/raw_order", method = RequestMethod.GET)
     public void getListPage(HttpServletRequest request, Model model ,Raw_orderVO rvo) throws Exception {
         
-		if(rvo.getClients() != null && rvo.getClients().getClient_actname() != null ||
-				rvo.getRaw_order_num() != null || rvo.getRawMaterial() != null && 
-				rvo.getRawMaterial().getRaw_name() != null) {
+		if(rvo.getClients().getClient_actname() != null ||
+				rvo.getRaw_order_num() != null || rvo.getRawMaterial().getRaw_name() != null) {
 			
 			 // 게시물 총 개수
 	         int count1 = ro_service.count1(rvo);
 	         
 	         // 한 페이지에 출력할 게시물 개수
-	         int pageSize = 1;
+	         int pageSize = 30;
 	         
 	         String pageNum = request.getParameter("num");
 	         if(pageNum == null) {
@@ -102,7 +101,7 @@ public class stockController {
          int count1 = ro_service.count1();
          
          // 한 페이지에 출력할 게시물 개수
-         int pageSize = 10;
+         int pageSize = 30;
          
          String pageNum = request.getParameter("num");
          if(pageNum == null) {
@@ -166,20 +165,21 @@ public class stockController {
 	}
 	// 발주 거래처 상세 팝업
 	
+	////////////////////////// 입고 //////////////////////////////////////////////////////
 	// 입고 페이징
     
-    //http://localhost:8088/stock/In_material
     //http://localhost:8080/stock/In_material
+	//http://localhost:8088/stock/In_material
 	@RequestMapping(value = "/In_material", method = RequestMethod.GET)
 	public void In_matPage(HttpServletRequest request, Model model , In_materialVO ivo ) throws Exception {
 
 			
-		if(ivo.getIn_num() != null || ivo.getRaw_mat() != null && ivo.getRaw_mat().getRaw_name() != null
-				|| ivo.getClients().getClient_actname() != null && ivo.getClients() != null) {
+		if(ivo.getIn_num() != null ||  ivo.getRaw_mat().getRaw_name() != null
+				|| ivo.getClients().getClient_actname() != null ) {
 			
 			int count = service.count(ivo);
 
-			int postNum = 2;
+			int postNum = 30;
 
 			// 하단 페이지 번호
 //     	        int pageNum = (int) Math.ceil((double) count / postNum);
@@ -214,7 +214,7 @@ public class stockController {
 		
 			int count = service.count();
 
-			int postNum = 2;
+			int postNum = 30;
 
 			// 하단 페이지 번호
 //     	        int pageNum = (int) Math.ceil((double) count / postNum);
@@ -263,7 +263,7 @@ public class stockController {
                 int count3 = s_service.count3(wvo);
                 
                 // 한 페이지에 출력할 게시물 개수
-                int pageSize = 10;
+                int pageSize = 30;
                 
                 String pageNum = request.getParameter("num");
                 if(pageNum == null) {
@@ -298,7 +298,7 @@ public class stockController {
                 int count3 = s_service.count3();
                 
                 // 한 페이지에 출력할 게시물 개수
-                int pageSize = 10;
+                int pageSize = 30;
                 
                 String pageNum = request.getParameter("num");
                 if(pageNum == null) {
@@ -341,15 +341,15 @@ public class stockController {
     	@RequestMapping(value="/Out_material" ,method = RequestMethod.GET)
     	public void out_matList(HttpServletRequest request, Model model, ProductVO ovo) throws Exception {
 
-    		if (ovo.getClient() != null && ovo.getClient().getClient_actname() != null
-    				|| ovo.getOut_mat().getOut_num() != null || ovo.getOut_mat() != null && ovo.getProd_name() != null) {
+    		if (ovo.getClient().getClient_actname() != null
+    				|| ovo.getOut_mat().getOut_num() != null ||  ovo.getProd_name() != null) {
 
     			logger.debug("ovo : " + ovo);
     			// 게시물 총 개수
     			int count2 = o_service.count2(ovo);
 
     			// 한 페이지에 출력할 게시물 개수
-    			int pageSize = 10;
+    			int pageSize = 30;
 
     			String pageNum = request.getParameter("num");
     			if (pageNum == null) {
@@ -386,7 +386,7 @@ public class stockController {
     			int count2 = o_service.count2();
 
     			// 한 페이지에 출력할 게시물 개수
-    			int pageSize = 10;
+    			int pageSize = 30;
 
     			String pageNum = request.getParameter("num");
     			if (pageNum == null) {
@@ -442,6 +442,6 @@ public class stockController {
     	
     	//////////////////////////// 출고 페이지 ///////////////////////////////////////
     
-    	
-    	
 }
+    	
+
