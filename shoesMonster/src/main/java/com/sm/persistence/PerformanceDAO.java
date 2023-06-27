@@ -96,6 +96,12 @@ public interface PerformanceDAO {
 	
 	//생산실적 삭제
 	public void deletePerformance(List<String> checked) throws Exception;
+
+	//생산실적 조회
+	public PerformanceVO readPerformanceInfo(String performCode) throws Exception;
+	
+	//생산실적 수정
+	public void updatePerformance(PerformanceVO uvo) throws Exception;
 	
 	
 	

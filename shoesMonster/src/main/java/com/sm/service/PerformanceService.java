@@ -94,5 +94,10 @@ public interface PerformanceService {
 	//생산실적 삭제
 	public void removePerformance(List<String> checked) throws Exception;
 	
+	//생산실적 조회
+	public PerformanceVO getPerformanceInfo(String performCode) throws Exception;
+	
+	//생산실적 수정
+	public void modifyPerformance(PerformanceVO uvo) throws Exception;
 
 }

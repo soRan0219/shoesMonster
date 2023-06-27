@@ -288,11 +288,21 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("##### DAO: delete 결과 ===> " + result);
 	} //deletePerformance()
 
+	@Override
+	public PerformanceVO readPerformanceInfo(String performCode) throws Exception {
+		logger.debug("##### DAO: readPerformanceInfo() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".performInfo", performCode);
+	} //readPerformanceInfo()
+
+	@Override
+	public void updatePerformance(PerformanceVO uvo) throws Exception {
+		logger.debug("##### DAO: updatePerformance() 호출");
+		int result = sqlSession.update(NAMESPACE + ".updatePerform", uvo);
+		
+		logger.debug("##### DAO: update 결과 ===> " + result);
+	} //updatePerformance()
+
 	
-
-
-
-
 
 
 }

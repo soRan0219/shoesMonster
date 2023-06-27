@@ -445,6 +445,27 @@
 	</delete>
 	<!-- 생산실적 삭제 -->
 	
+	<!-- 생산실적 조회 -->
+	<select id="performInfo" resultMap="perfList" resultType="PerformanceVO">
+		SELECT p.perform_code, p.work_code, w.line_code, w.prod_code, p.perform_date,
+				p.perform_qt, p.perform_fair, p.perform_defect, p.defect_note, p.perform_note 
+		FROM performance p JOIN work_order w 
+		ON p.work_code = w.work_code 
+		WHERE p.perform_code=#{perform_code}
+	</select>
+	<!-- 생산실적 조회 -->
+	
+	<!-- 생산실적 수정 -->
+	<update id="updatePerform">
+		UPDATE performance 
+		SET work_code=#{work_code}, perform_qt=#{perform_qt}, change_date=now(), 
+		perform_fair=#{perform_fair}, perform_defect=#{perform_defect}, 
+		defect_note=#{defect_note}, perform_note=#{perform_note} 
+		WHERE perform_code=#{perform_code}
+	</update>
+	<!-- 생산실적 수정 -->
+	
+	
 	
 	
 </mapper>
