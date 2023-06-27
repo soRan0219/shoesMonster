@@ -4,6 +4,8 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <script type="text/javascript">
 	
@@ -12,12 +14,32 @@
 	//오늘 날짜 yyyy-mm-dd
 	function getToday() {
 		var date = new Date();
+		
 		var year = date.getFullYear();
 		var month = ("0" + (1 + date.getMonth())).slice(-2);
 		var day = ("0" + date.getDate()).slice(-2);
 		
 		return year + "-" + month + "-" + day;
 	} //getToday()
+	
+	//unix시간 -> 날짜형식 변환
+	function getDate(unixTime) {
+// 		var date = new Date(unixTime * 1000);
+		var date = new Date(unixTime);
+		
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		
+		return year + "-" + month + "-" + day;
+	} //getDate()
+	
+	
+	//input으로 바꾸기 
+	function inputCng(obj, type, name, value) {
+		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+		obj.html(inputBox);
+	} //inputCng
 	
 	//팝업창 옵션
 	const popupOpt = "top=60,left=140,width=600,height=600";
@@ -27,6 +49,9 @@
 		var url = "/performance/search?type="+search + "&input=" + inputId;
 		var popup = window.open(url, "", popupOpt);
 	} //openWindow()
+	
+	
+	//========================= 함수, 상수 ==================================//
 	
 	
 	
@@ -155,6 +180,112 @@
 		
 		
 		
+		var isExecuted = false;
+		/////////////// 수정 //////////////////////////////
+		//수정버튼 클릭
+		$('#modify').click(function() {
+
+			$('#add').attr("disabled", true);
+			$('#delete').attr("disabled", true);
+
+			//행 하나 클릭했을 때	
+			$('table tr:not(:first-child)').click(function() {
+
+				//하나씩만 선택 가능
+				if(!isExecuted) {
+					isExecuted = true;
+					
+					$(this).addClass('selected');
+					//작업지시 코드 저장
+					let updateCode = $(this).find('#performCode').text().trim();
+					console.log(updateCode);
+	
+					var jsonData = {
+						perform_code : updateCode
+					};
+	
+					var self = $(this);
+	
+					$.ajax({
+						url : "/performance/detail",
+						type : "post",
+						contentType : "application/json; charset=UTF-8",
+						dataType : "json",
+						data : JSON.stringify(jsonData),
+						success : function(data) {
+// 							alert("*** 아작스 성공 ***");
+// 							alert(getDate(data.perform_date));
+	
+							var preVOs = [
+									data.perform_code,
+									data.work_code,
+									data.workOrder.line_code,
+									data.workOrder.prod_code,
+									getDate(data.perform_date),
+									data.perform_qt,
+									data.perform_fair, 
+									data.perform_defect, 
+									data.defect_note, 
+									data.perform_note, 
+									];
+	
+							var names = [
+									"perform_code",
+									"work_code",
+									"line_code",
+									"prod_code",
+									"perform_date",
+									"perform_qt", 
+									"perform_fair",
+									"perform_defect",
+									"defect_note",
+									"perform_note"
+									];
+	
+							//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+							self.find('td').each(function(idx,item) {
+	
+								if (idx > 0) {
+									inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+								} //라인코드부터 다 수정 가능하게
+	
+							}); // self.find(~~)
+	
+							
+							//작업지시코드 검색
+							$('#work_code').click(function(){
+								openWindow("work", "work_code");
+							}); //work_code click
+							
+						},
+						error : function(data) {
+							alert("아작스 실패 ~~");
+						}
+					}); //ajax
+	
+					//저장버튼 -> form 제출
+					$('#save').click(function() {
+	
+						$('#fr').attr("action","/performance/modify");
+						$('#fr').attr("method","post");
+						$('#fr').submit();
+	
+					}); //save
+
+				} //하나씩만 선택 가능
+					
+					
+				//취소버튼 -> 리셋
+				$('#cancle').click(function() {
+					$('#fr').each(function() {
+						this.reset();
+					});
+				}); //cancle click
+
+			}); //tr click
+
+		}); //modify click
+
 		
 		
 		
@@ -241,6 +372,55 @@
 			openWindow("work", "search_work_code");
 		}); //search_work_code click
 		
+		//라인코드 검색 팝업
+		$('#search_line_code').click(function() {
+			openWindow("line", "search_line_code");
+		}); //lineCode click
+
+		//품번 검색 팝업
+		$('#search_prod_code').click(function() {
+			openWindow("prod", "search_prod_code");
+		}); //prodCode click
+
+		//지시일자 이날부터
+		$('#search_fromDate').datepicker({
+			showOn:'both',
+			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+			buttonImageOnly:'true',
+			changeMonth:'true',
+			changeYear:'true',
+			nextText:'다음달',
+			prevText:'이전달',
+			showButtonPanel:'true',
+			currentText:'오늘',
+			closeText:'닫기',
+			dateFormat:'yy-mm-dd',
+			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			onSelect: function(date, inst) {
+				$('#search_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
+			}
+		});
+		//이날까지
+		$('#search_toDate').datepicker({
+			showOn:'both',
+			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+			buttonImageOnly:'true',
+			changeMonth:'true',
+			changeYear:'true',
+			nextText:'다음달',
+			prevText:'이전달',
+			showButtonPanel:'true',
+			currentText:'오늘',
+			closeText:'닫기',
+			dateFormat:'yy-mm-dd',
+			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		});
+		
+		
 		
 	}); //jQuery
 	
@@ -254,6 +434,11 @@
 	<div>
 		<fieldset>
 			작업지시코드: <input type="text" id="search_work_code" name="search_work_code">
+			실적일: 
+			<input type="text" id="search_fromDate" name="search_fromDate"> ~ 
+			<input type="text" id="search_toDate" name="search_toDate"> <br>
+			라인코드: <input type="text" id="search_line_code" name="search_line_code">
+			품번: <input type="text" id="search_prod_code" name="search_prod_code">
 		</fieldset>
 	</div>
 		
@@ -284,7 +469,7 @@
 			<c:forEach var="vo" items="${perfList }">
 				<tr>
 					<td></td>
-					<td>${vo.perform_code }</td>
+					<td id="performCode">${vo.perform_code }</td>
 					<td>${vo.work_code }</td>
 					<td>${vo.workOrder.line_code }</td>
 					<td>${vo.workOrder.prod_code }</td>

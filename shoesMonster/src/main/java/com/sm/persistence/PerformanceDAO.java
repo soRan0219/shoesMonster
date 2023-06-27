@@ -11,6 +11,7 @@ import com.sm.domain.PagingVO;
 import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.RawMaterialVO;
+import com.sm.domain.RequirementsVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
 
@@ -50,12 +51,33 @@ public interface PerformanceDAO {
 	public List<RawMaterialVO> readRawList(RawMaterialVO vo, PagingVO pvo) throws Exception;
 
 	// 원자재관리 정보 다중 저장
-	public void insertRawList(RawMaterialVO raw);
+	public void insertRawList(RawMaterialVO req);
 
 	// 원자재관리 삭제
 	public void deleteRaw(List<String> checked) throws Exception;
 
 	// ==========================================================================
+	
+	// 원자재관리 리스트 총갯수
+	public int countReq();
+
+	// 원자재관리 목록 불러오기
+	public List<RequirementsVO> readReqList(PagingVO pvo) throws Exception;
+
+	// 원자재관리 리스트 검색갯수
+	public int countReq(RequirementsVO vo);
+
+	// 원자재관리 검색리스트 불러오기
+	public List<RequirementsVO> readReqList(RequirementsVO vo, PagingVO pvo) throws Exception;
+
+	// 원자재관리 정보 다중 저장
+	public void insertReqList(RequirementsVO raw);
+
+	// 원자재관리 삭제
+	public void deleteReq(List<String> checked) throws Exception;
+
+	// ==========================================================================
+	
 
 	// 라인 조회 - getLineList
 	public List<LineVO> getLineList() throws Exception;
@@ -96,6 +118,12 @@ public interface PerformanceDAO {
 	
 	//생산실적 삭제
 	public void deletePerformance(List<String> checked) throws Exception;
+
+	//생산실적 조회
+	public PerformanceVO readPerformanceInfo(String performCode) throws Exception;
+	
+	//생산실적 수정
+	public void updatePerformance(PerformanceVO uvo) throws Exception;
 	
 	
 	
