@@ -7,10 +7,5 @@ public class ManagementVO {
 	
 	private String title;
 	private String programName;
-	private Myenum settingPermissions;
 	
-}
-
-enum Myenum {
-	Y, N
 }

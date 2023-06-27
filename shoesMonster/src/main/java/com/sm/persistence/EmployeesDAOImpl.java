@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.ManagementVO;
 
 @Repository
@@ -45,15 +46,23 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	}
 
 	@Override
-	public List<EmployeesVO> readEmpList() throws Exception {
+	public List<EmployeesVO> readEmpList(LineWhPageVO pvo) throws Exception {
 		logger.debug(" readEmpList() 호출@@@@@ ");
-		return sqlSession.selectList(NAMESPACE2 + ".empList");
+		return sqlSession.selectList(NAMESPACE2 + ".empList", pvo);
 	}
 
 	@Override
 	public List<ManagementVO> readManagement() throws Exception {
 		logger.debug(" readManagement() 호출@@@@@ ");
 		return sqlSession.selectList(NAMESPACE2 + ".management");
+	}
+
+	@Override
+	public List<EmployeesVO> selectEmployees(HashMap<String, Object> search) throws Exception {
+		logger.debug(" selectEmployees(HashMap) 호출@@@@@ ");
+		List<EmployeesVO> searchList = sqlSession.selectList(NAMESPACE2 + ".searchEmployees", search);
+		logger.debug(" search 결과 : " + searchList);
+		return searchList;
 	}
 
 	

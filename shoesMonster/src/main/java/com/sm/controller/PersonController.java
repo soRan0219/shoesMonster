@@ -1,6 +1,7 @@
 package com.sm.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.LineWhPageMaker;
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.ManagementVO;
 import com.sm.domain.OrderStatusVO;
 import com.sm.service.ClientsService;
@@ -41,10 +44,10 @@ public class PersonController {
 	// http://localhost:8088/person/empinfo
 	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
-	public void empInfoGET(Model model) throws Exception {
+	public void empInfoGET(Model model, LineWhPageVO pvo) throws Exception {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
-		List<EmployeesVO> empList = empService.getEmpList();
+		List<EmployeesVO> empList = empService.getEmpList(pvo);
 		logger.debug("empList : " + empList);
 		
 		model.addAttribute("empList", empList);
@@ -53,17 +56,57 @@ public class PersonController {
 	// http://localhost:8088/person/management
 	// 사원 권한 정보 조회 (GET)
 	@RequestMapping(value = "/management", method = RequestMethod.GET)
-	public void empManageGET(Model model) throws Exception {
+	public void empManageGET(Model model, LineWhPageVO pvo,
+			@RequestParam HashMap<String, Object> search) throws Exception {
 		logger.debug(" empManageGET() 호출@@@@@ ");
 		
+		//페이지 정보
+		pvo.setPageSize(10);
+		
+		//페이징 하단부 정보
+		LineWhPageMaker pm = new LineWhPageMaker();
+		pm.setLwPageVO(pvo);
+		pm.setPageBlock(10);
+		
 		List<ManagementVO> management = empService.getManagement();
-		List<EmployeesVO> empList = empService.getEmpList();
+		List<EmployeesVO> empList = new ArrayList<>();
 		logger.debug("management : " + management);
 		logger.debug("empList : " + empList);
 		
-		model.addAttribute("management", management);
-		model.addAttribute("empList", empList);
-	}
+		// 검색 있을 때
+		if((search.get("emp_id")!=null && !search.get("emp_id").equals("")) 
+			|| (search.get("emp_name")!=null && !search.get("emp_name").equals("")) 
+			|| (search.get("emp_department")!=null && !search.get("emp_department").equals(""))) {
+			
+			logger.debug(" 권한 정보 검색 호출 @@@@@ ");
+			
+			search.put("startPage", pvo.getStartPage());
+			search.put("pageSize", pvo.getPageSize());
+			
+			// 서비스 - 작업지시 검색
+			empList = empService.searchEmployees(search);
+			logger.debug(" empList 검색 결과 : " + empList);
+			
+//			logger.debug("@@@@@ CONTROLLER: 검색 결과 수 = " + empService.getSearchWorkOrder(search));
+//			pm.setTotalCount(empService.getSearchWorkOrder(search));
+			
+			model.addAttribute("management", management);
+			model.addAttribute("empList", empList);
+			model.addAttribute("pm", pm);
+			
+		}// if(검색)
+		
+		// 검색 없을 때
+		else {
+//			logger.debug("@@@@@ CONTROLLER: 전체 작업지시 수 = " + empService.getTotalWorkOrder());
+//			pm.setTotalCount(empService.getTotalWorkOrder());
+			empList = empService.getEmpList(pvo);
+			
+			model.addAttribute("empList", empList);
+			model.addAttribute("pm", pm);
+		}// else(모두)
+		
+	} // empManageGET()
 	
 	
 	// ========== 거래처 - /Person/Clients (GET) =========
