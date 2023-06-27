@@ -298,9 +298,11 @@ public class PerformanceImpl implements PerformanceDAO {
 		params.put("wh_code", wvo.getWh_code());
 		params.put("prod_code", wvo.getProd_code());
 		params.put("raw_code", wvo.getRaw_code());
-		params.put("wh_name", wvo.getWh_name());
 
-		if (wvo.getWh_use() != 0) {
+		params.put("wh_addr", wvo.getWh_addr());
+		
+		if(wvo.getWh_use() != 0) {
+
 			params.put("wh_use", wvo.getWh_use());
 		}
 
@@ -311,11 +313,35 @@ public class PerformanceImpl implements PerformanceDAO {
 	}
 
 	// 검색시 총 글 개수 계산
+//	@Override
+//	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception {
+//		logger.debug("@@ searchWh_TotalCount(Wh_prodVO wvo) 호출 @@");
+		
+//		return sqlSession.selectOne(NAMESPACE+".searchWhTotalCnt", wvo);
+//	}
 	@Override
 	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception {
 		logger.debug("@@ searchWh_TotalCount(Wh_prodVO wvo) 호출 @@");
 
-		return sqlSession.selectOne(NAMESPACE + ".searchWhTotalCnt", wvo);
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("wh_code", wvo.getWh_code());
+
+		if(wvo.getProd_code() != null) {
+			params.put("prod_code", wvo.getProd_code());
+		}else if(wvo.getRaw_code() != null) {
+			params.put("raw_code", wvo.getRaw_code());
+		}
+		
+		params.put("wh_addr", wvo.getWh_addr());
+		
+		if(wvo.getWh_use() != 0) {
+			params.put("wh_use", wvo.getWh_use());
+		}
+		
+		return sqlSession.selectOne(NAMESPACE+".searchWhTotalCnt", params);
+
 	}
 
 	// ==========================================================================

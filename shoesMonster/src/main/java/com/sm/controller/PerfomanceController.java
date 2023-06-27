@@ -347,17 +347,24 @@ public class PerfomanceController {
 	// ======== 창고 - /warehouse ===========================
 	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-	public void warehouseGET(Model model, LineWhPageVO vo, LineWhPageMaker lwpm, Wh_prodVO wvo,
-			@RequestParam Map<String, Object> params) throws Exception {
+
+	public void warehouseGET(Model model, LineWhPageVO vo,
+							 LineWhPageMaker lwpm, Wh_prodVO wvo,
+							 @RequestParam HashMap<String, Object> params) throws Exception {
 
 		logger.debug("@@ warehouseGET() 호출 @@");
 
 		List<WarehouseVO> whList = new ArrayList<>();
 
 		// 검색(+페이징)
-		if (wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null
-				|| wvo.getWh_name() != null || wvo.getWh_use() != 0) {
-
+		if(wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null ||
+				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
+			
+			// 이거 해야 전체 목록 보여짐
+			if(wvo.getWh_use() == 0) {
+				wvo.setWh_use(3);
+			}
+			
 			whList = service.searchWarehousePage(vo, wvo);
 			model.addAttribute("whList", whList);
 
@@ -374,18 +381,23 @@ public class PerfomanceController {
 			logger.debug("lwpm (서치) : " + lwpm.getTotalCount());
 			model.addAttribute("lwpm", lwpm);
 
-		}
-
+			
+		}else {
+			
 		// 모든 목록(+페이징)
 		whList = service.getWh_prodListPage(vo);
 		model.addAttribute("whList", whList);
-
+		
+		model.addAttribute("wvo", wvo);
+		
 		logger.debug("@@ 모든 리스트 호출 @@");
 
 		// 페이징처리(하단부) 저장
 		lwpm.setLwPageVO(vo);
 		lwpm.setTotalCount(service.getWh_TotalCount());
 		model.addAttribute("lwpm", lwpm);
+		
+		}
 	}
 
 	// ======== 창고 - /warehouse ===========================

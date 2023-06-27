@@ -71,7 +71,7 @@
 		<input type="hidden" name="input" id="input" value="${input}">
 		
 		<label>라인코드</label>
-			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요">
+			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요" >
 			
 		<label>라인명</label>
 			<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
