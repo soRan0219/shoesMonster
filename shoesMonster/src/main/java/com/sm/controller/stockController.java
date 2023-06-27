@@ -132,8 +132,8 @@ public class stockController {
          model.addAttribute("pageBlock", pageBlock);
          model.addAttribute("count1", count1);
          model.addAttribute("pageSize", pageSize);
-    }
-
+		}
+	}
 	// 발주 목록 + 페이징 처리 - 끝
 	// 발주 등록
 	@RequestMapping(value="/raw_order", method = RequestMethod.POST)

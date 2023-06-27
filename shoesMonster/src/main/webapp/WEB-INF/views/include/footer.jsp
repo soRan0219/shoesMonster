@@ -2,15 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!-- footer content -->
-<footer>
-	<div class="pull-right">
-		(주)슈즈몬스터 대표:박언효 주소:부산광역시 부산진구 부전동 동천로 109 삼한골든게이트 7층
+	<!-- footer content -->
+	<footer>
+		<div class="pull-right">
+			(주)슈즈몬스터 대표:박언효 주소:부산광역시 부산진구 부전동 동천로 109 삼한골든게이트 7층
+		</div>
+		<div class="clearfix"></div>
+	</footer>
+	<!-- /footer content -->
 	</div>
-	<div class="clearfix"></div>
-</footer>
-<!-- /footer content -->
-</div>
 </div>
 
 <!-- jQuery -->
