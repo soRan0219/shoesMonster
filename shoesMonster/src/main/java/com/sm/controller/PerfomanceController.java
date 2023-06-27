@@ -1,7 +1,7 @@
 package com.sm.controller;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
@@ -27,6 +29,7 @@ import com.sm.domain.RequirementsList;
 import com.sm.domain.RequirementsVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
+import com.sm.domain.WorkOrderVO;
 import com.sm.service.PerformanceService;
 
 @Controller
@@ -408,8 +411,11 @@ public class PerfomanceController {
 		logger.debug("@@@@@ CONTROLLER: workOrderGET() 호출");
 		logger.debug("@@@@@ CONTROLLER: type = " + type);
 
-		if (type.equals("work")) {
-			return "redirect:/workorder/workOrderList?input=" + input;
+		
+		if(type.equals("work")) {
+			String state = URLEncoder.encode("마감", "UTF-8");
+			return "redirect:/workorder/workOrderList?input=" + input + "&search_state=" + state;
+
 		}
 		return "";
 	} // workOrderGET()
@@ -436,6 +442,41 @@ public class PerfomanceController {
 		service.removePerformance(checked);
 
 		return "redirect:/performance/performList";
-	} // deletePerformance()
+
+	} //deletePerformance()
+	
+	//생산실적 조회 POST
+	@ResponseBody
+	@RequestMapping(value = "/detail", method = RequestMethod.POST)
+	public PerformanceVO getPerformData(@RequestBody PerformanceVO vo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: getPerformData() 호출");
+		logger.debug("@@@@@ CONTROLLER: performCode = " + vo.getPerform_code());
+		
+		//서비스 - 생산관리 정보 가져오기
+		PerformanceVO preVO = service.getPerformanceInfo(vo.getPerform_code());
+		logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
+		logger.debug("@@@@@ CONTROLLER: 실적일 =========> " + preVO.getPerform_date());
+		
+		return preVO;
+	} //getPerformData()
+	
+	//생산실적 수정 
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modifyPerformance(PerformanceVO uvo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: modifyPerformance() 호출");
+		logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
+		
+		//서비스 - 작업지시 수정
+		service.modifyPerformance(uvo);
+		
+		return "redirect:/performance/performList";
+	} //modifyPerformance()
+	
+	
+	
+	
+	
+	
+	
 
 }// PerfomanceController

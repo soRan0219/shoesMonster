@@ -222,10 +222,15 @@ public class PerformanceServiceImpl implements PerformanceService {
 		pdao.deletePerformance(checked);
 	} //removePerformance()
 
+	@Override
+	public PerformanceVO getPerformanceInfo(String performCode) throws Exception {
+		return pdao.readPerformanceInfo(performCode);
+	} //getPerformanceInfo()
 
-	
-
-
+	@Override
+	public void modifyPerformance(PerformanceVO uvo) throws Exception {
+		pdao.updatePerformance(uvo);
+	} //modifyPerformance()
 
 
 
