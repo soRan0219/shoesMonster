@@ -7,47 +7,45 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
-	<script type="text/javascript">
-		
-		function roPopup() {
-			
-			window.open("roPopup","거래처 목록","width=500, height=500, left=300, top=150, location=no");
-		}
-		
-		function detailPopup(rawCode) {
-			
-			window.open("detailPopup?rawCode=" + rawCode, "거래처 상세", "width=1000, height=500, left=200, top=150");
-		}
-		
-		function totalAmount() {
-			
-			var roCount = parseInt(document.getElementById("raw_order_count").value);
-			var rawPriceInput = document.getElementById("raw_price").value;
-			var rawPrice = parseFloat(rawPriceInput.replace(/,/g, ""));
-			
-			var totalAmount = roCount * rawPrice;
-			
-			var fmtAmount = totalAmount.toLocaleString() + "원";
-			
-			document.getElementById("total_amount").textContent = fmtAmount;
-		}
-		
-		function check() {
-			if (document.getElementById("client_actname").value === "") {
-				alert("발주 항목을 선택해주세요.");
-				return false;
-			} else if (document.getElementById("raw_order_count").value === "") {
-				alert("발주 수량을 입력해주세요.");
-				return false;
-			}
-		}
-		
-	</script>
-<<<<<<< HEAD
+<script type="text/javascript">
 	
+	function roPopup() {
+		
+		window.open("roPopup","거래처 목록","width=500, height=500, left=300, top=150, location=no");
+	}
+	
+	function detailPopup(rawCode) {
+		
+		window.open("detailPopup?rawCode=" + rawCode, "거래처 상세", "width=1000, height=500, left=200, top=150");
+	}
+	
+	function totalAmount() {
+		
+		var roCount = parseInt(document.getElementById("raw_order_count").value);
+		var rawPriceInput = document.getElementById("raw_price").value;
+		var rawPrice = parseFloat(rawPriceInput.replace(/,/g, ""));
+		
+		var totalAmount = roCount * rawPrice;
+		
+		var fmtAmount = totalAmount.toLocaleString() + "원";
+		
+		document.getElementById("total_amount").textContent = fmtAmount;
+	}
+	
+	function check() {
+		if (document.getElementById("client_actname").value === "") {
+			alert("발주 항목을 선택해주세요.");
+			return false;
+		} else if (document.getElementById("raw_order_count").value === "") {
+			alert("발주 수량을 입력해주세요.");
+			return false;
+		}
+	}
+</script>
+
 <!-- page content -->
 <div class="right_col" role="main">
-=======
+
 </head>
 <body>
 
@@ -76,8 +74,6 @@
 	};
 </script>
 
->>>>>>> branch 'develop' of https://github.com/eon2258/shoesMonster.git
-	
 	<%
 // 		String emp_id = (String)session.getAttribute("emp_id");
 	
@@ -91,7 +87,7 @@
     <div>
     <form action="" name="ro">
 	    <input type="button" value="발주 현황" onclick="toggleDiv('list')"></input>
-	    <input type="button"value="발주 등록" onclick="toggleDiv('regist')"></input>
+	    <input type="button" value="발주 등록" onclick="toggleDiv('regist')"></input>
     </form>
     </div>
 
@@ -194,17 +190,11 @@
 		<input type="submit" value="발주 신청">
 	</form>
 	
+	로그인 아이디 : ${emp_id } <!-- 로그인 확인 후 삭제하기 -->
+	</div>
+<!-- ============================ 발주 등록 ============================ -->
 	
-	로그인 아이디 : ${emp_id }
-	
-<<<<<<< HEAD
-	
-</div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
-=======
-	</div>
-	<!-- ============================ 발주 등록 ============================ -->
->>>>>>> branch 'develop' of https://github.com/eon2258/shoesMonster.git
 
 

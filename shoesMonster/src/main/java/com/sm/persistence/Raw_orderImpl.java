@@ -59,6 +59,7 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		if(result != 0) {
 			logger.debug("발주 등록완료");
 		}
+	}
 		
 	public int count1(Raw_orderVO rvo) throws Exception {
 		
