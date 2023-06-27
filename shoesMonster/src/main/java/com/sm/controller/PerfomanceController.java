@@ -2,6 +2,7 @@ package com.sm.controller;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -349,8 +350,8 @@ public class PerfomanceController {
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
 
 	public void warehouseGET(Model model, LineWhPageVO vo,
-							 LineWhPageMaker lwpm, Wh_prodVO wvo,
-							 @RequestParam HashMap<String, Object> params) throws Exception {
+							 LineWhPageMaker lwpm, Wh_prodVO wvo
+							 /*@RequestParam HashMap<String, Object> params*/) throws Exception {
 
 		logger.debug("@@ warehouseGET() 호출 @@");
 
@@ -371,7 +372,7 @@ public class PerfomanceController {
 			// 객체 다 넘기기
 			model.addAttribute("wvo", wvo);
 			model.addAttribute("vo", vo);
-			model.addAttribute("params", params);
+//			model.addAttribute("params", params);
 
 			logger.debug("@@!!@@ 검색 리스트 (페이징처리) 불러옴 @@!!@@");
 
