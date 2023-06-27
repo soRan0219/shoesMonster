@@ -201,12 +201,18 @@ public class PerfomanceController {
 		logger.debug("@@lineGET() 호출@@");
 		
 		logger.debug("lvo : " + lvo);
+		logger.debug("line_use : "+lvo.getLine_use());
 		
 		List<LineVO> boardList = new ArrayList<>();
 
 		// 검색
 		if (lvo.getLine_code() != null || lvo.getLine_name() != null || lvo.getLine_place() != null
 				|| lvo.getLine_use() != 0) {
+			
+			// 이거 해야 전체 목록 보여짐
+			if(lvo.getLine_use() == 0) {
+				lvo.setLine_use(3);
+			}
 			
 			// 페이징처리 + 검색
 			boardList = service.getSearchLinePage(vo, lvo);
@@ -234,6 +240,8 @@ public class PerfomanceController {
 			// 페이징처리된 리스트정보
 			boardList = service.getLineListPage(vo);
 			model.addAttribute("boardList", boardList);
+			
+			model.addAttribute("lvo", lvo);
 
 			logger.debug("@@ 모든 리스트 호출 @@");
 			
