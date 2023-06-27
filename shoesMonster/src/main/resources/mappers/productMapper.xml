@@ -43,7 +43,8 @@
 	<!-- 품목관리 검색 게시글 갯수 출력 -->
 
 	<!-- 품목관리 검색리스트 불러오기 -->
-	<select id="readSearchProd" parameterType="hashMap" resultType="ProductVO">
+	<select id="readSearchProd" parameterType="hashMap"
+		resultType="ProductVO">
 		<bind name="prod_code" value="'%'+ prod_code +'%'" />
 		<bind name="prod_name" value="'%'+ prod_name +'%'" />
 		<bind name="prod_category" value="'%'+ prod_category +'%'" />
@@ -64,7 +65,7 @@
 			</if>
 		</where>
 		limit #{start},#{cntPerPage}
-		
+
 	</select>
 	<!-- 품목관리 검색리스트 불러오기 -->
 
@@ -76,16 +77,16 @@
 		#{prod_color},#{client_code},#{prod_price},#{prod_note})
 	</insert>
 	<!-- 품목관리 정보 다중 입력 -->
-	
-	<!-- 작업지시 삭제 -->
+
+	<!-- 품목관리 삭제 -->
 	<delete id="deleteProd">
-		DELETE FROM product 
+		DELETE FROM product
 		WHERE prod_code=#{prod_code}
 	</delete>
-	<!-- 작업지시 삭제 -->
+	<!-- 품목관리 삭제 -->
 
 	<!-- //////////////////////////////////////////////////////////////// -->
-	
+
 	<!-- 원자재관리 총 게시글 갯수 출력 -->
 	<select id="countRaw" resultType="int">
 		SELECT COUNT(*) FROM
@@ -96,7 +97,7 @@
 	<!-- 원자재관리 목록 불러오기 -->
 	<resultMap id="rawMaterial"
 		type="com.sm.domain.RawMaterialVO">
-		
+
 		<id property="raw_name" column="raw_name" />
 		<result property="raw_code" column="raw_code" />
 		<result property="raw_color" column="raw_color" />
@@ -106,27 +107,32 @@
 		<result property="raw_size" column="raw_size" />
 		<result property="raw_note" column="raw_note" />
 		<result property="client_code" column="client_code" />
-	
-		<collection property="clients" ofType="com.sm.domain.ClientsVO">
+
+		<collection property="clients"
+			ofType="com.sm.domain.ClientsVO">
 			<result property="client_actname" column="client_actname" />
 		</collection>
-		
+
 	</resultMap>
 
-	<select id="readRaw" resultMap="rawMaterial" resultType="RawMaterialVO">
+	<select id="readRaw" resultMap="rawMaterial"
+		resultType="RawMaterialVO">
 		SELECT r.*, c.client_actname
 		from raw_material r
-		join clients c
+		join clients
+		c
 		on r.client_code = c.client_code limit
 		#{start}, #{cntPerPage}
 	</select>
 	<!-- 원자재관리 목록 불러오기 -->
 
 	<!-- 원자재관리 검색 게시글 갯수 출력 -->
-	<select id="countSearchRaw" parameterType="hashMap" resultType="int">
+	<select id="countSearchRaw" parameterType="hashMap"
+		resultType="int">
 		SELECT COUNT(*) FROM raw_material r
 		join clients c
-		on r.client_code = c.client_code
+		on r.client_code =
+		c.client_code
 		<where>
 			<if test="raw_code != ''">
 				r.raw_code like concat ('%', #{raw_code}, '%')
@@ -135,19 +141,21 @@
 				and r.raw_code like concat ('%', #{raw_code}, '%')
 			</if>
 			<if test="client_actname != null">
-				and c.client_actname like concat ('%', #{client_actname}, '%')
+				and c.client_actname like concat ('%', #{client_actname},
+				'%')
 			</if>
 		</where>
 	</select>
 	<!-- 원자재관리 검색 게시글 갯수 출력 -->
 
 	<!-- 원자재관리 검색리스트 불러오기 -->
-	<select id="readSearchRaw" parameterType="hashMap" resultMap="rawMaterial"
-		resultType="RawMaterialVO">
+	<select id="readSearchRaw" parameterType="hashMap"
+		resultMap="rawMaterial" resultType="RawMaterialVO">
 		SELECT r.*, c.client_actname
 		from raw_material r
 		join clients c
-		on r.client_code = c.client_code
+		on
+		r.client_code = c.client_code
 		<where>
 			<if test="raw_code != ''">
 				r.raw_code like concat ('%', #{raw_code}, '%')
@@ -156,7 +164,8 @@
 				and r.raw_code like concat ('%', #{raw_code}, '%')
 			</if>
 			<if test="client_actname != ''">
-				and c.client_actname like concat ('%', #{client_actname}, '%')
+				and c.client_actname like concat ('%', #{client_actname},
+				'%')
 			</if>
 		</where>
 		limit #{start},#{cntPerPage}
@@ -180,35 +189,133 @@
 	<!-- 원자재관리 삭제 -->
 
 	<!-- //////////////////////////////////////////////////////////////// -->
-	
+
+	<!-- 소요량관리 총 게시글 갯수 출력 -->
+	<select id="countReq" resultType="int">
+		SELECT COUNT(*) FROM
+		requirement
+	</select>
+	<!-- 소요량관리 총 게시글 갯수 출력 -->
+
+	<!-- 소요량관리 목록 불러오기 -->
+	<resultMap id="requirements"
+		type="com.sm.domain.RequirementsVO">
+
+		<id property="req_code" column="req_code" />
+		<result property="prod_code" column="prod_code" />
+		<result property="raw_code" column="raw_code" />
+		<result property="req_dan" column="req_dan" />
+		<result property="req_note" column="req_note" />
+
+		<collection property="prod"
+			ofType="com.sm.domain.ProductVO">
+			<result property="prod_name" column="prod_name" />
+		</collection>
+
+		<collection property="raw"
+			ofType="com.sm.domain.RawMaterialVO">
+			<result property="raw_name" column="raw_name" />
+		</collection>
+
+	</resultMap>
+
+	<select id="readReq" resultMap="requirements"
+		resultType="RequirementsVO">
+		SELECT r.*,p.prod_name ,rm.raw_name
+		FROM requirement r
+		join product p on p.prod_code = r.prod_code
+		JOIN raw_material rm on r.raw_code = rm.raw_code limit
+		#{start}, #{cntPerPage}
+	</select>
+	<!-- 소요량관리 목록 불러오기 -->
+
+	<!-- 소요량관리 검색 게시글 갯수 출력 -->
+	<select id="countSearchReq" parameterType="hashMap"
+		resultType="int">
+		SELECT COUNT(*) FROM requirement r
+		join product p on p.prod_code = r.prod_code
+		JOIN raw_material rm on r.raw_code = rm.raw_code
+		<where>
+			<if test="req_code != ''">
+				r.req_code like concat ('%', #{req_code}, '%')
+			</if>
+			<if test="prod_code != ''">
+				and p.prod_code like concat ('%', #{prod_code}, '%')
+			</if>
+			<if test="prod_name != ''">
+				and p.prod_name like concat ('%', #{prod_name},'%')
+			</if>
+		</where>
+	</select>
+	<!-- 소요량관리 검색 게시글 갯수 출력 -->
+
+	<!-- 소요량관리 검색리스트 불러오기 -->
+	<select id="readSearchReq" parameterType="hashMap"
+		resultMap="requirements" resultType="RequirementsVO">
+		SELECT r.*,p.prod_name ,rm.raw_name
+		FROM requirement r
+		join product p on p.prod_code = r.prod_code
+		JOIN raw_material rm on r.raw_code = rm.raw_code
+		<where>
+			<if test="req_code != ''">
+				r.req_code like concat ('%', #{req_code}, '%')
+			</if>
+			<if test="prod_code != ''">
+				and p.prod_code like concat ('%', #{prod_code}, '%')
+			</if>
+			<if test="prod_name != ''">
+				and p.prod_name like concat ('%', #{prod_name},'%')
+			</if>
+		</where>
+		limit #{start},#{cntPerPage}
+		</select>
+	<!-- 소요량관리 검색리스트 불러오기 -->
+
+	<!-- 소요량관리 정보 다중 입력 -->
+	<insert id="reqIn">
+	insert into requirement
+	values
+	(#{req_code},#{prod_code},#{raw_code},#{req_dan},#{req_note})
+	</insert>
+	<!-- 소요량관리 정보 다중 입력 -->
+
+	<!-- 소요량관리 삭제 -->
+	<delete id="deleteReq">
+		DELETE FROM requirement
+		WHERE req_code=#{req_code}
+	</delete>
+	<!-- 소요량관리 삭제 -->
+
+	<!-- //////////////////////////////////////////////////////////////// -->
+
 	<!-- 라인 목록 조회 -->
 	<select id="lineList" resultType="com.sm.domain.LineVO">
 		SELECT * FROM line
 	</select>
 	<!-- 라인 목록 조회 -->
-	
+
 	<!-- 라인 목록 조회 (페이징처리) -->
-	<select id="lineListPage" resultType="LineVO" >
+	<select id="lineListPage" resultType="LineVO">
 		<![CDATA[
 			SELECT * FROM line 
 			limit #{startPage}, #{pageSize}
 		]]>
 	</select>
 	<!-- 라인 목록 조회 (페이징처리) -->
-	
+
 	<!-- 라인 전체 글개수 계산 -->
 	<select id="totalCnt" resultType="int">
 		SELECT count(*) FROM line
 	</select>
 	<!-- 라인 전체 글개수 계산 -->
-	
+
 	<!-- 라인 전체 글개수 계산 (서치) -->
-		<select id="searchTotalCnt" resultType="int">
+	<select id="searchTotalCnt" resultType="int">
 		SELECT count(*) FROM line
 		<where>
 			<if test="line_code != ''">
 				line_code LIKE concat('%', #{line_code},'%')
-			</if>		
+			</if>
 			<if test="line_name != ''">
 				AND line_name LIKE concat('%', #{line_name},'%')
 			</if>
@@ -219,110 +326,122 @@
 				AND line_use= #{line_use}
 			</if>
 		</where>
-		</select>
+	</select>
 	<!-- 라인 전체 글개수 계산 (서치) -->
-	
+
 	<!-- 라인 검색(페이징처리) -->
-	<select id="searchLinePage" resultType="com.sm.domain.LineVO" parameterType="hashMap">
-		SELECT * FROM line 
-  <where>
-    <if test="line_code != ''">
-      AND line_code LIKE CONCAT('%', #{line_code}, '%') 
-    </if>
-    <if test="line_name != ''">
-      AND line_name LIKE CONCAT('%', #{line_name}, '%') 
-    </if>
-    <if test="line_place != ''">
-      AND line_place LIKE CONCAT('%', #{line_place}, '%') 
-    </if>
-    <if test="line_use != 3 "> <!-- 개중요했음!!! -->
-      AND line_use = #{line_use} 
-    </if>
-  </where>
-		limit #{startPage}, #{pageSize} 
-	</select>	
+
+	<select id="searchLinePage" resultType="com.sm.domain.LineVO"
+		parameterType="hashMap">
+		SELECT * FROM line
+		<where>
+			<if test="line_code != ''">
+				AND line_code LIKE CONCAT('%', #{line_code}, '%')
+			</if>
+			<if test="line_name != ''">
+				AND line_name LIKE CONCAT('%', #{line_name}, '%')
+			</if>
+			<if test="line_place != ''">
+				AND line_place LIKE CONCAT('%', #{line_place}, '%')
+			</if>
+			<if test="line_use != 3"> <!-- 개중요했음!!! -->
+				AND line_use = #{line_use}
+			</if>
+		</where>
+		limit #{startPage}, #{pageSize}
+	</select>
+
 	<!-- 라인 검색(페이징처리) -->
-	
+
 	<!-- ///////////////////////////////////////////////////////// -->
-	
+
 	<!-- 창고 조회 + 페이징처리 -->
 	<resultMap id="whm_listPage" type="com.sm.domain.Wh_prodVO">
-	    <result property="raw_code" column="raw_code" />
-	    <result property="prod_code" column="prod_code" />
-		<result property="wh_code" column="wh_code"/>
-		<result property="wh_name" column="wh_name"/>
-		<result property="wh_dv" column="wh_dv"/>
-		<result property="wh_addr" column="wh_addr"/>
-		<result property="wh_tel" column="wh_tel"/>
-		<result property="wh_use" column="wh_use"/>
-		<result property="wh_note" column="wh_note"/>
-	
-	<collection property="raw" ofType="com.sm.domain.RawMaterialVO">
-		<result property="raw_name" column="raw_name" />
-	</collection>
-	
-	<collection property="prod" ofType="com.sm.domain.ProductVO">
-		<result property="prod_name" column="prod_name" />
-	</collection>
+		<result property="raw_code" column="raw_code" />
+		<result property="prod_code" column="prod_code" />
+		<result property="wh_code" column="wh_code" />
+		<result property="wh_name" column="wh_name" />
+		<result property="wh_dv" column="wh_dv" />
+		<result property="wh_addr" column="wh_addr" />
+		<result property="wh_tel" column="wh_tel" />
+		<result property="wh_use" column="wh_use" />
+		<result property="wh_note" column="wh_note" />
+
+		<collection property="raw"
+			ofType="com.sm.domain.RawMaterialVO">
+			<result property="raw_name" column="raw_name" />
+		</collection>
+
+		<collection property="prod"
+			ofType="com.sm.domain.ProductVO">
+			<result property="prod_name" column="prod_name" />
+		</collection>
 	</resultMap>
-	
+
 	<select id="whlistPage" resultMap="whm_listPage">
-		SELECT wh_code, wh_name, wh_dv,w.prod_code, p.prod_name,
-			   w.raw_code, r.raw_name, wh_addr, wh_tel, wh_use, wh_note 
+		SELECT wh_code, wh_name,
+		wh_dv,w.prod_code, p.prod_name,
+		w.raw_code, r.raw_name, wh_addr,
+		wh_tel, wh_use, wh_note
 		FROM warehouse w
-		LEFT JOIN product p on p.prod_code = w.prod_code
-		LEFT JOIN raw_material r on r.raw_code = w.raw_code
-		
+		LEFT JOIN product p on
+		p.prod_code = w.prod_code
+		LEFT JOIN
+		raw_material r on r.raw_code =
+		w.raw_code
+
 		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 창고 조회 + 페이징처리 -->
-	
+
 	<!-- 창고 조회 (전체 글개수 계산) -->
 	<select id="whTotalCnt" resultType="int">
-		SELECT COUNT(*) 
-		FROM warehouse 
+		SELECT COUNT(*)
+		FROM warehouse
 	</select>
 	<!-- 창고 조회 (전체 글개수 계산) -->
 
-	<!-- 창고 검색 + 페이징처리 -->	
+	<!-- 창고 검색 + 페이징처리 -->
 	<resultMap id="whm_SearchPage" type="com.sm.domain.Wh_prodVO">
-	    <result property="raw_code" column="raw_code" />
-	    <result property="prod_code" column="prod_code" />
-		<result property="wh_code" column="wh_code"/>
-		<result property="wh_name" column="wh_name"/>
-		<result property="wh_dv" column="wh_dv"/>
-		<result property="wh_addr" column="wh_addr"/>
-		<result property="wh_tel" column="wh_tel"/>
-		<result property="wh_use" column="wh_use"/>
-		<result property="wh_note" column="wh_note"/>
-	
-	<collection property="raw" ofType="com.sm.domain.RawMaterialVO">
-		<result property="raw_name" column="raw_name" />
-	</collection>
-	<collection property="prod" ofType="com.sm.domain.ProductVO">
-		<result property="prod_name" column="prod_name" />
-	</collection>
+		<result property="raw_code" column="raw_code" />
+		<result property="prod_code" column="prod_code" />
+		<result property="wh_code" column="wh_code" />
+		<result property="wh_name" column="wh_name" />
+		<result property="wh_dv" column="wh_dv" />
+		<result property="wh_addr" column="wh_addr" />
+		<result property="wh_tel" column="wh_tel" />
+		<result property="wh_use" column="wh_use" />
+		<result property="wh_note" column="wh_note" />
+
+		<collection property="raw"
+			ofType="com.sm.domain.RawMaterialVO">
+			<result property="raw_name" column="raw_name" />
+		</collection>
+		<collection property="prod"
+			ofType="com.sm.domain.ProductVO">
+			<result property="prod_name" column="prod_name" />
+		</collection>
 	</resultMap>
-	
-	<select id="searchWareHouse" resultType="WarehouseVO" 
-					resultMap="whm_SearchPage" ><!-- parameterMap="hashMap" -->
+
+	<select id="searchWareHouse" resultType="WarehouseVO"
+		resultMap="whm_SearchPage"><!-- parameterMap="hashMap" -->
 		SELECT * FROM warehouse
 		<where>
-<!-- 			<if test="wh_code != null and !wh_code.isEmpty()"> -->
-<!-- 				wh_code LIKE CONCAT('%', #{wh_code}, '%') -->
-<!-- 			</if>		 -->
-<!-- 			<if test="prod_code != null and !prod_code.isEmpty()"> -->
-<!-- 				prod_code LIKE CONCAT('%', #{prod_code}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="raw_code != null and !raw_code.isEmpty()"> -->
-<!-- 				raw_code LIKE CONCAT('%', #{raw_code}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="wh_name != null and !wh_name.isEmpty()"> -->
-<!-- 				AND wh_name LIKE CONCAT('%', #{wh_name}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="wh_use != 3"> -->
-<!-- 				AND wh_use = #{wh_use} -->
-<!-- 			</if> -->
+			<!-- <if test="wh_code != null and !wh_code.isEmpty()"> -->
+			<!-- wh_code LIKE CONCAT('%', #{wh_code}, '%') -->
+			<!-- </if> -->
+			<!-- <if test="prod_code != null and !prod_code.isEmpty()"> -->
+			<!-- prod_code LIKE CONCAT('%', #{prod_code}, '%') -->
+			<!-- </if> -->
+			<!-- <if test="raw_code != null and !raw_code.isEmpty()"> -->
+			<!-- raw_code LIKE CONCAT('%', #{raw_code}, '%') -->
+			<!-- </if> -->
+			<!-- <if test="wh_name != null and !wh_name.isEmpty()"> -->
+			<!-- AND wh_name LIKE CONCAT('%', #{wh_name}, '%') -->
+			<!-- </if> -->
+			<!-- <if test="wh_use != 3"> -->
+			<!-- AND wh_use = #{wh_use} -->
+			<!-- </if> -->
 			<if test="wh_code != ''">
 				wh_code LIKE concat('%', #{wh_code}, '%');
 			</if>
@@ -341,49 +460,52 @@
 		</where>
 		limit #{startPage}, #{pageSize}
 	</select>
-	<!-- 창고 검색 + 페이징처리 -->	
-	
+	<!-- 창고 검색 + 페이징처리 -->
+
 	<!-- 창고 검색시 총 글 개수 -->
-	<resultMap id="whm_SearchPageTotalCnt" type="com.sm.domain.Wh_prodVO">
-	    <result property="raw_code" column="raw_code" />
-	    <result property="prod_code" column="prod_code" />
-		<result property="wh_code" column="wh_code"/>
-		<result property="wh_name" column="wh_name"/>
-		<result property="wh_dv" column="wh_dv"/>
-		<result property="wh_addr" column="wh_addr"/>
-		<result property="wh_tel" column="wh_tel"/>
-		<result property="wh_use" column="wh_use"/>
-		<result property="wh_note" column="wh_note"/>
-	
-	<collection property="raw" ofType="com.sm.domain.RawMaterialVO">
-		<result property="raw_name" column="raw_name" />
-	</collection>
-	
-	<collection property="prod" ofType="com.sm.domain.ProductVO">
-		<result property="prod_name" column="prod_name" />
-	</collection>
-	</resultMap>	
-	
-	<select id="searchWhTotalCnt" resultType="int" 
-					resultMap="whm_SearchPageTotalCnt" >
+	<resultMap id="whm_SearchPageTotalCnt"
+		type="com.sm.domain.Wh_prodVO">
+		<result property="raw_code" column="raw_code" />
+		<result property="prod_code" column="prod_code" />
+		<result property="wh_code" column="wh_code" />
+		<result property="wh_name" column="wh_name" />
+		<result property="wh_dv" column="wh_dv" />
+		<result property="wh_addr" column="wh_addr" />
+		<result property="wh_tel" column="wh_tel" />
+		<result property="wh_use" column="wh_use" />
+		<result property="wh_note" column="wh_note" />
+
+		<collection property="raw"
+			ofType="com.sm.domain.RawMaterialVO">
+			<result property="raw_name" column="raw_name" />
+		</collection>
+
+		<collection property="prod"
+			ofType="com.sm.domain.ProductVO">
+			<result property="prod_name" column="prod_name" />
+		</collection>
+	</resultMap>
+
+	<select id="searchWhTotalCnt" resultType="int"
+		resultMap="whm_SearchPageTotalCnt">
 		SELECT count(*) FROM warehouse
 		<where>
-<!-- 			<if test="wh_code != null and !wh_code.isEmpty()"> -->
-<!-- 				wh_code LIKE CONCAT('%', #{wh_code}, '%') -->
-<!-- 			</if>		 -->
-<!-- 			<if test="prod_code != null and !prod_code.isEmpty()"> -->
-<!-- 				prod_code LIKE CONCAT('%', #{prod_code}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="raw_code != null and !raw_code.isEmpty()"> -->
-<!-- 				raw_code LIKE CONCAT('%', #{raw_code}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="wh_name != null and !wh_name.isEmpty()"> -->
-<!-- 				AND wh_name LIKE CONCAT('%', #{wh_name}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="wh_use != 3"> -->
-<!-- 				AND wh_use = #{wh_use} -->
-<!-- 			</if> -->
-						<if test="wh_code != ''">
+			<!-- <if test="wh_code != null and !wh_code.isEmpty()"> -->
+			<!-- wh_code LIKE CONCAT('%', #{wh_code}, '%') -->
+			<!-- </if> -->
+			<!-- <if test="prod_code != null and !prod_code.isEmpty()"> -->
+			<!-- prod_code LIKE CONCAT('%', #{prod_code}, '%') -->
+			<!-- </if> -->
+			<!-- <if test="raw_code != null and !raw_code.isEmpty()"> -->
+			<!-- raw_code LIKE CONCAT('%', #{raw_code}, '%') -->
+			<!-- </if> -->
+			<!-- <if test="wh_name != null and !wh_name.isEmpty()"> -->
+			<!-- AND wh_name LIKE CONCAT('%', #{wh_name}, '%') -->
+			<!-- </if> -->
+			<!-- <if test="wh_use != 3"> -->
+			<!-- AND wh_use = #{wh_use} -->
+			<!-- </if> -->
+			<if test="wh_code != ''">
 				wh_code LIKE concat('%', #{wh_code}, '%');
 			</if>
 			<if test="prod_code != ''">
@@ -400,51 +522,58 @@
 			</if>
 		</where>
 	</select>
-	<!-- 창고 검색시 총 글 개수 -->	
-	
+	<!-- 창고 검색시 총 글 개수 -->
+
 	<!-- ///////////////////////////////////////////////////////// -->
-	
+
 	<!-- 생산실적 목록 -->
 	<resultMap id="perfList" type="PerformanceVO">
-		<result property="perform_code" column="perform_code"/>
-		<result property="work_code" column="work_code"/>
-		<result property="perform_date" column="perform_date"/>
-		<result property="perform_qt" column="perform_qt"/>
-		<result property="emp_id" column="emp_id"/>
-		<result property="change_id" column="change_id"/>
-		<result property="change_date" column="change_date"/>
-		<result property="perform_fair" column="perform_fair"/>
-		<result property="perform_defect" column="perform_defect"/>
-		<result property="defect_note" column="defect_note"/>
-		<result property="perform_note" column="perform_note"/>
-		
+		<result property="perform_code" column="perform_code" />
+		<result property="work_code" column="work_code" />
+		<result property="perform_date" column="perform_date" />
+		<result property="perform_qt" column="perform_qt" />
+		<result property="emp_id" column="emp_id" />
+		<result property="change_id" column="change_id" />
+		<result property="change_date" column="change_date" />
+		<result property="perform_fair" column="perform_fair" />
+		<result property="perform_defect" column="perform_defect" />
+		<result property="defect_note" column="defect_note" />
+		<result property="perform_note" column="perform_note" />
+
 		<collection property="workOrder" ofType="WorkOrderVO">
-			<result property="line_code" column="line_code"/>
-			<result property="prod_code" column="prod_code"/>
+			<result property="line_code" column="line_code" />
+			<result property="prod_code" column="prod_code" />
 		</collection>
 	</resultMap>
-	
-	<select id="performList" resultMap="perfList" resultType="PerformanceVO">
-		SELECT p.perform_code, p.work_code, w.line_code, w.prod_code, p.perform_date,
-				p.perform_qt, p.perform_fair, p.perform_defect, p.defect_note, p.perform_note 
-		FROM performance p JOIN work_order w 
+
+	<select id="performList" resultMap="perfList"
+		resultType="PerformanceVO">
+		SELECT p.perform_code, p.work_code, w.line_code,
+		w.prod_code, p.perform_date,
+		p.perform_qt, p.perform_fair,
+		p.perform_defect, p.defect_note, p.perform_note
+		FROM performance p JOIN
+		work_order w
 		ON p.work_code = w.work_code
 	</select>
 	<!-- 생산실적 목록 -->
-	
+
 	<!-- 생산실적 등록 -->
 	<insert id="insertPerform">
-		INSERT INTO performance (perform_code,work_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_note) 
-		VALUES (#{perform_code},#{work_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},#{perform_note});
+		INSERT INTO performance
+		(perform_code,work_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_note)
+		VALUES
+		(#{perform_code},#{work_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},#{perform_note});
 	</insert>
 	<!-- 생산실적 등록 -->
-	
+
 	<!-- 생산실적 삭제 -->
 	<delete id="deletePerformance">
-		DELETE FROM performance WHERE perform_code=#{perform_code}
+		DELETE FROM performance WHERE
+		perform_code=#{perform_code}
 	</delete>
 	<!-- 생산실적 삭제 -->
-	
-	
-	
+
+
+
 </mapper>

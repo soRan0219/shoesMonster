@@ -10,5 +10,13 @@ public class RequirementsVO {
 	private String req_dan;
 	private String req_note;
 	
+	private ProductVO prod;
+	private RawMaterialVO raw;
+	
+	public RequirementsVO() {
+		prod = new ProductVO();
+		raw = new RawMaterialVO();
+	}
+	
 	
 } //Requirements

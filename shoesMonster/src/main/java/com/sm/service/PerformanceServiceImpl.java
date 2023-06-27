@@ -14,6 +14,7 @@ import com.sm.domain.PagingVO;
 import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.RawMaterialVO;
+import com.sm.domain.RequirementsVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
 import com.sm.persistence.PerformanceDAO;
@@ -100,8 +101,47 @@ public class PerformanceServiceImpl implements PerformanceService {
 		pdao.deleteRaw(checked);
 	}
 
+	// ==========================================================================
+	
+	// 소요량관리 게시물 총 갯수
+	@Override
+	public int countReq() {
+		return pdao.countReq();
+	}
+	
+	// 소요량관리 리스트 불러오기
+	@Override
+	public List<RequirementsVO> getReqList(PagingVO pvo) throws Exception {
+		return pdao.readReqList(pvo);
+	}
+	
+	// 소요량관리 게시물 검색 갯수
+	@Override
+	public int countReq(RequirementsVO vo) throws Exception {
+		return pdao.countReq(vo);
+	}
+	
+	// 소요량관리 검색리스트 불러오기
+	@Override
+	public List<RequirementsVO> getReqList(RequirementsVO vo, PagingVO pvo) throws Exception {
+		return pdao.readReqList(vo, pvo);
+	}
+	
+	// 소요량관리 정보 다중 저장
+	@Override
+	public void insertReq(List<RequirementsVO> req) throws Exception {
+		for (RequirementsVO reqs : req) {
+			pdao.insertReqList(reqs);
+		}
+	}
+	
+	// 소요량관리 삭제
+	@Override
+	public void removeReq(List<String> checked) throws Exception {
+		pdao.deleteReq(checked);
+	}
 	// 라인=======================================================================
-
+	
 	// 라인 조회
 	@Override
 	public List<LineVO> getLineList() throws Exception {
