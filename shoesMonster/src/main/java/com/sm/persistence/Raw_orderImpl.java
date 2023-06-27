@@ -81,6 +81,24 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		
 	}
 
+
+
+	@Override
+    public void roInsert(Raw_orderVO vo) throws Exception {
+        int result = sqlSession.insert(NAMESPACE + ".roRegist", vo);
+        
+        if(result != 0) {
+            logger.debug("발주 등록완료");
+        }
+    }
+
+
+
+	@Override
+    public List<Raw_orderVO> getDetail() throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".roDetail");
+  }
+
     
     
 
