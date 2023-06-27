@@ -330,6 +330,7 @@
 	<!-- 라인 전체 글개수 계산 (서치) -->
 
 	<!-- 라인 검색(페이징처리) -->
+
 	<select id="searchLinePage" resultType="com.sm.domain.LineVO"
 		parameterType="hashMap">
 		SELECT * FROM line
@@ -349,6 +350,7 @@
 		</where>
 		limit #{startPage}, #{pageSize}
 	</select>
+
 	<!-- 라인 검색(페이징처리) -->
 
 	<!-- ///////////////////////////////////////////////////////// -->
