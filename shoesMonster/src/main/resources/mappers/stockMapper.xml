@@ -12,11 +12,12 @@
 	    <id property="raw_order_num" column="raw_order_num" />
 	    <result property="raw_order_count" column="raw_order_count" />
 	    <result property="raw_order_date" column="raw_order_date" />
+	    <result property="raw_code" column="raw_code" />
 	    <result property="emp_id" column="emp_id" />
 	
 	    <collection property="rawMaterial" ofType="com.sm.domain.RawMaterialVO">
 	        <result property="raw_name" column="raw_name" />
-	         <result property="raw_code" column="raw_code" />
+	    	<result property="raw_code" column="raw_code" />
 	        <result property="raw_color" column="raw_color" />
 	        <result property="raw_price" column="raw_price" />
 	    </collection>
@@ -27,17 +28,22 @@
 	    
 	    <collection property="clients" ofType="com.sm.domain.ClientsVO">
 	        <result property="client_actname" column="client_actname" />
+	        <result property="client_code" column="client_code" />
+	        <result property="client_tel" column="client_tel" />
+	        <result property="client_phone" column="client_phone" />
+	        <result property="client_fax" column="client_fax" />
+	        <result property="client_email" column="client_email" />
 	    </collection>
 	</resultMap>
 	
 	<!-- 발주 목록 조회 -->
 	<select id="getRaw_Order" resultMap="ro_List">
-	    select ro.raw_order_num, c.client_actname, s.raw_code, rm.raw_name, rm.raw_color,
+	    select ro.raw_order_num, c.client_actname, ro.raw_code, rm.raw_name, rm.raw_color, 
 	           ro.raw_order_count, s.stock_raw_count, rm.raw_price, ro.raw_order_date, ro.emp_id
 	    from raw_order ro
-	    JOIN raw_material rm ON ro.raw_code = rm.raw_code
-	    JOIN clients c ON c.client_code = rm.client_code
-	    JOIN stock s ON s.raw_code = rm.raw_code
+	    LEFT JOIN raw_material rm ON ro.raw_code = rm.raw_code
+	    LEFT JOIN clients c ON c.client_code = rm.client_code
+	    LEFT JOIN stock s ON s.raw_code = rm.raw_code
 	    order by ro.raw_order_num desc
 	    limit #{startRow}, #{pageSize};
 	</select>
@@ -51,12 +57,30 @@
 	
 	<!-- 발주 등록 팝업 -->
 	<select id="roPopup" resultMap="ro_List">
-		select c.client_actname, rm.raw_code, rm.raw_name, rm.raw_price, rm.raw_color, COALESCE(s.stock_raw_count, 0) AS stock_raw_count
+		select c.client_actname, rm.raw_code, rm.raw_name, rm.raw_price, c.client_code,
+			   rm.raw_color, COALESCE(s.stock_raw_count, 0) AS stock_raw_count
 		from raw_material rm
 		LEFT join stock s on s.raw_code = rm.raw_code
 		join clients c on c.client_code = rm.client_code;
 	</select>
 	<!-- 발주 등록 팝업 -->
+	
+	<!-- 발주 등록 -->	
+	<insert id="roRegist">
+		insert into raw_order(raw_order_num, raw_order_date, raw_code, raw_order_count)
+		values(CONCAT('R', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_code}, #{raw_order_count})
+	</insert>
+	<!-- 발주 등록 -->
+	
+	<!-- 발주 거래처 상세 -->
+<!-- 	<select id="roDetail" resultMap="ro_List"> -->
+<!-- 		select c.client_actname, c.client_code, c.client_tel, c.client_phone, c.client_fax, c.client_email -->
+<!-- 		from raw_order ro -->
+<!-- 	    LEFT JOIN raw_material rm ON ro.raw_code = rm.raw_code -->
+<!-- 	    LEFT JOIN clients c ON c.client_code = rm.client_code -->
+<!-- 		where -->
+<!-- 	</select> -->
+	<!-- 발주 거래처 상세 -->
 	
 	<!-- ========================= 발주 목록 조회 - 끝 ========================= -->
 

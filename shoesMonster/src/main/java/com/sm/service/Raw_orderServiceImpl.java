@@ -3,6 +3,7 @@ package com.sm.service;
 
 import java.util.List;
 
+import com.sm.domain.ClientsVO;
 import com.sm.domain.Raw_orderVO;
 import com.sm.persistence.Raw_orderDAO;
 
@@ -32,7 +33,22 @@ public class Raw_orderServiceImpl implements Raw_orderService{
 	public List<Raw_orderVO> getPopup() throws Exception {
 		return rodao.Popup();
 	}
+
+
+	@Override
+	public void roInsert(Raw_orderVO vo) throws Exception {
+		rodao.roInsert(vo);
+	}
+
+
+	@Override
+	public List<Raw_orderVO> getDetail() throws Exception {
+		return rodao.getDetail();
+	}
  
+	
+	
+	
     
     
 

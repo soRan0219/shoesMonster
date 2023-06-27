@@ -2,6 +2,7 @@ package com.sm.service;
 
 import java.util.List;
 
+import com.sm.domain.ClientsVO;
 import com.sm.domain.Raw_orderVO;
 
 public interface Raw_orderService {
@@ -15,7 +16,10 @@ public interface Raw_orderService {
 	// 발주 등록(팝업)
 	public List<Raw_orderVO> getPopup() throws Exception;
 	
-	// 발주 재고 개수(팝업)
+	// 발주 등록
+	public void roInsert(Raw_orderVO vo) throws Exception;
 
+	// 거래처 상세(팝업)
+	public List<Raw_orderVO> getDetail() throws Exception;
 
 }
