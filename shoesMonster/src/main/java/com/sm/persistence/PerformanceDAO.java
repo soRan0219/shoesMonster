@@ -111,7 +111,16 @@ public interface PerformanceDAO {
 	// ==========================================================================
 
 	// 생산실적 목록
-	public List<PerformanceVO> readAllPerf() throws Exception;
+	public List<PerformanceVO> readPerfList(LineWhPageVO pvo) throws Exception;
+	
+	//생산실적 검색
+	public List<PerformanceVO> readPerfList(HashMap<String,Object> search) throws Exception;
+	
+	//생산실적 전체 수
+	public int getPerfCnt() throws Exception;
+	
+	//생산실적 검색 수
+	public int getPerfCnt(HashMap<String,Object> search) throws Exception;
 	
 	//생산실적 등록
 	public void createPerformance(PerformanceVO vo) throws Exception;

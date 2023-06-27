@@ -54,7 +54,7 @@
 					<!-- menu profile quick info -->
 					<div class="profile clearfix">
 						<div class="profile_pic">
-							<img src="../include/images/hong1.jpg" alt="..."
+							<img src="/resources/images/churub.jpg" alt="..."
 								class="img-circle profile_img">
 						</div>
 						<div class="profile_info">
@@ -181,7 +181,7 @@
 							<li class="nav-item dropdown open" style="padding-left: 15px;">
 								<a href="javascript:;" class="user-profile dropdown-toggle"
 								aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/hong.jpg" alt="">홍길동</a>
+								aria-expanded="false"> <img src="/resources/images/churub.jpg" alt="">홍길동</a>
 								<div class="dropdown-menu dropdown-usermenu pull-right"
 									aria-labelledby="navbarDropdown">
 <!-- 									<a class="dropdown-item" href="javascript:;"> Profile</a> -->

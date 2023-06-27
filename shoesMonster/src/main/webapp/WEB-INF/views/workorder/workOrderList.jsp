@@ -3,11 +3,8 @@
 
 <%@ include file="../include/header.jsp"%>
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 
 <style type="text/css">
 .selected {
@@ -106,7 +103,8 @@
 
 	
 	//========================= 함수, 상수 ==================================//
-
+	
+	//jQuery
 	$(function() {
 
 		//테이블 항목들 인덱스 부여
@@ -455,6 +453,7 @@
 				$('#search_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
 			}
 		});
+		
 		//이날까지
 		$('#search_toDate').datepicker({
 			showOn:'both',
@@ -564,4 +563,5 @@
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
-
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

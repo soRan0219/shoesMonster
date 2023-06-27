@@ -207,8 +207,8 @@ public class PerformanceServiceImpl implements PerformanceService {
 	// ==========================================================================
 
 	@Override
-	public List<PerformanceVO> getAllPerf() throws Exception {
-		return pdao.readAllPerf();
+	public List<PerformanceVO> getPerfList(LineWhPageVO pvo) throws Exception {
+		return pdao.readPerfList(pvo);
 
 	} //getAllPerf()
 
@@ -231,6 +231,21 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public void modifyPerformance(PerformanceVO uvo) throws Exception {
 		pdao.updatePerformance(uvo);
 	} //modifyPerformance()
+
+	@Override
+	public int getPerfCnt() throws Exception {
+		return pdao.getPerfCnt();
+	} //getAllPerfCnt()
+
+	@Override
+	public List<PerformanceVO> getPerfList(HashMap<String, Object> search) throws Exception {
+		return pdao.readPerfList(search);
+	} //getPerfList(search)
+
+	@Override
+	public int getPerfCnt(HashMap<String, Object> search) throws Exception {
+		return pdao.getPerfCnt(search);
+	} //getPerfCnt(search)
 
 
 
