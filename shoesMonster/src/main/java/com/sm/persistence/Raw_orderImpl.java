@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.sm.domain.ClientsVO;
 import com.sm.domain.Raw_orderVO;
 
 @Repository
@@ -52,15 +51,6 @@ public class Raw_orderImpl implements Raw_orderDAO{
 
 
 	@Override
-
-	public void roInsert(Raw_orderVO vo) throws Exception {
-		int result = sqlSession.insert(NAMESPACE + ".roRegist", vo);
-		
-		if(result != 0) {
-			logger.debug("발주 등록완료");
-		}
-	}
-		
 	public int count1(Raw_orderVO rvo) throws Exception {
 		
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -72,17 +62,11 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		
 		
 		return sqlSession.selectOne(NAMESPACE+".searchCount1",data);
-
 	}
 
 
 
 	@Override
-	public List<Raw_orderVO> getDetail() throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".roDetail");
-  }
-    
-  @Override
 	public List<Raw_orderVO> Raw_order(int startRow, int pageSize, Raw_orderVO rvo) throws Exception {
 		
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -96,6 +80,24 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		return sqlSession.selectList(NAMESPACE+".getRaw_OrderSearch",data);
 		
 	}
+
+
+
+	@Override
+    public void roInsert(Raw_orderVO vo) throws Exception {
+        int result = sqlSession.insert(NAMESPACE + ".roRegist", vo);
+        
+        if(result != 0) {
+            logger.debug("발주 등록완료");
+        }
+    }
+
+
+
+	@Override
+    public List<Raw_orderVO> getDetail() throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".roDetail");
+  }
 
     
     
