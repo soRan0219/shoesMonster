@@ -15,22 +15,24 @@
 			<input type="text" name="wh_code"  placeholder="검색어를 입력해주세요">
 		
 		<label>품번</label> <!-- 품번 팝업창 + 라디오버튼 완제품/원자재 구분 한번 더 -->
-			<input type="text" name="prod_code" placeholder="검색어를 입력해주세요">
-			<!-- /////수정필요////////////////////////////////////////// -->
-		
+			<c:set var="inputcode" value="${empty prod_code? 'raw_code' : 'prod_code' }"/>
+			<c:set var="inputcode" value="${empty raw_code? 'prod_code' : 'raw_code' }"/>
+				<input type="text" name="${inputcode}" placeholder="검색어를 입력해주세요">
+				
 		<br>
 
 		<label>지역</label>
-			<select name="wh_addr" >
-				<option selected value="3">전 체</option>
+<!-- 			<select name="wh_addr" > -->
+<!-- 				<option selected>전 체</option> -->
 				
-					<c:forEach var="addr" items="${whList }">
-						<option>${addr.wh_addr.substring(0, 2)}</option>
-					</c:forEach>
+<%-- 					<c:forEach var="addr" items="${whList }"> --%>
+<%-- 						<option>${addr.wh_addr.substring(0, 2)}</option> --%>
+<%-- 					</c:forEach> --%>
 					<!-- 중복 처리 해야하는뎁 쩝 -->
-<!-- 				<option value="1">부산</option> -->
-<!-- 				<option value="2">창원</option> -->
-			</select>
+<!-- 				<option >부산</option> -->
+<!-- 				<option >창원</option> -->
+<!-- 			</select> -->
+			<input type="text" name="wh_addr"  placeholder="검색어를 입력해주세요">
 		
 		<label>사용여부</label>
 			<select name="wh_use" >
@@ -92,28 +94,56 @@
 	</table>
 
 	<div>
-		<c:if test="${lwpm.prev }">
-			<a href="/performance/warehouse?page=${lwpm.startPage-1 }">이 전</a>
+<%-- <c:if test="${wvo.prod_code } != null && ${wvo.prod_code } != '' "> --%>
+
+		<c:if test="${lwpm.startPage != 1 }"> 
+			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">이 전</a>
 		</c:if>
 		
-		<c:forEach begin="${lwpm.startPage }" 
-				   end="${lwpm.endPage }" step="1"
-				   varStatus="i">
-			
-				<a href="/performance/warehouse?page=${i.count }">${i.count }</a>
-				   
-		</c:forEach>	   
-				
-		<c:if test="${lwpm.next && lwpm.endPage>0 }">   
-			<a href="/performance/warehouse?page=${lwpm.endPage+1 }">다 음</a>
-		</c:if>
+		<c:forEach begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1" var="page">
+			<c:choose>
+				<c:when test="${page == lwpm.startPage }">
+					<b>${page }</b>
+				</c:when>
+				<c:when test="${page != lwpm.startPage }">
+<%-- 					<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">${page }</a> --%>
+					<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&inputcode=${inputcode }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">${page }</a>
+				</c:when>
+			</c:choose>
+		</c:forEach>
 		
-	</div>
+		<c:if test="${lwpm.next && lwpm.endPage>0 }">
+			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}}">다 음</a>
+		</c:if>
+
+<%-- 	<c:if test="${wvo.raw_code } != null && ${wvo.raw_code } != '' "> --%>
 	
-<%-- ${whList} --%>
+<%-- 			<c:if test="${lwpm.startPage != 1 }">  --%>
+<%-- 			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">이 전</a> --%>
+<%-- 		</c:if> --%>
+		
+<%-- 		<c:forEach begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1" var="page"> --%>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${page == lwpm.startPage }"> --%>
+<%-- 					<b>${page }</b> --%>
+<%-- 				</c:when> --%>
+<%-- 				<c:when test="${page != lwpm.startPage }"> --%>
+<%-- 					<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">${page }</a> --%>
+<%-- 				</c:when> --%>
+<%-- 			</c:choose> --%>
+<%-- 		</c:forEach> --%>
+		
+<%-- 		<c:if test="${lwpm.next && lwpm.endPage>0 }"> --%>
+<%-- 			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}}">다 음</a> --%>
+<%-- 		</c:if> --%>
+	
+	
+	
+	
+	
+<%-- 	</c:if> --%>
 
-
-</div>
+<%-- </c:if> --%>
+	</div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
-

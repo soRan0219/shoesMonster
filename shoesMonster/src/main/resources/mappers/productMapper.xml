@@ -305,7 +305,7 @@
 	</resultMap>
 	
 	<select id="searchWareHouse" resultType="WarehouseVO" 
-					resultMap="whm_SearchPage" ><!-- parameterMap="hashMap" -->
+					resultMap="whm_SearchPage"  ><!-- parameterMap="hashMap" -->
 		SELECT * FROM warehouse
 		<where>
 <!-- 			<if test="wh_code != null and !wh_code.isEmpty()"> -->
@@ -324,80 +324,51 @@
 <!-- 				AND wh_use = #{wh_use} -->
 <!-- 			</if> -->
 			<if test="wh_code != ''">
-				wh_code LIKE concat('%', #{wh_code}, '%');
+				wh_code LIKE concat('%', #{wh_code}, '%')
 			</if>
-			<if test="prod_code != ''">
-				AND prod_code LIKE concat('%', #{prod_code}, '%');
+<!-- 			<if test="prod_code != ''"> -->
+<!-- 				AND prod_code LIKE concat('%', #{prod_code}, '%') -->
+<!-- 			</if> -->
+<!-- 			<if test="raw_code != ''"> -->
+<!-- 				OR raw_code LIKE concat('%', #{raw_code}, '%') -->
+<!-- 			</if> -->
+			<if test="(prod_code != null and prod_code != '') or (raw_code != null and raw_code != '')">
+				AND prod_code LIKE concat('%', #{prod_code}, '%') 
+<!-- 			</if> -->
+<!-- 			<if test="raw_code != ''"> -->
+				OR raw_code LIKE concat('%', #{raw_code}, '%')  
 			</if>
-			<if test="raw_code != ''">
-				AND raw_code LIKE concat('%', #{raw_code}, '%');
-			</if>
-			<if test="wh_name != ''">
-				AND wh_name LIKE concat('%', #{wh_name}, '%');
+			<if test="wh_addr != ''">
+				AND wh_addr LIKE concat('%', #{wh_addr}, '%')
 			</if>
 			<if test="wh_use != 3">
-				AND wh_use = #{wh_use};
+				AND wh_use = #{wh_use}
 			</if>
 		</where>
 		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 창고 검색 + 페이징처리 -->	
 	
+	
 	<!-- 창고 검색시 총 글 개수 -->
-	<resultMap id="whm_SearchPageTotalCnt" type="com.sm.domain.Wh_prodVO">
-	    <result property="raw_code" column="raw_code" />
-	    <result property="prod_code" column="prod_code" />
-		<result property="wh_code" column="wh_code"/>
-		<result property="wh_name" column="wh_name"/>
-		<result property="wh_dv" column="wh_dv"/>
-		<result property="wh_addr" column="wh_addr"/>
-		<result property="wh_tel" column="wh_tel"/>
-		<result property="wh_use" column="wh_use"/>
-		<result property="wh_note" column="wh_note"/>
-	
-	<collection property="raw" ofType="com.sm.domain.RawMaterialVO">
-		<result property="raw_name" column="raw_name" />
-	</collection>
-	
-	<collection property="prod" ofType="com.sm.domain.ProductVO">
-		<result property="prod_name" column="prod_name" />
-	</collection>
-	</resultMap>	
 	
 	<select id="searchWhTotalCnt" resultType="int" 
-					resultMap="whm_SearchPageTotalCnt" >
+					parameterType="hashMap" >
 		SELECT count(*) FROM warehouse
 		<where>
-<!-- 			<if test="wh_code != null and !wh_code.isEmpty()"> -->
-<!-- 				wh_code LIKE CONCAT('%', #{wh_code}, '%') -->
-<!-- 			</if>		 -->
-<!-- 			<if test="prod_code != null and !prod_code.isEmpty()"> -->
-<!-- 				prod_code LIKE CONCAT('%', #{prod_code}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="raw_code != null and !raw_code.isEmpty()"> -->
-<!-- 				raw_code LIKE CONCAT('%', #{raw_code}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="wh_name != null and !wh_name.isEmpty()"> -->
-<!-- 				AND wh_name LIKE CONCAT('%', #{wh_name}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="wh_use != 3"> -->
-<!-- 				AND wh_use = #{wh_use} -->
-<!-- 			</if> -->
-						<if test="wh_code != ''">
-				wh_code LIKE concat('%', #{wh_code}, '%');
+			<if test="wh_code != null and wh_code != ''">
+				wh_code LIKE concat('%', #{wh_code}, '%') 
 			</if>
-			<if test="prod_code != ''">
-				AND prod_code LIKE concat('%', #{prod_code}, '%');
+			<if test="(prod_code != null and prod_code != '') or (raw_code != null and raw_code != '')">
+				AND prod_code LIKE concat('%', #{prod_code}, '%') 
+				OR raw_code LIKE concat('%', #{raw_code}, '%') 
 			</if>
-			<if test="raw_code != ''">
-				AND raw_code LIKE concat('%', #{raw_code}, '%');
-			</if>
-			<if test="wh_name != ''">
-				AND wh_name LIKE concat('%', #{wh_name}, '%');
+			<if test="wh_addr != null and wh_addr != ''">
+				AND wh_addr LIKE concat('%', #{wh_addr}, '%') 
 			</if>
 			<if test="wh_use != 3">
-				AND wh_use = #{wh_use};
-			</if>
+				AND wh_use = #{wh_use} 
+			</if> 
 		</where>
 	</select>
 	<!-- 창고 검색시 총 글 개수 -->	
