@@ -54,17 +54,17 @@
 		
 		SELECT * FROM work_order 
 		<where>
-			<if test="line_code!=null and !line_code.isEmpty()">
-				line_code=#{line_code} 
+			<if test="search_line!=null and !search_line.isEmpty()">
+				line_code=#{search_line} 
 			</if> 
-			<if test="(from_date!=null and !from_date.equals('')) and (to_date!=null and !to_date.equals(''))">
-				AND (work_date &gt;= #{from_date} AND work_date &lt;= #{to_date}) 
+			<if test="(search_fromDate!=null and !search_fromDate.equals('')) and (search_toDate!=null and !search_toDate.equals(''))">
+				AND (work_date &gt;= #{search_fromDate} AND work_date &lt;= #{search_toDate}) 
 			</if> 
-			<if test="work_state!=null and !work_state.isEmpty() and !work_state.equals('전체')">
-				AND work_state=#{work_state} 
+			<if test="search_state!=null and !search_state.isEmpty() and !search_state.equals('전체')">
+				AND work_state=#{search_state} 
 			</if> 
-			<if test="prod_code!=null and !prod_code.isEmpty()">
-				AND prod_code=#{prod_code} 
+			<if test="search_prod!=null and !search_prod.isEmpty()">
+				AND prod_code=#{search_prod} 
 			</if> 
 		</where>
 		LIMIT #{startPage}, #{pageSize}
@@ -72,20 +72,20 @@
 	<!-- 작업지시 검색 -->
 	
 	<!-- 작업지시 검색 개수 -->
-	<select id="searchWorkOrderCnt" resultType="int">
+	<select id="searchWorkOrderCnt" parameterType="hashMap" resultType="int">
 		SELECT count(*) FROM work_order 
 		<where>
-			<if test="line_code!=null and !line_code.isEmpty()">
-				line_code=#{line_code} 
+			<if test="search_line!=null and !search_line.isEmpty()">
+				line_code=#{search_line} 
 			</if> 
-			<if test="(from_date!=null and !from_date.equals('')) and (to_date!=null and !to_date.equals(''))">
-				AND (work_date &gt;= #{from_date} AND work_date &lt;= #{to_date}) 
+			<if test="(search_fromDate!=null and !search_fromDate.equals('')) and (search_toDate!=null and !search_toDate.equals(''))">
+				AND (work_date &gt;= #{search_fromDate} AND work_date &lt;= #{search_toDate}) 
 			</if> 
-			<if test="work_state!=null and !work_state.isEmpty() and !work_state.equals('전체')">
-				AND work_state=#{work_state} 
+			<if test="search_state!=null and !search_state.isEmpty() and !search_state.equals('전체')">
+				AND work_state=#{search_state} 
 			</if> 
-			<if test="prod_code!=null and !prod_code.isEmpty()">
-				AND prod_code=#{prod_code} 
+			<if test="search_prod!=null and !search_prod.isEmpty()">
+				AND prod_code=#{search_prod} 
 			</if> 
 		</where>
 	</select>

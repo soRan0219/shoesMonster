@@ -49,6 +49,8 @@ public class MainController {
 			return "redirect:/smmain/smLogin";
 		}
 	}
+	
+	// http://localhost:8088/smmain/smMain
 	// 메인페이지
 	@RequestMapping(value = "/smMain", method = RequestMethod.GET)
 	public void mainGET() {

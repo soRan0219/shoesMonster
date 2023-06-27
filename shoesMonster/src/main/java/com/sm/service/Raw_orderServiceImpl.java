@@ -38,12 +38,24 @@ public class Raw_orderServiceImpl implements Raw_orderService{
 	@Override
 	public void roInsert(Raw_orderVO vo) throws Exception {
 		rodao.roInsert(vo);
+  }
+  
+  @Override
+	public int count1(Raw_orderVO rvo) throws Exception {
+		
+		return rodao.count1(rvo);
 	}
 
 
 	@Override
 	public List<Raw_orderVO> getDetail() throws Exception {
 		return rodao.getDetail();
+  }
+  
+  @Override
+	public List<Raw_orderVO> getRaw_order(int startRow, int pageSize, Raw_orderVO rvo) throws Exception {
+		
+		return rodao.Raw_order(startRow, pageSize, rvo);
 	}
  
 	

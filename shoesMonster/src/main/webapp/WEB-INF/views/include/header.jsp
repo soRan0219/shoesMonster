@@ -14,10 +14,6 @@
 
 <title>Shoes Monster!</title>
 
-<script type="text/javascript">
-	function noBack(){window.history.forward();}
-</script>
-
 <!-- Bootstrap -->
 <link href="../resources/vendors/bootstrap/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -58,7 +54,7 @@
 					<!-- menu profile quick info -->
 					<div class="profile clearfix">
 						<div class="profile_pic">
-							<img src="images/hong1.jpg" alt="..."
+							<img src="../include/images/hong1.jpg" alt="..."
 								class="img-circle profile_img">
 						</div>
 						<div class="profile_info">
@@ -78,16 +74,16 @@
 								<li><a><i class="fa fa-home"></i> 기준정보 관리 <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="../">소요량 관리</a></li>
+										<li><a href="">소요량 관리</a></li>
 										<li><a href="../performance/product">품목 관리</a></li>
-										<li><a href="">원자재 관리</a></li>
+										<li><a href="../performance/rawMaterial">원자재 관리</a></li>
 										<li><a href="../performance/line">라인 관리</a></li>
 									</ul></li>
 								<li><a><i class="fa fa-desktop"></i> 생산 관리 <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<li><a href="../workorder/workOrderList">작업지시 관리</a></li>
-										<li><a href="">생산실적 관리</a></li>
+										<li><a href="../performance/performList">생산실적 관리</a></li>
 										<li><a href="">생산실적 현황</a></li>
 									</ul></li>
 								<li><a><i class="fa fa-table"></i> 자재관리 <span

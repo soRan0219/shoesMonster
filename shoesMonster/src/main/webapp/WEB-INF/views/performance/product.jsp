@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ include file="../include/header.jsp"%>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
     	
 	function popUp() {
@@ -15,6 +12,10 @@
 		var urlParams = new URLSearchParams(queryString);
 		
 		var isPop = urlParams.get("input");
+		
+		if(isPop==="null") {
+			isPop = null;
+		}
 		
 		$('#pagination a').each(function(){
 			
@@ -45,7 +46,7 @@
          	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
         		
     	} else {
-    		alert("null");
+    		console.log("팝업아님");
     	} //if(팝업으로 열었을 때)
     		
 	} //popUp()
@@ -186,9 +187,9 @@
             
         });
     </script>
-
-</head>
-<body>
+    
+<!-- page content -->
+<div class="right_col" role="main">
 
 	<h1>product</h1>
 	
@@ -207,7 +208,6 @@
         	<label>품목 단위:</label>
         	<input type="text" name="prod_unit" id="searchUnit">
         	<input type="submit" value="검색">
-        	<input type="button" value="검색" id="filterButton">
 		</fieldset>
 	</form>
 	
@@ -270,8 +270,8 @@
 			<a href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&prod_unit=${vo.prod_unit }">&gt;</a>
 		</c:if>
 	</div>
+	
+</div>
+<!-- /page content -->
 
-
-
-</body>
-</html>
+<%@ include file="../include/footer.jsp"%>

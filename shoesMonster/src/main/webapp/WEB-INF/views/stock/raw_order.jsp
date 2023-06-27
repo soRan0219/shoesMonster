@@ -3,11 +3,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>슈몬 발주</title>
+
+<%@ include file="../include/header.jsp"%>
+
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		
@@ -45,6 +43,11 @@
 		}
 		
 	</script>
+<<<<<<< HEAD
+	
+<!-- page content -->
+<div class="right_col" role="main">
+=======
 </head>
 <body>
 
@@ -73,6 +76,7 @@
 	};
 </script>
 
+>>>>>>> branch 'develop' of https://github.com/eon2258/shoesMonster.git
 	
 	<%
 // 		String emp_id = (String)session.getAttribute("emp_id");
@@ -92,17 +96,14 @@
     </div>
 
     <hr>
-    
-    <!-- ============================ 발주 현황 ============================ -->
-    <div id="list">
-    
-    <h1>발주 관리</h1>
-    <form action="">
-	    발주 번호 <input type="text" placeholder="발주 번호를 입력하세요">
-	   	품명 <input type="text" placeholder="품명을 입력하세요">
-	   	거래처명 <input type="text" placeholder="거래처명을 입력하세요"> <br>
-	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18">
-	   	<button type="submit">검색</button>
+
+    <form action="" method="get">
+	    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
+	   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
+	   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> <br>
+<!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
+	   	<input type="submit" value="검색"></input>
+
     </form>
     
     <table border="1">
@@ -196,8 +197,14 @@
 	
 	로그인 아이디 : ${emp_id }
 	
+<<<<<<< HEAD
+	
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>
+=======
 	</div>
 	<!-- ============================ 발주 등록 ============================ -->
+>>>>>>> branch 'develop' of https://github.com/eon2258/shoesMonster.git
 
-</body>
-</html>
+

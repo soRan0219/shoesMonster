@@ -61,21 +61,10 @@ public interface PerformanceDAO {
 	public List<LineVO> getLineList() throws Exception;
 
 	// 라인 조회(페이징처리) - getLineListPage
-//	public List<LineVO> getLineListPage(Integer page) throws Exception;
-
 	public List<LineVO> getLineListPage(LineWhPageVO vo) throws Exception;
-
-	// 라인 검색 - getSearchLine
-	public List<LineVO> getSearchLine(LineVO lvo) throws Exception;
-
-//	// 라인 검색(페이징처리)
-//	public List<LineVO> getSearchLinePage(LineWhPageVO vo) throws Exception;
-
-	// 라인 검색(페이징처리) ++ 도전
+	
+	// 라인 검색(페이징처리)
 	public List<LineVO> getSearchLinePage(LineWhPageVO vo, LineVO lvo) throws Exception;
-
-//	// 라인 검색(페이징처리) ++ 도전 두번째
-//	public List<LineVO> getSearchLinePage(LineVO lvo) throws Exception;
 
 	// 총 글 개수 계산
 	public int getTotalCount() throws Exception;
@@ -85,25 +74,29 @@ public interface PerformanceDAO {
 
 	// ================창고==========================
 
-	// 창고 조회 - R
-	public List<WarehouseVO> readWhList() throws Exception;
-
-	// 창고 조회 처리
-	public List<Wh_prodVO> readWh_prodList() throws Exception;
-
-	// 창고 조회 처리 (페이징처리)
-//	public List<Wh_prodVO> getWh_prodListPage(LineWhPageVO vo) throws Exception;
+	// 창고 목록 조회 + 페이징처리
 	public List<WarehouseVO> getWh_prodListPage(LineWhPageVO vo) throws Exception;
 
 	// 창고 조회 총 게시판 글 개수 계산
 	public int getWh_TotalCount() throws Exception;
 
-	// 창고 검색
-	public List<WarehouseVO> searchWarehouse(HashMap<String, Object> search) throws Exception;
+	// 창고 검색 + 페이징처리
+	public List<WarehouseVO> searchWarehousePage(LineWhPageVO vo, Wh_prodVO wvo) throws Exception;
+	
+	// 검색시 총 글 개수 계산
+	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception;
 
 	// ==========================================================================
 
 	// 생산실적 목록
 	public List<PerformanceVO> readAllPerf() throws Exception;
-
+	
+	//생산실적 등록
+	public void createPerformance(PerformanceVO vo) throws Exception;
+	
+	//생산실적 삭제
+	public void deletePerformance(List<String> checked) throws Exception;
+	
+	
+	
 }

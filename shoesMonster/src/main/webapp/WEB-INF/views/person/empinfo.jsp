@@ -2,9 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%@ include file="../include/header.jsp"%>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
 
 <script>
  
@@ -42,72 +42,75 @@
  
 </script>
 
+<!-- page content -->
+<div class="right_col" role="main">
 
-<h2>사원 관리</h2>
+
+	<h2>사원 관리</h2>
 
 
-<label>사원 번호</label>
-	<input type="text" id="searchCode" placeholder=" ( 10자리 )">
-<label>사원 명</label>
-	<input type="text" id="searchName" placeholder="">
-<label>부서</label>
-	<input type="text" id="searchdepartment" placeholder="">
+	<label>사원 번호</label> <input type="text" id="searchCode"
+		placeholder=" ( 10자리 )"> <label>사원 명</label> <input
+		type="text" id="searchName" placeholder=""> <label>부서</label>
+	<input type="text" id="searchdepartment" placeholder=""> <input
+		type="button" id="searchButton" value="조회"> <br>
+	<br>
 
-<input type="button" id="searchButton" value="조회">
+	<table border="1" id="lineTable">
+		<thead>
+			<tr>
+				<th></th>
+				<th>사원번호</th>
+				<th>사원명</th>
+				<th>부서</th>
+				<th>직책</th>
+				<th>이메일</th>
+				<th>전화번호</th>
+				<th>입사일자</th>
+				<th>재직구분</th>
+				<th></th>
+			</tr>
+		</thead>
 
-<br><br>
+		<c:forEach var="vo" items="${empList }" varStatus="i">
+			<tr>
+				<td>${i.count}</td>
+				<td>${vo.emp_id}</td>
+				<td>${vo.emp_name}</td>
+				<td>${vo.emp_department}</td>
+				<td>${vo.emp_position}</td>
+				<td>${vo.emp_email}</td>
+				<td>${vo.emp_phone}</td>
+				<td>${vo.emp_hiredate}</td>
+				<td>${vo.emp_work}</td>
+				<td>
+					<button class="details-btn" data-id="${emp_id }">상세보기</button>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
 
-<table border="1" id="lineTable">
-	<thead>
-		<tr>
-			<th></th>
-			<th>사원번호</th>
-			<th>사원명</th>
-			<th>부서</th>
-			<th>직책</th>
-			<th>이메일</th>
-			<th>전화번호</th>
-			<th>입사일자</th>
-			<th>재직구분</th>
-			<th></th>
-		</tr>
-	</thead>
+	<br>
+	<br>
 
-	<c:forEach var="vo" items="${empList }" varStatus="i">
-		<tr>
-			<td>${i.count}</td>
-			<td>${vo.emp_id}</td>
-			<td>${vo.emp_name}</td>
-			<td>${vo.emp_department}</td>
-			<td>${vo.emp_position}</td>
-			<td>${vo.emp_email}</td>
-			<td>${vo.emp_phone}</td>
-			<td>${vo.emp_hiredate}</td>
-			<td>${vo.emp_work}</td>
-			<td>
-				<button class="details-btn" data-id="${emp_id }">상세보기</button>
-			</td>
-		</tr>
-	</c:forEach>
-</table>
+	<div id="employees-details"></div>
 
-<br><br>
-
-<div id="employees-details">
-	
-</div>
-
-<script>
-	$(document).ready(function() {
-		$('.details-btn').click(function() {
-			var employeeId = $(this).data('id');
-			$.ajax({
-				url : '/employee/' + employeeId,
-				type : 'GET',
-				success : function(response) {
-					$('#employee-details').html(response);
-				}
+	<script>
+		$(document).ready(function() {
+			$('.details-btn').click(function() {
+				var employeeId = $(this).data('id');
+				$.ajax({
+					url : '/employee/' + employeeId,
+					type : 'GET',
+					success : function(response) {
+						$('#employee-details').html(response);
+					}
+				});
 			});
 		});
-	});
-</script>
+	</script>
+
+
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>

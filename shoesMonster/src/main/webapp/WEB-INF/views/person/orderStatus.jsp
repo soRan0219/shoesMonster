@@ -1,20 +1,67 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+<%@ include file="../include/header.jsp"%>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <script type="text/javascript">
 
+function popUp() {
+	var queryString = window.location.search;
+	var urlParams = new URLSearchParams(queryString);
+	
+	var isPop = urlParams.get("input");
+	
+	if(isPop==="null") {
+		isPop = null;
+	}
+	
+	
+	// vvvvvvvvvvvvvvvvvv 페이징 완료하면 주석 풀기 ~~ vvvvvvvvvvvvvvvvvvvvv
+// 	$('#pagination a').each(function(){
+		
+//    		var prHref = $(this).attr("href");
+   		
+//    		var newHref = prHref + "&input=" + isPop;
+//    			$(this).attr("href", newHref);
+			
+// 	}); //페이징 요소
+
+
+			
+	$('#input').val(isPop);
+			
+		if(isPop) {
+    		
+//     	$('#addButton').hide();
+//     	$('#modify').hide();
+//     	$('#delete').hide();
+//     	$('#save').hide();
+    		
+   		$('table tr:not(:first-child)').click(function(){
+   			$(this).css('background', '#ccc');
+    			
+   			var orderCode = $(this).find('#orderCode').text();
+     			
+ 			$('#'+isPop, opener.document).val(orderCode);
+     			
+     		window.close();
+     	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+    		
+	} else {
+		console.log("팝업아님");
+	} //if(팝업으로 열었을 때)
+		
+} //popUp()
+
 $(function(){
 	
-
+	popUp();
+	
 // ========================================= 검색 ===================================================
 	// 수주 일자 이날부터
 	$('#order_date_fromDate').datepicker({
@@ -97,29 +144,28 @@ $(function(){
 });
 </script>
 
-</head>
-<body>
-
-	
+<!-- page content -->
+<div class="right_col" role="main">
 
 	<h1>수주 현황</h1>
 	
 	<form action="" method="get">
-	업체 <input type="text" name="client_code">
-	수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
-			  <input type="text" name="order_date_toDate" id="order_date_toDate">
-	품번 <input type="text" name="prod_code">
-	<input type="submit" value="조회">
-	<br>
-	담당자 <input type="text" name="emp_id">
-	납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate">
-			    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
-	출하완료여부 
-	<select name="order_finish">
-		<option selected value= "전체">전체</option>
-		<option value="Y">Y</option>
-		<option value="N">N</option>
-	</select>
+		<input type="hidden" name="input" id="input" value="${input }">
+		업체 <input type="text" name="client_code">
+		수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
+				  <input type="text" name="order_date_toDate" id="order_date_toDate">
+		품번 <input type="text" name="prod_code">
+		<input type="submit" value="조회">
+		<br>
+		담당자 <input type="text" name="emp_id">
+		납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate">
+				    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
+		출하완료여부 
+		<select name="order_finish">
+			<option selected value= "전체">전체</option>
+			<option value="Y">Y</option>
+			<option value="N">N</option>
+		</select>
 	</form>
 	
 	
@@ -142,7 +188,7 @@ $(function(){
 			<c:if test="${vo.orders.order_finish == '전체' }">
 				<tr>
 					<td>${i.count }</td>
-					<td>${vo.orders.order_code}</td>
+					<td id="orderCode">${vo.orders.order_code}</td>
 					<td>${vo.orders.client_code}</td>
 					<td>${vo.orders.order_date}</td>
 					<td>${vo.orders.emp_id}</td>
@@ -189,5 +235,7 @@ $(function(){
 		</c:forEach>
 	</table>
 	
-</body>
-</html>
+</div>
+<!-- /page content -->
+<%@ include file="../include/footer.jsp"%>
+
