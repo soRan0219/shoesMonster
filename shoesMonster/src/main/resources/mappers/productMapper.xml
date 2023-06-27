@@ -526,10 +526,68 @@
 		p.perform_defect, p.defect_note, p.perform_note
 		FROM performance p JOIN
 		work_order w
-		ON p.work_code = w.work_code
+		ON p.work_code = w.work_code 
+		LIMIT #{startPage},#{pageSize}
 	</select>
 	<!-- 생산실적 목록 -->
-
+	
+	<!-- 생산실적 전체 수 -->
+	<select id="getTotalPerf" resultType="int">
+		SELECT count(*) FROM performance
+	</select>
+	<!-- 생산실적 전체 수 -->
+	
+	<!-- 생산실적 검색 -->
+	<select id="performSearchList" resultMap="perfList" parameterType="hashMap" resultType="PerformanceVO">
+		SELECT p.perform_code, p.work_code, w.line_code,
+		w.prod_code, p.perform_date,
+		p.perform_qt, p.perform_fair,
+		p.perform_defect, p.defect_note, p.perform_note
+		FROM performance p JOIN
+		work_order w
+		ON p.work_code = w.work_code 
+		<where>
+			<if test="search_work_code!=null and !search_work_code.isEmpty()">
+				p.work_code=#{search_work_code} 
+			</if>
+			<if test="(search_fromDate!=null and !search_fromDate.isEmpty()) and (search_toDate!=null and !search_toDate.isEmpty())">
+				AND (p.perform_date &gt;= #{search_fromDate} AND p.perform_date &lt;= #{search_toDate}) 
+			</if>
+			<if test="search_line_code!=null and !search_line_code.isEmpty()">
+				AND w.line_code=#{search_line_code} 
+			</if>
+			<if test="search_prod_code!=null and !search_prod_code.isEmpty()">
+				AND w.prod_code=#{search_prod_code} 
+			</if>
+		</where>
+		LIMIT #{startPage},#{pageSize}
+	</select>
+	<!-- 생산실적 검색 -->
+	
+	<!-- 생산실적 검색 수 -->
+	<select id="getSearchPerf" parameterType="hashMap" resultType="int">
+		SELECT count(*) 
+		FROM performance p JOIN work_order w 
+		ON p.work_code = w.work_code 
+		<where>
+			<if test="search_work_code!=null and !search_work_code.isEmpty()">
+				p.work_code=#{search_work_code} 
+			</if>
+			<if test="(search_fromDate!=null and !search_fromDate.isEmpty()) and (search_toDate!=null and !search_toDate.isEmpty())">
+				AND (p.perform_date &gt;= #{search_fromDate} AND p.perform_date &lt;= #{search_toDate}) 
+			</if>
+			<if test="search_line_code!=null and !search_line_code.isEmpty()">
+				AND w.line_code=#{search_line_code} 
+			</if>
+			<if test="search_prod_code!=null and !search_prod_code.isEmpty()">
+				AND w.prod_code=#{search_prod_code} 
+			</if>
+		</where>
+	</select>
+	<!-- 생산실적 검색 수 -->
+	
+	
+	
 	<!-- 생산실적 등록 -->
 	<insert id="insertPerform">
 		INSERT INTO performance

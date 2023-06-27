@@ -4,8 +4,7 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 
 <script type="text/javascript">
 	
@@ -432,14 +431,17 @@
 	<h1> /performance/performList </h1>
 	
 	<div>
-		<fieldset>
-			작업지시코드: <input type="text" id="search_work_code" name="search_work_code">
-			실적일: 
-			<input type="text" id="search_fromDate" name="search_fromDate"> ~ 
-			<input type="text" id="search_toDate" name="search_toDate"> <br>
-			라인코드: <input type="text" id="search_line_code" name="search_line_code">
-			품번: <input type="text" id="search_prod_code" name="search_prod_code">
-		</fieldset>
+		<form method="get">
+			<fieldset>
+				작업지시코드: <input type="text" id="search_work_code" name="search_work_code">
+				실적일: 
+				<input type="text" id="search_fromDate" name="search_fromDate"> ~ 
+				<input type="text" id="search_toDate" name="search_toDate"> <br>
+				라인코드: <input type="text" id="search_line_code" name="search_line_code">
+				품번: <input type="text" id="search_prod_code" name="search_prod_code">
+				<input type="submit" value="조회">
+			</fieldset>
+		</form>
 	</div>
 		
 	<br><br><br>
@@ -492,6 +494,26 @@
 	</form>
 	
 	
+	<br><br><br>
+	
+	
+	<div id="pagination">
+		<c:if test="${pm.prev }">
+			<a href="/performance/performList?page=${pm.startPage - 1 }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}"> ⏪ </a>
+		</c:if>
+		
+		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+			<a href="/performance/performList?page=${page }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}">${page }</a>
+		</c:forEach>
+	
+		<c:if test="${pm.next }">
+			<a href="/performance/performList?page=${pm.endPage + 1 }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}"> ⏩ </a>
+		</c:if>
+	</div>
+	
+	
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

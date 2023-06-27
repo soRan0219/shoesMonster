@@ -107,8 +107,17 @@ public interface PerformanceService {
 	// ==========================================================================
 
 	// 생산실적 목록
-	public List<PerformanceVO> getAllPerf() throws Exception;
-
+	public List<PerformanceVO> getPerfList(LineWhPageVO pvo) throws Exception;
+	
+	//생산실적 검색
+	public List<PerformanceVO> getPerfList(HashMap<String,Object> search) throws Exception;
+	
+	//생산실적 전체 수
+	public int getPerfCnt() throws Exception;
+	
+	//생산실적 검색 수
+	public int getPerfCnt(HashMap<String,Object> search) throws Exception;
+	
 	// 생산실적 등록
 	public void regPerformance(PerformanceVO vo) throws Exception;
 
@@ -120,6 +129,6 @@ public interface PerformanceService {
 	
 	//생산실적 수정
 	public void modifyPerformance(PerformanceVO uvo) throws Exception;
-
-
+	
+	
 }

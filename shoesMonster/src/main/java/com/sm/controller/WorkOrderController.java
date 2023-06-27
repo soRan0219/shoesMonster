@@ -186,49 +186,6 @@ public class WorkOrderController {
 		return "redirect:/workorder/workOrderList";
 	} //modifyWorkOrder()
 	
-	//작업지시 검색
-	@ResponseBody
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public HashMap<String, Object> searchWorkOrder(@RequestBody HashMap<String, Object> search, LineWhPageVO pvo) throws Exception {
-		logger.debug("@@@@@ CONTROLLER: searchWorkOrder() 호출");
-		
-		for(String key : search.keySet()) {
-			if(search.get(key)==null) {
-				search.replace(key, "");
-			}
-		}
-		logger.debug("@@@@@ CONTROLLER: 조회할 정보 - " + search);
-		logger.debug("@@@@@ CONTROLLER: 페이지 정보 page = " + search.get("page"));
-		logger.debug("@@@@@ CONTROLLER: 페이지 정보 pageSize = " + search.get("pageSize"));
-		
-		pvo.setPage((int)search.get("page"));
-		pvo.setPageSize((int)search.get("pageSize"));
-		
-		logger.debug("@@@@@ CONTROLLER: 페이지 정보 pvo = " + pvo);
-		
-		//페이징 하단부 정보
-		LineWhPageMaker pm = new LineWhPageMaker();
-		pm.setLwPageVO(pvo);
-		pm.setPageBlock(2);
-		pm.setTotalCount(wService.getSearchWorkOrder(search));
-		
-		logger.debug("@@@@@ CONTROLLER: 검색 결과 수 = " + wService.getSearchWorkOrder(search));
-		
-		search.put("startPage", pvo.getStartPage());
-		search.put("pageSize", pvo.getPageSize());
-		
-		//서비스 - 작업지시 검색
-		List<WorkOrderVO> searchList = wService.searchWorkOrder(search);
-		logger.debug("@@@@@ CONTROLLER: 검색결과list = " + searchList);
-		
-		HashMap<String, Object> searchMap = new HashMap<>();
-		searchMap.put("searchList", searchList);
-		searchMap.put("pm", pm);
-		
-		return searchMap;
-	} //searchWorkOrder()
-	
-	
 	
 	
 } //WorkOrderController

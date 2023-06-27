@@ -347,10 +347,10 @@ public class PerformanceImpl implements PerformanceDAO {
 	// ==========================================================================
 
 	@Override
-	public List<PerformanceVO> readAllPerf() throws Exception {
+	public List<PerformanceVO> readPerfList(LineWhPageVO pvo) throws Exception {
 		logger.debug("##### DAO: readAllPerf() 호출");
 
-		return sqlSession.selectList(NAMESPACE + ".performList");
+		return sqlSession.selectList(NAMESPACE + ".performList", pvo);
 	} // readAllPerf()
 
 	@Override
@@ -387,6 +387,25 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		logger.debug("##### DAO: update 결과 ===> " + result);
 	} //updatePerformance()
+
+	@Override
+	public int getPerfCnt() throws Exception {
+		logger.debug("##### DAO: getTotalPerf() 호출");
+		
+		return sqlSession.selectOne(NAMESPACE + ".getTotalPerf");
+	} //getTotalPerf()
+
+	@Override
+	public List<PerformanceVO> readPerfList(HashMap<String, Object> search) throws Exception {
+		logger.debug("##### DAO: readPerfList(search) 호출");
+		return sqlSession.selectList(NAMESPACE + ".performSearchList", search);
+	} //readPerfList(search)
+
+	@Override
+	public int getPerfCnt(HashMap<String, Object> search) throws Exception {
+		logger.debug("##### DAO: getPerfCnt(search) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".getSearchPerf", search);
+	} //getPerfCnt(search)
 
 	
 

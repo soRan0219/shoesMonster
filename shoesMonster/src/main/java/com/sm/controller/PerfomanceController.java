@@ -403,32 +403,89 @@ public class PerfomanceController {
 
 	// ======== 창고 - /warehouse ===========================
 
+	
+	
 	//// ************************* 생산실적 ************************* ////
-
+	// 생산실적 목록
 	// http://localhost:8088/performance/performList
 	@RequestMapping(value = "/performList", method = RequestMethod.GET)
-	public void performanceList(Model model) throws Exception {
+	public void performanceList(LineWhPageVO pvo,
+								@RequestParam HashMap<String, Object> search,
+								Model model) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: performanceList() 호출");
-
-		// 서비스 - 실적목록
-		List<PerformanceVO> perfList = service.getAllPerf();
+		
+		//페이지 정보
+		pvo.setPageSize(2);
+		
+		//페이징 하단부 정보
+		LineWhPageMaker pm = new LineWhPageMaker();
+		pm.setLwPageVO(pvo);
+		pm.setPageBlock(2);
+		
+		List<PerformanceVO> perfList = new ArrayList<>();
+		
+		//검색 있을 때
+		if((search.get("search_work_code")!=null && search.get("search_work_code").equals("")) || 
+				(search.get("search_fromDate")!=null && search.get("search_fromDate").equals("")) || 
+				(search.get("search_toDate")!=null && search.get("search_toDate").equals("")) ||
+				(search.get("search_line_code")!=null && search.get("search_line_code").equals("")) ||
+				(search.get("search_prod_code")!=null && search.get("search_prod_code").equals(""))) {
+			
+			logger.debug("@@@@@ CONTROLLER: 검색 service 호출");
+			
+			search.put("startPage", pvo.getStartPage());
+			search.put("pageSize", pvo.getPageSize());
+			
+			//서비스 - 생산실적관리 검색, 개수
+			perfList = service.getPerfList(search);
+			logger.debug("@@@@@ CONTROLLER: 검색 list = " + perfList);
+			logger.debug("@@@@@ CONTROLLER: 검색 결과 수 = " + service.getPerfCnt(search));
+			pm.setTotalCount(service.getPerfCnt(search));
+			
+			logger.debug("@@@@@ CONTROLLER: 페이징정보 ====> " + pvo + ", " + pm);
+			
+			model.addAttribute("search", search);
+			model.addAttribute("perfList", perfList);
+			model.addAttribute("pm", pm);
+			
+		} 
+		//검색 없을 때
+		else {
+			logger.debug("@@@@@ CONTROLLER: 목록 service 호출");
+			
+			// 서비스 - 생산실적목록
+			perfList = service.getPerfList(pvo);
+			
+			//페이징정보 - 전체 수
+			pm.setTotalCount(service.getPerfCnt());
+			
+			logger.debug("@@@@@ CONTROLLER: 페이징정보 ====> " + pvo + ", " + pm);
+			
+			model.addAttribute("perfList", perfList);
+			model.addAttribute("pm", pm);
+		}
+		
 		logger.debug("@@@@@ CONTROLLER: perfList = " + perfList);
 
 		model.addAttribute("perfList", perfList);
 	} // performanceList()
 
-	// 작업지시 검색
+	// 작업지시, 라인, 품번 검색
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String workOrderGET(Model model, @RequestParam("type") String type, @RequestParam("input") String input,
 			PagingVO pvo) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: workOrderGET() 호출");
 		logger.debug("@@@@@ CONTROLLER: type = " + type);
 
-		
 		if(type.equals("work")) {
 			String state = URLEncoder.encode("마감", "UTF-8");
 			return "redirect:/workorder/workOrderList?input=" + input + "&search_state=" + state;
-
+		}
+		if(type.equals("line")) {
+			return "redirect:/performance/line?input=" + input;
+		}
+		if(type.equals("prod")) {
+			return "redirect:/performance/product?input=" + input;
 		}
 		return "";
 	} // workOrderGET()
