@@ -12,12 +12,12 @@
 	
 	function select(row) {
 		
-		var clientName = row.cells[0].innerText;
-		var rawCode = row.cells[1].innerText;
-        var rawName = row.cells[2].innerText;
-        var rawColor = row.cells[3].innerText;
-        var stockCount = row.cells[4].innerText;
-        var rawPrice = row.cells[5].innerText;
+		var clientName = row.cells[1].innerText;
+		var rawCode = row.cells[2].innerText;
+        var rawName = row.cells[3].innerText;
+        var rawColor = row.cells[4].innerText;
+        var stockCount = row.cells[5].innerText;
+        var rawPrice = row.cells[6].innerText;
 		
       	opener.document.getElementById("client_actname").value = clientName;
       	opener.document.getElementById("raw_code").value = rawCode;
@@ -37,6 +37,7 @@
 	<form method="get">
 	<table border="1">
 		<tr>
+			<th>거래처 코드</th>
 			<th>거래처명</th>
 			<th>품번</th>
 			<th>품명</th>
@@ -46,12 +47,13 @@
 		</tr>
 		<c:forEach var="ro" items="${roPopup }">
 			<tr onclick = "select(this);">
+				<td>${ro.clients.client_code }</td>
 				<td>${ro.clients.client_actname }</td>
 				<td>${ro.rawMaterial.raw_code }</td>
 				<td>${ro.rawMaterial.raw_name }</td>
 				<td>${ro.rawMaterial.raw_color }</td>
-				<td>${ro.stock.stock_raw_count }</td>
-				<td><fmt:formatNumber value=" ${ro.rawMaterial.raw_price }"/></td>
+				<td style="color: ${ro.stock.stock_raw_count <= 20 ? 'red' : 'inherit'}">${ro.stock.stock_raw_count}</td>
+				<td><fmt:formatNumber value=" ${ro.rawMaterial.raw_price }"/>원</td>
 			</tr>
 		</c:forEach>
 	</table>

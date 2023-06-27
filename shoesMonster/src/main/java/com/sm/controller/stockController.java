@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sm.domain.ClientsVO;
 import com.sm.domain.In_materialVO;
@@ -101,7 +102,7 @@ public class stockController {
          int count1 = ro_service.count1();
          
          // 한 페이지에 출력할 게시물 개수
-         int pageSize = 1;
+         int pageSize = 10;
          
          String pageNum = request.getParameter("num");
          if(pageNum == null) {
@@ -114,7 +115,7 @@ public class stockController {
          
          // 페이징 처리 - 하단
  		 int pageCount = count1/pageSize + (count1%pageSize == 0? 0 : 1);
- 		 int pageBlock = 1;
+ 		 int pageBlock = 10;
 
  		 // 페이지 번호
  		 int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
@@ -129,23 +130,26 @@ public class stockController {
          model.addAttribute("startPage", startPage);
          model.addAttribute("endPage", endPage);
          model.addAttribute("pageBlock", pageBlock);
-         model.addAttribute("count1",count1);
-		}
-	}
+         model.addAttribute("count1", count1);
+         model.addAttribute("pageSize", pageSize);
+    }
+
 	// 발주 목록 + 페이징 처리 - 끝
 	// 발주 등록
 	@RequestMapping(value="/raw_order", method = RequestMethod.POST)
-	public String roRegist(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+	public String roRegist(Raw_orderVO vo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception {
 		
 		String emp_id = (String)session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
 		
 		request.setAttribute("emp_id", emp_id);
 		
+		ro_service.roInsert(vo);
+		rttr.addFlashAttribute("result", "roInsert");
 		
-		return "";
+		return "redirect:/stock/raw_order";
 	}
 	// 발주 등록
-	// 발주 팝업창(발주 정보 가져오기) - 시작
+	// 발주 등록 팝업창 - 시작
 	@RequestMapping(value = "/roPopup", method = RequestMethod.GET)
 	public void getClient(Model model) throws Exception {
 		
@@ -153,16 +157,19 @@ public class stockController {
 		
 		model.addAttribute("roPopup", roPopup);
 	}
-	// 발주 팝업창(발주 정보 가져오기) - 끝
-	
-    
-
-	
+	// 발주 등록 팝업창 - 끝
+	// 발주 거래처 상세 팝업
+	@RequestMapping(value = "/detailPopup", method = RequestMethod.GET)
+	public void getDetail(Model model, HttpServletRequest request) throws Exception {
+//		request.setAttribute("rawCode", rawCode);
+		
+	}
+	// 발주 거래처 상세 팝업
 	
 	// 입고 페이징
     
-  //http://localhost:8088/stock/In_material
-  //http://localhost:8080/stock/In_material
+    //http://localhost:8088/stock/In_material
+    //http://localhost:8080/stock/In_material
 	@RequestMapping(value = "/In_material", method = RequestMethod.GET)
 	public void In_matPage(HttpServletRequest request, Model model , In_materialVO ivo ) throws Exception {
 

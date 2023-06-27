@@ -11,16 +11,35 @@
 		
 		function roPopup() {
 			
-			window.open("roPopup","거래처 목록","width=500, height=500, left=300, top=150 location=no");
+			window.open("roPopup","거래처 목록","width=500, height=500, left=300, top=150, location=no");
+		}
 		
+		function detailPopup(rawCode) {
+			
+			window.open("detailPopup?rawCode=" + rawCode, "거래처 상세", "width=1000, height=500, left=200, top=150");
 		}
 		
 		function totalAmount() {
-			var rawOrderCount = parseInt(document.getElementById("raw_order_count").value);
-			var rawPrice = parseFloat(document.getElementById("raw_price").value);
-			var totalAmount = rawOrderCount * rawPrice;
+			
+			var roCount = parseInt(document.getElementById("raw_order_count").value);
+			var rawPriceInput = document.getElementById("raw_price").value;
+			var rawPrice = parseFloat(rawPriceInput.replace(/,/g, ""));
+			
+			var totalAmount = roCount * rawPrice;
+			
 			var fmtAmount = totalAmount.toLocaleString() + "원";
-		  	document.getElementById("total_amount").textContent = fmtAmount;
+			
+			document.getElementById("total_amount").textContent = fmtAmount;
+		}
+		
+		function check() {
+			if (document.getElementById("client_actname").value === "") {
+				alert("발주 항목을 선택해주세요.");
+				return false;
+			} else if (document.getElementById("raw_order_count").value === "") {
+				alert("발주 수량을 입력해주세요.");
+				return false;
+			}
 		}
 		
 	</script>
@@ -105,11 +124,11 @@
             <tr>
                 <td>${vo.raw_order_num}</td>
                 <td>${vo.clients.client_actname}</td>
-        		<td>${vo.rawMaterial.raw_code }</td>
+        		<td><input type="button" onclick="detailPopup('${vo.raw_code}')">${vo.raw_code }</td>
         		<td>${vo.rawMaterial.raw_name }</td>
         		<td>${vo.rawMaterial.raw_color }</td>
                 <td>${vo.raw_order_count}</td>
-                <td>${vo.stock.stock_raw_count}</td>
+	            <td>${vo.stock.stock_raw_count != null ? vo.stock.stock_raw_count : 0}</td>
         		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}"/>원</td>
         		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}"/>원</td>
                 <td>${vo.raw_order_date}</td>
@@ -120,7 +139,7 @@
    
     
 	<div>
-	    <c:if test="${count1 > 0 }">
+	    <c:if test="${count1 > 10 }">
 	    	<c:if test="${startPage > pageBlock }">
 	    		<span><a href="/stock/raw_order?num=${startPage - pageBlock}">이전</a></span>
 	    	</c:if>
@@ -129,7 +148,7 @@
 				<a href="/stock/raw_order?num=${i }">${i }</a>
 			</c:forEach>
 			
-			<c:if test="${endPage < count1 }">
+			<c:if test="${endPage*pageSize < count1 }">
 				<a href="/stock/raw_order?num=${startPage + pageBlock}">다음</a>
 			</c:if>
 	    </c:if>
@@ -141,8 +160,8 @@
 	<!-- ============================ 발주 등록 ============================ -->
 	<div id="regist">
 	
-	<form role="form" method="post">
-		<h1>발주 등록</h1>
+	<h1>발주 등록</h1>
+	<form action="" method="post" onsubmit="return check()">
 		<c:set var="today" value="<%=new Date() %>" />
 		
 		<table border="1" id="table">
@@ -159,12 +178,12 @@
 				<th>담당자</th> <!-- 발주번호처럼 '발주 신청' 버튼 눌렀을 때 저장하기 -->
 			</tr>
 			<tr>
-				<td><fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/></td>
-				<td onclick="roPopup();"><input type="text" name="client_actname" id="client_actname" readonly></td>
+				<td><input type="text" name="raw_order_date" value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>" readonly></td>
+				<td onclick="roPopup();"><input type="text" name="client_actname" id="client_actname" required readonly></td>
 				<td onclick="roPopup();"><input type="text" name="raw_code" id="raw_code" readonly></td>
 				<td onclick="roPopup();"><input type="text" name="raw_name" id="raw_name" readonly></td>
-				<td onclick="roPopup();"><input type="text" name="raw_color" id="raw_color" readonly></td>
-				<td><input type="number" min="1" id="raw_order_count" oninput="totalAmount()" required></td> <!-- CSS할 때 증감버튼 없애기 -->
+				<td><input type="text" name="raw_color" id="raw_color" readonly></td>
+				<td><input type="number" min="1" id="raw_order_count" name="raw_order_count" oninput="totalAmount()"></td> <!-- CSS할 때 증감버튼 없애기 -->
 				<td><input type="text" name="stock_raw_count" id="stock_raw_count" readonly></td>
 				<td><input type="text" name="raw_price" id="raw_price" readonly></td>
 				<td id="total_amount"></td>
@@ -176,8 +195,6 @@
 	</form>
 	
 	
-	
-	얼마 : ${raw_price*raw_order_count} <br>
 	로그인 아이디 : ${emp_id }
 	
 <<<<<<< HEAD
