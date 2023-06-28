@@ -85,6 +85,22 @@
 	</delete>
 	<!-- 품목관리 삭제 -->
 
+	<!-- 품목관리 조회 -->
+	<select id="readProdOne" resultType="ProductVO">
+		SELECT * FROM product WHERE
+		prod_code=#{prod_code}
+	</select>
+	<!-- 품목관리 조회 -->
+
+	<!-- 품목관리 수정 -->
+	<update id="updateProd">
+		UPDATE product
+		SET prod_code=#{prod_code},prod_name=#{prod_name},prod_category=#{prod_category},prod_unit=#{prod_unit},
+		prod_size=#{prod_size},prod_color=#{prod_color},client_code=#{client_code},prod_price=#{prod_price},prod_note=#{prod_note}
+		WHERE prod_code=#{prod_code}
+	</update>
+	<!-- 품목관리 수정 -->
+
 	<!-- //////////////////////////////////////////////////////////////// -->
 
 	<!-- 원자재관리 총 게시글 갯수 출력 -->
@@ -223,8 +239,10 @@
 		resultType="RequirementsVO">
 		SELECT r.*,p.prod_name ,rm.raw_name
 		FROM requirement r
-		join product p on p.prod_code = r.prod_code
-		JOIN raw_material rm on r.raw_code = rm.raw_code limit
+		join
+		product p on p.prod_code = r.prod_code
+		JOIN raw_material rm on
+		r.raw_code = rm.raw_code limit
 		#{start}, #{cntPerPage}
 	</select>
 	<!-- 소요량관리 목록 불러오기 -->
@@ -233,7 +251,8 @@
 	<select id="countSearchReq" parameterType="hashMap"
 		resultType="int">
 		SELECT COUNT(*) FROM requirement r
-		join product p on p.prod_code = r.prod_code
+		join product p on p.prod_code =
+		r.prod_code
 		JOIN raw_material rm on r.raw_code = rm.raw_code
 		<where>
 			<if test="req_code != ''">
@@ -254,8 +273,10 @@
 		resultMap="requirements" resultType="RequirementsVO">
 		SELECT r.*,p.prod_name ,rm.raw_name
 		FROM requirement r
-		join product p on p.prod_code = r.prod_code
-		JOIN raw_material rm on r.raw_code = rm.raw_code
+		join product p on
+		p.prod_code = r.prod_code
+		JOIN raw_material rm on r.raw_code =
+		rm.raw_code
 		<where>
 			<if test="req_code != ''">
 				r.req_code like concat ('%', #{req_code}, '%')
@@ -268,14 +289,14 @@
 			</if>
 		</where>
 		limit #{start},#{cntPerPage}
-		</select>
+	</select>
 	<!-- 소요량관리 검색리스트 불러오기 -->
 
 	<!-- 소요량관리 정보 다중 입력 -->
 	<insert id="reqIn">
-	insert into requirement
-	values
-	(#{req_code},#{prod_code},#{raw_code},#{req_dan},#{req_note})
+		insert into requirement
+		values
+		(#{req_code},#{prod_code},#{raw_code},#{req_dan},#{req_note})
 	</insert>
 	<!-- 소요량관리 정보 다중 입력 -->
 
@@ -423,9 +444,9 @@
 		</collection>
 	</resultMap>
 
-	
-	<select id="searchWareHouse" resultType="WarehouseVO" 
-					resultMap="whm_SearchPage"  ><!-- parameterMap="hashMap" -->
+
+	<select id="searchWareHouse" resultType="WarehouseVO"
+		resultMap="whm_SearchPage"><!-- parameterMap="hashMap" -->
 
 		SELECT * FROM warehouse
 		<where>
@@ -447,17 +468,18 @@
 			<if test="wh_code != ''">
 				wh_code LIKE concat('%', #{wh_code}, '%')
 			</if>
-<!-- 			<if test="prod_code != ''"> -->
-<!-- 				AND prod_code LIKE concat('%', #{prod_code}, '%') -->
-<!-- 			</if> -->
-<!-- 			<if test="raw_code != ''"> -->
-<!-- 				OR raw_code LIKE concat('%', #{raw_code}, '%') -->
-<!-- 			</if> -->
-			<if test="(prod_code != null and prod_code != '') or (raw_code != null and raw_code != '')">
-				AND prod_code LIKE concat('%', #{prod_code}, '%') 
-<!-- 			</if> -->
-<!-- 			<if test="raw_code != ''"> -->
-				OR raw_code LIKE concat('%', #{raw_code}, '%')  
+			<!-- <if test="prod_code != ''"> -->
+			<!-- AND prod_code LIKE concat('%', #{prod_code}, '%') -->
+			<!-- </if> -->
+			<!-- <if test="raw_code != ''"> -->
+			<!-- OR raw_code LIKE concat('%', #{raw_code}, '%') -->
+			<!-- </if> -->
+			<if
+				test="(prod_code != null and prod_code != '') or (raw_code != null and raw_code != '')">
+				AND prod_code LIKE concat('%', #{prod_code}, '%')
+				<!-- </if> -->
+				<!-- <if test="raw_code != ''"> -->
+				OR raw_code LIKE concat('%', #{raw_code}, '%')
 			</if>
 			<if test="wh_addr != ''">
 				AND wh_addr LIKE concat('%', #{wh_addr}, '%')
@@ -469,29 +491,30 @@
 		limit #{startPage}, #{pageSize}
 	</select>
 
-	<!-- 창고 검색 + 페이징처리 -->	
-	
-	
+	<!-- 창고 검색 + 페이징처리 -->
+
+
 	<!-- 창고 검색시 총 글 개수 -->
-	
-	<select id="searchWhTotalCnt" resultType="int" 
-					parameterType="hashMap" >
+
+	<select id="searchWhTotalCnt" resultType="int"
+		parameterType="hashMap">
 		SELECT count(*) FROM warehouse
 		<where>
 			<if test="wh_code != null and wh_code != ''">
-				wh_code LIKE concat('%', #{wh_code}, '%') 
+				wh_code LIKE concat('%', #{wh_code}, '%')
 
 			</if>
-			<if test="(prod_code != null and prod_code != '') or (raw_code != null and raw_code != '')">
-				AND prod_code LIKE concat('%', #{prod_code}, '%') 
-				OR raw_code LIKE concat('%', #{raw_code}, '%') 
+			<if
+				test="(prod_code != null and prod_code != '') or (raw_code != null and raw_code != '')">
+				AND prod_code LIKE concat('%', #{prod_code}, '%')
+				OR raw_code LIKE concat('%', #{raw_code}, '%')
 			</if>
 			<if test="wh_addr != null and wh_addr != ''">
-				AND wh_addr LIKE concat('%', #{wh_addr}, '%') 
+				AND wh_addr LIKE concat('%', #{wh_addr}, '%')
 			</if>
 			<if test="wh_use != 3">
-				AND wh_use = #{wh_use} 
-			</if> 
+				AND wh_use = #{wh_use}
+			</if>
 		</where>
 	</select>
 	<!-- 창고 검색시 총 글 개수 -->
@@ -526,68 +549,78 @@
 		p.perform_defect, p.defect_note, p.perform_note
 		FROM performance p JOIN
 		work_order w
-		ON p.work_code = w.work_code 
+		ON p.work_code = w.work_code
 		LIMIT #{startPage},#{pageSize}
 	</select>
 	<!-- 생산실적 목록 -->
-	
+
 	<!-- 생산실적 전체 수 -->
 	<select id="getTotalPerf" resultType="int">
-		SELECT count(*) FROM performance
+		SELECT count(*) FROM
+		performance
 	</select>
 	<!-- 생산실적 전체 수 -->
-	
+
 	<!-- 생산실적 검색 -->
-	<select id="performSearchList" resultMap="perfList" parameterType="hashMap" resultType="PerformanceVO">
+	<select id="performSearchList" resultMap="perfList"
+		parameterType="hashMap" resultType="PerformanceVO">
 		SELECT p.perform_code, p.work_code, w.line_code,
-		w.prod_code, p.perform_date,
+		w.prod_code,
+		p.perform_date,
 		p.perform_qt, p.perform_fair,
-		p.perform_defect, p.defect_note, p.perform_note
+		p.perform_defect,
+		p.defect_note, p.perform_note
 		FROM performance p JOIN
 		work_order w
-		ON p.work_code = w.work_code 
+		ON
+		p.work_code = w.work_code
 		<where>
 			<if test="search_work_code!=null and !search_work_code.isEmpty()">
-				p.work_code=#{search_work_code} 
+				p.work_code=#{search_work_code}
 			</if>
-			<if test="(search_fromDate!=null and !search_fromDate.isEmpty()) and (search_toDate!=null and !search_toDate.isEmpty())">
-				AND (p.perform_date &gt;= #{search_fromDate} AND p.perform_date &lt;= #{search_toDate}) 
+			<if
+				test="(search_fromDate!=null and !search_fromDate.isEmpty()) and (search_toDate!=null and !search_toDate.isEmpty())">
+				AND (p.perform_date &gt;= #{search_fromDate} AND p.perform_date
+				&lt;= #{search_toDate})
 			</if>
 			<if test="search_line_code!=null and !search_line_code.isEmpty()">
-				AND w.line_code=#{search_line_code} 
+				AND w.line_code=#{search_line_code}
 			</if>
 			<if test="search_prod_code!=null and !search_prod_code.isEmpty()">
-				AND w.prod_code=#{search_prod_code} 
+				AND w.prod_code=#{search_prod_code}
 			</if>
 		</where>
 		LIMIT #{startPage},#{pageSize}
 	</select>
 	<!-- 생산실적 검색 -->
-	
+
 	<!-- 생산실적 검색 수 -->
-	<select id="getSearchPerf" parameterType="hashMap" resultType="int">
-		SELECT count(*) 
-		FROM performance p JOIN work_order w 
-		ON p.work_code = w.work_code 
+	<select id="getSearchPerf" parameterType="hashMap"
+		resultType="int">
+		SELECT count(*)
+		FROM performance p JOIN work_order w
+		ON p.work_code = w.work_code
 		<where>
 			<if test="search_work_code!=null and !search_work_code.isEmpty()">
-				p.work_code=#{search_work_code} 
+				p.work_code=#{search_work_code}
 			</if>
-			<if test="(search_fromDate!=null and !search_fromDate.isEmpty()) and (search_toDate!=null and !search_toDate.isEmpty())">
-				AND (p.perform_date &gt;= #{search_fromDate} AND p.perform_date &lt;= #{search_toDate}) 
+			<if
+				test="(search_fromDate!=null and !search_fromDate.isEmpty()) and (search_toDate!=null and !search_toDate.isEmpty())">
+				AND (p.perform_date &gt;= #{search_fromDate} AND p.perform_date
+				&lt;= #{search_toDate})
 			</if>
 			<if test="search_line_code!=null and !search_line_code.isEmpty()">
-				AND w.line_code=#{search_line_code} 
+				AND w.line_code=#{search_line_code}
 			</if>
 			<if test="search_prod_code!=null and !search_prod_code.isEmpty()">
-				AND w.prod_code=#{search_prod_code} 
+				AND w.prod_code=#{search_prod_code}
 			</if>
 		</where>
 	</select>
 	<!-- 생산실적 검색 수 -->
-	
-	
-	
+
+
+
 	<!-- 생산실적 등록 -->
 	<insert id="insertPerform">
 		INSERT INTO performance
@@ -604,29 +637,31 @@
 	</delete>
 	<!-- 생산실적 삭제 -->
 
-	
+
 	<!-- 생산실적 조회 -->
-	<select id="performInfo" resultMap="perfList" resultType="PerformanceVO">
-		SELECT p.perform_code, p.work_code, w.line_code, w.prod_code, p.perform_date,
-				p.perform_qt, p.perform_fair, p.perform_defect, p.defect_note, p.perform_note 
-		FROM performance p JOIN work_order w 
-		ON p.work_code = w.work_code 
+	<select id="performInfo" resultMap="perfList"
+		resultType="PerformanceVO">
+		SELECT p.perform_code, p.work_code, w.line_code,
+		w.prod_code, p.perform_date,
+		p.perform_qt, p.perform_fair, p.perform_defect, p.defect_note, p.perform_note
+		FROM performance p JOIN work_order w
+		ON p.work_code = w.work_code
 		WHERE p.perform_code=#{perform_code}
 	</select>
 	<!-- 생산실적 조회 -->
-	
+
 	<!-- 생산실적 수정 -->
 	<update id="updatePerform">
-		UPDATE performance 
-		SET work_code=#{work_code}, perform_qt=#{perform_qt}, change_date=now(), 
-		perform_fair=#{perform_fair}, perform_defect=#{perform_defect}, 
-		defect_note=#{defect_note}, perform_note=#{perform_note} 
+		UPDATE performance
+		SET work_code=#{work_code}, perform_qt=#{perform_qt}, change_date=now(),
+		perform_fair=#{perform_fair}, perform_defect=#{perform_defect},
+		defect_note=#{defect_note}, perform_note=#{perform_note}
 		WHERE perform_code=#{perform_code}
 	</update>
 	<!-- 생산실적 수정 -->
-	
-	
-	
-	
+
+
+
+
 
 </mapper>

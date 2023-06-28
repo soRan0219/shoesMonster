@@ -32,6 +32,13 @@ public interface PerformanceService {
 
 	// 품목관리 삭제
 	public void removeProd(List<String> checked) throws Exception;
+	
+	// 품목관리 수정 시 수정할 기존 데이터 가져가기
+	public ProductVO getProd(String prod_code) throws Exception;
+	
+	// 품목관리 수정
+	public void modifyProd(ProductVO uvo) throws Exception;
+	
 
 	// ==========================================================================
 
