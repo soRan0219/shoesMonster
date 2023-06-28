@@ -4,12 +4,24 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript">
+	
+	// 거래처 검색
+	
+	
+	
+</script>
+
 <!-- page content -->
 <div class="right_col" role="main">
 	
 	<h1>거래처 정보 관리</h1>
 
-	<form action="" method="get">
+	<form method="get">
 		거래처코드
 		<input type="text" name="client_code"> 
 		거래처명
@@ -30,8 +42,8 @@
 	</form>
 
 	<hr>
-
-	거래처 총 0 건
+	
+	거래처 총 ${pm.totalCount } 건
 	<input type="button" value="추가" id="addButton">
 	<input type="button" value="수정" id="updateButton">
 	<input type="button" value="삭제" id="deleteButton">
@@ -39,7 +51,6 @@
 	<input type="button" value="저장" id="saveButton">
 
 	<table border="1" id="clientsTable">
-	<thead>
 		<tr>
 			<th></th>
 			<th>거래처코드</th>
@@ -58,7 +69,7 @@
 			<th>비고</th>
 		</tr>
 		
-		<c:forEach var="vo" items="${clientsList }" varStatus="i">
+		<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
 			<c:if test="${vo.client_type == '전체' }">
 				<tr>
 					<td>${i.count }</td>
@@ -142,9 +153,23 @@
 		
 	</table>
 <%-- 		${vo.client_useyn} 사용여부 -> 그냥 삭제용으로 쓰는 체크박스 --%>
-		
-	<!-- 페이징 처리 해야함 -->
 	
+	<div id="pagination">
+		<c:if test="${pm.prev }">
+			<a href="/person/Clients?page=${pm.startPage - 1 }&client_code=${search.client_code}&client_actname=${search.client_actname}&client_type=${search.client_type}"> ⏪ </a>
+		</c:if>
+		
+		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+			<a href="/person/Clients?page=${page }&client_code=${search.client_code}&client_actname=${search.client_actname}&client_type=${search.client_type}">${page }</a>
+		</c:forEach>
+
+		<c:if test="${pm.next }">
+			<a href="/person/Clients?page=${pm.endPage + 1 }&client_code=${search.client_code}&client_actname=${search.client_actname}&client_type=${search.client_type}"> ⏩ </a>
+		</c:if>
+	</div>
+
+	<div id="details"></div>
+		
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>

@@ -26,6 +26,12 @@
 	</select>
 	<!-- 거래처 목록 불러오기 -->
 	
+	<!-- 거래처 전체 개수 -->
+	<select id="clientALLcnt" resultType="int">
+		select count(*) from clients
+	</select>
+	<!-- 거래처 전체 개수 -->
+	
 	<!-- 거래처 검색 -->
 	<select id="searchClientsList" resultType="com.sm.domain.ClientsVO">
 		<bind name="client_code" value="'%' + client_code + '%'"/>
@@ -41,11 +47,32 @@
 				AND client_actname Like #{client_actname}
 			</if>
 			<if test="client_type != '전체'">
-				AND client_type Like #{client_type}
+				AND client_type=#{client_type}
+			</if>
+		</where>
+		limit #{startPage}, #{PageSize}
+	</select>
+	<!-- 거래처 검색 -->
+	
+	<!-- 거래처 검색 개수 -->
+	<select id="searchClientCnt" parameterType="hashMap" resultType="int">
+		<bind name="client_code" value="'%' + client_code + '%'"/>
+		<bind name="client_actname" value="'%' + client_actname + '%'"/>
+	
+		select count(*) from clients
+		<where>
+			<if test="client_code != null and !client_code.isEmpty()">
+				client_code Like #{client_code}
+			</if>
+			<if test="client_actname != null and !client_actname.isEmpty()">
+				AND client_actname Like #{client_actname}
+			</if>
+			<if test="client_type != null and client_type != '전체'">
+				AND client_type=#{client_type}
 			</if>
 		</where>
 	</select>
-	<!-- 거래처 검색 -->
+	<!-- 거래처 검색 개수 -->
 	
 	<!-- 수주 현황 목록 불러오기 -->
 	
