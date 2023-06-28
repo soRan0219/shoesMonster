@@ -313,12 +313,6 @@ public class PerformanceImpl implements PerformanceDAO {
 	}
 
 	// 검색시 총 글 개수 계산
-//	@Override
-//	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception {
-//		logger.debug("@@ searchWh_TotalCount(Wh_prodVO wvo) 호출 @@");
-		
-//		return sqlSession.selectOne(NAMESPACE+".searchWhTotalCnt", wvo);
-//	}
 	@Override
 	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception {
 		logger.debug("@@ searchWh_TotalCount(Wh_prodVO wvo) 호출 @@");
