@@ -54,9 +54,9 @@ public class Raw_orderServiceImpl implements Raw_orderService{
   }
   
   @Override
-	public List<Raw_orderVO> getRaw_order(int startRow, int pageSize, Raw_orderVO rvo) throws Exception {
+	public List<Raw_orderVO> getRaw_order(PageVO vo, Raw_orderVO rvo) throws Exception {
 		
-		return rodao.Raw_order(startRow, pageSize, rvo);
+		return rodao.Raw_order(vo, rvo);
 	}
  
 	

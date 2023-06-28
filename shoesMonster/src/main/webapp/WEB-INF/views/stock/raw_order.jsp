@@ -147,38 +147,30 @@ function toggleDiv(divId) {
             </tr>
         </c:forEach>
     </table>
-   
+      ${param }
    		<c:if test="${count1 > 10 }">
-			<c:if test="${bp.prev }">
-				<a href="/stock/raw_order?page=${bp.startPage - 1 }">이전</a>
+			<c:if test="${bp.prev}">
+			    <a href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&raw_name=${param.rawMaterial.raw_name}&client_actname=${param.clients.client_actname}">이전</a>
 			</c:if>
 			
-			<c:forEach begin="${bp.startPage }" end="${bp.endPage }" step="1" var="idx">
-					<a href="/stock/raw_order?page=${idx }">${idx }</a>
+			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+			    <a href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&raw_name=${param.rawMaterial.raw_name}&client_actname=${param.clients.client_actname}">${idx}</a>
 			</c:forEach>
 			
-			<c:if test="${bp.next && bp.endPage > 0 }">
-				<a href="/stock/raw_order?page=${bp.endPage + 1 }">다음</a>
+			<c:if test="${bp.next && bp.endPage > 0}">
+			    <a href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&raw_name=${param.rawMaterial.raw_name}&client_actname=${param.clients.client_actname}">다음</a>
 			</c:if>
 		</c:if>
-    
-	<%-- <div>
-	    <c:if test="${count1 > 10 }">
-	    	<c:if test="${startPage > pageBlock }">
-	    		<span><a href="/stock/raw_order?num=${startPage - pageBlock}">이전</a></span>
-	    	</c:if>
-		
-			<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-				<a href="/stock/raw_order?num=${i }">${i }</a>
-			</c:forEach>
-			
-			<c:if test="${endPage*pageSize < count1 }">
-				<a href="/stock/raw_order?num=${startPage + pageBlock}">다음</a>
-			</c:if>
-	    </c:if>
-	</div> --%>
+		<br><br>
+    bp.startPage : ${bp.startPage } <br>
+    bp.endPage : ${bp.endPage } <br>
+	param.raw_order_num : ${param.raw_order_num} <br>
+	param.raw_name : ${param.rawMaterial.raw_name} <br>
+	param.client_actname : ${clients.client_actname} <br><br>
+	
 	
 	</div>
+	
 	<!-- ============================ 발주 현황 ============================ -->
 	
 	<!-- ============================ 발주 등록 ============================ -->
