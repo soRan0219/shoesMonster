@@ -445,41 +445,22 @@
 	</resultMap>
 
 
-	<select id="searchWareHouse" resultType="WarehouseVO"
-		resultMap="whm_SearchPage"><!-- parameterMap="hashMap" -->
+	
+	<select id="searchWareHouse" resultType="WarehouseVO" 
+					resultMap="whm_SearchPage"  >
 
 		SELECT * FROM warehouse
 		<where>
-			<!-- <if test="wh_code != null and !wh_code.isEmpty()"> -->
-			<!-- wh_code LIKE CONCAT('%', #{wh_code}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="prod_code != null and !prod_code.isEmpty()"> -->
-			<!-- prod_code LIKE CONCAT('%', #{prod_code}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="raw_code != null and !raw_code.isEmpty()"> -->
-			<!-- raw_code LIKE CONCAT('%', #{raw_code}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="wh_name != null and !wh_name.isEmpty()"> -->
-			<!-- AND wh_name LIKE CONCAT('%', #{wh_name}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="wh_use != 3"> -->
-			<!-- AND wh_use = #{wh_use} -->
-			<!-- </if> -->
 			<if test="wh_code != ''">
 				wh_code LIKE concat('%', #{wh_code}, '%')
 			</if>
-			<!-- <if test="prod_code != ''"> -->
-			<!-- AND prod_code LIKE concat('%', #{prod_code}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="raw_code != ''"> -->
-			<!-- OR raw_code LIKE concat('%', #{raw_code}, '%') -->
-			<!-- </if> -->
-			<if
-				test="(prod_code != null and prod_code != '') or (raw_code != null and raw_code != '')">
-				AND prod_code LIKE concat('%', #{prod_code}, '%')
-				<!-- </if> -->
-				<!-- <if test="raw_code != ''"> -->
-				OR raw_code LIKE concat('%', #{raw_code}, '%')
+
+			<if test="prod_code != null and prod_code != ''">
+				AND prod_code LIKE concat('%', #{prod_code}, '%') 
+			</if>
+			<if test="raw_code != null and raw_code != ''">
+				OR raw_code LIKE concat('%', #{raw_code}, '%')  
+
 			</if>
 			<if test="wh_addr != ''">
 				AND wh_addr LIKE concat('%', #{wh_addr}, '%')
