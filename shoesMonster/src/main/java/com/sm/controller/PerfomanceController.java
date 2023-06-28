@@ -30,7 +30,6 @@ import com.sm.domain.RequirementsList;
 import com.sm.domain.RequirementsVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
-import com.sm.domain.WorkOrderVO;
 import com.sm.service.PerformanceService;
 
 @Controller
@@ -119,6 +118,32 @@ public class PerfomanceController {
 
 		return "redirect:/performance/product";
 	} // deleteProd()
+	
+	// 품목관리 조회 POST
+	@ResponseBody
+	@RequestMapping(value = "/prodOne", method = RequestMethod.POST)
+	public ProductVO getProd(@RequestBody ProductVO vo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: getProd() 호출");
+		logger.debug("@@@@@ CONTROLLER: prod_Code = " + vo.getProd_code());
+		
+		//서비스 - 품목관리 정보 가져오기
+		ProductVO preVO = service.getProd(vo.getProd_code());
+		logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
+		
+		return preVO;
+	} //getProd()
+	
+	//품목관리 수정 
+	@RequestMapping(value = "/prodModify", method = RequestMethod.POST)
+	public String modifyProd(/*@RequestBody */ProductVO uvo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: modifyProd() 호출");
+		logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
+		
+		//서비스 - 작업지시 수정
+		service.modifyProd(uvo);
+		
+		return "redirect:/performance/product";
+	} //modifyWorkOrder()
 
 	// =====================================================================================
 

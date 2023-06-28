@@ -6,6 +6,12 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
+	  	//검색 팝업
+	    function openWindow(search, inputId) {
+	    	var url = "/workorder/search?type=" + search + "&input=" + inputId;
+	    	var popup = window.open(url, "", popupOpt);
+	    } //openWindow()
+    	
     	
         $(document).ready(function() {
 
