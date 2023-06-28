@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.PageVO;
 import com.sm.domain.Raw_orderVO;
 
 @Repository
@@ -30,14 +31,9 @@ public class Raw_orderImpl implements Raw_orderDAO{
 
 
     @Override
-    public List<Raw_orderVO> Raw_order(int startRow, int pageSize) throws Exception {
+    public List<Raw_orderVO> Raw_order(PageVO vo) throws Exception {
 
-    	HashMap<String, Integer> data = new HashMap<String, Integer>();
-        
-        data.put("startRow", startRow);
-        data.put("pageSize", pageSize);
-        
-        return sqlSession.selectList(NAMESPACE + ".getRaw_Order", data);
+        return sqlSession.selectList(NAMESPACE + ".getRaw_Order", vo);
     }
 
 

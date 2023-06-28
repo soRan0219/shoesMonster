@@ -65,8 +65,22 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public void removeProd(List<String> checked) throws Exception {
 		pdao.deleteProd(checked);
 	}
+	
+	// 품목관리 수정 시 기존 데이터 가져가기
+	@Override
+	public ProductVO getProd(String prod_code) throws Exception{
+		return pdao.getProd(prod_code);
+	}
+	
+	// 품목관리 수정
+	@Override
+	public void modifyProd(ProductVO uvo) throws Exception {
+		pdao.updateProd(uvo);
+	}
 
 	// ==========================================================================
+
+	
 
 	@Override
 	public int countRaw() {

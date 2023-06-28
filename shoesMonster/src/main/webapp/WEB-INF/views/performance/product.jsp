@@ -6,6 +6,12 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
+    
+  //input으로 바꾸기 
+	function inputCng(obj, type, name, value) {
+		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+		obj.html(inputBox);
+	} //inputCng
     	
 	function popUp() {
 		var queryString = window.location.search;
@@ -93,7 +99,10 @@
 
             // 버튼 클릭시 addRow() 기능 불러오기
             $('#addButton').click(function() {
+            	$('#modify').attr("disabled", true);
+    			$('#delete').attr("disabled", true);
                 addRow();
+            	
             });
             
             // =============================================================================================================
@@ -116,7 +125,7 @@
 			
 			// 삭제 기능
 			$('#delete').click(function(){
-				
+				event.preventDefault();
 				$('#addButton').attr("disabled", true);
 				$('#modify').attr("disabled", true);
 				
@@ -183,6 +192,134 @@
 				});
 				
 			}); //delete click
+		
+			var isExecuted = false;
+			
+			/////////////// 수정 //////////////////////////////
+			//수정버튼 클릭
+			$('#modify').click(function() {
+				event.preventDefault();
+				$('#add').attr("disabled", true);
+				$('#delete').attr("disabled", true);
+
+				//행 하나 클릭했을 때	
+				$('table tr:not(:first-child)').click(function() {
+
+					//하나씩만 선택 가능
+					if(!isExecuted) {
+						isExecuted = true;
+						
+						$(this).addClass('selected');
+						//품목코드 저장
+						let updateCode = $(this).find('#prodCode').text().trim();
+						console.log(updateCode);
+		
+						var jsonData = {
+							prod_code : updateCode
+						};
+		
+						var self = $(this);
+		
+						$.ajax({
+							url : "/performance/prodOne",
+							type : "post",
+							contentType : "application/json; charset=UTF-8",
+							dataType : "json",
+							data : JSON.stringify(jsonData),
+							success : function(data) {
+								// alert("*** 아작스 성공 ***");
+				
+								var preVOs = [
+										data.prod_code,
+										data.prod_name,
+										data.prod_category,
+										data.prod_unit,
+										data.prod_color,
+										data.prod_size,
+										data.client_code,
+										data.prod_price,
+										data.prod_note,
+										];
+							
+		
+								var names = [
+										"prod_code",
+										"prod_name",
+										"prod_category",
+										"prod_unit",
+										"prod_color",
+										"prod_size",
+										"client_code",
+										"prod_price",
+										"prod_note", 
+										];
+		
+								//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+								self.find('td').each(function(idx,item) {
+		
+									if (idx > 0) {
+										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+// 										if (idx == 5) {
+// 											var dropDown = "<select id='work_state' name='work_state'>";
+// 											dropDown += "<option value='지시'>지시</option>";
+// 											dropDown += "<option value='진행'>진행</option>";
+// 											dropDown += "<option value='마감'>마감</option>";
+// 											dropDown += "</select>";
+// 											$(this).html(dropDown);
+// 											$(this).find('option').each(function() {
+// 												if (this.value == preVOs[idx - 1]) {
+// 													$(this).attr("selected",true);
+// 												}
+// 											}); //option이 work_state와 일치하면 선택된 상태로
+// 										} //지시상태 - select
+									} //라인코드부터 다 수정 가능하게
+		
+								}); // self.find(~~)
+		
+								//라인코드 검색
+								$('#line_code').click(function() {
+									openWindow("line","line_code");
+								}); //lineCode click
+		
+								//품번 검색 
+								$('#prod_code').click(function() {
+									openWindow("prod","prod_code");
+								}); //prodCode click
+		
+								//수주코드 검색
+								$('#order_code').click(function() {
+									openWindow("order","order_code");
+								}); //orderCode click
+		
+							},
+							error : function(data) {
+								alert("아작스 실패 ~~");
+							}
+						}); //ajax
+		
+						//저장버튼 -> form 제출
+						$('#save').click(function() {
+		
+							$('#fr').attr("action","/performance/prodModify");
+							$('#fr').attr("method","post");
+							$('#fr').submit();
+		
+						}); //save
+
+					} //하나씩만 선택 가능
+						
+						
+					//취소버튼 -> 리셋
+					$('#cancle').click(function() {
+						$('#fr').each(function() {
+							this.reset();
+						});
+					}); //cancle click
+
+				}); //tr click
+
+			}); //modify click
+			
 
             
         });
@@ -212,7 +349,7 @@
 	</form>
 	
 	
-	<form action="" method="post" onsubmit="return false" id="fr">
+	<form action="" method="post" id="fr">
 		<button id="addButton">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete">삭제</button>

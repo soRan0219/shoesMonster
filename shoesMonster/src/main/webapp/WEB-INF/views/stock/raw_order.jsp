@@ -148,8 +148,21 @@ function toggleDiv(divId) {
         </c:forEach>
     </table>
    
+   		<c:if test="${count1 > 10 }">
+			<c:if test="${bp.prev }">
+				<a href="/stock/raw_order?page=${bp.startPage - 1 }">이전</a>
+			</c:if>
+			
+			<c:forEach begin="${bp.startPage }" end="${bp.endPage }" step="1" var="idx">
+					<a href="/stock/raw_order?page=${idx }">${idx }</a>
+			</c:forEach>
+			
+			<c:if test="${bp.next && bp.endPage > 0 }">
+				<a href="/stock/raw_order?page=${bp.endPage + 1 }">다음</a>
+			</c:if>
+		</c:if>
     
-	<div>
+	<%-- <div>
 	    <c:if test="${count1 > 10 }">
 	    	<c:if test="${startPage > pageBlock }">
 	    		<span><a href="/stock/raw_order?num=${startPage - pageBlock}">이전</a></span>
@@ -163,7 +176,7 @@ function toggleDiv(divId) {
 				<a href="/stock/raw_order?num=${startPage + pageBlock}">다음</a>
 			</c:if>
 	    </c:if>
-	</div>
+	</div> --%>
 	
 	</div>
 	<!-- ============================ 발주 현황 ============================ -->

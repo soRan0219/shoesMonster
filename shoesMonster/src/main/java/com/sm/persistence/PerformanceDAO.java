@@ -35,7 +35,13 @@ public interface PerformanceDAO {
 
 	// 품목관리 삭제
 	public void deleteProd(List<String> checked) throws Exception;
-
+	
+	// 품목관리 수정 시 기존데이터 가져가기
+	public ProductVO getProd(String prod_code) throws Exception;
+	
+	// 품목관리 수정
+	public void updateProd(ProductVO uvo) throws Exception;
+	
 	// ==========================================================================
 
 	// 원자재관리 리스트 총갯수
