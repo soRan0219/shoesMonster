@@ -91,13 +91,13 @@
 	    LEFT JOIN clients c ON c.client_code = rm.client_code
 	    LEFT JOIN stock s ON s.raw_code = rm.raw_code
 	    <where>
-        <if test="raw_order_num != ''">
+        <if test="raw_order_num != null and raw_order_num != ''">
              ro.raw_order_num like concat ( '%' ,#{raw_order_num},'%' )
         </if>
-        <if test="raw_name != ''">
+        <if test="raw_name != null and raw_name != ''">
             and rm.raw_name like concat ( '%' ,#{raw_name},'%' )
         </if>
-        <if test="client_actname != ''">
+        <if test="client_actname != null and client_actname != ''">
             and c.client_actname like concat ( '%' ,#{client_actname},'%' )
         </if>
    		</where>
@@ -114,18 +114,18 @@
 	    left JOIN clients c ON c.client_code = rm.client_code
 	    left JOIN stock s ON s.raw_code = rm.raw_code
 	    <where>
-        <if test="raw_order_num != ''">
+        <if test="raw_order_num != null and raw_order_num != ''">
              ro.raw_order_num like concat ( '%' ,#{raw_order_num},'%' )
         </if>
-        <if test="raw_name != ''">
+        <if test="raw_name != null and raw_name != ''">
            and rm.raw_name like concat ( '%' ,#{raw_name},'%' )
         </if>
-        <if test="client_actname != ''">
+        <if test="client_actname != null and client_actname != ''">
             and c.client_actname like concat ( '%' ,#{client_actname},'%' )
         </if>
    		</where>
 	    order by ro.raw_order_num desc
-	    limit #{startRow}, #{pageSize}
+	    limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 발주 검색 목록  -->
 	

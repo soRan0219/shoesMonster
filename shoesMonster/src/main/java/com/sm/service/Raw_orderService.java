@@ -28,6 +28,6 @@ public interface Raw_orderService {
 	public int count1(Raw_orderVO rvo) throws Exception;
 	
 	// 발주 검색 목록 조회
-	public List<Raw_orderVO> getRaw_order(int startRow, int pageSize, Raw_orderVO rvo) throws Exception;
+	public List<Raw_orderVO> getRaw_order(PageVO vo, Raw_orderVO rvo) throws Exception;
 
 }
