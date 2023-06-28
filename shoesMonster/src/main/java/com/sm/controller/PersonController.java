@@ -61,24 +61,20 @@ public class PersonController {
 		logger.debug(" empManageGET() 호출@@@@@ ");
 		
 		//페이지 정보
-		pvo.setPageSize(10);
+		pvo.setPageSize(2);
 		
 		//페이징 하단부 정보
 		LineWhPageMaker pm = new LineWhPageMaker();
 		pm.setLwPageVO(pvo);
-		pm.setPageBlock(10);
+		pm.setPageBlock(2);
 		
-		List<ManagementVO> management = empService.getManagement();
+		List<ManagementVO> manageList = empService.getManagement();
 		List<EmployeesVO> empList = new ArrayList<>();
-		logger.debug("management : " + management);
-		logger.debug("empList : " + empList);
 		
 		// 검색 있을 때
-		if((search.get("emp_id")!=null && !search.get("emp_id").equals("")) 
-			|| (search.get("emp_name")!=null && !search.get("emp_name").equals("")) 
-			|| (search.get("emp_department")!=null && !search.get("emp_department").equals(""))) {
+		if((search.get("search_empid")!=null && !search.get("search_empid").equals("")) || (search.get("search_empname")!=null && !search.get("search_empname").equals("")) || (search.get("search_empdepartment")!=null && !search.get("search_empdepartment").equals(""))) {
 			
-			logger.debug(" 권한 정보 검색 호출 @@@@@ ");
+			logger.debug("검색 : service 호출 @@@@@");
 			
 			search.put("startPage", pvo.getStartPage());
 			search.put("pageSize", pvo.getPageSize());
@@ -87,10 +83,11 @@ public class PersonController {
 			empList = empService.searchEmployees(search);
 			logger.debug(" empList 검색 결과 : " + empList);
 			
-//			logger.debug("@@@@@ CONTROLLER: 검색 결과 수 = " + empService.getSearchWorkOrder(search));
-//			pm.setTotalCount(empService.getSearchWorkOrder(search));
+			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
+			pm.setTotalCount(empService.getSearchEmployees(search));
 			
-			model.addAttribute("management", management);
+			model.addAttribute("search", search);
+			model.addAttribute("management", manageList);
 			model.addAttribute("empList", empList);
 			model.addAttribute("pm", pm);
 			
@@ -98,10 +95,12 @@ public class PersonController {
 		
 		// 검색 없을 때
 		else {
-//			logger.debug("@@@@@ CONTROLLER: 전체 작업지시 수 = " + empService.getTotalWorkOrder());
-//			pm.setTotalCount(empService.getTotalWorkOrder());
+			logger.debug(" 전체 작업지시 수 : " + empService.getTotalEmployees());
+			pm.setTotalCount(empService.getTotalEmployees());
+			
 			empList = empService.getEmpList(pvo);
 			
+			model.addAttribute("manageList", manageList);
 			model.addAttribute("empList", empList);
 			model.addAttribute("pm", pm);
 		}// else(모두)

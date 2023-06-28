@@ -29,33 +29,28 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	@Override
 	public EmployeesVO loginEmp(EmployeesVO empvo) {
 		logger.debug(" loginEmp() 호출@@@@@ ");
-		
 		return sqlSession.selectOne(NAMESPACE + ".smLogin", empvo);
-	}
+	} //loginEmp()
 
 	@Override
 	public EmployeesVO loginEmp(String id, String pw) {
-		
 		Map<String, Object> params = new HashMap<String, Object>();
-		
 		params.put("userid", id);
 		params.put("userpw", pw);
-		
 		return sqlSession.selectOne(NAMESPACE + ".smlogin", params);
-		
-	}
+	} //loginEmp()
 
 	@Override
 	public List<EmployeesVO> readEmpList(LineWhPageVO pvo) throws Exception {
 		logger.debug(" readEmpList() 호출@@@@@ ");
 		return sqlSession.selectList(NAMESPACE2 + ".empList", pvo);
-	}
+	} //readEmpList()
 
 	@Override
 	public List<ManagementVO> readManagement() throws Exception {
 		logger.debug(" readManagement() 호출@@@@@ ");
 		return sqlSession.selectList(NAMESPACE2 + ".management");
-	}
+	} //readManagement()
 
 	@Override
 	public List<EmployeesVO> selectEmployees(HashMap<String, Object> search) throws Exception {
@@ -63,7 +58,19 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 		List<EmployeesVO> searchList = sqlSession.selectList(NAMESPACE2 + ".searchEmployees", search);
 		logger.debug(" search 결과 : " + searchList);
 		return searchList;
-	}
+	} //selectEmployees()
+
+	@Override
+	public int getTotalEmployees() throws Exception {
+		logger.debug(" getTotalEmployees() 호출@@@@@ ");
+		return sqlSession.selectOne(NAMESPACE2 + ".employeesAllCnt");
+	} //getTotalEmployees()
+
+	@Override
+	public int getSearchEmployees(HashMap<String, Object> search) throws Exception {
+		logger.debug(" getSearchEmployees() 호출@@@@@ ");
+		return sqlSession.selectOne(NAMESPACE2 + ".employeesSearchCnt", search);
+	} //getSearchEmployees()
 
 	
 	

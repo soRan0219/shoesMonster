@@ -21,4 +21,10 @@ public interface EmployeesService {
 	// 사원 검색
 	public List<EmployeesVO> searchEmployees(HashMap<String, Object> search) throws Exception;
 	
+	// 사원 전체 수
+	public int getTotalEmployees() throws Exception;
+	
+	// 사원 검색 수
+	public int getSearchEmployees(HashMap<String, Object> search) throws Exception;
+	
 }

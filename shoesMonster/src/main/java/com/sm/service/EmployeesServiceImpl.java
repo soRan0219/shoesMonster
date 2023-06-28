@@ -38,6 +38,16 @@ public class EmployeesServiceImpl implements EmployeesService{
 		return empdao.selectEmployees(search);
 	}
 
+	@Override
+	public int getTotalEmployees() throws Exception {
+		return empdao.getTotalEmployees();
+	}
+
+	@Override
+	public int getSearchEmployees(HashMap<String, Object> search) throws Exception {
+		return empdao.getSearchEmployees(search);
+	}
+
 	
 	
 	

@@ -15,13 +15,17 @@
 	</select>	
 	<!-- 사원 목록 조회 -->
 	
-	
 	<!-- 사원 권한 정보 조회 -->
 	<select id="management" resultType="ManagementVO">
 		select * from management
 	</select>
 	<!-- 사원 권한 정보 조회 -->
 	
+	<!-- 사원 전체 수 -->
+	<select id="employeesAllCnt" resultType="int">
+		select count(*) from employees
+	</select>
+	<!-- 사원 전체 수 -->
 	
 	<!-- 사원 검색 -->
 	<select id="searchEmployees" parameterType="hashMap" resultType="EmployeesVO">
@@ -31,16 +35,32 @@
 				emp_id=#{search_empid}
 			</if>
 			<if test="search_empname!=null and !search_empname.isEmpty()">
-				emp_name=#{search_empname}
+				and emp_name=#{search_empname}
 			</if>
 			<if test="search_empdepartment!=null and !search_empdepartment.isEmpty()">
-				emp_department=#{search_empdepartment}
+				and emp_department=#{search_empdepartment}
 			</if>
 		</where>
 		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 사원 검색 -->
 	
+	<!-- 사원 검색 개수 -->
+	<select id="employeesSearchCnt" parameterType="hashMap" resultType="int">
+		select count(*) from employees 
+		<where>
+			<if test="search_empid!=null and !search_empid.isEmpty()">
+				emp_id=#{search_empid}
+			</if>
+			<if test="search_empname!=null and !search_empname.isEmpty()">
+				and emp_name=#{search_empname}
+			</if>
+			<if test="search_empdepartment!=null and !search_empdepartment.isEmpty()">
+				and emp_department=#{search_empdepartment}
+			</if>
+		</where>
+	</select>
+	<!-- 사원 검색 개수 -->
 	
 	<!-- 거래처 목록 불러오기 -->
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
