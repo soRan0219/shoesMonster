@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sm.domain.BottomPaging;
 import com.sm.domain.ClientsVO;
 import com.sm.domain.In_materialVO;
 import com.sm.domain.Out_materialVO;
+import com.sm.domain.PageVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
 import com.sm.domain.StockVO;
@@ -49,13 +51,13 @@ public class stockController {
 	private static final Logger logger = LoggerFactory.getLogger(stockController.class);
 	
 
-	
 	// 발주 목록 + 페이징 처리 - 시작
     // http://localhost:8080/stock/raw_order
 	// http://localhost:8088/stock/raw_order
 	@RequestMapping(value="/raw_order", method = RequestMethod.GET)
-    public void getListPage(HttpServletRequest request, Model model ,Raw_orderVO rvo) throws Exception {
+    public void getListPage(PageVO vo, HttpServletRequest request, Model model ,Raw_orderVO rvo) throws Exception {
         
+		
 		if(rvo.getClients().getClient_actname() != null ||
 				rvo.getRaw_order_num() != null || rvo.getRawMaterial().getRaw_name() != null) {
 			
@@ -63,7 +65,7 @@ public class stockController {
 	         int count1 = ro_service.count1(rvo);
 	         
 	         // 한 페이지에 출력할 게시물 개수
-	         int pageSize = 30;
+	         int pageSize = 10;
 	         
 	         String pageNum = request.getParameter("num");
 	         if(pageNum == null) {
@@ -76,7 +78,7 @@ public class stockController {
 	         
 	         // 페이징 처리 - 하단
 	 		 int pageCount = count1/pageSize + (count1%pageSize == 0? 0 : 1);
-	 		 int pageBlock = 1;
+	 		 int pageBlock = 10;
 
 	 		 // 페이지 번호
 	 		 int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
@@ -92,46 +94,26 @@ public class stockController {
 	         model.addAttribute("endPage", endPage);
 	         model.addAttribute("pageBlock", pageBlock);
 	         model.addAttribute("count1",count1);
+	         model.addAttribute("pageSize", pageSize);
 			
+		} else {
 			
-		}else {
 		
+			List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo);
+			
+			int count1 = ro_service.count1();
+			
+			BottomPaging bp = new BottomPaging();
+			bp.setPageVO(vo);
+			bp.setTotalCount(ro_service.count1());
+			
+			model.addAttribute("ro_List", ro_List);
+			model.addAttribute("count1", count1);
+			model.addAttribute("bp", bp);
 		
-         // 게시물 총 개수
-         int count1 = ro_service.count1();
-         
-         // 한 페이지에 출력할 게시물 개수
-         int pageSize = 30;
-         
-         String pageNum = request.getParameter("num");
-         if(pageNum == null) {
-        	 pageNum = "1";
-         }
-         
-         // 행번호
-         int currentPage = Integer.parseInt(pageNum);
-         int startRow = (currentPage - 1) * pageSize;
-         
-         // 페이징 처리 - 하단
- 		 int pageCount = count1/pageSize + (count1%pageSize == 0? 0 : 1);
- 		 int pageBlock = 10;
-
- 		 // 페이지 번호
- 		 int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
- 		 int endPage = startPage+pageBlock-1;
- 		 if(endPage > pageCount) {
- 			 endPage = pageCount;
- 		 } 
-         
-         List<Raw_orderVO> ro_List = ro_service.getRaw_order(startRow, pageSize);
-        
-         model.addAttribute("ro_List", ro_List);
-         model.addAttribute("startPage", startPage);
-         model.addAttribute("endPage", endPage);
-         model.addAttribute("pageBlock", pageBlock);
-         model.addAttribute("count1", count1);
-         model.addAttribute("pageSize", pageSize);
 		}
+		
+		
 	}
 	// 발주 목록 + 페이징 처리 - 끝
 	// 발주 등록
