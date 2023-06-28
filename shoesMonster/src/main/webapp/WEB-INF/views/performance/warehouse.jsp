@@ -144,6 +144,7 @@
 	
 <form id="fr">
 	<table border="1">
+		<a>총 ${lwpm.totalCount } 건</a>
 		<tr>
 			<td></td>
 			<td>창고코드</td>
