@@ -5,21 +5,26 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
-	  	//검색 팝업
-	    function openWindow(search, inputId) {
-	    	var url = "/workorder/search?type=" + search + "&input=" + inputId;
+    <script>		
+    	
+		 // 팝업 옵션
+		const popupOpt = "top=60,left=140,width=600,height=600";
+	
+		//검색 팝업
+	  	function openWindow(search, inputId) {
+	   	 	var url = "/workorder/search?type=" + search + "&input=" + inputId;
 	    	var popup = window.open(url, "", popupOpt);
 	    } //openWindow()
-    	
-    	
+	    	
+	  	
         $(document).ready(function() {
+        	
+        	
 
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
     			$(this).find('td:first').text(index);
     		});
-
         	
             var counter = 0;
             
@@ -27,9 +32,9 @@
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                    '<td><input type="text" name="reqs[' + counter + '].req_code" required></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod_code"></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_code " required></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod_code" id= "prod_code"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name"></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].raw.raw_name"></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_dan"></td>' +
                     '<td></td>' +
@@ -42,11 +47,16 @@
             	 // 테이블이 많이 생성되면 스크롤바 생성
                 var table = document.getElementById('reqTable');
                 table.scrollTop = table.scrollHeight;
+				
             }
 
             // 버튼 클릭시 addRow() 기능 불러오기
             $('#addButton').click(function() {
                 addRow();
+                //품번 검색 
+        		$('#prod_code').click(function() {
+        			openWindow("prod","prod_code");
+        		}); //prodCode click
             });
             
             // =============================================================================================================
@@ -129,6 +139,119 @@
 				});
 				
 			}); //delete click
+			
+			/////////////// 수정 //////////////////////////////
+			//수정버튼 클릭
+			$('#modify').click(function() {
+				event.preventDefault();
+				$('#add').attr("disabled", true);
+				$('#delete').attr("disabled", true);
+
+				//행 하나 클릭했을 때	
+				$('table tr:not(:first-child)').click(function() {
+
+					//하나씩만 선택 가능
+					if(!isExecuted) {
+						isExecuted = true;
+						
+						$(this).addClass('selected');
+						//품목코드 저장
+						let updateCode = $(this).find('#reqCode').text().trim();
+						console.log(updateCode);
+		
+						var jsonData = {
+							req_code : updateCode
+						};
+		
+						var self = $(this);
+		
+						$.ajax({
+							url : "/performance/reqOne",
+							type : "post",
+							contentType : "application/json; charset=UTF-8",
+							dataType : "json",
+							data : JSON.stringify(jsonData),
+							success : function(data) {
+								// alert("*** 아작스 성공 ***");
+								var sum = 0;
+								
+								var preVOs = [
+										data.req_code,
+										data.prod_code,
+										data.prod.prod_name,
+										data.raw.raw_name,
+										data.req_dan,
+										data.sum,
+										data.req_note,
+										];
+								
+							
+		
+								var names = [
+										"req_code",
+										"prod_code",
+										"prod.prod_name",
+										"raw.raw_name",
+										"req_dan",
+										"",
+										"req_note",
+										];
+		
+								//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+								self.find('td').each(function(idx,item) {
+		
+									if (idx > 0) {
+										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+// 										if (idx == 5) {
+// 											var dropDown = "<select id='work_state' name='work_state'>";
+// 											dropDown += "<option value='지시'>지시</option>";
+// 											dropDown += "<option value='진행'>진행</option>";
+// 											dropDown += "<option value='마감'>마감</option>";
+// 											dropDown += "</select>";
+// 											$(this).html(dropDown);
+// 											$(this).find('option').each(function() {
+// 												if (this.value == preVOs[idx - 1]) {
+// 													$(this).attr("selected",true);
+// 												}
+// 											}); //option이 work_state와 일치하면 선택된 상태로
+// 										} //지시상태 - select
+									} //라인코드부터 다 수정 가능하게
+		
+								}); // self.find(~~)
+		
+								//품번 검색 
+								$('#prod_code').click(function() {
+									openWindow("prod","prod_code");
+								}); //prodCode click
+		
+							},
+							error : function(data) {
+								alert("아작스 실패 ~~");
+							}
+						}); //ajax
+		
+						//저장버튼 -> form 제출
+						$('#save').click(function() {
+		
+							$('#fr').attr("action","/performance/reqModify");
+							$('#fr').attr("method","post");
+							$('#fr').submit();
+		
+						}); //save
+
+					} //하나씩만 선택 가능
+						
+						
+					//취소버튼 -> 리셋
+					$('#cancle').click(function() {
+						$('#fr').each(function() {
+							this.reset();
+						});
+					}); //cancle click
+
+				}); //tr click
+
+			}); //modify click
 
             
         });

@@ -45,8 +45,10 @@
        			$(this).css('background', '#ccc');
         			
        			var prodCode = $(this).find('#prodCode').text();
+     			var prodName = $(this).find('#prodName').text();
          			
-     			$('#'+isPop, opener.document).val(prodCode);
+     			$('#prod_code', opener.document).val(prodCode);
+     			$('#prod_name', opener.document).val(prodName);
          			
          		window.close();
          	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
@@ -374,7 +376,7 @@
 					<tr>
 						<td></td>
          			    <td id="prodCode">${vo.prod_code }</td>
-						<td>${vo.prod_name }</td>
+						<td id="prodName">${vo.prod_name }</td>
 						<td>${vo.prod_category }</td>
 						<td>${vo.prod_unit }</td>
 						<td>${vo.prod_color }</td>
