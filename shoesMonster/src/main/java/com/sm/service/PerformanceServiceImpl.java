@@ -200,6 +200,34 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return pdao.getSearchTotalCount(lvo);
 	}
 	
+	// 라인 추가
+	@Override
+	public void registLine(LineVO lvo) throws Exception {
+			
+		pdao.registLine(lvo);
+	}
+	
+	// 라인 삭제
+	@Override
+	public void deleteLine(List<String> checked) throws Exception {
+		
+		pdao.deleteLine(checked);
+	}
+ 
+	// 라인 수정
+	@Override
+	public void modifyLine(LineVO lvo) throws Exception {
+		
+		pdao.modifyLine(lvo);
+	}
+	
+	// 라인 조회(String line_code)
+	@Override
+	public LineVO getLine(String line_code) throws Exception {
+		
+		return pdao.getLine(line_code);
+	}
+	
 	// 창고=======================================================================
 
 	// 창고 목록 조회 + 페이징처리
@@ -228,6 +256,34 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception {
 		
 		return pdao.searchWh_TotalCount(wvo);
+	}
+	
+	// 창고 추가
+	@Override
+	public void registWh(Wh_prodVO wvo) throws Exception {
+		
+		pdao.registWh(wvo);
+	}
+	
+	// 창고 삭제
+	@Override
+	public void deleteWh(List<String> checked) throws Exception {
+		
+		pdao.deleteWh(checked);
+	}
+
+	// 창고 수정
+	@Override
+	public void modifyWh(Wh_prodVO wvo) throws Exception {
+		
+		pdao.modifyWh(wvo);
+	}
+
+	// 창고 조회(String wh_code)
+	@Override
+	public Wh_prodVO getWarehouse(String wh_code) throws Exception {
+	
+		return pdao.getWarehouse(wh_code);
 	}
 
 	// ==========================================================================
@@ -272,6 +328,8 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public int getPerfCnt(HashMap<String, Object> search) throws Exception {
 		return pdao.getPerfCnt(search);
 	} //getPerfCnt(search)
+
+
 
 
 
