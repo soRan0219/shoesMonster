@@ -338,7 +338,7 @@
 <!-- 재고 검색 목록 조회 -->
 
 
-	<!-- ========================= 출고 - 끝 ========================= -->
+	<!-- ========================= 출고 - 시작 ========================= -->
 	<!-- 출고 목록 조회 -->
 	<resultMap id="out_List" type="com.sm.domain.ProductVO">
 		<result property="prod_code" column="prod_code" />
@@ -372,12 +372,13 @@
 	</select>
 	
 	<select id="out_matPage" parameterType="hashMap" resultType="com.sm.domain.ProductVO" resultMap="out_List">
-		SELECT o.order_code, c.client_actname, c.client_code, o.order_deliveryDate, o.order_count, om.out_num, om.out_date,
-			   om.emp_id, om.out_YN
+		SELECT om.out_num, o.order_code, c.client_actname, c.client_code, p.prod_code, p.prod_name, o.order_count,
+			   p.prod_price, o.order_deliveryDate, om.out_YN, om.emp_id
 		FROM orders o
-		JOIN clients c ON c.client_code = o.client_code
-		JOIN product p ON p.client_code = c.client_code
+		LEFT JOIN clients c ON c.client_code = o.client_code
+		LEFT JOIN product p ON p.client_code = c.client_code
 		LEFT JOIN out_material om ON om.prod_code = p.prod_code
+		order by om.out_num desc
 		limit #{startRow}, #{pageSize}
 	</select>
 	<!-- 출고 목록 조회 -->
@@ -431,9 +432,13 @@
 							out_date = CURDATE(), out_YN = '출고완료'
 		where order_code = #{order_code}
 	</update> -->
-	<insert id="omButton">
+	<!-- <insert id="omButton">
 		insert into out_material(out_num, out_date, out_YN)
 		values(CONCAT('OM', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), '출고완료')
+	</insert> -->
+	<insert id="omButton">
+		INSERT INTO out_material(out_num, out_date, out_YN)
+		VALUES(CONCAT('OM', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), '출고완료')
 	</insert>
 	<!-- 출고 처리 버튼 -->
 	<!-- ========================= 출고 - 끝 ========================= -->
