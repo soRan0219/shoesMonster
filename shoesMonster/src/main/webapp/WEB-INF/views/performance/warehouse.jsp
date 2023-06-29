@@ -140,10 +140,18 @@
 			<input type="submit" value="검색">
 		</fieldset>
 	</form>
-	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////////////////////// -->
 	
+	<button id="add" class="true">추가</button>
+	<button id="modify" >수정</button>
+	<button id="delete" class="true">삭제</button>
+	<button type="reset" id="cancle" >취소</button>
+	<button type="submit" id="save">저장</button>
+
+<!-- //////////////////////////////////////////////////////////////////////// -->
+
 <form id="fr">
-	<table border="1">
+	<table border="1"> 
 		<a>총 ${lwpm.totalCount } 건</a>
 		<tr>
 			<td></td>
@@ -198,27 +206,20 @@
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 	
 	<div id="pagination">
-		<c:if test="${lwpm.startPage != 1 }"> 
+		<c:if test="${lwpm.prev  }"> 
 			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}">이 전</a>
 		</c:if>
 		
-		<c:forEach begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1" var="page">
-			<c:choose>
-				<c:when test="${page == lwpm.startPage }">
-					<b>${page }</b>
-				</c:when>
-				<c:when test="${page != lwpm.startPage }">
-					<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}">${page }</a>
-				</c:when>
-			</c:choose>
+		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
+			<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}">${page }</a>
 		</c:forEach>
 		
-		<c:if test="${lwpm.next && lwpm.endPage>0 }">
-			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}}">다 음</a>
+		<c:if test="${lwpm.next }">
+			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}">다 음</a>
 		</c:if>
 
 	</div>
-	</div>
+</div>
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
 <!-- /page content -->

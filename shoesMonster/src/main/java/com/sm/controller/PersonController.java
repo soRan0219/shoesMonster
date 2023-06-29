@@ -48,7 +48,8 @@ public class PersonController {
 	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
 	public void empInfoGET(Model model, LineWhPageVO pvo,
-			@RequestParam HashMap<String, Object> search) throws Exception {
+			@RequestParam HashMap<String, Object> search,
+			@RequestParam(value = "input", required = false) String input) throws Exception {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
 		//페이지 정보
@@ -80,6 +81,12 @@ public class PersonController {
 			model.addAttribute("search", search);
 			model.addAttribute("empList", empList);
 			model.addAttribute("pm", pm);
+			
+			// 혜림 추가(등록시 팝업)
+			if (input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
+			}
 			
 		}// if(검색)
 		
