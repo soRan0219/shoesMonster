@@ -142,7 +142,7 @@
 // 						|| client_phone == "" || client_fax == "" || client_email == "" || client_note == "") {
 // 					alert("항목을 모두 입력하세요");
 // 				} else {
-					$('#fr').attr("action", "/person/add");
+					$('#fr').attr("action", "/person/addClient");
 					$('#fr').attr("method", "post");
 					$('#fr').submit();
 // 				}

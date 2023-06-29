@@ -230,7 +230,7 @@ public class PersonController {
 	} // ClientsGET()
 	
 	// 거래처 추가
-	@RequestMapping(value="/add", method = RequestMethod.POST)
+	@RequestMapping(value="/addClient", method = RequestMethod.POST)
 	public String addClient(ClientsVO cvo) throws Exception {
 		logger.debug("@@@ cnotroller : addClient(ClientsVO cvo) 호출 @@@");
 		logger.debug("@@@ cnotroller cvo : " + cvo);
