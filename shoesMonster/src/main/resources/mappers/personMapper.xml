@@ -129,6 +129,23 @@
 	</insert>
 	<!-- 거래처 추가 -->
 	
+	<!-- 거래처 삭제 -->
+	<delete id="deleteClient">
+		delete from clients
+		where client_code=#{client}
+	</delete>
+	<!-- 거래처 삭제 -->
+	
+	<!-- 거래처 수정 -->
+	<update id="updateClient">
+		update clients
+		set client_code=#{client_code}, client_actname=#{client_actname}, client_type=#{client_type}, client_number=#{client_number}, client_sort=#{client_sort},
+		    client_ceo=#{client_ceo}, client_name=#{client_name}, client_addr=#{client_addr}, client_addr2=#{client_addr2}, client_tel=#{client_tel},
+		    client_phone=#{client_phone}, client_fax=#{client_fax}, client_email=#{client_email}, client_note=#{client_note}
+		where client_code=#{client_code}
+	</update>
+	<!-- 거래처 수정 -->
+	
 <!-- ===================================================== 거래처 ================================================================== -->
 
 
