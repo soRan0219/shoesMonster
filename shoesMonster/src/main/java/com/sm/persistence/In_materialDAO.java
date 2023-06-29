@@ -3,6 +3,7 @@ package com.sm.persistence;
 import java.util.List;
 
 import com.sm.domain.In_materialVO;
+import com.sm.domain.Raw_orderVO;
 
 public interface In_materialDAO {
 
@@ -21,8 +22,8 @@ public interface In_materialDAO {
 //		
 //		public List<In_materialVO> In_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
 //		
-		// 출고 , 미출고 수정
-		public void updateIn(In_materialVO uvo) throws Exception;
+		// 입고등록
+		public void inInsert(Raw_orderVO rvo) throws Exception;
 }
 
 

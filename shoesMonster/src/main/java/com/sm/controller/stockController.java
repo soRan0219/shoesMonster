@@ -60,7 +60,7 @@ public class stockController {
 		
 		if((rvo.getClients().getClient_actname() != null && !rvo.getClients().getClient_actname().equals("")) ||
 		   (rvo.getRaw_order_num() != null && !rvo.getRaw_order_num().equals("")) || 
-		   (rvo.getRawMaterial().getRaw_name() != null && !rvo.getRawMaterial().getRaw_name().equals(""))) {
+		   (rvo.getRawMaterial() != null && rvo.getRawMaterial().getRaw_name() != null && !rvo.getRawMaterial().getRaw_name().equals(""))) {
 			
 
 			// 게시물 총 개수
@@ -79,9 +79,11 @@ public class stockController {
 			model.addAttribute("ro_List", ro_List);
 			model.addAttribute("count1", count1);
 			model.addAttribute("bp", bp);
+
 			model.addAttribute("rvo", rvo);
 	
 			
+
 			
 		} else {
 			
@@ -97,7 +99,7 @@ public class stockController {
 			model.addAttribute("ro_List", ro_List);
 			model.addAttribute("count1", count1);
 			model.addAttribute("bp", bp);
-		
+			request.setAttribute("rvo", rvo);
 		}
 		
 		
@@ -183,7 +185,21 @@ public class stockController {
      
     }
 	
-	
+	// 입고 등록
+	@RequestMapping(value = "/In_material" , method = RequestMethod.POST)
+	public String inRegist(Raw_orderVO rvo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception{
+		
+		String emp_id = (String)session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
+		
+		request.setAttribute("emp_id", emp_id);
+		
+		service.inInsert(rvo);
+		rttr.addFlashAttribute("result", "inInsert");
+		
+		logger.debug("ddf2fwefr23121231231312123123123l;;;23e!@#$%^&*()");
+		
+		 return "redirect:/stock/In_material";
+	}
 	
     // 입고 페이징
     
@@ -270,6 +286,7 @@ public class stockController {
             
     	}
     		
+    	
   
       ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
     	
