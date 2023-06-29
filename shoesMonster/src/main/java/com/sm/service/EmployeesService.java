@@ -27,4 +27,6 @@ public interface EmployeesService {
 	// 사원 검색 수
 	public int getSearchEmployees(HashMap<String, Object> search) throws Exception;
 	
+	// 사원 추가
+	public void regEmployees(EmployeesVO vo) throws Exception;
 }
