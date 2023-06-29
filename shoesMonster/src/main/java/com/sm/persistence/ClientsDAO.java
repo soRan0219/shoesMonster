@@ -20,4 +20,7 @@ public interface ClientsDAO {
 	
 	// 거래처 검색 개수
 	public int getSearchClient(HashMap<String, Object> search) throws Exception;
+	
+	// 거래처 추가
+	public void insertClient(ClientsVO cvo) throws Exception;
 }

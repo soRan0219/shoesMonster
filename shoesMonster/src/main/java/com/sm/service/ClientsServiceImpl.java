@@ -39,6 +39,14 @@ public class ClientsServiceImpl implements ClientsService {
 	public int getSearchClient(HashMap<String, Object> search) throws Exception {
 		return cldao.getSearchClient(search);
 	}
+
+	
+	// 거래처 추가
+	@Override
+	public void regClient(ClientsVO cvo) throws Exception {
+		cldao.insertClient(cvo);
+	}
+	
 	
 
 }
