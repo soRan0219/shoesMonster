@@ -20,6 +20,22 @@
 	   	 	var url = "/workorder/search?type=" + search + "&input=" + inputId;
 	    	var popup = window.open(url, "", popupOpt);
 	    } //openWindow()
+	    
+	    //검색 팝업2
+		function openWindow2(search, inputId) {
+			var url = "/performance/whsearch?type=" + search + "&input=" + inputId;
+			var popup = window.open(url, "", popupOpt);
+		} //openWindow()
+		
+		//추가 시 품번 검색 
+        function serchProd(inputId){
+        	openWindow("prod",inputId);
+        }
+		
+      	//추가 시 원자재 검색 
+        function serchRaw(inputId){
+        	openWindow2("raw",inputId);
+        }
 	    	
 	  	
         $(document).ready(function() {
@@ -37,11 +53,11 @@
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                    '<td><input type="text" name="reqs[' + counter + '].req_code " required></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod_code" id= "prod_code"></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name"></td>' +
-                    '<td><input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code"></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name"></td>' +
+                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'">' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_code" required></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" onclick=serchProd("prod_code'+counter+'");></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" onclick=serchRaw("raw_code'+counter+'");></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_dan"></td>' +
                     '<td></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_note"></td>' +
@@ -59,10 +75,10 @@
             // 버튼 클릭시 addRow() 기능 불러오기
             $('#addButton').click(function() {
                 addRow();
-                //품번 검색 
-        		$('#prod_code').click(function() {
-        			openWindow("prod","prod_code");
-        		}); //prodCode click
+                
+            	$('#delete').attr("disabled", true);
+				$('#modify').attr("disabled", true);
+                
             });
             
             // =============================================================================================================
@@ -157,11 +173,11 @@
 
 				//행 하나 클릭했을 때	
 				$('table tr:not(:first-child)').click(function() {
-
+					
 					//하나씩만 선택 가능
 					if(!isExecuted) {
 						isExecuted = true;
-						
+								
 						$(this).addClass('selected');
 						//품목코드 저장
 						let updateCode = $(this).find('#reqCode').text().trim();
@@ -191,6 +207,7 @@
 										data.req_dan,
 										data.req_dan,
 										data.req_note,
+										data.raw_code
 										];
 								
 							
@@ -201,13 +218,14 @@
 										"prod_name",
 										"raw_name",
 										"req_dan",
-										"req_dan",
+										"req_sum",
 										"req_note",
+										"raw_code"
 										];
 		
 								//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+								
 								self.find('td').each(function(idx,item) {
-		
 									if (idx > 0) {
 										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
 // 										if (idx == 5) {
@@ -223,14 +241,27 @@
 // 												}
 // 											}); //option이 work_state와 일치하면 선택된 상태로
 // 										} //지시상태 - select
+										if(idx==4){
+											var row = '<input type="hidden" name="'+names[7]+'" value="'+preVOs[7]+'" id="raw_code">'
+											$(".selected").append(row);
+										}
+
+
 									} //라인코드부터 다 수정 가능하게
 		
 								}); // self.find(~~)
+								
+								
 		
 								//품번 검색 
 								$('#prod_code').click(function() {
 									openWindow("prod","prod_code");
 								}); //prodCode click
+								
+								//품번 검색 팝업(raw)
+								$('#raw_name').click(function() {
+									openWindow2("raw", "search_raw");
+								}); //rawCode click
 		
 							},
 							error : function(data) {
