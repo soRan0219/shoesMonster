@@ -1,6 +1,7 @@
 package com.sm.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sm.domain.ClientPageMaker;
+import com.sm.domain.ClientPageVO;
 import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.LineWhPageMaker;
+import com.sm.domain.LineWhPageVO;
 import com.sm.domain.ManagementVO;
 import com.sm.domain.OrderStatusVO;
 import com.sm.service.ClientsService;
@@ -41,10 +46,10 @@ public class PersonController {
 	// http://localhost:8088/person/empinfo
 	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
-	public void empInfoGET(Model model) throws Exception {
+	public void empInfoGET(Model model, LineWhPageVO pvo) throws Exception {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
-		List<EmployeesVO> empList = empService.getEmpList();
+		List<EmployeesVO> empList = empService.getEmpList(pvo);
 		logger.debug("empList : " + empList);
 		
 		model.addAttribute("empList", empList);
@@ -53,42 +58,121 @@ public class PersonController {
 	// http://localhost:8088/person/management
 	// 사원 권한 정보 조회 (GET)
 	@RequestMapping(value = "/management", method = RequestMethod.GET)
-	public void empManageGET(Model model) throws Exception {
+	public void empManageGET(Model model, LineWhPageVO pvo,
+			@RequestParam HashMap<String, Object> search) throws Exception {
 		logger.debug(" empManageGET() 호출@@@@@ ");
 		
-		List<ManagementVO> management = empService.getManagement();
-		List<EmployeesVO> empList = empService.getEmpList();
-		logger.debug("management : " + management);
-		logger.debug("empList : " + empList);
+		//페이지 정보
+		pvo.setPageSize(2);
 		
-		model.addAttribute("management", management);
-		model.addAttribute("empList", empList);
-	}
+		//페이징 하단부 정보
+		LineWhPageMaker pm = new LineWhPageMaker();
+		pm.setLwPageVO(pvo);
+		pm.setPageBlock(2);
+		
+		List<ManagementVO> manageList = empService.getManagement();
+		List<EmployeesVO> empList = new ArrayList<>();
+		
+		// 검색 있을 때
+		if((search.get("search_empid")!=null && !search.get("search_empid").equals("")) || (search.get("search_empname")!=null && !search.get("search_empname").equals("")) || (search.get("search_empdepartment")!=null && !search.get("search_empdepartment").equals(""))) {
+			
+			logger.debug("검색 : service 호출 @@@@@");
+			
+			search.put("startPage", pvo.getStartPage());
+			search.put("pageSize", pvo.getPageSize());
+			
+			// 서비스 - 작업지시 검색
+			empList = empService.searchEmployees(search);
+			logger.debug(" empList 검색 결과 : " + empList);
+			
+			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
+			pm.setTotalCount(empService.getSearchEmployees(search));
+			
+			model.addAttribute("search", search);
+			model.addAttribute("management", manageList);
+			model.addAttribute("empList", empList);
+			model.addAttribute("pm", pm);
+			
+		}// if(검색)
+		
+		// 검색 없을 때
+		else {
+			logger.debug(" 전체 작업지시 수 : " + empService.getTotalEmployees());
+			pm.setTotalCount(empService.getTotalEmployees());
+			
+			empList = empService.getEmpList(pvo);
+			
+			model.addAttribute("manageList", manageList);
+			model.addAttribute("empList", empList);
+			model.addAttribute("pm", pm);
+		}// else(모두)
+		
+	} // empManageGET()
 	
 	
 	// ========== 거래처 - /Person/Clients (GET) =========
 	// http://localhost:8088/person/Clients
 	@RequestMapping(value="/Clients", method = RequestMethod.GET)
-	public void ClientsGET(Model model, ClientsVO cvo) throws Exception {
-		logger.debug("ClientsGET(Model model) 호출");
+	public void ClientsGET(ClientPageVO cpvo, 
+							@RequestParam HashMap<String, Object> search,
+//							@RequestParam(value="input", required = false) Object input,
+							Model model) throws Exception {
+		logger.debug("@@@ ClientsGET(Model model) 호출 @@@");
 		
-		// service - DB에 저장된 글 정보 가져오기
-		List<ClientsVO> clientsList = clService.getListAll();
-		logger.debug("clientsList : " + clientsList);
 		
-		model.addAttribute("clientsList", clientsList);
+		// 페이지 정보
+		cpvo.setPageSize(2);
+
+		// 페이징 하단부 정보
+		ClientPageMaker pm = new ClientPageMaker();
+		pm.setClientPageVO(cpvo);
+		pm.setPageBlock(2);
 		
-		// 검색
-		logger.debug("cvo : " + cvo);
+		List<ClientsVO> searchClientsList = new ArrayList<>();
 		
-		if(cvo.getClient_code() != null || cvo.getClient_name() != null 
-													|| cvo.getClient_type() != null ) {
-			List<ClientsVO> searchClientsList = clService.getSearchClientsList(cvo);
-			model.addAttribute("clientsList", searchClientsList);
+		// 검색 있을 때
+		logger.debug("search : " + search);
+		
+		if((search.get("client_code") != null && !search.get("client_code").equals("")) 
+			|| (search.get("client_name") != null && !search.get("client_name").equals(""))
+			|| (search.get("client_type") != null && !search.get("client_type").equals(""))) {
 			
-			logger.debug("searchClientsList : " + searchClientsList);
+			search.put("startPage", cpvo.getStartPage());
+			search.put("PageSize", cpvo.getPageSize());
 			
-			logger.debug("@@@ 거래처 검색 리스트 호출 @@@");
+			// 검색
+			searchClientsList = clService.getSearchClientsList(search);
+			logger.debug("@@@ 검색결과 list 호출 @@@ = " + searchClientsList);
+			
+			logger.debug("@@@ 검색결과 수 = " + clService.getSearchClient(search));
+			pm.setTotalCount(clService.getSearchClient(search));
+			
+			model.addAttribute("search", search);
+			model.addAttribute("searchClientsList", searchClientsList);
+			model.addAttribute("pm", pm);
+			
+//			if(input != null && !input.equals("")) {
+//				model.addAttribute("input", input);
+//				logger.debug("@@@ input 정보 전달 @@@");
+//			}
+		} // if(검색)
+		
+		// 검색 없을 때
+		else {
+			// 전체 글 개수
+			logger.debug("@@@ 전체 글 개수 = " + clService.getTotalClient());
+			
+			pm.setTotalCount(clService.getTotalClient());
+			
+			searchClientsList = clService.getListAll(cpvo);
+			
+			model.addAttribute("searchClientsList", searchClientsList);
+			model.addAttribute("pm", pm);
+			
+//			if(input != null && !input.equals("")) {
+//				model.addAttribute("input", input);
+//				logger.debug("@@@ input 정보 전달 @@@");
+//			}
 		}
 		
 		

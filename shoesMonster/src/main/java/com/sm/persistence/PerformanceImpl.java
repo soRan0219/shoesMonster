@@ -92,8 +92,21 @@ public class PerformanceImpl implements PerformanceDAO {
 
 		logger.debug("##### DAO: delete 결과 ===> " + result);
 	}
-
+	
+	// 품목관리 수정 시 기존데이터 가져가기
+	@Override
+	public ProductVO getProd(String prod_code) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".readProdOne", prod_code);
+	}
+	
+	// 품목관리 수정
+	@Override
+	public void updateProd(ProductVO uvo) throws Exception {
+		sqlSession.update(NAMESPACE+".updateProd", uvo);
+	}
+	
 	// ==========================================================================
+	
 
 	@Override
 	public int countRaw() {
@@ -313,12 +326,6 @@ public class PerformanceImpl implements PerformanceDAO {
 	}
 
 	// 검색시 총 글 개수 계산
-//	@Override
-//	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception {
-//		logger.debug("@@ searchWh_TotalCount(Wh_prodVO wvo) 호출 @@");
-		
-//		return sqlSession.selectOne(NAMESPACE+".searchWhTotalCnt", wvo);
-//	}
 	@Override
 	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception {
 		logger.debug("@@ searchWh_TotalCount(Wh_prodVO wvo) 호출 @@");

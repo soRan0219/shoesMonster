@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.PageVO;
 import com.sm.domain.Raw_orderVO;
 
 @Repository
@@ -30,14 +31,9 @@ public class Raw_orderImpl implements Raw_orderDAO{
 
 
     @Override
-    public List<Raw_orderVO> Raw_order(int startRow, int pageSize) throws Exception {
+    public List<Raw_orderVO> Raw_order(PageVO vo) throws Exception {
 
-    	HashMap<String, Integer> data = new HashMap<String, Integer>();
-        
-        data.put("startRow", startRow);
-        data.put("pageSize", pageSize);
-        
-        return sqlSession.selectList(NAMESPACE + ".getRaw_Order", data);
+        return sqlSession.selectList(NAMESPACE + ".getRaw_Order", vo);
     }
 
 
@@ -61,23 +57,23 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		
 		
 		
-		return sqlSession.selectOne(NAMESPACE+".searchCount1",data);
+		return sqlSession.selectOne(NAMESPACE+".searchCount1", data);
 	}
 
 
 
 	@Override
-	public List<Raw_orderVO> Raw_order(int startRow, int pageSize, Raw_orderVO rvo) throws Exception {
+	public List<Raw_orderVO> Raw_order(PageVO vo, Raw_orderVO rvo) throws Exception {
 		
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
-		data.put("startRow", startRow);
-        data.put("pageSize", pageSize);
 		data.put("raw_order_num", rvo.getRaw_order_num());
 		data.put("raw_name", rvo.getRawMaterial().getRaw_name());
 		data.put("client_actname", rvo.getClients().getClient_actname());
+		data.put("startPage", vo.getStartPage());
+		data.put("pageSize", vo.getPageSize());
 		
-		return sqlSession.selectList(NAMESPACE+".getRaw_OrderSearch",data);
+		return sqlSession.selectList(NAMESPACE+".getRaw_OrderSearch", data);
 		
 	}
 
