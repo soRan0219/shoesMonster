@@ -109,6 +109,7 @@ function toggleDiv(divId) {
     <form action="" method="get">
 	    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
 	   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
+<!-- 	   		품명 <input type="text" name="raw_name" placeholder="품명을 입력하세요"> -->
 	   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
 <!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
 	   	<input type="submit" value="검색"></input>
@@ -147,18 +148,18 @@ function toggleDiv(divId) {
             </tr>
         </c:forEach>
     </table>
-      ${param }
+      ${param }/${param.clients.client_actname}/${rvo.clients.client_actname}
    		<c:if test="${count1 > 10 }">
 			<c:if test="${bp.prev}">
-			    <a href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&raw_name=${param.rawMaterial.raw_name}&client_actname=${param.clients.client_actname}">이전</a>
+			    <a href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
 			</c:if>
 			
 			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-			    <a href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&raw_name=${param.rawMaterial.raw_name}&client_actname=${param.clients.client_actname}">${idx}</a>
+			    <a href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
 			</c:forEach>
 			
 			<c:if test="${bp.next && bp.endPage > 0}">
-			    <a href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&raw_name=${param.rawMaterial.raw_name}&client_actname=${param.clients.client_actname}">다음</a>
+			    <a href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
 			</c:if>
 		</c:if>
 		<br><br>
