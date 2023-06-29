@@ -7,9 +7,16 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-		<h1> 출고 관리 </h1>
+	<h1> 출고 관리 </h1>
 		
+	<div>
+	    <form action="" name="ro">
+		    <input type="button" value="발주 현황" onclick="toggleDiv('list')"></input>
+		    <input type="button" value="발주 등록" onclick="toggleDiv('regist')"></input>
+	    </form>
+    </div>
 
+	<hr>
 		
 		
 <!-- 		<label>출고 번호</label> -->
@@ -32,69 +39,72 @@
 
 
 
-
+	<form action="/stock/Out_material" method="post">
 
 	<table border="1">
 		<tr>
 			<th>출고 번호</th>
 			<th>수주번호</th>
-			<th>납품예정일</th>
+			<th>거래처명</th>
 			<th>거래처 코드</th>
-			<th>거래처 명</th>
-			<th>담당자 명</th>
 			<th>제품 코드</th>
 			<th>제품 이름</th>
-			<th>제품 가격</th>
-			<th>주문 갯수</th>
+			<th>주문 수량</th>
+			<th>납품가</th>
+			<th>납품예정일</th>
 			<th>출고 날짜</th>
 			<th>출고 여부</th>
+			<th>담당자</th>
 			<th>출고 처리</th>
-
 		</tr>
 		<c:forEach var="out" items="${out_matList }">
 			<tr>
 				<td>${out.out_mat.out_num}</td>
 				<td>${out.orders.order_code}</td>
-				<td>${out.orders.order_deliveryDate}</td>
-				<td>${out.orders.client_code}</td>
 				<td>${out.client.client_actname}</td>
-				<td>${out.out_mat.emp_id}</td>
+				<td>${out.orders.client_code}</td>
 				<td>${out.prod_code}</td>
 				<td>${out.prod_name}</td>
-				<td>${out.prod_price}원</td>
 				<td>${out.orders.order_count}</td>
+				<td>${out.prod_price}원</td>
+				<td>${out.orders.order_deliveryDate}</td>
 				<td>${out.out_mat.out_date}</td>
+				<td>${out.out_mat.emp_id}</td>
 				<td>${out.out_mat.out_YN}</td>
-				<td>
-					<button type="button" class="orderButton"
-						data-value="${out.orders.order_finish}">
-						<c:choose>
-							<c:when test="${out.orders.order_finish == 'N'}">
-								<c:choose>
-									<c:when test="${out.out_mat.out_YN == '출고 완료'}">
-                  		출고 완료
-                </c:when>
-									<c:otherwise>
-               		   출고 처리
-                </c:otherwise>
-								</c:choose>
-							</c:when>
-							<c:when test="${out.orders.order_finish == 'Y'}">
-								<c:choose>
-									<c:when test="${out.out_mat.out_YN == '미출고'}">
-              						 	   미출고
-            					    </c:when>
-									<c:otherwise>
-               							 출고 취소
-               						 </c:otherwise>
-								</c:choose>
-							</c:when>
-						</c:choose>
-					</button>
-				</td>
+				<td><input type="submit" value="출고 처리"></td>
+				
+				
+<!-- 				<td> -->
+<!-- 					<button type="button" class="orderButton" -->
+<%-- 						data-value="${out.orders.order_finish}"> --%>
+<%-- 						<c:choose> --%>
+<%-- 							<c:when test="${out.orders.order_finish == 'N'}"> --%>
+<%-- 								<c:choose> --%>
+<%-- 									<c:when test="${out.out_mat.out_YN == '출고 완료'}"> --%>
+<!--                   				출고 완료 -->
+<%--             		   		 </c:when> --%>
+<%-- 									<c:otherwise> --%>
+<!--                						   출고 처리 -->
+<%--               				  		</c:otherwise> --%>
+<%-- 								</c:choose> --%>
+<%-- 							</c:when> --%>
+<%-- 							<c:when test="${out.orders.order_finish == 'Y'}"> --%>
+<%-- 								<c:choose> --%>
+<%-- 									<c:when test="${out.out_mat.out_YN == '미출고'}"> --%>
+<!--               						 	   미출고 -->
+<%--             					    </c:when> --%>
+<%-- 									<c:otherwise> --%>
+<!--                							 출고 취소 -->
+<%--                						 </c:otherwise> --%>
+<%-- 								</c:choose> --%>
+<%-- 							</c:when> --%>
+<%-- 						</c:choose> --%>
+<!-- 					</button> -->
+<!-- 				</td> -->
 			</tr>
 		</c:forEach>
 	</table>
+	</form>
 
 	<script>
 		// 버튼 초기 텍스트 설정

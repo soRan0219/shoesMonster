@@ -17,12 +17,15 @@ public class Raw_orderVO {
 	private RawMaterialVO rawMaterial;
 	private ClientsVO clients;
 	private StockVO stock;
+	private In_materialVO in_mat;
 	
 	public Raw_orderVO () {
 		
 		rawMaterial = new RawMaterialVO();
 		clients = new ClientsVO();
 		stock = new StockVO();
+		in_mat = new In_materialVO();
+		
 	}
 	
 	

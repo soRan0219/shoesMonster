@@ -294,11 +294,37 @@ public class PerfomanceController {
 		logger.debug("@@@@@ CONTROLLER: deleteRequirement() 호출");
 		logger.debug("@@@@@ CONTROLLER: checked = " + checked);
 
-		// 서비스 - 원자재관리 삭제
+		// 서비스 - 소요량관리 삭제
 		service.removeReq(checked);
 
 		return "redirect:/performance/requirement";
-	} // deleteRawMaterial()
+	} // deleteRequirement()
+	
+	// 소요량관리 조회 POST
+		@ResponseBody
+		@RequestMapping(value = "/reqOne", method = RequestMethod.POST)
+		public RequirementsVO getreq(@RequestBody RequirementsVO vo) throws Exception {
+			logger.debug("@@@@@ CONTROLLER: getreq() 호출");
+			logger.debug("@@@@@ CONTROLLER: req_Code = " + vo.getReq_code());
+			
+			//서비스 - 품목관리 정보 가져오기
+			RequirementsVO preVO = service.getReq(vo.getReq_code());
+			logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
+			
+			return preVO;
+		} //getProd()
+		
+		//소요량관리 수정 
+		@RequestMapping(value = "/reqModify", method = RequestMethod.POST)
+		public String modifyreq(RequirementsVO uvo) throws Exception {
+			logger.debug("@@@@@ CONTROLLER: modifyreq() 호출");
+			logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
+			
+			//서비스 - 작업지시 수정
+			service.modifyReq(uvo);
+			
+			return "redirect:/performance/requirement";
+		} //modifyWorkOrder()
 
 	// =====================================================================================
 

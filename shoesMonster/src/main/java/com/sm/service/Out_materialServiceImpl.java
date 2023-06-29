@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sm.domain.Out_materialVO;
 import com.sm.domain.ProductVO;
+import com.sm.domain.Raw_orderVO;
 import com.sm.persistence.Out_materialDAO;
 
 @Service
@@ -39,6 +40,11 @@ public class Out_materialServiceImpl implements Out_materialService{
 	@Override
 	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, ProductVO ovo) throws Exception {
 		return o_dao.searchOut_mat(startRow, pageSize,ovo);
+	}
+
+	@Override
+	public void omButton(ProductVO vo) throws Exception {
+		o_dao.omButton(vo);
 	}
 
 	

@@ -36,6 +36,7 @@ public class ClientPageVO {
 		return pageSize;
 	}
 
+	// 시작 인덱스 계산
 	public int getStartPage() {
 		return (this.page - 1) * this.pageSize;
 	}

@@ -5,6 +5,7 @@
 
 <mapper namespace="com.sm.mapper.PersonMapper">
 	
+<!-- ===================================================== 사원 권한 ================================================================== -->
 	
 	<!-- 사원 목록 조회 -->
 	<select id="empList" resultType="EmployeesVO"> 
@@ -20,7 +21,7 @@
 		select * from management
 	</select>
 	<!-- 사원 권한 정보 조회 -->
-	
+
 	<!-- 사원 전체 수 -->
 	<select id="employeesAllCnt" resultType="int">
 		select count(*) from employees
@@ -69,10 +70,14 @@
 	</insert>
 	<!-- 사원 추가 -->
 	
-	
+  <!-- ===================================================== 사원 권한 ================================================================== -->
+  
+  <!-- ===================================================== 거래처 ================================================================== -->
+
 	<!-- 거래처 목록 불러오기 -->
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
-		select * from clients
+		select * from clients 
+		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 거래처 목록 불러오기 -->
 	
@@ -84,30 +89,30 @@
 	
 	<!-- 거래처 검색 -->
 	<select id="searchClientsList" resultType="com.sm.domain.ClientsVO">
-		<bind name="client_code" value="'%' + client_code + '%'"/>
-		<bind name="client_actname" value="'%' + client_actname + '%'"/>
+		<bind name="client_code" value="'%' + search_client_code + '%'"/>
+		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
 <!-- 		<bind name="client_type" value="'%' + client_type + '%'"/> -->
 		
 		select * from clients
 		<where>
-			<if test="client_code != ''">
+			<if test="client_code != null and !client_code.isEmpty()">
 				client_code Like #{client_code}
 			</if>
-			<if test="client_actname != ''">
+			<if test="client_actname != null and !client_actname.isEmpty()">
 				AND client_actname Like #{client_actname}
 			</if>
-			<if test="client_type != '전체'">
-				AND client_type=#{client_type}
+			<if test="search_client_type != '전체' and !search_client_type.isEmpty()">
+				AND client_type=#{search_client_type}
 			</if>
 		</where>
-		limit #{startPage}, #{PageSize}
+		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 거래처 검색 -->
 	
 	<!-- 거래처 검색 개수 -->
 	<select id="searchClientCnt" parameterType="hashMap" resultType="int">
-		<bind name="client_code" value="'%' + client_code + '%'"/>
-		<bind name="client_actname" value="'%' + client_actname + '%'"/>
+		<bind name="client_code" value="'%' + search_client_code + '%'"/>
+		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
 	
 		select count(*) from clients
 		<where>
@@ -117,13 +122,26 @@
 			<if test="client_actname != null and !client_actname.isEmpty()">
 				AND client_actname Like #{client_actname}
 			</if>
-			<if test="client_type != null and client_type != '전체'">
-				AND client_type=#{client_type}
+			<if test="search_client_type != null and search_client_type != '전체'">
+				AND client_type=#{search_client_type}
 			</if>
 		</where>
 	</select>
 	<!-- 거래처 검색 개수 -->
 	
+	<!-- 거래처 추가 -->
+	<insert id="insertClient">
+		insert into clients (client_code, client_actname, client_type, client_number, client_sort, client_ceo, client_name, client_addr, 
+							 client_addr2, client_tel, client_phone, client_fax, client_email, client_note)
+		values (#{client_code}, #{client_actname}, #{client_type}, #{client_number}, #{client_sort}, #{client_ceo}, #{client_name}, #{client_addr}, 
+			   #{client_addr2}, #{client_tel}, #{client_phone}, #{client_fax}, #{client_email}, #{client_note})
+	</insert>
+	<!-- 거래처 추가 -->
+	
+<!-- ===================================================== 거래처 ================================================================== -->
+
+
+<!-- ===================================================== 수주 현황 ================================================================== -->
 	<!-- 수주 현황 목록 불러오기 -->
 	
 	<resultMap type="com.sm.domain.ProductVO" id="productList">
@@ -212,7 +230,10 @@
 	
 	
 	<!-- 수주현황 검색 -->
+<!-- ===================================================== 수주 현황 ================================================================== -->
 	
+	
+<!-- ===================================================== 수주 관리 ================================================================== -->
 	<!-- 수주 관리 조회 -->
 	<resultMap type="com.sm.domain.ClientsVO" id="Client_order_ManageList">
 		<result column="client_code" property="client_code"/>
@@ -236,6 +257,7 @@
         join employees e on e.emp_id = o.emp_id;
 	</select>
 	<!-- 수주 관리 조회 -->
+<!-- ===================================================== 수주 관리 ================================================================== -->
 	
 	
 	

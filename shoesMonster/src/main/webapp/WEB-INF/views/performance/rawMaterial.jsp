@@ -39,8 +39,15 @@
        			$(this).css('background', '#ccc');
         		
             		var rawCode = $(this).find('#rawCode').text();
+            		var rawName = $(this).find('#rawName').text();
+            		var number = isPop.match(/\d+/);
             		
-            		$('#'+isPop, opener.document).val(rawCode);
+         			$('#'+isPop, opener.document).val(rawCode);
+         			if(number !=null){
+         			$('#raw_name'+number, opener.document).val(rawName);
+         			} else {
+         			$('#raw_name', opener.document).val(rawName);
+         			}
         		
         		window.close();
         	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
@@ -224,7 +231,7 @@
 					<tr>
 						<td></td>
          			    <td id="rawCode">${vo.raw_code }</td>
-						<td>${vo.raw_name }</td>
+						<td id="rawName">${vo.raw_name }</td>
 						<td>${vo.raw_color }</td>
 						<td>${vo.raw_unit }</td>
 						<td>${vo.raw_size }</td>
