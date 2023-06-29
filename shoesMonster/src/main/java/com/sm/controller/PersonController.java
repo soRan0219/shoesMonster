@@ -76,8 +76,9 @@ public class PersonController {
 							@RequestParam HashMap<String, Object> search,
 //							@RequestParam(value="input", required = false) Object input,
 							Model model) throws Exception {
-		logger.debug("@@@ ClientsGET(Model model) 호출 @@@");
+		logger.debug("@@@ cnotroller : ClientsGET(Model model) 호출 @@@");
 		
+		logger.debug("search ################"+search);
 		
 		// 페이지 정보
 		cpvo.setPageSize(2);
@@ -92,18 +93,18 @@ public class PersonController {
 		// 검색 있을 때
 		logger.debug("search : " + search);
 		
-		if((search.get("client_code") != null && !search.get("client_code").equals("")) 
-			|| (search.get("client_name") != null && !search.get("client_name").equals(""))
-			|| (search.get("client_type") != null && !search.get("client_type").equals(""))) {
+		if((search.get("search_client_code") != null && !search.get("search_client_code").equals("")) 
+			|| (search.get("search_client_name") != null && !search.get("search_client_name").equals(""))
+			|| (search.get("search_client_type") != null && !search.get("search_client_type").equals(""))) {
 			
 			search.put("startPage", cpvo.getStartPage());
-			search.put("PageSize", cpvo.getPageSize());
+			search.put("pageSize", cpvo.getPageSize());
 			
 			// 검색
 			searchClientsList = clService.getSearchClientsList(search);
-			logger.debug("@@@ 검색결과 list 호출 @@@ = " + searchClientsList);
+			logger.debug("@@@ cnotroller 검색결과 list 호출 = " + searchClientsList);
 			
-			logger.debug("@@@ 검색결과 수 = " + clService.getSearchClient(search));
+			logger.debug("@@@ cnotroller 검색결과 수 = " + clService.getSearchClient(search));
 			pm.setTotalCount(clService.getSearchClient(search));
 			
 			model.addAttribute("search", search);
@@ -114,12 +115,12 @@ public class PersonController {
 //				model.addAttribute("input", input);
 //				logger.debug("@@@ input 정보 전달 @@@");
 //			}
-		} // if(검색)
+		} // 검색 있을 때
 		
 		// 검색 없을 때
 		else {
 			// 전체 글 개수
-			logger.debug("@@@ 전체 글 개수 = " + clService.getTotalClient());
+			logger.debug("@@@ cnotroller : 전체 글 개수 = " + clService.getTotalClient());
 			
 			pm.setTotalCount(clService.getTotalClient());
 			
@@ -132,10 +133,27 @@ public class PersonController {
 //				model.addAttribute("input", input);
 //				logger.debug("@@@ input 정보 전달 @@@");
 //			}
-		}
+		} // 검색 없을 때
 		
 		
-	}
+	} // ClientsGET()
+	
+	// 거래처 추가
+	@RequestMapping(value="/add", method = RequestMethod.POST)
+	public String addClient(ClientsVO cvo) throws Exception {
+		logger.debug("@@@ cnotroller : addClient(ClientsVO cvo) 호출 @@@");
+		logger.debug("@@@ cnotroller cvo : " + cvo);
+		
+		clService.regClient(cvo);
+		
+		return "redirect:/person/Clients";
+	} // 거래처 추가
+	
+	
+	
+	
+	
+	
 	// ========== 거래처 ===================================
 	
 	
@@ -143,17 +161,17 @@ public class PersonController {
 	// http://localhost:8088/person/orderStatus
 	@RequestMapping(value="/orderStatus", method = RequestMethod.GET)
 	public void orderStatusGET(Model model, @RequestParam HashMap<String, Object> search) throws Exception {
-		logger.debug("orderStatusGET(Model model) 호출");
+		logger.debug("cnotroller : orderStatusGET(Model model) 호출");
 		
 		// service - DB에 저장된 글 정보 가져오기
 		List<OrderStatusVO> orderStatusList = osService.getOsList();
-		logger.debug("orderStatusList : "+ orderStatusList );
+		logger.debug("@@@ cnotroller orderStatusList : "+ orderStatusList );
 		
 		model.addAttribute("orderStatusList", orderStatusList);
 		
-		logger.debug("@@@ search : " + search);
+		logger.debug("@@@ cnotroller search : " + search);
 		
-		logger.debug("@@@ client_code : " + search.get("client_code"));
+		logger.debug("@@@ cnotroller client_code : " + search.get("client_code"));
 		
 		// 검색
 		if(search.get("client_code") != null  || search.get("prod_code") != null 
@@ -165,7 +183,7 @@ public class PersonController {
 			
 			logger.debug("searchOrderStatusList" + searchOrderStatusList);
 			
-			logger.debug("@@@ 수주현황 검색 리스트 호출 @@@");
+			logger.debug("@@@ cnotroller : 수주현황 검색 리스트 호출 @@@");
 		}
 	}
 	
