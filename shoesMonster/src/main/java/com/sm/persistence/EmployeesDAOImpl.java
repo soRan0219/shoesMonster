@@ -72,6 +72,13 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 		return sqlSession.selectOne(NAMESPACE2 + ".employeesSearchCnt", search);
 	} //getSearchEmployees()
 
+	@Override
+	public void insertEmployees(EmployeesVO vo) throws Exception {
+		logger.debug(" insertEmployees() 호출@@@@@ ");
+		int result = sqlSession.insert(NAMESPACE2 + ".insertEmployees", vo);
+		logger.debug(" result : " + result);
+	} // insertEmployees()
+
 	
 	
 	

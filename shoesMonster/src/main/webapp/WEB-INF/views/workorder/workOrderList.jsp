@@ -87,6 +87,7 @@
        			$(this).css('background', '#ccc');
         		
        			if(isPop==="work_code") {
+       				//생산실적(performList)에서 열었을 때
 	        		var workCode = $(this).find('#workCode').text();
 	        		var lineCode = $(this).find('#lineCode').text();
 	        		var prodCode = $(this).find('#prodCode').text();
@@ -95,7 +96,10 @@
 	        		$('#'+isPop, opener.document).val(workCode);
 	        		$('#line_code', opener.document).val(lineCode);
 	        		$('#prod_code', opener.document).val(prodCode);
-	        		$('#perform_qt', opener.document).val(workQt);
+	        		
+	        		//실적수량, 양품수, 불량수 작업지시량보다 많을 수 없게 설정
+	        		$("input[type='number']", opener.document).attr("max", workQt);
+	        		$("input[type='number']", opener.document).attr("placeholder", workQt);
 	        		
        			} else {
 	        		var workCode = $(this).find('#workCode').text();
@@ -488,8 +492,28 @@
 		});
 		
 		
+		//검색 결과 없을 때 표, 버튼 다 숨기기
+		if(Number($('#total').text())==0) {
+			$('#body').html("검색 결과가 없습니다.");
+		}
+		
 		//============================ 검색 =========================================//
 		
+		
+		
+		//n건씩 표시
+		$('#perPage').on('change', function() {
+			var pageSize = $(this).val();
+			
+			$('#pageSize').val(pageSize);
+			$('#searchForm').submit();
+		});
+		
+		$('#perPage').find('option').each(function(){
+			if($(this).val()===$('#pageSize').val()) {
+				$(this).prop("selected", true);
+			}
+		});
 		
 		
 	}); //jQuery
@@ -498,39 +522,48 @@
 
 <!-- page content -->
 <div class="right_col" role="main">
-	<h1>/workorder/workOrderList.jsp</h1>
+	<h1>작업지시 관리</h1>
 
 	<div>
-		<form method="get">
+		<form id="searchForm" method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
+				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 				라인코드: <input type="text" name="search_line" id="search_line"> 
 				지시일자: <input type="text" name="search_fromDate" id="search_fromDate"> ~ 
 						  <input type="text" name="search_toDate" id="search_toDate"> 
 				<br>
-				지시상태: <input type="radio" name="search_state" id="search_state" value="지시"> 지시 
+				지시상태: <input type="radio" name="search_state" id="search_state" value="전체"> 전체 
+						  <input type="radio" name="search_state" id="search_state" value="지시"> 지시 
 						  <input type="radio" name="search_state" id="search_state" value="진행"> 진행 
 						  <input type="radio" name="search_state" id="search_state" value="마감"> 마감 
-						  <input type="radio" name="search_state" id="search_state" value="전체"> 전체 
 				품번: <input type="text" name="search_prod" id="search_prod">
 				<br>
 				<input type="submit" value="조회"> 
-<!-- 				<button id="search">조회</button>  -->
 			</fieldset>
 		</form>
 	</div>
 
-	<br>
-	<br>
-	<br>
-
-	<button id="add" class="true">추가</button>
-	<button id="modify">수정</button>
-	<button id="delete" class="true">삭제</button>
-	<button type="reset" id="cancle">취소</button>
-	<button type="submit" id="save">저장</button>
+	<br><br>
 
 	<div id="body">
+	
+		<button id="add" class="true">추가</button>
+		<button id="modify">수정</button>
+		<button id="delete" class="true">삭제</button>
+		<button type="reset" id="cancle">취소</button>
+		<button type="submit" id="save">저장</button>
+		
+	
+		총 <span id="total">${pm.totalCount }</span>건
+		
+		<select id="perPage" name="perPage">
+			<option value="2">2</option>
+			<option value="5">5</option>
+			<option value="7">7</option>
+		</select>
+		건씩 표시
+		
 		<form id="fr">
 			<table border="1">
 				<tr>
@@ -557,20 +590,23 @@
 				</c:forEach>
 			</table>
 		</form>
-	</div>
-
-	<div id="pagination">
-		<c:if test="${pm.prev }">
-			<a href="/workorder/workOrderList?page=${pm.startPage - 1 }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏪ </a>
-		</c:if>
 		
-		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-			<a href="/workorder/workOrderList?page=${page }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}">${page }</a>
-		</c:forEach>
-
-		<c:if test="${pm.next }">
-			<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏩ </a>
-		</c:if>
+		
+		
+		
+		<div id="pagination">
+			<c:if test="${pm.prev }">
+				<a href="/workorder/workOrderList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏪ </a>
+			</c:if>
+			
+			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+				<a href="/workorder/workOrderList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}">${page }</a>
+			</c:forEach>
+	
+			<c:if test="${pm.next }">
+				<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏩ </a>
+			</c:if>
+		</div>
 	</div>
 
 	<div id="details"></div>

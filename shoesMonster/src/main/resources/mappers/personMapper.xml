@@ -38,7 +38,7 @@
 			<if test="search_empname!=null and !search_empname.isEmpty()">
 				and emp_name=#{search_empname}
 			</if>
-			<if test="search_empdepartment!=null and !search_empdepartment.isEmpty()">
+			<if test="search_empdepartment != '전체' and !search_empdepartment.isEmpty()">
 				and emp_department=#{search_empdepartment}
 			</if>
 		</where>
@@ -56,15 +56,24 @@
 			<if test="search_empname!=null and !search_empname.isEmpty()">
 				and emp_name=#{search_empname}
 			</if>
-			<if test="search_empdepartment!=null and !search_empdepartment.isEmpty()">
+			<if test="search_empdepartment != '전체' and !search_empdepartment.isEmpty()">
 				and emp_department=#{search_empdepartment}
 			</if>
 		</where>
 	</select>
 	<!-- 사원 검색 개수 -->
+	
+	<!-- 사원 추가 -->
+	<insert id="">
+		insert into employees (emp_id, emp_name, emp_department, emp_position, emp_email, emp_phone, emp_hiredate, emp_work)
+		values (#{emp_id}, #{emp_name}, #{emp_department}, #{emp_position}, #{emp_email}, #{emp_phone}, #{emp_hiredate}, #{emp_work})
+	</insert>
+	<!-- 사원 추가 -->
+	
   <!-- ===================================================== 사원 권한 ================================================================== -->
   
   <!-- ===================================================== 거래처 ================================================================== -->
+
 	<!-- 거래처 목록 불러오기 -->
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
 		select * from clients 

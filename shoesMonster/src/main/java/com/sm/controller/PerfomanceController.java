@@ -498,7 +498,12 @@ public class PerfomanceController {
 		logger.debug("@@@@@ CONTROLLER: performanceList() 호출");
 		
 		//페이지 정보
-		pvo.setPageSize(2);
+		if(search.get("pageSize")!=null) {
+			int pageSize = Integer.parseInt(search.get("pageSize").toString());
+			pvo.setPageSize(pageSize);
+		} else {
+			pvo.setPageSize(2);
+		}
 		
 		//페이징 하단부 정보
 		LineWhPageMaker pm = new LineWhPageMaker();

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sm.domain.In_materialVO;
+import com.sm.domain.Raw_orderVO;
 import com.sm.persistence.In_materialDAO;
 
 
@@ -42,6 +43,12 @@ public class In_materialServiceImpl implements In_materialService{
 		return idao.In_matPage(displayPost, postNum);
 	}
 
+
+	@Override
+	public void inInsert(Raw_orderVO rvo, String raw_order_num) throws Exception {
+		idao.inInsert(rvo, raw_order_num);
+	}
+
 	
 	
 //	@Override
@@ -60,11 +67,7 @@ public class In_materialServiceImpl implements In_materialService{
 //	}
 
 
-	@Override
-	public void updateIn(In_materialVO uvo) throws Exception {
-		
-		idao.updateIn(uvo);
-	}
+	
 
 
 

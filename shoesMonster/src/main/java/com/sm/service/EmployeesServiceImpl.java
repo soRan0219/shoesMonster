@@ -48,6 +48,11 @@ public class EmployeesServiceImpl implements EmployeesService{
 		return empdao.getSearchEmployees(search);
 	}
 
+	@Override
+	public void regEmployees(EmployeesVO vo) throws Exception {
+		empdao.insertEmployees(vo);
+	}
+
 	
 	
 	
