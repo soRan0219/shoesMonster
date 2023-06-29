@@ -4,47 +4,147 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<style type="text/css">
+.selected {
+	background-color: #ccc;
+}
+</style>
 <!-- page content -->
 <div class="right_col" role="main">
 
+<script type="text/javascript">
+
+	//input으로 바꾸기 
+	function inputCng(obj, type, name, value) {
+		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+		obj.html(inputBox);
+	} //inputCng
+	
+	//팝업창 옵션
+	const popupOpt = "top=60,left=140,width=600,height=600";
+	
+	//검색 팝업
+	function openWindow(search, inputId) {
+		var url = "/performance/whsearch?type=" + search + "&input=" + inputId;
+		var popup = window.open(url, "", popupOpt);
+	} //openWindow()
+
+
+
+	// 팝업으로 열었을 때
+	function popUp() {
+		var queryString = window.location.search;
+		var urlParams = new URLSearchParams(queryString);
+		var isPop = urlParams.get("input");
+		
+		if(isPop==="null") {
+			isPop = null;
+		}
+		
+		$('#pagination a').each(function(){
+			
+	   		var prHref = $(this).attr("href");
+	   			
+				var newHref = prHref + "&input=" + isPop;
+				$(this).attr("href", newHref);
+				
+		}); //페이징 요소	
+	
+	
+	$('#input').val(isPop);
+	
+	if(isPop!=null && isPop!="") {
+		
+    	$('#add').hide();
+    	$('#modify').hide();
+    	$('#delete').hide();
+    	$('#save').hide();
+    	
+   		$('table tr:not(:first-child)').click(function(){
+   			$(this).css('background', '#ccc');
+    		
+   			if(isPop==="wh_code") {
+        		var rawCode = $(this).find('#rawCode').text();
+        		var prodCode = $(this).find('#prodCode').text();
+        		
+        		$('#'+isPop, opener.document).val(whCode);
+        		$('#raw_code', opener.document).val(rawCode);
+        		$('#prod_code', opener.document).val(prodCode);
+        		
+   			} else {
+        		var whCode = $(this).find('#whCode').text();
+        		
+        		$('#'+isPop, opener.document).val(whCode);
+   			}
+    		
+    		window.close();
+    	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+    		
+     		
+		} //if 
+		
+		else {
+			console.log("팝업아님");
+	} //if(팝업으로 열었을 때)
+		
+} //popUp()
+
+
+//===========검색==========================
+	
+	$(function () {
+		
+	
+		//품번 검색 팝업(prod)
+		$('#search_prod').click(function() {
+			openWindow("prod", "search_prod");
+		}); //prodCode click
+		
+		//품번 검색 팝업(raw)
+		$('#search_raw').click(function() {
+			openWindow("raw", "search_raw");
+		}); //rawCode click
+
+	});
+</script>
+
+
+<!-- /////////////////////////////////////////////////////////////////////////////////// -->
 <h2>창고관리</h2>
 
-	<form action="" method="get">
-		
-		<label>창고코드</label>
-			<input type="text" name="wh_code"  placeholder="검색어를 입력해주세요">
-		
-		<label>품번</label> <!-- 품번 팝업창 + 라디오버튼 완제품/원자재 구분 한번 더 -->
-			<c:set var="inputcode" value="${empty prod_code? 'raw_code' : 'prod_code' }"/>
-			<c:set var="inputcode" value="${empty raw_code? 'prod_code' : 'raw_code' }"/>
-				<input type="text" name="${inputcode}" placeholder="검색어를 입력해주세요">
-				
-		<br>
-
-		<label>지역</label>
-<!-- 			<select name="wh_addr" > -->
-<!-- 				<option selected>전 체</option> -->
-				
-<%-- 					<c:forEach var="addr" items="${whList }"> --%>
-<%-- 						<option>${addr.wh_addr.substring(0, 2)}</option> --%>
-<%-- 					</c:forEach> --%>
-					<!-- 중복 처리 해야하는뎁 쩝 -->
-<!-- 				<option >부산</option> -->
-<!-- 				<option >창원</option> -->
-<!-- 			</select> -->
-			<input type="text" name="wh_addr"  placeholder="검색어를 입력해주세요">
-		
-		<label>사용여부</label>
-			<select name="wh_use" >
-				<option selected value="3">전 체</option>
-				<option value="1">Y</option>
-				<option value="2">N</option>
-			</select>
+	<form method="get">
+		<fieldset>
+			<input type="hidden" name="input" id="input" value="${input }">
 			
-		<input type="submit" value="검색">
-	</form>
+			<label>창고코드</label>
+				<input type="text" name="wh_code"  placeholder="검색어를 입력해주세요">
+			
+			<label>품번</label> <!-- 품번 팝업창 + 라디오버튼 완제품/원자재 구분 한번 더 -->
+					<input type="text" name="prod_code" id="search_prod" placeholder="prod">
+					<input type="text" name="raw_code" id="search_raw" placeholder="raw">
+			<br>
 	
+			<label>지역</label>
+				<input type="text" name="wh_addr"  placeholder="검색어를 입력해주세요">
+			
+			<label>사용여부</label>
+				<select name="wh_use" >
+					<option selected value="3">전 체</option>
+					<option value="1">Y</option>
+					<option value="2">N</option>
+				</select>
+				
+			<input type="submit" value="검색">
+		</fieldset>
+	</form>
+	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
+	
+<form id="fr">
 	<table border="1">
+		<a>총 ${lwpm.totalCount } 건</a>
 		<tr>
 			<td></td>
 			<td>창고코드</td>
@@ -61,17 +161,17 @@
 		<c:forEach var="ww" items="${whList }" varStatus="i">
 				<tr>	
 					<td>${i.count }</td>
-					<td>${ww.wh_code}</td>
+					<td id="whCode">${ww.wh_code}</td>
 					<td>${ww.wh_name}</td>
 					<td>${ww.wh_dv}</td>
 					
 					<c:choose>
 						<c:when test="${ww.wh_dv == '원자재'}">
-							<td>${ww.raw_code }</td>
+							<td id="rawCode">${ww.raw_code }</td>
 							<td>${ww.raw.raw_name }</td>
 						</c:when>
 						<c:when test="${ww.wh_dv == '완제품'}">
-							<td>${ww.prod_code }</td>
+							<td id="prodCode">${ww.prod_code }</td>
 							<td>${ww.prod.prod_name }</td>
 						</c:when>
 					</c:choose>
@@ -92,12 +192,14 @@
 				</tr>
 		</c:forEach>
 	</table>
-
+</form>
 	<div>
-<%-- <c:if test="${wvo.prod_code } != null && ${wvo.prod_code } != '' "> --%>
 
+<!-- /////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<div id="pagination">
 		<c:if test="${lwpm.startPage != 1 }"> 
-			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">이 전</a>
+			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}">이 전</a>
 		</c:if>
 		
 		<c:forEach begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1" var="page">
@@ -106,44 +208,18 @@
 					<b>${page }</b>
 				</c:when>
 				<c:when test="${page != lwpm.startPage }">
-<%-- 					<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">${page }</a> --%>
-					<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&inputcode=${inputcode }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">${page }</a>
+					<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}">${page }</a>
 				</c:when>
 			</c:choose>
 		</c:forEach>
 		
 		<c:if test="${lwpm.next && lwpm.endPage>0 }">
-			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}}">다 음</a>
+			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&prod_code=${wvo.prod_code }&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}}">다 음</a>
 		</c:if>
 
-<%-- 	<c:if test="${wvo.raw_code } != null && ${wvo.raw_code } != '' "> --%>
-	
-<%-- 			<c:if test="${lwpm.startPage != 1 }">  --%>
-<%-- 			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">이 전</a> --%>
-<%-- 		</c:if> --%>
-		
-<%-- 		<c:forEach begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1" var="page"> --%>
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test="${page == lwpm.startPage }"> --%>
-<%-- 					<b>${page }</b> --%>
-<%-- 				</c:when> --%>
-<%-- 				<c:when test="${page != lwpm.startPage }"> --%>
-<%-- 					<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}">${page }</a> --%>
-<%-- 				</c:when> --%>
-<%-- 			</c:choose> --%>
-<%-- 		</c:forEach> --%>
-		
-<%-- 		<c:if test="${lwpm.next && lwpm.endPage>0 }"> --%>
-<%-- 			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&raw_code=${wvo.raw_code }&wh_addr=${wvo.wh_addr }&wh_use=${wh_use}}">다 음</a> --%>
-<%-- 		</c:if> --%>
-	
-	
-	
-	
-	
-<%-- 	</c:if> --%>
-
-<%-- </c:if> --%>
 	</div>
+	</div>
+<!-- /////////////////////////////////////////////////////////////////////////////////// -->
+
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>

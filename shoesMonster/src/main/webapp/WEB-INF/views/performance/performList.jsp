@@ -21,9 +21,22 @@
 		return year + "-" + month + "-" + day;
 	} //getToday()
 	
+	
+	//날짜 + 시간 + 분 + 초 ==> 코드
+	function codeCreation() {
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		var time = ("0" + date.getHours()).slice(-2);
+		var minute = ("0" + date.getMinutes()).slice(-2);
+		var second = ("0" + date.getSeconds()).slice(-2);
+		
+		return year + month + day + time + minute + second;
+	}
+	
 	//unix시간 -> 날짜형식 변환
 	function getDate(unixTime) {
-// 		var date = new Date(unixTime * 1000);
 		var date = new Date(unixTime);
 		
 		var year = date.getFullYear();
@@ -87,7 +100,7 @@
 				// 생산실적코드
 				tbl += " <td>";
 				tbl += "  <input type='text' name='perform_code' id='perform_code' readonly value='";
-				tbl += "PF" + pCodeNum;
+				tbl += "PF" + codeCreation();
 				tbl += "'>";
 				tbl += " </td>";
 				// 작업지시코드
@@ -110,15 +123,18 @@
 				tbl += " </td>";
 				// 실적수량
 				tbl += " <td>";
-				tbl += "  <input type='text' name='perform_qt' id='perform_qt' required>";
+// 				tbl += "  <input type='text' name='perform_qt' id='perform_qt' required>";
+				tbl += "  <input type='number' name='perform_qt' id='perform_qt' required>";
 				tbl += " </td>";
 				// 양품수
 				tbl += " <td>";
-				tbl += "  <input type='text' name='perform_fair' id='perform_fair' required>";
+// 				tbl += "  <input type='text' name='perform_fair' id='perform_fair' required>";
+				tbl += "  <input type='number' name='perform_fair' id='perform_fair' required>";
 				tbl += " </td>";
 				// 불량수
 				tbl += " <td>";
-				tbl += "  <input type='text' name='perform_defect' id='perform_defect' required>";
+// 				tbl += "  <input type='text' name='perform_defect' id='perform_defect' required>";
+				tbl += "  <input type='number' name='perform_defect' id='perform_defect' required>";
 				tbl += " </td>";
 				// 불량사유
 				tbl += " <td>";
@@ -136,7 +152,31 @@
 				$('#work_code').click(function(){
 					openWindow("work", "work_code");
 				}); //work_code click
-			
+				
+				
+				
+				
+				
+				
+				
+				let maxVal = $('#perform_qt').val();
+				$('#perform_qt').attr("max", maxVal);
+// 				$('#perform_fair').attr("max", maxVal);
+// 				$('#perform_defect').attr("max", maxVal);
+				$('input[type=number]').attr("max", maxVal);
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				$(this).removeClass('true');
 			} //true 클래스 있을 때
 			

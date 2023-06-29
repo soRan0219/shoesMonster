@@ -24,7 +24,20 @@
 
 		return year + "-" + month + "-" + day;
 	} //getToday()
-
+	
+	//날짜 + 시간 + 분 + 초 ==> 코드
+	function codeCreation() {
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		var time = ("0" + date.getHours()).slice(-2);
+		var minute = ("0" + date.getMinutes()).slice(-2);
+		var second = ("0" + date.getSeconds()).slice(-2);
+		
+		return year + month + day + time + minute + second;
+	}
+	
 	//input으로 바꾸기 
 	function inputCng(obj, type, name, value) {
 		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
@@ -77,10 +90,12 @@
 	        		var workCode = $(this).find('#workCode').text();
 	        		var lineCode = $(this).find('#lineCode').text();
 	        		var prodCode = $(this).find('#prodCode').text();
+	        		var workQt = $(this).find('#workQt').text(); 
 	        		
 	        		$('#'+isPop, opener.document).val(workCode);
 	        		$('#line_code', opener.document).val(lineCode);
 	        		$('#prod_code', opener.document).val(prodCode);
+	        		$('#perform_qt', opener.document).val(workQt);
 	        		
        			} else {
 	        		var workCode = $(this).find('#workCode').text();
@@ -106,7 +121,7 @@
 	
 	//jQuery
 	$(function() {
-
+		
 		//테이블 항목들 인덱스 부여
 		$('table tr').each(function(index) {
 			$(this).find('td:first').text(index);
@@ -139,7 +154,7 @@
 				// 작업지시코드
 				tbl += " <td>";
 				tbl += "  <input type='text' name='work_code' id='work_code' readonly value='";
-				tbl += "WO" + wCodeNum;
+				tbl += "WO" + codeCreation();
 				tbl += "'>";
 				tbl += " </td>";
 				// 라인코드
@@ -537,7 +552,7 @@
 						<td>${w.order_code }</td>
 						<td>${w.work_state }</td>
 						<td>${w.work_date }</td>
-						<td>${w.work_qt }</td>
+						<td id="workQt">${w.work_qt }</td>
 					</tr>
 				</c:forEach>
 			</table>

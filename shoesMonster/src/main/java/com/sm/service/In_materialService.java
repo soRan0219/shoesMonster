@@ -15,12 +15,13 @@ public interface In_materialService {
 		public List<In_materialVO> getIn_matPage(int displayPost,int postNum) throws Exception;
 		
 		// 입고 검색 총 갯수
-		public int count(In_materialVO ivo) throws Exception;
+//		public int count(In_materialVO ivo) throws Exception;
+//		
+//		// 입고 검색 페이지
+//		public List<In_materialVO> getIn_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
 		
-		// 입고 검색 페이지
-		public List<In_materialVO> getIn_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
-		
-
+		// 입고 미입고 업뎃
+		public void updateIn(In_materialVO uvo) throws Exception;
 		
 	}
 

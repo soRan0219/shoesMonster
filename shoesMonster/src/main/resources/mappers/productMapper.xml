@@ -85,12 +85,12 @@
 	</delete>
 	<!-- 품목관리 삭제 -->
 
-	<!-- 품목관리 조회 -->
+	<!-- 품목관리 수정 시 조회 -->
 	<select id="readProdOne" resultType="ProductVO">
 		SELECT * FROM product WHERE
 		prod_code=#{prod_code}
 	</select>
-	<!-- 품목관리 조회 -->
+	<!-- 품목관리 수정 시 조회 -->
 
 	<!-- 품목관리 수정 -->
 	<update id="updateProd">
@@ -306,6 +306,28 @@
 		WHERE req_code=#{req_code}
 	</delete>
 	<!-- 소요량관리 삭제 -->
+	
+	<!-- 소요량관리 수정 시 조회 -->
+	<select id="readReqOne" resultMap="requirements" resultType="RequirementsVO">
+		SELECT r.*,p.prod_name ,rm.raw_name
+		FROM requirement r
+		join
+		product p on p.prod_code = r.prod_code
+		JOIN raw_material rm on
+		r.raw_code = rm.raw_code
+		WHERE
+		req_code=#{req_code}
+	</select>
+	<!-- 소요량관리 수정 시 조회 -->
+
+	<!-- 소요량관리 수정 -->
+	<update id="updateReq">
+		UPDATE requirement
+		SET req_code=#{req_code},prod_code=#{prod_code},raw_code=#{raw_code},req_dan=#{req_dan},
+		req_note=#{req_note}
+		WHERE req_code=#{req_code}
+	</update>
+	<!-- 소요량관리 수정 -->
 
 	<!-- //////////////////////////////////////////////////////////////// -->
 
@@ -445,41 +467,22 @@
 	</resultMap>
 
 
-	<select id="searchWareHouse" resultType="WarehouseVO"
-		resultMap="whm_SearchPage"><!-- parameterMap="hashMap" -->
+	
+	<select id="searchWareHouse" resultType="WarehouseVO" 
+					resultMap="whm_SearchPage"  >
 
 		SELECT * FROM warehouse
 		<where>
-			<!-- <if test="wh_code != null and !wh_code.isEmpty()"> -->
-			<!-- wh_code LIKE CONCAT('%', #{wh_code}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="prod_code != null and !prod_code.isEmpty()"> -->
-			<!-- prod_code LIKE CONCAT('%', #{prod_code}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="raw_code != null and !raw_code.isEmpty()"> -->
-			<!-- raw_code LIKE CONCAT('%', #{raw_code}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="wh_name != null and !wh_name.isEmpty()"> -->
-			<!-- AND wh_name LIKE CONCAT('%', #{wh_name}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="wh_use != 3"> -->
-			<!-- AND wh_use = #{wh_use} -->
-			<!-- </if> -->
 			<if test="wh_code != ''">
 				wh_code LIKE concat('%', #{wh_code}, '%')
 			</if>
-			<!-- <if test="prod_code != ''"> -->
-			<!-- AND prod_code LIKE concat('%', #{prod_code}, '%') -->
-			<!-- </if> -->
-			<!-- <if test="raw_code != ''"> -->
-			<!-- OR raw_code LIKE concat('%', #{raw_code}, '%') -->
-			<!-- </if> -->
-			<if
-				test="(prod_code != null and prod_code != '') or (raw_code != null and raw_code != '')">
-				AND prod_code LIKE concat('%', #{prod_code}, '%')
-				<!-- </if> -->
-				<!-- <if test="raw_code != ''"> -->
-				OR raw_code LIKE concat('%', #{raw_code}, '%')
+
+			<if test="prod_code != null and prod_code != ''">
+				AND prod_code LIKE concat('%', #{prod_code}, '%') 
+			</if>
+			<if test="raw_code != null and raw_code != ''">
+				OR raw_code LIKE concat('%', #{raw_code}, '%')  
+
 			</if>
 			<if test="wh_addr != ''">
 				AND wh_addr LIKE concat('%', #{wh_addr}, '%')

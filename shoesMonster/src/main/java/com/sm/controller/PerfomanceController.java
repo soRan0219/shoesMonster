@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
 import com.sm.domain.LineWhPageVO;
@@ -152,7 +153,8 @@ public class PerfomanceController {
 	@RequestMapping(value = "/rawMaterial", method = RequestMethod.GET)
 	public void rawMaterialGET(Model model, RawMaterialVO vo, PagingVO pvo,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
-			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) throws Exception {
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+			@RequestParam(value = "input", required = false) String input) throws Exception {
 
 		logger.debug("rawMaterialGET() 호출");
 		List<RawMaterialVO> raws = new ArrayList<RawMaterialVO>();
@@ -180,6 +182,12 @@ public class PerfomanceController {
 			logger.debug("vo : " + vo);
 
 			logger.debug("검색 리스트 가져감");
+			
+			// input 추가 
+			if (input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
+			}
 
 		} else {
 			logger.debug("else문 호출");
@@ -286,11 +294,37 @@ public class PerfomanceController {
 		logger.debug("@@@@@ CONTROLLER: deleteRequirement() 호출");
 		logger.debug("@@@@@ CONTROLLER: checked = " + checked);
 
-		// 서비스 - 원자재관리 삭제
+		// 서비스 - 소요량관리 삭제
 		service.removeReq(checked);
 
 		return "redirect:/performance/requirement";
-	} // deleteRawMaterial()
+	} // deleteRequirement()
+	
+	// 소요량관리 조회 POST
+		@ResponseBody
+		@RequestMapping(value = "/reqOne", method = RequestMethod.POST)
+		public RequirementsVO getreq(@RequestBody RequirementsVO vo) throws Exception {
+			logger.debug("@@@@@ CONTROLLER: getreq() 호출");
+			logger.debug("@@@@@ CONTROLLER: req_Code = " + vo.getReq_code());
+			
+			//서비스 - 품목관리 정보 가져오기
+			RequirementsVO preVO = service.getReq(vo.getReq_code());
+			logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
+			
+			return preVO;
+		} //getProd()
+		
+		//소요량관리 수정 
+		@RequestMapping(value = "/reqModify", method = RequestMethod.POST)
+		public String modifyreq(RequirementsVO uvo) throws Exception {
+			logger.debug("@@@@@ CONTROLLER: modifyreq() 호출");
+			logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
+			
+			//서비스 - 작업지시 수정
+			service.modifyReq(uvo);
+			
+			return "redirect:/performance/requirement";
+		} //modifyWorkOrder()
 
 	// =====================================================================================
 
@@ -315,7 +349,7 @@ public class PerfomanceController {
 			if(lvo.getLine_use() == 0) {
 				lvo.setLine_use(3);
 			}
-
+			
 			// 페이징처리 + 검색
 			boardList = service.getSearchLinePage(vo, lvo);
 			model.addAttribute("boardList", boardList);
@@ -373,20 +407,24 @@ public class PerfomanceController {
 	// ======== 창고 - /warehouse ===========================
 	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-
 	public void warehouseGET(Model model, LineWhPageVO vo,
 							 LineWhPageMaker lwpm, Wh_prodVO wvo
-							 /*@RequestParam HashMap<String, Object> params*/) throws Exception {
+							 ,@RequestParam HashMap<String, Object> params) throws Exception {
 
 		logger.debug("@@ warehouseGET() 호출 @@");
 
 		List<WarehouseVO> whList = new ArrayList<>();
+		
+		// 이거 해야 전체 목록 보여짐
+					
+			
+		logger.debug("wh_use : "+wvo.getWh_use());
+
 
 		// 검색(+페이징)
 		if(wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null ||
 				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
 			
-			// 이거 해야 전체 목록 보여짐
 			if(wvo.getWh_use() == 0) {
 				wvo.setWh_use(3);
 			}
@@ -397,7 +435,7 @@ public class PerfomanceController {
 			// 객체 다 넘기기
 			model.addAttribute("wvo", wvo);
 			model.addAttribute("vo", vo);
-//			model.addAttribute("params", params);
+			model.addAttribute("params", params);
 
 			logger.debug("@@!!@@ 검색 리스트 (페이징처리) 불러옴 @@!!@@");
 
@@ -425,7 +463,27 @@ public class PerfomanceController {
 		
 		}
 	}
-
+	
+	// 품목 검색 팝업창
+	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
+	public String popUpGET(@RequestParam("input") String input,
+			   @RequestParam("type") String type) throws Exception{
+	
+		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
+		logger.debug("@#@#@# C : type = "+type);
+		
+		if(type.equals("prod")) {
+		return "redirect:/performance/product?input="+input;
+		}
+		else if(type.equals("raw")) {
+			return "redirect:/performance/rawMaterial?input="+input;
+		}
+		
+			return "redirect:/performance/warehouse?input="+input;
+		
+	}
+	
+	
 	// ======== 창고 - /warehouse ===========================
 
 	

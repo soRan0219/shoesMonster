@@ -79,6 +79,12 @@ public interface PerformanceService {
 
 	// 소요량관리 삭제
 	public void removeReq(List<String> checked) throws Exception;
+	
+	// 소요량관리 수정 시 수정할 기존 데이터 가져가기
+	public RequirementsVO getReq(String req_code) throws Exception;
+		
+	// 소요량관리 수정
+	public void modifyReq(RequirementsVO uvo) throws Exception;
 
 	// ==========================================================================
 

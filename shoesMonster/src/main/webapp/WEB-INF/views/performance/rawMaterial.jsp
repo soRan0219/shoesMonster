@@ -6,7 +6,61 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
+ // 팝업으로 열었을 때
+    function popUp() {
+    	var queryString = window.location.search;
+    	var urlParams = new URLSearchParams(queryString);
+    	var isPop = urlParams.get("input");
     	
+    	if(isPop==="null") {
+    		isPop = null;
+    	}
+    	
+    	$('#pagination a').each(function(){
+    		
+       		var prHref = $(this).attr("href");
+       			
+    			var newHref = prHref + "&input=" + isPop;
+    			$(this).attr("href", newHref);
+    			
+    	}); //페이징 요소	
+    	
+    	
+    	$('#input').val(isPop);
+    	
+    	if(isPop!=null && isPop!="") {
+    		
+        	$('#add').hide();
+        	$('#modify').hide();
+        	$('#delete').hide();
+        	$('#save').hide();
+        	
+       		$('table tr:not(:first-child)').click(function(){
+       			$(this).css('background', '#ccc');
+        		
+            		var rawCode = $(this).find('#rawCode').text();
+            		var rawName = $(this).find('#rawName').text();
+            		var number = isPop.match(/\d+/);
+            		
+         			$('#'+isPop, opener.document).val(rawCode);
+         			if(number !=null){
+         			$('#raw_name'+number, opener.document).val(rawName);
+         			} else {
+         			$('#raw_name', opener.document).val(rawName);
+         			}
+        		
+        		window.close();
+        	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+        		
+         		
+    		} //if 
+    		
+    		else {
+    			console.log("팝업아님");
+    	} //if(팝업으로 열었을 때)
+    		
+    } //popUp()
+    
         $(document).ready(function() {
 
         	//테이블 항목들 인덱스 부여
@@ -14,6 +68,8 @@
     			$(this).find('td:first').text(index);
     		});
 
+        	popUp();
+        	
         	
             var counter = 0;
             
@@ -137,6 +193,7 @@
 	
 	<form action="" method="get">
 		<fieldset>
+		<input type="hidden" name="input" id="input" value="${input }">
        		<label>품번:</label>
         	<input type="text" name="raw_code" id="searchCode">
         	<label>거래처명:</label>
@@ -174,7 +231,7 @@
 					<tr>
 						<td></td>
          			    <td id="rawCode">${vo.raw_code }</td>
-						<td>${vo.raw_name }</td>
+						<td id="rawName">${vo.raw_name }</td>
 						<td>${vo.raw_color }</td>
 						<td>${vo.raw_unit }</td>
 						<td>${vo.raw_size }</td>
