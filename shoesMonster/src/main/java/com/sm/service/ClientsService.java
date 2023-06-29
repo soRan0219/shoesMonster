@@ -20,4 +20,7 @@ public interface ClientsService {
 	
 	// 거래처 검색 개수 
 	public int getSearchClient(HashMap<String, Object> search) throws Exception;
+	
+	// 거래처 추가
+	public void regClient(ClientsVO cvo) throws Exception;
 }

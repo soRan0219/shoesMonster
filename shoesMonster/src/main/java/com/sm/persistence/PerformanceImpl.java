@@ -107,19 +107,21 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	// ==========================================================================
 	
-
+	// 원자재관리 리스트 총 갯수
 	@Override
 	public int countRaw() {
 		logger.debug(" 원자재관리 리스트 갯수 확인 ");
 		return sqlSession.selectOne(NAMESPACE + ".countRaw");
 	}
-
+	
+	// 원자재 관리 전체 리스트
 	@Override
 	public List<RawMaterialVO> readRawList(PagingVO pvo) throws Exception {
 		logger.debug(" 원자재관리 전체리스트 DAO ");
 		return sqlSession.selectList(NAMESPACE + ".readRaw", pvo);
 	}
-
+	
+	// 원자재관리 검색 갯수
 	@Override
 	public int countRaw(RawMaterialVO vo) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -133,7 +135,8 @@ public class PerformanceImpl implements PerformanceDAO {
 
 		return sqlSession.selectOne(NAMESPACE + ".countSearchRaw", data);
 	}
-
+	
+	// 원자재관리 검색리스트
 	@Override
 	public List<RawMaterialVO> readRawList(RawMaterialVO vo, PagingVO pvo) throws Exception {
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -146,12 +149,14 @@ public class PerformanceImpl implements PerformanceDAO {
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchRaw", data);
 	}
-
+	
+	// 원자재관리 데이터 추가
 	@Override
 	public void insertRawList(RawMaterialVO raw) {
 		sqlSession.insert(NAMESPACE + ".rawIn", raw);
 	}
-
+	
+	// 원자재관리 데이터 삭제
 	@Override
 	public void deleteRaw(List<String> checked) throws Exception {
 		logger.debug("##### DAO: deleteRaw() 호출");
@@ -163,25 +168,26 @@ public class PerformanceImpl implements PerformanceDAO {
 			String raw_code = it.next();
 			result += sqlSession.delete(NAMESPACE + ".deleteRaw", raw_code);
 		}
-
 		logger.debug("##### DAO: delete 결과 ===> " + result);
-
 	}
 
 	// ==========================================================================
-
+	
+	// 소요량관리 전체 갯수
 	@Override
 	public int countReq() {
 		logger.debug(" 소요량관리 리스트 갯수 확인 ");
 		return sqlSession.selectOne(NAMESPACE + ".countReq");
 	}
-
+	
+	// 소요량관리 전체리스트
 	@Override
 	public List<RequirementsVO> readReqList(PagingVO pvo) throws Exception {
 		logger.debug(" 소요량관리 전체리스트 DAO ");
 		return sqlSession.selectList(NAMESPACE + ".readReq", pvo);
 	}
-
+	
+	// 소요량 검색 갯수
 	@Override
 	public int countReq(RequirementsVO vo) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -191,7 +197,8 @@ public class PerformanceImpl implements PerformanceDAO {
 		data.put("prod_code", vo.getProd_code());
 		return sqlSession.selectOne(NAMESPACE + ".countSearchReq", data);
 	}
-
+	
+	// 소요량 검색 리스트
 	@Override
 	public List<RequirementsVO> readReqList(RequirementsVO vo, PagingVO pvo) throws Exception {
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -204,13 +211,15 @@ public class PerformanceImpl implements PerformanceDAO {
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchReq", data);
 	}
-
+	
+	// 소요량 데이터 추가
 	@Override
 	public void insertReqList(RequirementsVO req) {
 		sqlSession.insert(NAMESPACE + ".reqIn", req);
 
 	}
-
+	
+	// 소요량 데이터 삭제
 	@Override
 	public void deleteReq(List<String> checked) throws Exception {
 		logger.debug("##### DAO: deleteRaw() 호출");
@@ -225,6 +234,18 @@ public class PerformanceImpl implements PerformanceDAO {
 
 		logger.debug("##### DAO: delete 결과 ===> " + result);
 
+	}
+	
+	// 소요량관리 수정 시 기존데이터 가져가기
+	@Override
+	public RequirementsVO getReq(String req_code) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".readReqOne", req_code);
+	}
+
+	// 소요량관리 수정
+	@Override
+	public void updateReq(RequirementsVO uvo) throws Exception {
+		sqlSession.update(NAMESPACE + ".updateReq", uvo);
 	}
 
 	// ==========================================================================
