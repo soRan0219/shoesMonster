@@ -201,7 +201,7 @@
 			//수정버튼 클릭
 			$('#modify').click(function() {
 				event.preventDefault();
-				$('#add').attr("disabled", true);
+				$('#addButton').attr("disabled", true);
 				$('#delete').attr("disabled", true);
 
 				//행 하나 클릭했을 때	

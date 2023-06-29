@@ -5,9 +5,14 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>		
-    	
-		 // 팝업 옵션
+<script>		
+	 	//input으로 바꾸기 
+		function inputCng(obj, type, name, value) {
+			var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+			obj.html(inputBox);
+		} //inputCng	
+    
+		// 팝업 옵션
 		const popupOpt = "top=60,left=140,width=600,height=600";
 	
 		//검색 팝업
@@ -35,7 +40,8 @@
                     '<td><input type="text" name="reqs[' + counter + '].req_code " required></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].prod_code" id= "prod_code"></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name"></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name"></td>' +
+                    '<td><input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name"></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_dan"></td>' +
                     '<td></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_note"></td>' +
@@ -141,10 +147,12 @@
 			}); //delete click
 			
 			/////////////// 수정 //////////////////////////////
+			var isExecuted = false;
+			
 			//수정버튼 클릭
 			$('#modify').click(function() {
 				event.preventDefault();
-				$('#add').attr("disabled", true);
+				$('#addButton').attr("disabled", true);
 				$('#delete').attr("disabled", true);
 
 				//행 하나 클릭했을 때	
@@ -181,7 +189,7 @@
 										data.prod.prod_name,
 										data.raw.raw_name,
 										data.req_dan,
-										data.sum,
+										data.req_dan,
 										data.req_note,
 										];
 								
@@ -190,10 +198,10 @@
 								var names = [
 										"req_code",
 										"prod_code",
-										"prod.prod_name",
-										"raw.raw_name",
+										"prod_name",
+										"raw_name",
 										"req_dan",
-										"",
+										"req_dan",
 										"req_note",
 										];
 		
@@ -299,8 +307,8 @@
 					<tr>
 						<td></td>
          			    <td id="reqCode">${vo.req_code }</td>
-						<td>${vo.prod_code }</td>
-						<td>${vo.prod.prod_name }</td>
+         			    <td >${vo.prod_code }</td>
+						<td id="prodName">${vo.prod.prod_name }</td>
 						<td>${vo.raw.raw_name }</td>
 						<td>${vo.req_dan }</td>
 						<td> </td>

@@ -85,12 +85,12 @@
 	</delete>
 	<!-- 품목관리 삭제 -->
 
-	<!-- 품목관리 조회 -->
+	<!-- 품목관리 수정 시 조회 -->
 	<select id="readProdOne" resultType="ProductVO">
 		SELECT * FROM product WHERE
 		prod_code=#{prod_code}
 	</select>
-	<!-- 품목관리 조회 -->
+	<!-- 품목관리 수정 시 조회 -->
 
 	<!-- 품목관리 수정 -->
 	<update id="updateProd">
@@ -306,6 +306,28 @@
 		WHERE req_code=#{req_code}
 	</delete>
 	<!-- 소요량관리 삭제 -->
+	
+	<!-- 소요량관리 수정 시 조회 -->
+	<select id="readReqOne" resultMap="requirements" resultType="RequirementsVO">
+		SELECT r.*,p.prod_name ,rm.raw_name
+		FROM requirement r
+		join
+		product p on p.prod_code = r.prod_code
+		JOIN raw_material rm on
+		r.raw_code = rm.raw_code
+		WHERE
+		req_code=#{req_code}
+	</select>
+	<!-- 소요량관리 수정 시 조회 -->
+
+	<!-- 소요량관리 수정 -->
+	<update id="updateReq">
+		UPDATE requirement
+		SET req_code=#{req_code},prod_code=#{prod_code},raw_code=#{raw_code},req_dan=#{req_dan},
+		req_note=#{req_note}
+		WHERE req_code=#{req_code}
+	</update>
+	<!-- 소요량관리 수정 -->
 
 	<!-- //////////////////////////////////////////////////////////////// -->
 

@@ -154,6 +154,18 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public void removeReq(List<String> checked) throws Exception {
 		pdao.deleteReq(checked);
 	}
+	
+	// 소요량관리 수정 시 기존 데이터 가져가기
+	@Override
+	public RequirementsVO getReq(String Req_code) throws Exception {
+		return pdao.getReq(Req_code);
+	}
+
+	// 소요량관리 수정
+	@Override
+	public void modifyReq(RequirementsVO uvo) throws Exception {
+		pdao.updateReq(uvo);
+	}
 	// 라인=======================================================================
 	
 	// 라인 조회

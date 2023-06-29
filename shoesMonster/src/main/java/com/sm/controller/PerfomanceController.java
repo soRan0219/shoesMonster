@@ -292,30 +292,30 @@ public class PerfomanceController {
 		return "redirect:/performance/requirement";
 	} // deleteRequirement()
 	
-	// 품목관리 조회 POST
+	// 소요량관리 조회 POST
 		@ResponseBody
 		@RequestMapping(value = "/reqOne", method = RequestMethod.POST)
-		public ProductVO getreq(@RequestBody ProductVO vo) throws Exception {
-			logger.debug("@@@@@ CONTROLLER: getProd() 호출");
-			logger.debug("@@@@@ CONTROLLER: prod_Code = " + vo.getProd_code());
+		public RequirementsVO getreq(@RequestBody RequirementsVO vo) throws Exception {
+			logger.debug("@@@@@ CONTROLLER: getreq() 호출");
+			logger.debug("@@@@@ CONTROLLER: req_Code = " + vo.getReq_code());
 			
 			//서비스 - 품목관리 정보 가져오기
-			ProductVO preVO = service.getProd(vo.getProd_code());
+			RequirementsVO preVO = service.getReq(vo.getReq_code());
 			logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
 			
 			return preVO;
 		} //getProd()
 		
-		//품목관리 수정 
+		//소요량관리 수정 
 		@RequestMapping(value = "/reqModify", method = RequestMethod.POST)
-		public String modifyreq(/*@RequestBody */ProductVO uvo) throws Exception {
-			logger.debug("@@@@@ CONTROLLER: modifyProd() 호출");
+		public String modifyreq(RequirementsVO uvo) throws Exception {
+			logger.debug("@@@@@ CONTROLLER: modifyreq() 호출");
 			logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
 			
 			//서비스 - 작업지시 수정
-			service.modifyProd(uvo);
+			service.modifyReq(uvo);
 			
-			return "redirect:/performance/product";
+			return "redirect:/performance/requirement";
 		} //modifyWorkOrder()
 
 	// =====================================================================================
