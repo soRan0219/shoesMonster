@@ -62,8 +62,10 @@ public class stockController {
 		   (rvo.getRaw_order_num() != null && !rvo.getRaw_order_num().equals("")) || 
 		   (rvo.getRawMaterial().getRaw_name() != null && !rvo.getRawMaterial().getRaw_name().equals(""))) {
 			
+
 			// 게시물 총 개수
 	        int count1 = ro_service.count1(rvo);
+
 	         
 	        List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo, rvo);
 	        logger.debug("@@@@@@@@@@@@@@ : " + vo);
@@ -135,82 +137,51 @@ public class stockController {
     //http://localhost:8080/stock/In_material
 	//http://localhost:8088/stock/In_material
 	@RequestMapping(value = "/In_material", method = RequestMethod.GET)
-	public void In_matPage(HttpServletRequest request, Model model , In_materialVO ivo ) throws Exception {
+    public void In_matPage(HttpServletRequest request, Model model , Raw_orderVO rvo ,PageVO vo) throws Exception {
 
-			
-		if(ivo.getIn_num() != null ||  ivo.getRaw_mat().getRaw_name() != null
-				|| ivo.getClients().getClient_actname() != null ) {
-			
-			int count = service.count(ivo);
+            
+        if((rvo.getClients().getClient_actname() != null && !rvo.getClients().getClient_actname().equals("")) ||
+                   (rvo.getRaw_order_num() != null && !rvo.getRaw_order_num().equals("")) || 
+                   (rvo.getRawMaterial().getRaw_name() != null && !rvo.getRawMaterial().getRaw_name().equals(""))) {
+                    
+                    // 게시물 총 개수
+                    int count1 = ro_service.count1(rvo);
+                     
+                    List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo, rvo);
+                    logger.debug("@@@@@@@@@@@@@@ : " + vo);
+                    logger.debug("@@@@@@@@@@@@@@ : " + ro_List);
+                     
+                    BottomPaging bp = new BottomPaging();
+                    bp.setPageVO(vo);
+                    bp.setTotalCount(count1);
+                    logger.debug("@@@@@@@@@@@@@@ : " + bp);
+                    
+                    model.addAttribute("ro_List", ro_List);
+                    model.addAttribute("count1", count1);
+                    model.addAttribute("bp", bp);
+                    
+                } else {
+                    
+                
+                    List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo);
+                    
+                    int count1 = ro_service.count1();
+                    
+                    BottomPaging bp = new BottomPaging();
+                    bp.setPageVO(vo);
+                    bp.setTotalCount(count1);
+                    
+                    model.addAttribute("ro_List", ro_List);
+                    model.addAttribute("count1", count1);
+                    model.addAttribute("bp", bp);
+                
+                }
 
-			int postNum = 30;
-
-			// 하단 페이지 번호
-//     	        int pageNum = (int) Math.ceil((double) count / postNum);
-			String pageNum = request.getParameter("num");
-			if (pageNum == null) {
-				pageNum = "1";
-			}
-
-			int currentPage = Integer.parseInt(pageNum);
-			int displayPost = (currentPage - 1) * postNum;
-
-			// 페이징 처리 2 - 하단
-			int pageCount = count / postNum + (count % postNum == 0 ? 0 : 1);
-			int pageBlock = 2;
-
-			// 페이지 번호
-			int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
-			int endPage = startPage + pageBlock - 1;
-			if (endPage > pageCount) {
-				endPage = pageCount;
-			}
-
-			List<In_materialVO> In_materialList = service.getIn_matPage(displayPost, postNum ,ivo);
-			model.addAttribute("In_materialList", In_materialList);
-			model.addAttribute("startPage", startPage);
-			model.addAttribute("endPage", endPage);
-			model.addAttribute("pageBlock", pageBlock);
-			model.addAttribute("pageNum", pageNum);
-			model.addAttribute("count", count);
-			
-		}else {
-		
-			int count = service.count();
-
-			int postNum = 30;
-
-			// 하단 페이지 번호
-//     	        int pageNum = (int) Math.ceil((double) count / postNum);
-			String pageNum = request.getParameter("num");
-			if (pageNum == null) {
-				pageNum = "1";
-			}
-
-			int currentPage = Integer.parseInt(pageNum);
-			int displayPost = (currentPage - 1) * postNum;
-
-			// 페이징 처리 2 - 하단
-			int pageCount = count / postNum + (count % postNum == 0 ? 0 : 1);
-			int pageBlock = 2;
-
-			// 페이지 번호
-			int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
-			int endPage = startPage + pageBlock - 1;
-			if (endPage > pageCount) {
-				endPage = pageCount;
-			}
-
-			List<In_materialVO> In_materialList = service.getIn_matPage(displayPost, postNum);
-			model.addAttribute("In_materialList", In_materialList);
-			model.addAttribute("startPage", startPage);
-			model.addAttribute("endPage", endPage);
-			model.addAttribute("pageBlock", pageBlock);
-			model.addAttribute("pageNum", pageNum);
-			model.addAttribute("count", count);
-		}
      
-	}
+    }
+	
+	
+	
     // 입고 페이징
     
     ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
@@ -227,7 +198,7 @@ public class stockController {
                 int count3 = s_service.count3(wvo);
                 
                 // 한 페이지에 출력할 게시물 개수
-                int pageSize = 30;
+                int pageSize = 1;
                 
                 String pageNum = request.getParameter("num");
                 if(pageNum == null) {
@@ -262,7 +233,7 @@ public class stockController {
                 int count3 = s_service.count3();
                 
                 // 한 페이지에 출력할 게시물 개수
-                int pageSize = 30;
+                int pageSize = 1;
                 
                 String pageNum = request.getParameter("num");
                 if(pageNum == null) {

@@ -72,11 +72,11 @@
 							<c:when test="${out.orders.order_finish == 'N'}">
 								<c:choose>
 									<c:when test="${out.out_mat.out_YN == '출고 완료'}">
-                  		출고 완료
-                </c:when>
+                  				출고 완료
+            		   		 </c:when>
 									<c:otherwise>
-               		   출고 처리
-                </c:otherwise>
+               						   출고 처리
+              				  		</c:otherwise>
 								</c:choose>
 							</c:when>
 							<c:when test="${out.orders.order_finish == 'Y'}">

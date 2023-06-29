@@ -84,21 +84,16 @@ public class In_materialImpl implements In_materialDAO {
 		return sqlSession.selectList(NAMESPACE+".in_matPageSearch",data);
 	}
 
+	@Override
+	public void updateIn(In_materialVO uvo) throws Exception {
+		int result = sqlSession.update(NAMESPACE+".updateIn", uvo);
+		if(result == 1) {
+			logger.debug(uvo.getIn_num() + "번 글정보 수정 완료 !");
+		}
+	}
 
+	
 
-//	@Override
-//	public List<In_materialVO> In_matSearch(
-//			int displayPost, int postNum, String keyword) throws Exception {
-//		
-//		HashMap<String, Object> data =new HashMap<String, Object>();
-//		
-//		data.put("displayPost", displayPost);
-//		data.put("postNum", postNum);
-//		data.put("keyword", keyword);
-//		
-//		
-//		return sqlSession.selectList(NAMESPACE+".In_material",data);
-//	}
 
 	
 }
