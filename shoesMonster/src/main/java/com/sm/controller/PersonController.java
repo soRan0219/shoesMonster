@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -240,7 +241,26 @@ public class PersonController {
 		return "redirect:/person/Clients";
 	} // 거래처 추가
 	
+	// 거래처 삭제
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
+	public String deleteClient(@RequestParam(value="checked[]") List<String> checked) throws Exception {
+		logger.debug("@@@ cnotroller : deleteClient() 호출 @@@");
+		
+		clService.deleteClient(checked);
+		
+		return "redirect:/person/Clients";
+	}
 	
+	// 거래처 수정
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public String updateClient(ClientsVO cvo) throws Exception {
+		logger.debug("@@@ cnotroller : updateClient() 호출 @@@");
+		logger.debug("@@@ cnotroller cvo : " + cvo);
+		
+		clService.updateClient(cvo);
+		
+		return "redirect:/person/Clients";
+	}
 	
 	
 	
