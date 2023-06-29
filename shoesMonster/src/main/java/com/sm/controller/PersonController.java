@@ -92,7 +92,18 @@ public class PersonController {
 			model.addAttribute("empList", empList);
 			model.addAttribute("pm", pm);
 		}// else(모두)
-	}
+	}// empInfoGET()
+	
+	// 사원 추가
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String addEmployees(EmployeesVO vo) throws Exception {
+		logger.debug(" addEmployees() 호출@@@@@ ");
+		logger.debug(" vo : " + vo);
+		
+		empService.regEmployees(vo);
+		
+		return "redirect:/person/empinfo";
+	}// addEmployees()
 	
 	// http://localhost:8088/person/management
 	// 사원 권한 정보 조회 (GET)
