@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
 import com.sm.domain.LineWhPageVO;
@@ -144,7 +143,7 @@ public class PerfomanceController {
 		service.modifyProd(uvo);
 		
 		return "redirect:/performance/product";
-	} //modifyWorkOrder()
+	} //modifyProd()
 
 	// =====================================================================================
 
@@ -225,6 +224,32 @@ public class PerfomanceController {
 
 		return "redirect:/performance/rawMaterial";
 	} // deleteRawMaterial()
+	
+	// 원자재관리 조회 POST
+	@ResponseBody
+	@RequestMapping(value = "/rawOne", method = RequestMethod.POST)
+	public RawMaterialVO getRaw(@RequestBody RawMaterialVO vo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: getRaw() 호출");
+		logger.debug("@@@@@ CONTROLLER: raw_Code = " + vo.getRaw_code());
+
+		// 서비스 - 원자재관리 정보 가져오기
+		RawMaterialVO preVO = service.getRaw(vo.getRaw_code());
+		logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
+
+		return preVO;
+	} // getProd()
+
+	// 원자재관리 수정
+	@RequestMapping(value = "/rawModify", method = RequestMethod.POST)
+	public String modifyRaw(RawMaterialVO uvo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: modifyRaw() 호출");
+		logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
+
+		// 서비스 - 원자재관리 수정
+		service.modifyRaw(uvo);
+
+		return "redirect:/performance/rawMaterial";
+	} // modifyRaw()
 
 	// =====================================================================================
 
@@ -307,7 +332,7 @@ public class PerfomanceController {
 			logger.debug("@@@@@ CONTROLLER: getreq() 호출");
 			logger.debug("@@@@@ CONTROLLER: req_Code = " + vo.getReq_code());
 			
-			//서비스 - 품목관리 정보 가져오기
+			//서비스 - 소요량관리 정보 가져오기
 			RequirementsVO preVO = service.getReq(vo.getReq_code());
 			logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
 			
@@ -320,7 +345,7 @@ public class PerfomanceController {
 			logger.debug("@@@@@ CONTROLLER: modifyreq() 호출");
 			logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
 			
-			//서비스 - 작업지시 수정
+			//서비스 - 소요량관리 수정
 			service.modifyReq(uvo);
 			
 			return "redirect:/performance/requirement";

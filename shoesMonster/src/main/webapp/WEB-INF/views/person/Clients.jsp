@@ -12,6 +12,65 @@
 	
 	// 거래처 검색
 	
+	// 팝업으로 열었을 때
+    function popUp() {
+    	var queryString = window.location.search;
+    	var urlParams = new URLSearchParams(queryString);
+    	var isPop = urlParams.get("input");
+    	
+    	if(isPop==="null") {
+    		isPop = null;
+    	}
+    	$('#pagination a').each(function(){
+    		
+       		var prHref = $(this).attr("href");
+       			
+    			var newHref = prHref + "&input=" + isPop;
+    			$(this).attr("href", newHref);
+    			
+    	}); //페이징 요소	
+    	
+    	
+    	$('#input').val(isPop);
+    	
+    	if(isPop!=null && isPop!="") {
+    		
+    		$('#addButton').hide();
+        	$('#updateButton').hide();
+        	$('#deleteButton').hide();
+        	$('#cancelButton').hide();
+        	$('#saveButton').hide();
+        	
+       		$('table tr:not(:first-child)').click(function(){
+       			$(this).css('background', '#ccc');
+        		
+            		var client_code = $(this).find('#client_code').text();
+            		var client_actname = $(this).find('#client_actname').text();
+            		var number = isPop.match(/\d+/);
+            		
+         			$('#'+isPop, opener.document).val(client_code);
+         			if(number !=null){
+         			$('#client_actname'+number, opener.document).val(client_actname);
+         			} else {
+         			$('#client_actname', opener.document).val(client_actname);
+         			}
+        		
+        		window.close();
+        	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+        		
+         		
+    		} //if 
+    		
+    		else {
+    			console.log("팝업아님");
+    	} //if(팝업으로 열었을 때)
+    		
+    } //popUp()
+    
+    $(document).ready(function() {
+		popUp();
+	});
+	
 	
 	
 </script>
@@ -22,6 +81,7 @@
 	<h1>거래처 정보 관리</h1>
 
 	<form method="get">
+		<input type="hidden" name="input" id="input" value="${input }">
 		거래처코드
 		<input type="text" name="client_code"> 
 		거래처명
@@ -73,8 +133,8 @@
 			<c:if test="${vo.client_type == '전체' }">
 				<tr>
 					<td>${i.count }</td>
-					<td>${vo.client_code}</td>
-					<td>${vo.client_actname}</td>
+					<td id="client_code">${vo.client_code}</td>
+					<td id="client_actname">${vo.client_actname}</td>
 					<td>${vo.client_type}</td>
 					<td>${vo.client_number}</td>
 					<td>${vo.client_sort}</td>
@@ -93,8 +153,8 @@
 			<c:if test="${vo.client_type == '발주처' }">
 				<tr>
 					<td>${i.count }</td>
-					<td>${vo.client_code}</td>
-					<td>${vo.client_actname}</td>
+					<td id="client_code">${vo.client_code}</td>
+					<td id="client_actname">${vo.client_actname}</td>
 					<td>${vo.client_type}</td>
 					<td>${vo.client_number}</td>
 					<td>${vo.client_sort}</td>
@@ -113,8 +173,8 @@
 			<c:if test="${vo.client_type == '수주처' }">
 				<tr>
 					<td>${i.count }</td>
-					<td>${vo.client_code}</td>
-					<td>${vo.client_actname}</td>
+					<td id="client_code">${vo.client_code}</td>
+					<td id="client_actname">${vo.client_actname}</td>
 					<td>${vo.client_type}</td>
 					<td>${vo.client_number}</td>
 					<td>${vo.client_sort}</td>
@@ -133,8 +193,8 @@
 			<c:if test="${vo.client_type == '협력사' }">
 				<tr>
 					<td>${i.count }</td>
-					<td>${vo.client_code}</td>
-					<td>${vo.client_actname}</td>
+					<td id="client_code">${vo.client_code}</td>
+					<td id="client_actname">${vo.client_actname}</td>
 					<td>${vo.client_type}</td>
 					<td>${vo.client_number}</td>
 					<td>${vo.client_sort}</td>
