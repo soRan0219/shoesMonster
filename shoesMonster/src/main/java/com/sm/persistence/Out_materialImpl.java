@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sm.domain.Out_materialVO;
 import com.sm.domain.ProductVO;
+import com.sm.domain.Raw_orderVO;
 
 @Repository
 public class Out_materialImpl implements Out_materialDAO {
@@ -69,6 +70,17 @@ public class Out_materialImpl implements Out_materialDAO {
 
 	
 		return sqlSession.selectList(NAMESPACE+".searchOut",data);
+	}
+
+	@Override
+	public void omButton(ProductVO vo) throws Exception {
+		int result = sqlSession.insert(NAMESPACE + ".omButton", vo);
+        logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result : " + result);
+        
+        if(result != 0) {
+            logger.debug("출고 완료");
+        }
+		
 	}
 
 	

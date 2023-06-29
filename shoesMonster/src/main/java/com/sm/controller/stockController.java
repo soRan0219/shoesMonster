@@ -79,6 +79,9 @@ public class stockController {
 			model.addAttribute("ro_List", ro_List);
 			model.addAttribute("count1", count1);
 			model.addAttribute("bp", bp);
+			model.addAttribute("rvo", rvo);
+	
+			
 			
 		} else {
 			
@@ -353,6 +356,24 @@ public class stockController {
 
     		}
     	}
+    	
+    	// 출고 처리 버튼
+    	//http://localhost:8080/stock/Out_material
+    	@RequestMapping(value = "/Out_material", method = RequestMethod.POST)
+    	public void omRegist(ProductVO vo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+    	    logger.debug("@@@@@@@@@@ 출고 처리 버튼 컨트롤러 @@@@@@@@@@");
+
+    	    String emp_id = (String) session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
+    	    vo.getOut_mat().setEmp_id(emp_id); // 담당자 설정
+
+    	    o_service.omButton(vo); // 출고 처리 메서드 호출
+    	    rttr.addFlashAttribute("result", "omButton");
+
+//    	    return "redirect:/stock/Out_material";
+    	}
+    	// 출고 처리 버튼
+    	
+    	
     	
     	// 출고 검색
 //    	@RequestMapping(value="/Out_material",method=RequestMethod.POST)
