@@ -85,10 +85,6 @@
 			$('#modify').attr("disabled", true);
 			$('#delete').attr("disabled", true);
 			
-			//생산실적코드 부여(임시로 그냥 1 증가로 해놓음)
-			let pCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
-			pCodeNum++;
-			
 			let today = getToday();
 			
 			if($(this).hasClass('true')) {
@@ -109,11 +105,11 @@
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='line_code' id='line_code' required>";
+				tbl += "  <input type='text' name='line_code' id='line_code' required readonly>";
 				tbl += " </td>";
 				// 품번
 				tbl += " <td>";
-				tbl += "  <input type='text' name='prod_code' id='prod_code' required>";
+				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly>";
 				tbl += " </td>";
 				// 실적일
 				tbl += " <td>";
@@ -123,17 +119,14 @@
 				tbl += " </td>";
 				// 실적수량
 				tbl += " <td>";
-// 				tbl += "  <input type='text' name='perform_qt' id='perform_qt' required>";
 				tbl += "  <input type='number' name='perform_qt' id='perform_qt' required>";
 				tbl += " </td>";
 				// 양품수
 				tbl += " <td>";
-// 				tbl += "  <input type='text' name='perform_fair' id='perform_fair' required>";
 				tbl += "  <input type='number' name='perform_fair' id='perform_fair' required>";
 				tbl += " </td>";
 				// 불량수
 				tbl += " <td>";
-// 				tbl += "  <input type='text' name='perform_defect' id='perform_defect' required>";
 				tbl += "  <input type='number' name='perform_defect' id='perform_defect' required>";
 				tbl += " </td>";
 				// 불량사유
@@ -153,28 +146,17 @@
 					openWindow("work", "work_code");
 				}); //work_code click
 				
-				
-				
-				
-				
-				
-				
-				let maxVal = $('#perform_qt').val();
-				$('#perform_qt').attr("max", maxVal);
-// 				$('#perform_fair').attr("max", maxVal);
-// 				$('#perform_defect').attr("max", maxVal);
-				$('input[type=number]').attr("max", maxVal);
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+				//실적수량, 양품수, 불량수 작업지시 수량보다 적게
+				$("input[type='number']").on('change', function() {
+					var inserted = Number($(this).val());
+					var maxVal = Number($(this).attr("max"));
+					
+					if(inserted > maxVal) {
+						alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+						$(this).val("");
+					}
+					
+				}); //input type=number onchange
 				
 				
 				$(this).removeClass('true');
@@ -286,6 +268,11 @@
 	
 								if (idx > 0) {
 									inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+									
+									if(idx>=6 && idx<=8) {
+										inputCng($(this), "number", names[idx-1], preVOs[idx-1]);
+									}
+									
 								} //라인코드부터 다 수정 가능하게
 	
 							}); // self.find(~~)
@@ -295,6 +282,18 @@
 							$('#work_code').click(function(){
 								openWindow("work", "work_code");
 							}); //work_code click
+							
+							//실적수량, 양품수, 불량수 작업지시 수량보다 적게
+							$("input[type='number']").on('change', function() {
+								var inserted = Number($(this).val());
+								var maxVal = Number($(this).attr("max"));
+								
+								if(inserted > maxVal) {
+									alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+									$(this).val("");
+								}
+								
+							}); //input type=number onchange
 							
 						},
 						error : function(data) {

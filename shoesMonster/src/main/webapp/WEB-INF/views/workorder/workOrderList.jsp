@@ -87,6 +87,7 @@
        			$(this).css('background', '#ccc');
         		
        			if(isPop==="work_code") {
+       				//생산실적(performList)에서 열었을 때
 	        		var workCode = $(this).find('#workCode').text();
 	        		var lineCode = $(this).find('#lineCode').text();
 	        		var prodCode = $(this).find('#prodCode').text();
@@ -95,7 +96,10 @@
 	        		$('#'+isPop, opener.document).val(workCode);
 	        		$('#line_code', opener.document).val(lineCode);
 	        		$('#prod_code', opener.document).val(prodCode);
-	        		$('#perform_qt', opener.document).val(workQt);
+	        		
+	        		//실적수량, 양품수, 불량수 작업지시량보다 많을 수 없게 설정
+	        		$("input[type='number']", opener.document).attr("max", workQt);
+	        		$("input[type='number']", opener.document).attr("placeholder", workQt);
 	        		
        			} else {
 	        		var workCode = $(this).find('#workCode').text();
