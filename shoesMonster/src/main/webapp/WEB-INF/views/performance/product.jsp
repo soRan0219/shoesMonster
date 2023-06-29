@@ -46,10 +46,15 @@
         			
        			var prodCode = $(this).find('#prodCode').text();
      			var prodName = $(this).find('#prodName').text();
-         			
-     			$('#prod_code', opener.document).val(prodCode);
+     			
+     			var number = isPop.match(/\d+/);
+     			$('#'+isPop, opener.document).val(prodCode);
+     			if(number !=null){
+     			$('#prod_name'+number, opener.document).val(prodName);
+     			} else {
      			$('#prod_name', opener.document).val(prodName);
-         			
+     			}
+     			
          		window.close();
          	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
         		
@@ -58,23 +63,17 @@
     	} //if(팝업으로 열었을 때)
     		
 	} //popUp()
-    	
-	
-		
 		
 		//jQuery
         $(document).ready(function() {
         	
-
         	popUp();
-			
         	
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
     			$(this).find('td:first').text(index);
     		});
 
-        	
             var counter = 0;
             
             // 추가 버튼 클릭 시 row 생성
