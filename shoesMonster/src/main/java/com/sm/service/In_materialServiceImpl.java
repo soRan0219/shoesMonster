@@ -60,6 +60,13 @@ public class In_materialServiceImpl implements In_materialService{
 	}
 
 
+	@Override
+	public void updateIn(In_materialVO uvo) throws Exception {
+		
+		idao.updateIn(uvo);
+	}
+
+
 
 
 	

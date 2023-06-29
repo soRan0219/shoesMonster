@@ -21,8 +21,8 @@ public interface In_materialDAO {
 		
 		public List<In_materialVO> In_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
 		
-	
-
+		// 출고 , 미출고 수정
+		public void updateIn(In_materialVO uvo) throws Exception;
 }
 
 
