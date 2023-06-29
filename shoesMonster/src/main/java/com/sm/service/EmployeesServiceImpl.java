@@ -44,7 +44,7 @@ public class EmployeesServiceImpl implements EmployeesService{
 	}
 
 	@Override
-	public int getSearchEmployees(HashMap<String, Object> search) throws Exception {
+	public List<EmployeesVO> getSearchEmployees(HashMap<String, Object> search) throws Exception {
 		return empdao.getSearchEmployees(search);
 	}
 

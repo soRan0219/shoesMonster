@@ -40,7 +40,7 @@ $(function() {
     }
 	
 	//추가 버튼
-	$('#add').click(function() {
+	$('#empAdd').click(function() {
 		$('#modify').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 		
@@ -144,27 +144,25 @@ $(function() {
 	<div style="margin: 5% 0% 0% 12%; width: 88%;">
 		<h1>사원 관리</h1>
 		<form action="" method="get">
-			<fieldset>
-	       		<input type="hidden" name="input" id="input" value="${input }">
-	       		<label>사원번호</label>
-	        		<input type="text" name="search_empid" id="search_empid">
-	        	<label>사원명</label>
-	        		<input type="text" name="search_empname" id="search_empname">
-	        	<label>부서</label>
-	        		  <select name="search_empdepartment">           
-					     <option selected value="전체">전체</option>    
-					     <option value="영업팀">영업팀</option>    
-					     <option value="생산팀">생산팀</option>
-					     <option value="인사팀">인사팀</option>
-					  </select>
-				<input type="submit" value="조회"> 
-			</fieldset>
+       		<input type="hidden" name="input" id="input" value="${input }">
+       		사원번호
+        	<input type="text" name="search_empid" id="search_empid">
+        	사원명
+        	<input type="text" name="search_empname" id="search_empname">
+        	부서
+       		<select name="search_empdepartment">           
+				<option selected value="전체">전체</option>    
+			    <option value="영업팀">영업팀</option>    
+			    <option value="생산팀">생산팀</option>
+			    <option value="인사팀">인사팀</option>
+			</select>
+			<input type="submit" value="조회"> 
 		</form>
 	</div>
 	
 	<div style="margin: 5% 12% 0% 12%;">
 		<div style="text-align-last: right;">
-			<button id="add" class="true">추가</button>
+			<button id="empAdd" class="true">추가</button>
 			<button id="modify">수정</button>
 			<button id="delete" class="true">삭제</button>
 			<button type="reset" id="cancle">취소</button>
@@ -201,6 +199,7 @@ $(function() {
 						</tr>
 					</thead>
 					<c:forEach var="vo" items="${empList }" varStatus="i">
+						<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀'}">
 						<tr>
 							<td>${i.count}</td>
 							<td>${vo.emp_id}</td>
@@ -215,6 +214,7 @@ $(function() {
 								<button class="details-btn" data-id="${emp_id }">상세보기</button>
 							</td>
 						</tr>
+						</c:if>
 					</c:forEach>
 				</table>
 			</form>

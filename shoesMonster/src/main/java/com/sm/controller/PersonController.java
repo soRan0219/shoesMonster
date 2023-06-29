@@ -46,7 +46,7 @@ public class PersonController {
 	// http://localhost:8088/person/empinfo
 	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
-	public void empInfoGET(Model model, LineWhPageVO pvo,
+	public void empInfoGET(Model model, LineWhPageVO pvo, 
 			@RequestParam HashMap<String, Object> search) throws Exception {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
@@ -95,7 +95,7 @@ public class PersonController {
 	}// empInfoGET()
 	
 	// 사원 추가
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/empAdd", method = RequestMethod.POST)
 	public String addEmployees(EmployeesVO vo) throws Exception {
 		logger.debug(" addEmployees() 호출@@@@@ ");
 		logger.debug(" vo : " + vo);

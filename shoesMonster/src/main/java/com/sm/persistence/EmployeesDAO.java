@@ -27,7 +27,7 @@ public interface EmployeesDAO {
 	public int getTotalEmployees() throws Exception;
 	
 	// 사원 검색 수
-	public int getSearchEmployees(HashMap<String, Object> search) throws Exception;
+	public List<EmployeesVO> getSearchEmployees(HashMap<String, Object> search) throws Exception;
 	
 	// 사원 추가
 	public void insertEmployees(EmployeesVO vo) throws Exception;

@@ -67,9 +67,9 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	} //getTotalEmployees()
 
 	@Override
-	public int getSearchEmployees(HashMap<String, Object> search) throws Exception {
+	public List<EmployeesVO> getSearchEmployees(HashMap<String, Object> search) throws Exception {
 		logger.debug(" getSearchEmployees() 호출@@@@@ ");
-		return sqlSession.selectOne(NAMESPACE2 + ".employeesSearchCnt", search);
+		return sqlSession.selectList(NAMESPACE2 + ".employeesSearchCnt", search);
 	} //getSearchEmployees()
 
 	@Override
