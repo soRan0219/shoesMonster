@@ -58,14 +58,17 @@
             var inYNElement = button.parentNode.previousElementSibling;
             if (button.value === "입고처리") {
                 button.value = "입고취소";
-                inYNElement.innerText = "출고완료";
+                inYNElement.innerText = "입고완료";
             } else {
                 button.value = "입고처리";
                 inYNElement.innerText = "미입고";
             }
         }
+        
+      
     </script>
 
+	<form action="" method="post">
 	<table border="1">
         <tr>
             <th>입고번호</th>
@@ -81,11 +84,9 @@
             <th>입고일</th>
             <th>담당자</th>
             <th>입고 버튼</th>
-            <th></th>
         </tr>
 
         <c:forEach var="vo" items="${ro_List }">
-
             <tr>
                 <td>${vo.in_mat.in_num }</td>
                 <td>${vo.raw_order_num }</td>
@@ -101,13 +102,13 @@
                 <td>${vo.emp_id }</td>
                  <td>${vo.in_mat.in_YN}</td>
                     <td>
-                <input type="button" value="입고처리" onclick="changeButtonValue(this)">
+                <input type="submit" value="입고처리" onclick="changeButtonValue(this)" >
                     </td>
             </tr>
         </c:forEach>
     </table>
-
-
+	
+</form>
 
 
 	<div>
