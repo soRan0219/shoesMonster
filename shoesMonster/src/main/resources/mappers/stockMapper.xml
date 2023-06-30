@@ -261,7 +261,13 @@
 	<!-- 입고 등록 -->
 
 	
-	
+	 <!-- 미입고 , 입고완료 -->
+    <update id="updateIn" parameterType="String">
+      UPDATE in_material 
+      SET in_YN = '입고완료'
+      WHERE raw_order_num = #{rawOrderNum}
+    </update>
+    <!-- 미입고 , 입고완료 -->
 	
 	
 

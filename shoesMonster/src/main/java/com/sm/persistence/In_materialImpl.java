@@ -66,7 +66,11 @@ public class In_materialImpl implements In_materialDAO {
 	}
 
 	
-	
+	@Override
+    public void updateIn(String raw_order_num) throws Exception {
+
+        sqlSession.update(NAMESPACE+".updateIn",raw_order_num);
+    }
 	
 	
 //	@Override
