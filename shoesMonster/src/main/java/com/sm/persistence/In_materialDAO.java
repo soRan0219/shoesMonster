@@ -24,6 +24,10 @@ public interface In_materialDAO {
 //		
 		// 입고등록
 		public void inInsert(Raw_orderVO rvo) throws Exception;
+		
+		// 미입고 ,입고완료
+        public void updateIn(String raw_order_num ) throws Exception;
+		
 }
 
 
