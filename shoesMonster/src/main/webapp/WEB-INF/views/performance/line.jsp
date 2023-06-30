@@ -33,6 +33,15 @@
 		obj.html(inputBox);
 	}// inputCng
 	
+	//팝업창 옵션
+	const popupOpt = "top=60,left=140,width=600,height=600";
+
+	//검색 팝업
+	function openWindow(search, inputId) {
+		var url = "/performance/lineEmpSearch?type=" + search + "&input=" + inputId;
+		var popup = window.open(url, "", popupOpt);
+	} //openWindow()
+	
 	// 팝업으로 열었을 때
 	function popUp() {
 		var queryString = window.location.search;
@@ -252,6 +261,11 @@
 					
 				}); // self.find
 				
+				// 등록자(사원) 검색
+				$('#emp_id').click(function () {
+					openWindow("emp", "emp_id");
+				}); // #emp_id click
+				
 				// 저장 -> 수정완료
 				$('#save').click(function () {
 					
@@ -425,7 +439,7 @@
 						</c:when>
 					</c:choose>
 					
-					<td id="emp_id">${vo.emp_id}</td>
+					<td>${vo.emp_id}</td>
 					<td>${vo.insert_date}</td>
 					<td>${vo.line_note}</td>
 				</tr>
