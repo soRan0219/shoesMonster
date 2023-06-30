@@ -726,7 +726,15 @@ public class PerfomanceController {
 		return "redirect:/performance/performList";
 	} //modifyPerformance()
 	
-	
+	//생산실적 현황 - 양불수
+	//http://localhost:8088/performance/performStatus
+	@RequestMapping(value = "/performStatus", method = RequestMethod.GET)
+	public void getPerformStatus(Model model) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: getPerformStatus() 호출");
+		
+		model.addAttribute("status", service.getPerformStatus());
+		
+	} //getPerformStatus()
 	
 	
 	

@@ -45,7 +45,7 @@ public class WorkOrderController {
 								@RequestParam(value = "input", required = false) Object input, 
 								Model model) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: workOrderListGET() 호출");
-		
+		logger.debug("@@@@@ CONTROLLER: search정보!!!!!!!!!!!!!!!" + search);
 		
 		//페이지 정보
 		if(search.get("pageSize")!=null) {

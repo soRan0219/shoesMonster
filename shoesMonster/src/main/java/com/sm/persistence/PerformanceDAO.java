@@ -170,6 +170,7 @@ public interface PerformanceDAO {
 	//생산실적 수정
 	public void updatePerformance(PerformanceVO uvo) throws Exception;
 	
-	
+	//생산실적 현황 - 양불수
+	public List<PerformanceVO> getPerformStatus() throws Exception;
 	
 }

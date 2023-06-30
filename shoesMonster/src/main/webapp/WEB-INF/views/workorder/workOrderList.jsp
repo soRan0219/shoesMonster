@@ -533,7 +533,7 @@
 				지시일자: <input type="text" name="search_fromDate" id="search_fromDate"> ~ 
 						  <input type="text" name="search_toDate" id="search_toDate"> 
 				<br>
-				지시상태: <input type="radio" name="search_state" id="search_state" value="전체"> 전체 
+				지시상태: <input type="radio" name="search_state" id="search_state" value="전체" checked> 전체 
 						  <input type="radio" name="search_state" id="search_state" value="지시"> 지시 
 						  <input type="radio" name="search_state" id="search_state" value="진행"> 진행 
 						  <input type="radio" name="search_state" id="search_state" value="마감"> 마감 
