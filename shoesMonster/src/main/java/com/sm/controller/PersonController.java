@@ -53,7 +53,7 @@ public class PersonController {
 	// http://localhost:8088/person/empinfo
 	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
-	public void empInfoGET(Model model, ClientPageVO cpvo, 
+	public void empInfoGET(@RequestParam(value = "input", required = false) Object input, Model model, ClientPageVO cpvo, 
 			@RequestParam HashMap<String, Object> search) throws Exception {
 
 		logger.debug(" empinfoGET() 호출@@@@@ ");
