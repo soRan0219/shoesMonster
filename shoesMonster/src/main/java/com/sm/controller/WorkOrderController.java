@@ -126,9 +126,15 @@ public class WorkOrderController {
 
 		}
 		
+		else if(type.equals("client")) {
+			return "redirect:/person/Clients?input="+input;
+		}
+		
 		else /* if(type.equals("order"))*/ {
 			return "redirect:/person/orderStatus?input="+input;
 		}
+		
+		
 	} //popUpGET()
 		
 	//작업지시 추가

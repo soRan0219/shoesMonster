@@ -170,6 +170,18 @@ public class PerformanceImpl implements PerformanceDAO {
 		}
 		logger.debug("##### DAO: delete 결과 ===> " + result);
 	}
+	
+	// 원자재관리 수정 시 기존데이터 가져가기
+	@Override
+	public RawMaterialVO getRaw(String raw_code) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".readRawOne", raw_code);
+	}
+
+	// 원자재관리 수정
+	@Override
+	public void updateRaw(RawMaterialVO uvo) throws Exception {
+		sqlSession.update(NAMESPACE + ".updateRaw", uvo);
+	}
 
 	// ==========================================================================
 	

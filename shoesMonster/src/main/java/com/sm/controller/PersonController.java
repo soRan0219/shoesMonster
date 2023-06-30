@@ -173,7 +173,7 @@ public class PersonController {
 	@RequestMapping(value="/Clients", method = RequestMethod.GET)
 	public void ClientsGET(ClientPageVO cpvo, 
 							@RequestParam HashMap<String, Object> search,
-//							@RequestParam(value="input", required = false) Object input,
+							@RequestParam(value="input", required = false) Object input,
 							Model model) throws Exception {
 		logger.debug("@@@ cnotroller : ClientsGET(Model model) 호출 @@@");
 		
@@ -210,11 +210,15 @@ public class PersonController {
 			model.addAttribute("searchClientsList", searchClientsList);
 			model.addAttribute("pm", pm);
 			
-//			if(input != null && !input.equals("")) {
-//				model.addAttribute("input", input);
-//				logger.debug("@@@ input 정보 전달 @@@");
-//			}
-		} // 검색 있을 때
+
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@ input 정보 전달 @@@");
+			}
+		} // if(검색)
+
+
+
 		
 		// 검색 없을 때
 		else {
@@ -228,11 +232,14 @@ public class PersonController {
 			model.addAttribute("searchClientsList", searchClientsList);
 			model.addAttribute("pm", pm);
 			
-//			if(input != null && !input.equals("")) {
-//				model.addAttribute("input", input);
-//				logger.debug("@@@ input 정보 전달 @@@");
-//			}
-		} // 검색 없을 때
+
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@ input 정보 전달 @@@");
+			}
+		}
+
+
 		
 		
 	} // ClientsGET()

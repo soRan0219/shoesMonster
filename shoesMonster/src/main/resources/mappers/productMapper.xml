@@ -203,6 +203,25 @@
 		WHERE raw_code=#{raw_code}
 	</delete>
 	<!-- 원자재관리 삭제 -->
+	
+	<!-- 원자재관리 수정 시 조회 -->
+	<select id="readRawOne" resultMap="rawMaterial" resultType="RawMaterialVO">
+		SELECT r.*, c.client_actname
+		from raw_material r
+		join clients c
+		on r.client_code = c.client_code
+		WHERE r.raw_code=#{raw_code}
+	</select>
+	<!-- 원자재관리 수정 시 조회 -->
+
+	<!-- 원자재관리 수정 -->
+	<update id="updateRaw">
+		UPDATE raw_material
+		SET raw_code=#{raw_code},raw_name=#{raw_name},raw_color=#{raw_color},raw_unit=#{raw_unit},
+		raw_size=#{raw_size},raw_price=#{raw_price},client_code=#{client_code},raw_note=#{raw_note}
+		WHERE raw_code=#{raw_code}
+	</update>
+	<!-- 원자재관리 수정 -->
 
 	<!-- //////////////////////////////////////////////////////////////// -->
 
