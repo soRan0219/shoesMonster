@@ -24,6 +24,8 @@ public interface In_materialService {
 		// 입고 등록
 		public void inInsert(Raw_orderVO rvo, String raw_order_num) throws Exception;
 		
+		
+		
 		// 미입고 ,출국완료
         public void updateIn(String raw_order_num) throws Exception;
 		

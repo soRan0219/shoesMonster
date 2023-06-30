@@ -16,7 +16,14 @@ public class OrderStatusVO {
 	private String oreder_note;
 	
 	private ClientsVO clients;
-	private EmployeesVO employees;
-	private ProductVO product;
+	private ProductVO prod;
+	private Out_materialVO out_mat;
+	
+	public OrderStatusVO() {
+		out_mat = new Out_materialVO();
+		prod = new  ProductVO();
+		clients = new ClientsVO();	
+	}
+	
 	
 }

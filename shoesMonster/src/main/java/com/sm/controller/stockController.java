@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sm.domain.BottomPaging;
 import com.sm.domain.ClientsVO;
 import com.sm.domain.In_materialVO;
+import com.sm.domain.OrderStatusVO;
 import com.sm.domain.Out_materialVO;
 import com.sm.domain.PageVO;
 import com.sm.domain.ProductVO;
@@ -107,13 +108,16 @@ public class stockController {
 	// 발주 목록 + 페이징 처리 - 끝
 	// 발주 등록
 	@RequestMapping(value="/raw_order", method = RequestMethod.POST)
-	public String roRegist(Raw_orderVO vo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+	public String roRegist(Raw_orderVO vo, RedirectAttributes rttr
+			, HttpSession session, HttpServletRequest request
+			, Model model ) throws Exception {
 		
 		String emp_id = (String)session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
 		
 		request.setAttribute("emp_id", emp_id);
 		
 		ro_service.roInsert(vo);
+	
 		rttr.addFlashAttribute("result", "roInsert");
 		
 		return "redirect:/stock/raw_order";
@@ -298,10 +302,10 @@ public class stockController {
     	//http://localhost:8080/stock/Out_material
     	//http://localhost:8088/stock/Out_material
     	@RequestMapping(value="/Out_material" ,method = RequestMethod.GET)
-    	public void out_matList(HttpServletRequest request, Model model, ProductVO ovo) throws Exception {
+    	public void out_matList(HttpServletRequest request, Model model, OrderStatusVO ovo) throws Exception {
 
-    		if (ovo.getClient().getClient_actname() != null
-    				|| ovo.getOut_mat().getOut_num() != null ||  ovo.getProd_name() != null) {
+    		if (ovo.getClients().getClient_actname() != null
+    				|| ovo.getOut_mat().getOut_num() != null ||  ovo.getProd().getProd_name() != null) {
 
     			logger.debug("ovo : " + ovo);
     			// 게시물 총 개수
@@ -380,6 +384,7 @@ public class stockController {
     	
     	// 출고 처리 버튼
     	//http://localhost:8080/stock/Out_material
+    	//http://localhost:8088/stock/Out_material
     	@RequestMapping(value = "/Out_material", method = RequestMethod.POST)
     	public void omRegist(ProductVO vo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception {
     	    logger.debug("@@@@@@@@@@ 출고 처리 버튼 컨트롤러 @@@@@@@@@@");
