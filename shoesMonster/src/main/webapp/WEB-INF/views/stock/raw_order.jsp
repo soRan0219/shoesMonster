@@ -54,9 +54,6 @@
 function toggleDiv(divId) {
     var listDiv = document.getElementById("list");
     var registDiv = document.getElementById("regist");
-   
-    
-    
     
     if(divId === "list"){
    	 listDiv.style.display = "block";
@@ -69,21 +66,16 @@ function toggleDiv(divId) {
    	 registDiv.style.display = "block";
     	}
     
-    
-    
-    
     }
 
- window.onload = function() {
-	  	 var listDiv = document.getElementById("list");
-	     var registDiv = document.getElementById("regist");
-	     
-	    	
-	     	listDiv.style.display = "block";
-			registDiv.style.display = "none";
-			
-};
-
+	window.onload = function() {
+		var listDiv = document.getElementById("list");
+		var registDiv = document.getElementById("regist");
+		 
+		listDiv.style.display = "block";
+		registDiv.style.display = "none";
+				
+	};
 
 </script>
 
@@ -187,6 +179,7 @@ function toggleDiv(divId) {
 		<table border="1" id="table">
 			<tr>
 				<th>발주일</th>
+				<th>거래처 코드</th>
 				<th>거래처명</th>
 				<th>품번</th>
 				<th>품명</th>
@@ -199,10 +192,11 @@ function toggleDiv(divId) {
 			</tr>
 			<tr>
 				<td><input type="text" name="raw_order_date" value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>" readonly></td>
+				<td onclick="roPopup();"><input type="text" name="client_code" id="client_code" readonly></td>
 				<td onclick="roPopup();"><input type="text" name="client_actname" id="client_actname" required readonly></td>
 				<td onclick="roPopup();"><input type="text" name="raw_code" id="raw_code" readonly></td>
 				<td onclick="roPopup();"><input type="text" name="raw_name" id="raw_name" readonly></td>
-				<td><input type="text" name="raw_color" id="raw_color" readonly></td>
+				<td onclick="roPopup();"><input type="text" name="raw_color" id="raw_color" readonly></td>
 				<td><input type="number" min="1" id="raw_order_count" name="raw_order_count" oninput="totalAmount()"></td> <!-- CSS할 때 증감버튼 없애기 -->
 				<td><input type="text" name="stock_raw_count" id="stock_raw_count" readonly></td>
 				<td><input type="text" name="raw_price" id="raw_price" readonly></td>
