@@ -74,7 +74,7 @@ public class Out_materialImpl implements Out_materialDAO {
 	}
 
 	@Override
-	public void omButton(ProductVO vo) throws Exception {
+	public void omButton(OrderStatusVO vo ,String order_code) throws Exception {
 		int result = sqlSession.insert(NAMESPACE + ".omButton", vo);
         logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result : " + result);
         

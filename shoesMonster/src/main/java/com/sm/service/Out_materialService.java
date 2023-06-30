@@ -22,7 +22,7 @@ public interface Out_materialService {
 	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize , OrderStatusVO ovo) throws Exception;
 
 	// 출고 버튼
-	public void omButton(ProductVO vo) throws Exception;
+	public void omButton(OrderStatusVO vo , String order_code) throws Exception;
 
 
 }
