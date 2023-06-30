@@ -723,8 +723,7 @@
 
 
 	<!-- 생산실적 조회 -->
-	<select id="performInfo" resultMap="perfList"
-		resultType="PerformanceVO">
+	<select id="performInfo" resultMap="perfList" resultType="PerformanceVO">
 		SELECT p.perform_code, p.work_code, w.line_code,
 		w.prod_code, p.perform_date,
 		p.perform_qt, p.perform_fair, p.perform_defect, p.defect_note, p.perform_note
@@ -744,7 +743,33 @@
 	</update>
 	<!-- 생산실적 수정 -->
 
+	<!-- 생산실적 양불 현황 -->
+	<resultMap id="perfStatus" type="List">
+		<result property="perform_code" column="perform_code" />
+		<result property="work_code" column="work_code" />
+		<result property="perform_date" column="perform_date" />
+		<result property="perform_qt" column="perform_qt" />
+		<result property="emp_id" column="emp_id" />
+		<result property="change_id" column="change_id" />
+		<result property="change_date" column="change_date" />
+		<result property="perform_fair" column="perform_fair" />
+		<result property="perform_defect" column="perform_defect" />
+		<result property="defect_note" column="defect_note" />
+		<result property="perform_note" column="perform_note" />
 
+		<collection property="workOrder" ofType="WorkOrderVO">
+			<result property="line_code" column="line_code" />
+			<result property="prod_code" column="prod_code" />
+		</collection>
+	</resultMap>
+	
+	<select id="getStatus" resultMap="perfStatus">
+		SELECT w.line_code, sum(p.perform_fair), sum(p.perform_defect) 
+		FROM performance p 
+		JOIN work_order w ON p.work_code = w.work_code 
+		GROUP BY w.line_code
+	</select>
+	<!-- 생산실적 양불 현황 -->
 
 
 

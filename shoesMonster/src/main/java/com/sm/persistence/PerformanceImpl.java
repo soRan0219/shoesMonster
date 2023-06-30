@@ -526,10 +526,15 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectOne(NAMESPACE + ".getSearchPerf", search);
 	} //getPerfCnt(search)
 
-
-
-	
-
+	@Override
+	public List<PerformanceVO> getPerformStatus() throws Exception {
+		logger.debug("##### DAO: getPerformStatus() 호출");
+		
+		List<PerformanceVO> statusList = sqlSession.selectList(NAMESPACE + ".getStatus");
+		logger.debug("##### DAO: 라인별 양불현황 ===> " + statusList);
+		
+		return statusList;
+	} //getPerformStatus()
 
 
 }
