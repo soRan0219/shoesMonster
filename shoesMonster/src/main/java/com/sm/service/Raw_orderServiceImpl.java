@@ -4,6 +4,7 @@ package com.sm.service;
 import java.util.List;
 
 import com.sm.domain.ClientsVO;
+import com.sm.domain.In_materialVO;
 import com.sm.domain.PageVO;
 import com.sm.domain.Raw_orderVO;
 import com.sm.persistence.Raw_orderDAO;
@@ -40,8 +41,13 @@ public class Raw_orderServiceImpl implements Raw_orderService{
 	public void roInsert(Raw_orderVO vo) throws Exception {
 		rodao.roInsert(vo);
   }
+	
+	
   
-  @Override
+  
+
+
+@Override
 	public int count1(Raw_orderVO rvo) throws Exception {
 		
 		return rodao.count1(rvo);

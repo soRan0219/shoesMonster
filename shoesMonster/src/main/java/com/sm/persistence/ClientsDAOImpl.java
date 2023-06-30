@@ -1,6 +1,7 @@
 package com.sm.persistence;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -59,10 +60,36 @@ public class ClientsDAOImpl implements ClientsDAO {
 	// 거래처 추가
 	@Override
 	public void insertClient(ClientsVO cvo) throws Exception {
-		logger.debug("@@@ DAO : insertClient(ClientPageVO cpvo) 호출");
+		logger.debug("@@@ DAO : insertClient(ClientPageVO cpvo) 호출 @@@");
 		int result = sqlSession.insert(NameSpace+".insertClient", cvo);
 		logger.debug("@@@ DAO insert 결과 : "+result);
 	}
+
+	// 거래처 삭제
+	@Override
+	public void deleteClient(List<String> checked) throws Exception {
+		logger.debug("@@@ DAO : deleteClient(List<String> checked) 호출 @@@");
+		
+		Iterator<String> it = checked.iterator();
+		int result = 0;
+		
+		while(it.hasNext()) {
+			String client_code = it.next();
+			result += sqlSession.delete(NameSpace+".deleteClient", client_code);
+		}
+		
+		logger.debug("@@@ DAO delete 결과 : "+result);
+	}
+
+	// 거래처 수정
+	@Override
+	public void updateClient(ClientsVO cvo) throws Exception {
+		logger.debug("@@@ DAO : updateClient(ClientsVO cvo) 호출 @@@");
+		int result = sqlSession.update(NameSpace+".updateClient", cvo);
+		logger.debug("@@@ DAO update 결과 : "+result);
+	}
+	
+	
 	
 	
 	

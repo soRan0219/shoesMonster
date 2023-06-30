@@ -10,7 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.RequestBody;
+
+import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,6 +55,7 @@ public class PersonController {
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
 	public void empInfoGET(Model model, ClientPageVO cpvo, 
 			@RequestParam HashMap<String, Object> search) throws Exception {
+
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
 		//페이지 정보
@@ -82,6 +87,12 @@ public class PersonController {
 			model.addAttribute("search", search);
 			model.addAttribute("empList", empList);
 			model.addAttribute("pm", pm);
+			
+			// 혜림 추가(등록시 팝업)
+			if (input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
+			}
 			
 		}// if(검색)
 		
@@ -207,7 +218,7 @@ public class PersonController {
 	@RequestMapping(value="/Clients", method = RequestMethod.GET)
 	public void ClientsGET(ClientPageVO cpvo, 
 							@RequestParam HashMap<String, Object> search,
-//							@RequestParam(value="input", required = false) Object input,
+							@RequestParam(value="input", required = false) Object input,
 							Model model) throws Exception {
 		logger.debug("@@@ cnotroller : ClientsGET(Model model) 호출 @@@");
 		
@@ -244,11 +255,15 @@ public class PersonController {
 			model.addAttribute("searchClientsList", searchClientsList);
 			model.addAttribute("pm", pm);
 			
-//			if(input != null && !input.equals("")) {
-//				model.addAttribute("input", input);
-//				logger.debug("@@@ input 정보 전달 @@@");
-//			}
-		} // 검색 있을 때
+
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@ input 정보 전달 @@@");
+			}
+		} // if(검색)
+
+
+
 		
 		// 검색 없을 때
 		else {
@@ -262,17 +277,20 @@ public class PersonController {
 			model.addAttribute("searchClientsList", searchClientsList);
 			model.addAttribute("pm", pm);
 			
-//			if(input != null && !input.equals("")) {
-//				model.addAttribute("input", input);
-//				logger.debug("@@@ input 정보 전달 @@@");
-//			}
-		} // 검색 없을 때
+
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@ input 정보 전달 @@@");
+			}
+		}
+
+
 		
 		
 	} // ClientsGET()
 	
 	// 거래처 추가
-	@RequestMapping(value="/add", method = RequestMethod.POST)
+	@RequestMapping(value="/addClient", method = RequestMethod.POST)
 	public String addClient(ClientsVO cvo) throws Exception {
 		logger.debug("@@@ cnotroller : addClient(ClientsVO cvo) 호출 @@@");
 		logger.debug("@@@ cnotroller cvo : " + cvo);
@@ -282,7 +300,26 @@ public class PersonController {
 		return "redirect:/person/Clients";
 	} // 거래처 추가
 	
+	// 거래처 삭제
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
+	public String deleteClient(@RequestParam(value="checked[]") List<String> checked) throws Exception {
+		logger.debug("@@@ cnotroller : deleteClient() 호출 @@@");
+		
+		clService.deleteClient(checked);
+		
+		return "redirect:/person/Clients";
+	}
 	
+	// 거래처 수정
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public String updateClient(ClientsVO cvo) throws Exception {
+		logger.debug("@@@ cnotroller : updateClient() 호출 @@@");
+		logger.debug("@@@ cnotroller cvo : " + cvo);
+		
+		clService.updateClient(cvo);
+		
+		return "redirect:/person/Clients";
+	}
 	
 	
 	

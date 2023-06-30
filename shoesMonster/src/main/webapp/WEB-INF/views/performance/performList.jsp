@@ -458,7 +458,28 @@
 			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 		});
 		
+		//검색 결과 없을 때 표, 버튼 다 숨기기
+		if(Number($('#total').text())==0) {
+			$('#body').html("검색 결과가 없습니다.");
+		}
 		
+		//======================= 검색 ===============================//
+		
+		
+		
+		//n건씩 표시
+		$('#perPage').on('change', function() {
+			var pageSize = $(this).val();
+			
+			$('#pageSize').val(pageSize);
+			$('#searchForm').submit();
+		});
+		
+		$('#perPage').find('option').each(function(){
+			if($(this).val()===$('#pageSize').val()) {
+				$(this).prop("selected", true);
+			}
+		});
 		
 	}); //jQuery
 	
@@ -470,8 +491,9 @@
 	<h1> /performance/performList </h1>
 	
 	<div>
-		<form method="get">
+		<form id="searchForm" method="get">
 			<fieldset>
+				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 				작업지시코드: <input type="text" id="search_work_code" name="search_work_code">
 				실적일: 
 				<input type="text" id="search_fromDate" name="search_fromDate"> ~ 
@@ -485,71 +507,81 @@
 		
 	<br><br><br>
 	
-	<button id="add" class="true">추가</button>
-	<button id="modify">수정</button>
-	<button id="delete" class="true">삭제</button>
-	<button type="reset" id="cancle">취소</button>
-	<button type="submit" id="save">저장</button>
-	
-	<form id="fr">
-		<table border="1">
-			<tr>
-				<th>번호</th>
-				<th>생산실적코드</th>
-				<th>작업지시코드</th>
-				<th>라인코드</th>
-				<th>품번</th>
-				<th>실적일</th>
-				<th>실적수량</th>
-				<th>양품수</th>
-				<th>불량수</th>
-				<th>불량사유</th>
-				<th>비고</th>
-			</tr>
-
-			<c:forEach var="vo" items="${perfList }">
-				<tr>
-					<td></td>
-					<td id="performCode">${vo.perform_code }</td>
-					<td>${vo.work_code }</td>
-					<td>${vo.workOrder.line_code }</td>
-					<td>${vo.workOrder.prod_code }</td>
-					<td>${vo.perform_date }</td>
-					<td>${vo.perform_qt }</td>
-					<td>${vo.perform_fair }</td>
-					<td>${vo.perform_defect }</td>
-					<td>${vo.defect_note }</td>
-					<c:choose>
-						<c:when test="${empty vo.perform_note }">
-							<td>없음</td>
-						</c:when>
-						<c:otherwise>
-							<td>${vo.perform_note }</td>
-						</c:otherwise>
-					</c:choose>
-				</tr>
-			</c:forEach>
-		</table>
-	</form>
-	
-	
-	<br><br><br>
-	
-	
-	<div id="pagination">
-		<c:if test="${pm.prev }">
-			<a href="/performance/performList?page=${pm.startPage - 1 }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}"> ⏪ </a>
-		</c:if>
+	<div id="body">
+		<button id="add" class="true">추가</button>
+		<button id="modify">수정</button>
+		<button id="delete" class="true">삭제</button>
+		<button type="reset" id="cancle">취소</button>
+		<button type="submit" id="save">저장</button>
 		
-		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-			<a href="/performance/performList?page=${page }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}">${page }</a>
-		</c:forEach>
+		총 <span id="total">${pm.totalCount }</span>건
+				
+		<select id="perPage" name="perPage">
+			<option value="2">2</option>
+			<option value="5">5</option>
+			<option value="7">7</option>
+		</select>
+		건씩 표시
+		
+		<form id="fr">
+			<table border="1">
+				<tr>
+					<th>번호</th>
+					<th>생산실적코드</th>
+					<th>작업지시코드</th>
+					<th>라인코드</th>
+					<th>품번</th>
+					<th>실적일</th>
+					<th>실적수량</th>
+					<th>양품수</th>
+					<th>불량수</th>
+					<th>불량사유</th>
+					<th>비고</th>
+				</tr>
 	
-		<c:if test="${pm.next }">
-			<a href="/performance/performList?page=${pm.endPage + 1 }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}"> ⏩ </a>
-		</c:if>
+				<c:forEach var="vo" items="${perfList }">
+					<tr>
+						<td></td>
+						<td id="performCode">${vo.perform_code }</td>
+						<td>${vo.work_code }</td>
+						<td>${vo.workOrder.line_code }</td>
+						<td>${vo.workOrder.prod_code }</td>
+						<td>${vo.perform_date }</td>
+						<td>${vo.perform_qt }</td>
+						<td>${vo.perform_fair }</td>
+						<td>${vo.perform_defect }</td>
+						<td>${vo.defect_note }</td>
+						<c:choose>
+							<c:when test="${empty vo.perform_note }">
+								<td>없음</td>
+							</c:when>
+							<c:otherwise>
+								<td>${vo.perform_note }</td>
+							</c:otherwise>
+						</c:choose>
+					</tr>
+				</c:forEach>
+			</table>
+		</form>
+		
+		
+		<br><br><br>
+		
+		
+		<div id="pagination">
+			<c:if test="${pm.prev }">
+				<a href="/performance/performList?page=${pm.startPage - 1 }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}"> ⏪ </a>
+			</c:if>
+			
+			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+				<a href="/performance/performList?page=${page }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}">${page }</a>
+			</c:forEach>
+		
+			<c:if test="${pm.next }">
+				<a href="/performance/performList?page=${pm.endPage + 1 }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}"> ⏩ </a>
+			</c:if>
+		</div>
 	</div>
-	
 	
 </div>
 <!-- /page content -->

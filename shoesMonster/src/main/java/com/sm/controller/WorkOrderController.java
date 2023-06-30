@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sm.domain.LineWhPageMaker;
 import com.sm.domain.LineWhPageVO;
-import com.sm.domain.PagingVO;
 import com.sm.domain.WorkOrderVO;
-import com.sm.service.OrderStatusService;
-import com.sm.service.PerformanceService;
 import com.sm.service.WorkOrderService;
 
 @Controller
@@ -33,12 +30,12 @@ public class WorkOrderController {
 	private WorkOrderService wService;
 	
 	//품목, 라인 service
-	@Autowired
-	private PerformanceService pService;
+//	@Autowired
+//	private PerformanceService pService;
 	
 	//수주 service
-	@Autowired
-	private OrderStatusService osService;
+//	@Autowired
+//	private OrderStatusService osService;
 	
 	//작업지시 목록
 	//http://localhost:8088/workorder/workOrderList
@@ -51,10 +48,12 @@ public class WorkOrderController {
 		
 		
 		//페이지 정보
-		pvo.setPageSize(2);
-//		pvo.setPage((int)search.get("page"));
-//		pvo.setPageSize((int)search.get("pageSize"));
-		
+		if(search.get("pageSize")!=null) {
+			int pageSize = Integer.parseInt(search.get("pageSize").toString());
+			pvo.setPageSize(pageSize);
+		} else {
+			pvo.setPageSize(2);
+		}
 		
 		//페이징 하단부 정보
 		LineWhPageMaker pm = new LineWhPageMaker();
@@ -127,9 +126,15 @@ public class WorkOrderController {
 
 		}
 		
+		else if(type.equals("client")) {
+			return "redirect:/person/Clients?input="+input;
+		}
+		
 		else /* if(type.equals("order"))*/ {
 			return "redirect:/person/orderStatus?input="+input;
 		}
+		
+		
 	} //popUpGET()
 		
 	//작업지시 추가
@@ -158,8 +163,8 @@ public class WorkOrderController {
 	
 	//작업지시 조회 POST
 	@ResponseBody
-	@RequestMapping(value = "/detail", method = RequestMethod.POST/*, produces = "application/text; charset=utf8"*/)
-	public /*HashMap<String, Object>*/WorkOrderVO getWorkOrder(@RequestBody WorkOrderVO vo) throws Exception {
+	@RequestMapping(value = "/detail", method = RequestMethod.POST)
+	public WorkOrderVO getWorkOrder(@RequestBody WorkOrderVO vo) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: getWorkOrder() 호출");
 		logger.debug("@@@@@ CONTROLLER: workCode = " + vo.getWork_code());
 		
@@ -167,16 +172,12 @@ public class WorkOrderController {
 		WorkOrderVO preVO = wService.getWorkOrder(vo.getWork_code());
 		logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
 		
-		//정보 가지고 돌아감
-//		HashMap<String, Object> voMap = new HashMap<String, Object>();
-//		voMap.put("preVO", preVO);
-		
 		return preVO;
 	} //getWorkOrder()
 	
 	//작업지시 수정 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyWorkOrder(/*@RequestBody */WorkOrderVO uvo) throws Exception {
+	public String modifyWorkOrder(WorkOrderVO uvo) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: modifyWorkOrder() 호출");
 		logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
 		

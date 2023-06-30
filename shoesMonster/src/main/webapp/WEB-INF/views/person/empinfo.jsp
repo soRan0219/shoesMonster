@@ -15,8 +15,60 @@
 </style>
 
 <script type="text/javascript">
+// 혦넣
+//팝업으로 열었을 때
+function popUp() {
+	var queryString = window.location.search;
+	var urlParams = new URLSearchParams(queryString);
+	
+	var isPop = urlParams.get("input");
+	
+	if(isPop==="null") {
+		isPop = null;
+	}
+		
+	$('#pagination a').each(function(){
+		
+   		var prHref = $(this).attr("href");
+   			
+			var newHref = prHref + "&input=" + isPop;
+			$(this).attr("href", newHref);
+			
+	}); //페이징 요소	
+	
+	$('#input').val(isPop);
+			
+	if(isPop) {
+    	
+    	$('#add').hide();
+    	$('#modify').hide();
+    	$('#delete').hide();
+    	$('#save').hide();
+    	
+   		$('table tr:not(:first-child)').click(function(){
+   			
+   			$(this).css('background', '#ccc');
+    			
+    		var empCode = $(this).find('#empCode').text();
+    			
+    		$('#'+isPop, opener.document).val(empCode);
+    			
+    		window.close();
+    	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+    		
+     		
+		} else {
+			console.log("팝업아님");
+	} //if(팝업으로 열었을 때)
+		
+} //popUp()
+
 //제이쿼리
 $(function() {
+	
+	// 혦넣
+	popUp();
+	
 	//테이블 항목들 인덱스 부여
 	$('table tr').each(function(index) {
 		$(this).find('td:first').text(index);
@@ -300,7 +352,6 @@ $(function() {
 				    <col style="width: 75px">
 				    <col style="width: 75px">
 				</colgroup>
-					<thead>
 						<tr>
 							<th></th>
 							<th>사원번호</th>
@@ -313,12 +364,11 @@ $(function() {
 							<th>재직구분</th>
 							<th></th>
 						</tr>
-					</thead>
 					<c:forEach var="vo" items="${empList }" varStatus="i">
 						<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀'}">
 						<tr>
 							<td>${i.count}</td>
-							<td>${vo.emp_id}</td>
+							<td id="empCode">${vo.emp_id}</td> <!-- 혦넣 -->
 							<td>${vo.emp_name}</td>
 							<td>${vo.emp_department}</td>
 							<td>${vo.emp_position}</td>

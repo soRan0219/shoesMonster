@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sm.domain.OrderStatusVO;
 import com.sm.domain.Out_materialVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
@@ -32,13 +33,13 @@ public class Out_materialServiceImpl implements Out_materialService{
 
 	//출고 검색 목록 조회
 	@Override
-	public int count2(ProductVO ovo) throws Exception {
+	public int count2(OrderStatusVO ovo) throws Exception {
 	
 			return o_dao.count2(ovo);
 	}
 
 	@Override
-	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, ProductVO ovo) throws Exception {
+	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize,OrderStatusVO ovo) throws Exception {
 		return o_dao.searchOut_mat(startRow, pageSize,ovo);
 	}
 

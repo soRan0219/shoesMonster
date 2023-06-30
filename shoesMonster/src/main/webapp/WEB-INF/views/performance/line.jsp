@@ -16,8 +16,32 @@
 
 <script type="text/javascript">
 	//========================= 함수, 상수 ==================================//
+	
+	// 오늘 날짜 yyyy-mm-dd
+	function getToday() {
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = ("0" + (1+date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		
+		return year+"-"+month+"-"+day;
+	}//getToday()
 
+	// input으로 바꾸기
+	function inputCng(obj, type, name, value) {
+		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+		obj.html(inputBox);
+	}// inputCng
+	
+	//팝업창 옵션
+	const popupOpt = "top=60,left=140,width=600,height=600";
 
+	//검색 팝업
+	function openWindow(search, inputId) {
+		var url = "/performance/lineEmpSearch?type=" + search + "&input=" + inputId;
+		var popup = window.open(url, "", popupOpt);
+	} //openWindow()
+	
 	// 팝업으로 열었을 때
 	function popUp() {
 		var queryString = window.location.search;
@@ -71,21 +95,16 @@
 	$(function() {
 		popUp();
 		
-		
-		
-		
-	
-	
 	//============================ 버튼 구현 ====================================//	
 	
-	// 추가
+	////////////////// 추가/////////////////////////
 	$('#add').click(function () {
 		
 		$('#modify').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 		
 		// 라인코드 부여
-		let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
+// 		let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
 		
 		// 오늘날짜 -> 등록일
 		let today = getToday();
@@ -100,11 +119,7 @@
 			
 			// 라인코드 
 			tbl += " <td>";
-// 			tbl += " <input type='text' name='wh_code' id='wh_code' readonly value='";
-			tbl += " <input type='text' name='wh_code' id='wh_code'";
-			tbl += "L >"; 
-// 			tbl += "'>";
-// 			tbl += ">";
+			tbl += " <input type='text' name='line_code' id='line_code'required>";
 			tbl += " </td>";
 			
 			// 라인명
@@ -120,8 +135,8 @@
 			// 사용여부
 			tbl += " <td>";
 			tbl += " <select name='line_use' id='line_use'>";
-			tbl += " <option>1</option>";
-			tbl += " <option>2</option>";
+			tbl += " <option>Y</option>";
+			tbl += " <option>N</option>";
 			tbl += " </select>";
 			tbl += " </td>";
 			
@@ -139,7 +154,7 @@
 
 			// 비고			
 			tbl += " <td>";
-			tbl += " <input type='text' name='line_note' id='line_note' required>";
+			tbl += " <input type='text' name='line_note' id='line_note'>";
 			tbl += " </td>";
 			tbl += " </tr>";
 		
@@ -153,9 +168,8 @@
 			$(this).removeClass('true');
 		}// if (true 클래스 있을 때)
 		
-		//---------------------------------------
-		// 저장
-		$('save').click(function () {
+		// 저장 -> 저장
+		$('#save').click(function () {
 			
 			var line_code = $('#line_code').val();
 			var line_name = $('#line_name').val();
@@ -168,7 +182,7 @@
 					|| emp_id == ""){
 				alert("항목을 모두 입력하세요");
 			}else{
-				$('#fr').attr("action", "/line/add");
+				$('#fr').attr("action", "/performance/lineadd"); 
 				$('#fr').attr("method", "post");
 				$('#fr').submit();
 			}
@@ -182,10 +196,173 @@
 			});
 		}); // cancle click
 		
-		
 	});// 추가 add click
+
+	
+	////수정//////////////////////////////////////////////////
+	var isExecuted = false;
+	
+	$('#modify').click(function () {
+		
+		$('#add').attr("disabled", true);
+		$('#delete').attr("disabled", true);
+		
+		// 행 하나 선택시
+		$('table tr:not(:first-child)').click(function () {
+			
+			// 하나씩 선택 가능
+			if(!isExecuted){
+				isExecuted = true;
+				
+				$(this).addClass('selected');
+				
+				// 라인코드 저장
+				let updateCode = $(this).find('#lineCode').text().trim();
+				console.log(updateCode);
+				
+				var jsonData = {
+						lineCode : updateCode
+				};
+				
+				var self = $(this);
+				
+				var names = [
+						"line_code",
+						"line_name",
+						"line_place",
+						"line_use",
+						"emp_id",
+						"insert_date",
+						"line_note"
+						];
+				
+				// tr안 td 요소들 input으로 변경 후 기존 값 띄움
+				self.find('td').each(function (idx, item) {
+					
+					if(idx > 0){
+						inputCng($(this), "text", names[idx - 1], $(this).text());
+						if(idx == 4 ){
+							var dropDown = "<select id = 'line_use' name = 'line_use'>";
+// 								dropDown += "<option value = '전체'></option>";
+								dropDown += "<option value = '1'>Y</option>";
+								dropDown += "<option value = '2'>N</option>";
+								dropDown += "</select>"
+								$(this).html(dropDown);
+								$(this).find('option').each(function () {
+									if(this.value == $(this).text()){
+										$(this).attr("selected", true);
+									}
+						
+								});// this.find('option')
+					
+						}// if(idx==2)
+			
+					}//if
+					
+				}); // self.find
+				
+				// 등록자(사원) 검색
+				$('#emp_id').click(function () {
+					openWindow("emp", "emp_id");
+				}); // #emp_id click
+				
+				// 저장 -> 수정완료
+				$('#save').click(function () {
+					
+					$('#fr').attr("action", "/performance/linemodify");
+					$('#fr').attr("method", "POST");
+					$('#fr').submit();
+					
+				});//save
+					
+			}// if(!isExecuted)
+				
+			// 취소 -> 리셋
+			$('#cancle').click(function () {
+				$('#fr').each(function () {
+					this.reset();
+				});
+				
+			}); // cancle
+			
+		}); // table .click
+		
+	});// modify.click
 	
 	
+	////삭제/////////////////////////////////////////////////////////
+	$('#delete').click(function () {
+		
+		$('#add').attr("disabled", true);
+		$('#modify').attr("disabled", true);
+		
+		if($(this).hasClass('true')){
+			
+			// 열: 체크박스 행: 라인코드
+			$('table tr').each(function () {
+				var code = $(this).find('td:nth-child(2)').text();
+				
+				var tbl = "<input type='checkbox' name='selected' value='";
+					tbl += code;
+					tbl += "'>";
+				
+				$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
+				$(this).find('td:first').html(tbl);
+			});
+			
+			// 전체선택
+			$('#selectAll').click(function () {
+				var checkAll = $(this).is(":checked");
+				
+				if(checkAll){
+					$('input:checkbox').prop('checked', true);
+				}else{
+					$('input:checkbox').prop('checked', false);
+				}
+				
+			});
+			
+			// 저장 -> 삭제
+			$('#save').click(function () {
+				
+				var checked = [];
+				
+				$('input[name=selected]:checked').each(function () {
+					checked.push($(this).val());
+				});
+				
+				if(checked.length > 0){
+				
+					$.ajax({
+						url: "/performance/linedelete",
+						type: "POST",
+						data: {checked : checked},
+						dataType: "text",
+						success: function () {
+							alert("에이잭스 예에~!~!");
+							location.reload();
+						},
+						error: function () {
+							alert("에이잭스 우우~!~!");
+						}
+					}); // ajax
+					
+				}// 체크OOO
+				else{
+					alert("선택된 항목이 없음");
+				}// 체크 XXX
+	
+			}); // save
+			
+			$(this).removeClass('true');
+		}// if(삭제 버튼 true class O)
+		
+		// 취소 -> 리셋
+		$('#cancle').click(function () {
+			$('input:checkbox').prop('checked', false);
+		});
+		
+	});//delete.click
 	
 	});// 제이쿼리
 </script>
@@ -272,22 +449,15 @@
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 	
 	<div id="pagination">
-		<c:if test="${lwpm.startPage != 1 }"> <!-- pageSize 없는 버전 -->
+		<c:if test="${lwpm.prev }">
 			<a href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">이 전</a>
 		</c:if>
 		
-		<c:forEach begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1" var="page">
-			<c:choose>
-				<c:when test="${page == lwpm.startPage }">
-					<b>${page }</b>
-				</c:when>
-				<c:when test="${page != lwpm.startPage }">
-					<a href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
-				</c:when>
-			</c:choose>
+		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
+			<a href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
 		</c:forEach>
-		
-		<c:if test="${lwpm.next && lwpm.endPage>0 }">
+
+		<c:if test="${lwpm.next }">
 			<a href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">다 음</a>
 		</c:if>
 	</div>

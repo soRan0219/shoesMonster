@@ -9,7 +9,8 @@
 <script type="text/javascript">
 	
 	// ==================================== 버튼 =================================================
-	// 추가
+		
+	// 추가 //
 	//날짜 + 시간 + 분 + 초 ==> 코드
     function codeCreation() {
 		
@@ -28,6 +29,12 @@
 
         return YY_year + month + minute + second;
     }
+	
+	// input으로 바꾸기
+	function inputCng(obj, type, name, value) {
+		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+		obj.html(inputBox);
+	}// inputCng
 	
 	$(document).ready(function(){
 		
@@ -137,15 +144,15 @@
 				var client_email = $('#client_email').val();
 				var client_note = $('#client_note').val();
 
-// 				if (client_code == "" || client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
-// 						|| client_ceo == "" || client_name == "" || client_addr == "" || client_addr2 == "" || client_tel == "" 
-// 						|| client_phone == "" || client_fax == "" || client_email == "" || client_note == "") {
-// 					alert("항목을 모두 입력하세요");
-// 				} else {
-					$('#fr').attr("action", "/person/add");
+				if (client_code == "" || client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
+						|| client_ceo == "" || client_name == "" || client_addr == "" || client_addr2 == "" || client_tel == "" 
+						|| client_phone == "" || client_fax == "" || client_email == "" || client_note == "") {
+					alert("항목을 모두 입력하세요");
+				} else {
+					$('#fr').attr("action", "/person/addClient");
 					$('#fr').attr("method", "post");
 					$('#fr').submit();
-// 				}
+				}
 
 			}); //save
 
@@ -157,9 +164,233 @@
 			}); // cancle click
 
 		}); // add click
-
 		
+		// 삭제 //
+		$('#deleteButton').click(function() {
+
+			$('#addButton').attr("disabled", true);
+			$('#updateButton').attr("disabled", true);
+	
+			if($(this).hasClass('true')) {
+				
+				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 거래처코드 저장
+				$('table tr').each(function() {
+					var code = $(this).find('td:nth-child(2)').text();
+	
+					var tbl = "<input type='checkbox' name='selected' value='";
+					tbl += code;
+					tbl += "'>";
+	
+					$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
+					$(this).find('td:first').html(tbl);
+				});
+				
+				//전체선택
+				$('#selectAll').click(function() {
+					var checkAll = $(this).is(":checked");
+	
+					if (checkAll) {
+						$('input:checkbox').prop('checked', true);
+					} else {
+						$('input:checkbox').prop('checked', false);
+					}
+				});
+	
+				// 저장 -> 삭제
+				$('#saveButton').click(function() {
+	
+					var checked = [];
+	
+					$('input[name=selected]:checked').each(function() {
+						checked.push($(this).val());
+					});
+	
+					// 	alert(checked);
+	
+					if (checked.length > 0) {
+	
+
+	// 팝업으로 열었을 때
+    function popUp() {
+    	var queryString = window.location.search;
+    	var urlParams = new URLSearchParams(queryString);
+    	var isPop = urlParams.get("input");
+    	
+    	if(isPop==="null") {
+    		isPop = null;
+    	}
+    	$('#pagination a').each(function(){
+    		
+       		var prHref = $(this).attr("href");
+       			
+    			var newHref = prHref + "&input=" + isPop;
+    			$(this).attr("href", newHref);
+    			
+    	}); //페이징 요소	
+    	
+    	
+    	$('#input').val(isPop);
+    	
+    	if(isPop!=null && isPop!="") {
+    		
+    		$('#addButton').hide();
+        	$('#updateButton').hide();
+        	$('#deleteButton').hide();
+        	$('#cancelButton').hide();
+        	$('#saveButton').hide();
+        	
+       		$('table tr:not(:first-child)').click(function(){
+       			$(this).css('background', '#ccc');
+        		
+            		var client_code = $(this).find('#client_code').text();
+            		var client_actname = $(this).find('#client_actname').text();
+            		var number = isPop.match(/\d+/);
+            		
+         			$('#'+isPop, opener.document).val(client_code);
+         			if(number !=null){
+         			$('#client_actname'+number, opener.document).val(client_actname);
+         			} else {
+         			$('#client_actname', opener.document).val(client_actname);
+         			}
+        		
+        		window.close();
+        	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+        		
+         		
+    		} //if 
+    		
+    		else {
+    			console.log("팝업아님");
+    	} //if(팝업으로 열었을 때)
+    		
+    } //popUp()
+    
+    $(document).ready(function() {
+		popUp();
+	});
+	
+
+						$.ajax({
+							url : "/person/delete",
+							type : "post",
+							data : {checked : checked},
+							dataType : "text",
+							success : function() {
+								alert("*** 아작스 성공 ***");
+								location.reload();
+							},
+							error : function() {
+								alert("아작스실패~~");
+							}
+						}); //ajax
+
+	
+					} //체크된거 있을대
+					else {
+						alert("선택된 항목이 없습니다.");
+					} //체크된거 없을때
+	
+				}); //save
+				
+				$(this).removeClass('true');
+			} //if(삭제 버튼 true class 있으면)
+
+			//취소 -> 리셋
+			$('#cancelButton').click(function() {
+				$('input:checkbox').prop('checked', false);
+			});
+
+		}); //deleteButton click
+		
+		// 수정 //
 		var isExecuted = false;
+		
+		//수정버튼 클릭
+		$('#updateButton').click(function() {
+
+			$('#addButton').attr("disabled", true);
+			$('#deleteButton').attr("disabled", true);
+
+			//행 하나 클릭했을 때	
+			$('table tr:not(:first-child)').click(function() {
+
+				//하나씩만 선택 가능
+				if(!isExecuted) {
+					isExecuted = true;
+					
+					$(this).addClass('selected');
+					//작업지시 코드 저장
+					let updateCode = $(this).find('#clientCode').text().trim();
+					console.log(updateCode);
+	
+					var jsonData = {
+						client_code : updateCode
+					};
+	
+					var self = $(this);
+	
+					var names = [
+							"client_code",
+							"client_actname",
+							"client_type",
+							"client_number",
+							"client_sort",
+							"client_ceo",
+							"client_name", 
+							"client_addr", 
+							"client_addr2", 
+							"client_tel", 
+							"client_phone", 
+							"client_fax", 
+							"client_email", 
+							"client_note", 
+							];
+	
+					//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+					self.find('td').each(function(idx,item) {
+
+						if (idx > 0) {
+							inputCng($(this),"text",names[idx - 1], $(this).text());
+							if (idx == 3) {
+								var dropDown = "<select id='client_type' name='client_type'>";
+								dropDown += "<option value='전체'>전체</option>";
+								dropDown += "<option value='발주처'>발주처</option>";
+								dropDown += "<option value='수주처'>수주처</option>";
+								dropDown += "</select>";
+								$(this).html(dropDown);
+								$(this).find('option').each(function() {
+									if (this.value == $(this).text()) {
+										$(this).attr("selected",true);
+									}
+								}); // option이 client_type와 일치하면 선택된 상태로
+							} // 거래처구분 - select
+						} // 거래처 코드부터 다 수정 가능하게
+
+					}); // self.find(~~)
+			
+					//저장버튼 -> form 제출
+					$('#saveButton').click(function() {
+	
+						$('#fr').attr("action","/person/update");
+						$('#fr').attr("method","post");
+						$('#fr').submit();
+	
+					}); //save
+
+				} //하나씩만 선택 가능
+					
+					
+				//취소버튼 -> 리셋
+				$('#cancelButton').click(function() {
+					$('#fr').each(function() {
+						this.reset();
+					});
+				}); // cancelButton click
+
+			}); // tr click
+
+		}); // updateButton click
+
 	
 	// ==================================== 버튼 =================================================
 	
@@ -173,6 +404,7 @@
 	<h1>거래처 정보 관리</h1>
 
 	<form method="get">
+		<input type="hidden" name="input" id="input" value="${input }">
 		거래처코드
 		<input type="text" name="search_client_code" id="search_client_code"> 
 		거래처명
@@ -191,103 +423,117 @@
 	거래처 총 ${pm.totalCount } 건
 	<input type="button" value="추가" id="addButton" class="true">
 	<input type="button" value="수정" id="updateButton">
-	<input type="button" value="삭제" id="deleteButton">
+	<input type="button" value="삭제" id="deleteButton" class="true">
 	<input type="button" value="취소" id="cancelButton">
 	<input type="button" value="저장" id="saveButton">
-	
-<!-- 	<button id="addButton" class="true">추가</button> -->
-<!-- 	<button id="updateButton">수정</button> -->
-<!-- 	<button id="deleteButton" class="true">삭제</button> -->
-<!-- 	<button type="reset" id="cancelButton">취소</button> -->
-<!-- 	<button type="submit" id="saveButton">저장</button> -->
 
-	<form id = "fr">
-		<table border="1" id="clientsTable">
-			<tr>
-				<th>번호</th>
-				<th>거래처코드</th>
-				<th>거래처명</th>
-				<th>거래처구분</th>
-				<th>사업자번호</th>
-				<th>업태</th>
-				<th>대표자</th>
-				<th>담당자</th>
-				<th>주소</th>
-				<th>상세주소</th>
-				<th>전화번호</th>
-				<th>휴대폰번호</th>
-				<th>팩스번호</th>
-				<th>email</th>
-				<th>비고</th>
-			</tr>
-			
-			<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
-				<c:if test="${vo.client_type == '전체' }">
-					<tr>
-						<td>${i.count }</td>
-						<td>${vo.client_code}</td>
-						<td>${vo.client_actname}</td>
-						<td>${vo.client_type}</td>
-						<td>${vo.client_number}</td>
-						<td>${vo.client_sort}</td>
-						<td>${vo.client_ceo}</td>
-						<td>${vo.client_name}</td>
-						<td>${vo.client_addr}</td>
-						<td>${vo.client_addr2}</td>
-						<td>${vo.client_tel}</td>
-						<td>${vo.client_phone}</td>
-						<td>${vo.client_fax}</td>
-						<td>${vo.client_email}</td>
-						<td>${vo.client_note}</td>
-					</tr>
-				</c:if>
-					
-				<c:if test="${vo.client_type == '발주처' }">
-					<tr>
-						<td>${i.count }</td>
-						<td>${vo.client_code}</td>
-						<td>${vo.client_actname}</td>
-						<td>${vo.client_type}</td>
-						<td>${vo.client_number}</td>
-						<td>${vo.client_sort}</td>
-						<td>${vo.client_ceo}</td>
-						<td>${vo.client_name}</td>
-						<td>${vo.client_addr}</td>
-						<td>${vo.client_addr2}</td>
-						<td>${vo.client_tel}</td>
-						<td>${vo.client_phone}</td>
-						<td>${vo.client_fax}</td>
-						<td>${vo.client_email}</td>
-						<td>${vo.client_note}</td>
-					</tr>
-				</c:if>
-					
-				<c:if test="${vo.client_type == '수주처' }">
-					<tr>
-						<td>${i.count }</td>
-						<td>${vo.client_code}</td>
-						<td>${vo.client_actname}</td>
-						<td>${vo.client_type}</td>
-						<td>${vo.client_number}</td>
-						<td>${vo.client_sort}</td>
-						<td>${vo.client_ceo}</td>
-						<td>${vo.client_name}</td>
-						<td>${vo.client_addr}</td>
-						<td>${vo.client_addr2}</td>
-						<td>${vo.client_tel}</td>
-						<td>${vo.client_phone}</td>
-						<td>${vo.client_fax}</td>
-						<td>${vo.client_email}</td>
-						<td>${vo.client_note}</td>
-					</tr>
-				</c:if>
+
+	<table border="1" id="clientsTable">
+		<tr>
+			<th></th>
+			<th>거래처코드</th>
+			<th>거래처명</th>
+			<th>거래처구분</th>
+			<th>사업자번호</th>
+			<th>업태</th>
+			<th>대표자</th>
+			<th>담당자</th>
+			<th>주소</th>
+			<th>상세주소</th>
+			<th>전화번호</th>
+			<th>휴대폰번호</th>
+			<th>팩스번호</th>
+			<th>email</th>
+			<th>비고</th>
+		</tr>
+		
+		<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
+			<c:if test="${vo.client_type == '전체' }">
+				<tr>
+					<td>${i.count }</td>
+					<td id="client_code">${vo.client_code}</td>
+					<td id="client_actname">${vo.client_actname}</td>
+					<td>${vo.client_type}</td>
+					<td>${vo.client_number}</td>
+					<td>${vo.client_sort}</td>
+					<td>${vo.client_ceo}</td>
+					<td>${vo.client_name}</td>
+					<td>${vo.client_addr}</td>
+					<td>${vo.client_addr2}</td>
+					<td>${vo.client_tel}</td>
+					<td>${vo.client_phone}</td>
+					<td>${vo.client_fax}</td>
+					<td>${vo.client_email}</td>
+					<td>${vo.client_note}</td>
+				</tr>
+			</c:if>
 				
-			</c:forEach>
+			<c:if test="${vo.client_type == '발주처' }">
+				<tr>
+					<td>${i.count }</td>
+					<td id="client_code">${vo.client_code}</td>
+					<td id="client_actname">${vo.client_actname}</td>
+					<td>${vo.client_type}</td>
+					<td>${vo.client_number}</td>
+					<td>${vo.client_sort}</td>
+					<td>${vo.client_ceo}</td>
+					<td>${vo.client_name}</td>
+					<td>${vo.client_addr}</td>
+					<td>${vo.client_addr2}</td>
+					<td>${vo.client_tel}</td>
+					<td>${vo.client_phone}</td>
+					<td>${vo.client_fax}</td>
+					<td>${vo.client_email}</td>
+					<td>${vo.client_note}</td>
+				</tr>
+			</c:if>
+				
+			<c:if test="${vo.client_type == '수주처' }">
+				<tr>
+					<td>${i.count }</td>
+					<td id="client_code">${vo.client_code}</td>
+					<td id="client_actname">${vo.client_actname}</td>
+					<td>${vo.client_type}</td>
+					<td>${vo.client_number}</td>
+					<td>${vo.client_sort}</td>
+					<td>${vo.client_ceo}</td>
+					<td>${vo.client_name}</td>
+					<td>${vo.client_addr}</td>
+					<td>${vo.client_addr2}</td>
+					<td>${vo.client_tel}</td>
+					<td>${vo.client_phone}</td>
+					<td>${vo.client_fax}</td>
+					<td>${vo.client_email}</td>
+					<td>${vo.client_note}</td>
+				</tr>
+			</c:if>
 			
-		</table>
-	</form>
+			<c:if test="${vo.client_type == '협력사' }">
+				<tr>
+					<td>${i.count }</td>
+					<td id="client_code">${vo.client_code}</td>
+					<td id="client_actname">${vo.client_actname}</td>
+					<td>${vo.client_type}</td>
+					<td>${vo.client_number}</td>
+					<td>${vo.client_sort}</td>
+					<td>${vo.client_ceo}</td>
+					<td>${vo.client_name}</td>
+					<td>${vo.client_addr}</td>
+					<td>${vo.client_addr2}</td>
+					<td>${vo.client_tel}</td>
+					<td>${vo.client_phone}</td>
+					<td>${vo.client_fax}</td>
+					<td>${vo.client_email}</td>
+					<td>${vo.client_note}</td>
+				</tr>
+			</c:if>
+		</c:forEach>
+		
+	</table>
+<%-- 		${vo.client_useyn} 사용여부 -> 그냥 삭제용으로 쓰는 체크박스 --%>
+
 	
-	search : ${search }
+<%-- 	search : ${search } --%>
 
 	<div id="pagination">
 		<c:if test="${pm.prev }">
@@ -302,25 +548,6 @@
 			<a href="/person/Clients?page=${pm.endPage + 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> ⏩ </a>
 		</c:if>
 	</div>
-
-<%-- 		<c:if test="${pm.startPage != 1 }"> <!-- pageSize 없는 버전 --> --%>
-<%-- 			<a href="/person/Clients?page=${pm.startPage-1 }&search_client_code=${search.client_code}&search_client_actname=${search.client_actname}&search_client_type=${search.client_type}"> ⏪ </a> --%>
-<%-- 		</c:if> --%>
-		
-<%-- 		<c:forEach begin="${pm.startPage }" end="${pm.endPage }" step="1" var="page"> --%>
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test="${page == pm.startPage }"> --%>
-<%-- 					<b>${page }</b> --%>
-<%-- 				</c:when> --%>
-<%-- 				<c:when test="${page != pm.startPage }"> --%>
-<%-- 					<a href="/person/Clients?page=${page }&search_client_code=${search.client_code}&search_client_actname=${search.client_actname}&search_client_type=${search.client_type}">${page }</a> --%>
-<%-- 				</c:when> --%>
-<%-- 			</c:choose> --%>
-<%-- 		</c:forEach> --%>
-		
-<%-- 		<c:if test="${pm.next && pm.endPage>0 }"> --%>
-<%-- 			<a href="/person/Clients?page=${pm.endPage+1 }&search_client_code=${search.client_code}&search_client_actname=${search.client_actname}&search_client_type=${search.client_type}"> ⏩ </a> --%>
-<%-- 		</c:if> --%>
 
 	<div id="details"></div>
 		

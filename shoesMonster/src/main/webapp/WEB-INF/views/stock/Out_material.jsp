@@ -3,6 +3,10 @@
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 <%@ include file="../include/header.jsp"%>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	
+</script>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -60,76 +64,25 @@
 		<c:forEach var="out" items="${out_matList }">
 			<tr>
 				<td>${out.out_mat.out_num}</td>
-				<td>${out.orders.order_code}</td>
-				<td>${out.client.client_actname}</td>
-				<td>${out.orders.client_code}</td>
-				<td>${out.prod_code}</td>
-				<td>${out.prod_name}</td>
-				<td>${out.orders.order_count}</td>
-				<td>${out.prod_price}원</td>
-				<td>${out.orders.order_deliveryDate}</td>
+				<td>${out.order_code}</td>
+				<td>${out.clients.client_actname}</td>
+				<td>${out.client_code}</td>
+				<td>${out.prod.prod_code}</td>
+				<td>${out.prod.prod_name}</td>
+				<td>${out.order_count}</td>
+				<td>${out.prod.prod_price}원</td>
+				<td>${out.order_deliveryDate}</td>
 				<td>${out.out_mat.out_date}</td>
-				<td>${out.out_mat.emp_id}</td>
 				<td>${out.out_mat.out_YN}</td>
-				<td><input type="submit" value="출고 처리"></td>
-				
-				
-<!-- 				<td> -->
-<!-- 					<button type="button" class="orderButton" -->
-<%-- 						data-value="${out.orders.order_finish}"> --%>
-<%-- 						<c:choose> --%>
-<%-- 							<c:when test="${out.orders.order_finish == 'N'}"> --%>
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${out.out_mat.out_YN == '출고 완료'}"> --%>
-<!--                   				출고 완료 -->
-<%--             		   		 </c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!--                						   출고 처리 -->
-<%--               				  		</c:otherwise> --%>
-<%-- 								</c:choose> --%>
-<%-- 							</c:when> --%>
-<%-- 							<c:when test="${out.orders.order_finish == 'Y'}"> --%>
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${out.out_mat.out_YN == '미출고'}"> --%>
-<!--               						 	   미출고 -->
-<%--             					    </c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!--                							 출고 취소 -->
-<%--                						 </c:otherwise> --%>
-<%-- 								</c:choose> --%>
-<%-- 							</c:when> --%>
-<%-- 						</c:choose> --%>
-<!-- 					</button> -->
-<!-- 				</td> -->
-			</tr>
+				<td>${out.out_mat.emp_id}</td>
+				<td>
+					<button type="submit" name="orderCode" value="${out.order_code}">출고 처리</button>
+        		</td>
 		</c:forEach>
 	</table>
 	</form>
 
-	<script>
-		// 버튼 초기 텍스트 설정
-		const buttons = document.querySelectorAll(".orderButton");
-		buttons.forEach(function(button) {
-			const initialValue = button.getAttribute("data-value");
-			button.textContent = initialValue === "N" ? "출고 처리" : "출고 취소";
-		});
-
-		// 버튼 클릭 이벤트 처리
-		buttons.forEach(function(button) {
-			button.addEventListener("click", function() {
-				const currentValue = this.getAttribute("data-value");
-				if (currentValue === "N") {
-					this.innerText = "Y";
-					this.setAttribute("data-value", "Y");
-					this.textContent = "출고 취소";
-				} else if (currentValue === "Y") {
-					this.innerText = "N";
-					this.setAttribute("data-value", "N");
-					this.textContent = "출고 처리";
-				}
-			});
-		});
-	</script>
+	
    
     
 <div>

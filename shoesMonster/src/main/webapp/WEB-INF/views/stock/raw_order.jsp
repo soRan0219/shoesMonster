@@ -151,7 +151,9 @@ function toggleDiv(divId) {
       ${param }/${param.clients.client_actname}/${rvo.clients.client_actname}
    		<c:if test="${count1 > 10 }">
 			<c:if test="${bp.prev}">
+
 			    <a href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+
 			</c:if>
 			
 			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
@@ -159,16 +161,17 @@ function toggleDiv(divId) {
 			</c:forEach>
 			
 			<c:if test="${bp.next && bp.endPage > 0}">
+
 			    <a href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+
 			</c:if>
 		</c:if>
 		<br><br>
     bp.startPage : ${bp.startPage } <br>
     bp.endPage : ${bp.endPage } <br>
-	param.raw_order_num : ${param.raw_order_num} <br>
-	param.raw_name : ${param.rawMaterial.raw_name} <br>
-	param.client_actname : ${clients.client_actname} <br><br>
-	
+    param : ${param } <br>
+
+
 	
 	</div>
 	

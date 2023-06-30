@@ -3,6 +3,7 @@ package com.sm.persistence;
 import java.util.List;
 
 import com.sm.domain.ClientsVO;
+import com.sm.domain.In_materialVO;
 import com.sm.domain.PageVO;
 import com.sm.domain.Raw_orderVO;
 
@@ -20,6 +21,8 @@ public interface Raw_orderDAO {
     
   // 발주 등록
  	public void roInsert(Raw_orderVO vo) throws Exception;
+ 	
+ 	
     
  	// 거래처 상세(팝업)
  	public List<Raw_orderVO> getDetail() throws Exception;
@@ -31,5 +34,6 @@ public interface Raw_orderDAO {
   public List<Raw_orderVO> Raw_order(PageVO vo, Raw_orderVO rvo) throws Exception;
 
     
+  
 }
 

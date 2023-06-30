@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.In_materialVO;
+import com.sm.domain.Raw_orderVO;
 
 @Repository
 public class In_materialImpl implements In_materialDAO {
@@ -53,8 +54,23 @@ public class In_materialImpl implements In_materialDAO {
 		return sqlSession.selectList(NAMESPACE+".in_matPage",data);
 	}
 
+	@Override
+	public void inInsert(Raw_orderVO rvo, String raw_order_num) throws Exception {
+		
+		int result = sqlSession.insert(NAMESPACE + ".inRegist", rvo);
+    
+		if(result != 0) {
+			logger.debug("입고 등록완료");
+        }
+		
+	}
+
 	
-	
+	@Override
+    public void updateIn(String raw_order_num) throws Exception {
+
+        sqlSession.update(NAMESPACE+".updateIn",raw_order_num);
+    }
 	
 	
 //	@Override
@@ -84,13 +100,7 @@ public class In_materialImpl implements In_materialDAO {
 //		return sqlSession.selectList(NAMESPACE+".in_matPageSearch",data);
 //	}
 
-	@Override
-	public void updateIn(In_materialVO uvo) throws Exception {
-		int result = sqlSession.update(NAMESPACE+".updateIn", uvo);
-		if(result == 1) {
-			logger.debug(uvo.getIn_num() + "번 글정보 수정 완료 !");
-		}
-	}
+	
 
 	
 

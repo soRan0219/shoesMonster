@@ -6,7 +6,30 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
- // 팝업으로 열었을 때
+    
+	//input으로 바꾸기 
+	function inputCng(obj, type, name, value) {
+		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+		obj.html(inputBox);
+	} //inputCng
+	
+	// 팝업 옵션
+	const popupOpt = "top=60,left=140,width=600,height=600";
+	
+	//검색 팝업(거래처)
+  	function openWindow(search, inputId) {
+   	 	var url = "/workorder/search?type=" + search + "&input=" + inputId;
+    	var popup = window.open(url, "", popupOpt);
+    } //openWindow()
+    
+	
+	//추가 시 거래처 검색 
+    function serchClient(inputId){
+    	openWindow("client",inputId);
+    }
+    
+    
+ 	// 팝업으로 열었을 때
     function popUp() {
     	var queryString = window.location.search;
     	var urlParams = new URLSearchParams(queryString);
@@ -30,9 +53,10 @@
     	
     	if(isPop!=null && isPop!="") {
     		
-        	$('#add').hide();
+    		$('#addButton').hide();
         	$('#modify').hide();
         	$('#delete').hide();
+        	$('#cancle').hide();
         	$('#save').hide();
         	
        		$('table tr:not(:first-child)').click(function(){
@@ -82,8 +106,8 @@
                     '<td><input type="text" name="raws[' + counter + '].raw_color"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_unit"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_size"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].client_code"required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_price"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_note"></td>' +
                     '</tr>';
@@ -102,7 +126,114 @@
             });
             
             // =============================================================================================================
- 
+ 			
+            /////////////// 수정 //////////////////////////////
+			var isExecuted = false;
+			
+			//수정버튼 클릭
+			$('#modify').click(function() {
+				event.preventDefault();
+				$('#addButton').attr("disabled", true);
+				$('#delete').attr("disabled", true);
+
+				//행 하나 클릭했을 때	
+				$('table tr:not(:first-child)').click(function() {
+					
+					//하나씩만 선택 가능
+					if(!isExecuted) {
+						isExecuted = true;
+								
+						$(this).addClass('selected');
+						//품목코드 저장
+						let updateCode = $(this).find('#rawCode').text().trim();
+						console.log(updateCode);
+		
+						var jsonData = {
+							raw_code : updateCode
+						};
+		
+						var self = $(this);
+		
+						$.ajax({
+							url : "/performance/rawOne",
+							type : "post",
+							contentType : "application/json; charset=UTF-8",
+							dataType : "json",
+							data : JSON.stringify(jsonData),
+							success : function(data) {
+								// alert("*** 아작스 성공 ***");
+								var sum = 0;
+								
+								var preVOs = [
+										data.raw_code,
+										data.raw_name,
+										data.raw_color,
+										data.raw_unit,
+										data.raw_size,
+										data.client_code,
+										data.clients.client_actname,
+										data.raw_price,
+										data.raw_note
+										];
+								
+								var names = [
+										"raw_code",
+										"raw_name",
+										"raw_color",
+										"raw_unit",
+										"raw_size",
+										"client_code",
+										"client_actname",
+										"raw_price",
+										"raw_note"
+										];
+		
+								//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+								
+								self.find('td').each(function(idx,item) {
+									if (idx > 0) {
+										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+
+									} //라인코드부터 다 수정 가능하게
+		
+								}); // self.find(~~)
+								
+								//거래처 검색 
+								$('#client_code').click(function() {
+									openWindow("client","client_code");
+								}); //client_code click
+								
+							},
+							error : function(data) {
+								alert("아작스 실패 ~~");
+							}
+						}); //ajax
+		
+						//저장버튼 -> form 제출
+						$('#save').click(function() {
+		
+							$('#fr').attr("action","/performance/rawModify");
+							$('#fr').attr("method","post");
+							$('#fr').submit();
+		
+						}); //save
+
+					} //하나씩만 선택 가능
+						
+						
+					//취소버튼 -> 리셋
+					$('#cancle').click(function() {
+						$('#fr').each(function() {
+							this.reset();
+						});
+					}); //cancle click
+
+				}); //tr click
+
+			}); //modify click
+            	
+           	
+            // =============================================================================================================
 
         	//취소버튼 -> 리셋
 			$('#cancle').click(function(){
@@ -212,7 +343,6 @@
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save">
-
 	
 		<table border="1" id="rawTable">
 				<tr>

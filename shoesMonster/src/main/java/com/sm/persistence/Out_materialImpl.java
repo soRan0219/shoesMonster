@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.OrderStatusVO;
 import com.sm.domain.Out_materialVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
@@ -44,29 +45,29 @@ public class Out_materialImpl implements Out_materialDAO {
 	
 	
 	@Override
-	public int count2(ProductVO ovo) throws Exception {
+	public int count2(OrderStatusVO ovo) throws Exception {
 		
 		HashMap<String , Object> data = new HashMap<String, Object>();
         
-        data.put("client_actname",ovo.getClient().getClient_actname());
+        data.put("client_actname",ovo.getClients().getClient_actname());
         data.put("out_num", ovo.getOut_mat().getOut_num());
-        data.put("prod_name", ovo.getProd_name());
+        data.put("prod_name", ovo.getProd().getProd_name());
         
          
         return sqlSession.selectOne(NAMESPACE+".searchCount2",data);
 	}
 
 	@Override
-	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, ProductVO ovo) throws Exception {
+	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, OrderStatusVO ovo) throws Exception {
 
 		HashMap<String , Object> data = new HashMap<String, Object>();
 		
 		data.put("startRow", startRow);
         data.put("pageSize", pageSize);
 		
-		data.put("client_actname",ovo.getClient().getClient_actname());
+		data.put("client_actname",ovo.getClients().getClient_actname());
 		data.put("out_num", ovo.getOut_mat().getOut_num());
-		data.put("prod_name", ovo.getProd_name());
+		data.put("prod_name", ovo.getProd().getProd_name());
 
 	
 		return sqlSession.selectList(NAMESPACE+".searchOut",data);

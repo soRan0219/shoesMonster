@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
 import com.sm.domain.LineWhPageVO;
@@ -144,7 +143,7 @@ public class PerfomanceController {
 		service.modifyProd(uvo);
 		
 		return "redirect:/performance/product";
-	} //modifyWorkOrder()
+	} //modifyProd()
 
 	// =====================================================================================
 
@@ -225,6 +224,32 @@ public class PerfomanceController {
 
 		return "redirect:/performance/rawMaterial";
 	} // deleteRawMaterial()
+	
+	// 원자재관리 조회 POST
+	@ResponseBody
+	@RequestMapping(value = "/rawOne", method = RequestMethod.POST)
+	public RawMaterialVO getRaw(@RequestBody RawMaterialVO vo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: getRaw() 호출");
+		logger.debug("@@@@@ CONTROLLER: raw_Code = " + vo.getRaw_code());
+
+		// 서비스 - 원자재관리 정보 가져오기
+		RawMaterialVO preVO = service.getRaw(vo.getRaw_code());
+		logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
+
+		return preVO;
+	} // getProd()
+
+	// 원자재관리 수정
+	@RequestMapping(value = "/rawModify", method = RequestMethod.POST)
+	public String modifyRaw(RawMaterialVO uvo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: modifyRaw() 호출");
+		logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
+
+		// 서비스 - 원자재관리 수정
+		service.modifyRaw(uvo);
+
+		return "redirect:/performance/rawMaterial";
+	} // modifyRaw()
 
 	// =====================================================================================
 
@@ -307,7 +332,7 @@ public class PerfomanceController {
 			logger.debug("@@@@@ CONTROLLER: getreq() 호출");
 			logger.debug("@@@@@ CONTROLLER: req_Code = " + vo.getReq_code());
 			
-			//서비스 - 품목관리 정보 가져오기
+			//서비스 - 소요량관리 정보 가져오기
 			RequirementsVO preVO = service.getReq(vo.getReq_code());
 			logger.debug("@@@@@ CONTROLLER: preVO = " + preVO);
 			
@@ -320,7 +345,7 @@ public class PerfomanceController {
 			logger.debug("@@@@@ CONTROLLER: modifyreq() 호출");
 			logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
 			
-			//서비스 - 작업지시 수정
+			//서비스 - 소요량관리 수정
 			service.modifyReq(uvo);
 			
 			return "redirect:/performance/requirement";
@@ -330,7 +355,6 @@ public class PerfomanceController {
 
 	// ======== 라인 - /line ================================
 	// http://localhost:8088/performance/line
-	// http://localhost:8088/performance/line?page=1
 	@RequestMapping(value = "/line", method = RequestMethod.GET)
 	public void lineGET(Model model, LineVO lvo, LineWhPageVO vo, LineWhPageMaker lwpm,
 			@RequestParam Map<String, Object> params, @RequestParam(value = "input", required = false) String input)
@@ -386,24 +410,75 @@ public class PerfomanceController {
 			lwpm.setTotalCount(service.getTotalCount());
 			logger.debug("lwpm : " + lwpm.getTotalCount());
 			model.addAttribute("lwpm", lwpm);
-
 		}
 
 	}
-
-	@RequestMapping(value = "/line", method = RequestMethod.POST)
-	public void linePOST(Model model) throws Exception {
-		logger.debug("linePOST() 호출");
-
-		List<LineVO> boardList = service.getLineList();
-		logger.debug("boardList : " + boardList);
-
-//		model.addAttribute("boardList", boardList);
-
+	
+	// 사원 팝업
+	@RequestMapping(value = "/lineEmpSearch", method = RequestMethod.GET)
+	public String popUpLineGET(@RequestParam("type") String type,
+				@RequestParam(value = "input", required = false) String input) throws Exception{
+		
+		logger.debug("@#@#@# C : popUpLineGET() 호출");
+		logger.debug("@#@#@# C : type = "+type);
+		
+		if(type.equals("emp")) {
+			return "redirect:/person/empinfo?input="+input;
+		}
+		
+		return "redirect:/performance/line?input="+input;
 	}
+	
+	// 라인 추가
+	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
+	public String addLine(LineVO lvo) throws Exception{
+		logger.debug("@#@#@# C : addLine(LineVO lvo) 호출 ");
+		logger.debug("@#@#@# C : lvo = "+lvo);
+		
+		// 라인 등록
+		service.registLine(lvo);
+		
+		return "redirect:/performance/line";
+	}
+	
+	// 라인 삭제
+	@RequestMapping(value = "/linedelete", method = RequestMethod.POST)
+	public String deleteLine(@RequestParam(value="checked[]") List<String> checked) throws Exception{
+		logger.debug("@#@#@# C : deleteLine() 호출 ");
+		logger.debug("@#@#@# C : checked = "+checked);
+		
+		service.deleteLine(checked);
+		
+		return "redirect:/performance/line";
+	}
+	
+	// 라인 수정
+	@RequestMapping(value = "/linemodify", method = RequestMethod.POST)
+	public String modifyLine(LineVO lvo) throws Exception{
+		logger.debug("@#@#@# C : modifyLine(LineVO lvo) 호출 ");
+		logger.debug("@#@#@# C : lvo = "+lvo);
+		
+		service.modifyLine(lvo);
+		
+		return "redirect:/performance/line";
+	}
+	
+	// 라인 조회 POST
+	@ResponseBody
+	@RequestMapping(value = "/line", method = RequestMethod.POST)
+	public LineVO getlinePOST(@RequestBody LineVO lvo ) throws Exception {
+		logger.debug("@#@#@# C : linePOST() 호출");
+		logger.debug("@#@#@# C : lineCode = "+lvo.getLine_code());
 
+		LineVO lpvo = service.getLine(lvo.getLine_code());
+		logger.debug("@#@#@# C : lpvo = "+lpvo);
+		
+		return lpvo;
+	}
+	
 	// ======== 라인 - /line ================================
 
+	
 	// ======== 창고 - /warehouse ===========================
 	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
@@ -483,6 +558,52 @@ public class PerfomanceController {
 		
 	}
 	
+	// 창고 추가
+	@RequestMapping(value = "/whadd", method = RequestMethod.POST)
+	public String addWh(Wh_prodVO wvo) throws Exception{
+		logger.debug("@#@#@# C : addWh(Wh_prodVO wvo) 호출 ");
+		logger.debug("@#@#@# C : wvo = "+wvo);
+		
+		service.registWh(wvo);
+		
+		return "redirect:/performance/warehouse";
+	}
+	
+	// 창고 삭제
+	@RequestMapping(value = "/whdelete", method = RequestMethod.POST)
+	public String deleteWh(@RequestParam(value="checked[]") List<String> checked) throws Exception{
+		logger.debug("@#@#@# C : deleteWh() 호출 ");
+		logger.debug("@#@#@# C : checked = "+checked);
+		
+		service.deleteWh(checked);;
+		
+		return "redirect:/performance/warehouse";
+	}
+	
+	// 창고 수정
+	@RequestMapping(value = "/whmodify", method = RequestMethod.POST)
+	public String modifyWh(Wh_prodVO wvo) throws Exception{
+		logger.debug("@#@#@# C : modifyWh(Wh_prodVO wvo) 호출 ");
+		logger.debug("@#@#@# C : wvo = "+wvo);
+		
+		service.modifyWh(wvo);
+		
+		return "redirect:/performance/warehouse";
+	}
+	
+	// 라인 조회 POST
+	@ResponseBody
+	@RequestMapping(value = "/warehouse", method = RequestMethod.POST)
+	public Wh_prodVO warehousePOST(@RequestBody Wh_prodVO wvo ) throws Exception {
+		logger.debug("@#@#@# C : warehousePOST() 호출");
+		logger.debug("@#@#@# C : whCode = "+wvo.getWh_code());
+
+		Wh_prodVO whVO = service.getWarehouse(wvo.getWh_code());
+		logger.debug("@#@#@# C : whVO = "+whVO);
+		
+		return whVO;
+	}
+	
 	
 	// ======== 창고 - /warehouse ===========================
 
@@ -498,7 +619,12 @@ public class PerfomanceController {
 		logger.debug("@@@@@ CONTROLLER: performanceList() 호출");
 		
 		//페이지 정보
-		pvo.setPageSize(2);
+		if(search.get("pageSize")!=null) {
+			int pageSize = Integer.parseInt(search.get("pageSize").toString());
+			pvo.setPageSize(pageSize);
+		} else {
+			pvo.setPageSize(2);
+		}
 		
 		//페이징 하단부 정보
 		LineWhPageMaker pm = new LineWhPageMaker();

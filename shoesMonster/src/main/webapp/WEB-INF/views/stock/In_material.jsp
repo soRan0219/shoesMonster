@@ -58,14 +58,17 @@
             var inYNElement = button.parentNode.previousElementSibling;
             if (button.value === "입고처리") {
                 button.value = "입고취소";
-                inYNElement.innerText = "출고완료";
+                inYNElement.innerText = "입고완료";
             } else {
                 button.value = "입고처리";
                 inYNElement.innerText = "미입고";
             }
         }
+        
+      
     </script>
 
+	<form action="" method="post">
 	<table border="1">
         <tr>
             <th>입고번호</th>
@@ -81,33 +84,30 @@
             <th>입고일</th>
             <th>담당자</th>
             <th>입고 버튼</th>
-            <th></th>
         </tr>
 
-        <c:forEach var="vo" items="${ro_List }">
-
+        <c:forEach var="rvo" items="${ro_List }">
             <tr>
-                <td>${vo.in_mat.in_num }</td>
-                <td>${vo.raw_order_num }</td>
-                <td>${vo.clients.client_actname }</td>
-                <td>${vo.raw_code }</td>
-                <td>${vo.rawMaterial.raw_name }</td>
-                <td>${vo.rawMaterial.raw_color }</td>
-                <td>${vo.raw_order_count}</td>
-                <td>${vo.stock.stock_raw_count != null ? vo.stock.stock_raw_count : 0}</td>
-                <td>${vo.rawMaterial.raw_price}원</td>
-                <td>${vo.rawMaterial.raw_price*vo.raw_order_count}원</td>
-                <td>${vo.in_mat.in_date }</td>
-                <td>${vo.emp_id }</td>
-                 <td>${vo.in_mat.in_YN}</td>
-                    <td>
-                <input type="button" value="입고처리" onclick="changeButtonValue(this)">
-                    </td>
+                <td>${rvo.in_mat.in_num }</td>
+                <td>${rvo.raw_order_num }</td>
+                <td>${rvo.clients.client_actname }</td>
+                <td>${rvo.raw_code }</td>
+                <td>${rvo.rawMaterial.raw_name }</td>
+                <td>${rvo.rawMaterial.raw_color }</td>
+                <td>${rvo.raw_order_count}</td>
+                <td>${rvo.stock.stock_raw_count != null ? vo.stock.stock_raw_count : 0}</td>
+                <td>${rvo.rawMaterial.raw_price}원</td>
+                <td>${rvo.rawMaterial.raw_price*vo.raw_order_count}원</td>
+                <td>${rvo.in_mat.in_date }</td>
+                <td>${rvo.emp_id }</td>
+				 <td>${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
+				<td>
+					<button type="submit" name="raw_order_num" value="${rvo.raw_order_num}">입고 처리</button>
+				</td>
             </tr>
         </c:forEach>
     </table>
-
-
+</form>
 
 
 	<div>
