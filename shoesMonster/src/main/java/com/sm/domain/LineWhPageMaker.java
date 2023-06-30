@@ -1,5 +1,7 @@
 package com.sm.domain;
 
+import java.util.List;
+
 public class LineWhPageMaker {
 	
 	// 하단부 페이징처리

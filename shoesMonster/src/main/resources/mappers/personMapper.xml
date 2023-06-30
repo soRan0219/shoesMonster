@@ -10,8 +10,6 @@
 	<!-- 사원 목록 조회 -->
 	<select id="empList" resultType="EmployeesVO"> 
 		select * from employees
-		where emp_id !=''
-		order by emp_id desc
 		limit #{startPage}, #{pageSize}
 	</select>	
 	<!-- 사원 목록 조회 -->
@@ -30,13 +28,16 @@
 	
 	<!-- 사원 검색 -->
 	<select id="searchEmployees" parameterType="hashMap" resultType="EmployeesVO">
+		<bind name="emp_id" value="'%' + search_empid + '%'"/>
+		<bind name="emp_name" value="'%' + search_empname + '%'"/>
+		
 		select * from employees
 		<where>
-			<if test="search_empid!=null and !search_empid.isEmpty()">
-				emp_id=#{search_empid}
+			<if test="emp_id != null and !emp_id.isEmpty()">
+				emp_id like #{emp_id}
 			</if>
-			<if test="search_empname!=null and !search_empname.isEmpty()">
-				and emp_name=#{search_empname}
+			<if test="emp_name != null and !emp_name.isEmpty()">
+				and emp_name like #{emp_name}
 			</if>
 			<if test="search_empdepartment != '전체' and !search_empdepartment.isEmpty()">
 				and emp_department=#{search_empdepartment}
@@ -50,16 +51,17 @@
 	<select id="employeesSearchCnt" parameterType="hashMap" resultType="int">
 		select count(*) from employees 
 		<where>
-			<if test="search_empid!=null and !search_empid.isEmpty()">
-				emp_id=#{search_empid}
+			<if test="emp_id != null and !emp_id.isEmpty()">
+				emp_id like #{emp_id}
 			</if>
-			<if test="search_empname!=null and !search_empname.isEmpty()">
-				and emp_name=#{search_empname}
+			<if test="emp_name != null and !emp_name.isEmpty()">
+				and emp_name like #{emp_name}
 			</if>
 			<if test="search_empdepartment != '전체' and !search_empdepartment.isEmpty()">
 				and emp_department=#{search_empdepartment}
 			</if>
 		</where>
+		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 사원 검색 개수 -->
 	
@@ -69,6 +71,38 @@
 		values (#{emp_id}, #{emp_name}, #{emp_department}, #{emp_position}, #{emp_email}, #{emp_phone}, #{emp_hiredate}, #{emp_work})
 	</insert>
 	<!-- 사원 추가 -->
+	
+	<!-- 사원 삭제 -->
+	<delete id="deleteEmployees">
+		delete from employees 
+		where emp_id=#{emp_id}
+	</delete>
+	<!-- 사원 삭제 -->
+	
+	<!-- 사원 조회 -->
+	<select id="realEmployees" resultType="EmployeesVO">
+		select * from employees where emp_id=#{emp_id}
+	</select>
+	<!-- 사원 조회 -->
+	
+	<!-- 사원 수정 -->
+	<update id="updateEmployees">
+		update employees
+		set emp_id=#{emp_id}, emp_name=#{emp_name}, emp_department=#{emp_department}, 
+			emp_position=#{emp_position}, emp_email=#{emp_email}, emp_phone=#{emp_phone},
+			emp_hiredate=#{emp_hiredate}, emp_work=#{emp_work}
+		where emp_id=#{emp_id}
+	</update>
+	<!-- 사원 수정 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
   <!-- ===================================================== 사원 권한 ================================================================== -->
   
