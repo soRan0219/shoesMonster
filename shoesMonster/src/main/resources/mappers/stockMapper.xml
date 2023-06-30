@@ -81,8 +81,8 @@
 		insert into raw_order(raw_order_num, raw_order_date, raw_code, raw_order_count)
 		values(CONCAT('R', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_code}, #{raw_order_count}) 
 		
-		
 	</insert>
+
 	<!-- 발주 등록 -->
 	
 	<!-- 발주 거래처 상세 -->
@@ -146,36 +146,35 @@
 	
 <!-- =================================입고 목록 조회 -============================================== 시작  -->
 
-<!-- 	<resultMap id="in_List" type="com.sm.domain.In_materialVO"> -->
-<!-- 	    <result property="in_num" column="in_num" /> -->
-<!-- 	    <result property="in_date" column="in_date" /> -->
-<!-- 	    <result property="in_YN" column="in_YN" /> -->
-<!-- 	    <result property="raw_order_num" column="raw_order_num" /> -->
+	<resultMap id="in_List" type="com.sm.domain.In_materialVO">
+	    <result property="in_num" column="in_num" />
+	    <result property="in_date" column="in_date" />
+	    <result property="raw_order_num" column="raw_order_num" />
+	    <result property="client_code" column="client_code" />
+	    <result property="in_YN" column="in_YN" />
 	
-<!-- 	    <collection property="rawOrder" ofType="com.sm.domain.Raw_orderVO"> -->
-<!-- 	        <result property="raw_code" column="raw_code" /> -->
-<!-- 	        <result property="raw_order_count" column="raw_order_count" /> -->
-<!-- 	        <result property="emp_id" column="emp_id" /> -->
-<!-- 	    </collection> -->
+	    <collection property="rawOrder" ofType="com.sm.domain.Raw_orderVO">
+	        <result property="raw_order_num" column="raw_order_num" />
+	        <result property="raw_code" column="raw_code" />
+	        <result property="raw_order_count" column="raw_order_count" />
+	        <!-- <result property="emp_id" column="emp_id" /> -->
+	    </collection>
 	    
-<!-- 	    <collection property="raw_mat" ofType="com.sm.domain.RawMaterialVO"> -->
-<!-- 	    	<result property="raw_color" column="raw_color"/> -->
-<!-- 	        <result property="raw_name" column="raw_name" /> -->
-<!-- 	        <result property="raw_price" column="raw_price" /> -->
-<!-- 	    </collection> -->
+	    <collection property="raw_mat" ofType="com.sm.domain.RawMaterialVO">
+	    	<result property="raw_color" column="raw_color"/>
+	        <result property="raw_name" column="raw_name" />
+	        <result property="raw_price" column="raw_price" />
+	    </collection>
 	
-<!-- 	    <collection property="clients" ofType="com.sm.domain.ClientsVO"> -->
-<!-- 	        <result property="client_actname" column="client_actname" /> -->
-<!-- 	    </collection> -->
+	    <collection property="clients" ofType="com.sm.domain.ClientsVO">
+	        <result property="client_actname" column="client_actname" />
+	    </collection>
 	
-<!-- 	    <collection property="stock" ofType="com.sm.domain.StockVO"> -->
-<!-- 	        <result property="stock_raw_count" column="stock_raw_count" /> -->
-<!-- 	    </collection> -->
-	    
-	    
-<!-- 	</resultMap> -->
-
-
+	    <collection property="stock" ofType="com.sm.domain.StockVO">
+	        <result property="stock_raw_count" column="stock_raw_count" />
+	    </collection>
+	</resultMap>
+	
 
  <!-- 게시물 총 갯수 --> 
 <!-- <select id="count" resultType="int" > -->
@@ -254,14 +253,13 @@
 <!--   	</update> -->
 <!-- 출고 ,미출고 변경 -->
 
+	<!-- 입고 등록 -->
+	<insert id="inRegist" parameterType="com.sm.domain.In_materialVO">
+	    insert into in_material(in_num, in_date, raw_order_num) 
+	    values(CONCAT('I', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_order_num} ) 
+	</insert>
+	<!-- 입고 등록 -->
 
-
-<!-- 입고 등록 -->
-	<insert id="inRegist">
-		insert into in_material(in_num, in_date , raw_order_num) 
-		values(CONCAT('R', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_order_num} ) 
-
-	</insert>	
 	
 	 <!-- 미입고 , 입고완료 -->
     <update id="updateIn" parameterType="String">
@@ -271,9 +269,9 @@
     </update>
     <!-- 미입고 , 입고완료 -->
 	
-<!-- 입고 등록 -->
+	
 
-<!-- =================================입고 목록 조회 -============================================== 끝  -->
+<!-- =================================입고 - 끝 ============================================== 끝  -->
 
 <!-- 재고 목록 조회 -->
 
@@ -344,7 +342,7 @@
 <!-- 재고 검색 목록 조회 -->
 
 
-	<!-- ========================= 출고 - 끝 ========================= -->
+	<!-- ========================= 출고 - 시작 ========================= -->
 	<!-- 출고 목록 조회 -->
 	<resultMap id="out_List" type="com.sm.domain.ProductVO">
 		<result property="prod_code" column="prod_code" />
@@ -378,12 +376,13 @@
 	</select>
 	
 	<select id="out_matPage" parameterType="hashMap" resultType="com.sm.domain.ProductVO" resultMap="out_List">
-		SELECT o.order_code, c.client_actname, c.client_code, o.order_deliveryDate, o.order_count, om.out_num, om.out_date,
-			   om.emp_id, om.out_YN
+		SELECT om.out_num, o.order_code, c.client_actname, c.client_code, p.prod_code, p.prod_name, o.order_count,
+			   p.prod_price, o.order_deliveryDate, om.out_YN, om.emp_id
 		FROM orders o
-		JOIN clients c ON c.client_code = o.client_code
-		JOIN product p ON p.client_code = c.client_code
+		LEFT JOIN clients c ON c.client_code = o.client_code
+		LEFT JOIN product p ON p.client_code = c.client_code
 		LEFT JOIN out_material om ON om.prod_code = p.prod_code
+		order by om.out_num desc
 		limit #{startRow}, #{pageSize}
 	</select>
 	<!-- 출고 목록 조회 -->
@@ -437,9 +436,13 @@
 							out_date = CURDATE(), out_YN = '출고완료'
 		where order_code = #{order_code}
 	</update> -->
-	<insert id="omButton">
+	<!-- <insert id="omButton">
 		insert into out_material(out_num, out_date, out_YN)
 		values(CONCAT('OM', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), '출고완료')
+	</insert> -->
+	<insert id="omButton">
+		INSERT INTO out_material(out_num, out_date, out_YN)
+		VALUES(CONCAT('OM', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), '출고완료')
 	</insert>
 	<!-- 출고 처리 버튼 -->
 	<!-- ========================= 출고 - 끝 ========================= -->

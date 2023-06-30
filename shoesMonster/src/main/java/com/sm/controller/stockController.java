@@ -186,6 +186,7 @@ public class stockController {
     }
 	
 	// 입고 등록
+
     @RequestMapping(value = "/In_material" , method = RequestMethod.POST)
     public String inRegist(@RequestParam("raw_order_num") String raw_order_num, Raw_orderVO rvo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception{
         
@@ -204,6 +205,7 @@ public class stockController {
         
         return "redirect:/stock/In_material";
     }
+
     
     ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
    

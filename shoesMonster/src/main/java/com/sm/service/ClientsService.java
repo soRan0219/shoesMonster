@@ -23,4 +23,10 @@ public interface ClientsService {
 	
 	// 거래처 추가
 	public void regClient(ClientsVO cvo) throws Exception;
+	
+	// 거래처 삭제
+	public void deleteClient(List<String> checked) throws Exception;
+	
+	// 거래처 수정
+	public void updateClient(ClientsVO cvo) throws Exception;
 }

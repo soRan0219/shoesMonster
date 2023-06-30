@@ -22,7 +22,7 @@ public interface In_materialService {
 //		public List<In_materialVO> getIn_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
 		
 		// 입고 등록
-		public void inInsert(Raw_orderVO rvo) throws Exception;
+		public void inInsert(Raw_orderVO rvo, String raw_order_num) throws Exception;
 		
 		// 미입고 ,출국완료
         public void updateIn(String raw_order_num) throws Exception;
