@@ -72,6 +72,38 @@
 	</insert>
 	<!-- 사원 추가 -->
 	
+	<!-- 사원 삭제 -->
+	<delete id="deleteEmployees">
+		delete from employees 
+		where emp_id=#{emp_id}
+	</delete>
+	<!-- 사원 삭제 -->
+	
+	<!-- 사원 조회 -->
+	<select id="realEmployees" resultType="EmployeesVO">
+		select * from employees where emp_id=#{emp_id}
+	</select>
+	<!-- 사원 조회 -->
+	
+	<!-- 사원 수정 -->
+	<update id="updateEmployees">
+		update employees
+		set emp_id=#{emp_id}, emp_name=#{emp_name}, emp_department=#{emp_department}, 
+			emp_position=#{emp_position}, emp_email=#{emp_email}, emp_phone=#{emp_phone},
+			emp_hiredate=#{emp_hiredate}, emp_work=#{emp_work}
+		where emp_id=#{emp_id}
+	</update>
+	<!-- 사원 수정 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
   <!-- ===================================================== 사원 권한 ================================================================== -->
   
   <!-- ===================================================== 거래처 ================================================================== -->

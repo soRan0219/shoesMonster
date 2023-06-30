@@ -40,7 +40,7 @@ $(function() {
     }
 	
 	//추가 버튼
-	$('#empAdd').click(function() {
+	$('#add').click(function() {
 		$('#modify').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 		
@@ -133,6 +133,122 @@ $(function() {
 	}); //add click
 	
 	//수정
+	$('#modify').click(function() {
+
+		$('#add').attr("disabled", true);
+		$('#delete').attr("disabled", true);
+
+		//행 하나 클릭했을 때	
+		$('table tr:not(:first-child)').click(function() {
+
+			//하나씩만 선택 가능
+			if(!isExecuted) {
+				isExecuted = true;
+				
+				$(this).addClass('selected');
+				//작업지시 코드 저장
+				let updateCode = $(this).find('#workCode').text().trim();
+				console.log(updateCode);
+				
+				var jsonData = {
+						work_code : updateCode
+					};
+				
+				var self = $(this);
+				
+				$.ajax({
+					url : "/person/detail",
+					type : "post",
+					contentType : "application/json; charset=UTF-8",
+					dataType : "json",
+					data : JSON.stringify(jsonData),
+					success : function(data) {
+
+						var preVOs = [
+								data.emp_id,
+								data.emp_name,
+								data.emp_department,
+								data.emp_position,
+								data.emp_email,
+								data.emp_phone,
+								data.emp_hiredate,
+								data.emp_work ];
+	
+						var names = [
+								"emp_id",
+								"emp_name",
+								"emp_department",
+								"emp_position",
+								"emp_email",
+								"emp_phone",
+								"emp_hiredate",
+								"emp_work" ];
+
+						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+						self.find('td').each(function(idx,item) {
+
+							if (idx > 0) {
+								inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+								if (idx == 5) {
+									var dropDown = "<select id='work_state' name='work_state'>";
+									dropDown += "<option value='지시'>지시</option>";
+									dropDown += "<option value='진행'>진행</option>";
+									dropDown += "<option value='마감'>마감</option>";
+									dropDown += "</select>";
+									$(this).html(dropDown);
+									$(this).find('option').each(function() {
+										if (this.value == preVOs[idx - 1]) {
+											$(this).attr("selected",true);
+										}
+									}); //option이 work_state와 일치하면 선택된 상태로
+								} //지시상태 - select
+							} //라인코드부터 다 수정 가능하게
+
+						}); // self.find(~~)
+
+						//라인코드 검색
+						$('#line_code').click(function() {
+							openWindow("line","line_code");
+						}); //lineCode click
+
+						//품번 검색 
+						$('#prod_code').click(function() {
+							openWindow("prod","prod_code");
+						}); //prodCode click
+
+						//수주코드 검색
+						$('#order_code').click(function() {
+							openWindow("order","order_code");
+						}); //orderCode click
+
+					},
+					error : function(data) {
+						alert("아작스 실패 ~~");
+					}
+				}); //ajax
+
+				//저장버튼 -> form 제출
+				$('#save').click(function() {
+
+					$('#fr').attr("action","/workorder/modify");
+					$('#fr').attr("method","post");
+					$('#fr').submit();
+
+				}); //save
+
+			} //하나씩만 선택 가능
+				
+				
+			//취소버튼 -> 리셋
+			$('#cancle').click(function() {
+				$('#fr').each(function() {
+					this.reset();
+				});
+			}); //cancle click
+
+		}); //tr click
+
+	}); //modify click
 	//삭제
 
 });
