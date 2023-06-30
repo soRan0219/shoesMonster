@@ -12,6 +12,21 @@
 		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
 		obj.html(inputBox);
 	} //inputCng
+	
+	// 팝업 옵션
+	const popupOpt = "top=60,left=140,width=600,height=600";
+	
+	//검색 팝업(거래처)
+  	function openWindow(search, inputId) {
+   	 	var url = "/workorder/search?type=" + search + "&input=" + inputId;
+    	var popup = window.open(url, "", popupOpt);
+    } //openWindow()
+    
+	
+	//추가 시 거래처 검색 
+    function serchClient(inputId){
+    	openWindow("client",inputId);
+    }
     
     
  	// 팝업으로 열었을 때
@@ -91,8 +106,8 @@
                     '<td><input type="text" name="raws[' + counter + '].raw_color"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_unit"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_size"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].client_code"required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_price"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_note"></td>' +
                     '</tr>';
@@ -168,7 +183,7 @@
 										"raw_unit",
 										"raw_size",
 										"client_code",
-										"clients.client_actname",
+										"client_actname",
 										"raw_price",
 										"raw_note"
 										];
@@ -182,6 +197,11 @@
 									} //라인코드부터 다 수정 가능하게
 		
 								}); // self.find(~~)
+								
+								//거래처 검색 
+								$('#client_code').click(function() {
+									openWindow("client","client_code");
+								}); //client_code click
 								
 							},
 							error : function(data) {
