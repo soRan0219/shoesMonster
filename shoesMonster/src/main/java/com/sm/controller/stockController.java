@@ -386,13 +386,15 @@ public class stockController {
     	//http://localhost:8080/stock/Out_material
     	//http://localhost:8088/stock/Out_material
     	@RequestMapping(value = "/Out_material", method = RequestMethod.POST)
-    	public void omRegist(ProductVO vo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+    	public void omRegist(OrderStatusVO vo, RedirectAttributes rttr,
+    			HttpSession session, HttpServletRequest request
+    			, Model model , String order_code) throws Exception {
     	    logger.debug("@@@@@@@@@@ 출고 처리 버튼 컨트롤러 @@@@@@@@@@");
 
     	    String emp_id = (String) session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
     	    vo.getOut_mat().setEmp_id(emp_id); // 담당자 설정
 
-    	    o_service.omButton(vo); // 출고 처리 메서드 호출
+    	    o_service.omButton(vo, order_code); // 출고 처리 메서드 호출
     	    rttr.addFlashAttribute("result", "omButton");
 
 //    	    return "redirect:/stock/Out_material";

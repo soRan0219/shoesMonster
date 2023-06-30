@@ -5,6 +5,7 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <style type="text/css">
@@ -12,6 +13,7 @@
 	background-color: #ccc;
 }
 </style>
+
 <!-- page content -->
 <div class="right_col" role="main">
 
@@ -31,8 +33,6 @@
 		var url = "/performance/whsearch?type=" + search + "&input=" + inputId;
 		var popup = window.open(url, "", popupOpt);
 	} //openWindow()
-
-
 
 	// 팝업으로 열었을 때
 	function popUp() {
@@ -64,6 +64,7 @@
     	$('#save').hide();
     	
    		$('table tr:not(:first-child)').click(function(){
+   			
    			$(this).css('background', '#ccc');
     		
    			if(isPop==="wh_code") {
@@ -95,21 +96,380 @@
 
 //===========검색==========================
 	
+	// 제이쿼리
 	$(function () {
 		
-	
-		//품번 검색 팝업(prod)
-		$('#search_prod').click(function() {
-			openWindow("prod", "search_prod");
-		}); //prodCode click
-		
-		//품번 검색 팝업(raw)
-		$('#search_raw').click(function() {
-			openWindow("raw", "search_raw");
-		}); //rawCode click
+	popUp();
 
-	});
-</script>
+	
+	//============================ 버튼 구현 ====================================//	
+	
+	////////////////// 추가/////////////////////////
+	$("#add").click(function () {
+		
+		$('#modify').attr("disabled", true);
+		$('#delete').attr("disabled", true);
+		
+		if($(this).hasClass('true')){
+			
+			var tbl = "<tr>";
+			
+			// 번호
+			tbl += "<td>";
+			tbl += "</td>";
+			
+			// 창고코드
+			tbl += "<td>";
+			tbl += "<input type='text' name='wh_code' id='wh_code' required>";
+			tbl += "</td>";
+			
+			// 창고명
+			tbl += "<td>";
+			tbl += "<input type='text' name='wh_name' id='wh_name' required>";
+			tbl += "</td>";
+			
+			// 창고유형
+			tbl += "<td>";
+			tbl += "<select name='wh_dv' id='wh_dv'onchange='whdv(this)'>";
+			tbl += "<option>선택</option>";
+			tbl += "<option value='완제품'>완제품</option>";
+			tbl += "<option value='원자재'>원자재</option>";
+			tbl += "</select>";
+			tbl += "</td>";
+			
+			// 품번
+			tbl += "<td>";
+			tbl += "<input type='text' name='' id='Code' required>";
+// 			tbl += "<input type='text' name='raw_code' id='raw_code' required>";
+			tbl += "</td>";
+			
+// 			tbl += "<td>";
+// 			tbl += "<input type='text' name='raw_code' id='raw_code' required>";
+// 			tbl += "</td>";
+			
+			// 품명
+			tbl += "<td>";
+			tbl += "<input type='text' name='' id='Name'>";
+// 			tbl += "<input type='text' name='raw_name' id='raw_name'>";
+			tbl += "</td>";
+			
+// 			tbl += "<td>";
+// 			tbl += "<input type='text' name='raw_name' id='raw_name'>";
+// 			tbl += "</td>";
+			
+			// 지역
+			tbl += "<td>";
+			tbl += "<input type='text' name='wh_addr' id='wh_addr' required>";
+			tbl += "</td>";
+			
+			// 전화번호
+			tbl += "<td>";
+			tbl += "<input type='text' name='wh_tel' id='wh_tel' required>";
+			tbl += "</td>";
+			
+			// 사용여부
+			tbl += "<td>";
+			tbl += "<select name='wh_use' id='wh_use'>";
+			tbl += "<option value='1'>Y</option>";
+			tbl += "<option values='2'>N</option>";
+			tbl += "</select>";
+			tbl += "</td>";
+			
+			// 비고
+			tbl += "<td>";
+			tbl += "<input type='text' name='wh_note' id='wh_note'>";
+			tbl += "</td>";
+			tbl += "</tr>";
+			
+			$('table').append(tbl);
+			
+			// 0630 추가
+// 			$("#wh_dv").on("change", function () {
+// 				if($("#wh_dv option:selected").val() === '완제품'){
+// 					$('input[name="wh_dv"]').val('OR'+codeCreation());
+// 				}else if($("#wh_dv option:selected").val() === '원자재'){
+// 					$('input[name="wh_dv"]').val('CL'+codeCreation());
+// 				}
+// 			});
+			
+
+			
+			//품번 검색 팝업(prod or raw)
+			$('#Code').click(function() {
+				var name = $('input#Code').attr("name");
+				if (name == "prod_code") {
+					openWindow("prod", "search_prod");
+				} else if(name == "raw_code"){
+					openWindow("raw", "search_raw");
+				}
+				
+			}); //prodCode click
+			
+			$(this).removeClass('true');
+			
+		}// if
+		
+		// 저장 -> 저장
+		$('#save').click(function () {
+			
+			var wh_code = $('#wh_code').val();
+			var wh_name = $('#wh_name').val();
+			var wh_dv = $('#wh_dv').val();
+			var prod_code = $('#prod_code').val();
+			var raw_code = $('#raw_code').val();
+			/////
+			var prod_name = $('#prod_name').val();
+			var raw_name = $('#raw_name').val();
+			var wh_addr = $('#wh_addr').val();
+			var wh_tel = $('#wh_tel').val();
+			var wh_use = $('#wh_use').val();
+			var wh_note = $('#wh_note').val();
+			
+			if(wh_code == "" || wh_name == "" || wh_dv == "" || 
+			  (prod_code == "" || raw_code == "" ) || wh_addr == "" || wh_tel == "" || wh_use == ""){
+				alert("항목을 모두 입력하세요");
+			}else{
+				$('#fr').attr("action", "/performance/whadd");
+				$('#fr').attr("method", "POST");
+				$('#fr').submit();
+			}
+			
+		}); // save
+		
+		// 취소버튼(=리셋)
+		$('#cancle').click(function () {
+			$('#fr').each(function () {
+				this.reset();
+			});
+		}); // cancle click		
+		
+	});// add.click
+	
+	
+	////수정//////////////////////////////////////////////////
+	var isExecuted = false;
+	
+	$('#modify').click(function () {
+		
+		$('#add').attr("disabled", true);
+		$('#delete').attr("disabled", true);
+		
+		// 행 하나 선택시
+		$('table tr:not(:first-child)').click(function () {
+			
+			// 하나씩 선택 가능
+			if(!isExecuted){
+				isExecuted = true;
+				
+				$(this).addClass('selected');
+				
+				// 창고코드 저장
+				let updateCode = $(this).find('#whCode').text().trim();
+				console.log(updateCode);
+				
+				var jsonDate = {
+						whCode : updateCode
+				};
+				
+				var self = $(this);
+				var names = [
+						"wh_code",
+						"wh_name",
+						"wh_dv",
+						"prod_code", //"raw_code"
+						"wh_addr",
+						"wh_tel",
+						"wh_use",
+						"wh_note"
+					];
+				
+				// tr안 td 요소들 input으로 변경 후 기존 값 띄움
+				self.find('td').each(function (idx, item) {
+					
+					if(idx > 0){
+						inputCng($(this), "text", names[idx - 1], $(this).text());
+						if(idx == 3){
+							var dropDown = "<select id='wh_dv' name='wh_dv'>";
+							 	dropDown += "<option>완제품</option>";
+							 	dropDown += "<option>원자재</option>";
+							 	dropDown += "</select>";
+							 	
+								$(this).html(dropDown);
+								$(this).find('option').each(function () {
+									if(this.value == $(this).text()){
+										$(this).attr("selected", true);
+									}
+						
+								});// this.find('option')						
+						
+						}//if(idx==3)
+						if(idx == 8){
+							var dropDown = "<select id='wh_use' name='wh_use'>";
+							 	dropDown += "<option value='1'>Y</option>";
+							 	dropDown += "<option value='2'>N</option>";
+							 	dropDown += "</select>";
+						 	
+								$(this).html(dropDown);
+								$(this).find('option').each(function () {
+									if(this.value == $(this).text()){
+										$(this).attr("selected", true);
+									}
+					
+							});// this.find('option')	
+							
+						}//idx==8
+					
+					}// if
+					
+				});//self.find
+				
+				//품번 검색 팝업(prod)
+				$('#search_prod').click(function() {
+					openWindow("prod", "search_prod");
+				}); //prodCode click
+				
+				//품번 검색 팝업(raw)
+				$('#search_raw').click(function() {
+					openWindow("raw", "search_raw");
+				}); //rawCode click
+				
+				// 저장 -> 수정완료
+				$('#save').click(function () {
+					
+					$('#fr').attr("action", "/performance/whmodify");
+					$('#fr').attr("method", "POST");
+					$('#fr').submit();
+					
+				});//save				
+				
+			}// if(!isExecuted)
+			
+			// 취소 -> 리셋
+			$('#cancle').click(function () {
+				$('#fr').each(function () {
+					this.reset();
+				});
+				
+			}); // cancle			
+			
+		}); // table.click
+		
+	}); //modify.click
+	
+	
+	////삭제/////////////////////////////////////////////////////////
+	$('#delete').click(function () {
+
+		$('#add').attr("disabled", true);
+		$('#modify').attr("disabled", true);
+		
+		if($(this).hasClass('true')){
+			
+			// 열: 체크박스 행: 라인코드
+			$('table tr').each(function () {
+				var code = $(this).find('td:nth-child(2)').text();
+				
+				var tbl = "<input type='checkbox' name='selected' value='";
+				tbl += code;
+				tbl += "'>";
+				
+				$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
+				$(this).find('td:first').html(tbl);
+				
+			});//table.each
+			
+			// 전체선택
+			$('#selectAll').click(function () {
+				var checkAll = $(this).is(":checked");
+				
+				if(checkAll){
+					$('input:checkbox').prop('checked', true);
+				}else{
+					$('input:checkbox').prop('checked', false);
+				}
+			}); 
+			
+			// 저장 -> 삭제
+			$('#save').click(function () {
+				
+				var checked = [];
+				
+				$('input[name=selected]:checked').each(function () {
+					checked.push($(this).val());
+				});
+				
+				if(checked.length > 0){
+					
+					$.ajax({
+						url: "/performance/whdelete",
+						type: "POST",
+						data: {checked : checked},
+						dataType: "text",
+						success: function () {
+							alert("에이잭스 예에~!~!");
+							location.reload();
+						},
+						error: function () {
+							alert("에이잭스 우우~!~!");
+						}
+					}); //ajax
+					
+				}// 체크OOO
+				else{
+					alert("선택된 항목이 없음");					
+				}// 체크XXX
+				
+			});//save
+			
+			$(this).removeClass('true');
+		}// if
+		
+		// 취소 -> 리셋
+		$('#cancle').click(function () {
+			$('input:checkbox').prop('checked', false);
+		});
+		
+	});//delete
+	
+	
+	
+	//============================ 검색 =========================================//
+ 		//품번 검색 팝업(prod) 
+ 		$('#search_prod').click(function() { 
+ 			openWindow("prod", "search_prod");
+ 		}); //prodCode click 
+		
+ 		//품번 검색 팝업(raw) 
+ 		$('#search_raw').click(function() { 
+			openWindow("raw", "search_raw"); 
+ 		}); //rawCode click 
+	
+	
+	}); // 제이쿼리
+	
+	// onchance
+	function whdv(selectElement) {
+		 var selectedValue = selectElement.value; // 선택된 옵션의 값
+		 
+		  var inputElement = document.getElementById("Code");
+		  var inputElement2 = document.getElementById("Name");
+		  var newName = "defaultName"; // 기본 이름
+		  var newName2 = "defaultName"; // 기본 이름
+		  
+		  // 옵션 값에 따라 이름 변경
+		  if (selectedValue === "완제품") {
+		    newName = "prod_code";
+		    newName2 = "prod_name";
+		  } else if (selectedValue === "원자재") {
+		    newName = "raw_code";
+		    newName2 = "raw_name";
+		  } 
+		  
+		  inputElement.name = newName; // input 태그의 name 값을 변경
+		  inputElement2.name = newName2; // input 태그의 name 값을 변경
+	};
+	
+	</script>
 
 
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
@@ -154,7 +514,7 @@
 	<table border="1"> 
 		<a>총 ${lwpm.totalCount } 건</a>
 		<tr>
-			<td></td>
+			<td>번호</td>
 			<td>창고코드</td>
 			<td>창고명</td>
 			<td>창고유형</td>
@@ -220,6 +580,9 @@
 
 	</div>
 </div>
+
+	
+
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
 <!-- /page content -->

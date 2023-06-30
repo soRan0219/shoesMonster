@@ -44,8 +44,8 @@ public class Out_materialServiceImpl implements Out_materialService{
 	}
 
 	@Override
-	public void omButton(ProductVO vo) throws Exception {
-		o_dao.omButton(vo);
+	public void omButton(OrderStatusVO vo , String order_code) throws Exception {
+		o_dao.omButton(vo, order_code);
 	}
 
 	

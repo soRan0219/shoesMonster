@@ -172,4 +172,9 @@ public interface PerformanceService {
 	// 생산실적 수정
 	public void modifyPerformance(PerformanceVO uvo) throws Exception;
 
+	
+	//실적현황
+	public List<PerformanceVO> getPerformStatus() throws Exception;
+	
+
 }
