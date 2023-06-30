@@ -51,6 +51,15 @@ public class In_materialServiceImpl implements In_materialService{
 
 	
 	
+	
+
+
+	@Override
+    public void updateIn(String raw_order_num) throws Exception {
+
+        idao.updateIn(raw_order_num);
+    }
+	
 //	@Override
 //	public int count(In_materialVO ivo) throws Exception {
 //		

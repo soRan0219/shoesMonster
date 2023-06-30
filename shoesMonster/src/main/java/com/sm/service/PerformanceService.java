@@ -32,13 +32,12 @@ public interface PerformanceService {
 
 	// 품목관리 삭제
 	public void removeProd(List<String> checked) throws Exception;
-	
+
 	// 품목관리 수정 시 수정할 기존 데이터 가져가기
 	public ProductVO getProd(String prod_code) throws Exception;
-	
+
 	// 품목관리 수정
 	public void modifyProd(ProductVO uvo) throws Exception;
-	
 
 	// ==========================================================================
 
@@ -60,6 +59,12 @@ public interface PerformanceService {
 	// 원자재관리 삭제
 	public void removeRaw(List<String> checked) throws Exception;
 
+	// 품목관리 수정 시 수정할 기존 데이터 가져가기
+	public RawMaterialVO getRaw(String raw_code) throws Exception;
+
+	// 품목관리 수정
+	public void modifyRaw(RawMaterialVO uvo) throws Exception;
+
 	// ==========================================================================
 
 	// 소요량관리 게시물 총 갯수
@@ -79,10 +84,10 @@ public interface PerformanceService {
 
 	// 소요량관리 삭제
 	public void removeReq(List<String> checked) throws Exception;
-	
+
 	// 소요량관리 수정 시 수정할 기존 데이터 가져가기
 	public RequirementsVO getReq(String req_code) throws Exception;
-		
+
 	// 소요량관리 수정
 	public void modifyReq(RequirementsVO uvo) throws Exception;
 
@@ -145,29 +150,31 @@ public interface PerformanceService {
 
 	// 생산실적 목록
 	public List<PerformanceVO> getPerfList(LineWhPageVO pvo) throws Exception;
-	
-	//생산실적 검색
-	public List<PerformanceVO> getPerfList(HashMap<String,Object> search) throws Exception;
-	
-	//생산실적 전체 수
+
+	// 생산실적 검색
+	public List<PerformanceVO> getPerfList(HashMap<String, Object> search) throws Exception;
+
+	// 생산실적 전체 수
 	public int getPerfCnt() throws Exception;
-	
-	//생산실적 검색 수
-	public int getPerfCnt(HashMap<String,Object> search) throws Exception;
-	
+
+	// 생산실적 검색 수
+	public int getPerfCnt(HashMap<String, Object> search) throws Exception;
+
 	// 생산실적 등록
 	public void regPerformance(PerformanceVO vo) throws Exception;
 
 	// 생산실적 삭제
 	public void removePerformance(List<String> checked) throws Exception;
-	
-	//생산실적 조회
+
+	// 생산실적 조회
 	public PerformanceVO getPerformanceInfo(String performCode) throws Exception;
-	
-	//생산실적 수정
+
+	// 생산실적 수정
 	public void modifyPerformance(PerformanceVO uvo) throws Exception;
+
 	
 	//실적현황
 	public List<PerformanceVO> getPerformStatus() throws Exception;
 	
+
 }

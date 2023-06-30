@@ -1,6 +1,7 @@
 package com.sm.persistence;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.ClientPageVO;
 import com.sm.domain.EmployeesVO;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.ManagementVO;
@@ -41,9 +43,9 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	} //loginEmp()
 
 	@Override
-	public List<EmployeesVO> readEmpList(LineWhPageVO pvo) throws Exception {
+	public List<EmployeesVO> readEmpList(ClientPageVO cpvo) throws Exception {
 		logger.debug(" readEmpList() 호출@@@@@ ");
-		return sqlSession.selectList(NAMESPACE2 + ".empList", pvo);
+		return sqlSession.selectList(NAMESPACE2 + ".empList", cpvo);
 	} //readEmpList()
 
 	@Override
@@ -67,9 +69,9 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	} //getTotalEmployees()
 
 	@Override
-	public int getSearchEmployees(HashMap<String, Object> search) throws Exception {
+	public List<EmployeesVO> getSearchEmployees(HashMap<String, Object> search) throws Exception {
 		logger.debug(" getSearchEmployees() 호출@@@@@ ");
-		return sqlSession.selectOne(NAMESPACE2 + ".employeesSearchCnt", search);
+		return sqlSession.selectList(NAMESPACE2 + ".employeesSearchCnt", search);
 	} //getSearchEmployees()
 
 	@Override
@@ -78,6 +80,33 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 		int result = sqlSession.insert(NAMESPACE2 + ".insertEmployees", vo);
 		logger.debug(" result : " + result);
 	} // insertEmployees()
+
+	@Override
+	public void deleteEmployees(List<String> checked) throws Exception {
+		logger.debug(" deleteEmployees() 호출@@@@@ ");
+		
+		Iterator<String> it = checked.iterator();
+		int result = 0;
+		
+		while(it.hasNext()) {
+			String emp_id = it.next();
+			result += sqlSession.delete(NAMESPACE2 + ".deleteEmployees", emp_id);
+		}
+		logger.debug(" result : " + result);
+	} // deleteEmployees()
+
+	@Override
+	public EmployeesVO readEmployees(String emp_id) throws Exception {
+		logger.debug(" readEmployees() 호출@@@@@ ");
+		return sqlSession.selectOne(NAMESPACE2 + ".readEmployees", emp_id);
+	} // readEmployees()
+
+	@Override
+	public void updateEmployees(EmployeesVO uvo) throws Exception {
+		logger.debug(" updateEmployees() 호출@@@@@ ");
+		int result = sqlSession.update(NAMESPACE2 + ".updateEmployees", uvo);
+		logger.debug(" result " + result);
+	} // updateEmployees
 
 	
 	

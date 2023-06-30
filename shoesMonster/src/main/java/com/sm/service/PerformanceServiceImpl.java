@@ -81,28 +81,32 @@ public class PerformanceServiceImpl implements PerformanceService {
 	// ==========================================================================
 
 	
-
+	// 원자재관리 총 갯수
 	@Override
 	public int countRaw() {
 		return pdao.countRaw();
 	}
-
+	
+	// 원자재관리 전체 리스트 
 	@Override
 	public List<RawMaterialVO> getRawList(PagingVO pvo) throws Exception {
 		// TODO Auto-generated method stub
 		return pdao.readRawList(pvo);
 	}
 
+	// 원자재관리 검색 갯수
 	@Override
 	public int countRaw(RawMaterialVO vo) {
 		return pdao.countRaw(vo);
 	}
-
+	
+	// 원자재관리 검색 리스트
 	@Override
 	public List<RawMaterialVO> getRawList(RawMaterialVO vo, PagingVO pvo) throws Exception {
 		return pdao.readRawList(vo, pvo);
 	}
-
+	
+	// 원자재관리 데이터 추가
 	@Override
 	public void insertRaw(List<RawMaterialVO> raw) {
 		for (RawMaterialVO raws : raw) {
@@ -110,9 +114,22 @@ public class PerformanceServiceImpl implements PerformanceService {
 		}
 	}
 
+	// 원자재관리 데이터 삭제
 	@Override
 	public void removeRaw(List<String> checked) throws Exception {
 		pdao.deleteRaw(checked);
+	}
+	
+	// 원자재관리 수정 시 기존 데이터 가져가기
+	@Override
+	public RawMaterialVO getRaw(String raw_code) throws Exception {
+		return pdao.getRaw(raw_code);
+	}
+
+	// 원자재관리 수정
+	@Override
+	public void modifyRaw(RawMaterialVO uvo) throws Exception {
+		pdao.updateRaw(uvo);
 	}
 
 	// ==========================================================================

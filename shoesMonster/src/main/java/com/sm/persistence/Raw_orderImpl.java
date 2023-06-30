@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.In_materialVO;
 import com.sm.domain.PageVO;
 import com.sm.domain.Raw_orderVO;
 
@@ -87,6 +88,12 @@ public class Raw_orderImpl implements Raw_orderDAO{
             logger.debug("발주 등록완료");
         }
     }
+	
+	
+
+
+
+	
 
 
 

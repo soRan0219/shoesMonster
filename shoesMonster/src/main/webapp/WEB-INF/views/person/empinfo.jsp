@@ -15,8 +15,60 @@
 </style>
 
 <script type="text/javascript">
+// 혦넣
+//팝업으로 열었을 때
+function popUp() {
+	var queryString = window.location.search;
+	var urlParams = new URLSearchParams(queryString);
+	
+	var isPop = urlParams.get("input");
+	
+	if(isPop==="null") {
+		isPop = null;
+	}
+		
+	$('#pagination a').each(function(){
+		
+   		var prHref = $(this).attr("href");
+   			
+			var newHref = prHref + "&input=" + isPop;
+			$(this).attr("href", newHref);
+			
+	}); //페이징 요소	
+	
+	$('#input').val(isPop);
+			
+	if(isPop) {
+    	
+    	$('#add').hide();
+    	$('#modify').hide();
+    	$('#delete').hide();
+    	$('#save').hide();
+    	
+   		$('table tr:not(:first-child)').click(function(){
+   			
+   			$(this).css('background', '#ccc');
+    			
+    		var empCode = $(this).find('#empCode').text();
+    			
+    		$('#'+isPop, opener.document).val(empCode);
+    			
+    		window.close();
+    	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+    		
+     		
+		} else {
+			console.log("팝업아님");
+	} //if(팝업으로 열었을 때)
+		
+} //popUp()
+
 //제이쿼리
 $(function() {
+	
+	// 혦넣
+	popUp();
+	
 	//테이블 항목들 인덱스 부여
 	$('table tr').each(function(index) {
 		$(this).find('td:first').text(index);
@@ -133,6 +185,122 @@ $(function() {
 	}); //add click
 	
 	//수정
+	$('#modify').click(function() {
+
+		$('#add').attr("disabled", true);
+		$('#delete').attr("disabled", true);
+
+		//행 하나 클릭했을 때	
+		$('table tr:not(:first-child)').click(function() {
+
+			//하나씩만 선택 가능
+			if(!isExecuted) {
+				isExecuted = true;
+				
+				$(this).addClass('selected');
+				//작업지시 코드 저장
+				let updateCode = $(this).find('#workCode').text().trim();
+				console.log(updateCode);
+				
+				var jsonData = {
+						work_code : updateCode
+					};
+				
+				var self = $(this);
+				
+				$.ajax({
+					url : "/person/detail",
+					type : "post",
+					contentType : "application/json; charset=UTF-8",
+					dataType : "json",
+					data : JSON.stringify(jsonData),
+					success : function(data) {
+
+						var preVOs = [
+								data.emp_id,
+								data.emp_name,
+								data.emp_department,
+								data.emp_position,
+								data.emp_email,
+								data.emp_phone,
+								data.emp_hiredate,
+								data.emp_work ];
+	
+						var names = [
+								"emp_id",
+								"emp_name",
+								"emp_department",
+								"emp_position",
+								"emp_email",
+								"emp_phone",
+								"emp_hiredate",
+								"emp_work" ];
+
+						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+						self.find('td').each(function(idx,item) {
+
+							if (idx > 0) {
+								inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+								if (idx == 5) {
+									var dropDown = "<select id='work_state' name='work_state'>";
+									dropDown += "<option value='지시'>지시</option>";
+									dropDown += "<option value='진행'>진행</option>";
+									dropDown += "<option value='마감'>마감</option>";
+									dropDown += "</select>";
+									$(this).html(dropDown);
+									$(this).find('option').each(function() {
+										if (this.value == preVOs[idx - 1]) {
+											$(this).attr("selected",true);
+										}
+									}); //option이 work_state와 일치하면 선택된 상태로
+								} //지시상태 - select
+							} //라인코드부터 다 수정 가능하게
+
+						}); // self.find(~~)
+
+						//라인코드 검색
+						$('#line_code').click(function() {
+							openWindow("line","line_code");
+						}); //lineCode click
+
+						//품번 검색 
+						$('#prod_code').click(function() {
+							openWindow("prod","prod_code");
+						}); //prodCode click
+
+						//수주코드 검색
+						$('#order_code').click(function() {
+							openWindow("order","order_code");
+						}); //orderCode click
+
+					},
+					error : function(data) {
+						alert("아작스 실패 ~~");
+					}
+				}); //ajax
+
+				//저장버튼 -> form 제출
+				$('#save').click(function() {
+
+					$('#fr').attr("action","/workorder/modify");
+					$('#fr').attr("method","post");
+					$('#fr').submit();
+
+				}); //save
+
+			} //하나씩만 선택 가능
+				
+				
+			//취소버튼 -> 리셋
+			$('#cancle').click(function() {
+				$('#fr').each(function() {
+					this.reset();
+				});
+			}); //cancle click
+
+		}); //tr click
+
+	}); //modify click
 	//삭제
 
 });
@@ -144,27 +312,25 @@ $(function() {
 	<div style="margin: 5% 0% 0% 12%; width: 88%;">
 		<h1>사원 관리</h1>
 		<form action="" method="get">
-			<fieldset>
-	       		<input type="hidden" name="input" id="input" value="${input }">
-	       		<label>사원번호</label>
-	        		<input type="text" name="search_empid" id="search_empid">
-	        	<label>사원명</label>
-	        		<input type="text" name="search_empname" id="search_empname">
-	        	<label>부서</label>
-	        		  <select name="search_empdepartment">           
-					     <option selected value="전체">전체</option>    
-					     <option value="영업팀">영업팀</option>    
-					     <option value="생산팀">생산팀</option>
-					     <option value="인사팀">인사팀</option>
-					  </select>
-				<input type="submit" value="조회"> 
-			</fieldset>
+       		<input type="hidden" name="input" id="input" value="${input }">
+       		사원번호
+        	<input type="text" name="search_empid" id="search_empid">
+        	사원명
+        	<input type="text" name="search_empname" id="search_empname">
+        	부서
+       		<select name="search_empdepartment">           
+				<option selected value="전체">전체</option>    
+			    <option value="영업팀">영업팀</option>    
+			    <option value="생산팀">생산팀</option>
+			    <option value="인사팀">인사팀</option>
+			</select>
+			<input type="submit" value="조회"> 
 		</form>
 	</div>
 	
 	<div style="margin: 5% 12% 0% 12%;">
 		<div style="text-align-last: right;">
-			<button id="add" class="true">추가</button>
+			<button id="empAdd" class="true">추가</button>
 			<button id="modify">수정</button>
 			<button id="delete" class="true">삭제</button>
 			<button type="reset" id="cancle">취소</button>
@@ -186,7 +352,6 @@ $(function() {
 				    <col style="width: 75px">
 				    <col style="width: 75px">
 				</colgroup>
-					<thead>
 						<tr>
 							<th></th>
 							<th>사원번호</th>
@@ -199,11 +364,11 @@ $(function() {
 							<th>재직구분</th>
 							<th></th>
 						</tr>
-					</thead>
 					<c:forEach var="vo" items="${empList }" varStatus="i">
+						<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀'}">
 						<tr>
 							<td>${i.count}</td>
-							<td>${vo.emp_id}</td>
+							<td id="empCode">${vo.emp_id}</td> <!-- 혦넣 -->
 							<td>${vo.emp_name}</td>
 							<td>${vo.emp_department}</td>
 							<td>${vo.emp_position}</td>
@@ -215,6 +380,7 @@ $(function() {
 								<button class="details-btn" data-id="${emp_id }">상세보기</button>
 							</td>
 						</tr>
+						</c:if>
 					</c:forEach>
 				</table>
 			</form>

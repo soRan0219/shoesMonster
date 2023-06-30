@@ -64,19 +64,19 @@
 		<c:forEach var="out" items="${out_matList }">
 			<tr>
 				<td>${out.out_mat.out_num}</td>
-				<td>${out.orders.order_code}</td>
-				<td>${out.client.client_actname}</td>
-				<td>${out.orders.client_code}</td>
-				<td>${out.prod_code}</td>
-				<td>${out.prod_name}</td>
-				<td>${out.orders.order_count}</td>
-				<td>${out.prod_price}원</td>
-				<td>${out.orders.order_deliveryDate}</td>
+				<td>${out.order_code}</td>
+				<td>${out.clients.client_actname}</td>
+				<td>${out.client_code}</td>
+				<td>${out.prod.prod_code}</td>
+				<td>${out.prod.prod_name}</td>
+				<td>${out.order_count}</td>
+				<td>${out.prod.prod_price}원</td>
+				<td>${out.order_deliveryDate}</td>
 				<td>${out.out_mat.out_date}</td>
 				<td>${out.out_mat.out_YN}</td>
 				<td>${out.out_mat.emp_id}</td>
 				<td>
-					<button type="submit" name="orderCode" value="${out.orders.order_code}">출고 처리</button>
+					<button type="submit" name="orderCode" value="${out.order_code}">출고 처리</button>
         		</td>
 		</c:forEach>
 	</table>

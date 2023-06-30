@@ -100,7 +100,7 @@
                 <td>${rvo.rawMaterial.raw_price*vo.raw_order_count}원</td>
                 <td>${rvo.in_mat.in_date }</td>
                 <td>${rvo.emp_id }</td>
-				<td>${rvo.in_mat.in_YN}</td>
+				 <td>${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
 				<td>
 					<button type="submit" name="raw_order_num" value="${rvo.raw_order_num}">입고 처리</button>
 				</td>

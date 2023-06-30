@@ -12,6 +12,22 @@
 		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
 		obj.html(inputBox);
 	} //inputCng
+	
+	// 팝업 옵션
+	const popupOpt = "top=60,left=140,width=600,height=600";
+	
+	//검색 팝업(거래처)
+  	function openWindow(search, inputId) {
+   	 	var url = "/workorder/search?type=" + search + "&input=" + inputId;
+    	var popup = window.open(url, "", popupOpt);
+    } //openWindow()
+    
+	
+	//추가 시 거래처 검색 
+    function serchClient(inputId){
+    	openWindow("client",inputId);
+    }
+	
     	
 	function popUp() {
 		var queryString = window.location.search;
@@ -39,6 +55,7 @@
         	$('#addButton').hide();
         	$('#modify').hide();
         	$('#delete').hide();
+        	$('#cancle').hide();
         	$('#save').hide();
         		
        		$('table tr:not(:first-child)').click(function(){
@@ -79,13 +96,14 @@
             // 추가 버튼 클릭 시 row 생성
             function addRow() {
                 var row = '<tr>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_code" required></td>' +
+                	'<td></td>'+
+                    '<td><input type="text" name="products[' + counter + '].prod_code" id="" required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_name"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_category"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_unit"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_size"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_color"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].client_code" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_price"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_note"></td>' +
                     '</tr>';
@@ -277,21 +295,13 @@
 		
 								}); // self.find(~~)
 		
-								//라인코드 검색
-								$('#line_code').click(function() {
-									openWindow("line","line_code");
-								}); //lineCode click
 		
-								//품번 검색 
-								$('#prod_code').click(function() {
-									openWindow("prod","prod_code");
-								}); //prodCode click
+								//거래처 검색 
+								$('#client_code').click(function() {
+									openWindow("client","client_code");
+								}); //client_code click
 		
-								//수주코드 검색
-								$('#order_code').click(function() {
-									openWindow("order","order_code");
-								}); //orderCode click
-		
+							
 							},
 							error : function(data) {
 								alert("아작스 실패 ~~");

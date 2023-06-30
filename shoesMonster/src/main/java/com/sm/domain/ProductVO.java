@@ -21,11 +21,11 @@ public class ProductVO {
 	private Out_materialVO out_mat;
 	
 	public ProductVO() {
-		orders = new OrderStatusVO();
+//		orders = new OrderStatusVO();
 		client = new ClientsVO();
-		out_mat = new Out_materialVO();
-	
-	
+//		out_mat = new Out_materialVO();
+//	
+//	
 	}
 	
 } //productVO

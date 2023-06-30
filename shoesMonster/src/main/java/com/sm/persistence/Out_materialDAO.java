@@ -16,10 +16,10 @@ public interface Out_materialDAO {
 	public List<Out_materialVO> Out_matList(int startRow,int pageSize ) throws Exception;
 	
 	// 검색 총 갯수
-	public int count2(ProductVO ovo) throws Exception;
+	public int count2(OrderStatusVO ovo) throws Exception;
 	
 	// 발주 검색
-	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, ProductVO ovo) throws Exception;
+	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, OrderStatusVO ovo) throws Exception;
 	
 	// 출고 버튼
 	public void omButton(ProductVO vo) throws Exception;

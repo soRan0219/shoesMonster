@@ -35,13 +35,13 @@ public interface PerformanceDAO {
 
 	// 품목관리 삭제
 	public void deleteProd(List<String> checked) throws Exception;
-	
+
 	// 품목관리 수정 시 기존데이터 가져가기
 	public ProductVO getProd(String prod_code) throws Exception;
-	
+
 	// 품목관리 수정
 	public void updateProd(ProductVO uvo) throws Exception;
-	
+
 	// ==========================================================================
 
 	// 원자재관리 리스트 총갯수
@@ -62,8 +62,14 @@ public interface PerformanceDAO {
 	// 원자재관리 삭제
 	public void deleteRaw(List<String> checked) throws Exception;
 
+	// 원자재관리 수정 시 기존데이터 가져가기
+	public RawMaterialVO getRaw(String raw_code) throws Exception;
+
+	// 원자재관리 수정
+	public void updateRaw(RawMaterialVO uvo) throws Exception;
+
 	// ==========================================================================
-	
+
 	// 소요량관리 리스트 총갯수
 	public int countReq();
 
@@ -81,7 +87,7 @@ public interface PerformanceDAO {
 
 	// 소요량관리 삭제
 	public void deleteReq(List<String> checked) throws Exception;
-	
+
 	// 소요량관리 수정 시 기존데이터 가져가기
 	public RequirementsVO getReq(String req_code) throws Exception;
 
@@ -89,14 +95,13 @@ public interface PerformanceDAO {
 	public void updateReq(RequirementsVO uvo) throws Exception;
 
 	// ==========================================================================
-	
 
 	// 라인 조회 - getLineList
 	public List<LineVO> getLineList() throws Exception;
 
 	// 라인 조회(페이징처리) - getLineListPage
 	public List<LineVO> getLineListPage(LineWhPageVO vo) throws Exception;
-	
+
 	// 라인 검색(페이징처리)
 	public List<LineVO> getSearchLinePage(LineWhPageVO vo, LineVO lvo) throws Exception;
 
@@ -128,7 +133,7 @@ public interface PerformanceDAO {
 
 	// 창고 검색 + 페이징처리
 	public List<WarehouseVO> searchWarehousePage(LineWhPageVO vo, Wh_prodVO wvo) throws Exception;
-	
+
 	// 검색시 총 글 개수 계산
 	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception;
 	
@@ -148,29 +153,31 @@ public interface PerformanceDAO {
 
 	// 생산실적 목록
 	public List<PerformanceVO> readPerfList(LineWhPageVO pvo) throws Exception;
-	
-	//생산실적 검색
-	public List<PerformanceVO> readPerfList(HashMap<String,Object> search) throws Exception;
-	
-	//생산실적 전체 수
+
+	// 생산실적 검색
+	public List<PerformanceVO> readPerfList(HashMap<String, Object> search) throws Exception;
+
+	// 생산실적 전체 수
 	public int getPerfCnt() throws Exception;
-	
-	//생산실적 검색 수
-	public int getPerfCnt(HashMap<String,Object> search) throws Exception;
-	
-	//생산실적 등록
+
+	// 생산실적 검색 수
+	public int getPerfCnt(HashMap<String, Object> search) throws Exception;
+
+	// 생산실적 등록
 	public void createPerformance(PerformanceVO vo) throws Exception;
-	
-	//생산실적 삭제
+
+	// 생산실적 삭제
 	public void deletePerformance(List<String> checked) throws Exception;
 
-	//생산실적 조회
+	// 생산실적 조회
 	public PerformanceVO readPerformanceInfo(String performCode) throws Exception;
-	
-	//생산실적 수정
+
+	// 생산실적 수정
 	public void updatePerformance(PerformanceVO uvo) throws Exception;
+
 	
 	//생산실적 현황 - 양불수
 	public List<PerformanceVO> getPerformStatus() throws Exception;
 	
+
 }
