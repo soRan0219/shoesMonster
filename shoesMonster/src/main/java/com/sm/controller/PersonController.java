@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,14 +47,71 @@ public class PersonController {
 	// http://localhost:8088/person/empinfo
 	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
-	public void empInfoGET(Model model, LineWhPageVO pvo) throws Exception {
+	public void empInfoGET(Model model, LineWhPageVO pvo,
+			@RequestParam HashMap<String, Object> search,
+			@RequestParam(value = "input", required = false) String input) throws Exception {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
+		
+		//페이지 정보
+		pvo.setPageSize(2);
+		
+		//페이징 하단부 정보
+		LineWhPageMaker pm = new LineWhPageMaker();
+		pm.setLwPageVO(pvo);
+		pm.setPageBlock(2);
 		
 		List<EmployeesVO> empList = empService.getEmpList(pvo);
 		logger.debug("empList : " + empList);
 		
-		model.addAttribute("empList", empList);
-	}
+		// 검색 있을 때
+		if((search.get("search_empid")!=null && !search.get("search_empid").equals("")) || (search.get("search_empname")!=null && !search.get("search_empname").equals("")) || (search.get("search_empdepartment")!=null && !search.get("search_empdepartment").equals(""))) {
+			
+			logger.debug("검색 : service 호출 @@@@@");
+			
+			search.put("startPage", pvo.getStartPage());
+			search.put("pageSize", pvo.getPageSize());
+			
+			// 서비스 - 작업지시 검색
+			empList = empService.searchEmployees(search);
+			logger.debug(" empList 검색 결과 : " + empList);
+			
+			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
+			pm.setTotalCount(empService.getSearchEmployees(search));
+			
+			model.addAttribute("search", search);
+			model.addAttribute("empList", empList);
+			model.addAttribute("pm", pm);
+			
+			// 혜림 추가(등록시 팝업)
+			if (input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
+			}
+			
+		}// if(검색)
+		
+		// 검색 없을 때
+		else {
+			logger.debug(" 전체 작업지시 수 : " + empService.getTotalEmployees());
+			pm.setTotalCount(empService.getTotalEmployees());
+			
+			empList = empService.getEmpList(pvo);
+			
+			model.addAttribute("empList", empList);
+			model.addAttribute("pm", pm);
+		}// else(모두)
+	}// empInfoGET()
+	
+	// 사원 추가
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String addEmployees(EmployeesVO vo) throws Exception {
+		logger.debug(" addEmployees() 호출@@@@@ ");
+		logger.debug(" vo : " + vo);
+		
+		empService.regEmployees(vo);
+		
+		return "redirect:/person/empinfo";
+	}// addEmployees()
 	
 	// http://localhost:8088/person/management
 	// 사원 권한 정보 조회 (GET)
@@ -117,8 +175,9 @@ public class PersonController {
 							@RequestParam HashMap<String, Object> search,
 							@RequestParam(value="input", required = false) Object input,
 							Model model) throws Exception {
-		logger.debug("@@@ ClientsGET(Model model) 호출 @@@");
+		logger.debug("@@@ cnotroller : ClientsGET(Model model) 호출 @@@");
 		
+		logger.debug("search ################"+search);
 		
 		// 페이지 정보
 		cpvo.setPageSize(2);
@@ -133,34 +192,38 @@ public class PersonController {
 		// 검색 있을 때
 		logger.debug("search : " + search);
 		
-		if((search.get("client_code") != null && !search.get("client_code").equals("")) 
-			|| (search.get("client_name") != null && !search.get("client_name").equals(""))
-			|| (search.get("client_type") != null && !search.get("client_type").equals(""))) {
+		if((search.get("search_client_code") != null && !search.get("search_client_code").equals("")) 
+			|| (search.get("search_client_name") != null && !search.get("search_client_name").equals(""))
+			|| (search.get("search_client_type") != null && !search.get("search_client_type").equals(""))) {
 			
 			search.put("startPage", cpvo.getStartPage());
-			search.put("PageSize", cpvo.getPageSize());
+			search.put("pageSize", cpvo.getPageSize());
 			
 			// 검색
 			searchClientsList = clService.getSearchClientsList(search);
-			logger.debug("@@@ 검색결과 list 호출 @@@ = " + searchClientsList);
+			logger.debug("@@@ cnotroller 검색결과 list 호출 = " + searchClientsList);
 			
-			logger.debug("@@@ 검색결과 수 = " + clService.getSearchClient(search));
+			logger.debug("@@@ cnotroller 검색결과 수 = " + clService.getSearchClient(search));
 			pm.setTotalCount(clService.getSearchClient(search));
 			
 			model.addAttribute("search", search);
 			model.addAttribute("searchClientsList", searchClientsList);
 			model.addAttribute("pm", pm);
 			
+
 			if(input != null && !input.equals("")) {
 				model.addAttribute("input", input);
 				logger.debug("@@@ input 정보 전달 @@@");
 			}
 		} // if(검색)
+
+
+
 		
 		// 검색 없을 때
 		else {
 			// 전체 글 개수
-			logger.debug("@@@ 전체 글 개수 = " + clService.getTotalClient());
+			logger.debug("@@@ cnotroller : 전체 글 개수 = " + clService.getTotalClient());
 			
 			pm.setTotalCount(clService.getTotalClient());
 			
@@ -169,14 +232,53 @@ public class PersonController {
 			model.addAttribute("searchClientsList", searchClientsList);
 			model.addAttribute("pm", pm);
 			
+
 			if(input != null && !input.equals("")) {
 				model.addAttribute("input", input);
 				logger.debug("@@@ input 정보 전달 @@@");
 			}
 		}
+
+
 		
 		
+	} // ClientsGET()
+	
+	// 거래처 추가
+	@RequestMapping(value="/addClient", method = RequestMethod.POST)
+	public String addClient(ClientsVO cvo) throws Exception {
+		logger.debug("@@@ cnotroller : addClient(ClientsVO cvo) 호출 @@@");
+		logger.debug("@@@ cnotroller cvo : " + cvo);
+		
+		clService.regClient(cvo);
+		
+		return "redirect:/person/Clients";
+	} // 거래처 추가
+	
+	// 거래처 삭제
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
+	public String deleteClient(@RequestParam(value="checked[]") List<String> checked) throws Exception {
+		logger.debug("@@@ cnotroller : deleteClient() 호출 @@@");
+		
+		clService.deleteClient(checked);
+		
+		return "redirect:/person/Clients";
 	}
+	
+	// 거래처 수정
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public String updateClient(ClientsVO cvo) throws Exception {
+		logger.debug("@@@ cnotroller : updateClient() 호출 @@@");
+		logger.debug("@@@ cnotroller cvo : " + cvo);
+		
+		clService.updateClient(cvo);
+		
+		return "redirect:/person/Clients";
+	}
+	
+	
+	
+	
 	// ========== 거래처 ===================================
 	
 	
@@ -184,17 +286,17 @@ public class PersonController {
 	// http://localhost:8088/person/orderStatus
 	@RequestMapping(value="/orderStatus", method = RequestMethod.GET)
 	public void orderStatusGET(Model model, @RequestParam HashMap<String, Object> search) throws Exception {
-		logger.debug("orderStatusGET(Model model) 호출");
+		logger.debug("cnotroller : orderStatusGET(Model model) 호출");
 		
 		// service - DB에 저장된 글 정보 가져오기
 		List<OrderStatusVO> orderStatusList = osService.getOsList();
-		logger.debug("orderStatusList : "+ orderStatusList );
+		logger.debug("@@@ cnotroller orderStatusList : "+ orderStatusList );
 		
 		model.addAttribute("orderStatusList", orderStatusList);
 		
-		logger.debug("@@@ search : " + search);
+		logger.debug("@@@ cnotroller search : " + search);
 		
-		logger.debug("@@@ client_code : " + search.get("client_code"));
+		logger.debug("@@@ cnotroller client_code : " + search.get("client_code"));
 		
 		// 검색
 		if(search.get("client_code") != null  || search.get("prod_code") != null 
@@ -206,7 +308,7 @@ public class PersonController {
 			
 			logger.debug("searchOrderStatusList" + searchOrderStatusList);
 			
-			logger.debug("@@@ 수주현황 검색 리스트 호출 @@@");
+			logger.debug("@@@ cnotroller : 수주현황 검색 리스트 호출 @@@");
 		}
 	}
 	

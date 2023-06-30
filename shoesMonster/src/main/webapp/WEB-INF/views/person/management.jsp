@@ -15,26 +15,25 @@
 </style>
 
 <script type="text/javascript">
-
-// 제이쿼리
-$(function() {
-	//테이블 항목들 인덱스 부여
-	$('#managementTable tr').each(function(index) {
-		$(this).find('td:first').text(index);
-	});
-	
-	//버튼구현
-    	//수정
+	// 제이쿼리
+	$(function() {
+		//테이블 항목들 인덱스 부여
+		$('#managementTable tr').each(function(index) {
+			$(this).find('td:first').text(index);
+		});
+		
+		//버튼구현
+	   	//수정
 		$('#modify').click(function() {
 			
 			// td 요소 중 뒤에서 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
 			$('#managementTable tr').each(function() {
 				var code = $(this).find('td:nth-last-child(2)').text();
-
+	
 				var tbl = "<input type='checkbox' name='selected' value='";
 				tbl += code;
 				tbl += "'>";
-
+	
 				$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
 				$(this).find('td:first').html(tbl);
 			});
@@ -42,7 +41,7 @@ $(function() {
 			//전체선택
 			$('#selectAll').click(function() {
 				var checkAll = $(this).is(":checked");
-
+	
 				if (checkAll) {
 					$('input:checkbox').prop('checked', true);
 				} else {
@@ -52,17 +51,17 @@ $(function() {
 			
 			//저장 -> 삭제
 			$('#save').click(function() {
-
+	
 				var checked = [];
-
+	
 				$('input[name=selected]:checked').each(function() {
 					checked.push($(this).val());
 				});
-
+	
 				// 	alert(checked);
-
+	
 				if (checked.length > 0) {
-
+	
 					$.ajax({
 						url : "/workorder/delete",
 						type : "post",
@@ -86,7 +85,8 @@ $(function() {
 			$('#cancle').click(function() {
 				$('input:checkbox').prop('checked', false);
 			});
-			
+		});
+	});
 </script>
 
 <!-- page content -->
@@ -111,7 +111,7 @@ $(function() {
 		<div>
 			<div style="float: left; margin: 5% 12% 0% 12%; width: 25%;">
 				<h6>사원</h6>
-				<table border="1" id="clientsTable">
+				<table border="1" id="employeesTable">
 					<tr>
 						<th></th>
 						<th>사원번호</th>

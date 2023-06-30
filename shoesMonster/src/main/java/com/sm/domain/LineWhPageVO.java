@@ -8,8 +8,8 @@ public class LineWhPageVO {
 	
 	public LineWhPageVO() {
 		this.page = 1;
-//		this.pageSize = 10; // 잠시 수정
-		this.pageSize = 1; // 잠시 수정
+		this.pageSize = 10; // 잠시 수정
+//		this.pageSize = 1; // 잠시 수정
 	}
 
 	// 제어설정
@@ -23,8 +23,8 @@ public class LineWhPageVO {
 
 	public void setPageSize(int pageSize) {
 		if(pageSize <= 0 || pageSize > 100) {
-//			this.pageSize = 10;// 잠시수정
-			this.pageSize = 1;// 잠시수정
+			this.pageSize = 10;// 잠시수정
+//			this.pageSize = 1;// 잠시수정
 			return;
 		}
 		this.pageSize = pageSize;

@@ -110,6 +110,18 @@ public interface PerformanceDAO {
 
 	// 서치시 총 글 개수 계산
 	public int getSearchTotalCount(LineVO lvo) throws Exception;
+	
+	// 라인 추가
+	public void registLine(LineVO lvo) throws Exception;
+	
+	// 라인 삭제
+	public void deleteLine(List<String> checked) throws Exception;
+	
+	// 라인 수정
+	public void modifyLine(LineVO lvo) throws Exception;
+	
+	// 라인 조회(String line_code)
+	public LineVO getLine(String line_code) throws Exception;
 
 	// ================창고==========================
 
@@ -124,6 +136,18 @@ public interface PerformanceDAO {
 
 	// 검색시 총 글 개수 계산
 	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception;
+	
+	// 창고 추가
+	public void registWh(Wh_prodVO wvo) throws Exception;
+
+	// 창고 삭제
+	public void deleteWh(List<String> checked) throws Exception;
+	
+	// 창고 수정
+	public void modifyWh(Wh_prodVO wvo) throws Exception;
+	
+	// 창고 조회(String wh_code)
+	public Wh_prodVO getWarehouse(String wh_code) throws Exception;
 
 	// ==========================================================================
 

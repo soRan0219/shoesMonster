@@ -315,6 +315,46 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("result :" + result);
 		return result;
 	}
+	
+	// 라인 추가
+	@Override
+	public void registLine(LineVO lvo) throws Exception {
+		logger.debug("@@ D : registLine(LineVO lvo) 호출 @@");
+		
+		sqlSession.insert(NAMESPACE+".registLine", lvo);
+	}
+	
+	// 라인 삭제
+	@Override
+	public void deleteLine(List<String> checked) throws Exception {
+		logger.debug("@@ D : deleteLine(List<String> checked) 호출 @@");
+		
+		Iterator<String> it = checked.iterator();
+		int result = 0;
+		
+		while(it.hasNext()) {
+			String line_code = it.next();
+			result += sqlSession.delete(NAMESPACE+".deleteLine", line_code);
+		}
+		logger.debug("@@ D : delete ==> "+ result);
+	}
+	
+	// 라인 수정  
+	@Override
+	public void modifyLine(LineVO lvo) throws Exception {
+		logger.debug("@@ D : modifyLine(LineVO lvo) 호출 @@");
+		
+		int result = sqlSession.update(NAMESPACE+".updateLine", lvo);
+		logger.debug("@@ D : update ==> "+ result);
+	}
+	
+	// 라인 조회(String line_code)
+	@Override
+	public LineVO getLine(String line_code) throws Exception {
+		logger.debug("@@ D : getLine(String line_code) 호출 @@");
+			
+		return sqlSession.selectOne(NAMESPACE+".readLineList", line_code);
+	}
 
 	// ===========창고==============================================
 
@@ -383,6 +423,45 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectOne(NAMESPACE+".searchWhTotalCnt", params);
 
 	}
+	
+	// 창고 추가
+	@Override
+	public void registWh(Wh_prodVO wvo) throws Exception {
+		logger.debug("@@ D : registWh(Wh_prodVO wvo) 호출 @@");
+		
+		sqlSession.insert(NAMESPACE+".registWh", wvo);
+	}
+	
+	// 창고 삭제
+	@Override
+	public void deleteWh(List<String> checked) throws Exception {
+		logger.debug("@@ D : deleteWh(List<String> checked) 호출 @@");
+		
+		Iterator<String> it = checked.iterator();
+		int result = 0;
+		
+		while(it.hasNext()) {
+			String wh_code = it.next();
+			result += sqlSession.delete(NAMESPACE+".deleteWh", wh_code);
+		}
+		logger.debug("@@ D : delete ==> "+result);
+	}
+
+	// 창고 수정
+	@Override
+	public void modifyWh(Wh_prodVO wvo) throws Exception {
+		logger.debug("@@ D : modifyWh(Wh_prodVO wvo) 호출 @@");
+		
+		sqlSession.update(NAMESPACE+".updateWh", wvo);
+	}
+
+	// 창고 조회(String wh_code)
+	@Override
+	public Wh_prodVO getWarehouse(String wh_code) throws Exception {
+		logger.debug("@@ D : getWarehouse(String wh_code) 호출 @@");
+		
+		return sqlSession.selectOne(NAMESPACE+".readWhList", wh_code);
+	}
 
 	// ==========================================================================
 
@@ -446,6 +525,8 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("##### DAO: getPerfCnt(search) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".getSearchPerf", search);
 	} //getPerfCnt(search)
+
+
 
 	
 
