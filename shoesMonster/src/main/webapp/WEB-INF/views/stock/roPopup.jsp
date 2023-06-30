@@ -12,6 +12,7 @@
 	
 	function select(row) {
 		
+		var clientCode = row.cells[0].innerText;
 		var clientName = row.cells[1].innerText;
 		var rawCode = row.cells[2].innerText;
         var rawName = row.cells[3].innerText;
@@ -19,6 +20,7 @@
         var stockCount = row.cells[5].innerText;
         var rawPrice = row.cells[6].innerText;
 		
+      	opener.document.getElementById("client_code").value = clientCode;
       	opener.document.getElementById("client_actname").value = clientName;
       	opener.document.getElementById("raw_code").value = rawCode;
       	opener.document.getElementById("raw_name").value = rawName;
@@ -47,7 +49,7 @@
 		</tr>
 		<c:forEach var="ro" items="${roPopup }">
 			<tr onclick = "select(this);">
-				<td>${ro.clients.client_code }</td>
+				<td>${ro.rawMaterial.client_code }</td>
 				<td>${ro.clients.client_actname }</td>
 				<td>${ro.rawMaterial.raw_code }</td>
 				<td>${ro.rawMaterial.raw_name }</td>
