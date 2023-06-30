@@ -20,6 +20,7 @@
 	    	<result property="raw_code" column="raw_code" />
 	        <result property="raw_color" column="raw_color" />
 	        <result property="raw_price" column="raw_price" />
+	        <result property="client_code" column="client_code" />
 	    </collection>
 	
 	    <collection property="stock" ofType="com.sm.domain.StockVO">
@@ -67,7 +68,7 @@
 	
 	<!-- 발주 등록 팝업 -->
 	<select id="roPopup" resultMap="ro_List">
-		select c.client_actname, rm.raw_code, rm.raw_name, rm.raw_price, c.client_code,
+		select c.client_actname, rm.raw_code, rm.raw_name, rm.raw_price, rm.client_code,
 			   rm.raw_color, COALESCE(s.stock_raw_count, 0) AS stock_raw_count
 		from raw_material rm
 		LEFT join stock s on s.raw_code = rm.raw_code
@@ -78,9 +79,8 @@
 
 	<!-- 발주 등록 -->	
 	<insert id="roRegist">
-		insert into raw_order(raw_order_num, raw_order_date, raw_code, raw_order_count)
-		values(CONCAT('R', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_code}, #{raw_order_count}) 
-		
+		insert into raw_order(raw_order_num, raw_order_date, raw_code, client_code, raw_order_count)
+		values(CONCAT('R', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_code}, #{client_code}, #{raw_order_count}) 
 	</insert>
 
 	<!-- 발주 등록 -->
@@ -255,19 +255,13 @@
 
 	<!-- 입고 등록 -->
 	<insert id="inRegist" parameterType="com.sm.domain.In_materialVO">
-	    insert into in_material(in_num, in_date, raw_order_num) 
-	    values(CONCAT('I', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_order_num} ) 
+	    insert into in_material(in_num, in_date, raw_order_num, in_YN) 
+	    values(CONCAT('I', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_order_num}, "입고완료") 
 	</insert>
 	<!-- 입고 등록 -->
 
 	
-	 <!-- 미입고 , 입고완료 -->
-    <update id="updateIn" parameterType="String">
-      UPDATE in_material 
-      SET in_YN = '입고완료'
-      WHERE raw_order_num = #{rawOrderNum}
-    </update>
-    <!-- 미입고 , 입고완료 -->
+	
 	
 	
 
@@ -440,9 +434,9 @@
 		insert into out_material(out_num, out_date, out_YN)
 		values(CONCAT('OM', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), '출고완료')
 	</insert> -->
-	<insert id="omButton">
-		INSERT INTO out_material(out_num, out_date, out_YN)
-		VALUES(CONCAT('OM', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), '출고완료')
+	<insert id="omButton" parameterType="com.sm.domain.ProductVO">
+		INSERT INTO out_mat.out_material(out_num, prod_code, out_date, out_YN)
+		VALUES(CONCAT('OM', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), #{orderCode}, CURDATE(), "출고완료")
 	</insert>
 	<!-- 출고 처리 버튼 -->
 	<!-- ========================= 출고 - 끝 ========================= -->
