@@ -246,7 +246,7 @@
 // 								dropDown += "<option value = '전체'></option>";
 								dropDown += "<option value = '1'>Y</option>";
 								dropDown += "<option value = '2'>N</option>";
-								dropDown += "</select>"
+								dropDown += "</select>";
 								$(this).html(dropDown);
 								$(this).find('option').each(function () {
 									if(this.value == $(this).text()){

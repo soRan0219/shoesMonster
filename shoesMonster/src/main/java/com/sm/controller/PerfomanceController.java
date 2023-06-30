@@ -566,7 +566,7 @@ public class PerfomanceController {
 		return "redirect:/performance/warehouse";
 	}
 	
-	// 라인 조회 POST
+	// 창고 조회 POST
 	@ResponseBody
 	@RequestMapping(value = "/warehouse", method = RequestMethod.POST)
 	public Wh_prodVO warehousePOST(@RequestBody Wh_prodVO wvo ) throws Exception {
