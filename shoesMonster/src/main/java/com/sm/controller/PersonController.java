@@ -24,11 +24,8 @@ import com.sm.domain.ClientPageMaker;
 import com.sm.domain.ClientPageVO;
 import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
-import com.sm.domain.LineWhPageMaker;
-import com.sm.domain.LineWhPageVO;
 import com.sm.domain.ManagementVO;
 import com.sm.domain.OrderStatusVO;
-import com.sm.domain.WorkOrderVO;
 import com.sm.service.ClientsService;
 import com.sm.service.EmployeesService;
 import com.sm.service.OrderStatusService;
@@ -54,7 +51,8 @@ public class PersonController {
 	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
 	public void empInfoGET(Model model, ClientPageVO cpvo, 
-			@RequestParam HashMap<String, Object> search) throws Exception {
+			@RequestParam HashMap<String, Object> search,
+			@RequestParam(value = "input", required = false) Object input) throws Exception {
 
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
@@ -109,7 +107,7 @@ public class PersonController {
 	}// empInfoGET()
 	
 	// 사원 추가
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/empAdd", method = RequestMethod.POST)
 	public String addEmployees(EmployeesVO vo) throws Exception {
 		logger.debug(" addEmployees() 호출@@@@@ ");
 		logger.debug(" vo : " + vo);
@@ -120,9 +118,9 @@ public class PersonController {
 	}// addEmployees()
 	
 	// 사원 삭제
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/empDelete", method = RequestMethod.POST)
 	public String deleteEmployees(@RequestParam(value="checked[]") List<String> checked) throws Exception {
-		logger.debug(" deleteWorkOrder() 호출@@@@@ ");
+		logger.debug(" deleteEmployees() 호출@@@@@ ");
 		logger.debug(" checked : " + checked);
 		
 		//서비스 - 작업지시 삭제 
@@ -133,7 +131,7 @@ public class PersonController {
 	
 	// 사원 상세 조회 POST
 	@ResponseBody
-	@RequestMapping(value = "/detail", method = RequestMethod.POST/*, produces = "application/text; charset=utf8"*/)
+	@RequestMapping(value = "/empDetail", method = RequestMethod.POST)
 	public EmployeesVO getEmployees(@RequestBody EmployeesVO vo) throws Exception {
 		logger.debug(" getEmployees() 호출@@@@@");
 		logger.debug(" emp_id " + vo.getEmp_id());
@@ -146,7 +144,7 @@ public class PersonController {
 	} //getEmployees()
 	
 	//작업지시 수정 
-	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	@RequestMapping(value = "/empModify", method = RequestMethod.POST)
 	public String modifyEmployees(EmployeesVO uvo) throws Exception {
 		logger.debug("modifyEmployees() 호출@@@@@");
 		logger.debug(" uvo : " + uvo);
