@@ -12,7 +12,7 @@ public class LineWhPageMaker {
 	private boolean prev;
 	private boolean next;
 	
-	private int pageBlock = 10;
+	private int pageBlock = 5;
 	
 	private LineWhPageVO lwPageVO;
 	

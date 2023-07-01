@@ -385,12 +385,19 @@
 		
 		<br>
 		
+<!-- 		<label>사용여부</label> -->
+<!-- 			<select name="line_use" > -->
+<!-- 				<option selected value="3">전 체</option> -->
+<!-- 				<option value="1">Y</option> -->
+<!-- 				<option value="2">N</option> -->
+<!-- 			</select> -->
+
 		<label>사용여부</label>
-			<select name="line_use" >
-				<option selected value="3">전 체</option>
-				<option value="1">Y</option>
-				<option value="2">N</option>
-			</select>
+			<input type="radio" name="line_use" value="3" checked>전 체
+			<input type="radio" name="line_use" value="1">Y
+			<input type="radio" name="line_use" value="2">N
+			
+			
 		
 		<label>작업장</label>
 			<input type="text" name="line_place" placeholder="검색어를 입력해주세요">
@@ -398,8 +405,9 @@
 
 		 <input type="submit" value="검색">
 	</form>
-
+	
 <!-- //////////////////////////////////////////////////////////////////////// -->	
+	<br>
 	
 	<button id="add" class="true">추가</button>
 	<button id="modify" >수정</button>
@@ -407,6 +415,7 @@
 	<button type="reset" id="cancle" >취소</button>
 	<button type="submit" id="save">저장</button>
 
+	<br>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 
 <form id="fr">
