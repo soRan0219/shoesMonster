@@ -354,6 +354,8 @@
 					<th>규격</th>
 					<th>거래처코드</th>
 					<th>거래처명</th>
+					<th>창고코드</th>
+					<th>창고명</th>
 					<th>매입단가</th>
 					<th>비고</th>
 				</tr>
@@ -367,6 +369,8 @@
 						<td>${vo.raw_size }</td>
 						<td>${vo.client_code }</td>
 						<td>${vo.clients.client_actname }</td>
+						<td>${vo.wh_code }</td>
+						<td></td>
 						<td>${vo.raw_price }</td>
 						<td>${vo.raw_note }</td>
 					</tr>

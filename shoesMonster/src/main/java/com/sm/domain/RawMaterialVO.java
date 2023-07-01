@@ -12,6 +12,7 @@ public class RawMaterialVO {
 	private float raw_price;
 	private String client_code;
 	private String raw_note;
+	private String wh_code;
 	
 	private ClientsVO clients;
 	

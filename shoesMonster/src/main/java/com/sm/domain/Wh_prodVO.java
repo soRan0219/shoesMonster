@@ -15,7 +15,4 @@ public class Wh_prodVO {
 	private String prod_code;
 	private String raw_code;
 	
-	private ProductVO prod;
-	private RawMaterialVO raw;
-	
 }
