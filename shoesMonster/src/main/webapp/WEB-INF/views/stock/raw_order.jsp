@@ -11,7 +11,7 @@
 	
 	function roPopup() {
 		
-		window.open("roPopup","거래처 목록","width=500, height=500, left=300, top=150, location=no");
+		window.open("roPopup","거래처 목록","width=650, height=500, left=300, top=150, location=no");
 	}
 	
 	function detailPopup(rawCode) {
