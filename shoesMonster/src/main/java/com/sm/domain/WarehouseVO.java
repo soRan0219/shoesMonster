@@ -15,10 +15,8 @@ public class WarehouseVO {
 	private String raw_code;
 	private String emp_id;
 	
-	
 	private ProductVO product;
 	private RawMaterialVO raw_mat;
-	
 	
 	public WarehouseVO() {
 		product = new ProductVO();

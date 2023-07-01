@@ -66,7 +66,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		data.put("prod_code", vo.getProd_code());
 		data.put("prod_name", vo.getProd_name());
 		data.put("prod_category", vo.getProd_category());
-		data.put("prod_unit", vo.getProd_unit());
+		data.put("client_code", vo.getClient_code());
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchProd", data);
 	}

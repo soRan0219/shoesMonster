@@ -15,17 +15,14 @@ public class ProductVO {
 	private String client_code;
 	private float prod_price;
 	private String prod_note;
+	private String wh_code;
 	
-	private OrderStatusVO orders;
-	private ClientsVO client;
-	private Out_materialVO out_mat;
+	private ClientsVO clients;
+	private Wh_prodVO wh;
 	
 	public ProductVO() {
-//		orders = new OrderStatusVO();
-		client = new ClientsVO();
-//		out_mat = new Out_materialVO();
-//	
-//	
+		clients = new ClientsVO();
+		wh = new Wh_prodVO();
 	}
 	
 } //productVO

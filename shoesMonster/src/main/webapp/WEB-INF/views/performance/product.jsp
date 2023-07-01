@@ -104,6 +104,9 @@
                     '<td><input type="text" name="products[' + counter + '].prod_size"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_color"></td>' +
                     '<td><input type="text" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].clients.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_name'+counter+'"); required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_price"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_note"></td>' +
                     '</tr>';
@@ -256,6 +259,9 @@
 										data.prod_color,
 										data.prod_size,
 										data.client_code,
+										data.client_code,
+										data.wh_code,
+										data.wh_code,
 										data.prod_price,
 										data.prod_note,
 										];
@@ -269,6 +275,9 @@
 										"prod_color",
 										"prod_size",
 										"client_code",
+										"client_name",
+										"wh_code",
+										"wh_name",
 										"prod_price",
 										"prod_note", 
 										];
@@ -278,20 +287,7 @@
 		
 									if (idx > 0) {
 										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
-// 										if (idx == 5) {
-// 											var dropDown = "<select id='work_state' name='work_state'>";
-// 											dropDown += "<option value='지시'>지시</option>";
-// 											dropDown += "<option value='진행'>진행</option>";
-// 											dropDown += "<option value='마감'>마감</option>";
-// 											dropDown += "</select>";
-// 											$(this).html(dropDown);
-// 											$(this).find('option').each(function() {
-// 												if (this.value == preVOs[idx - 1]) {
-// 													$(this).attr("selected",true);
-// 												}
-// 											}); //option이 work_state와 일치하면 선택된 상태로
-// 										} //지시상태 - select
-									} //라인코드부터 다 수정 가능하게
+									} //품목코드부터 다 수정 가능하게
 		
 								}); // self.find(~~)
 		
@@ -353,8 +349,8 @@
         	<br>
         	<label>카테고리:</label>
         	<input type="text" name="prod_category" id="searchCategory"> 
-        	<label>품목 단위:</label>
-        	<input type="text" name="prod_unit" id="searchUnit">
+        	<label>거래처 : </label>
+        	<input type="text" name="client_code" id="searchUnit">
         	<input type="submit" value="검색">
 		</fieldset>
 	</form>
@@ -376,8 +372,11 @@
 					<th>카테고리</th>
 					<th>품목 단위</th>
 					<th>컬러</th>
-					<th>규격</th>
+					<th>사이즈</th>
 					<th>거래처코드</th>
+					<th>거래처명</th>
+					<th>창고코드</th>
+					<th>창고명</th>
 					<th>매출단가</th>
 					<th>비고</th>
 				</tr>
@@ -391,6 +390,9 @@
 						<td>${vo.prod_color }</td>
 						<td>${vo.prod_size }</td>
 						<td>${vo.client_code }</td>
+						<td>${vo.clients.client_actname }</td>
+						<td>${vo.wh_code }</td>
+						<td>${vo.wh.wh_name }</td>
 						<td>${vo.prod_price }</td>
 						<td>${vo.prod_note }</td>
 					</tr>
@@ -402,7 +404,7 @@
 	
 	<div id="pagination" style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
-			<a href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&prod_unit=${vo.prod_unit }">&lt;</a>
+			<a href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&lt;</a>
 		</c:if>
 		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
 			<c:choose>
@@ -410,12 +412,12 @@
 					<b>${p }</b>
 				</c:when>
 				<c:when test="${p != paging.nowPage }">
-					<a href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&prod_unit=${vo.prod_unit }">${p }</a>
+					<a href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
 				</c:when>
 			</c:choose>
 		</c:forEach>
 		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&prod_unit=${vo.prod_unit }">&gt;</a>
+			<a href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&gt;</a>
 		</c:if>
 	</div>
 	

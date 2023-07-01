@@ -7,6 +7,66 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 <script type="text/javascript">
+	//팝업으로 열었을 때
+	function popUp() {
+		var queryString = window.location.search;
+		var urlParams = new URLSearchParams(queryString);
+		var isPop = urlParams.get("input");
+		
+		if(isPop==="null") {
+			isPop = null;
+		}
+		$('#pagination a').each(function(){
+			
+	   		var prHref = $(this).attr("href");
+	   			
+				var newHref = prHref + "&input=" + isPop;
+				$(this).attr("href", newHref);
+				
+		}); //페이징 요소	
+		
+		
+		$('#input').val(isPop);
+		
+		if(isPop!=null && isPop!="") {
+			
+			$('#addButton').hide();
+	    	$('#updateButton').hide();
+	    	$('#deleteButton').hide();
+	    	$('#cancelButton').hide();
+	    	$('#saveButton').hide();
+	    	
+	   		$('table tr:not(:first-child)').click(function(){
+	   			$(this).css('background', '#ccc');
+	    		
+	        		var client_code = $(this).find('#client_code').text();
+	        		var client_actname = $(this).find('#client_actname').text();
+	        		var number = isPop.match(/\d+/);
+	        		
+	     			$('#'+isPop, opener.document).val(client_code);
+	     			if(number !=null){
+	     			$('#client_actname'+number, opener.document).val(client_actname);
+	     			} else {
+	     			$('#client_actname', opener.document).val(client_actname);
+	     			}
+	    		
+	    		window.close();
+	    	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
+	    		
+	     		
+			} //if 
+			
+			else {
+				console.log("팝업아님");
+		} //if(팝업으로 열었을 때)
+			
+	} //popUp()
+	
+	$(document).ready(function() {
+		popUp();
+	});
+
+
 	
 	// ==================================== 버튼 =================================================
 		
@@ -208,66 +268,6 @@
 					// 	alert(checked);
 	
 					if (checked.length > 0) {
-	
-
-	// 팝업으로 열었을 때
-    function popUp() {
-    	var queryString = window.location.search;
-    	var urlParams = new URLSearchParams(queryString);
-    	var isPop = urlParams.get("input");
-    	
-    	if(isPop==="null") {
-    		isPop = null;
-    	}
-    	$('#pagination a').each(function(){
-    		
-       		var prHref = $(this).attr("href");
-       			
-    			var newHref = prHref + "&input=" + isPop;
-    			$(this).attr("href", newHref);
-    			
-    	}); //페이징 요소	
-    	
-    	
-    	$('#input').val(isPop);
-    	
-    	if(isPop!=null && isPop!="") {
-    		
-    		$('#addButton').hide();
-        	$('#updateButton').hide();
-        	$('#deleteButton').hide();
-        	$('#cancelButton').hide();
-        	$('#saveButton').hide();
-        	
-       		$('table tr:not(:first-child)').click(function(){
-       			$(this).css('background', '#ccc');
-        		
-            		var client_code = $(this).find('#client_code').text();
-            		var client_actname = $(this).find('#client_actname').text();
-            		var number = isPop.match(/\d+/);
-            		
-         			$('#'+isPop, opener.document).val(client_code);
-         			if(number !=null){
-         			$('#client_actname'+number, opener.document).val(client_actname);
-         			} else {
-         			$('#client_actname', opener.document).val(client_actname);
-         			}
-        		
-        		window.close();
-        	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
-        		
-         		
-    		} //if 
-    		
-    		else {
-    			console.log("팝업아님");
-    	} //if(팝업으로 열었을 때)
-    		
-    } //popUp()
-    
-    $(document).ready(function() {
-		popUp();
-	});
 	
 
 						$.ajax({
