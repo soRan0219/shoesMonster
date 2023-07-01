@@ -95,7 +95,7 @@
                 <td>${rvo.rawMaterial.raw_name }</td>
                 <td>${rvo.rawMaterial.raw_color }</td>
                 <td>${rvo.raw_order_count}</td>
-                <td>${rvo.stock.stock_raw_count != null ? vo.stock.stock_raw_count : 0}</td>
+                <td>${rvo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
                 <td>${rvo.rawMaterial.raw_price}원</td>
                 <td>${rvo.rawMaterial.raw_price*vo.raw_order_count}원</td>
                 <td>${rvo.in_mat.in_date }</td>

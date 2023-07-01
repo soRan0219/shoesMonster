@@ -49,7 +49,7 @@
 <!--             <tr> -->
 <%--                 <td>${s.product.prod_code}</td> --%>
 <%--         		<td>${s.product.prod_name}</td> --%>
-<%--         		<td>${s.stock_raw_count}</td> --%>
+<%--         		<td>${s.stock_count}</td> --%>
 <!--                 <td><input type="text"></td> -->
 <%--                 <td>${s.wh_dv}</td> --%>
 <%--         		<td>${s.wh_code}</td> --%>
@@ -62,7 +62,7 @@
 <!--             <tr> -->
 <%--                 <td>${s.raw_mat.raw_code}</td> --%>
 <%--         		<td>${s.raw_mat.raw_name}</td> --%>
-<%--         		<td>${s.stock_raw_count}</td> --%>
+<%--         		<td>${s.stock_count}</td> --%>
 <%--                 <td>${s.wh_name}</td> --%>
 <!--                 <td><input type="text"></td> -->
 <%--                 <td>${s.wh_dv}</td> --%>
