@@ -474,13 +474,13 @@
 	</resultMap>
 
 	<select id="whlistPage" resultMap="whm_listPage">
-		SELECT wh_code, wh_name,
-		wh_dv,w.prod_code, p.prod_name,
-		w.raw_code, r.raw_name, wh_addr,
-		wh_tel, wh_use, wh_note
+		SELECT w.wh_code, w.wh_name,
+			   w.wh_dv,w.prod_code, p.prod_name,
+			   w.raw_code, r.raw_name, w.wh_addr,
+			   w.wh_tel, w.wh_use, w.wh_note
 		FROM warehouse w
 		LEFT JOIN product p on
-		p.prod_code = w.prod_code
+				  p.prod_code = w.prod_code
 		LEFT JOIN
 		raw_material r on r.raw_code =
 		w.raw_code

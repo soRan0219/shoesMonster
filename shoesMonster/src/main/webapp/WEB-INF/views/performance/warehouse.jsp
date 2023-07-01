@@ -496,6 +496,10 @@
 					<option value="1">Y</option>
 					<option value="2">N</option>
 				</select>
+			
+<!-- 				<input type="radio" name="wh_use" value="3" checked>전 체 -->
+<!-- 				<input type="radio" name="wh_use" value="1">Y -->
+<!-- 				<input type="radio" name="wh_use" value="2">N -->
 				
 			<input type="submit" value="검색">
 		</fieldset>
