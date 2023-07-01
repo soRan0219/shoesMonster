@@ -81,28 +81,50 @@
 		</c:forEach>
 	</table>
 	</form>
+	
+	<c:if test="${count4 > 10 }">
+		<c:if test="${bp.prev}">
 
+		    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+
+		</c:if>
+		
+		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+		    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+		</c:forEach>
+		
+		<c:if test="${bp.next && bp.endPage > 0}">
+
+		    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+
+		</c:if>
+	</c:if>
+	<br><br>
+    bp.startPage : ${bp.startPage } <br>
+    bp.endPage : ${bp.endPage } <br>
+    param : ${param } <br>
+	
 	
    
     
-<div>
-    <c:if test="${count2 > 0 }">
-    	<c:if test="${startPage > pageBlock }">
-    		<span><a href="/stock/Out_material?num=${startPage - pageBlock}&client_actname=${out.client.client_actname}
-    		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">이전</a></span>
-    	</c:if>
+<!-- <div> -->
+<%--     <c:if test="${count2 > 0 }"> --%>
+<%--     	<c:if test="${startPage > pageBlock }"> --%>
+<%--     		<span><a href="/stock/Out_material?num=${startPage - pageBlock}&client_actname=${out.client.client_actname} --%>
+<%--     		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">이전</a></span> --%>
+<%--     	</c:if> --%>
 	
-		<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-			<a href="/stock/Out_material?num=${i }&client_actname=${out.client.client_actname}
-    		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">${i }</a>
-		</c:forEach>
+<%-- 		<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1"> --%>
+<%-- 			<a href="/stock/Out_material?num=${i }&client_actname=${out.client.client_actname} --%>
+<%--     		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">${i }</a> --%>
+<%-- 		</c:forEach> --%>
 		
-		<c:if test="${endPage < count2 }">
-			<a href="/stock/Out_material?num=${startPage + pageBlock}&client_actname=${out.client.client_actname}
-    		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">다음</a>
-		</c:if>
-    </c:if>
-</div>
+<%-- 		<c:if test="${endPage < count2 }"> --%>
+<%-- 			<a href="/stock/Out_material?num=${startPage + pageBlock}&client_actname=${out.client.client_actname} --%>
+<%--     		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">다음</a> --%>
+<%-- 		</c:if> --%>
+<%--     </c:if> --%>
+<!-- </div> -->
 
 
 </div>

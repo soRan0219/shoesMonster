@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sm.domain.OrderStatusVO;
 import com.sm.domain.Out_materialVO;
+import com.sm.domain.PageVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
 
@@ -25,53 +26,54 @@ public class Out_materialImpl implements Out_materialDAO {
     private static final String NAMESPACE="com.sm.mapper.stockMapper";
 	
 	@Override
-	public int count2() throws Exception {
+	public int count4() throws Exception {
 		
-		return sqlSession.selectOne(NAMESPACE+".count2");
+		return sqlSession.selectOne(NAMESPACE+".count4");
 	}
 
 	@Override
-	public List<Out_materialVO> Out_matList(int startRow, int pageSize) throws Exception {
+	public List<Out_materialVO> Out_matList(PageVO vo) throws Exception {
 		
-		HashMap<String, Object> data = new HashMap<String, Object>();
-        
-        data.put("startRow", startRow);
-        data.put("pageSize", pageSize);
+HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		
+		data.put("startPage", vo.getStartPage());
+		data.put("pageSize", vo.getPageSize());
+		
 		
 		return sqlSession.selectList(NAMESPACE+".out_matPage",data);
 	}
 
 	
 	
-	
-	@Override
-	public int count2(OrderStatusVO ovo) throws Exception {
-		
-		HashMap<String , Object> data = new HashMap<String, Object>();
-        
-        data.put("client_actname",ovo.getClients().getClient_actname());
-        data.put("out_num", ovo.getOut_mat().getOut_num());
-        data.put("prod_name", ovo.getProd().getProd_name());
-        
-         
-        return sqlSession.selectOne(NAMESPACE+".searchCount2",data);
-	}
+//	@Override
+//	public int count4(Out_materialVO rvo) throws Exception {
+//		
+//		HashMap<String , Object> data = new HashMap<String, Object>();
+//        
+//        data.put("client_actname",rvo.getClients().getClient_actname());
+//        data.put("out_num", rvo.getOut_num());
+//        data.put("prod_name", rvo.getProd().getProd_name());
+//        
+//         
+//        return sqlSession.selectOne(NAMESPACE+".searchCount2",data);
+//	}
 
-	@Override
-	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, OrderStatusVO ovo) throws Exception {
-
-		HashMap<String , Object> data = new HashMap<String, Object>();
-		
-		data.put("startRow", startRow);
-        data.put("pageSize", pageSize);
-		
-		data.put("client_actname",ovo.getClients().getClient_actname());
-		data.put("out_num", ovo.getOut_mat().getOut_num());
-		data.put("prod_name", ovo.getProd().getProd_name());
-
-	
-		return sqlSession.selectList(NAMESPACE+".searchOut",data);
-	}
+//	@Override
+//	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, Out_materialVO rvo) throws Exception {
+//
+//		HashMap<String , Object> data = new HashMap<String, Object>();
+//		
+//		data.put("startRow", startRow);
+//        data.put("pageSize", pageSize);
+//		
+//		data.put("client_actname",rvo.getClients().getClient_actname());
+//		data.put("out_num", rvo.getOut_num());
+//		data.put("prod_name", rvo.getProd().getProd_name());
+//
+//	
+//		return sqlSession.selectList(NAMESPACE+".searchOut",data);
+//	}
 
 	@Override
 	public void omButton(OrderStatusVO vo ,String order_code) throws Exception {
@@ -84,6 +86,35 @@ public class Out_materialImpl implements Out_materialDAO {
 		
 	}
 
+	@Override
+	public int count4(Out_materialVO rvo) throws Exception {
+		
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("out_num", rvo.getOut_num());
+		data.put("prod_name", rvo.getProd().getProd_name());
+		data.put("client_actname", rvo.getClients().getClient_actname());
+		
+		
+		return sqlSession.selectOne(NAMESPACE+".searchCount4", data);
+	}
+
+	@Override
+	public List<Out_materialVO> getSearch_Out(PageVO vo, Out_materialVO rvo) throws Exception {
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("out_num", rvo.getOut_num());
+		data.put("prod_name", rvo.getProd().getProd_name());
+		data.put("client_actname", rvo.getClients().getClient_actname());
+		data.put("startPage", vo.getStartPage());
+		data.put("pageSize", vo.getPageSize());
+		
+		return sqlSession.selectList(NAMESPACE+".searchOut", data);
+	}
+
+	
 	
 	
 }

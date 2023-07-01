@@ -195,12 +195,7 @@
 <!-- ===================================================== 수주 현황 ================================================================== -->
 	<!-- 수주 현황 목록 불러오기 -->
 	
-	<resultMap type="com.sm.domain.ProductVO" id="productList">
-			<result column="prod_code" property="prod_code" />
-			<result column="prod_name" property="prod_name" />
-			<result column="prod_unit" property="prod_unit" />
-	
-		<collection property="orders" ofType="com.sm.domain.OrderStatusVO">
+	<resultMap type="com.sm.domain.OrderStatusVO" id="productList">
 			<result column="order_code" property="order_code" />
 			<result column="order_date" property="order_date" />
 			<result column="order_deliveryDate" property="order_deliveryDate" />
@@ -209,6 +204,12 @@
 			<result column="client_code" property="client_code" />
 			<result column="order_finish" property="order_finish" />
 			<result column="oreder_note" property="oreder_note" />
+	
+		<collection property="prod" ofType="com.sm.domain.ProductVO">
+			
+			<result column="prod_code" property="prod_code" />
+			<result column="prod_name" property="prod_name" />
+			<result column="prod_unit" property="prod_unit" />
 		</collection>
 	</resultMap>
 	
@@ -222,23 +223,23 @@
 	<!-- 수주 현황 목록 불러오기 -->
 	
 	<!-- 수주현황 검색 -->
-	<resultMap type="com.sm.domain.ProductVO" id="productList2">
-			<result column="prod_code" property="prod_code" />
-			<result column="prod_name" property="prod_name" />
-			<result column="prod_unit" property="prod_unit" />
+<!-- 	<resultMap type="com.sm.domain.ProductVO" id="productList2"> -->
+<!-- 			<result column="prod_code" property="prod_code" /> -->
+<!-- 			<result column="prod_name" property="prod_name" /> -->
+<!-- 			<result column="prod_unit" property="prod_unit" /> -->
 	
-		<collection property="orders" ofType="com.sm.domain.OrderStatusVO">
-			<result column="order_code" property="order_code" />
-			<result column="order_date" property="order_date" />
-			<result column="order_deliveryDate" property="order_deliveryDate" />
-			<result column="emp_id" property="emp_id" />
-			<result column="order_count" property="order_count" />
-			<result column="client_code" property="client_code" />
-			<result column="order_finish" property="order_finish" />
-		</collection>
-	</resultMap>
+<!-- 		<collection property="orders" ofType="com.sm.domain.OrderStatusVO"> -->
+<!-- 			<result column="order_code" property="order_code" /> -->
+<!-- 			<result column="order_date" property="order_date" /> -->
+<!-- 			<result column="order_deliveryDate" property="order_deliveryDate" /> -->
+<!-- 			<result column="emp_id" property="emp_id" /> -->
+<!-- 			<result column="order_count" property="order_count" /> -->
+<!-- 			<result column="client_code" property="client_code" /> -->
+<!-- 			<result column="order_finish" property="order_finish" /> -->
+<!-- 		</collection> -->
+<!-- 	</resultMap> -->
 	
-	<select id="searchOrderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="productList2">
+	<select id="searchOrderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="productList">
 <!-- 		<bind name="client_code" value="'%' + client_code + '%'"/> -->
 <!-- 		<bind name="order_date" value="'%' + order_date + '%'"/> -->
 <!-- 		<bind name="prod_code" value="'%' + prod_code + '%'"/> -->
