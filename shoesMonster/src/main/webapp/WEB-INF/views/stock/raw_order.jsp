@@ -132,7 +132,7 @@ function toggleDiv(divId) {
         		<td>${vo.rawMaterial.raw_name }</td>
         		<td>${vo.rawMaterial.raw_color }</td>
                 <td>${vo.raw_order_count}</td>
-	            <td>${vo.stock.stock_raw_count != null ? vo.stock.stock_raw_count : 0}</td>
+	            <td>${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
         		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}"/>원</td>
         		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}"/>원</td>
                 <td>${vo.raw_order_date}</td>
@@ -198,7 +198,7 @@ function toggleDiv(divId) {
 				<td onclick="roPopup();"><input type="text" name="raw_name" id="raw_name" readonly></td>
 				<td onclick="roPopup();"><input type="text" name="raw_color" id="raw_color" readonly></td>
 				<td><input type="number" min="1" id="raw_order_count" name="raw_order_count" oninput="totalAmount()"></td> <!-- CSS할 때 증감버튼 없애기 -->
-				<td><input type="text" name="stock_raw_count" id="stock_raw_count" readonly></td>
+				<td><input type="text" name="stock_count" id="stock_count" readonly></td>
 				<td><input type="text" name="raw_price" id="raw_price" readonly></td>
 				<td id="total_amount"></td>
 				<td>${sessionScope.emp_id }</td>
