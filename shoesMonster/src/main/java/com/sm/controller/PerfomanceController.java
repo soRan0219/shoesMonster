@@ -757,11 +757,17 @@ public class PerfomanceController {
 	public void getPerformStatus(Model model) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: getPerformStatus() 호출");
 		
-		model.addAttribute("status", service.getPerformStatus());
-		
 	} //getPerformStatus()
 	
-	
+	@ResponseBody
+	@RequestMapping(value = "/status", method = RequestMethod.POST)
+	public Map<String, List<PerformanceVO>> status() throws Exception {
+		logger.debug("@@@@@ CONTROLLER: status() 호출");
+		
+		Map<String, List<PerformanceVO>> statusMap = service.getPerformStatus();
+		
+		return statusMap;
+	} //status()
 	
 	
 	
