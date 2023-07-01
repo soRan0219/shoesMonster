@@ -183,51 +183,51 @@ $(function(){
 		</tr>
 		
 		<c:forEach var="vo" items="${orderStatusList }" varStatus="i">
-			<c:if test="${vo.orders.order_finish == '전체' }">
+			<c:if test="${vo.order_finish == '전체' }">
 				<tr>
 					<td>${i.count }</td>
-					<td id="orderCode">${vo.orders.order_code}</td>
+					<td id="orderCode">${vo.order_code}</td>
 					<td>${vo.orders.client_code}</td>
-					<td>${vo.orders.order_date}</td>
-					<td>${vo.orders.emp_id}</td>
-					<td>${vo.prod_code}</td>
-					<td>${vo.prod_name}</td>
-					<td>${vo.prod_unit}</td>
-					<td>${vo.orders.order_deliveryDate}</td>
-					<td>${vo.orders.order_count}</td>
-					<td><input type="checkbox">${vo.orders.order_finish}</td>
+					<td>${vo.order_date}</td>
+					<td>${vo.emp_id}</td>
+					<td>${vo.prod.prod_code}</td>
+					<td>${vo.prod.prod_name}</td>
+					<td>${vo.prod.prod_unit}</td>
+					<td>${vo.order_deliveryDate}</td>
+					<td>${vo.order_count}</td>
+					<td><input type="checkbox">${vo.order_finish}</td>
 				</tr>
 			</c:if>
 			
-			<c:if test="${vo.orders.order_finish == 'Y' }">
+			<c:if test="${vo.order_finish == 'Y' }">
 				<tr>
 					<td>${i.count }</td>
-					<td>${vo.orders.order_code}</td>
-					<td>${vo.orders.client_code}</td>
-					<td>${vo.orders.order_date}</td>
-					<td>${vo.orders.emp_id}</td>
-					<td>${vo.prod_code}</td>
-					<td>${vo.prod_name}</td>
-					<td>${vo.prod_unit}</td>
-					<td>${vo.orders.order_deliveryDate}</td>
-					<td>${vo.orders.order_count}</td>
-					<td><input type="checkbox">${vo.orders.order_finish}</td>
+					<td>${vo.order_code}</td>
+					<td>${vo.client_code}</td>
+					<td>${vo.order_date}</td>
+					<td>${vo.emp_id}</td>
+					<td>${vo.prod.prod_code}</td>
+					<td>${vo.prod.prod_name}</td>
+					<td>${vo.prod.prod_unit}</td>
+					<td>${vo.order_deliveryDate}</td>
+					<td>${vo.order_count}</td>
+					<td><input type="checkbox">${vo.order_finish}</td>
 				</tr>
 			</c:if>
 			
-			<c:if test="${vo.orders.order_finish == 'N' }">
+			<c:if test="${vo.order_finish == 'N' }">
 				<tr>
 					<td>${i.count }</td>
-					<td>${vo.orders.order_code}</td>
-					<td>${vo.orders.client_code}</td>
-					<td>${vo.orders.order_date}</td>
-					<td>${vo.orders.emp_id}</td>
-					<td>${vo.prod_code}</td>
-					<td>${vo.prod_name}</td>
-					<td>${vo.prod_unit}</td>
-					<td>${vo.orders.order_deliveryDate}</td>
-					<td>${vo.orders.order_count}</td>
-					<td><input type="checkbox">${vo.orders.order_finish}</td>
+					<td>${vo.order_code}</td>
+					<td>${vo.client_code}</td>
+					<td>${vo.order_date}</td>
+					<td>${vo.emp_id}</td>
+					<td>${vo.prod.prod_code}</td>
+					<td>${vo.prod.prod_name}</td>
+					<td>${vo.prod.prod_unit}</td>
+					<td>${vo.order_deliveryDate}</td>
+					<td>${vo.order_count}</td>
+					<td><input type="checkbox">${vo.order_finish}</td>
 				</tr>
 			</c:if>
 		</c:forEach>

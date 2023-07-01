@@ -4,24 +4,31 @@ import java.util.List;
 
 import com.sm.domain.OrderStatusVO;
 import com.sm.domain.Out_materialVO;
+import com.sm.domain.PageVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
 
 public interface Out_materialDAO {
 
 	// 글 총 갯수
-	public int count2() throws Exception;
+	public int count4() throws Exception;
 	
 	// 발주 목록 조회
-	public List<Out_materialVO> Out_matList(int startRow,int pageSize ) throws Exception;
+	public List<Out_materialVO> Out_matList(PageVO vo) throws Exception;
 	
-	// 검색 총 갯수
-	public int count2(OrderStatusVO ovo) throws Exception;
-	
-	// 발주 검색
-	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, OrderStatusVO ovo) throws Exception;
+//	// 검색 총 갯수
+//	public int count4(Out_materialVO rvo) throws Exception;
+//	
+//	// 발주 검색
+//	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize, Out_materialVO rvo) throws Exception;
 	
 	// 출고 버튼
 	public void omButton(OrderStatusVO vo , String order_code) throws Exception;
+	
+	// 출고 검색 목록 개수
+	public int count4(Out_materialVO rvo) throws Exception;
+	
+	// 출고 검색 목록 조회
+	public List<Out_materialVO> getSearch_Out(PageVO vo, Out_materialVO rvo) throws Exception;
 			
  }

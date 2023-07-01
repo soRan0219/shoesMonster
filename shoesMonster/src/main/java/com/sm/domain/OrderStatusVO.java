@@ -20,9 +20,9 @@ public class OrderStatusVO {
 	private Out_materialVO out_mat;
 	
 	public OrderStatusVO() {
-		out_mat = new Out_materialVO();
+//		out_mat = new Out_materialVO();
 		prod = new  ProductVO();
-		clients = new ClientsVO();	
+//		clients = new ClientsVO();	
 	}
 	
 	
