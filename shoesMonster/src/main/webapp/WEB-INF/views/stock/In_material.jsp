@@ -26,18 +26,18 @@
 <!-- 	<button type="submit">검색</button> -->
 
 <form action="" method="get">
-		
-		<label>품명</label>
-			<input type="text" name="raw_mat.raw_name"  placeholder="검색어를 입력해주세요">
-		<label>입고번호</label>
-		<input type="text"  name="in_num" placeholder="검색어를 입력해주세요">
-		
-		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
-		<label>거래처명</label>
-		<input type="text"  name="clients.client_actname" placeholder="검색어를 입력해주세요">
-			
-		<input type="submit" value="검색">
-	</form>
+        
+        <label>품명</label>
+            <input type="text" name="rawMaterial.raw_name"  placeholder="검색어를 입력해주세요">
+        <label>입고번호</label>
+        <input type="text"  name="in_mat.in_num" placeholder="검색어를 입력해주세요">
+        
+        <!-- 이것도 옵션으로 바꿀까 생각해보기 -->
+        <label>거래처명</label>
+        <input type="text"  name="clients.client_actname" placeholder="검색어를 입력해주세요">
+            
+        <input type="submit" value="검색">
+    </form>
 
 
 
@@ -109,23 +109,21 @@
     </table>
 </form>
 
-
 	<div>
-    <c:if test="${count > 0 }">
-        <c:if test="${startPage > pageBlock }">
-            <span><a href="/stock/In_material?num=${startPage - pageBlock}">이전</a></span>
+    <c:if test="${count1 > 10 }">
+       <c:if test="${bp.prev}">
+            <span><a href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a></span>
         </c:if>
     
-        <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-            <a href="/stock/In_material?num=${i }">${i }</a>
+        <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}" step="1">
+            <a href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
         </c:forEach>
         
-        <c:if test="${endPage < count }">
-            <a href="/stock/In_material?num=${startPage + pageBlock}">다음</a>
+        <c:if test="${bp.next && bp.endPage > 0}">
+            <a href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
         </c:if>
     </c:if>
-	</div>
-
+    </div>
 
 </div>
 <!-- /page content -->

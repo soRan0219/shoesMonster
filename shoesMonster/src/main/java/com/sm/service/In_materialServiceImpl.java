@@ -59,6 +59,16 @@ public class In_materialServiceImpl implements In_materialService{
 
         idao.updateIn(raw_order_num);
     }
+
+	
+	// 입고 버튼용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+//	@Override
+//	public void selectCheck() throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//	}
+	
+	
 	
 //	@Override
 //	public int count(In_materialVO ivo) throws Exception {

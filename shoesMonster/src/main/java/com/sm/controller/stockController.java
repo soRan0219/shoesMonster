@@ -140,64 +140,75 @@ public class stockController {
 	}
 	// 발주 거래처 상세 팝업
 	
-	////////////////////////// 입고 //////////////////////////////////////////////////////
+	// ====================================== 발주 - 끝 ====================================== //
+	
+	// ====================================== 입고 - 시작 ====================================== //
+	
 	// 입고 페이징
-    
     //http://localhost:8080/stock/In_material
 	//http://localhost:8088/stock/In_material
 	@RequestMapping(value = "/In_material", method = RequestMethod.GET)
     public void In_matPage(HttpServletRequest request, Model model , Raw_orderVO rvo ,PageVO vo) throws Exception {
-
             
-        if((rvo.getClients().getClient_actname() != null && !rvo.getClients().getClient_actname().equals("")) ||
-                   (rvo.getRaw_order_num() != null && !rvo.getRaw_order_num().equals("")) || 
-                   (rvo.getRawMaterial().getRaw_name() != null && !rvo.getRawMaterial().getRaw_name().equals(""))) {
-                    
-                    // 게시물 총 개수
-                    int count1 = ro_service.count1(rvo);
-                     
-                    List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo, rvo);
-                    logger.debug("@@@@@@@@@@@@@@ : " + vo);
-                    logger.debug("@@@@@@@@@@@@@@ : " + ro_List);
-                     
-                    BottomPaging bp = new BottomPaging();
-                    bp.setPageVO(vo);
-                    bp.setTotalCount(count1);
-                    logger.debug("@@@@@@@@@@@@@@ : " + bp);
-                    
-                    model.addAttribute("ro_List", ro_List);
-                    model.addAttribute("count1", count1);
-                    model.addAttribute("bp", bp);
-                    
-                } else {
-                    
-                
-                    List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo);
-                    
-                    int count1 = ro_service.count1();
-                    
-                    BottomPaging bp = new BottomPaging();
-                    bp.setPageVO(vo);
-                    bp.setTotalCount(count1);
-                    
-                    model.addAttribute("ro_List", ro_List);
-                    model.addAttribute("count1", count1);
-                    model.addAttribute("bp", bp);
-                
-                }
+		if((rvo.getClients().getClient_actname() != null && !rvo.getClients().getClient_actname().equals("")) ||
+                (rvo.getIn_mat().getIn_num() != null && !rvo.getIn_mat().getIn_num().equals("")) || 
+                (rvo.getRawMaterial().getRaw_name() != null && !rvo.getRawMaterial().getRaw_name().equals(""))) {
+                 
+                 // 게시물 총 개수
+                 int count1 = ro_service.count1(rvo);
+                 logger.debug("@@@@@@@@@@@@@@@@@@@@@count1 : "+count1);
+                 
+                 List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo, rvo);
+                 logger.debug("@@@@@@@@@@@@@@ : " + vo);
+                 logger.debug("@@@@@@@@@@@@@@ : " + ro_List);
+                  
+                 BottomPaging bp = new BottomPaging();
+                 bp.setPageVO(vo);
+                 bp.setTotalCount(count1);
+                 logger.debug("@@@@@@@@@@@@@@ : " + bp);
+                 
+                 model.addAttribute("ro_List", ro_List);
+                 model.addAttribute("count1", count1);
+                 model.addAttribute("bp", bp);
+                 model.addAttribute("rvo", rvo);
+                 
+             } else {
+                 
+             
+                 List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo);
+                 
+                 int count1 = ro_service.count1();
+                 
+                 BottomPaging bp = new BottomPaging();
+                 bp.setPageVO(vo);
+                 bp.setTotalCount(count1);
+                 
+                 model.addAttribute("ro_List", ro_List);
+                 model.addAttribute("count1", count1);
+                 model.addAttribute("bp", bp);
+                 model.addAttribute("rvo", rvo);
+             }
 
-     
     }
 	
-	// 입고 등록
-
+	// 입고 등록 버튼
+	//http://localhost:8080/stock/In_material
+	//http://localhost:8088/stock/In_material
     @RequestMapping(value = "/In_material" , method = RequestMethod.POST)
-    public String inRegist(@RequestParam("raw_order_num") String raw_order_num, Raw_orderVO rvo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception{
+    public String inRegist(@RequestParam("raw_order_num") String raw_order_num,
+//    					   @RequestParam("raw_code") String rawCode, 
+    					   Raw_orderVO rvo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception{
         
         logger.debug("@@@@@@@@@@@@ 발주 번호 확인용 : " + raw_order_num);
         
-        String emp_id = (String)session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
+        // 로그인 정보
+        String emp_id = (String)session.getAttribute("emp_id");
         request.setAttribute("emp_id", emp_id);
+        
+        // 재고에 입고할 항목있는지 조회(select)
+//        service.selectCheck();
+        
+        
         
         service.inInsert(rvo, raw_order_num);
         
@@ -210,8 +221,9 @@ public class stockController {
         return "redirect:/stock/In_material";
     }
 
+    // ====================================== 입고 - 끝 ====================================== //
     
-    ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
+    // ====================================== 재고 - 시작 ====================================== //
    
 		//http://localhost:8080/stock/stockList
     	//http://localhost:8088/stock/stockList
@@ -293,12 +305,11 @@ public class stockController {
     		}
             
     	}
-    		
+
+    // ====================================== 재고 - 끝 ====================================== //
     	
-  
-      ///////////////////////////////////////////재고 페이지 ///////////////////////////////////////////
+    // ====================================== 출고 - 시작 ====================================== //
     	
-    	//////////////////////////// 출고 페이지 ///////////////////////////////////////
     	//http://localhost:8080/stock/Out_material
     	//http://localhost:8088/stock/Out_material
 //    	@RequestMapping(value="/Out_material" ,method = RequestMethod.GET)
@@ -470,8 +481,7 @@ public class stockController {
 //    		
 //    	}
     	
-    	//////////////////////////// 출고 페이지 ///////////////////////////////////////
-    
+    // ====================================== 출고 - 끝 ====================================== //    
 }
     	
 

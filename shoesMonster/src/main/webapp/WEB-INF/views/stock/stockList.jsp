@@ -77,17 +77,17 @@
            		
 <div>
     <c:if test="${count3 > 0 }">
-    	<c:if test="${startPage > pageBlock }">
-    		<span><a href="/stock/stockList?num=${startPage - pageBlock}">이전</a></span>
-    	</c:if>
-	
-		<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-			<a href="/stock/stockList?num=${i }">${i }</a>
-		</c:forEach>
-		
-		<c:if test="${endPage < count3 }">
-			<a href="/stock/stockList?num=${startPage + pageBlock}">다음</a>
-		</c:if>
+        <c:if test="${startPage > pageBlock }">
+            <span><a href="/stock/stockList?num=${startPage - pageBlock}&wh_code=${wh_code}">이전</a></span>
+        </c:if>
+    
+        <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+            <a href="/stock/stockList?num=${i }&wh_code=${wh_code}">${i }</a>
+        </c:forEach>
+        
+        <c:if test="${endPage < count3 }">
+            <a href="/stock/stockList?num=${startPage + pageBlock}&wh_code=${wh_code}">다음</a>
+        </c:if>
     </c:if>
 </div>
 
