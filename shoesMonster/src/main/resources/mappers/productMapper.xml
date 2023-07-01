@@ -505,13 +505,13 @@
 	</resultMap>
 
 	<select id="whlistPage" resultMap="whm_listPage">
-		SELECT wh_code, wh_name,
-		wh_dv,w.prod_code, p.prod_name,
-		w.raw_code, r.raw_name, wh_addr,
-		wh_tel, wh_use, wh_note
+		SELECT w.wh_code, w.wh_name,
+			   w.wh_dv,w.prod_code, p.prod_name,
+			   w.raw_code, r.raw_name, w.wh_addr,
+			   w.wh_tel, w.wh_use, w.wh_note
 		FROM warehouse w
 		LEFT JOIN product p on
-		p.prod_code = w.prod_code
+				  p.prod_code = w.prod_code
 		LEFT JOIN
 		raw_material r on r.raw_code =
 		w.raw_code
@@ -774,34 +774,31 @@
 	</update>
 	<!-- 생산실적 수정 -->
 
-	<!-- 생산실적 양불 현황 -->
-	<resultMap id="perfStatus" type="List">
-		<result property="perform_code" column="perform_code" />
-		<result property="work_code" column="work_code" />
-		<result property="perform_date" column="perform_date" />
-		<result property="perform_qt" column="perform_qt" />
-		<result property="emp_id" column="emp_id" />
-		<result property="change_id" column="change_id" />
-		<result property="change_date" column="change_date" />
-		<result property="perform_fair" column="perform_fair" />
-		<result property="perform_defect" column="perform_defect" />
-		<result property="defect_note" column="defect_note" />
-		<result property="perform_note" column="perform_note" />
-
-		<collection property="workOrder" ofType="WorkOrderVO">
-			<result property="line_code" column="line_code" />
-			<result property="prod_code" column="prod_code" />
-		</collection>
-	</resultMap>
-	
-	<select id="getStatus" resultMap="perfStatus">
-		SELECT w.line_code, sum(p.perform_fair), sum(p.perform_defect) 
+	<!-- 생산실적 양불 현황: 라인별 -->
+	<select id="statusLine" resultMap="perfList">
+		SELECT w.line_code, sum(p.perform_qt) perform_qt, sum(p.perform_fair) perform_fair, sum(p.perform_defect) perform_defect 
 		FROM performance p 
 		JOIN work_order w ON p.work_code = w.work_code 
 		GROUP BY w.line_code
 	</select>
-	<!-- 생산실적 양불 현황 -->
+	<!-- 생산실적 양불 현황: 라인별 -->
 
+	<!-- 생산실적 양불 현황: 품목별 -->
+	<select id="statusProd" resultMap="perfList">
+		SELECT w.prod_code, sum(p.perform_qt) perform_qt, sum(p.perform_fair) perform_fair, sum(p.perform_defect) perform_defect 
+		FROM performance p 
+		JOIN work_order w ON p.work_code = w.work_code 
+		GROUP BY w.prod_code
+	</select>
+	<!-- 생산실적 양불 현황: 품목별 -->
+	
+	<!-- 생산실적 양불 현황: 일자별 -->
+	<select id="statusDate" resultMap="perfList">
+		SELECT perform_date, sum(perform_qt) perform_qt, sum(perform_fair) perform_fair, sum(perform_defect) perform_defect 
+		FROM performance 
+		GROUP BY perform_date
+	</select>
+	<!-- 생산실적 양불 현황: 일자별 -->
 
 
 </mapper>

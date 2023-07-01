@@ -8,7 +8,7 @@ public class LineWhPageVO {
 	
 	public LineWhPageVO() {
 		this.page = 1;
-		this.pageSize = 10; // 잠시 수정
+		this.pageSize = 20; // 잠시 수정
 //		this.pageSize = 1; // 잠시 수정
 	}
 
