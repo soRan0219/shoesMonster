@@ -117,9 +117,11 @@
 	<!-- 품목관리 삭제 -->
 
 	<!-- 품목관리 수정 시 조회 -->
-	<select id="readProdOne" resultType="ProductVO">
-		SELECT * FROM product WHERE
-		prod_code=#{prod_code}
+	<select id="readProdOne" resultType="ProductVO" resultMap="prod">
+		SELECT p.*, c.client_actname,w.wh_name  from product p
+		join warehouse w ON p.wh_code =w.wh_code
+		JOIN clients c on p.client_code =c.client_code
+		WHERE p.prod_code=#{prod_code}
 	</select>
 	<!-- 품목관리 수정 시 조회 -->
 
@@ -155,21 +157,28 @@
 		<result property="raw_size" column="raw_size" />
 		<result property="raw_note" column="raw_note" />
 		<result property="client_code" column="client_code" />
+		<result property="wh_code" column="wh_code" />
 
 		<collection property="clients"
 			ofType="com.sm.domain.ClientsVO">
 			<result property="client_actname" column="client_actname" />
+		</collection>
+		
+		<collection property="wh"
+			ofType="com.sm.domain.Wh_prodVO">
+			<result property="wh_name" column="wh_name" />
 		</collection>
 
 	</resultMap>
 
 	<select id="readRaw" resultMap="rawMaterial"
 		resultType="RawMaterialVO">
-		SELECT r.*, c.client_actname
+		SELECT r.*, c.client_actname, w.wh_name
 		from raw_material r
 		join clients c
-		on r.client_code = c.client_code limit
-		#{start}, #{cntPerPage}
+		on r.client_code = c.client_code
+		join warehouse w ON r.wh_code =w.wh_code
+		limit #{start}, #{cntPerPage}
 	</select>
 	<!-- 원자재관리 목록 불러오기 -->
 
@@ -177,9 +186,8 @@
 	<select id="countSearchRaw" parameterType="hashMap"
 		resultType="int">
 		SELECT COUNT(*) FROM raw_material r
-		join clients c
-		on r.client_code =
-		c.client_code
+		join clients c on r.client_code = c.client_code
+		join warehouse w ON r.wh_code =w.wh_code
 		<where>
 			<if test="raw_code != ''">
 				r.raw_code like concat ('%', #{raw_code}, '%')
@@ -198,11 +206,11 @@
 	<!-- 원자재관리 검색리스트 불러오기 -->
 	<select id="readSearchRaw" parameterType="hashMap"
 		resultMap="rawMaterial" resultType="RawMaterialVO">
-		SELECT r.*, c.client_actname
+		SELECT r.*, c.client_actname, w.wh_name
 		from raw_material r
 		join clients c
-		on
-		r.client_code = c.client_code
+		on r.client_code = c.client_code
+		join warehouse w ON r.wh_code =w.wh_code
 		<where>
 			<if test="raw_code != ''">
 				r.raw_code like concat ('%', #{raw_code}, '%')

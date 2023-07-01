@@ -1,7 +1,5 @@
 package com.sm.domain;
 
-
-
 import lombok.Data;
 
 @Data
