@@ -2,6 +2,7 @@ package com.sm.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -356,7 +357,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 	//실적현황 - 양불수
 	@Override
-	public List<PerformanceVO> getPerformStatus() throws Exception {
+	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception {
 		return pdao.getPerformStatus();
 	} //getPerformStatus()
 

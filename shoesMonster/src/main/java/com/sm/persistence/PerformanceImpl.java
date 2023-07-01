@@ -527,13 +527,25 @@ public class PerformanceImpl implements PerformanceDAO {
 	} //getPerfCnt(search)
 
 	@Override
-	public List<PerformanceVO> getPerformStatus() throws Exception {
+	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception {
 		logger.debug("##### DAO: getPerformStatus() 호출");
 		
-		List<PerformanceVO> statusList = sqlSession.selectList(NAMESPACE + ".getStatus");
-		logger.debug("##### DAO: 라인별 양불현황 ===> " + statusList);
+		Map<String, List<PerformanceVO>> statusMap = new HashMap<>();
 		
-		return statusList;
+		List<PerformanceVO> statusLineList = sqlSession.selectList(NAMESPACE + ".statusLine");
+		logger.debug("##### DAO: 라인별 양불현황 ===> " + statusLineList);
+		
+		List<PerformanceVO> statusProdList = sqlSession.selectList(NAMESPACE + ".statusProd");
+		logger.debug("##### DAO: 품목별 양불현황 ===> " + statusProdList);
+		
+		List<PerformanceVO> statusDateList = sqlSession.selectList(NAMESPACE + ".statusDate");
+		logger.debug("##### DAO: 일자별 양불현황 ===> " + statusDateList);
+		
+		statusMap.put("perLine", statusLineList);
+		statusMap.put("perProd", statusProdList);
+		statusMap.put("perDate", statusDateList);
+		
+		return statusMap;
 	} //getPerformStatus()
 
 
