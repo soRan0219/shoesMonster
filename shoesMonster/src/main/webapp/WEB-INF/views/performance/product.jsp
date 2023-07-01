@@ -106,7 +106,7 @@
                     '<td><input type="text" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
                     '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
                     '<td><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].clients.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_name'+counter+'"); required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_name'+counter+'"); required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_price"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_note"></td>' +
                     '</tr>';
@@ -259,9 +259,9 @@
 										data.prod_color,
 										data.prod_size,
 										data.client_code,
-										data.client_code,
+										data.clients.client_actname,
 										data.wh_code,
-										data.wh_code,
+										data.wh.wh_name,
 										data.prod_price,
 										data.prod_note,
 										];
