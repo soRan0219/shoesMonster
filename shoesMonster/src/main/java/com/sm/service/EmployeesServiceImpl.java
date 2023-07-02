@@ -35,23 +35,23 @@ public class EmployeesServiceImpl implements EmployeesService{
 	}
 
 	@Override
-	public List<EmployeesVO> searchEmployees(HashMap<String, Object> search) throws Exception {
-		return empdao.selectEmployees(search);
+	public List<EmployeesVO> getSearchEmployeesList(HashMap<String, Object> search) throws Exception {
+		return empdao.getSearchEmployeesList(search);
 	}
 
 	@Override
 	public int getTotalEmployees() throws Exception {
 		return empdao.getTotalEmployees();
 	}
-
+		
 	@Override
-	public List<EmployeesVO> getSearchEmployees(HashMap<String, Object> search) throws Exception {
+	public int getSearchEmployees(HashMap<String, Object> search) throws Exception {
 		return empdao.getSearchEmployees(search);
 	}
 
 	@Override
-	public void regEmployees(EmployeesVO vo) throws Exception {
-		empdao.insertEmployees(vo);
+	public void regEmployees(EmployeesVO evo) throws Exception {
+		empdao.insertEmployees(evo);
 	}
 
 	@Override

@@ -48,6 +48,7 @@ public class PersonController {
 	
 	
 	// http://localhost:8088/person/empinfo
+	// http://localhost:8080/person/empinfo
 	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
 	public void empInfoGET(Model model, ClientPageVO cpvo, 
@@ -76,7 +77,7 @@ public class PersonController {
 			search.put("pageSize", cpvo.getPageSize());
 			
 			// 서비스 - 작업지시 검색
-			empList = empService.searchEmployees(search);
+			empList = empService.getSearchEmployeesList(search);
 			logger.debug(" empList 검색 결과 : " + empList);
 			
 			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
@@ -108,11 +109,11 @@ public class PersonController {
 	
 	// 사원 추가
 	@RequestMapping(value = "/empAdd", method = RequestMethod.POST)
-	public String addEmployees(EmployeesVO vo) throws Exception {
+	public String addEmployees(EmployeesVO evo) throws Exception {
 		logger.debug(" addEmployees() 호출@@@@@ ");
-		logger.debug(" vo : " + vo);
+		logger.debug(" vo : " + evo);
 		
-		empService.regEmployees(vo);
+		empService.regEmployees(evo);
 		
 		return "redirect:/person/empinfo";
 	}// addEmployees()
@@ -132,12 +133,12 @@ public class PersonController {
 	// 사원 상세 조회 POST
 	@ResponseBody
 	@RequestMapping(value = "/empDetail", method = RequestMethod.POST)
-	public EmployeesVO getEmployees(@RequestBody EmployeesVO vo) throws Exception {
+	public EmployeesVO getEmployees(@RequestBody EmployeesVO evo) throws Exception {
 		logger.debug(" getEmployees() 호출@@@@@");
-		logger.debug(" emp_id " + vo.getEmp_id());
+		logger.debug(" emp_id " + evo.getEmp_id());
 		
 		//서비스 - 작업지시 정보 가져오기
-		EmployeesVO preVO = empService.getEmployees(vo.getEmp_id());
+		EmployeesVO preVO = empService.getEmployees(evo.getEmp_id());
 		logger.debug(" preVO = " + preVO);
 		
 		return preVO;
@@ -183,7 +184,7 @@ public class PersonController {
 			search.put("pageSize", cpvo.getPageSize());
 			
 			// 서비스 - 작업지시 검색
-			empList = empService.searchEmployees(search);
+			empList = empService.getSearchEmployeesList(search);
 			logger.debug(" empList 검색 결과 : " + empList);
 			
 			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
