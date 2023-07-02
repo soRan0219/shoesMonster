@@ -12,5 +12,5 @@ public class StockVO {
 	private String stock_text;
 	private String prod_code;
 	private String in_num;
-	private int stock_raw_count;
+	private int stock_count;
 }

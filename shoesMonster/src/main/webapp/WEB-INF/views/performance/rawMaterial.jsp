@@ -108,6 +108,8 @@
                     '<td><input type="text" name="raws[' + counter + '].raw_size"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
                     '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_name'+counter+'"); required></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_price"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_note"></td>' +
                     '</tr>';
@@ -172,6 +174,8 @@
 										data.raw_size,
 										data.client_code,
 										data.clients.client_actname,
+										data.wh_code,
+										data.wh.wh_name,
 										data.raw_price,
 										data.raw_note
 										];
@@ -184,6 +188,8 @@
 										"raw_size",
 										"client_code",
 										"client_actname",
+										"wh_code",
+										"wh_name",
 										"raw_price",
 										"raw_note"
 										];
@@ -354,6 +360,8 @@
 					<th>규격</th>
 					<th>거래처코드</th>
 					<th>거래처명</th>
+					<th>창고코드</th>
+					<th>창고명</th>
 					<th>매입단가</th>
 					<th>비고</th>
 				</tr>
@@ -367,6 +375,8 @@
 						<td>${vo.raw_size }</td>
 						<td>${vo.client_code }</td>
 						<td>${vo.clients.client_actname }</td>
+						<td>${vo.wh_code }</td>
+						<td>${vo.wh.wh_name }</td>
 						<td>${vo.raw_price }</td>
 						<td>${vo.raw_note }</td>
 					</tr>

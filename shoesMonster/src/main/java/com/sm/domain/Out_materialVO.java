@@ -18,9 +18,14 @@ public class Out_materialVO {
 	private Date out_date;
 	
 	private OrderStatusVO orders;
-	private ClientsVO client;
-	private ProductVO product;
+	private ClientsVO clients;
+	private ProductVO prod;
 	
+	public Out_materialVO() {
+		orders = new OrderStatusVO();
+		clients = new ClientsVO();
+		prod = new ProductVO();
+	}
 	
 	
 }

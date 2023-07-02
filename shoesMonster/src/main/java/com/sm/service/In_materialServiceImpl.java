@@ -49,11 +49,26 @@ public class In_materialServiceImpl implements In_materialService{
 		idao.inInsert(rvo, raw_order_num);
 	}
 
+	
+	
+	
+
+
 	@Override
     public void updateIn(String raw_order_num) throws Exception {
 
         idao.updateIn(raw_order_num);
     }
+
+	
+	// 입고 버튼용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+//	@Override
+//	public void selectCheck() throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//	}
+	
+	
 	
 //	@Override
 //	public int count(In_materialVO ivo) throws Exception {

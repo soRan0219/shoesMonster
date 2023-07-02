@@ -2,6 +2,7 @@ package com.sm.persistence;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -174,5 +175,9 @@ public interface PerformanceDAO {
 
 	// 생산실적 수정
 	public void updatePerformance(PerformanceVO uvo) throws Exception;
+
+	//생산실적 현황 - 양불수
+	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception;
+	
 
 }

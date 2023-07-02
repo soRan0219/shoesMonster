@@ -18,6 +18,7 @@ public class Raw_orderVO {
 	private ClientsVO clients;
 	private StockVO stock;
 	private In_materialVO in_mat;
+	private WarehouseVO warehouse;
 	
 	public Raw_orderVO () {
 		

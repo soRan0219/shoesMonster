@@ -200,7 +200,6 @@ $(function(){
 					<td>${vo.prod_unit}</td>
 					<td>${vo.orders.order_deliveryDate}</td>
 					<td>${vo.orders.order_count}</td>
-<%-- 					<td><input type="checkbox">${vo.orders.order_finish}</td> --%>
 				</tr>
 <%-- 			</c:if> --%>
 			
@@ -235,6 +234,7 @@ $(function(){
 <%-- 					<td><input type="checkbox">${vo.orders.order_finish}</td> --%>
 <!-- 				</tr> -->
 <%-- 			</c:if> --%>
+
 		</c:forEach>
 	</table>
 	</form>

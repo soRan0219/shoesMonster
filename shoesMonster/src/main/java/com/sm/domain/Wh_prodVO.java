@@ -14,8 +14,11 @@ public class Wh_prodVO {
 	private String wh_note;
 	private String prod_code;
 	private String raw_code;
+	private String emp_id;
 	
 	private ProductVO prod;
 	private RawMaterialVO raw;
+	private EmployeesVO emp;
 	
+
 }

@@ -3,8 +3,10 @@ package com.sm.service;
 import java.util.List;
 
 import com.sm.domain.ClientsVO;
+import com.sm.domain.In_materialVO;
 import com.sm.domain.PageVO;
 import com.sm.domain.Raw_orderVO;
+import com.sm.domain.WarehouseVO;
 
 public interface Raw_orderService {
 	
@@ -15,10 +17,17 @@ public interface Raw_orderService {
 	public int count1() throws Exception;
 	
 	// 발주 등록(팝업)
-	public List<Raw_orderVO> getPopup() throws Exception;
+	public List<Raw_orderVO> getPopup(PageVO vo) throws Exception;
+	
+	// 발주 (팝업)리스트 갯수
+    public int countPoP() throws Exception;
+	
+	// 창고 등록(팝업)
+	public List<WarehouseVO> whPopup() throws Exception;
 	
 	// 발주 등록
 	public void roInsert(Raw_orderVO vo) throws Exception;
+	
 
 	// 거래처 상세(팝업)
 	public List<Raw_orderVO> getDetail() throws Exception;

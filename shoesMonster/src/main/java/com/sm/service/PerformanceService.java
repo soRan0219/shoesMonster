@@ -2,6 +2,7 @@ package com.sm.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageVO;
@@ -171,5 +172,9 @@ public interface PerformanceService {
 
 	// 생산실적 수정
 	public void modifyPerformance(PerformanceVO uvo) throws Exception;
+
+	//실적현황
+	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception;
+	
 
 }
