@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.sm.domain.In_materialVO;
 import com.sm.domain.PageVO;
 import com.sm.domain.Raw_orderVO;
+import com.sm.domain.WarehouseVO;
 
 @Repository
 public class Raw_orderImpl implements Raw_orderDAO{
@@ -43,6 +44,13 @@ public class Raw_orderImpl implements Raw_orderDAO{
 	public List<Raw_orderVO> Popup() throws Exception {
 		
 		return sqlSession.selectList(NAMESPACE + ".roPopup");
+	}
+
+
+
+	@Override
+	public List<WarehouseVO> whPopup() throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".whPopup");
 	}
 
 
