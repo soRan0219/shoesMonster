@@ -108,13 +108,18 @@ public class stockController {
 	// 발주 목록 + 페이징 처리 - 끝
 	// 발주 등록
 	@RequestMapping(value="/raw_order", method = RequestMethod.POST)
-	public String roRegist(Raw_orderVO vo, RedirectAttributes rttr
-			, HttpSession session, HttpServletRequest request
-			, Model model ) throws Exception {
+	public String roRegist(@RequestParam("wh_code") String wh_code,
+//						   @RequestParam("emp_id") String emp_id,
+						   Raw_orderVO vo, RedirectAttributes rttr,
+						   HttpSession session, HttpServletRequest request,
+						   Model model) throws Exception {
 		
-		String emp_id = (String)session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
+		// 로그인 정보
+//		String emp_id = (String)session.getAttribute("emp_id");
+//		request.setAttribute("emp_id", emp_id);
+		logger.debug("///////////////// wh_code : " + wh_code + "////////////////");
+//		logger.debug("///////////////// emp_id : " + emp_id + "////////////////");
 		
-		request.setAttribute("emp_id", emp_id);
 		
 		ro_service.roInsert(vo);
 	
@@ -122,8 +127,8 @@ public class stockController {
 		
 		return "redirect:/stock/raw_order";
 	}
-	// 발주 등록
-	// 발주 등록 팝업창 - 시작
+
+	// 발주 등록 팝업창
 	@RequestMapping(value = "/roPopup", method = RequestMethod.GET)
 	public void getClient(Model model) throws Exception {
 		
@@ -131,14 +136,23 @@ public class stockController {
 		
 		model.addAttribute("roPopup", roPopup);
 	}
-	// 발주 등록 팝업창 - 끝
+
 	// 발주 거래처 상세 팝업
 	@RequestMapping(value = "/detailPopup", method = RequestMethod.GET)
 	public void getDetail(Model model, HttpServletRequest request) throws Exception {
 //		request.setAttribute("rawCode", rawCode);
 		
 	}
-	// 발주 거래처 상세 팝업
+
+	// 창고 목록 팝업
+	@RequestMapping(value = "/whPopup", method = RequestMethod.GET)
+	public void getWarehouse(Model model) throws Exception {
+		
+		List<WarehouseVO> whPopup = ro_service.whPopup();
+		
+		model.addAttribute("whPopup", whPopup);
+		
+	}
 	
 	// ====================================== 발주 - 끝 ====================================== //
 	

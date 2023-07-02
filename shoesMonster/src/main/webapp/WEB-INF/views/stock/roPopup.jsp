@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>발주 정보</title>
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 	
@@ -25,7 +25,7 @@
       	opener.document.getElementById("raw_code").value = rawCode;
       	opener.document.getElementById("raw_name").value = rawName;
       	opener.document.getElementById("raw_color").value = rawColor;
-      	opener.document.getElementById("stock_raw_count").value = stockCount;
+      	opener.document.getElementById("stock_count").value = stockCount;
       	opener.document.getElementById("raw_price").value = rawPrice;
         
 		window.close();
@@ -36,7 +36,7 @@
 <body>
 	<h1>발주 정보</h1>
 	
-	<form method="get">
+<!-- 	<form method="get"> -->
 	<table border="1">
 		<tr>
 			<th>거래처 코드</th>
@@ -54,12 +54,12 @@
 				<td>${ro.rawMaterial.raw_code }</td>
 				<td>${ro.rawMaterial.raw_name }</td>
 				<td>${ro.rawMaterial.raw_color }</td>
-				<td style="color: ${ro.stock.stock_raw_count <= 20 ? 'red' : 'inherit'}">${ro.stock.stock_raw_count}</td>
+				<td style="color: ${ro.stock.stock_count <= 20 ? 'red' : 'inherit'}">${ro.stock.stock_count}</td>
 				<td><fmt:formatNumber value=" ${ro.rawMaterial.raw_price }"/>원</td>
 			</tr>
 		</c:forEach>
 	</table>
-	</form>
+<!-- 	</form> -->
 	
 	
 </body>
