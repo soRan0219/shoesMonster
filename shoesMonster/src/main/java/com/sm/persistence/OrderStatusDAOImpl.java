@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.ClientPageVO;
 import com.sm.domain.ClientsVO;
 import com.sm.domain.OrderStatusVO;
 
@@ -26,28 +27,32 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
 	
 	// 수주 현황 목록 불러오기 
 	@Override
-	public List<OrderStatusVO> readOrderStatusList() throws Exception {
-		logger.debug("@@@ readOrderStatusList() 호출 @@@");
+	public List<OrderStatusVO> readOrderStatusList(ClientPageVO cpvo) throws Exception {
+		logger.debug("@@@ DAO : readOrderStatusList() 호출 @@@");
 		return sqlSession.selectList(NameSpace +".orderStatusList");
 	}
 	
 	// 수주 현황 검색
 	@Override
 	public List<OrderStatusVO> getSearchOrderStatus(HashMap<String, Object> search) throws Exception {
-		logger.debug("@@@ getSearchOrderStatus(HashMap<String, Object> search) 호출 @@@");
-		
+		logger.debug("@@@ DAO : getSearchOrderStatus(HashMap<String, Object> search) 호출 @@@");
 		return sqlSession.selectList(NameSpace + ".searchOrderStatusList", search);
 	}
-//	@Override
-//	public List<OrderStatusVO> getSearchOrderStatus2(HashMap<String, Object> search) throws Exception {
-//		logger.debug("@@@ getSearchOrderStatus2(HashMap<String, Object> search) 호출 @@@");
-//
-//		List<OrderStatusVO> searchOsList = sqlSession.selectList(NameSpace + ".searchOrderStatusList", search);
-//		logger.debug("@@@ searchOsList : " + searchOsList);
-//		
-//		return null;
-//	}
 	
+	// 수주 현황 전체 개수
+	@Override
+	public int getTotalOrderStatus() throws Exception {
+		logger.debug("@@@ DAO : getTotalOrderStatus() 호출 @@@");
+		return sqlSession.selectOne(NameSpace+".orderStatusALLcnt");
+	}
+
+	// 수주 현황 검색 개수
+	@Override
+	public int getSearchCountOrderStatus(HashMap<String, Object> search) throws Exception {
+		logger.debug("@@@ DAO : getSearchCountOrderStatus() 호출 @@@");
+		return sqlSession.selectOne(NameSpace+".searchOrderStatusCnt", search);
+	}
+
 	// 수주 관리 조회
 	@Override
 	public List<ClientsVO> readOrderManageList() throws Exception {
