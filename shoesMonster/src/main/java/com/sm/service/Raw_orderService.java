@@ -17,7 +17,10 @@ public interface Raw_orderService {
 	public int count1() throws Exception;
 	
 	// 발주 등록(팝업)
-	public List<Raw_orderVO> getPopup() throws Exception;
+	public List<Raw_orderVO> getPopup(PageVO vo) throws Exception;
+	
+	// 발주 (팝업)리스트 갯수
+    public int countPoP() throws Exception;
 	
 	// 창고 등록(팝업)
 	public List<WarehouseVO> whPopup() throws Exception;

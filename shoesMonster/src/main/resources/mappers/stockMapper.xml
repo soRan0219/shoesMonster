@@ -21,6 +21,7 @@
 	        <result property="raw_color" column="raw_color" />
 	        <result property="raw_price" column="raw_price" />
 	        <result property="client_code" column="client_code" />
+	        <result property="wh_code" column="wh_code" />
 	    </collection>
 	
 	    <collection property="stock" ofType="com.sm.domain.StockVO">
@@ -52,7 +53,7 @@
     <select id="getRaw_Order" resultMap="ro_List" resultType="com.sm.domain.Raw_orderVO">
         select i.in_num, ro.raw_order_num, c.client_actname, ro.raw_code, rm.raw_name, rm.raw_color,
 		       ro.raw_order_count, s.stock_count, rm.raw_price, ro.raw_order_date,i.in_date, ro.emp_id,i.in_YN,
-		       w.wh_code
+		       rm.wh_code
 		from raw_order ro
 		LEFT JOIN raw_material rm ON ro.raw_code = rm.raw_code
 		LEFT JOIN clients c ON c.client_code = rm.client_code
@@ -70,14 +71,22 @@
 		select count(*) from raw_order 
 	</select>
 	<!-- 발주 목록 개수 -->
-	
+	<!-- 발주 등록 팝업 갯수-->
+    <select id="roPopupCount" resultType="int">
+    select count(rm.raw_code)
+    from raw_material rm
+        LEFT join stock s on s.raw_code = rm.raw_code
+        join clients c on c.client_code = rm.client_code
+    </select>    
+    <!-- 발주 등록 팝업  갯수-->
 	<!-- 발주 등록 팝업 -->
 	<select id="roPopup" resultMap="ro_List">
 		select c.client_actname, rm.raw_code, rm.raw_name, rm.raw_price, rm.client_code,
-			   rm.raw_color, COALESCE(s.stock_count, 0) AS stock_count
+			   rm.raw_color, COALESCE(s.stock_count, 0) AS stock_count, rm.wh_code
 		from raw_material rm
 		LEFT join stock s on s.raw_code = rm.raw_code
-		join clients c on c.client_code = rm.client_code;
+		join clients c on c.client_code = rm.client_code
+		limit #{startPage}, #{pageSize};
 	</select>
 	<!-- 발주 등록 팝업 -->
 	<!-- 창고 목록 팝업 -->
