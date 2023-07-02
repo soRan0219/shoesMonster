@@ -29,8 +29,8 @@
 		</tr>
 		<c:forEach var="wh" items="${whPopup}">
 			<tr onclick = "select(this);">
-				<td>${wh.warehouse.wh_code }</td>
-				<td>${wh.warehouse.wh_dv }</td>
+				<td>${wh.warehouse.wh_code}</td>
+				<td>${wh.warehouse.wh_dv}</td>
 			</tr>
 		</c:forEach>
 	</table>
