@@ -475,10 +475,9 @@
 	
 	<!-- 라인 등록 -->
 	<insert id="registLine">
-		INSERT INTO line (line_code, line_name, line_use, emp_id, insert_date,
-						  line_note, line_place)
-		VALUES (#{line_code}, #{line_name}, #{line_use}, #{emp_id}, now(), 
-			    #{line_note}, #{line_place})
+		INSERT INTO line (line_code, line_name, line_use, emp_id, insert_date, line_note, line_place)
+		VALUES (#{line_code}, #{line_name}, #{line_use}, #{emp_id}, now(), #{line_note}, #{line_place})
+		WHERE line_code = #{line_code} 
 	</insert>
 	<!-- 라인 등록 -->
 	
@@ -494,7 +493,7 @@
 		UPDATE line
 		SET line_code = #{line_code}, line_name = #{line_name}, line_use = #{line_use}, emp_id = #{emp_id}, 
 			insert_date = now(), line_note = #{line_note}, line_place = #{line_place}
-		WHERE line_code = #{line_code}
+ 		WHERE line_code = #{line_code} 
 	</update>
 	<!-- 라인 수정 --> 
 	
