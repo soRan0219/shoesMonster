@@ -76,9 +76,9 @@ public class In_materialImpl implements In_materialDAO {
 	@Override
 	public boolean selectCheck(String rawCode) throws Exception {
 		
-		Integer result = sqlSession.selectOne(NAMESPACE+".selectCheck", rawCode);
+		boolean result = sqlSession.selectOne(NAMESPACE+".selectCheck", rawCode);
 		
-		return result != null && result > 0;
+		return result;
 	}
 
 	@Override
