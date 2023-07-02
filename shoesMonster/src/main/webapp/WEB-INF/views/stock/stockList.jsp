@@ -34,44 +34,64 @@
  		<th>담당자</th>
  		<th>수정 버튼</th>
  	</tr>
- 	<tr>
- 		<th></th>
- 		<th></th>
- 		<th></th>
- 		<th></th>
- 		<th></th>
- 		<th></th>
- 		<th></th>
- 	</tr>
-<%--         <c:forEach var="s" items="${stockList }"> --%>
+ 	
+ 	<c:forEach var="s" items="${stockList }">
+ 	
+	 	<c:if test="${s.wh_dv  == '완제품'}">
+		 	<tr>
+		 		<th>${s.wh_dv}</th>
+		 		<th>${s.product.prod_code}</th>
+		 		<td>${s.product.prod_name}</td>
+		   		<td>${s.stock.stock_count}</td>
+		        <td><input type="text"></td>
+		   		<td>${s.wh_code}</td>
+		   		<td>${s.wh_name}</td>
+		   		<td><input type="button"></td>
+		 	</tr>
+	 	</c:if>
+	 	<c:if test="${s.wh_dv  == '원자재'}">
+		 	<tr>
+		 		<th>${s.wh_dv}</th>
+		 		<th>${s.raw_mat.raw_code}</th>
+		 		<td>${s.raw_mat.raw_name}</td>
+		   		<td>${s.stock.stock_count}</td>
+		        <td><input type="text"></td>
+		   		<td>${s.wh_code}</td>
+		   		<td>${s.wh_name}</td>
+		   		<td><input type="button"></td>
+		 	</tr>
+	 	</c:if>
+	 	
+ 	</c:forEach>
+ 	
+<%-- 		<c:forEach var="s" items="${stockList }"> --%>
         
 <%--         <c:if test="${s.wh_dv  == '완제품'}"> --%>
 <!--             <tr> -->
+<%--                 <td>${s.wh_dv}</td> --%>
 <%--                 <td>${s.product.prod_code}</td> --%>
 <%--         		<td>${s.product.prod_name}</td> --%>
 <%--         		<td>${s.stock_count}</td> --%>
 <!--                 <td><input type="text"></td> -->
-<%--                 <td>${s.wh_dv}</td> --%>
 <%--         		<td>${s.wh_code}</td> --%>
 <%--         		<td>${s.wh_name}</td> --%>
 <!--         		<td><input type="button"></td> -->
 <!--             </tr> -->
-<%--             </c:if> --%>
+<%--          </c:if> --%>
             
-<%--             <c:if test="${s.wh_dv  == '원자재'}"> --%>
+<%--          <c:if test="${s.wh_dv  == '원자재'}"> --%>
 <!--             <tr> -->
+<%--                 <td>${s.wh_dv}</td> --%>
 <%--                 <td>${s.raw_mat.raw_code}</td> --%>
 <%--         		<td>${s.raw_mat.raw_name}</td> --%>
 <%--         		<td>${s.stock_count}</td> --%>
-<%--                 <td>${s.wh_name}</td> --%>
 <!--                 <td><input type="text"></td> -->
-<%--                 <td>${s.wh_dv}</td> --%>
-<%--         		<td>${s.wh_name}</td> --%>
 <%--         		<td>${s.wh_code}</td> --%>
+<%--         		<td>${s.wh_name}</td> --%>
 <!--         		<td><input type="button"></td> -->
 <!--             </tr> -->
-<%--             </c:if> --%>
-<%--         </c:forEach> --%>
+<%--           </c:if> --%>
+<%-- 		</c:forEach> --%>
     </table>
    
            		
