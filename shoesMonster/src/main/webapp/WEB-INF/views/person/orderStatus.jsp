@@ -20,14 +20,14 @@ function popUp() {
 	
 	
 	// vvvvvvvvvvvvvvvvvv 페이징 완료하면 주석 풀기 ~~ vvvvvvvvvvvvvvvvvvvvv
-// 	$('#pagination a').each(function(){
+	$('#pagination a').each(function(){
 		
-//    		var prHref = $(this).attr("href");
+   		var prHref = $(this).attr("href");
    		
-//    		var newHref = prHref + "&input=" + isPop;
-//    			$(this).attr("href", newHref);
+   		var newHref = prHref + "&input=" + isPop;
+   			$(this).attr("href", newHref);
 			
-// 	}); //페이징 요소
+	}); //페이징 요소
 
 
 			
@@ -44,7 +44,11 @@ function popUp() {
    			$(this).css('background', '#ccc');
     			
    			var orderCode = $(this).find('#orderCode').text();
-     			
+   			var prodCode = $(this).find('#prodCode').text();
+     		
+   			if(isPop === "order_code") {
+   				$('#prod_code', opener.document).val(prodCode);
+   			}
  			$('#'+isPop, opener.document).val(orderCode);
      			
      		window.close();
@@ -195,7 +199,7 @@ $(function(){
 					<td>${vo.orders.client_code}</td>
 					<td>${vo.orders.order_date}</td>
 					<td>${vo.orders.emp_id}</td>
-					<td>${vo.prod_code}</td>
+					<td id="prodCode">${vo.prod_code}</td>
 					<td>${vo.prod_name}</td>
 					<td>${vo.prod_unit}</td>
 					<td>${vo.orders.order_deliveryDate}</td>

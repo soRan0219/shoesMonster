@@ -485,10 +485,14 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		sqlSession.insert(NAMESPACE + ".insertPerform", vo);
 		
+		//DB작업 위해서 작업지시코드 변수에 저장
 		String work_code = vo.getWork_code();
+		
+		//생산실적 중 양품수와 작업지시수량 비교
 		String result = sqlSession.selectOne(NAMESPACE + ".compare", work_code);
 		logger.debug("##### DAO: 양품수와 작업지시수량 비교 결과 있없 ===> " + result);
 		
+		//비교결과 해당 작업지시수량보다 생산한 양품수가 같거나 많으면 생산현황 마감으로 변경
 		if(result != null) {
 			sqlSession.update(NAMESPACE + ".updateStatus", work_code);
 		}
