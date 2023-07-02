@@ -698,7 +698,28 @@
 			<result property="prod_code" column="prod_code" />
 		</collection>
 	</resultMap>
-
+	
+	<resultMap id="stock" type="StockVO">
+		<result property="stock_num" column="stock_num"/>
+		<result property="raw_code" column="raw_code"/>
+		<result property="wh_code" column="wh_code"/>
+		<result property="stock_text" column="stock_text"/>
+		<result property="prod_code" column="prod_code"/>
+		<result property="in_num" column="in_num"/>
+		<result property="stock_count" column="stock_count"/>
+		
+		<collection property="workOrder" ofType="WorkOrderVO">
+			<result property="work_code" column="work_code"/>
+			<result property="prod_code" column="prod_code"/>
+		</collection>
+		
+		<collection property="performance" ofType="PerformanceVO">
+			<result property="work_code" column="work_code"/>
+			<result property="perform_fair" column="perform_fair"/>
+		</collection>
+	</resultMap>
+	
+	
 	<select id="performList" resultMap="perfList"
 		resultType="PerformanceVO">
 		SELECT p.perform_code, p.work_code, w.line_code,
@@ -777,10 +798,8 @@
 	</select>
 	<!-- 생산실적 검색 수 -->
 
-
-
-
-
+	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
+	
 	<!-- 생산실적 등록 -->
 	<insert id="insertPerform">
 		INSERT INTO performance
@@ -789,7 +808,41 @@
 		(#{perform_code},#{work_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},'진행',#{perform_note});
 	</insert>
 	<!-- 생산실적 등록 -->
-
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 재고에 해당 품목 있는지 확인 -->
+<!-- 	<select id="searchStock" resultMap="stock"> -->
+<!-- 		SELECT DISTINCT s.prod_code, s.stock_num  -->
+<!-- 		FROM stock s  -->
+<!-- 		JOIN work_order w ON w.prod_code = s.prod_code  -->
+<!-- 		JOIN performance pf ON pf.work_code = w.work_code  -->
+<!-- 		WHERE s.prod_code = w.prod_code AND w.prod_code= -->
+<!-- 		(SELECT DISTINCT w.prod_code  -->
+<!-- 		FROM work_order w  -->
+<!-- 		JOIN performance p ON p.work_code=w.work_code  -->
+<!-- 		WHERE w.work_code=#{work_code}) -->
+<!-- 	</select> -->
+	<!-- 재고에 해당 품목 있는지 확인 -->
+	
+	
+	<!-- 양품수만큼 재고등록 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- 양품수와 작업지시 수량 비교 -->
 	<select id="compare" resultType="String">
 		SELECT 
@@ -808,6 +861,7 @@
 	</update>
 	<!-- 생산현황 마감으로 변경 -->
 
+	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
 
 	<!-- 생산실적 삭제 -->
 	<delete id="deletePerformance">

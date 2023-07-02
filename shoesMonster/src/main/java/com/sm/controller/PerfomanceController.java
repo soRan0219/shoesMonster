@@ -432,8 +432,8 @@ public class PerfomanceController {
 	}
 	
 	// 라인 추가
-//	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
-	@PostMapping(value = "/lineadd")
+	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
+//	@PostMapping(value = "/lineadd")
 	public String addLine(LineVO lvo) throws Exception{
 		logger.debug("@#@#@# C : addLine(LineVO lvo) 호출 ");
 		logger.debug("@#@#@# C : lvo = "+lvo);

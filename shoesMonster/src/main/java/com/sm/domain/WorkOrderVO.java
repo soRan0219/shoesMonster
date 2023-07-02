@@ -21,5 +21,6 @@ public class WorkOrderVO {
 	private Date change_date;
 	private String work_state;
 	
+//	private ProductVO product;
 	
 } //WorkOrder
