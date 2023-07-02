@@ -17,10 +17,13 @@ public class ProductVO {
 	
 	private ClientsVO clients;
 	private Wh_prodVO wh;
+	private OrderStatusVO orders;
 	
 	public ProductVO() {
 		clients = new ClientsVO();
 		wh = new Wh_prodVO();
+		orders = new OrderStatusVO();
 	}
+	
 	
 } //productVO

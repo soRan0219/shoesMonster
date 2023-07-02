@@ -23,14 +23,6 @@
 	
 		$(function(){
 			
-// 			let lineArr = $('#line').val();
-			
-// 			console.log(typeof lineArr);
-			
-// 			for(var i=0; i<lineArr.length; i++) {
-// 				console.log(lineArr[i].perform_qt);
-// 			}
-			
 			let perLineArr = [ ['라인명', '생산수량', '양품', '불량'] ];
 			let perProdArr = [ ['품목명', '생산수량', '양품', '불량'] ];
 			let perDateArr = [ ['생산일자', '생산수량', '양품', '불량'] ];
@@ -39,7 +31,6 @@
 				url: "/performance/status",
 				type: "post",
 				success: function(data) {
-// 					console.log(data.perLine);
 					var line = data.perLine;
 					var prod = data.perProd;
 					var date = data.perDate;
@@ -128,36 +119,6 @@
 	<div id="chart_line" style="width: 900px; height: 500px;"></div>
 	<div id="chart_prod" style="width: 900px; height: 500px;"></div>
 	<div id="chart_date" style="width: 900px; height: 500px;"></div>
-	
-	
-	
-	
-	<input type="hidden" id="line" value="${status.perLine }">
-	
-	<c:forEach var="line" items="${status.perLine }">
-		라인: ${line.workOrder.line_code }
-		생산수량: ${line.perform_qt }
-		양품수: ${line.perform_fair }
-		불량수: ${line.perform_defect }
-		<br>
-	</c:forEach>
-	<hr>
-	<c:forEach var="prod" items="${status.perProd }">
-		품목: ${prod.workOrder.prod_code }
-		생산수량: ${prod.perform_qt }
-		양품수: ${prod.perform_fair }
-		불량수: ${prod.perform_defect }
-		<br>
-	</c:forEach>
-	<hr>
-	<c:forEach var="date" items="${status.perDate }">
-		생산일자: ${date.perform_date }
-		생산수량: ${date.perform_qt }
-		양품수: ${date.perform_fair }
-		불량수: ${date.perform_defect }
-		<br>
-	</c:forEach>
-	
 	
 	
 	

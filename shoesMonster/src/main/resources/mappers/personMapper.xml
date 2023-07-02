@@ -207,14 +207,14 @@
 			<result column="emp_id" property="emp_id" />
 			<result column="order_count" property="order_count" />
 			<result column="client_code" property="client_code" />
-			<result column="order_finish" property="order_finish" />
-			<result column="oreder_note" property="oreder_note" />
+<!-- 			<result column="order_finish" property="order_finish" /> -->
+			<result column="order_note" property="order_note" />
 		</collection>
   </resultMap>
 	
 	<select id="orderStatusList" resultType="com.sm.domain.ProductVO" resultMap="productList">
 		select o.order_code, o.order_date, o.client_code, o.emp_id, p.prod_code, p.prod_name, 
-			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_finish
+			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
 		from orders o
 		JOIN product p ON p.client_code = o.client_code
 	</select>
@@ -241,7 +241,7 @@
  			<result column="emp_id" property="emp_id" /> 
  			<result column="order_count" property="order_count" /> 
  			<result column="client_code" property="client_code" /> 
- 			<result column="order_finish" property="order_finish" /> 
+<!--  			<result column="order_finish" property="order_finish" />  -->
  		</collection> 
  	</resultMap> 
 	

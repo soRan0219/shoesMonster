@@ -209,6 +209,7 @@
 // 						|| client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
 // 						|| client_ceo == "" || client_name == "" || client_addr == "" || client_addr2 == "" || client_tel == "" 
 // 						|| client_phone == "" || client_fax == "" || client_email == "" || client_note == ""
+// 나중에 최종 수정 다끝나면 주석 풀기
 						
 				) {
 					alert("client_code"+client_code);
@@ -281,11 +282,11 @@
 							data : {checked : checked},
 							dataType : "text",
 							success : function() {
-								alert("*** 아작스 성공 ***");
+								alert("삭제");
 								location.reload();
 							},
 							error : function() {
-								alert("아작스실패~~");
+								alert("삭제 실패");
 							}
 						}); //ajax
 
