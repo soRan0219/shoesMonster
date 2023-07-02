@@ -119,7 +119,6 @@ public class stockController {
 //		request.setAttribute("emp_id", emp_id);
 		logger.debug("///////////////// wh_code : " + wh_code + "////////////////");
 //		logger.debug("///////////////// emp_id : " + emp_id + "////////////////");
-		//
 		
 		ro_service.roInsert(vo);
 	
@@ -240,7 +239,7 @@ public class stockController {
 	//http://localhost:8080/stock/In_material
 	//http://localhost:8088/stock/In_material
     @RequestMapping(value = "/In_material" , method = RequestMethod.POST)
-    public String inRegist(@RequestParam("in_Button") String in_Button,
+    public String inRegist(@RequestParam("in_Button") String in_Button, PageVO vo,
     					   Raw_orderVO rvo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception{
         
     	String[] values = in_Button.split(",");
@@ -288,86 +287,87 @@ public class stockController {
     
     // ====================================== 재고 - 시작 ====================================== //
    
-		//http://localhost:8080/stock/stockList
-    	//http://localhost:8088/stock/stockList
-    	@RequestMapping(value="/stockList" ,method = RequestMethod.GET)
-    	public void stockList(HttpServletRequest request , Model model ,WarehouseVO wvo) throws Exception {
-    		
-    		
-    		if(wvo.getWh_code() != null) {
-    			
-    			 // 게시물 총 개수
-                int count3 = s_service.count3(wvo);
-                
-                // 한 페이지에 출력할 게시물 개수
-                int pageSize = 1;
-                
-                String pageNum = request.getParameter("num");
-                if(pageNum == null) {
-               	 pageNum = "1";
-                }
-                
-                // 행번호
-                int currentPage = Integer.parseInt(pageNum);
-                int startRow = (currentPage - 1) * pageSize;
-                
-                // 페이징 처리 - 하단
-        		 int pageCount = count3/pageSize + (count3%pageSize == 0? 0 : 1);
-        		 int pageBlock = 5;
+	//http://localhost:8080/stock/stockList
+	//http://localhost:8088/stock/stockList
+	@RequestMapping(value="/stockList" ,method = RequestMethod.GET)
+	public void stockList(PageVO vo, HttpServletRequest request , Model model, StockVO svo) throws Exception {
+		
+		logger.debug("/////////////////////////////////////svo /////////////////////////////////////" + svo);
+		logger.debug("//////////// "+ svo.getRaw_code());
+		logger.debug("//////////// "+ svo.getProd_code());
+		logger.debug("//////////// "+ svo.getRaw_mat().getRaw_name());
+		logger.debug("//////////// "+ svo.getProduct().getProd_name());
+		logger.debug("//////////// "+ svo.getWh_code());
+		
+		if((svo.getRaw_code() != null && !svo.getRaw_code().equals("")) ||
+		   (svo.getProd_code() != null && !svo.getProd_code().equals("")) ||
+		   (svo.getRaw_mat().getRaw_name() != null && !svo.getRaw_mat().getRaw_name().equals("")) || 
+		   (svo.getProduct().getProd_name() != null && !svo.getProduct().getProd_name().equals("")) || 
+		   (svo.getWh_code() != null && !svo.getWh_code().equals(""))) {
+					
+				logger.debug("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 
-        		 // 페이지 번호
-        		 int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
-        		 int endPage = startPage+pageBlock-1;
-        		 if(endPage > pageCount) {
-        			 endPage = pageCount;
-        		 } 
-                
-                List<StockVO> stockList = s_service.getStockList(startRow, pageSize, wvo);
-               
-                model.addAttribute("stockList", stockList);
-                model.addAttribute("startPage", startPage);
-                model.addAttribute("endPage", endPage);
-                model.addAttribute("pageBlock", pageBlock);
-                model.addAttribute("count3",count3);
-        		
-    			} else {
-    			 // 게시물 총 개수
-                int count3 = s_service.count3();
-                
-                // 한 페이지에 출력할 게시물 개수
-                int pageSize = 1;
-                
-                String pageNum = request.getParameter("num");
-                if(pageNum == null) {
-               	 pageNum = "1";
-                }
-                
-                // 행번호
-                int currentPage = Integer.parseInt(pageNum);
-                int startRow = (currentPage - 1) * pageSize;
-                
-                // 페이징 처리 - 하단
-        		 int pageCount = count3/pageSize + (count3%pageSize == 0? 0 : 1);
-        		 int pageBlock = 5;
+					// 게시물 총 개수
+			        int count3 = s_service.count3(svo);
+			        logger.debug("검색 재고 개수 : " + count3);
 
-        		 // 페이지 번호
-        		 int startPage = ((currentPage-1)/pageBlock)*pageBlock + 1;
-        		 int endPage = startPage+pageBlock-1;
-        		 if(endPage > pageCount) {
-        			 endPage = pageCount;
-        		 } 
-                
-                List<StockVO> stockList = s_service.getStockList(startRow, pageSize);
-               
-                model.addAttribute("stockList", stockList);
-                model.addAttribute("startPage", startPage);
-                model.addAttribute("endPage", endPage);
-                model.addAttribute("pageBlock", pageBlock);
-                model.addAttribute("count3",count3);
-        		
-    		}
+			        List<StockVO> stock_List = s_service.getStock(vo, svo);
+			        logger.debug("@@@@@@@@@@@@@@ : " + vo);
+			        logger.debug("@@@@@@@@@@@@@@ : " + stock_List);
+			         
+			        BottomPaging bp = new BottomPaging();
+					bp.setPageVO(vo);
+					bp.setTotalCount(count3);
+					logger.debug("@@@@@@@@@@@@@@ : " + bp);
+					
+					model.addAttribute("stock_List", stock_List);
+					model.addAttribute("count3", count3);
+					model.addAttribute("bp", bp);
+					model.addAttribute("svo", svo);
+  
+    				} else {
+    				
+    					logger.debug("ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ");
+    					
+    					int count3 = s_service.count3();
+    					logger.debug("재고 총 개수 : " + count3);
+    					
+    					List<StockVO> stock_List = s_service.getStock(vo);
+					
+						BottomPaging bp = new BottomPaging();
+						bp.setPageVO(vo);
+						bp.setTotalCount(count3);
+						
+						model.addAttribute("stock_List", stock_List);
+						model.addAttribute("count3", count3);
+						model.addAttribute("bp", bp);
+						request.setAttribute("svo", svo);
+				}
+    		
             
     	}
+	
+	@RequestMapping(value ="/stockList" , method = RequestMethod.POST)
+    public String updateCount(@RequestParam("modify_Button") String modify_Button,
+    							@RequestParam("new_stock_count") String new_stock_count,
+    						  HttpSession session, HttpServletRequest request) throws Exception{
+        
+		String[] values = modify_Button.split(",");
+        String code = values[0];
+//        String new_stock_count = values[1];
+		
+		logger.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ" + modify_Button + "ㅁㅁㅁㅁㅁㅁㅁㅁ");
+		logger.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ" + code + "ㅁㅁㅁㅁㅁㅁㅁㅁ");
+		logger.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ" + new_stock_count + "ㅁㅁㅁㅁㅁㅁㅁㅁ");
+		
+        String emp_id = (String)session.getAttribute("emp_id");
+        request.setAttribute("emp_id", emp_id);
+        
+        
+//        s_service.updateCount(stock_count,raw_code);
+        
+        return "redirect:/stock/stockList";
+    }
 
     // ====================================== 재고 - 끝 ====================================== //
     	
