@@ -21,7 +21,9 @@ public class OrderStatusVO {
 	
 	public OrderStatusVO() {
 //		out_mat = new Out_materialVO();
-		prod = new  ProductVO();
+//		prod = new  ProductVO();
+		// orderStatus 페이지 안돌아가서 주석처리함 이거때문에 문제 생기면 이도희 찾아오셈
+		
 //		clients = new ClientsVO();	
 	}
 	
