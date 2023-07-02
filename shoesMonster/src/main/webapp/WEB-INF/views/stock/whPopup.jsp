@@ -20,14 +20,14 @@
 	</script>
 </head>
 <body>
-	<h1>창고 목록</h1>
+	<h1>창고 목록</h1> 
 	
 	<table border="1">
 		<tr>
 			<th>창고 코드</th>
 			<th>창고 유형</th>
 		</tr>
-		<c:forEach var="wh" items="${whPopup}">
+		<c:forEach var="wh" items="${whPopup }">
 			<tr onclick = "select(this);">
 				<td>${wh.warehouse.wh_code}</td>
 				<td>${wh.warehouse.wh_dv}</td>
