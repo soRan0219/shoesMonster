@@ -21,18 +21,18 @@ public interface EmployeesDAO {
 	
 	// 사원 권한 정보 조회 - R
 	public List<ManagementVO> readManagement() throws Exception;
-
-	// 사원 검색
-	public List<EmployeesVO> selectEmployees(HashMap<String, Object> search) throws Exception;
 	
+	// 사원 검색
+	public List<EmployeesVO> getSearchEmployeesList(HashMap<String, Object> search) throws Exception;
+
 	// 사원 전체 수
 	public int getTotalEmployees() throws Exception;
 	
 	// 사원 검색 수
-	public List<EmployeesVO> getSearchEmployees(HashMap<String, Object> search) throws Exception;
+	public int getSearchEmployees(HashMap<String, Object> search) throws Exception;
 	
 	// 사원 추가
-	public void insertEmployees(EmployeesVO vo) throws Exception;
+	public void insertEmployees(EmployeesVO evo) throws Exception;
 	
 	// 사원 삭제
 	public void deleteEmployees(List<String> checked) throws Exception;
