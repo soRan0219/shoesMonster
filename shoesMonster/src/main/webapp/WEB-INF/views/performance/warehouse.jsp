@@ -198,12 +198,13 @@
 			tbl += "<td>";
 			tbl += "<select name='wh_use' id='wh_use'>";
 			tbl += "<option value='1'>Y</option>";
-			tbl += "<option values='2'>N</option>";
+			tbl += "<option value='2'>N</option>";
 			tbl += "</select>";
 			tbl += "</td>";
 			
 			// 담당자
 			tbl += "<td>";
+			tbl += "<input type='hidden' name='emp_id' id='emp_id' required>";
 			tbl += "<input type='text' name='emp_name' id='emp_name' required>";
 			tbl += "</td>";
 			
@@ -239,6 +240,8 @@
 
 			// 등록자(사원) 검색
 			$('#emp_name').click(function () {
+				alert("검색클릭");
+			
 				openWindow("emp", "emp_name");
 			}); // #emp_id click
 			
@@ -258,7 +261,7 @@
 			var wh_addr = $('#wh_addr').val();
 			var wh_tel = $('#wh_tel').val();
 			var wh_use = $('#wh_use').val();
-// 			var emp_id = $('#emp_id').val();
+			var emp_id = $('#emp_id').val();
 			var emp_name = $('#emp_name').val();
 			var wh_note = $('#wh_note').val();
 			
@@ -319,6 +322,7 @@
 						"wh_addr",
 						"wh_tel",
 						"wh_use",
+						"emp_id",
 						"emp_name",
 						"wh_note"
 					];
@@ -328,6 +332,8 @@
 					
 					if(idx > 0){
 						inputCng($(this), "text", names[idx - 1], $(this).text());
+						
+						
 // 						if(idx == 3){
 // 							var dropDown = "<select id='wh_dv' name='wh_dv'>";
 // 							 	dropDown += "<option>완제품</option>";
@@ -358,7 +364,9 @@
 							});// this.find('option')	
 							
 						}//idx==5
-					
+						if(idx == 6){
+							inputCng($(this), "hidden", names[idx - 1], $(this).text());
+						}
 					}// if
 					
 				});//self.find
@@ -448,7 +456,7 @@
 					if(confirm("선택한 항목을 삭제하시겠습니까?")){
 						
 						$.ajax({
-	 						url: "/performance/linedelete",
+	 						url: "/performance/whdelete",
 	 						type: "POST",
 	 						data: {checked : checked},
 	 						dataType: "text",	
@@ -511,7 +519,7 @@
 		
 				// 야ㅕ기까지 삭제
 			// 등록자(사원) 검색
-			$('#emp_name').click(function () {
+			$('#s_emp_name').click(function () {
 				openWindow("emp", "emp_name");
 			}); // #emp_id click
 	
@@ -574,7 +582,8 @@
 				<input type="radio" name="wh_use" value="2">N
 				
 			<label>담당자</label>
-				<input type="text" id="emp_name" name="emp_name" placeholder="검색어를 입력해주세요">
+				<input type="hidden" id="s_emp_id" name="emp_id">
+				<input type="text" id="s_emp_name" name="emp_name" placeholder="검색어를 입력해주세요">
 				
 			<input type="submit" value="검색">
 		</fieldset>
@@ -602,7 +611,7 @@
 			<td>지역</td>
 			<td>전화번호</td>
 			<td>사용여부</td>
-<!-- 			<td>담당자 코드</td> -->
+			<td type='hidden' style='display: none;'>담당자 코드</td>
 			<td>담당자</td>
 			<td>비고</td>
 		</tr>
@@ -636,8 +645,8 @@
 							<td>N</td>
 						</c:when>
 					</c:choose>
-<%-- 					<td>${ww.emp_id }</td> --%>
-					<td id="empCode">${ww.emp.emp_name}</td>
+					<td type='hidden' style='display: none;'>${ww.emp_id }</td>
+					<td id="">${ww.emp.emp_name}</td>
 					<td>${ww.wh_note}</td>
 				</tr>
 		</c:forEach>
@@ -665,7 +674,7 @@
 		</c:if>
 		
 		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
-			<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_name=${ww.emp.emp_name}">${page }</a>
+			<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}">${page }</a>
 		</c:forEach>
 		
 		<c:if test="${lwpm.next }">
