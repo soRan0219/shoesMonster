@@ -38,6 +38,12 @@
 <body>
 	<h1>발주 정보</h1>
 	
+	<form action="" method="get">
+		품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
+		거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
+		<input type="submit" value="검색"></input>
+    </form>
+	
 	<table border="1">
 		<tr>
 			<th>거래처 코드</th>
@@ -64,22 +70,22 @@
 	</table>
 	
 	<c:if test="${countPop > 10 }">
-	    <c:if test="${bp.prev}">
-	
-	        <a href="/stock/roPopup?page=${bp.startPage - 1}">이전</a>
-	
-	    </c:if>
-	    
-	    <c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-	        <a href="/stock/roPopup?page=${idx}">${idx}</a>
-	    </c:forEach>
-	    
-	    <c:if test="${bp.next && bp.endPage > 0}">
-	
-	        <a href="/stock/roPopup?page=${bp.endPage + 1}">다음</a>
-	
-	    </c:if>
-	</c:if>
+        <c:if test="${bp.prev}">
+    
+            <a href="/stock/roPopup?page=${bp.startPage - 1}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+    
+        </c:if>
+        
+        <c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+            <a href="/stock/roPopup?page=${idx}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+        </c:forEach>
+        
+        <c:if test="${bp.next && bp.endPage > 0}">
+    
+            <a href="/stock/roPopup?page=${bp.endPage + 1}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+    
+        </c:if>
+    </c:if>
 
 	
 </body>

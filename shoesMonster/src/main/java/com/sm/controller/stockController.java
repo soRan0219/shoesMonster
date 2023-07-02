@@ -129,10 +129,30 @@ public class stockController {
 	}
 
 	// 발주 등록 팝업창
-	@RequestMapping(value = "/roPopup", method = RequestMethod.GET)
-	public void getClient(Model model, PageVO vo ,Raw_orderVO rvo) throws Exception {
-		
-		List<Raw_orderVO> roPopup = ro_service.getPopup(vo);
+    @RequestMapping(value = "/roPopup", method = RequestMethod.GET)
+    public void getClient(Model model, PageVO vo ,Raw_orderVO rvo) throws Exception {
+        
+        if((rvo.getClients().getClient_actname() != null && !rvo.getClients().getClient_actname().equals("")) ||
+                   (rvo.getRawMaterial() != null && rvo.getRawMaterial().getRaw_name() != null && !rvo.getRawMaterial().getRaw_name().equals(""))) {
+            
+            List<Raw_orderVO> roPopup = ro_service.Popup(vo, rvo);
+            
+            int countPop = ro_service.countPop(rvo);
+            
+            BottomPaging bp = new BottomPaging();
+            bp.setPageVO(vo);
+            bp.setTotalCount(countPop);
+            
+            model.addAttribute("roPopup", roPopup);
+            model.addAttribute("countPop", countPop);
+            model.addAttribute("bp", bp);
+            
+            model.addAttribute("rvo", rvo);
+            
+        }else {
+        
+        
+        List<Raw_orderVO> roPopup = ro_service.getPopup(vo);
         
         int countPop = ro_service.countPoP();
         
@@ -145,7 +165,9 @@ public class stockController {
         model.addAttribute("bp", bp);
         
         model.addAttribute("rvo", rvo);
-	}
+        
+        }
+    }
 
 	// 발주 거래처 상세 팝업
 	@RequestMapping(value = "/detailPopup", method = RequestMethod.GET)
@@ -197,7 +219,6 @@ public class stockController {
                  model.addAttribute("rvo", rvo);
                  
              } else {
-                 
              
                  List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo);
                  
@@ -219,18 +240,36 @@ public class stockController {
 	//http://localhost:8080/stock/In_material
 	//http://localhost:8088/stock/In_material
     @RequestMapping(value = "/In_material" , method = RequestMethod.POST)
-    public String inRegist(@RequestParam("raw_order_num") String raw_order_num,
-//    					   @RequestParam("raw_code") String rawCode, 
+    public String inRegist(@RequestParam("in_Button") String in_Button,
     					   Raw_orderVO rvo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception{
         
-        logger.debug("@@@@@@@@@@@@ 발주 번호 확인용 : " + raw_order_num);
+    	String[] values = in_Button.split(",");
+        String raw_order_num = values[0];
+        String rawCode = values[1];
+        int raw_order_count = Integer.parseInt(values[2]);
+        String wh_code = values[3];
+
+        logger.debug("@@@@@@@@@@@@@@@ 발주 번호 확인용 : " + raw_order_num);
+        logger.debug("@@@@@@@@@@@@@@@ 원자재 코드 확인용 : " + rawCode);
+        logger.debug("@@@@@@@@@@@@@@@ 발주 개수 확인용 : " + raw_order_count);
+        logger.debug("@@@@@@@@@@@@@@@ 입고 창고 확인용 : " + wh_code);
         
         // 로그인 정보
         String emp_id = (String)session.getAttribute("emp_id");
         request.setAttribute("emp_id", emp_id);
         
+        boolean result = service.selectCheck(rawCode);
+        
+        if(result) {
+        	logger.debug("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        	service.updateStock(rawCode, raw_order_count);
+        } else {
+        	logger.debug("XXXXXXXXXXXXXXXXX ");
+        	service.insertStock(rawCode, raw_order_count, wh_code);
+        }
+        
         // 재고에 입고할 항목있는지 조회(select)
-//        service.selectCheck();
+//        service.selectCheck(rawCode);
         
         
         
