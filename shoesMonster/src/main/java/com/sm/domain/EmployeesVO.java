@@ -22,5 +22,20 @@ public class EmployeesVO {
 	private Date emp_hiredate;
 	private String emp_tel;
 	
+	private String hyphenPhone;
+	private String hyphenEmail;
+	
+	public void setEmp_ehone(String emp_phone) {
+		this.emp_phone = emp_phone;
+		this.hyphenPhone = emp_phone.replace("-", "");
+	}
+
+	public void setEmp_email(String emp_email) {
+		this.emp_email = emp_email;
+		this.hyphenEmail = emp_email.replace("-", "");
+	}
+	
+	
+	
 	
 }

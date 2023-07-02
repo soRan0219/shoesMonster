@@ -470,19 +470,37 @@ public class PerformanceImpl implements PerformanceDAO {
 
 	// ==========================================================================
 
+	//생산실적 목록 - 전체
 	@Override
 	public List<PerformanceVO> readPerfList(LineWhPageVO pvo) throws Exception {
 		logger.debug("##### DAO: readAllPerf() 호출");
 
 		return sqlSession.selectList(NAMESPACE + ".performList", pvo);
 	} // readAllPerf()
-
+	
+	//생산실적 등록
 	@Override
 	public void createPerformance(PerformanceVO vo) throws Exception {
 		logger.debug("##### DAO: createPerformance() 호출");
+		
 		sqlSession.insert(NAMESPACE + ".insertPerform", vo);
+		
+		//DB작업 위해서 작업지시코드 변수에 저장
+		String work_code = vo.getWork_code();
+		
+		//생산실적 중 양품수와 작업지시수량 비교
+		String result = sqlSession.selectOne(NAMESPACE + ".compare", work_code);
+		logger.debug("##### DAO: 양품수와 작업지시수량 비교 결과 있없 ===> " + result);
+		
+		//비교결과 해당 작업지시수량보다 생산한 양품수가 같거나 많으면 생산현황 마감으로 변경
+		if(result != null) {
+			sqlSession.update(NAMESPACE + ".updateStatus", work_code);
+		}
+		
+		
 	} // createPerformance()
 
+	//생산실적 삭제
 	@Override
 	public void deletePerformance(List<String> checked) throws Exception {
 		logger.debug("##### DAO: deletePerformance() 호출");
@@ -498,12 +516,14 @@ public class PerformanceImpl implements PerformanceDAO {
 
 	} //deletePerformance()
 
+	//생산실적 조회
 	@Override
 	public PerformanceVO readPerformanceInfo(String performCode) throws Exception {
 		logger.debug("##### DAO: readPerformanceInfo() 호출");
 		return sqlSession.selectOne(NAMESPACE + ".performInfo", performCode);
 	} //readPerformanceInfo()
 
+	//생산실적 수정
 	@Override
 	public void updatePerformance(PerformanceVO uvo) throws Exception {
 		logger.debug("##### DAO: updatePerformance() 호출");
@@ -512,6 +532,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("##### DAO: update 결과 ===> " + result);
 	} //updatePerformance()
 
+	//생산실적 전체 수
 	@Override
 	public int getPerfCnt() throws Exception {
 		logger.debug("##### DAO: getTotalPerf() 호출");
@@ -519,18 +540,21 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectOne(NAMESPACE + ".getTotalPerf");
 	} //getTotalPerf()
 
+	//생산실적 목록 - 검색
 	@Override
 	public List<PerformanceVO> readPerfList(HashMap<String, Object> search) throws Exception {
 		logger.debug("##### DAO: readPerfList(search) 호출");
 		return sqlSession.selectList(NAMESPACE + ".performSearchList", search);
 	} //readPerfList(search)
 
+	//생산실적 검색 수
 	@Override
 	public int getPerfCnt(HashMap<String, Object> search) throws Exception {
 		logger.debug("##### DAO: getPerfCnt(search) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".getSearchPerf", search);
 	} //getPerfCnt(search)
 
+	//생산실적 양불 현황
 	@Override
 	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception {
 		logger.debug("##### DAO: getPerformStatus() 호출");

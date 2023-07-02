@@ -133,6 +133,10 @@
 				tbl += " <td>";
 				tbl += "  <input type='text' name='defect_note' id='defect_note' required>";
 				tbl += " </td>";
+				// 현황
+				tbl += " <td>";
+				tbl += "  <input type='text' name='perform_status' id='perform_status' value='진행' readonly>";
+				tbl += " </td>";
 				// 비고
 				tbl += " <td>";
 				tbl += "  <textarea name='perform_note' id='perform_note'></textarea>";
@@ -174,7 +178,6 @@
 				var perform_fair = $('#perform_fair').val();
 				var perform_defect = $('#perform_defect').val();
 				var defect_note = $('#defect_note').val();
-				var perform_note = $('#perform_note').val();
 				
 				if(perform_code=="" || work_code=="" || line_code=="" || prod_code=="" || 
 						perform_date=="" || perform_qt=="" || perform_qt=="" || 
@@ -221,85 +224,74 @@
 					let updateCode = $(this).find('#performCode').text().trim();
 					console.log(updateCode);
 	
-					var jsonData = {
-						perform_code : updateCode
-					};
-	
 					var self = $(this);
-	
-					$.ajax({
-						url : "/performance/detail",
-						type : "post",
-						contentType : "application/json; charset=UTF-8",
-						dataType : "json",
-						data : JSON.stringify(jsonData),
-						success : function(data) {
-// 							alert("*** 아작스 성공 ***");
-// 							alert(getDate(data.perform_date));
-	
-							var preVOs = [
-									data.perform_code,
-									data.work_code,
-									data.workOrder.line_code,
-									data.workOrder.prod_code,
-									getDate(data.perform_date),
-									data.perform_qt,
-									data.perform_fair, 
-									data.perform_defect, 
-									data.defect_note, 
-									data.perform_note, 
-									];
-	
-							var names = [
-									"perform_code",
-									"work_code",
-									"line_code",
-									"prod_code",
-									"perform_date",
-									"perform_qt", 
-									"perform_fair",
-									"perform_defect",
-									"defect_note",
-									"perform_note"
-									];
-	
-							//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
-							self.find('td').each(function(idx,item) {
-	
-								if (idx > 0) {
-									inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
-									
-									if(idx>=6 && idx<=8) {
-										inputCng($(this), "number", names[idx-1], preVOs[idx-1]);
-									}
-									
-								} //라인코드부터 다 수정 가능하게
-	
-							}); // self.find(~~)
-	
 							
-							//작업지시코드 검색
-							$('#work_code').click(function(){
-								openWindow("work", "work_code");
-							}); //work_code click
+					var names = [
+							"perform_code",
+							"work_code",
+							"line_code",
+							"prod_code",
+							"perform_date",
+							"perform_qt", 
+							"perform_fair",
+							"perform_defect",
+							"defect_note",
+							"perform_status",
+							"perform_note"
+							];
+
+					//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+					self.find('td').each(function(idx,item) {
+
+						if (idx > 0) {
+							inputCng($(this),"text",names[idx - 1], $(this).text());
 							
-							//실적수량, 양품수, 불량수 작업지시 수량보다 적게
-							$("input[type='number']").on('change', function() {
-								var inserted = Number($(this).val());
-								var maxVal = Number($(this).attr("max"));
+							//생산수량, 양품수, 불량수 타입 number
+							if(idx>=6 && idx<=8) {
+								var num = $(this).find("input");
+								num.attr("type", "number");
+								inputCng($(this), "number", names[idx-1], num.val());
+							} //생산수량, 양품수, 불량수
+							
+							//생산현황 select로 바꿈(수동마감 해야할 수도 있음)
+							if(idx==10) {
+								var origin = $(this).find("input").val();
 								
-								if(inserted > maxVal) {
-									alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
-									$(this).val("");
-								}
-								
-							}); //input type=number onchange
+								var dropDown = "<select id='perform_status' name='perform_status'>";
+								dropDown += "<option value='진행'>진행</option>";
+								dropDown += "<option value='마감'>마감</option>";
+								dropDown += "</select>";
+								$(this).html(dropDown);
+								//기존값이랑 일치하는 항목 선택된 상태
+								$(this).find('option').each(function() {
+									if (origin === $(this).text()) {
+										$(this).attr("selected",true);
+									} //if(일치하는 값 선택 상태로)
+								}); //option 하나씩 탐색
+							} //생산현황
 							
-						},
-						error : function(data) {
-							alert("아작스 실패 ~~");
+						} //작업지시코드부터 다 수정 가능하게
+
+					}); // self.find(~~)
+
+					
+					//작업지시코드 검색
+					$('#work_code').click(function(){
+						openWindow("work", "work_code");
+					}); //work_code click
+					
+					//실적수량, 양품수, 불량수 작업지시 수량보다 적게
+					$("input[type='number']").on('change', function() {
+						var inserted = Number($(this).val());
+						var maxVal = Number($(this).attr("max"));
+						
+						if(inserted > maxVal) {
+							alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+							$(this).val("");
 						}
-					}); //ajax
+						
+					}); //input type=number onchange
+							
 	
 					//저장버튼 -> form 제출
 					$('#save').click(function() {
@@ -405,8 +397,8 @@
 		
 		
 		//======================= 검색 ===============================//
+		//작업지시코드 검색 팝업
 		$('#search_work_code').click(function(){
-			//작업지시코드 검색
 			openWindow("work", "search_work_code");
 		}); //search_work_code click
 		
@@ -500,6 +492,10 @@
 				<input type="text" id="search_toDate" name="search_toDate"> <br>
 				라인코드: <input type="text" id="search_line_code" name="search_line_code">
 				품번: <input type="text" id="search_prod_code" name="search_prod_code">
+				현황: <input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
+					  <input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
+					  <input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
+				
 				<input type="submit" value="조회">
 			</fieldset>
 		</form>
@@ -536,6 +532,7 @@
 					<th>양품수</th>
 					<th>불량수</th>
 					<th>불량사유</th>
+					<th>현황</th>
 					<th>비고</th>
 				</tr>
 	
@@ -551,6 +548,7 @@
 						<td>${vo.perform_fair }</td>
 						<td>${vo.perform_defect }</td>
 						<td>${vo.defect_note }</td>
+						<td>${vo.perform_status }</td>
 						<c:choose>
 							<c:when test="${empty vo.perform_note }">
 								<td>없음</td>
@@ -570,15 +568,15 @@
 		
 		<div id="pagination">
 			<c:if test="${pm.prev }">
-				<a href="/performance/performList?page=${pm.startPage - 1 }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}"> ⏪ </a>
+				<a href="/performance/performList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏪ </a>
 			</c:if>
 			
 			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-				<a href="/performance/performList?page=${page }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}">${page }</a>
+				<a href="/performance/performList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}">${page }</a>
 			</c:forEach>
 		
 			<c:if test="${pm.next }">
-				<a href="/performance/performList?page=${pm.endPage + 1 }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}"> ⏩ </a>
+				<a href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏩ </a>
 			</c:if>
 		</div>
 	</div>

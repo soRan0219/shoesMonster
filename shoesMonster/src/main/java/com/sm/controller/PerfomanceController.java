@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -431,7 +432,11 @@ public class PerfomanceController {
 	}
 	
 	// 라인 추가
+
 	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
+
+	//@RequestMapping(value = "/liadd", method = RequestMethod.POST)
+
 	public String addLine(LineVO lvo) throws Exception{
 		logger.debug("@#@#@# C : addLine(LineVO lvo) 호출 ");
 		logger.debug("@#@#@# C : lvo = "+lvo);
@@ -502,7 +507,7 @@ public class PerfomanceController {
 //				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
 			
 		if(wvo.getWh_code() != null  || wvo.getWh_name() != null ||
-		   wvo.getEmp() != null || wvo.getWh_use() != 0) {
+		   wvo.getEmp_id() != null || wvo.getWh_use() != 0) {
 		
 			if(wvo.getWh_use() == 0) {
 				wvo.setWh_use(3);
@@ -523,6 +528,9 @@ public class PerfomanceController {
 			lwpm.setTotalCount(service.searchWh_TotalCount(wvo));
 			logger.debug("lwpm (서치) : " + lwpm.getTotalCount());
 			model.addAttribute("lwpm", lwpm);
+			
+			logger.debug("검색"+whList);
+			
 
 			
 		}else {
@@ -654,11 +662,12 @@ public class PerfomanceController {
 		List<PerformanceVO> perfList = new ArrayList<>();
 		
 		//검색 있을 때
-		if((search.get("search_work_code")!=null && search.get("search_work_code").equals("")) || 
-				(search.get("search_fromDate")!=null && search.get("search_fromDate").equals("")) || 
-				(search.get("search_toDate")!=null && search.get("search_toDate").equals("")) ||
-				(search.get("search_line_code")!=null && search.get("search_line_code").equals("")) ||
-				(search.get("search_prod_code")!=null && search.get("search_prod_code").equals(""))) {
+		if((search.get("search_work_code")!=null && !search.get("search_work_code").equals("")) || 
+				(search.get("search_fromDate")!=null && !search.get("search_fromDate").equals("")) || 
+				(search.get("search_toDate")!=null && !search.get("search_toDate").equals("")) ||
+				(search.get("search_line_code")!=null && !search.get("search_line_code").equals("")) ||
+				(search.get("search_prod_code")!=null && !search.get("search_prod_code").equals("")) ||
+				(search.get("search_perform_status")!=null && !search.get("search_perform_status").equals("") && !search.get("search_perform_status").equals("전체"))) {
 			
 			logger.debug("@@@@@ CONTROLLER: 검색 service 호출");
 			
@@ -699,7 +708,7 @@ public class PerfomanceController {
 		model.addAttribute("perfList", perfList);
 	} // performanceList()
 
-	// 작업지시, 라인, 품번 검색
+	// 작업지시, 라인, 품번 팝업
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String workOrderGET(Model model, @RequestParam("type") String type, @RequestParam("input") String input,
 			PagingVO pvo) throws Exception {

@@ -390,15 +390,34 @@
 	<!-- //////////////////////////////////////////////////////////////// -->
 
 	<!-- 라인 목록 조회 -->
-	<select id="lineList" resultType="com.sm.domain.LineVO">
-		SELECT * FROM line
+	<resultMap type="LineVO" id="lineEmp">
+		<result property="line_code" column="line_code"/>
+		<result property="line_name" column="line_name"/>
+		<result property="line_use" column="line_use"/>
+		<result property="emp_id" column="emp_id"/>
+		<result property="insert_date" column="insert_date"/>
+		<result property="line_note" column="line_note"/>
+		<result property="line_place" column="line_place"/>
+	
+	<collection property="emp" ofType="EmployeesVO">
+		<result property="emp_name" column="emp_name"/>
+	</collection>
+		
+	</resultMap>
+	
+	<select id="lineList" resultType="com.sm.domain.LineVO" resultMap="lineEmp">
+		select l.* , e.emp_name
+		from line l
+		Left join employees e on l.emp_id = e.emp_id 
 	</select>
 	<!-- 라인 목록 조회 -->
 
 	<!-- 라인 목록 조회 (페이징처리) -->
-	<select id="lineListPage" resultType="LineVO">
+	<select id="lineListPage" resultType="LineVO" resultMap="lineEmp">
 		<![CDATA[
-			SELECT * FROM line 
+			select l.* , e.emp_name
+			from line l
+			Left join employees e on l.emp_id = e.emp_id 
 			limit #{startPage}, #{pageSize}
 		]]>
 	</select>
@@ -411,7 +430,7 @@
 	<!-- 라인 전체 글개수 계산 -->
 
 	<!-- 라인 전체 글개수 계산 (서치) -->
-	<select id="searchTotalCnt" resultType="int">
+	<select id="searchTotalCnt" resultType="int" >
 		SELECT count(*) FROM line
 		<where>
 			<if test="line_code != ''">
@@ -433,7 +452,7 @@
 	<!-- 라인 검색(페이징처리) -->
 
 	<select id="searchLinePage" resultType="com.sm.domain.LineVO"
-		parameterType="hashMap">
+		parameterType="hashMap" resultMap="lineEmp">
 		SELECT * FROM line
 		<where>
 			<if test="line_code != ''">
@@ -480,9 +499,11 @@
 	<!-- 라인 수정 --> 
 	
 	<!-- 라인 조회(String line_code) -->
-	<select id="readLineList"> 
-		SELECT * FROM line
-		WHERE line_code = #{line_code}
+	<select id="readLineList" resultType="LineVO" resultMap="lineEmp"> 
+		select l.* , e.emp_name
+		from line l
+		Left join employees e on l.emp_id = e.emp_id 
+		where l.line_code = #{line_code}
 	</select>
 	<!-- 라인 조회(String line_code) -->
 	
@@ -573,11 +594,16 @@
 	
 	<select id="searchWareHouse" resultType="WarehouseVO" 
 					resultMap="whm_SearchPage"  >
-
-		SELECT * FROM warehouse
+		
+		SELECT w.wh_code, w.wh_name, w.wh_addr, w.wh_tel, w.wh_use, 
+			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
+		FROM warehouse w
+		LEFT JOIN employees e on
+				  e.emp_id = w.emp_id
+		
 		<where>
 			<if test="wh_code != ''">
-				wh_code LIKE concat('%', #{wh_code}, '%')
+				w.wh_code LIKE concat('%', #{wh_code}, '%')
 			</if>
 
 <!-- 			<if test="prod_code != null and prod_code != ''"> -->
@@ -588,13 +614,13 @@
 
 <!-- 			</if> -->
 			<if test="wh_addr != ''">
-				AND wh_addr LIKE concat('%', #{wh_addr}, '%')
+				AND w.wh_addr LIKE concat('%', #{wh_addr}, '%')
 			</if>
 			<if test="wh_use != 3">
-				AND wh_use = #{wh_use}
+				AND w.wh_use = #{wh_use}
 			</if>
 			<if test="emp_id != null and emp_id != ''">
-				AND emp_id LIKE concat('%', #{emp_id}, '%')
+				AND w.emp_id LIKE concat('%', #{emp_id}, '%')
 			</if>
 		</where>
 		limit #{startPage}, #{pageSize}
@@ -663,15 +689,21 @@
 
 	<update id="updateWh">
 		UPDATE warehouse
-		SET wh_code = #{wh_code}, wh_name = #{wh_name}, wh_use = #{wh_use}, 
+		SET  wh_name = #{wh_name}, wh_use = #{wh_use}, 
 			wh_addr = #{wh_addr}, wh_tel = #{wh_tel}, wh_note = #{wh_note}, 
 			emp_id = #{emp_id}
+		where wh_code = #{wh_code}
 	</update>
 	<!-- 창고 수정 -->
 
 	<!-- 창고 조회(String wh_code) -->
 	<select id="readWhList">
-		SELECT * FROM warehouse
+		
+		SELECT w.wh_code, w.wh_name, w.wh_addr, w.wh_tel, w.wh_use, 
+			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
+		FROM warehouse w
+		LEFT JOIN employees e on
+				  e.emp_id = w.emp_id
 		WHERE wh_code = #{wh_code}
 	</select>
 	<!-- 창고 조회(String wh_code) -->
@@ -690,6 +722,7 @@
 		<result property="perform_fair" column="perform_fair" />
 		<result property="perform_defect" column="perform_defect" />
 		<result property="defect_note" column="defect_note" />
+		<result property="perform_status" column="perform_status" />
 		<result property="perform_note" column="perform_note" />
 
 		<collection property="workOrder" ofType="WorkOrderVO">
@@ -697,13 +730,34 @@
 			<result property="prod_code" column="prod_code" />
 		</collection>
 	</resultMap>
-
+	
+	<resultMap id="stock" type="StockVO">
+		<result property="stock_num" column="stock_num"/>
+		<result property="raw_code" column="raw_code"/>
+		<result property="wh_code" column="wh_code"/>
+		<result property="stock_text" column="stock_text"/>
+		<result property="prod_code" column="prod_code"/>
+		<result property="in_num" column="in_num"/>
+		<result property="stock_count" column="stock_count"/>
+		
+		<collection property="workOrder" ofType="WorkOrderVO">
+			<result property="work_code" column="work_code"/>
+			<result property="prod_code" column="prod_code"/>
+		</collection>
+		
+		<collection property="performance" ofType="PerformanceVO">
+			<result property="work_code" column="work_code"/>
+			<result property="perform_fair" column="perform_fair"/>
+		</collection>
+	</resultMap>
+	
+	
 	<select id="performList" resultMap="perfList"
 		resultType="PerformanceVO">
 		SELECT p.perform_code, p.work_code, w.line_code,
 		w.prod_code, p.perform_date,
-		p.perform_qt, p.perform_fair,
-		p.perform_defect, p.defect_note, p.perform_note
+		p.perform_qt, p.perform_fair, p.perform_defect, 
+		p.defect_note, p.perform_status, p.perform_note
 		FROM performance p JOIN
 		work_order w
 		ON p.work_code = w.work_code
@@ -719,18 +773,13 @@
 	<!-- 생산실적 전체 수 -->
 
 	<!-- 생산실적 검색 -->
-	<select id="performSearchList" resultMap="perfList"
-		parameterType="hashMap" resultType="PerformanceVO">
-		SELECT p.perform_code, p.work_code, w.line_code,
-		w.prod_code,
+	<select id="performSearchList" resultMap="perfList" parameterType="hashMap">
+		SELECT p.perform_code, p.work_code, w.line_code, w.prod_code, 
 		p.perform_date,
-		p.perform_qt, p.perform_fair,
-		p.perform_defect,
-		p.defect_note, p.perform_note
+		p.perform_qt, p.perform_fair, p.perform_defect, 
+		p.defect_note, p.perform_status, p.perform_note 
 		FROM performance p JOIN
-		work_order w
-		ON
-		p.work_code = w.work_code
+		work_order w ON p.work_code = w.work_code 
 		<where>
 			<if test="search_work_code!=null and !search_work_code.isEmpty()">
 				p.work_code=#{search_work_code}
@@ -746,14 +795,16 @@
 			<if test="search_prod_code!=null and !search_prod_code.isEmpty()">
 				AND w.prod_code=#{search_prod_code}
 			</if>
+			<if test="search_perform_status!=null and !search_perform_status.isEmpty() and !search_perform_status.equals('전체')">
+				AND p.perform_status=#{search_perform_status}
+			</if>
 		</where>
 		LIMIT #{startPage},#{pageSize}
 	</select>
 	<!-- 생산실적 검색 -->
 
 	<!-- 생산실적 검색 수 -->
-	<select id="getSearchPerf" parameterType="hashMap"
-		resultType="int">
+	<select id="getSearchPerf" parameterType="hashMap" resultType="int">
 		SELECT count(*)
 		FROM performance p JOIN work_order w
 		ON p.work_code = w.work_code
@@ -772,25 +823,82 @@
 			<if test="search_prod_code!=null and !search_prod_code.isEmpty()">
 				AND w.prod_code=#{search_prod_code}
 			</if>
+			<if test="search_perform_status!=null and !search_perform_status.isEmpty() and !search_perform_status.equals('전체')">
+				AND p.perform_status=#{search_perform_status}
+			</if>
 		</where>
 	</select>
 	<!-- 생산실적 검색 수 -->
 
-
-
+	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
+	
 	<!-- 생산실적 등록 -->
 	<insert id="insertPerform">
 		INSERT INTO performance
-		(perform_code,work_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_note)
-		VALUES
-		(#{perform_code},#{work_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},#{perform_note});
+		(perform_code,work_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_status,perform_note) 
+		VALUES 
+		(#{perform_code},#{work_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},'진행',#{perform_note});
 	</insert>
 	<!-- 생산실적 등록 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 재고에 해당 품목 있는지 확인 -->
+<!-- 	<select id="searchStock" resultMap="stock"> -->
+<!-- 		SELECT DISTINCT s.prod_code, s.stock_num  -->
+<!-- 		FROM stock s  -->
+<!-- 		JOIN work_order w ON w.prod_code = s.prod_code  -->
+<!-- 		JOIN performance pf ON pf.work_code = w.work_code  -->
+<!-- 		WHERE s.prod_code = w.prod_code AND w.prod_code= -->
+<!-- 		(SELECT DISTINCT w.prod_code  -->
+<!-- 		FROM work_order w  -->
+<!-- 		JOIN performance p ON p.work_code=w.work_code  -->
+<!-- 		WHERE w.work_code=#{work_code}) -->
+<!-- 	</select> -->
+	<!-- 재고에 해당 품목 있는지 확인 -->
+	
+	
+	<!-- 양품수만큼 재고등록 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 양품수와 작업지시 수량 비교 -->
+	<select id="compare" resultType="String">
+		SELECT 
+			(SELECT sum(perform_fair) FROM performance WHERE work_code=#{work_code}) 'perform_fair',
+			(SELECT work_qt FROM work_order WHERE work_code=#{work_code}) 'work_qt' 
+		FROM dual 
+		HAVING perform_fair &gt;= work_qt
+	</select>
+	<!-- 양품수와 작업지시 수량 비교 -->
+
+	<!-- 생산현황 마감으로 변경 -->
+	<update id="updateStatus">
+		UPDATE performance 
+		SET perform_status='마감' 
+		WHERE work_code=#{work_code}
+	</update>
+	<!-- 생산현황 마감으로 변경 -->
+
+	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
 
 	<!-- 생산실적 삭제 -->
 	<delete id="deletePerformance">
-		DELETE FROM performance WHERE
-		perform_code=#{perform_code}
+		DELETE FROM performance  
+		WHERE perform_code=#{perform_code}
 	</delete>
 	<!-- 생산실적 삭제 -->
 
@@ -798,20 +906,21 @@
 	<!-- 생산실적 조회 -->
 	<select id="performInfo" resultMap="perfList" resultType="PerformanceVO">
 		SELECT p.perform_code, p.work_code, w.line_code,
-		w.prod_code, p.perform_date,
-		p.perform_qt, p.perform_fair, p.perform_defect, p.defect_note, p.perform_note
-		FROM performance p JOIN work_order w
-		ON p.work_code = w.work_code
+		w.prod_code, p.perform_date, p.perform_qt, p.perform_fair, p.perform_defect, 
+		p.defect_note, p.perform_status, p.perform_note 
+		FROM performance p JOIN work_order w 
+		ON p.work_code = w.work_code 
 		WHERE p.perform_code=#{perform_code}
 	</select>
 	<!-- 생산실적 조회 -->
 
 	<!-- 생산실적 수정 -->
 	<update id="updatePerform">
-		UPDATE performance
+		UPDATE performance 
 		SET work_code=#{work_code}, perform_qt=#{perform_qt}, change_date=now(),
 		perform_fair=#{perform_fair}, perform_defect=#{perform_defect},
-		defect_note=#{defect_note}, perform_note=#{perform_note}
+		defect_note=#{defect_note}, perform_status=#{perform_status},  
+		perform_note=#{perform_note} 
 		WHERE perform_code=#{perform_code}
 	</update>
 	<!-- 생산실적 수정 -->
