@@ -14,6 +14,14 @@ public class StockVO {
 	private String in_num;
 	private int stock_count;
 	
-	private WorkOrderVO workOrder;
-	private PerformanceVO performance;
+	private ProductVO product;
+	private RawMaterialVO raw_mat;
+	private WarehouseVO warehouse;
+	
+	public StockVO() {
+		warehouse = new WarehouseVO();
+		product = new ProductVO();
+		raw_mat = new RawMaterialVO();
+	}
+	
 }
