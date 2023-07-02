@@ -18,7 +18,10 @@ public interface Raw_orderDAO {
 	public int count1() throws Exception;
     
 	// 발주 등록(팝업)
-	public List<Raw_orderVO> Popup() throws Exception;
+	public List<Raw_orderVO> Popup(PageVO vo) throws Exception;
+	
+	//창고 팝업리스트 갯수
+    public int countPop() throws Exception;
 	
 	// 창고 등록(팝업)
 	public List<WarehouseVO> whPopup() throws Exception;

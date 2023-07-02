@@ -17,14 +17,16 @@
 		var rawCode = row.cells[2].innerText;
         var rawName = row.cells[3].innerText;
         var rawColor = row.cells[4].innerText;
-        var stockCount = row.cells[5].innerText;
-        var rawPrice = row.cells[6].innerText;
+        var whCode = row.cells[5].innerText;
+        var stockCount = row.cells[6].innerText;
+        var rawPrice = row.cells[7].innerText;
 		
       	opener.document.getElementById("client_code").value = clientCode;
       	opener.document.getElementById("client_actname").value = clientName;
       	opener.document.getElementById("raw_code").value = rawCode;
       	opener.document.getElementById("raw_name").value = rawName;
       	opener.document.getElementById("raw_color").value = rawColor;
+      	opener.document.getElementById("wh_code").value = whCode;
       	opener.document.getElementById("stock_count").value = stockCount;
       	opener.document.getElementById("raw_price").value = rawPrice;
         
@@ -36,7 +38,6 @@
 <body>
 	<h1>발주 정보</h1>
 	
-<!-- 	<form method="get"> -->
 	<table border="1">
 		<tr>
 			<th>거래처 코드</th>
@@ -44,6 +45,7 @@
 			<th>품번</th>
 			<th>품명</th>
 			<th>색상</th>
+			<th>입고 창고</th>
 			<th>재고 수량</th>
 			<th>단가</th>
 		</tr>
@@ -54,13 +56,31 @@
 				<td>${ro.rawMaterial.raw_code }</td>
 				<td>${ro.rawMaterial.raw_name }</td>
 				<td>${ro.rawMaterial.raw_color }</td>
+				<td>${ro.rawMaterial.wh_code }</td>
 				<td style="color: ${ro.stock.stock_count <= 20 ? 'red' : 'inherit'}">${ro.stock.stock_count}</td>
 				<td><fmt:formatNumber value=" ${ro.rawMaterial.raw_price }"/>원</td>
 			</tr>
 		</c:forEach>
 	</table>
-<!-- 	</form> -->
 	
+	<c:if test="${countPop > 10 }">
+	    <c:if test="${bp.prev}">
+	
+	        <a href="/stock/roPopup?page=${bp.startPage - 1}">이전</a>
+	
+	    </c:if>
+	    
+	    <c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+	        <a href="/stock/roPopup?page=${idx}">${idx}</a>
+	    </c:forEach>
+	    
+	    <c:if test="${bp.next && bp.endPage > 0}">
+	
+	        <a href="/stock/roPopup?page=${bp.endPage + 1}">다음</a>
+	
+	    </c:if>
+	</c:if>
+
 	
 </body>
 </html>

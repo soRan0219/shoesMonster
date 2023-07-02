@@ -146,13 +146,13 @@ function toggleDiv(divId) {
 	            <td>${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
         		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}"/>원</td>
         		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}"/>원</td>
-                <td>${param.wh_code }</td>
+                <td>${vo.rawMaterial.wh_code }</td>
                 <td>${vo.raw_order_date}</td>
         		<td>${vo.emp_id }</td>
             </tr>
         </c:forEach>
     </table>
-      ${param }/${param.clients.client_actname}/${rvo.clients.client_actname}
+    
    		<c:if test="${count1 > 10 }">
 			<c:if test="${bp.prev}">
 
@@ -191,7 +191,7 @@ function toggleDiv(divId) {
 		<table border="1">
 			<tr>
 				<th>입고 창고</th>
-				<td onclick="warehouse();"><input type="text" name="wh_code" id="wh_code" readonly></td>
+				<td onclick="roPopup();"><input type="text" name="wh_code" id="wh_code" readonly></td>
 			</tr>
 		</table>
 		<br>

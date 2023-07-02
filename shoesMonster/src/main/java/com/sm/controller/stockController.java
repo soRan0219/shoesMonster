@@ -130,11 +130,21 @@ public class stockController {
 
 	// 발주 등록 팝업창
 	@RequestMapping(value = "/roPopup", method = RequestMethod.GET)
-	public void getClient(Model model) throws Exception {
+	public void getClient(Model model, PageVO vo ,Raw_orderVO rvo) throws Exception {
 		
-		List<Raw_orderVO> roPopup = ro_service.getPopup();
-		
-		model.addAttribute("roPopup", roPopup);
+		List<Raw_orderVO> roPopup = ro_service.getPopup(vo);
+        
+        int countPop = ro_service.countPoP();
+        
+        BottomPaging bp = new BottomPaging();
+        bp.setPageVO(vo);
+        bp.setTotalCount(countPop);
+        
+        model.addAttribute("roPopup", roPopup);
+        model.addAttribute("countPop", countPop);
+        model.addAttribute("bp", bp);
+        
+        model.addAttribute("rvo", rvo);
 	}
 
 	// 발주 거래처 상세 팝업

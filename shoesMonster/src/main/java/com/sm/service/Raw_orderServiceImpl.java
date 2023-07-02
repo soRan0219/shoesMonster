@@ -33,9 +33,14 @@ public class Raw_orderServiceImpl implements Raw_orderService{
 
 
 	@Override
-	public List<Raw_orderVO> getPopup() throws Exception {
-		return rodao.Popup();
+	public List<Raw_orderVO> getPopup(PageVO vo) throws Exception {
+		return rodao.Popup(vo);
 	}
+	
+	@Override
+    public int countPoP() throws Exception {
+        return rodao.countPop();
+    }
 
 
 	@Override

@@ -39,12 +39,18 @@ public class Raw_orderImpl implements Raw_orderDAO{
     }
 
 
+	@Override
+	public List<Raw_orderVO> Popup(PageVO vo) throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE + ".roPopup", vo);
+	}
+
 
 	@Override
-	public List<Raw_orderVO> Popup() throws Exception {
-		
-		return sqlSession.selectList(NAMESPACE + ".roPopup");
-	}
+    public int countPop() throws Exception {
+        
+        return sqlSession.selectOne(NAMESPACE+".roPopupCount");
+    }
 
 
 
