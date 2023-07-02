@@ -119,7 +119,7 @@ public class stockController {
 //		request.setAttribute("emp_id", emp_id);
 		logger.debug("///////////////// wh_code : " + wh_code + "////////////////");
 //		logger.debug("///////////////// emp_id : " + emp_id + "////////////////");
-		
+		//
 		
 		ro_service.roInsert(vo);
 	
