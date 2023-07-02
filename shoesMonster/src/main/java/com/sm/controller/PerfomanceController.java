@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sm.domain.EmployeesVO;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
 import com.sm.domain.LineWhPageVO;
@@ -482,7 +483,7 @@ public class PerfomanceController {
 	// ======== 창고 - /warehouse ===========================
 	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-	public void warehouseGET(Model model, LineWhPageVO vo,
+	public void warehouseGET(Model model, LineWhPageVO vo, EmployeesVO emp,
 							 LineWhPageMaker lwpm, Wh_prodVO wvo
 							 ,@RequestParam HashMap<String, Object> params) throws Exception {
 
@@ -497,9 +498,12 @@ public class PerfomanceController {
 
 
 		// 검색(+페이징)
-		if(wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null ||
-				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
+//		if(wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null ||
+//				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
 			
+		if(wvo.getWh_code() != null  || wvo.getWh_name() != null ||
+		   wvo.getEmp() != null || wvo.getWh_use() != 0) {
+		
 			if(wvo.getWh_use() == 0) {
 				wvo.setWh_use(3);
 			}
@@ -539,22 +543,38 @@ public class PerfomanceController {
 		}
 	}
 	
-	// 품목 검색 팝업창
+//	// 품목 검색 팝업창
+//	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
+//	public String popUpGET(@RequestParam("input") String input,
+//			   @RequestParam("type") String type) throws Exception{
+//	
+//		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
+//		logger.debug("@#@#@# C : type = "+type);
+//		
+//		if(type.equals("prod")) {
+//		return "redirect:/performance/product?input="+input;
+//		}
+//		else if(type.equals("raw")) {
+//			return "redirect:/performance/rawMaterial?input="+input;
+//		}
+//		
+//			return "redirect:/performance/warehouse?input="+input;
+//		
+//	}
+	
+	// 담당자(사원) 팝업 검색
 	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
 	public String popUpGET(@RequestParam("input") String input,
-			   @RequestParam("type") String type) throws Exception{
+			   			   @RequestParam("type") String type) throws Exception{
 	
 		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
 		logger.debug("@#@#@# C : type = "+type);
 		
-		if(type.equals("prod")) {
-		return "redirect:/performance/product?input="+input;
-		}
-		else if(type.equals("raw")) {
-			return "redirect:/performance/rawMaterial?input="+input;
+		if(type.equals("emp")) {
+			return "redirect:/person/empinfo?input="+input;
 		}
 		
-			return "redirect:/performance/warehouse?input="+input;
+		return "redirect:/performance/warehouse?input="+input;
 		
 	}
 	

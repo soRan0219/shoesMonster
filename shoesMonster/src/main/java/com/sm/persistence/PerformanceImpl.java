@@ -382,8 +382,10 @@ public class PerformanceImpl implements PerformanceDAO {
 		Map<String, Object> params = new HashMap<>();
 
 		params.put("wh_code", wvo.getWh_code());
-		params.put("prod_code", wvo.getProd_code());
-		params.put("raw_code", wvo.getRaw_code());
+//		params.put("prod_code", wvo.getProd_code());
+//		params.put("raw_code", wvo.getRaw_code());
+		params.put("emp_id", wvo.getEmp_id());
+//		params.put("emp_name", wvo.getEmp().getEmp_name());
 
 		params.put("wh_addr", wvo.getWh_addr());
 		
@@ -408,17 +410,20 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		params.put("wh_code", wvo.getWh_code());
 
-		if(wvo.getProd_code() != null) {
-			params.put("prod_code", wvo.getProd_code());
-		}else if(wvo.getRaw_code() != null) {
-			params.put("raw_code", wvo.getRaw_code());
-		}
+//		if(wvo.getProd_code() != null) {
+//			params.put("prod_code", wvo.getProd_code());
+//		}else if(wvo.getRaw_code() != null) {
+//			params.put("raw_code", wvo.getRaw_code());
+//		}
 		
 		params.put("wh_addr", wvo.getWh_addr());
 		
 		if(wvo.getWh_use() != 0) {
 			params.put("wh_use", wvo.getWh_use());
 		}
+		
+		params.put("emp_id", wvo.getEmp_id());
+//		params.put("emp_name", wvo.getEmp().getEmp_name());
 		
 		return sqlSession.selectOne(NAMESPACE+".searchWhTotalCnt", params);
 
