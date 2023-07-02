@@ -432,8 +432,9 @@ public class PerfomanceController {
 	}
 	
 	// 라인 추가
-//	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
-	@PostMapping(value = "/lineadd")
+
+	@RequestMapping(value = "/liadd", method = RequestMethod.POST)
+
 	public String addLine(LineVO lvo) throws Exception{
 		logger.debug("@#@#@# C : addLine(LineVO lvo) 호출 ");
 		logger.debug("@#@#@# C : lvo = "+lvo);
@@ -504,7 +505,7 @@ public class PerfomanceController {
 //				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
 			
 		if(wvo.getWh_code() != null  || wvo.getWh_name() != null ||
-		   wvo.getEmp() != null || wvo.getWh_use() != 0) {
+		   wvo.getEmp_id() != null || wvo.getWh_use() != 0) {
 		
 			if(wvo.getWh_use() == 0) {
 				wvo.setWh_use(3);
@@ -525,6 +526,9 @@ public class PerfomanceController {
 			lwpm.setTotalCount(service.searchWh_TotalCount(wvo));
 			logger.debug("lwpm (서치) : " + lwpm.getTotalCount());
 			model.addAttribute("lwpm", lwpm);
+			
+			logger.debug("검색"+whList);
+			
 
 			
 		}else {

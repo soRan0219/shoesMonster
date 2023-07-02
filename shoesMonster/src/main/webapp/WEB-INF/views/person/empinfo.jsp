@@ -52,9 +52,12 @@ function popUp() {
     		var empCode = $(this).find('#empCode').text();
     		var empName = $(this).find('#empName').text(); // 230702 넣 지울거면 주석지워도됨! 혹시나!
     			
-    		$('#'+isPop, opener.document).val(empCode);
-    		$('#'+isPop, opener.document).val(empName); // 230702 넣 지울거면 주석지워도됨!
-    			
+    		$('#emp_id', opener.document).val(empCode);
+    		$('#emp_name', opener.document).val(empName); // 230702 넣 지울거면 주석지워도됨!
+    		
+    		$('#s_emp_id', opener.document).val(empCode);
+    		$('#s_emp_name', opener.document).val(empName);
+    		
     		window.close();
     	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
     		
