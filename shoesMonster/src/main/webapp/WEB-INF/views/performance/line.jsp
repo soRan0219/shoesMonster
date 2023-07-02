@@ -113,100 +113,107 @@
 		$('#add').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 				
-				//행 하나 클릭했을 때	
-				$('table tr:not(:first-child)').click(function() {
+			//행 하나 클릭했을 때	
+			$('table tr:not(:first-child)').click(function() {
 
-					//하나씩만 선택 가능
-					if(!isExecuted) {
-						isExecuted = true;
+				//하나씩만 선택 가능
+				if(!isExecuted) {
+					isExecuted = true;
 						
-						$(this).addClass('selected');
+					$(this).addClass('selected');
+					
+					// 라인코드 저장
+					let updateCode = $(this).find('#lineCode').text().trim();
+					console.log(updateCode);
 						
-						// 라인코드 저장
-						let updateCode = $(this).find('#lineCode').text().trim();
-						console.log(updateCode);
+					var jsonData = {
+						line_code : updateCode
+					};
 						
-						var jsonData = {
-								line_code : updateCode
-						};
+					console.log(jsonData);
 						
-						console.log(jsonData);
-						
-						var self = $(this);
+					var self = $(this);
 		
-						$.ajax({
-							url : "/performance/line",
-							type : "post",
-							contentType : "application/json; charset=UTF-8",
-							dataType : "json",
-							data : JSON.stringify(jsonData),
-							success : function(data) {
-								// alert("*** 아작스 성공 ***");
+					$.ajax({
+						url : "/performance/line",
+						type : "post",
+						contentType : "application/json; charset=UTF-8",
+						dataType : "json",
+						data : JSON.stringify(jsonData),
+						success : function(data) {
+							// alert("*** 아작스 성공 ***");
 		
-								var preVOs = [
-										data.line_code,
-										data.line_name,
-										data.line_place,
-										data.line_use,
-										data.emp_id,
-										data.emp.emp_name,
-										data.insert_date,
-										data.line_note, 
-										];
+						var preVOs = [
+							data.line_code,
+							data.line_name,
+							data.line_place,
+							data.line_use,
+							data.emp_id,
+							data.emp.emp_name,
+							data.insert_date,
+							data.line_note, 
+							];
 		
-								var names = [
-									"line_code",
-									"line_name",
-									"line_place",
-									"line_use",
-									"emp_id",
-									"emp_name",
-									"insert_date",
-									"line_note"
-									];
+						var names = [
+							"line_code",
+							"line_name",
+							"line_place",
+							"line_use",
+							"emp_id",
+							"emp_name",
+							"insert_date",
+							"line_note"
+							];
 		
-								//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
-								self.find('td').each(function(idx,item) {
+						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+						self.find('td').each(function(idx,item) {
 		
-									if(idx > 0){
-										inputCng($(this), "text", names[idx - 1], preVOs[idx - 1]);
-										if(idx == 4 ){
-											var dropDown = "<select id = 'line_use' name = 'line_use'>";
-//				 								dropDown += "<option value = '전체'></option>";
-												dropDown += "<option value = '1'>Y</option>";
-												dropDown += "<option value = '2'>N</option>";
-												dropDown += "</select>";
-												$(this).html(dropDown);
-												$(this).find('option').each(function () {
-													if(this.value == $(this).text()){
-														$(this).attr("selected", true);
-													}
+							if(idx > 0){
+								inputCng($(this), "text", names[idx - 1], preVOs[idx - 1]);
+									if(idx == 4 ){
+										var dropDown = "<select id = 'line_use' name = 'line_use'>";
+											dropDown += "<option value = '1'>Y</option>";
+											dropDown += "<option value = '2'>N</option>";
+											dropDown += "</select>";
+											$(this).html(dropDown);
+											$(this).find('option').each(function () {
+												if(this.value == preVOs[idx - 1]){
+													$(this).attr("selected", true);
+												}
 										
-												});// this.find('option')
+											});// this.find('option')
 									
-										}// if(idx==2)
+									}// if(idx==4)
 							
-									}//if
+							}//if(idx>0)
 		
-								}); // self.find(~~)
+						}); // self.find(~~)
 		
-								// 등록자(사원) 검색
-								$('#emp_name').click(function () {
-									openWindow("emp", "emp_name");
-								}); // #emp_id click
+						// 등록자(사원) 검색
+						$('#emp_name').click(function () {
+						openWindow("emp", "emp_name");
+						}); // #emp_id click
 		
-							},
-							error : function(data) {
-								alert("아작스 실패 ~~");
-							}
-						}); //ajax
+						},
+						
+						error : function(data) {
+							alert("아작스 실패 ~~");
+						}
+					}); //ajax
 				
 				// 저장 -> 수정완료
 				$('#save').click(function () {
 					
-					$('#fr').attr("action", "/performance/linemodify");
-					$('#fr').attr("method", "POST");
-					$('#fr').submit();
+					if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
+						|| emp_id == ""){
+						
+						alert("항목을 모두 입력하세요");
+					
+					}else{
+						$('#fr').attr("action", "/performance/linemodify"); 
+						$('#fr').attr("method", "POST");
+						$('#fr').submit();
+				}
 					
 				});//save
 					
@@ -231,7 +238,7 @@
 		$('#delete').attr("disabled", true);
 		
 		// 라인코드 부여
-		let wCodeNum = Number(000);
+		let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
 		wCodeNum++;
 		
 		let lineNum = lineCodeNum(wCodeNum, 3);
@@ -315,7 +322,7 @@
 					|| emp_id == ""){
 				alert("항목을 모두 입력하세요");
 			}else{
-				$('#fr').attr("action", "/performance/liadd"); 
+				$('#fr').attr("action", "/performance/lineadd"); 
 				$('#fr').attr("method", "POST");
 				$('#fr').submit();
 			}
@@ -479,6 +486,7 @@
 	<button id="delete" class="true">삭제</button>
 	<button type="reset" id="cancle" >취소</button>
 	<button type="submit" id="save">저장</button>
+	<button onclick="location.reload()">새로고침</button>
 
 	<br>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
