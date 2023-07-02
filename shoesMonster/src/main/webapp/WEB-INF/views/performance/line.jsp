@@ -27,6 +27,15 @@
 		return year+"-"+month+"-"+day;
 	}//getToday()
 
+	// 코드 자동 부여
+	function lineCodeNum(num, length) {
+		let str = num.toString();
+		while (str.length < length){
+			str = '0' + str;
+		}
+		return str;
+	}
+	
 	// input으로 바꾸기
 	function inputCng(obj, type, name, value) {
 		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
@@ -104,7 +113,10 @@
 		$('#delete').attr("disabled", true);
 		
 		// 라인코드 부여
-// 		let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
+		let wCodeNum = Number(000);
+		wCodeNum++;
+		
+		let lineNum = lineCodeNum(wCodeNum, 3);
 		
 		// 오늘날짜 -> 등록일
 		let today = getToday();
@@ -119,7 +131,9 @@
 			
 			// 라인코드 
 			tbl += " <td>";
-			tbl += " <input type='text' name='line_code' id='line_code'required>";
+			tbl += " <input type='text' name='line_code' id='line_code'required value='";
+			tbl += "L"+ lineNum;
+			tbl += "'>";
 			tbl += " </td>";
 			
 			// 라인명
@@ -183,7 +197,7 @@
 				alert("항목을 모두 입력하세요");
 			}else{
 				$('#fr').attr("action", "/performance/lineadd"); 
-				$('#fr').attr("method", "post");
+				$('#fr').attr("method", "POST");
 				$('#fr').submit();
 			}
 			
@@ -332,20 +346,40 @@
 				});
 				
 				if(checked.length > 0){
+					
+					if(confirm("선택한 항목을 삭제하시겠습니까?")){
+					
+						$.ajax({
+	 						url: "/performance/linedelete",
+	 						type: "POST",
+	 						data: {checked : checked},
+	 						dataType: "text",	
+	 						success: function () {
+								alert("삭제가 완료되었습니다");
+								location.reload();
+							},
+							error: function () {
+								alert("삭제 중 오류가 발생했습니다");
+							}
+						});//ajax
+					}else{
+						alert("삭제가 취소되었습니다");
+					}// if(confirm)
+						
 				
-					$.ajax({
-						url: "/performance/linedelete",
-						type: "POST",
-						data: {checked : checked},
-						dataType: "text",
-						success: function () {
-							alert("에이잭스 예에~!~!");
-							location.reload();
-						},
-						error: function () {
-							alert("에이잭스 우우~!~!");
-						}
-					}); // ajax
+// 					$.ajax({
+// 						url: "/performance/linedelete",
+// 						type: "POST",
+// 						data: {checked : checked},
+// 						dataType: "text",
+// 						success: function () {
+// 							alert("에이잭스 예에~!~!");
+// 							location.reload();
+// 						},
+// 						error: function () {
+// 							alert("에이잭스 우우~!~!");
+// 						}
+// 					}); // ajax
 					
 				}// 체크OOO
 				else{

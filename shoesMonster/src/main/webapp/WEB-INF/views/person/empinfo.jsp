@@ -50,8 +50,10 @@ function popUp() {
    			$(this).css('background', '#ccc');
     			
     		var empCode = $(this).find('#empCode').text();
+    		var empName = $(this).find('#empName').text(); // 230702 넣 지울거면 주석지워도됨! 혹시나!
     			
     		$('#'+isPop, opener.document).val(empCode);
+    		$('#'+isPop, opener.document).val(empName); // 230702 넣 지울거면 주석지워도됨!
     			
     		window.close();
     	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
@@ -61,7 +63,7 @@ function popUp() {
 			console.log("팝업아님");
 	} //if(팝업으로 열었을 때)
 		
-} //popUp()
+} //popUp() 여기까지 혦넣
 
 //제이쿼리
 $(function() {
@@ -397,7 +399,7 @@ $(function() {
 						<tr>
 							<td></td>
 							<td id="empCode">${vo.emp_id}</td> <!-- 혦넣 -->
-							<td>${vo.emp_name}</td>
+							<td id="empName">${vo.emp_name}</td> <!-- 혦넣 -->
 							<td>${vo.emp_department}</td>
 							<td>${vo.emp_position}</td>
 							<td>${vo.emp_email}</td>
