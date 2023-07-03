@@ -94,6 +94,16 @@ public class PerfomanceController {
 		}
 
 	}
+	
+	// 품목관리 추가 시 code 값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "prodCode", method = RequestMethod.GET)
+    public String getProdCode() {
+		logger.debug(" getProdCode() 호출 ");
+		
+        return service.getProdCode();
+    }
+	
 
 	// 품목관리 정보 추가
 	@RequestMapping(value = "product", method = RequestMethod.POST)
@@ -106,7 +116,7 @@ public class PerfomanceController {
 
 		return "redirect:/performance/product";
 	}
-
+	
 	// 품목관리 삭제
 	@RequestMapping(value = "/prodDelete", method = RequestMethod.POST)
 	public String deleteProd(@RequestParam(value = "checked[]") List<String> checked) throws Exception {

@@ -68,13 +68,19 @@
 
 	</select>
 	<!-- 품목관리 검색리스트 불러오기 -->
+	
+	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
+	<select id="readProdCode" resultType="String">
+		select prod_code from product order by prod_code desc limit 1;
+	</select>
+	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
 
 	<!-- 품목관리 정보 다중 입력 -->
 	<insert id="prodIn">
 		insert into product
 		values
 		(#{prod_code},#{prod_name},#{prod_category},#{prod_unit},#{prod_size},
-		#{prod_color},#{client_code},#{prod_price},#{prod_note})
+		#{prod_color},#{client_code},#{prod_price},#{prod_note},#{wh_code})
 	</insert>
 	<!-- 품목관리 정보 다중 입력 -->
 
@@ -96,7 +102,8 @@
 	<update id="updateProd">
 		UPDATE product
 		SET prod_code=#{prod_code},prod_name=#{prod_name},prod_category=#{prod_category},prod_unit=#{prod_unit},
-		prod_size=#{prod_size},prod_color=#{prod_color},client_code=#{client_code},prod_price=#{prod_price},prod_note=#{prod_note}
+		prod_size=#{prod_size},prod_color=#{prod_color},client_code=#{client_code},prod_price=#{prod_price},prod_note=#{prod_note},
+		wh_code=#{wh_code}
 		WHERE prod_code=#{prod_code}
 	</update>
 	<!-- 품목관리 수정 -->
@@ -193,7 +200,7 @@
 	<insert id="rawIn">
 		insert into raw_material
 		values
-		(#{raw_code},#{raw_name},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{raw_note})
+		(#{raw_code},#{raw_name},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{raw_note},#{wh_code})
 	</insert>
 	<!-- 원자재관리 정보 다중 입력 -->
 
@@ -218,7 +225,8 @@
 	<update id="updateRaw">
 		UPDATE raw_material
 		SET raw_code=#{raw_code},raw_name=#{raw_name},raw_color=#{raw_color},raw_unit=#{raw_unit},
-		raw_size=#{raw_size},raw_price=#{raw_price},client_code=#{client_code},raw_note=#{raw_note}
+		raw_size=#{raw_size},raw_price=#{raw_price},client_code=#{client_code},raw_note=#{raw_note},
+		wh_code=#{wh_code}
 		WHERE raw_code=#{raw_code}
 	</update>
 	<!-- 원자재관리 수정 -->

@@ -15,6 +15,7 @@ public class ProductVO {
 	private String client_code;
 	private float prod_price;
 	private String prod_note;
+	private String wh_code;
 	
 	private OrderStatusVO orders;
 	private ClientsVO client;

@@ -26,6 +26,9 @@ public interface PerformanceService {
 
 	// 품목관리 검색리스트 불러오기
 	public List<ProductVO> getProdList(ProductVO vo, PagingVO pvo) throws Exception;
+	
+	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
+	public String getProdCode(); 
 
 	// 품목관리 정보 다중 저장
 	public void insertProd(List<ProductVO> products);

@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.mysql.cj.util.DnsSrv.SrvRecord;
-import com.mysql.cj.xdevapi.Result;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
@@ -69,6 +67,13 @@ public class PerformanceImpl implements PerformanceDAO {
 		data.put("prod_unit", vo.getProd_unit());
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchProd", data);
+	}
+	
+	
+	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String readProdCode() {
+		return sqlSession.selectOne(NAMESPACE+".readProdCode");
 	}
 
 	// 품목관리 정보 다중 저장
