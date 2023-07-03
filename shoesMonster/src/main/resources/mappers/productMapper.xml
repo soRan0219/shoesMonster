@@ -829,6 +829,15 @@
 	</select>
 	<!-- 생산실적 검색 수 -->
 
+
+
+
+
+
+
+
+
+
 	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
 	
 	<!-- 생산실적 등록 -->
@@ -841,36 +850,41 @@
 	<!-- 생산실적 등록 -->
 	
 	
-	
-	
-	
-	
+	<!-- 작업지시코드에 해당하는 양품 수 합 -->
+	<select id="sumFair" resultType="int">
+		SELECT sum(perform_fair) 
+		FROM performance 
+		WHERE work_code=#{work_code}
+	</select>
+	<!-- 작업지시코드에 해당하는 양품 수 합 -->
 	
 	
 	<!-- 재고에 해당 품목 있는지 확인 -->
-<!-- 	<select id="searchStock" resultMap="stock"> -->
-<!-- 		SELECT DISTINCT s.prod_code, s.stock_num  -->
-<!-- 		FROM stock s  -->
-<!-- 		JOIN work_order w ON w.prod_code = s.prod_code  -->
-<!-- 		JOIN performance pf ON pf.work_code = w.work_code  -->
-<!-- 		WHERE s.prod_code = w.prod_code AND w.prod_code= -->
-<!-- 		(SELECT DISTINCT w.prod_code  -->
-<!-- 		FROM work_order w  -->
-<!-- 		JOIN performance p ON p.work_code=w.work_code  -->
-<!-- 		WHERE w.work_code=#{work_code}) -->
-<!-- 	</select> -->
+	<sql id="subQuery">
+		(SELECT DISTINCT w.prod_code 
+		FROM work_order w 
+		JOIN performance p ON p.work_code=w.work_code 
+		WHERE w.work_code=#{work_code})
+	</sql>
+	
+	<select id="searchStock" resultMap="stock">
+		SELECT DISTINCT s.prod_code 
+		FROM stock s 
+		JOIN work_order w ON w.prod_code = s.prod_code 
+		JOIN performance pf ON pf.work_code = w.work_code 
+		WHERE s.prod_code = w.prod_code AND w.prod_code=
+		<include refid="subQuery"/>
+	</select>
 	<!-- 재고에 해당 품목 있는지 확인 -->
 	
 	
 	<!-- 양품수만큼 재고등록 -->
-	
-	
-	
-	
-	
-	
-	
-	
+	<update id="updateStock">
+		UPDATE stock 
+		SET stock_count = stock_count + #{stock_count} 
+		WHERE prod_code = #{prod_code}
+	</update>
+	<!-- 양품수만큼 재고등록 -->
 	
 	
 	
@@ -893,6 +907,19 @@
 	<!-- 생산현황 마감으로 변경 -->
 
 	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<!-- 생산실적 삭제 -->
 	<delete id="deletePerformance">
