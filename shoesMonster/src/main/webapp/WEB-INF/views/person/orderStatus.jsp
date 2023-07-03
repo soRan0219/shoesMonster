@@ -170,7 +170,18 @@ $(function(){
 <!-- 		</select> -->
 	</form>
 	
+	<!-- //////////////////////////////////////////////////////////////////////// -->	
 	<br>
+	
+	<button id="add" class="true">추가</button>
+	<button id="modify" >수정</button>
+	<button id="delete" class="true">삭제</button>
+	<button type="reset" id="cancle" >취소</button>
+	<button type="submit" id="save">저장</button>
+	<button onclick="location.reload()">새로고침</button>
+
+	<br>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
 	
 	<form id="fr">
 	
