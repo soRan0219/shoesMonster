@@ -59,6 +59,14 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
 		logger.debug(" readOrderManageList() 호출@@@@@ ");
 		return sqlSession.selectList(NameSpace + ".orderManageList");
 	}
+	
+	// 수주 등록
+	@Override
+	public void registOrder(OrderStatusVO osvo) throws Exception {
+		logger.debug("@#@# D : registOrder(OrderStatusVO osvo) 호출");
+		
+		sqlSession.insert(NameSpace+".registOrder", osvo);
+	}
 
 
 
