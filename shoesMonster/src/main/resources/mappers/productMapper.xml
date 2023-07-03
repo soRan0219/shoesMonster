@@ -720,6 +720,14 @@
 	</select>
 	<!-- 창고 조회(String wh_code) -->
 	
+	<!-- 창고 추가 시 코드값 가져가기 -->
+	<select id="getWhCode" resultType="WorkOrderVO">
+		SELECT wh_code 
+		FROM warehouse 
+		ORDER BY wh_code desc limit 1
+	</select>
+	<!-- 창고 추가 시 코드값 가져가기 -->
+	
 	<!-- ///////////////////////////////////////////////////////// -->
 
 	<!-- 생산실적 목록 -->

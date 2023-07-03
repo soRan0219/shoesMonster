@@ -315,6 +315,13 @@ public class PerformanceServiceImpl implements PerformanceService {
 	
 		return pdao.getWarehouse(wh_code);
 	}
+	
+	// 창고 추가 선택 시 코드 가져오기
+	@Override
+	public String getWhCode() {
+
+		return pdao.getWhCode();
+	}
 
 	// ==========================================================================
 
@@ -372,6 +379,8 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception {
 		return pdao.getPerformStatus();
 	} //getPerformStatus()
+
+
 
 
 }

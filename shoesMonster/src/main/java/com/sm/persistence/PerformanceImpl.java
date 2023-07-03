@@ -479,6 +479,13 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".readWhList", wh_code);
 	}
+	
+	// 창고 추가 시 code값 가져가기
+	@Override
+	public String getWhCode() {
+		
+		return sqlSession.selectOne(NAMESPACE+".getWhCode");
+	}
 
 	// ==========================================================================
 
@@ -602,6 +609,8 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return statusMap;
 	} //getPerformStatus()
+
+
 
 
 }

@@ -155,6 +155,9 @@ public interface PerformanceDAO {
 	
 	// 창고 조회(String wh_code)
 	public Wh_prodVO getWarehouse(String wh_code) throws Exception;
+	
+	// 창고 추가 시 code값 가져가기
+	public String getWhCode();
 
 	// ==========================================================================
 
