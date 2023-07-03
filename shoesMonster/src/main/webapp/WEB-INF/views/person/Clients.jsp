@@ -449,7 +449,7 @@
 				<th>전화번호</th>
 				<th>휴대폰번호</th>
 				<th>팩스번호</th>
-				<th>email</th>
+				<th>이메일</th>
 				<th>비고</th>
 			</tr>
 			

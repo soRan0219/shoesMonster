@@ -13,8 +13,6 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import org.springframework.validation.BindingResult;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,18 +57,22 @@ public class PersonController {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
 		//페이지 정보
-		cpvo.setPageSize(2);
+		if(search.get("pageSize")!=null) {
+			int pageSize = Integer.parseInt(search.get("pageSize").toString());
+			cpvo.setPageSize(pageSize);
+		} else {
+			cpvo.setPageSize(2);
+		}
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
 		pm.setClientPageVO(cpvo);
-		pm.setPageBlock(2);
+		pm.setPageBlock(5);
 		
 		List<EmployeesVO> empList = new ArrayList<>();
-		logger.debug("empList : " + empList);
 		
 		// 검색 있을 때
-		if((search.get("search_empid")!=null && !search.get("search_empid").equals("")) || (search.get("search_empname")!=null && !search.get("search_empname").equals("")) || (search.get("search_empdepartment")!=null && !search.get("search_empdepartment").equals(""))) {
+		if((search.get("search_emp_id")!=null && !search.get("search_emp_id").equals("")) || (search.get("search_emp_name")!=null && !search.get("search_emp_name").equals("")) || (search.get("search_emp_department")!=null && !search.get("search_emp_department").equals(""))) {
 			
 			logger.debug("검색 : service 호출 @@@@@");
 			
@@ -109,18 +111,18 @@ public class PersonController {
 	}// empInfoGET()
 	
 	// 사원 추가
-	@RequestMapping(value = "/empAdd", method = RequestMethod.POST)
-	public String addEmployees(EmployeesVO evo) throws Exception {
+	@RequestMapping(value = "/addEmp", method = RequestMethod.POST)
+	public String addEmployees(EmployeesVO vo) throws Exception {
 		logger.debug(" addEmployees() 호출@@@@@ ");
-		logger.debug(" vo : " + evo);
+		logger.debug(" vo : " + vo);
 		
-		empService.regEmployees(evo);
+		empService.regEmployees(vo);
 		
 		return "redirect:/person/empinfo";
 	}// addEmployees()
 	
 	// 사원 삭제
-	@RequestMapping(value = "/empDelete", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteEmp", method = RequestMethod.POST)
 	public String deleteEmployees(@RequestParam(value="checked[]") List<String> checked) throws Exception {
 		logger.debug(" deleteEmployees() 호출@@@@@ ");
 		logger.debug(" checked : " + checked);
@@ -131,9 +133,21 @@ public class PersonController {
 		return "redirect:/person/empinfo";
 	} //deleteEmployees()
 	
+	//사원 수정 
+	@RequestMapping(value = "/modifyEmp", method = RequestMethod.POST)
+	public String modifyEmployees(EmployeesVO uvo) throws Exception {
+		logger.debug("modifyEmployees() 호출@@@@@");
+		logger.debug(" uvo : " + uvo);
+		
+		//서비스 - 작업지시 수정
+		empService.modifyEmployees(uvo);
+		
+		return "redirect:/person/empinfo";
+	} //modifyEmployees()
+	
 	// 사원 상세 조회 POST
 	@ResponseBody
-	@RequestMapping(value = "/empDetail", method = RequestMethod.POST)
+	@RequestMapping(value = "/detailEmp", method = RequestMethod.POST)
 	public EmployeesVO getEmployees(@RequestBody EmployeesVO evo) throws Exception {
 		logger.debug(" getEmployees() 호출@@@@@");
 		logger.debug(" emp_id " + evo.getEmp_id());
@@ -145,18 +159,6 @@ public class PersonController {
 		return preVO;
 	} //getEmployees()
 	
-	//작업지시 수정 
-	@RequestMapping(value = "/empModify", method = RequestMethod.POST)
-	public String modifyEmployees(EmployeesVO uvo) throws Exception {
-		logger.debug("modifyEmployees() 호출@@@@@");
-		logger.debug(" uvo : " + uvo);
-		
-		//서비스 - 작업지시 수정
-		empService.modifyEmployees(uvo);
-		
-		return "redirect:/person/empinfo";
-	} //modifyEmployees()
-	
 	
 	// http://localhost:8088/person/management
 	// 사원 권한 정보 조회 (GET)
@@ -166,18 +168,18 @@ public class PersonController {
 		logger.debug(" empManageGET() 호출@@@@@ ");
 		
 		//페이지 정보
-		cpvo.setPageSize(2);
+		cpvo.setPageSize(20);
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
 		pm.setClientPageVO(cpvo);
-		pm.setPageBlock(2);
+		pm.setPageBlock(5);
 		
 		List<ManagementVO> manageList = empService.getManagement();
 		List<EmployeesVO> empList = new ArrayList<>();
 		
 		// 검색 있을 때
-		if((search.get("search_empid")!=null && !search.get("search_empid").equals("")) || (search.get("search_empname")!=null && !search.get("search_empname").equals("")) || (search.get("search_empdepartment")!=null && !search.get("search_empdepartment").equals(""))) {
+		if((search.get("search_emp_id")!=null && !search.get("search_emp_id").equals("")) || (search.get("search_emp_name")!=null && !search.get("search_emp_name").equals("")) || (search.get("search_emp_department")!=null && !search.get("search_emp_department").equals(""))) {
 			
 			logger.debug("검색 : service 호출 @@@@@");
 			
@@ -211,6 +213,14 @@ public class PersonController {
 		}// else(모두)
 		
 	} // empManageGET()
+	
+	
+	// http://localhost:8088/empform
+	@RequestMapping(value = "/empform", method = RequestMethod.GET)
+	public void fileForm() throws Exception{
+		logger.debug(" fileForm 호출 @@@ ");
+	}
+	
 	
 	
 	// ===================================== 거래처 - /Person/Clients (GET) ========================================
