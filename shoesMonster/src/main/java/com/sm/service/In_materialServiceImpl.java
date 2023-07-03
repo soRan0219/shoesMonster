@@ -45,8 +45,8 @@ public class In_materialServiceImpl implements In_materialService{
 
 
 	@Override
-	public void inInsert(Raw_orderVO rvo, String raw_order_num) throws Exception {
-		idao.inInsert(rvo, raw_order_num);
+	public void inInsert(String raw_order_num) throws Exception {
+		idao.inInsert(raw_order_num);
 	}
 
 	
