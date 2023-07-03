@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -212,6 +211,15 @@ public class PerfomanceController {
 		}
 
 	}
+	
+	// 원자재관리 추가 시 code 값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "rawCode", method = RequestMethod.GET)
+    public String getRawCode() {
+		logger.debug(" getRawCode() 호출 ");
+		
+        return service.getRawCode();
+    }
 
 	// 원자재관리 정보 추가
 	@RequestMapping(value = "rawMaterial", method = RequestMethod.POST)

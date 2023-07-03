@@ -155,6 +155,12 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectList(NAMESPACE + ".readSearchRaw", data);
 	}
 	
+	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String readRawCode() {
+		return sqlSession.selectOne(NAMESPACE+".readRawCode");
+	}
+	
 	// 원자재관리 데이터 추가
 	@Override
 	public void insertRawList(RawMaterialVO raw) {

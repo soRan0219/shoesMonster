@@ -23,9 +23,14 @@
     } //openWindow()
     
 	
-	//추가 시 거래처 검색 
+	// 추가 시 거래처 검색 
     function serchClient(inputId){
     	openWindow("client",inputId);
+    }
+    
+    // 추가 시 창고 검색
+    function serchWh(inputId){
+    	openWindow("wh",inputId);
     }
 	
     	
@@ -332,10 +337,15 @@
 								}); // self.find(~~)
 		
 		
-								//거래처 검색 
+								// 거래처 검색 
 								$('#client_code').click(function() {
 									openWindow("client","client_code");
 								}); //client_code click
+								
+								// 창고 검색
+								$('#wh_code').click(function() {
+									openWindow("wh","wh_code");
+								}); // wh_code click
 		
 							
 							},

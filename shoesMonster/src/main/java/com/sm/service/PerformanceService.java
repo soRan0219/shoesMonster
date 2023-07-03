@@ -56,6 +56,9 @@ public interface PerformanceService {
 
 	// 원자재관리 검색리스트 불러오기
 	public List<RawMaterialVO> getRawList(RawMaterialVO vo, PagingVO pvo) throws Exception;
+	
+	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
+	public String getRawCode(); 
 
 	// 원자재관리 정보 다중 저장
 	public void insertRaw(List<RawMaterialVO> raw) throws Exception;

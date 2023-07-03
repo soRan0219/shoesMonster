@@ -16,16 +16,21 @@
 	// 팝업 옵션
 	const popupOpt = "top=60,left=140,width=600,height=600";
 	
-	//검색 팝업(거래처)
+	//검색 팝업(거래처,창고)
   	function openWindow(search, inputId) {
    	 	var url = "/workorder/search?type=" + search + "&input=" + inputId;
     	var popup = window.open(url, "", popupOpt);
     } //openWindow()
     
 	
-	//추가 시 거래처 검색 
+	// 추가 시 거래처 검색 
     function serchClient(inputId){
     	openWindow("client",inputId);
+    }
+    
+    // 추가 시 창고 검색
+    function serchWh(inputId){
+    	openWindow("wh",inputId);
     }
     
     
@@ -95,13 +100,48 @@
         	popUp();
         	
         	
+        	 // 추가 시 필요한 변수들
+
             var counter = 0;
+            var codeNum = 0;
+        	var rawCode = 0;
+            
+         	// 버튼 클릭시 addRow() 기능 불러오기
+            $('#addButton').click(function() {
+            	event.preventDefault();
+            	$('#modify').attr("disabled", true);
+    			$('#delete').attr("disabled", true);
+    			
+    			$.ajax({
+    				  url: "/performance/rawCode",
+    				  method: "GET",
+    				  dataType: "text",
+    				  success: function(data) {
+    				    // Ajax 요청 안에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
+    				    codeNum = data;
+    				    console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+    				    
+    				    // 변수에 할당된 데이터를 기반으로 추가 작업 수행
+    				    someFunction(codeNum);
+    				  }
+    				}); // ajax 끝
+
+    				function someFunction(data) {
+    					 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
+   						 var num = parseInt(codeNum.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+   						 var paddedNum = padNumber(num, codeNum.length - 1); // 숫자를 패딩하여 길이 유지
+   			             rawCode = codeNum.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+   			             addRow();
+   			             counter++;
+    				} // someFunction(data)
+            	
+            }); //  $('#addButton').click(function()
             
             // 추가 버튼 클릭 시 row 생성
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                    '<td><input type="text" name="raws[' + counter + '].raw_code" required></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" required></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_name"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_color"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_unit"></td>' +
@@ -115,17 +155,20 @@
                     '</tr>';
 
                 $('#rawTable').append(row);
-                counter++;
                 
             	 // 테이블이 많이 생성되면 스크롤바 생성
                 var table = document.getElementById('rawTable');
                 table.scrollTop = table.scrollHeight;
             }
+            
+            function padNumber(number, length) {
+                var paddedNumber = number.toString();
+                while (paddedNumber.length < length) {
+                    paddedNumber = "0" + paddedNumber;
+                }
+                return paddedNumber;
+       		 } // padNumber(number, length)
 
-            // 버튼 클릭시 addRow() 기능 불러오기
-            $('#addButton').click(function() {
-                addRow();
-            });
             
             // =============================================================================================================
  			
@@ -208,6 +251,11 @@
 								$('#client_code').click(function() {
 									openWindow("client","client_code");
 								}); //client_code click
+								
+								// 창고 검색
+								$('#wh_code').click(function() {
+									openWindow("wh","wh_code");
+								}); // wh_code click
 								
 							},
 							error : function(data) {
