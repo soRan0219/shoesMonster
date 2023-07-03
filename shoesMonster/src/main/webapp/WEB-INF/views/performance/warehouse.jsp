@@ -244,6 +244,8 @@
 				openWindow("emp", "emp_name");
 			}); // #emp_id click
 			
+			$(this).removeClass('true');
+			
 		}// if
 		
 		// 저장 -> 저장
@@ -267,7 +269,7 @@
 // 			if(wh_code == "" || wh_name == "" || wh_dv == "" || 
 // 			  (prod_code == "" || raw_code == "" ) || wh_addr == "" || wh_tel == "" || wh_use == ""){
 			if(wh_code == "" || wh_name == "" || 
-			  emp_name == "" || wh_addr == "" || wh_tel == "" || wh_use == ""){
+			  emp_id == "" || wh_addr == "" || wh_tel == "" || wh_use == ""){
 				alert("항목을 모두 입력하세요");
 			}else{
 				$('#fr').attr("action", "/performance/whadd");
@@ -304,155 +306,76 @@
 				
 				$(this).addClass('selected');
 				
-				// 여기까지 지우기
-				/////////////////////////////
-						// 라인코드 저장
-					let updateCode = $(this).find('#lineCode').text().trim();
-					console.log(updateCode);
-						
-					var jsonData = {
-						line_code : updateCode
-					};
-						
-					console.log(jsonData);
-						
-					var self = $(this);
-		
-					$.ajax({
-						url : "/performance/warehouse",
-						type : "post",
-						contentType : "application/json; charset=UTF-8",
-						dataType : "json",
-						data : JSON.stringify(jsonData),
-						success : function(data) {
-							// alert("*** 아작스 성공 ***");
-		
-						var preVOs = [
-							data.wh_code,
-							data.wh_name,
-							data.wh_addr,
-							data.wh_tel,
-							data.wh_use,
-							data.emp_id,
-							data.emp.emp_name,
-							data.wh_note,
-							];
-		
-							var names = [
-								"wh_code",
-								"wh_name",
-								"wh_addr",
-								"wh_tel",
-								"wh_use",
-								"emp_id",
-								"emp_name",
-								"wh_note"
-							];
-		
-						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
-						self.find('td').each(function(idx,item) {
-		
-							if(idx > 0){
-								inputCng($(this), "text", names[idx - 1], preVOs[idx - 1]);
-									if(idx == 5 ){
-										var dropDown = "<select id = 'wh_use' name = 'wh_use'>";
-											dropDown += "<option value = '1'>Y</option>";
-											dropDown += "<option value = '2'>N</option>";
-											dropDown += "</select>";
-											$(this).html(dropDown);
-											$(this).find('option').each(function () {
-												if(this.value == preVOs[idx - 1]){
-													$(this).attr("selected", true);
-												}
-										
-											});// this.find('option')
-									
-									}// if(idx==4)
-							
-							}//if(idx>0)
-		
-						}); // self.find(~~)
-		
-						// 등록자(사원) 검색
-						$('#emp_name').click(function () {
-						openWindow("emp", "emp_name");
-						}); // #emp_id click
-		
-						},
-						
-						error : function(data) {
-							alert("아작스 실패 ~~");
-						}
-					}); //ajax
-				
-				
-				/////////////////////////////////////
-				
-// 				// 창고코드 저장
-// 				let updateCode = $(this).find('#whCode').text().trim();
-// 				console.log(updateCode);
+				// 창고코드 저장
+				let updateCode = $(this).find('#whCode').text().trim();
+				console.log(updateCode);
 				
 // 				var jsonDate = {
 // 						whCode : updateCode
 // 				};
 				
-// 				var self = $(this);
-// 				var names = [
-// 						"wh_code",
-// 						"wh_name",
-// // 						"wh_dv",
-// // 						"prod_code", //"raw_code"
-// 						"wh_addr",
-// 						"wh_tel",
-// 						"wh_use",
-// 						"emp_id",
-// 						"emp_name",
-// 						"wh_note"
-// 					];
+				var self = $(this);
 				
-// 				// tr안 td 요소들 input으로 변경 후 기존 값 띄움
-// 				self.find('td').each(function (idx, item) {
+				var names = [
+						"wh_code",
+						"wh_name",
+// 						"wh_dv",
+// 						"prod_code", //"raw_code"
+						"wh_addr",
+						"wh_tel",
+						"wh_use",
+						"emp_id",
+						"emp_name",
+						"wh_note"
+					];
+				
+				// tr안 td 요소들 input으로 변경 후 기존 값 띄움
+				self.find('td').each(function (idx, item) {
 					
-// 					if(idx > 0){
-// 						inputCng($(this), "text", names[idx - 1], $(this).text());
+					if(idx > 0){
+						inputCng($(this), "text", names[idx - 1], $(this).text());
 						
 						
-// // 						if(idx == 3){
-// // 							var dropDown = "<select id='wh_dv' name='wh_dv'>";
-// // 							 	dropDown += "<option>완제품</option>";
-// // 							 	dropDown += "<option>원자재</option>";
-// // 							 	dropDown += "</select>";
-							 	
-// // 								$(this).html(dropDown);
-// // 								$(this).find('option').each(function () {
-// // 									if(this.value == $(this).text()){
-// // 										$(this).attr("selected", true);
-// // 									}
-						
-// // 								});// this.find('option')						
-						
-// // 						}//if(idx==3)
-// 						if(idx == 5){
-// 							var dropDown = "<select id='wh_use' name='wh_use'>";
-// 							 	dropDown += "<option value='1'>Y</option>";
-// 							 	dropDown += "<option value='2'>N</option>";
+// 						if(idx == 3){
+// 							var dropDown = "<select id='wh_dv' name='wh_dv'>";
+// 							 	dropDown += "<option>완제품</option>";
+// 							 	dropDown += "<option>원자재</option>";
 // 							 	dropDown += "</select>";
-						 	
+							 	
 // 								$(this).html(dropDown);
 // 								$(this).find('option').each(function () {
 // 									if(this.value == $(this).text()){
 // 										$(this).attr("selected", true);
 // 									}
-					
-// 							});// this.find('option')	
+						
+// 								});// this.find('option')						
+						
+// 						}//if(idx==3)
+						if(idx == 5){
 							
-// 						}//idx==5
-// 						if(idx == 6){
-// 							inputCng($(this), "hidden", names[idx - 1], $(this).text());
-// 						}
-// 					}// if
+							var origin = $(this).find("input").val();
+						
+							var dropDown = "<select id='wh_use' name='wh_use'>";
+							 	dropDown += "<option value='1'>Y</option>";
+							 	dropDown += "<option value='2'>N</option>";
+							 	dropDown += "</select>";
+						 	
+								$(this).html(dropDown);
+								
+								$(this).find('option').each(function () {
+									if(origin == $(this).text()){
+										$(this).attr("selected", true);
+									}
 					
-// 				});//self.find
+							});// this.find('option')	
+							
+						}//idx==5
+						if(idx == 6){
+							inputCng($(this), "hidden", names[idx - 1], $(this).text());
+						}
+					}// if
+					
+				});//self.find
 				
 // 				//품번 검색 팝업(prod)
 // // 				$('#search_prod').click(function() {
@@ -464,10 +387,10 @@
 // // 					openWindow("raw", "search_raw");
 // // 				}); //rawCode click
 
-// 				// 등록자(사원) 검색
-// 				$('#emp_name').click(function () {
-// 					openWindow("emp", "emp_name");
-// 				}); // #emp_id click
+				// 등록자(사원) 검색
+				$('#emp_name').click(function () {
+					openWindow("emp", "emp_name");
+				}); // #emp_id click
 				
 				////////////////////////////////////////////////////
 				
