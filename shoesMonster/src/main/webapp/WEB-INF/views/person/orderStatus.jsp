@@ -20,14 +20,14 @@ function popUp() {
 	
 	
 	// vvvvvvvvvvvvvvvvvv 페이징 완료하면 주석 풀기 ~~ vvvvvvvvvvvvvvvvvvvvv
-// 	$('#pagination a').each(function(){
+	$('#pagination a').each(function(){
 		
-//    		var prHref = $(this).attr("href");
+   		var prHref = $(this).attr("href");
    		
-//    		var newHref = prHref + "&input=" + isPop;
-//    			$(this).attr("href", newHref);
+   		var newHref = prHref + "&input=" + isPop;
+   			$(this).attr("href", newHref);
 			
-// 	}); //페이징 요소
+	}); //페이징 요소
 
 
 			
@@ -44,7 +44,11 @@ function popUp() {
    			$(this).css('background', '#ccc');
     			
    			var orderCode = $(this).find('#orderCode').text();
-     			
+   			var prodCode = $(this).find('#prodCode').text();
+     		
+   			if(isPop === "order_code") {
+   				$('#prod_code', opener.document).val(prodCode);
+   			}
  			$('#'+isPop, opener.document).val(orderCode);
      			
      		window.close();
@@ -147,7 +151,7 @@ $(function(){
 
 	<h1>수주 현황</h1>
 	
-	<form action="" method="get">
+	<form method="get">
 		<input type="hidden" name="input" id="input" value="${input }">
 		업체 <input type="text" name="client_code">
 		수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
@@ -158,14 +162,30 @@ $(function(){
 		담당자 <input type="text" name="emp_id">
 		납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate">
 				    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
-		출하완료여부 
-		<select name="order_finish">
-			<option selected value= "전체">전체</option>
-			<option value="Y">Y</option>
-			<option value="N">N</option>
-		</select>
+<!-- 		출하완료여부  -->
+<!-- 		<select name="order_finish"> -->
+<!-- 			<option selected value= "전체">전체</option> -->
+<!-- 			<option value="Y">Y</option> -->
+<!-- 			<option value="N">N</option> -->
+<!-- 		</select> -->
 	</form>
 	
+	<!-- //////////////////////////////////////////////////////////////////////// -->	
+	<br>
+	
+	<button id="add" class="true">추가</button>
+	<button id="modify" >수정</button>
+	<button id="delete" class="true">삭제</button>
+	<button type="reset" id="cancle" >취소</button>
+	<button type="submit" id="save">저장</button>
+	<button onclick="location.reload()">새로고침</button>
+
+	<br>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+	
+	<form id="fr">
+	
+	총 ${pm.totalCount } 건
 	
 	<table border="1" id="">
 		<tr>
@@ -179,59 +199,76 @@ $(function(){
 			<th>단위</th>
 			<th>납품예정일</th>
 			<th>수주량</th>
-			<th>완료여부</th>
+<!-- 			<th>완료여부</th> -->
 		</tr>
 		
-		<c:forEach var="vo" items="${orderStatusList }" varStatus="i">
-			<c:if test="${vo.orders.order_finish == '전체' }">
+		<c:forEach var="vo" items="${searchOrderStatusList }" varStatus="i">
+<%-- 			<c:if test="${vo.orders.order_finish == '전체' }"> --%>
 				<tr>
 					<td>${i.count }</td>
 					<td id="orderCode">${vo.orders.order_code}</td>
 					<td>${vo.orders.client_code}</td>
 					<td>${vo.orders.order_date}</td>
 					<td>${vo.orders.emp_id}</td>
-					<td>${vo.prod_code}</td>
+					<td id="prodCode">${vo.prod_code}</td>
 					<td>${vo.prod_name}</td>
 					<td>${vo.prod_unit}</td>
 					<td>${vo.orders.order_deliveryDate}</td>
 					<td>${vo.orders.order_count}</td>
-					<td><input type="checkbox">${vo.orders.order_finish}</td>
 				</tr>
-			</c:if>
+<%-- 			</c:if> --%>
 			
-			<c:if test="${vo.orders.order_finish == 'Y' }">
-				<tr>
-					<td>${i.count }</td>
-					<td>${vo.orders.order_code}</td>
-					<td>${vo.orders.client_code}</td>
-					<td>${vo.orders.order_date}</td>
-					<td>${vo.orders.emp_id}</td>
-					<td>${vo.prod_code}</td>
-					<td>${vo.prod_name}</td>
-					<td>${vo.prod_unit}</td>
-					<td>${vo.orders.order_deliveryDate}</td>
-					<td>${vo.orders.order_count}</td>
-					<td><input type="checkbox">${vo.orders.order_finish}</td>
-				</tr>
-			</c:if>
+<%-- 			<c:if test="${vo.orders.order_finish == 'Y' }"> --%>
+<!-- 				<tr> -->
+<%-- 					<td>${i.count }</td> --%>
+<%-- 					<td>${vo.orders.order_code}</td> --%>
+<%-- 					<td>${vo.orders.client_code}</td> --%>
+<%-- 					<td>${vo.orders.order_date}</td> --%>
+<%-- 					<td>${vo.orders.emp_id}</td> --%>
+<%-- 					<td>${vo.prod_code}</td> --%>
+<%-- 					<td>${vo.prod_name}</td> --%>
+<%-- 					<td>${vo.prod_unit}</td> --%>
+<%-- 					<td>${vo.orders.order_deliveryDate}</td> --%>
+<%-- 					<td>${vo.orders.order_count}</td> --%>
+<%-- 					<td><input type="checkbox">${vo.orders.order_finish}</td> --%>
+<!-- 				</tr> -->
+<%-- 			</c:if> --%>
 			
-			<c:if test="${vo.orders.order_finish == 'N' }">
-				<tr>
-					<td>${i.count }</td>
-					<td>${vo.orders.order_code}</td>
-					<td>${vo.orders.client_code}</td>
-					<td>${vo.orders.order_date}</td>
-					<td>${vo.orders.emp_id}</td>
-					<td>${vo.prod_code}</td>
-					<td>${vo.prod_name}</td>
-					<td>${vo.prod_unit}</td>
-					<td>${vo.orders.order_deliveryDate}</td>
-					<td>${vo.orders.order_count}</td>
-					<td><input type="checkbox">${vo.orders.order_finish}</td>
-				</tr>
-			</c:if>
+<%-- 			<c:if test="${vo.orders.order_finish == 'N' }"> --%>
+<!-- 				<tr> -->
+<%-- 					<td>${i.count }</td> --%>
+<%-- 					<td>${vo.orders.order_code}</td> --%>
+<%-- 					<td>${vo.orders.client_code}</td> --%>
+<%-- 					<td>${vo.orders.order_date}</td> --%>
+<%-- 					<td>${vo.orders.emp_id}</td> --%>
+<%-- 					<td>${vo.prod_code}</td> --%>
+<%-- 					<td>${vo.prod_name}</td> --%>
+<%-- 					<td>${vo.prod_unit}</td> --%>
+<%-- 					<td>${vo.orders.order_deliveryDate}</td> --%>
+<%-- 					<td>${vo.orders.order_count}</td> --%>
+<%-- 					<td><input type="checkbox">${vo.orders.order_finish}</td> --%>
+<!-- 				</tr> -->
+<%-- 			</c:if> --%>
+
 		</c:forEach>
 	</table>
+	</form>
+	
+	<div id="pagination">
+		<c:if test="${pm.prev }">
+			<a href="/person/orderStatus?page=${pm.startPage - 1 }&pageSize=${pm.clientPageVO.pageSize }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&search_prod=${search.search_prod}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
+		</c:if>
+		
+		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+			<a href="/person/orderStatus?page=${page }&pageSize=${pm.clientPageVO.pageSize }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&search_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&search_prod=${search.search_prod}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
+		</c:forEach>
+
+		<c:if test="${pm.next }">
+			<a href="/person/orderStatus?page=${pm.endPage + 1 }&pageSize=${pm.clientPageVO.pageSize }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&search_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&search_prod=${search.search_prod}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
+		</c:if>
+	</div>
+
+	<div id="details"></div>
 	
 </div>
 <!-- /page content -->

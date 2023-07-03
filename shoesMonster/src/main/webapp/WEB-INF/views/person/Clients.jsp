@@ -66,8 +66,6 @@
 		popUp();
 	});
 
-
-
 	
 	// ==================================== 버튼 =================================================
 		
@@ -112,7 +110,7 @@
 				tbl += " </td>";
 				// 거래처 코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_code'' id='client_code' readonly>";
+				tbl += "  <input type='text' name='client_code'' id='client_code2' readonly>";
 				tbl += " </td>";
 				// 거래처명
 				tbl += " <td>";
@@ -190,7 +188,7 @@
 			// 저장 -> form 제출하고 저장함
 			$('#saveButton').click(function() {
 
-				var client_code = $('#client_code').val();
+				var client_code = $('#client_code2').val();
 				var client_actname = $('#client_actname').val();
 				var client_type = $('#client_type').val();
 				var client_number = $('#client_number').val();
@@ -205,9 +203,15 @@
 				var client_email = $('#client_email').val();
 				var client_note = $('#client_note').val();
 
-				if (client_code == "" || client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
-						|| client_ceo == "" || client_name == "" || client_addr == "" || client_addr2 == "" || client_tel == "" 
-						|| client_phone == "" || client_fax == "" || client_email == "" || client_note == "") {
+				if (client_code == "" 
+						
+// 						|| client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
+// 						|| client_ceo == "" || client_name == "" || client_addr == "" || client_addr2 == "" || client_tel == "" 
+// 						|| client_phone == "" || client_fax == "" || client_email == "" || client_note == ""
+// 나중에 최종 수정 다끝나면 주석 풀기
+						
+				) {
+					alert("client_code"+client_code);
 					alert("항목을 모두 입력하세요");
 				} else {
 					$('#fr').attr("action", "/person/addClient");
@@ -276,11 +280,11 @@
 							data : {checked : checked},
 							dataType : "text",
 							success : function() {
-								alert("*** 아작스 성공 ***");
+								alert("삭제");
 								location.reload();
 							},
 							error : function() {
-								alert("아작스실패~~");
+								alert("삭제 실패");
 							}
 						}); //ajax
 
@@ -420,134 +424,113 @@
 
 	<hr>
 	
-	거래처 총 ${pm.totalCount } 건
-	<input type="button" value="추가" id="addButton" class="true">
-	<input type="button" value="수정" id="updateButton">
-	<input type="button" value="삭제" id="deleteButton" class="true">
-	<input type="button" value="취소" id="cancelButton">
-	<input type="button" value="저장" id="saveButton">
-
-
-	<table border="1" id="clientsTable">
-		<tr>
-			<th></th>
-			<th>거래처코드</th>
-			<th>거래처명</th>
-			<th>거래처구분</th>
-			<th>사업자번호</th>
-			<th>업태</th>
-			<th>대표자</th>
-			<th>담당자</th>
-			<th>주소</th>
-			<th>상세주소</th>
-			<th>전화번호</th>
-			<th>휴대폰번호</th>
-			<th>팩스번호</th>
-			<th>email</th>
-			<th>비고</th>
-		</tr>
+	<form id="fr">
+	
+		거래처 총 ${pm.totalCount } 건
+		<input type="button" value="추가" id="addButton" class="true">
+		<input type="button" value="수정" id="updateButton">
+		<input type="button" value="삭제" id="deleteButton" class="true">
+		<input type="button" value="취소" id="cancelButton">
+		<input type="button" value="저장" id="saveButton">
+	
+	
+		<table border="1" id="clientsTable">
+			<tr>
+				<th></th>
+				<th>거래처코드</th>
+				<th>거래처명</th>
+				<th>거래처구분</th>
+				<th>사업자번호</th>
+				<th>업태</th>
+				<th>대표자</th>
+				<th>담당자</th>
+				<th>주소</th>
+				<th>상세주소</th>
+				<th>전화번호</th>
+				<th>휴대폰번호</th>
+				<th>팩스번호</th>
+				<th>email</th>
+				<th>비고</th>
+			</tr>
+			
+			<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
+				<c:if test="${vo.client_type == '전체' }">
+					<tr>
+						<td>${i.count }</td>
+						<td id="client_code">${vo.client_code}</td>
+						<td id="client_actname">${vo.client_actname}</td>
+						<td>${vo.client_type}</td>
+						<td>${vo.client_number}</td>
+						<td>${vo.client_sort}</td>
+						<td>${vo.client_ceo}</td>
+						<td>${vo.client_name}</td>
+						<td>${vo.client_addr}</td>
+						<td>${vo.client_addr2}</td>
+						<td>${vo.client_tel}</td>
+						<td>${vo.client_phone}</td>
+						<td>${vo.client_fax}</td>
+						<td>${vo.client_email}</td>
+						<td>${vo.client_note}</td>
+					</tr>
+				</c:if>
+					
+				<c:if test="${vo.client_type == '발주처' }">
+					<tr>
+						<td>${i.count }</td>
+						<td id="client_code">${vo.client_code}</td>
+						<td id="client_actname">${vo.client_actname}</td>
+						<td>${vo.client_type}</td>
+						<td>${vo.client_number}</td>
+						<td>${vo.client_sort}</td>
+						<td>${vo.client_ceo}</td>
+						<td>${vo.client_name}</td>
+						<td>${vo.client_addr}</td>
+						<td>${vo.client_addr2}</td>
+						<td>${vo.client_tel}</td>
+						<td>${vo.client_phone}</td>
+						<td>${vo.client_fax}</td>
+						<td>${vo.client_email}</td>
+						<td>${vo.client_note}</td>
+					</tr>
+				</c:if>
+					
+				<c:if test="${vo.client_type == '수주처' }">
+					<tr>
+						<td>${i.count }</td>
+						<td id="client_code">${vo.client_code}</td>
+						<td id="client_actname">${vo.client_actname}</td>
+						<td>${vo.client_type}</td>
+						<td>${vo.client_number}</td>
+						<td>${vo.client_sort}</td>
+						<td>${vo.client_ceo}</td>
+						<td>${vo.client_name}</td>
+						<td>${vo.client_addr}</td>
+						<td>${vo.client_addr2}</td>
+						<td>${vo.client_tel}</td>
+						<td>${vo.client_phone}</td>
+						<td>${vo.client_fax}</td>
+						<td>${vo.client_email}</td>
+						<td>${vo.client_note}</td>
+					</tr>
+				</c:if>
+			</c:forEach>
+		</table>
+		</form>
+	
 		
-		<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
-			<c:if test="${vo.client_type == '전체' }">
-				<tr>
-					<td>${i.count }</td>
-					<td id="client_code">${vo.client_code}</td>
-					<td id="client_actname">${vo.client_actname}</td>
-					<td>${vo.client_type}</td>
-					<td>${vo.client_number}</td>
-					<td>${vo.client_sort}</td>
-					<td>${vo.client_ceo}</td>
-					<td>${vo.client_name}</td>
-					<td>${vo.client_addr}</td>
-					<td>${vo.client_addr2}</td>
-					<td>${vo.client_tel}</td>
-					<td>${vo.client_phone}</td>
-					<td>${vo.client_fax}</td>
-					<td>${vo.client_email}</td>
-					<td>${vo.client_note}</td>
-				</tr>
-			</c:if>
-				
-			<c:if test="${vo.client_type == '발주처' }">
-				<tr>
-					<td>${i.count }</td>
-					<td id="client_code">${vo.client_code}</td>
-					<td id="client_actname">${vo.client_actname}</td>
-					<td>${vo.client_type}</td>
-					<td>${vo.client_number}</td>
-					<td>${vo.client_sort}</td>
-					<td>${vo.client_ceo}</td>
-					<td>${vo.client_name}</td>
-					<td>${vo.client_addr}</td>
-					<td>${vo.client_addr2}</td>
-					<td>${vo.client_tel}</td>
-					<td>${vo.client_phone}</td>
-					<td>${vo.client_fax}</td>
-					<td>${vo.client_email}</td>
-					<td>${vo.client_note}</td>
-				</tr>
-			</c:if>
-				
-			<c:if test="${vo.client_type == '수주처' }">
-				<tr>
-					<td>${i.count }</td>
-					<td id="client_code">${vo.client_code}</td>
-					<td id="client_actname">${vo.client_actname}</td>
-					<td>${vo.client_type}</td>
-					<td>${vo.client_number}</td>
-					<td>${vo.client_sort}</td>
-					<td>${vo.client_ceo}</td>
-					<td>${vo.client_name}</td>
-					<td>${vo.client_addr}</td>
-					<td>${vo.client_addr2}</td>
-					<td>${vo.client_tel}</td>
-					<td>${vo.client_phone}</td>
-					<td>${vo.client_fax}</td>
-					<td>${vo.client_email}</td>
-					<td>${vo.client_note}</td>
-				</tr>
+		<div id="pagination">
+			<c:if test="${pm.prev }">
+				<a href="/person/Clients?page=${pm.startPage - 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> ⏪ </a>
 			</c:if>
 			
-			<c:if test="${vo.client_type == '협력사' }">
-				<tr>
-					<td>${i.count }</td>
-					<td id="client_code">${vo.client_code}</td>
-					<td id="client_actname">${vo.client_actname}</td>
-					<td>${vo.client_type}</td>
-					<td>${vo.client_number}</td>
-					<td>${vo.client_sort}</td>
-					<td>${vo.client_ceo}</td>
-					<td>${vo.client_name}</td>
-					<td>${vo.client_addr}</td>
-					<td>${vo.client_addr2}</td>
-					<td>${vo.client_tel}</td>
-					<td>${vo.client_phone}</td>
-					<td>${vo.client_fax}</td>
-					<td>${vo.client_email}</td>
-					<td>${vo.client_note}</td>
-				</tr>
-			</c:if>
-		</c:forEach>
-		
-	</table>
-<%-- 		${vo.client_useyn} 사용여부 -> 그냥 삭제용으로 쓰는 체크박스 --%>
-
+			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+				<a href="/person/Clients?page=${page }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}">${page }</a>
+			</c:forEach>
 	
-<%-- 	search : ${search } --%>
-
-	<div id="pagination">
-		<c:if test="${pm.prev }">
-			<a href="/person/Clients?page=${pm.startPage - 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> ⏪ </a>
-		</c:if>
-		
-		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-			<a href="/person/Clients?page=${page }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}">${page }</a>
-		</c:forEach>
-
-		<c:if test="${pm.next }">
-			<a href="/person/Clients?page=${pm.endPage + 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> ⏩ </a>
-		</c:if>
-	</div>
+			<c:if test="${pm.next }">
+				<a href="/person/Clients?page=${pm.endPage + 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> ⏩ </a>
+			</c:if>
+		</div>
 
 	<div id="details"></div>
 		

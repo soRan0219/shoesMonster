@@ -13,11 +13,11 @@ public class WarehouseVO {
 	private String wh_note;
 	private String prod_code;
 	private String raw_code;
-	
+	private String emp_id;
 	
 	private ProductVO product;
 	private RawMaterialVO raw_mat;
-	
+	private StockVO stock;
 	
 	public WarehouseVO() {
 		product = new ProductVO();

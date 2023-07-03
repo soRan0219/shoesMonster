@@ -1,7 +1,5 @@
 package com.sm.domain;
 
-
-
 import lombok.Data;
 
 @Data
@@ -17,16 +15,15 @@ public class ProductVO {
 	private String prod_note;
 	private String wh_code;
 	
+	private ClientsVO clients;
+	private Wh_prodVO wh;
 	private OrderStatusVO orders;
-	private ClientsVO client;
-	private Out_materialVO out_mat;
 	
 	public ProductVO() {
+		clients = new ClientsVO();
+		wh = new Wh_prodVO();
 		orders = new OrderStatusVO();
-		client = new ClientsVO();
-		out_mat = new Out_materialVO();
-	
-	
 	}
+	
 	
 } //productVO

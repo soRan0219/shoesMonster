@@ -10,17 +10,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sm.domain.ClientPageMaker;
 import com.sm.domain.ClientPageVO;
 import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
-import com.sm.domain.LineWhPageMaker;
-import com.sm.domain.LineWhPageVO;
 import com.sm.domain.ManagementVO;
 import com.sm.domain.OrderStatusVO;
 import com.sm.service.ClientsService;
@@ -45,22 +48,24 @@ public class PersonController {
 	
 	
 	// http://localhost:8088/person/empinfo
+	// http://localhost:8080/person/empinfo
 	// 사원 목록 조회 (GET)
 	@RequestMapping(value = "/empinfo", method = RequestMethod.GET)
-	public void empInfoGET(Model model, LineWhPageVO pvo,
+	public void empInfoGET(Model model, ClientPageVO cpvo, 
 			@RequestParam HashMap<String, Object> search,
-			@RequestParam(value = "input", required = false) String input) throws Exception {
+			@RequestParam(value = "input", required = false) Object input) throws Exception {
+
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
 		//페이지 정보
-		pvo.setPageSize(2);
+		cpvo.setPageSize(2);
 		
 		//페이징 하단부 정보
-		LineWhPageMaker pm = new LineWhPageMaker();
-		pm.setLwPageVO(pvo);
+		ClientPageMaker pm = new ClientPageMaker();
+		pm.setClientPageVO(cpvo);
 		pm.setPageBlock(2);
 		
-		List<EmployeesVO> empList = empService.getEmpList(pvo);
+		List<EmployeesVO> empList = new ArrayList<>();
 		logger.debug("empList : " + empList);
 		
 		// 검색 있을 때
@@ -68,15 +73,15 @@ public class PersonController {
 			
 			logger.debug("검색 : service 호출 @@@@@");
 			
-			search.put("startPage", pvo.getStartPage());
-			search.put("pageSize", pvo.getPageSize());
+			search.put("startPage", cpvo.getStartPage());
+			search.put("pageSize", cpvo.getPageSize());
 			
 			// 서비스 - 작업지시 검색
-			empList = empService.searchEmployees(search);
+			empList = empService.getSearchEmployeesList(search);
 			logger.debug(" empList 검색 결과 : " + empList);
 			
 			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
-			pm.setTotalCount(empService.getSearchEmployees(search));
+			pm.setTotalCount(empService.getTotalEmployees());
 			
 			model.addAttribute("search", search);
 			model.addAttribute("empList", empList);
@@ -95,7 +100,7 @@ public class PersonController {
 			logger.debug(" 전체 작업지시 수 : " + empService.getTotalEmployees());
 			pm.setTotalCount(empService.getTotalEmployees());
 			
-			empList = empService.getEmpList(pvo);
+			empList = empService.getEmpList(cpvo);
 			
 			model.addAttribute("empList", empList);
 			model.addAttribute("pm", pm);
@@ -103,29 +108,68 @@ public class PersonController {
 	}// empInfoGET()
 	
 	// 사원 추가
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addEmployees(EmployeesVO vo) throws Exception {
+	@RequestMapping(value = "/empAdd", method = RequestMethod.POST)
+	public String addEmployees(EmployeesVO evo) throws Exception {
 		logger.debug(" addEmployees() 호출@@@@@ ");
-		logger.debug(" vo : " + vo);
+		logger.debug(" vo : " + evo);
 		
-		empService.regEmployees(vo);
+		empService.regEmployees(evo);
 		
 		return "redirect:/person/empinfo";
 	}// addEmployees()
 	
+	// 사원 삭제
+	@RequestMapping(value = "/empDelete", method = RequestMethod.POST)
+	public String deleteEmployees(@RequestParam(value="checked[]") List<String> checked) throws Exception {
+		logger.debug(" deleteEmployees() 호출@@@@@ ");
+		logger.debug(" checked : " + checked);
+		
+		//서비스 - 작업지시 삭제 
+		empService.removeEmployees(checked);
+		
+		return "redirect:/person/empinfo";
+	} //deleteEmployees()
+	
+	// 사원 상세 조회 POST
+	@ResponseBody
+	@RequestMapping(value = "/empDetail", method = RequestMethod.POST)
+	public EmployeesVO getEmployees(@RequestBody EmployeesVO evo) throws Exception {
+		logger.debug(" getEmployees() 호출@@@@@");
+		logger.debug(" emp_id " + evo.getEmp_id());
+		
+		//서비스 - 작업지시 정보 가져오기
+		EmployeesVO preVO = empService.getEmployees(evo.getEmp_id());
+		logger.debug(" preVO = " + preVO);
+		
+		return preVO;
+	} //getEmployees()
+	
+	//작업지시 수정 
+	@RequestMapping(value = "/empModify", method = RequestMethod.POST)
+	public String modifyEmployees(EmployeesVO uvo) throws Exception {
+		logger.debug("modifyEmployees() 호출@@@@@");
+		logger.debug(" uvo : " + uvo);
+		
+		//서비스 - 작업지시 수정
+		empService.modifyEmployees(uvo);
+		
+		return "redirect:/person/empinfo";
+	} //modifyEmployees()
+	
+	
 	// http://localhost:8088/person/management
 	// 사원 권한 정보 조회 (GET)
 	@RequestMapping(value = "/management", method = RequestMethod.GET)
-	public void empManageGET(Model model, LineWhPageVO pvo,
+	public void empManageGET(Model model, ClientPageVO cpvo,
 			@RequestParam HashMap<String, Object> search) throws Exception {
 		logger.debug(" empManageGET() 호출@@@@@ ");
 		
 		//페이지 정보
-		pvo.setPageSize(2);
+		cpvo.setPageSize(2);
 		
 		//페이징 하단부 정보
-		LineWhPageMaker pm = new LineWhPageMaker();
-		pm.setLwPageVO(pvo);
+		ClientPageMaker pm = new ClientPageMaker();
+		pm.setClientPageVO(cpvo);
 		pm.setPageBlock(2);
 		
 		List<ManagementVO> manageList = empService.getManagement();
@@ -136,15 +180,15 @@ public class PersonController {
 			
 			logger.debug("검색 : service 호출 @@@@@");
 			
-			search.put("startPage", pvo.getStartPage());
-			search.put("pageSize", pvo.getPageSize());
+			search.put("startPage", cpvo.getStartPage());
+			search.put("pageSize", cpvo.getPageSize());
 			
 			// 서비스 - 작업지시 검색
-			empList = empService.searchEmployees(search);
+			empList = empService.getSearchEmployeesList(search);
 			logger.debug(" empList 검색 결과 : " + empList);
 			
 			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
-			pm.setTotalCount(empService.getSearchEmployees(search));
+			pm.setTotalCount(empService.getTotalEmployees());
 			
 			model.addAttribute("search", search);
 			model.addAttribute("management", manageList);
@@ -158,7 +202,7 @@ public class PersonController {
 			logger.debug(" 전체 작업지시 수 : " + empService.getTotalEmployees());
 			pm.setTotalCount(empService.getTotalEmployees());
 			
-			empList = empService.getEmpList(pvo);
+			empList = empService.getEmpList(cpvo);
 			
 			model.addAttribute("manageList", manageList);
 			model.addAttribute("empList", empList);
@@ -168,7 +212,8 @@ public class PersonController {
 	} // empManageGET()
 	
 	
-	// ========== 거래처 - /Person/Clients (GET) =========
+	// ===================================== 거래처 - /Person/Clients (GET) ========================================
+	
 	// http://localhost:8088/person/Clients
 	@RequestMapping(value="/Clients", method = RequestMethod.GET)
 	public void ClientsGET(ClientPageVO cpvo, 
@@ -217,9 +262,6 @@ public class PersonController {
 			}
 		} // if(검색)
 
-
-
-		
 		// 검색 없을 때
 		else {
 			// 전체 글 개수
@@ -238,10 +280,6 @@ public class PersonController {
 				logger.debug("@@@ input 정보 전달 @@@");
 			}
 		}
-
-
-		
-		
 	} // ClientsGET()
 	
 	// 거래처 추가
@@ -253,7 +291,7 @@ public class PersonController {
 		clService.regClient(cvo);
 		
 		return "redirect:/person/Clients";
-	} // 거래처 추가
+	} 
 	
 	// 거래처 삭제
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
@@ -276,64 +314,112 @@ public class PersonController {
 		return "redirect:/person/Clients";
 	}
 	
+	// ================================================= 거래처 ============================================================
 	
 	
+	// ================================================ 수주 현황 ==========================================================
 	
-	// ========== 거래처 ===================================
-	
-	
-	// ========= 수주 현황 =================================
 	// http://localhost:8088/person/orderStatus
 	@RequestMapping(value="/orderStatus", method = RequestMethod.GET)
-	public void orderStatusGET(Model model, @RequestParam HashMap<String, Object> search) throws Exception {
-		logger.debug("cnotroller : orderStatusGET(Model model) 호출");
+	public void orderStatusGET(Model model, ClientPageVO cpvo, 
+								@RequestParam HashMap<String, Object> search, 
+								@RequestParam(value="input", required = false) Object input) throws Exception {
+		logger.debug("@@@ cnotroller : orderStatusGET() 호출 @@@");
 		
-		// service - DB에 저장된 글 정보 가져오기
-		List<OrderStatusVO> orderStatusList = osService.getOsList();
-		logger.debug("@@@ cnotroller orderStatusList : "+ orderStatusList );
-		
-		model.addAttribute("orderStatusList", orderStatusList);
-		
-		logger.debug("@@@ cnotroller search : " + search);
-		
-		logger.debug("@@@ cnotroller client_code : " + search.get("client_code"));
-		
-		// 검색
-		if(search.get("client_code") != null  || search.get("prod_code") != null 
-				|| search.get("emp_id") != null || search.get("order_finish") != null 
-				|| search.get("order_date_fromDate") != null || search.get("order_date_toDate") != null
-				|| search.get("order_deliveryDate_fromDate") != null || search.get("order_deliveryDate_toDate") != null ) {
-			List<OrderStatusVO> searchOrderStatusList = osService.getSearchOrderStatus(search);
-			model.addAttribute("orderStatusList", searchOrderStatusList);
-			
-			logger.debug("searchOrderStatusList" + searchOrderStatusList);
-			
-			logger.debug("@@@ cnotroller : 수주현황 검색 리스트 호출 @@@");
+		// 페이지 정보
+		if(search.get("pageSize")!=null) {
+			int pageSize = Integer.parseInt(search.get("pageSize").toString());
+			cpvo.setPageSize(pageSize);
+		} else {
+			cpvo.setPageSize(10);
 		}
-	}
+		
+		// 페이지 하단부 정보
+		ClientPageMaker pm = new ClientPageMaker();
+		pm.setClientPageVO(cpvo);
+		pm.setPageBlock(10);
+		
+		List<OrderStatusVO> searchOrderStatusList = new ArrayList<>();
+		
+		// 검색 있을 때
+		if((search.get("client_code") != null && !search.get("client_code").equals("")) 
+				|| (search.get("prod_code") != null && !search.get("prod_code").equals(""))
+				|| (search.get("emp_id") != null && !search.get("emp_id").equals(""))
+				|| (search.get("order_finish") != null && !search.get("order_finish").equals(""))
+				|| (search.get("order_date_fromDate") != null && !search.get("order_date_fromDate").equals(""))
+				|| (search.get("order_date_toDate") != null && !search.get("order_date_toDate").equals(""))
+				|| (search.get("order_deliveryDate_fromDate") != null && !search.get("order_deliveryDate_fromDate").equals(""))
+				|| (search.get("order_deliveryDate_toDate") != null && !search.get("order_deliveryDate_toDate").equals(""))) {
+			
+			search.put("startPage", cpvo.getStartPage());
+			search.put("pageSize", cpvo.getPageSize());
+			
+			// 검색
+			pm.setTotalCount(osService.getSearchCountOrderStatus(search));
+			
+			searchOrderStatusList = osService.getSearchOrderStatus(search);
+			logger.debug("@@@ cnotroller 검색결과 list 호출 = " + searchOrderStatusList);
+			
+			model.addAttribute("search", search);
+			model.addAttribute("searchOrderStatusList", searchOrderStatusList);
+			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@orderStatusList : "+searchOrderStatusList);
+			model.addAttribute("pm", pm);
+			
+			
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@ cnotroller : input 정보 전달");
+			} // if(검색)
+		}
+		// 검색 없을 때
+		else {
+			logger.debug("@@@ cnotroller 전체 수주현황 수 : "+ osService );
+			
+			pm.setTotalCount(osService.getTotalOrderStatus());
+			
+			searchOrderStatusList = osService.getOsList(cpvo);
+			
+			model.addAttribute("searchOrderStatusList", searchOrderStatusList);
+			model.addAttribute("pm", pm);
+			
+			if(input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@ controller : input 정보 전달");
+			}
+		} // else
+	} // orderStatusGET()
 	
-	// 검색2
-//	@ResponseBody
-//	@RequestMapping(value = "/orderStatus", method = RequestMethod.POST)
-//	public List<OrderStatusVO> searchOrderStatusPOST(@RequestBody HashMap<String, Object> search) throws Exception {
-//		logger.debug("@@@ searchOrderStatusPOST(@RequestBody HashMap<String, Object> search) 호출 @@@");
+	// 팝업 검색
+//	@RequestMapping(value = "/osSearch", method = RequestMethod.GET)
+//	public String popUpGET(Model model, @RequestParam("type") String type, 
+//			@RequestParam("input") String input) throws Exception {
+//		logger.debug("@@@ cnotroller : popUpGET() 호출");
+//		logger.debug("@@@ cnotroller : type = " + type);
 //		
-//		for(String key : search.keySet()) {
-//			if(search.get(key)==null) {
-//				search.replace(key, "");
-//			}
+//		
+//		if(type.equals("line")) {
+//			return "redirect:/performance/line?input="+input;
 //		}
-//		logger.debug("@@@ CONTROLLER: 조회할 정보 - " + search);
 //		
-//		//서비스 - 작업지시 검색
-//		List<OrderStatusVO> searchList = osService.getSearchOrderStatus2(search);
-//		logger.debug("@@@ CONTROLLER: 검색결과list = " + searchList);
+//		else if(type.equals("prod")) {
+//			return "redirect:/performance/product?input="+input;
+//
+//		}
 //		
-//		return searchList;
-//	}
+//		else if(type.equals("client")) {
+//			return "redirect:/person/Clients?input="+input;
+//		}
+//		
+//		else /* if(type.equals("order"))*/ {
+//			return "redirect:/person/orderStatus?input="+input;
+//		}
+//		
+//		
+//	} //popUpGET()
 	
-	// ========= 수주 현황 =================================
+	// ===================================================== 수주 현황 ==========================================================
 	
+	// ===================================================== 수주 관리 ==========================================================
 	
 	// http://localhost:8088/person/orderManage
 	// 수주 관리 목록 조회
@@ -355,4 +441,5 @@ public class PersonController {
 	
 	
 	
+	// ===================================================== 수주 관리 ==========================================================
 }

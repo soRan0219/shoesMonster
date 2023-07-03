@@ -2,6 +2,7 @@ package com.sm.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -311,49 +312,60 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 	// ==========================================================================
 
+	//생산실적 목록
 	@Override
 	public List<PerformanceVO> getPerfList(LineWhPageVO pvo) throws Exception {
 		return pdao.readPerfList(pvo);
 
 	} //getAllPerf()
 
+	//생산실적 등록
 	@Override
 	public void regPerformance(PerformanceVO vo) throws Exception {
 		pdao.createPerformance(vo);
 	} //regPerformance()
 
+	//생산실적 삭제
 	@Override
 	public void removePerformance(List<String> checked) throws Exception {
 		pdao.deletePerformance(checked);
 	} //removePerformance()
 
+	//생산실적 조회
 	@Override
 	public PerformanceVO getPerformanceInfo(String performCode) throws Exception {
 		return pdao.readPerformanceInfo(performCode);
 	} //getPerformanceInfo()
 
+	//생산실적 수정
 	@Override
 	public void modifyPerformance(PerformanceVO uvo) throws Exception {
 		pdao.updatePerformance(uvo);
 	} //modifyPerformance()
 
+	//생산실적 전체 수
 	@Override
 	public int getPerfCnt() throws Exception {
 		return pdao.getPerfCnt();
 	} //getAllPerfCnt()
 
+	//생산실적 검색
 	@Override
 	public List<PerformanceVO> getPerfList(HashMap<String, Object> search) throws Exception {
 		return pdao.readPerfList(search);
 	} //getPerfList(search)
 
+	//생산실적 검색 수
 	@Override
 	public int getPerfCnt(HashMap<String, Object> search) throws Exception {
 		return pdao.getPerfCnt(search);
 	} //getPerfCnt(search)
 
-
-
+	//실적현황 - 양불수
+	@Override
+	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception {
+		return pdao.getPerformStatus();
+	} //getPerformStatus()
 
 
 }

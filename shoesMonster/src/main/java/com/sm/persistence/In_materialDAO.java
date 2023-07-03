@@ -22,12 +22,21 @@ public interface In_materialDAO {
 //		
 //		public List<In_materialVO> In_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
 //		
-		// 입고등록
+	// 입고등록
 
-		public void inInsert(Raw_orderVO rvo, String raw_order_num) throws Exception;
+	public void inInsert(Raw_orderVO rvo, String raw_order_num) throws Exception;
   
-  // 미입고 ,입고완료
-        public void updateIn(String raw_order_num ) throws Exception;
+	// 미입고 ,입고완료
+    public void updateIn(String raw_order_num ) throws Exception;
+        
+    // 재고에 입고할 항목있는지 조회(select)
+    public boolean selectCheck(String rawCode) throws Exception;
+    
+    // 재고 update
+    public void updateStock(String rawCode, int raw_order_count) throws Exception;
+    
+    // 재고 insert
+    public void insertStock(String rawCode, int raw_order_count, String wh_code) throws Exception;
 
 }
 

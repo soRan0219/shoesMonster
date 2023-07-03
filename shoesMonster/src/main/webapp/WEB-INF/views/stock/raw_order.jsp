@@ -9,16 +9,17 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 	
+	// 발주 팝업
 	function roPopup() {
-		
-		window.open("roPopup","거래처 목록","width=500, height=500, left=300, top=150, location=no");
+		window.open("roPopup","거래처 목록","width=650, height=500, left=300, top=150, location=no");
 	}
 	
+	// 발주 현황 상세페이지
 	function detailPopup(rawCode) {
-		
 		window.open("detailPopup?rawCode=" + rawCode, "거래처 상세", "width=1000, height=500, left=200, top=150");
 	}
 	
+	// 총액
 	function totalAmount() {
 		
 		var roCount = parseInt(document.getElementById("raw_order_count").value);
@@ -32,15 +33,25 @@
 		document.getElementById("total_amount").textContent = fmtAmount;
 	}
 	
+	// 창고
+	function warehouse() {
+		window.open("whPopup","창고 목록","width=400, height=400, left=550, top=150, location=no");
+	}
+	
+	// 체크
 	function check() {
-		if (document.getElementById("client_actname").value === "") {
+		if(document.getElementById("client_actname").value === "") {
 			alert("발주 항목을 선택해주세요.");
 			return false;
-		} else if (document.getElementById("raw_order_count").value === "") {
+		} else if(document.getElementById("raw_order_count").value === "") {
 			alert("발주 수량을 입력해주세요.");
+			return false;
+		} else if(document.getElementById("wh_code").value === "") {
+			alert("입고 창고를 선택해주세요.");
 			return false;
 		}
 	}
+		
 </script>
 
 <!-- page content -->
@@ -54,9 +65,6 @@
 function toggleDiv(divId) {
     var listDiv = document.getElementById("list");
     var registDiv = document.getElementById("regist");
-   
-    
-    
     
     if(divId === "list"){
    	 listDiv.style.display = "block";
@@ -69,21 +77,16 @@ function toggleDiv(divId) {
    	 registDiv.style.display = "block";
     	}
     
-    
-    
-    
     }
 
- window.onload = function() {
-	  	 var listDiv = document.getElementById("list");
-	     var registDiv = document.getElementById("regist");
-	     
-	    	
-	     	listDiv.style.display = "block";
-			registDiv.style.display = "none";
-			
-};
-
+	window.onload = function() {
+		var listDiv = document.getElementById("list");
+		var registDiv = document.getElementById("regist");
+		 
+		listDiv.style.display = "block";
+		registDiv.style.display = "none";
+				
+	};
 
 </script>
 
@@ -106,6 +109,7 @@ function toggleDiv(divId) {
 
     <hr>
 
+    <div id="list">
     <form action="" method="get">
 	    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
 	   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
@@ -115,8 +119,6 @@ function toggleDiv(divId) {
 	   	<input type="submit" value="검색"></input>
 
     </form>
-    
-    <div id="list">
     
     <table border="1">
 	    <tr>
@@ -129,6 +131,7 @@ function toggleDiv(divId) {
 	 		<th>재고 수량</th>
 	 		<th>단가</th>
 	 		<th>총액</th>
+	 		<th>입고 창고</th>
 	 		<th>발주일</th>
 	 		<th>담당자</th>
 	 	</tr>
@@ -140,15 +143,16 @@ function toggleDiv(divId) {
         		<td>${vo.rawMaterial.raw_name }</td>
         		<td>${vo.rawMaterial.raw_color }</td>
                 <td>${vo.raw_order_count}</td>
-	            <td>${vo.stock.stock_raw_count != null ? vo.stock.stock_raw_count : 0}</td>
+	            <td>${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
         		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}"/>원</td>
         		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}"/>원</td>
+                <td>${vo.rawMaterial.wh_code }</td>
                 <td>${vo.raw_order_date}</td>
         		<td>${vo.emp_id }</td>
             </tr>
         </c:forEach>
     </table>
-      ${param }/${param.clients.client_actname}/${rvo.clients.client_actname}
+    
    		<c:if test="${count1 > 10 }">
 			<c:if test="${bp.prev}">
 
@@ -184,9 +188,17 @@ function toggleDiv(divId) {
 	<form action="" method="post" onsubmit="return check()">
 		<c:set var="today" value="<%=new Date() %>" />
 		
+		<table border="1">
+			<tr>
+				<th>입고 창고</th>
+				<td onclick="roPopup();"><input type="text" name="wh_code" id="wh_code" readonly></td>
+			</tr>
+		</table>
+		<br>
 		<table border="1" id="table">
 			<tr>
 				<th>발주일</th>
+				<th>거래처 코드</th>
 				<th>거래처명</th>
 				<th>품번</th>
 				<th>품명</th>
@@ -199,12 +211,13 @@ function toggleDiv(divId) {
 			</tr>
 			<tr>
 				<td><input type="text" name="raw_order_date" value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>" readonly></td>
+				<td onclick="roPopup();"><input type="text" name="client_code" id="client_code" readonly></td>
 				<td onclick="roPopup();"><input type="text" name="client_actname" id="client_actname" required readonly></td>
 				<td onclick="roPopup();"><input type="text" name="raw_code" id="raw_code" readonly></td>
 				<td onclick="roPopup();"><input type="text" name="raw_name" id="raw_name" readonly></td>
-				<td><input type="text" name="raw_color" id="raw_color" readonly></td>
+				<td onclick="roPopup();"><input type="text" name="raw_color" id="raw_color" readonly></td>
 				<td><input type="number" min="1" id="raw_order_count" name="raw_order_count" oninput="totalAmount()"></td> <!-- CSS할 때 증감버튼 없애기 -->
-				<td><input type="text" name="stock_raw_count" id="stock_raw_count" readonly></td>
+				<td><input type="text" name="stock_count" id="stock_count" readonly></td>
 				<td><input type="text" name="raw_price" id="raw_price" readonly></td>
 				<td id="total_amount"></td>
 				<td>${sessionScope.emp_id }</td>

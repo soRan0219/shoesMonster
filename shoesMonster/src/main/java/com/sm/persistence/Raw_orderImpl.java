@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.In_materialVO;
 import com.sm.domain.PageVO;
 import com.sm.domain.Raw_orderVO;
+import com.sm.domain.WarehouseVO;
 
 @Repository
 public class Raw_orderImpl implements Raw_orderDAO{
@@ -37,11 +39,24 @@ public class Raw_orderImpl implements Raw_orderDAO{
     }
 
 
+	@Override
+	public List<Raw_orderVO> Popup(PageVO vo) throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE + ".roPopup", vo);
+	}
+
 
 	@Override
-	public List<Raw_orderVO> Popup() throws Exception {
-		
-		return sqlSession.selectList(NAMESPACE + ".roPopup");
+    public int countPop() throws Exception {
+        
+        return sqlSession.selectOne(NAMESPACE+".roPopupCount");
+    }
+
+
+
+	@Override
+	public List<WarehouseVO> whPopup() throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".whPopup");
 	}
 
 
@@ -53,6 +68,7 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		
 		data.put("raw_order_num", rvo.getRaw_order_num());
 		data.put("raw_name", rvo.getRawMaterial().getRaw_name());
+		data.put("in_num", rvo.getIn_mat().getIn_num());
 		data.put("client_actname", rvo.getClients().getClient_actname());
 		
 		
@@ -70,6 +86,7 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		data.put("raw_order_num", rvo.getRaw_order_num());
 		data.put("raw_name", rvo.getRawMaterial().getRaw_name());
 		data.put("client_actname", rvo.getClients().getClient_actname());
+		data.put("in_num", rvo.getIn_mat().getIn_num());
 		data.put("startPage", vo.getStartPage());
 		data.put("pageSize", vo.getPageSize());
 		
@@ -87,6 +104,37 @@ public class Raw_orderImpl implements Raw_orderDAO{
             logger.debug("발주 등록완료");
         }
     }
+	
+	
+	@Override
+    public int countPop(Raw_orderVO rvo) throws Exception {
+        
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        data.put("client_actname", rvo.getClients().getClient_actname());
+        data.put("raw_name", rvo.getRawMaterial().getRaw_name());
+        
+        return sqlSession.selectOne(NAMESPACE+".roPopupCountSearch", data);
+    }
+
+
+
+    @Override
+    public List<Raw_orderVO> Popup(PageVO vo, Raw_orderVO rvo) throws Exception {
+        
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        data.put("startPage", vo.getStartPage());
+        data.put("pageSize", vo.getPageSize());
+        data.put("client_actname", rvo.getClients().getClient_actname());
+        data.put("raw_name", rvo.getRawMaterial().getRaw_name());
+        
+        
+        return sqlSession.selectList(NAMESPACE+".roPopupSearch", data);
+    }
+
+
+	
 
 
 

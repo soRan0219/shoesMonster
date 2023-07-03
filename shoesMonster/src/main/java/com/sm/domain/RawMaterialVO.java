@@ -15,9 +15,11 @@ public class RawMaterialVO {
 	private String wh_code;
 	
 	private ClientsVO clients;
+	private Wh_prodVO wh;
 	
 	public RawMaterialVO() {
 		clients = new ClientsVO();
+		wh = new Wh_prodVO();
 	}
 	
 } //RawMaterailVO

@@ -1,5 +1,7 @@
 package com.sm.domain;
 
+import java.util.List;
+
 public class ClientPageMaker {
 	
 	// 하단부 페이징처리
@@ -105,6 +107,7 @@ public class ClientPageMaker {
 		return "ClientPageMaker [totalCount=" + totalCount + ", startPage=" + startPage + ", endPage=" + endPage
 				+ ", prev=" + prev + ", next=" + next + ", pageBlock=" + pageBlock + ", clientPageVO=" + clientPageVO + "]";
 	}
+
 
 	
 }

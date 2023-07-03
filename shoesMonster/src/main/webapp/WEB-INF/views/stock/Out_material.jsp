@@ -61,48 +61,68 @@
 			<th>담당자</th>
 			<th>출고 처리</th>
 		</tr>
-		<c:forEach var="out" items="${out_matList }">
-			<tr>
-				<td>${out.out_mat.out_num}</td>
-				<td>${out.orders.order_code}</td>
-				<td>${out.client.client_actname}</td>
-				<td>${out.orders.client_code}</td>
-				<td>${out.prod_code}</td>
-				<td>${out.prod_name}</td>
-				<td>${out.orders.order_count}</td>
-				<td>${out.prod_price}원</td>
-				<td>${out.orders.order_deliveryDate}</td>
-				<td>${out.out_mat.out_date}</td>
-				<td>${out.out_mat.out_YN}</td>
-				<td>${out.out_mat.emp_id}</td>
-				<td>
-					<button type="submit" name="orderCode" value="${out.orders.order_code}">출고 처리</button>
-        		</td>
-		</c:forEach>
+		<c:forEach var="out" items="${out_List }">
+            <tr>
+                <td>${out.out_num}</td>
+                <td>${out.orders.order_code}</td>
+                <td>${out.clients.client_actname}</td>
+                <td>${out.orders.client_code}</td>
+                <td>${out.prod.prod_code}</td>
+                <td>${out.prod.prod_name}</td>
+                <td>${out.orders.order_count}</td>
+                <td>${out.prod.prod_price}원</td>
+                <td>${out.orders.order_deliveryDate}</td>
+                <td>${out.out_date}</td>
+                <td>${out.out_YN}</td>
+                <td>${out.emp_id}</td>
+                </tr>
+        </c:forEach>
 	</table>
 	</form>
+	
+	<c:if test="${count4 > 10 }">
+		<c:if test="${bp.prev}">
 
+		    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+
+		</c:if>
+		
+		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+		    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+		</c:forEach>
+		
+		<c:if test="${bp.next && bp.endPage > 0}">
+
+		    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+
+		</c:if>
+	</c:if>
+	<br><br>
+    bp.startPage : ${bp.startPage } <br>
+    bp.endPage : ${bp.endPage } <br>
+    param : ${param } <br>
+	
 	
    
     
-<div>
-    <c:if test="${count2 > 0 }">
-    	<c:if test="${startPage > pageBlock }">
-    		<span><a href="/stock/Out_material?num=${startPage - pageBlock}&client_actname=${out.client.client_actname}
-    		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">이전</a></span>
-    	</c:if>
+<!-- <div> -->
+<%--     <c:if test="${count2 > 0 }"> --%>
+<%--     	<c:if test="${startPage > pageBlock }"> --%>
+<%--     		<span><a href="/stock/Out_material?num=${startPage - pageBlock}&client_actname=${out.client.client_actname} --%>
+<%--     		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">이전</a></span> --%>
+<%--     	</c:if> --%>
 	
-		<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-			<a href="/stock/Out_material?num=${i }&client_actname=${out.client.client_actname}
-    		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">${i }</a>
-		</c:forEach>
+<%-- 		<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1"> --%>
+<%-- 			<a href="/stock/Out_material?num=${i }&client_actname=${out.client.client_actname} --%>
+<%--     		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">${i }</a> --%>
+<%-- 		</c:forEach> --%>
 		
-		<c:if test="${endPage < count2 }">
-			<a href="/stock/Out_material?num=${startPage + pageBlock}&client_actname=${out.client.client_actname}
-    		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">다음</a>
-		</c:if>
-    </c:if>
-</div>
+<%-- 		<c:if test="${endPage < count2 }"> --%>
+<%-- 			<a href="/stock/Out_material?num=${startPage + pageBlock}&client_actname=${out.client.client_actname} --%>
+<%--     		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">다음</a> --%>
+<%-- 		</c:if> --%>
+<%--     </c:if> --%>
+<!-- </div> -->
 
 
 </div>

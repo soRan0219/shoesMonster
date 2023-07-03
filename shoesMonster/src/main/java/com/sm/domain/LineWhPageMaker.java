@@ -1,5 +1,7 @@
 package com.sm.domain;
 
+import java.util.List;
+
 public class LineWhPageMaker {
 	
 	// 하단부 페이징처리
@@ -10,7 +12,7 @@ public class LineWhPageMaker {
 	private boolean prev;
 	private boolean next;
 	
-	private int pageBlock = 10;
+	private int pageBlock = 5;
 	
 	private LineWhPageVO lwPageVO;
 	

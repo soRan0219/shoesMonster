@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sm.domain.ClientPageVO;
 import com.sm.domain.EmployeesVO;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.ManagementVO;
@@ -24,8 +25,8 @@ public class EmployeesServiceImpl implements EmployeesService{
 	}
 
 	@Override
-	public List<EmployeesVO> getEmpList(LineWhPageVO pvo) throws Exception {
-		return empdao.readEmpList(pvo);
+	public List<EmployeesVO> getEmpList(ClientPageVO cpvo) throws Exception {
+		return empdao.readEmpList(cpvo);
 	}
 
 	@Override
@@ -34,23 +35,38 @@ public class EmployeesServiceImpl implements EmployeesService{
 	}
 
 	@Override
-	public List<EmployeesVO> searchEmployees(HashMap<String, Object> search) throws Exception {
-		return empdao.selectEmployees(search);
+	public List<EmployeesVO> getSearchEmployeesList(HashMap<String, Object> search) throws Exception {
+		return empdao.getSearchEmployeesList(search);
 	}
 
 	@Override
 	public int getTotalEmployees() throws Exception {
 		return empdao.getTotalEmployees();
 	}
-
+		
 	@Override
 	public int getSearchEmployees(HashMap<String, Object> search) throws Exception {
 		return empdao.getSearchEmployees(search);
 	}
 
 	@Override
-	public void regEmployees(EmployeesVO vo) throws Exception {
-		empdao.insertEmployees(vo);
+	public void regEmployees(EmployeesVO evo) throws Exception {
+		empdao.insertEmployees(evo);
+	}
+
+	@Override
+	public void removeEmployees(List<String> checked) throws Exception {
+		empdao.deleteEmployees(checked);
+	}
+
+	@Override
+	public EmployeesVO getEmployees(String emp_id) throws Exception {
+		return empdao.readEmployees(emp_id);
+	}
+
+	@Override
+	public void modifyEmployees(EmployeesVO uvo) throws Exception {
+		empdao.updateEmployees(uvo);
 	}
 
 	

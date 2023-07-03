@@ -27,6 +27,15 @@
 		return year+"-"+month+"-"+day;
 	}//getToday()
 
+	// 코드 자동 부여
+	function lineCodeNum(num, length) {
+		let str = num.toString();
+		while (str.length < length){
+			str = '0' + str;
+		}
+		return str;
+	}
+	
 	// input으로 바꾸기
 	function inputCng(obj, type, name, value) {
 		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
@@ -96,6 +105,131 @@
 		popUp();
 		
 	//============================ 버튼 구현 ====================================//	
+		////수정//////////////////////////////////////////////////
+	var isExecuted = false;
+	
+	$('#modify').click(function () {
+		
+		$('#add').attr("disabled", true);
+		$('#delete').attr("disabled", true);
+				
+			//행 하나 클릭했을 때	
+			$('table tr:not(:first-child)').click(function() {
+
+				//하나씩만 선택 가능
+				if(!isExecuted) {
+					isExecuted = true;
+						
+					$(this).addClass('selected');
+					
+					// 라인코드 저장
+					let updateCode = $(this).find('#lineCode').text().trim();
+					console.log(updateCode);
+						
+					var jsonData = {
+						line_code : updateCode
+					};
+						
+					console.log(jsonData);
+						
+					var self = $(this);
+		
+					$.ajax({
+						url : "/performance/line",
+						type : "post",
+						contentType : "application/json; charset=UTF-8",
+						dataType : "json",
+						data : JSON.stringify(jsonData),
+						success : function(data) {
+							// alert("*** 아작스 성공 ***");
+		
+						var preVOs = [
+							data.line_code,
+							data.line_name,
+							data.line_place,
+							data.line_use,
+							data.emp_id,
+							data.emp.emp_name,
+							data.insert_date,
+							data.line_note, 
+							];
+		
+						var names = [
+							"line_code",
+							"line_name",
+							"line_place",
+							"line_use",
+							"emp_id",
+							"emp_name",
+							"insert_date",
+							"line_note"
+							];
+		
+						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+						self.find('td').each(function(idx,item) {
+		
+							if(idx > 0){
+								inputCng($(this), "text", names[idx - 1], preVOs[idx - 1]);
+									if(idx == 4 ){
+										var dropDown = "<select id = 'line_use' name = 'line_use'>";
+											dropDown += "<option value = '1'>Y</option>";
+											dropDown += "<option value = '2'>N</option>";
+											dropDown += "</select>";
+											$(this).html(dropDown);
+											$(this).find('option').each(function () {
+												if(this.value == preVOs[idx - 1]){
+													$(this).attr("selected", true);
+												}
+										
+											});// this.find('option')
+									
+									}// if(idx==4)
+							
+							}//if(idx>0)
+		
+						}); // self.find(~~)
+		
+						// 등록자(사원) 검색
+						$('#emp_name').click(function () {
+						openWindow("emp", "emp_name");
+						}); // #emp_id click
+		
+						},
+						
+						error : function(data) {
+							alert("아작스 실패 ~~");
+						}
+					}); //ajax
+				
+				// 저장 -> 수정완료
+				$('#save').click(function () {
+					
+					if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
+						|| emp_id == ""){
+						
+						alert("항목을 모두 입력하세요");
+					
+					}else{
+						$('#fr').attr("action", "/performance/linemodify"); 
+						$('#fr').attr("method", "POST");
+						$('#fr').submit();
+				}
+					
+				});//save
+					
+			}// if(!isExecuted)
+				
+			// 취소 -> 리셋
+			$('#cancle').click(function () {
+				$('#fr').each(function () {
+					this.reset();
+				});
+				
+			}); // cancle
+			
+		}); // table .click
+		
+	});// modify.click
 	
 	////////////////// 추가/////////////////////////
 	$('#add').click(function () {
@@ -104,7 +238,10 @@
 		$('#delete').attr("disabled", true);
 		
 		// 라인코드 부여
-// 		let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
+		let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
+		wCodeNum++;
+		
+		let lineNum = lineCodeNum(wCodeNum, 3);
 		
 		// 오늘날짜 -> 등록일
 		let today = getToday();
@@ -119,7 +256,9 @@
 			
 			// 라인코드 
 			tbl += " <td>";
-			tbl += " <input type='text' name='line_code' id='line_code'required>";
+			tbl += " <input type='text' name='line_code' id='line_code'required value='";
+			tbl += "L"+ lineNum;
+			tbl += "'>";
 			tbl += " </td>";
 			
 			// 라인명
@@ -135,14 +274,15 @@
 			// 사용여부
 			tbl += " <td>";
 			tbl += " <select name='line_use' id='line_use'>";
-			tbl += " <option>Y</option>";
-			tbl += " <option>N</option>";
+			tbl += " <option value='1'>Y</option>";
+			tbl += " <option value='2'>N</option>";
 			tbl += " </select>";
 			tbl += " </td>";
 			
 			// 등록자			
 			tbl += " <td>";
-			tbl += " <input type='text' name='emp_id' id='emp_id' required>";
+			tbl += " <input type='hidden' name='emp_id' id='emp_id' required>";
+			tbl += " <input type='text' name='emp_name' id='emp_name' required>";
 			tbl += " </td>";
 			
 			// 등록일			
@@ -161,8 +301,8 @@
 			$('table').append(tbl);
 			
 			// 등록자(사원) 검색
-			$('#emp_id').click(function () {
-				openWindow("emp", "emp_id");
+			$('#emp_name').click(function () {
+				openWindow("emp", "emp_name");
 			}); // #emp_id click
 			
 			$(this).removeClass('true');
@@ -183,7 +323,7 @@
 				alert("항목을 모두 입력하세요");
 			}else{
 				$('#fr').attr("action", "/performance/lineadd"); 
-				$('#fr').attr("method", "post");
+				$('#fr').attr("method", "POST");
 				$('#fr').submit();
 			}
 			
@@ -199,95 +339,7 @@
 	});// 추가 add click
 
 	
-	////수정//////////////////////////////////////////////////
-	var isExecuted = false;
-	
-	$('#modify').click(function () {
-		
-		$('#add').attr("disabled", true);
-		$('#delete').attr("disabled", true);
-		
-		// 행 하나 선택시
-		$('table tr:not(:first-child)').click(function () {
-			
-			// 하나씩 선택 가능
-			if(!isExecuted){
-				isExecuted = true;
-				
-				$(this).addClass('selected');
-				
-				// 라인코드 저장
-				let updateCode = $(this).find('#lineCode').text().trim();
-				console.log(updateCode);
-				
-				var jsonData = {
-						lineCode : updateCode
-				};
-				
-				var self = $(this);
-				
-				var names = [
-						"line_code",
-						"line_name",
-						"line_place",
-						"line_use",
-						"emp_id",
-						"insert_date",
-						"line_note"
-						];
-				
-				// tr안 td 요소들 input으로 변경 후 기존 값 띄움
-				self.find('td').each(function (idx, item) {
-					
-					if(idx > 0){
-						inputCng($(this), "text", names[idx - 1], $(this).text());
-						if(idx == 4 ){
-							var dropDown = "<select id = 'line_use' name = 'line_use'>";
-// 								dropDown += "<option value = '전체'></option>";
-								dropDown += "<option value = '1'>Y</option>";
-								dropDown += "<option value = '2'>N</option>";
-								dropDown += "</select>"
-								$(this).html(dropDown);
-								$(this).find('option').each(function () {
-									if(this.value == $(this).text()){
-										$(this).attr("selected", true);
-									}
-						
-								});// this.find('option')
-					
-						}// if(idx==2)
-			
-					}//if
-					
-				}); // self.find
-				
-				// 등록자(사원) 검색
-				$('#emp_id').click(function () {
-					openWindow("emp", "emp_id");
-				}); // #emp_id click
-				
-				// 저장 -> 수정완료
-				$('#save').click(function () {
-					
-					$('#fr').attr("action", "/performance/linemodify");
-					$('#fr').attr("method", "POST");
-					$('#fr').submit();
-					
-				});//save
-					
-			}// if(!isExecuted)
-				
-			// 취소 -> 리셋
-			$('#cancle').click(function () {
-				$('#fr').each(function () {
-					this.reset();
-				});
-				
-			}); // cancle
-			
-		}); // table .click
-		
-	});// modify.click
+
 	
 	
 	////삭제/////////////////////////////////////////////////////////
@@ -332,20 +384,40 @@
 				});
 				
 				if(checked.length > 0){
+					
+					if(confirm("선택한 항목을 삭제하시겠습니까?")){
+					
+						$.ajax({
+	 						url: "/performance/linedelete",
+	 						type: "POST",
+	 						data: {checked : checked},
+	 						dataType: "text",	
+	 						success: function () {
+								alert("삭제가 완료되었습니다");
+								location.reload();
+							},
+							error: function () {
+								alert("삭제 중 오류가 발생했습니다");
+							}
+						});//ajax
+					}else{
+						alert("삭제가 취소되었습니다");
+					}// if(confirm)
+						
 				
-					$.ajax({
-						url: "/performance/linedelete",
-						type: "POST",
-						data: {checked : checked},
-						dataType: "text",
-						success: function () {
-							alert("에이잭스 예에~!~!");
-							location.reload();
-						},
-						error: function () {
-							alert("에이잭스 우우~!~!");
-						}
-					}); // ajax
+// 					$.ajax({
+// 						url: "/performance/linedelete",
+// 						type: "POST",
+// 						data: {checked : checked},
+// 						dataType: "text",
+// 						success: function () {
+// 							alert("에이잭스 예에~!~!");
+// 							location.reload();
+// 						},
+// 						error: function () {
+// 							alert("에이잭스 우우~!~!");
+// 						}
+// 					}); // ajax
 					
 				}// 체크OOO
 				else{
@@ -385,12 +457,19 @@
 		
 		<br>
 		
+<!-- 		<label>사용여부</label> -->
+<!-- 			<select name="line_use" > -->
+<!-- 				<option selected value="3">전 체</option> -->
+<!-- 				<option value="1">Y</option> -->
+<!-- 				<option value="2">N</option> -->
+<!-- 			</select> -->
+
 		<label>사용여부</label>
-			<select name="line_use" >
-				<option selected value="3">전 체</option>
-				<option value="1">Y</option>
-				<option value="2">N</option>
-			</select>
+			<input type="radio" name="line_use" value="3" checked>전 체
+			<input type="radio" name="line_use" value="1">Y
+			<input type="radio" name="line_use" value="2">N
+			
+			
 		
 		<label>작업장</label>
 			<input type="text" name="line_place" placeholder="검색어를 입력해주세요">
@@ -398,15 +477,18 @@
 
 		 <input type="submit" value="검색">
 	</form>
-
+	
 <!-- //////////////////////////////////////////////////////////////////////// -->	
+	<br>
 	
 	<button id="add" class="true">추가</button>
 	<button id="modify" >수정</button>
 	<button id="delete" class="true">삭제</button>
 	<button type="reset" id="cancle" >취소</button>
 	<button type="submit" id="save">저장</button>
+	<button onclick="location.reload()">새로고침</button>
 
+	<br>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 
 <form id="fr">
@@ -418,6 +500,7 @@
 			<th>라인명</th>
 			<th>작업장</th>
 			<th>사용여부</th>
+			<th type='hidden' style='display: none;'>등록자 코드</th>
 			<th>등록자</th>
 			<th>등록일</th>
 			<th>비고</th>
@@ -439,7 +522,8 @@
 						</c:when>
 					</c:choose>
 					
-					<td>${vo.emp_id}</td>
+					<td type='hidden' style='display: none;'>${vo.emp_id}</td>
+					<td>${vo.emp.emp_name}</td>
 					<td>${vo.insert_date}</td>
 					<td>${vo.line_note}</td>
 				</tr>

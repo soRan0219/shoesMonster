@@ -11,12 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sm.domain.EmployeesVO;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
 import com.sm.domain.LineWhPageVO;
@@ -440,7 +442,11 @@ public class PerfomanceController {
 	}
 	
 	// 라인 추가
+
 	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
+
+
+
 	public String addLine(LineVO lvo) throws Exception{
 		logger.debug("@#@#@# C : addLine(LineVO lvo) 호출 ");
 		logger.debug("@#@#@# C : lvo = "+lvo);
@@ -492,7 +498,7 @@ public class PerfomanceController {
 	// ======== 창고 - /warehouse ===========================
 	// http://localhost:8088/performance/warehouse
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-	public void warehouseGET(Model model, LineWhPageVO vo,
+	public void warehouseGET(Model model, LineWhPageVO vo, EmployeesVO emp,
 							 LineWhPageMaker lwpm, Wh_prodVO wvo
 							 ,@RequestParam HashMap<String, Object> params) throws Exception {
 
@@ -507,9 +513,12 @@ public class PerfomanceController {
 
 
 		// 검색(+페이징)
-		if(wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null ||
-				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
+//		if(wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null ||
+//				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
 			
+		if(wvo.getWh_code() != null  || wvo.getWh_name() != null ||
+		   wvo.getEmp_id() != null || wvo.getWh_use() != 0) {
+		
 			if(wvo.getWh_use() == 0) {
 				wvo.setWh_use(3);
 			}
@@ -529,6 +538,9 @@ public class PerfomanceController {
 			lwpm.setTotalCount(service.searchWh_TotalCount(wvo));
 			logger.debug("lwpm (서치) : " + lwpm.getTotalCount());
 			model.addAttribute("lwpm", lwpm);
+			
+			logger.debug("검색"+whList);
+			
 
 			
 		}else {
@@ -549,22 +561,38 @@ public class PerfomanceController {
 		}
 	}
 	
-	// 품목 검색 팝업창
+//	// 품목 검색 팝업창
+//	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
+//	public String popUpGET(@RequestParam("input") String input,
+//			   @RequestParam("type") String type) throws Exception{
+//	
+//		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
+//		logger.debug("@#@#@# C : type = "+type);
+//		
+//		if(type.equals("prod")) {
+//		return "redirect:/performance/product?input="+input;
+//		}
+//		else if(type.equals("raw")) {
+//			return "redirect:/performance/rawMaterial?input="+input;
+//		}
+//		
+//			return "redirect:/performance/warehouse?input="+input;
+//		
+//	}
+	
+	// 담당자(사원) 팝업 검색
 	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
 	public String popUpGET(@RequestParam("input") String input,
-			   @RequestParam("type") String type) throws Exception{
+			   			   @RequestParam("type") String type) throws Exception{
 	
 		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
 		logger.debug("@#@#@# C : type = "+type);
 		
-		if(type.equals("prod")) {
-		return "redirect:/performance/product?input="+input;
-		}
-		else if(type.equals("raw")) {
-			return "redirect:/performance/rawMaterial?input="+input;
+		if(type.equals("emp")) {
+			return "redirect:/person/empinfo?input="+input;
 		}
 		
-			return "redirect:/performance/warehouse?input="+input;
+		return "redirect:/performance/warehouse?input="+input;
 		
 	}
 	
@@ -601,7 +629,7 @@ public class PerfomanceController {
 		return "redirect:/performance/warehouse";
 	}
 	
-	// 라인 조회 POST
+	// 창고 조회 POST
 	@ResponseBody
 	@RequestMapping(value = "/warehouse", method = RequestMethod.POST)
 	public Wh_prodVO warehousePOST(@RequestBody Wh_prodVO wvo ) throws Exception {
@@ -644,11 +672,12 @@ public class PerfomanceController {
 		List<PerformanceVO> perfList = new ArrayList<>();
 		
 		//검색 있을 때
-		if((search.get("search_work_code")!=null && search.get("search_work_code").equals("")) || 
-				(search.get("search_fromDate")!=null && search.get("search_fromDate").equals("")) || 
-				(search.get("search_toDate")!=null && search.get("search_toDate").equals("")) ||
-				(search.get("search_line_code")!=null && search.get("search_line_code").equals("")) ||
-				(search.get("search_prod_code")!=null && search.get("search_prod_code").equals(""))) {
+		if((search.get("search_work_code")!=null && !search.get("search_work_code").equals("")) || 
+				(search.get("search_fromDate")!=null && !search.get("search_fromDate").equals("")) || 
+				(search.get("search_toDate")!=null && !search.get("search_toDate").equals("")) ||
+				(search.get("search_line_code")!=null && !search.get("search_line_code").equals("")) ||
+				(search.get("search_prod_code")!=null && !search.get("search_prod_code").equals("")) ||
+				(search.get("search_perform_status")!=null && !search.get("search_perform_status").equals("") && !search.get("search_perform_status").equals("전체"))) {
 			
 			logger.debug("@@@@@ CONTROLLER: 검색 service 호출");
 			
@@ -689,7 +718,7 @@ public class PerfomanceController {
 		model.addAttribute("perfList", perfList);
 	} // performanceList()
 
-	// 작업지시, 라인, 품번 검색
+	// 작업지시, 라인, 품번 팝업
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String workOrderGET(Model model, @RequestParam("type") String type, @RequestParam("input") String input,
 			PagingVO pvo) throws Exception {
@@ -761,9 +790,23 @@ public class PerfomanceController {
 		return "redirect:/performance/performList";
 	} //modifyPerformance()
 	
+	//생산실적 현황 - 양불수
+	//http://localhost:8088/performance/performStatus
+	@RequestMapping(value = "/performStatus", method = RequestMethod.GET)
+	public void getPerformStatus(Model model) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: getPerformStatus() 호출");
+		
+	} //getPerformStatus()
 	
-	
-	
+	@ResponseBody
+	@RequestMapping(value = "/status", method = RequestMethod.POST)
+	public Map<String, List<PerformanceVO>> status() throws Exception {
+		logger.debug("@@@@@ CONTROLLER: status() 호출");
+		
+		Map<String, List<PerformanceVO>> statusMap = service.getPerformStatus();
+		
+		return statusMap;
+	} //status()
 	
 	
 	

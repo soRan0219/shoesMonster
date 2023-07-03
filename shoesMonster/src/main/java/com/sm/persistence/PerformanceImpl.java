@@ -64,7 +64,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		data.put("prod_code", vo.getProd_code());
 		data.put("prod_name", vo.getProd_name());
 		data.put("prod_category", vo.getProd_category());
-		data.put("prod_unit", vo.getProd_unit());
+		data.put("client_code", vo.getClient_code());
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchProd", data);
 	}
@@ -387,8 +387,10 @@ public class PerformanceImpl implements PerformanceDAO {
 		Map<String, Object> params = new HashMap<>();
 
 		params.put("wh_code", wvo.getWh_code());
-		params.put("prod_code", wvo.getProd_code());
-		params.put("raw_code", wvo.getRaw_code());
+//		params.put("prod_code", wvo.getProd_code());
+//		params.put("raw_code", wvo.getRaw_code());
+		params.put("emp_id", wvo.getEmp_id());
+//		params.put("emp_name", wvo.getEmp().getEmp_name());
 
 		params.put("wh_addr", wvo.getWh_addr());
 		
@@ -413,17 +415,20 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		params.put("wh_code", wvo.getWh_code());
 
-		if(wvo.getProd_code() != null) {
-			params.put("prod_code", wvo.getProd_code());
-		}else if(wvo.getRaw_code() != null) {
-			params.put("raw_code", wvo.getRaw_code());
-		}
+//		if(wvo.getProd_code() != null) {
+//			params.put("prod_code", wvo.getProd_code());
+//		}else if(wvo.getRaw_code() != null) {
+//			params.put("raw_code", wvo.getRaw_code());
+//		}
 		
 		params.put("wh_addr", wvo.getWh_addr());
 		
 		if(wvo.getWh_use() != 0) {
 			params.put("wh_use", wvo.getWh_use());
 		}
+		
+		params.put("emp_id", wvo.getEmp_id());
+//		params.put("emp_name", wvo.getEmp().getEmp_name());
 		
 		return sqlSession.selectOne(NAMESPACE+".searchWhTotalCnt", params);
 
@@ -470,19 +475,37 @@ public class PerformanceImpl implements PerformanceDAO {
 
 	// ==========================================================================
 
+	//생산실적 목록 - 전체
 	@Override
 	public List<PerformanceVO> readPerfList(LineWhPageVO pvo) throws Exception {
 		logger.debug("##### DAO: readAllPerf() 호출");
 
 		return sqlSession.selectList(NAMESPACE + ".performList", pvo);
 	} // readAllPerf()
-
+	
+	//생산실적 등록
 	@Override
 	public void createPerformance(PerformanceVO vo) throws Exception {
 		logger.debug("##### DAO: createPerformance() 호출");
+		
 		sqlSession.insert(NAMESPACE + ".insertPerform", vo);
+		
+		//DB작업 위해서 작업지시코드 변수에 저장
+		String work_code = vo.getWork_code();
+		
+		//생산실적 중 양품수와 작업지시수량 비교
+		String result = sqlSession.selectOne(NAMESPACE + ".compare", work_code);
+		logger.debug("##### DAO: 양품수와 작업지시수량 비교 결과 있없 ===> " + result);
+		
+		//비교결과 해당 작업지시수량보다 생산한 양품수가 같거나 많으면 생산현황 마감으로 변경
+		if(result != null) {
+			sqlSession.update(NAMESPACE + ".updateStatus", work_code);
+		}
+		
+		
 	} // createPerformance()
 
+	//생산실적 삭제
 	@Override
 	public void deletePerformance(List<String> checked) throws Exception {
 		logger.debug("##### DAO: deletePerformance() 호출");
@@ -498,12 +521,14 @@ public class PerformanceImpl implements PerformanceDAO {
 
 	} //deletePerformance()
 
+	//생산실적 조회
 	@Override
 	public PerformanceVO readPerformanceInfo(String performCode) throws Exception {
 		logger.debug("##### DAO: readPerformanceInfo() 호출");
 		return sqlSession.selectOne(NAMESPACE + ".performInfo", performCode);
 	} //readPerformanceInfo()
 
+	//생산실적 수정
 	@Override
 	public void updatePerformance(PerformanceVO uvo) throws Exception {
 		logger.debug("##### DAO: updatePerformance() 호출");
@@ -512,6 +537,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("##### DAO: update 결과 ===> " + result);
 	} //updatePerformance()
 
+	//생산실적 전체 수
 	@Override
 	public int getPerfCnt() throws Exception {
 		logger.debug("##### DAO: getTotalPerf() 호출");
@@ -519,22 +545,42 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectOne(NAMESPACE + ".getTotalPerf");
 	} //getTotalPerf()
 
+	//생산실적 목록 - 검색
 	@Override
 	public List<PerformanceVO> readPerfList(HashMap<String, Object> search) throws Exception {
 		logger.debug("##### DAO: readPerfList(search) 호출");
 		return sqlSession.selectList(NAMESPACE + ".performSearchList", search);
 	} //readPerfList(search)
 
+	//생산실적 검색 수
 	@Override
 	public int getPerfCnt(HashMap<String, Object> search) throws Exception {
 		logger.debug("##### DAO: getPerfCnt(search) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".getSearchPerf", search);
 	} //getPerfCnt(search)
 
-
-
-	
-
+	//생산실적 양불 현황
+	@Override
+	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception {
+		logger.debug("##### DAO: getPerformStatus() 호출");
+		
+		Map<String, List<PerformanceVO>> statusMap = new HashMap<>();
+		
+		List<PerformanceVO> statusLineList = sqlSession.selectList(NAMESPACE + ".statusLine");
+		logger.debug("##### DAO: 라인별 양불현황 ===> " + statusLineList);
+		
+		List<PerformanceVO> statusProdList = sqlSession.selectList(NAMESPACE + ".statusProd");
+		logger.debug("##### DAO: 품목별 양불현황 ===> " + statusProdList);
+		
+		List<PerformanceVO> statusDateList = sqlSession.selectList(NAMESPACE + ".statusDate");
+		logger.debug("##### DAO: 일자별 양불현황 ===> " + statusDateList);
+		
+		statusMap.put("perLine", statusLineList);
+		statusMap.put("perProd", statusProdList);
+		statusMap.put("perDate", statusDateList);
+		
+		return statusMap;
+	} //getPerformStatus()
 
 
 }
