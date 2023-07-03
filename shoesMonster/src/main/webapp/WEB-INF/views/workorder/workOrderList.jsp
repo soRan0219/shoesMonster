@@ -552,7 +552,6 @@
 
 	<br><br>
 
-	<div id="body">
 	
 		<button id="add" class="true">추가</button>
 		<button id="modify">수정</button>
@@ -560,6 +559,7 @@
 		<button type="reset" id="cancle">취소</button>
 		<button type="submit" id="save">저장</button>
 		
+	<div id="body">
 	
 		총 <span id="total">${pm.totalCount }</span>건
 		
@@ -569,6 +569,7 @@
 			<option value="7">7</option>
 		</select>
 		건씩 표시
+	</div>
 		
 		<form id="fr">
 			<table border="1">
@@ -613,7 +614,6 @@
 				<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏩ </a>
 			</c:if>
 		</div>
-	</div>
 
 	<div id="details"></div>
 

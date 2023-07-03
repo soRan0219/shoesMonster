@@ -503,13 +503,13 @@
 		
 	<br><br><br>
 	
-	<div id="body">
 		<button id="add" class="true">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete" class="true">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<button type="submit" id="save">저장</button>
 		
+	<div id="body">
 		총 <span id="total">${pm.totalCount }</span>건
 				
 		<select id="perPage" name="perPage">
@@ -518,6 +518,7 @@
 			<option value="7">7</option>
 		</select>
 		건씩 표시
+	</div>
 		
 		<form id="fr">
 			<table border="1">
@@ -579,7 +580,6 @@
 				<a href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏩ </a>
 			</c:if>
 		</div>
-	</div>
 	
 </div>
 <!-- /page content -->
