@@ -31,6 +31,7 @@ import com.sm.service.EmployeesService;
 import com.sm.service.OrderStatusService;
 
 
+
 @Controller
 @RequestMapping(value="/person/*")
 public class PersonController {
@@ -416,6 +417,23 @@ public class PersonController {
 //		
 //		
 //	} //popUpGET()
+	
+	// 수주 등록
+	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
+	public String addOrder(OrderStatusVO osvo) throws Exception{
+		logger.debug("@#@# C : addOrder(osvo) 호출 ");
+		logger.debug("@#@# C : osvo = "+osvo);
+		
+		osService.registOrder(osvo);
+		
+		return "redirect:/person/orderStatus";
+	}
+	
+	// 수주 수정
+	
+	// 수주 삭제
+	
+	
 	
 	// ===================================================== 수주 현황 ==========================================================
 	

@@ -305,6 +305,16 @@
 		</where>
 	</select>
 	<!-- 수주 현황 검색 개수 -->
+	
+	<!-- 수주 등록 -->
+	<insert id="registOrder">
+		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_id,
+					order_count, client_code, order_finish) 
+		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id},
+				#{order_count}, #{client_code}, #{order_finish})
+	</insert>
+	<!-- 수주 등록 -->
+	
 <!-- ===================================================== 수주 현황 ================================================================== -->
 	
 	
