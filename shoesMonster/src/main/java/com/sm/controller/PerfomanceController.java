@@ -450,7 +450,6 @@ public class PerfomanceController {
 	}
 	
 	// 라인 추가
-
 	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
 	public String addLine(LineVO lvo) throws Exception{
 		logger.debug("@#@#@# C : addLine(LineVO lvo) 호출 ");
@@ -584,6 +583,14 @@ public class PerfomanceController {
 //			return "redirect:/performance/warehouse?input="+input;
 //		
 //	}
+	
+	// 창고 추가 시 code값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "whCode", method = RequestMethod.GET)
+	public String getWhCode() {
+		
+		return service.getWhCode();
+	}
 	
 	// 담당자(사원) 팝업 검색
 	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)

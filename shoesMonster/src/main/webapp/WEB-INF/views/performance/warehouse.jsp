@@ -140,6 +140,7 @@
 	
 	//============================ 버튼 구현 ====================================//	
 	
+	
 	////////////////// 추가/////////////////////////
 	$("#add").click(function () {
 		
@@ -151,6 +152,26 @@
 		wCodeNum++;
 		
 		let whNum = whCodeNum(wCodeNum, 3);
+
+
+// 페이지 수 확인
+// let totalPages = getTotalPages(); // 페이지 수를 얻는 방법에 따라 getTotalPages() 함수를 작성해야 합니다.
+
+// // 전체 페이지를 합친 테이블에서 마지막 행의 두 번째 열에서 숫자 추출
+// let wCodeNum = 0;
+// for (let page = 1; page <= totalPages; page++) {
+//   // 각 페이지에 접근하여 테이블의 마지막 행 찾기
+//   let lastRow = $(getPageTable(page)).find('tr:last');
+
+//   // 마지막 행의 두 번째 열에서 숫자 추출
+//   let pageWCodeNum = Number(lastRow.find('td:nth-child(2)').text().substring(2));
+
+//   // 페이지별로 가장 큰 숫자 저장
+//   wCodeNum = Math.max(wCodeNum, pageWCodeNum);
+// }
+
+// // 숫자에 1을 더한 후 창고 코드 생성
+// let whNum = whCodeNum(wCodeNum + 1, 3);
 		
 		if($(this).hasClass('true')){
 			
@@ -573,6 +594,10 @@
 // 		  inputElement2.name = newName2; // input 태그의 name 값을 변경
 // 	};
 	
+	
+	
+	
+	
 	</script>
 
 
@@ -626,7 +651,7 @@
 <!-- //////////////////////////////////////////////////////////////////////// -->
 
 <form id="fr">
-	<table border="1"> 
+	<table border="1" id="whTable"> 
 		<a>총 ${lwpm.totalCount } 건</a>
 		<tr>
 			<td>번호</td>
