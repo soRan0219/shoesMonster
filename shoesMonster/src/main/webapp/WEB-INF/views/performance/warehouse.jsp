@@ -92,11 +92,29 @@
         		$('#'+isPop, opener.document).val(whCode);
         		$('#emp_name', opener.document).val(empCode);
 //         		$('#prod_code', opener.document).val(prodCode);
+
+        		var whCode = $(this).find('#whCode').text();
+        		var whName = $(this).find('#whName').text();
+        		
+        		var number = isPop.match(/\d+/);
+     			$('#'+isPop, opener.document).val(whCode);
+     			if(number !=null){
+     			$('#wh_name'+number, opener.document).val(whName);
+     			} else {
+     			$('#wh_name', opener.document).val(whName);
+     			}
         		
    			} else {
         		var whCode = $(this).find('#whCode').text();
+        		var whName = $(this).find('#whName').text();
         		
-        		$('#'+isPop, opener.document).val(whCode);
+        		var number = isPop.match(/\d+/);
+     			$('#'+isPop, opener.document).val(whCode);
+     			if(number !=null){
+     			$('#wh_name'+number, opener.document).val(whName);
+     			} else {
+     			$('#wh_name', opener.document).val(whName);
+     			}
    			}
     		
     		window.close();
@@ -629,7 +647,7 @@
 				<tr>	
 					<td>${i.count }</td>
 					<td id="whCode">${ww.wh_code}</td>
-					<td>${ww.wh_name}</td>
+					<td id="whName">${ww.wh_name}</td>
 <%-- 					<td>${ww.wh_dv}</td> --%>
 					
 <%-- 					<c:choose> --%>

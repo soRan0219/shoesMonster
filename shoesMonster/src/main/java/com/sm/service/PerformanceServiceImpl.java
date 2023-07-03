@@ -113,6 +113,12 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return pdao.readRawList(vo, pvo);
 	}
 	
+	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String getRawCode() {
+		return pdao.readRawCode();
+	}
+	
 	// 원자재관리 데이터 추가
 	@Override
 	public void insertRaw(List<RawMaterialVO> raw) {

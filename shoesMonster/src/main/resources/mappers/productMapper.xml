@@ -233,6 +233,12 @@
 
 	</select>
 	<!-- 원자재관리 검색리스트 불러오기 -->
+	
+	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
+	<select id="readRawCode" resultType="String">
+		select raw_code from raw_material order by raw_code desc limit 1;
+	</select>
+	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
 
 	<!-- 원자재관리 정보 다중 입력 -->
 	<insert id="rawIn">
