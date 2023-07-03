@@ -4,7 +4,7 @@
     
 <%@ include file="../include/header.jsp"%>
 
-<script>
+<!-- <script>
     function updateStockCount() {
         var newStockCountInput = document.getElementById("new_stock_count");
         var newStockCount = newStockCountInput.value;
@@ -14,7 +14,7 @@
 
         newStockCountInput.value = "";
     }
-</script>
+</script> -->
 
 <!-- page content -->
 <div class="right_col" role="main">
