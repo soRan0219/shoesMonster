@@ -80,6 +80,8 @@
     	} //if(팝업으로 열었을 때)
     		
 	} //popUp()
+	
+	 
 		
 		//jQuery
         $(document).ready(function() {
@@ -90,14 +92,50 @@
     		$('table tr').each(function(index){
     			$(this).find('td:first').text(index);
     		});
+        	
+      	 // 추가 시 필요한 변수들
 
             var counter = 0;
+            var codeNum = 0;
+        	var prodCode = 0;
+            
+         // 버튼 클릭시 addRow() 기능 불러오기
+            $('#addButton').click(function() {
+            	event.preventDefault();
+            	$('#modify').attr("disabled", true);
+    			$('#delete').attr("disabled", true);
+    			
+    			$.ajax({
+    				  url: "/performance/prodCode",
+    				  method: "GET",
+    				  dataType: "text",
+    				  success: function(data) {
+    				    // Ajax 요청 안에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
+    				    codeNum = data;
+    				    console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+    				    
+    				    // 변수에 할당된 데이터를 기반으로 추가 작업 수행
+    				    someFunction(codeNum);
+    				  }
+    				}); // ajax 끝
+
+    				function someFunction(data) {
+    					 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
+   						 var num = parseInt(codeNum.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+   						 var paddedNum = padNumber(num, codeNum.length - 1); // 숫자를 패딩하여 길이 유지
+   			             prodCode = codeNum.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+   			             addRow();
+   			             counter++;
+    				} // someFunction(data)
+            	
+            }); //  $('#addButton').click(function()
             
             // 추가 버튼 클릭 시 row 생성
             function addRow() {
+            	
                 var row = '<tr>' +
                 	'<td></td>'+
-                    '<td><input type="text" name="products[' + counter + '].prod_code" id="" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_name"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_category"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_unit"></td>' +
@@ -112,20 +150,22 @@
                     '</tr>';
 
                 $('#productTable').append(row);
-                counter++;
                 
             	 // 테이블이 많이 생성되면 스크롤바 생성
                 var table = document.getElementById('productTable');
                 table.scrollTop = table.scrollHeight;
-            }
+	        } // addRow()
+	            
+	           
+            function padNumber(number, length) {
+	                var paddedNumber = number.toString();
+	                while (paddedNumber.length < length) {
+	                    paddedNumber = "0" + paddedNumber;
+	                }
+	                return paddedNumber;
+	        } // padNumber(number, length)
 
-            // 버튼 클릭시 addRow() 기능 불러오기
-            $('#addButton').click(function() {
-            	$('#modify').attr("disabled", true);
-    			$('#delete').attr("disabled", true);
-                addRow();
-            	
-            });
+           
             
             // =============================================================================================================
             

@@ -52,6 +52,12 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 		return pdao.readProdList(vo, pvo);
 	}
+	
+	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String getProdCode() {
+		return pdao.readProdCode();
+	}
 
 	// 품목관리 정보 다중
 	@Override
