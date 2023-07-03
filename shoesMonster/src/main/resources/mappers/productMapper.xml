@@ -943,10 +943,10 @@
 
 
 	<!-- 생산실적 조회 -->
-	<select id="performInfo" resultMap="perfList" resultType="PerformanceVO">
+	<select id="performInfo" resultMap="perfList">
 		SELECT p.perform_code, p.work_code, w.line_code,
 		w.prod_code, p.perform_date, p.perform_qt, p.perform_fair, p.perform_defect, 
-		p.defect_note, p.perform_status, p.perform_note 
+		p.defect_note, p.perform_status, p.emp_id, p.change_id, p.change_date, p.perform_note 
 		FROM performance p JOIN work_order w 
 		ON p.work_code = w.work_code 
 		WHERE p.perform_code=#{perform_code}
