@@ -430,7 +430,7 @@ $(function() {
 			<button type="reset" id="cancelEmp">취소</button>
 			<button type="submit" id="saveEmp">저장</button>
 			<button onclick="location.href='/person/empinfo'">새로고침</button>
-		</div>
+		</div> 
 		<div>
 			<h6>사원</h6>
 			<form id = "fr">
