@@ -16,6 +16,7 @@ public class StockVO {
 	
 	private ProductVO product;
 	private RawMaterialVO raw_mat;
+	private RequirementsVO requirement;
 	private WarehouseVO warehouse;
 	private WorkOrderVO workOrder;
 	private PerformanceVO performance;

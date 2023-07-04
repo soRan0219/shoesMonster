@@ -5,6 +5,21 @@
   
 <mapper namespace="com.sm.mapper.workorderMapper">
 	
+	<resultMap id="stockRM" type="StockVO">
+		<result property="stock_num" column="stock_num"/>
+		<result property="raw_code" column="raw_code"/>
+		<result property="wh_code" column="wh_code"/>
+		<result property="stock_text" column="stock_text"/>
+		<result property="prod_code" column="prod_code"/>
+		<result property="in_num" column="in_num"/>
+		<result property="stock_count" column="stock_count"/>
+		
+		<collection property="requirement" ofType="RequirementsVO">
+			<result property="raw_code" column="raw_code"/>
+			<result property="prod_code" column="prod_code"/>
+		</collection>
+	</resultMap>
+	
 	<!-- 작업지시 목록 -->
 	<select id="allWorkOrder" resultType="WorkOrderVO">
 		SELECT * FROM work_order 
@@ -20,12 +35,30 @@
 	</select>
 	<!-- 작업지시 전체 개수 -->
 	
+	
+	
+	
+	<!-- 특정 완제품에 들어가는 원자재 코드와 재고량 조회 -->
+	<select id="reqRaw" resultMap="stockRM">
+		SELECT s.raw_code, stock_count 
+		FROM stock s 
+		JOIN requirement r ON s.raw_code = r.raw_code 
+		WHERE r.prod_code = #{prod_code}
+	</select>
+	<!-- 특정 완제품에 들어가는 원자재 코드와 재고량 조회 -->
+	
+	
+	
 	<!-- 작업지시 등록 -->
 	<insert id="insertWorkOrder">
 		INSERT INTO work_order (work_code,prod_code,order_code,work_date,line_code,work_qt,work_state)
 		VALUES (#{work_code},#{prod_code},#{order_code},now(),#{line_code},#{work_qt},#{work_state}) 
 	</insert>
 	<!-- 작업지시 등록 -->
+	
+	
+	
+	
 	
 	<!-- 작업지시 삭제 -->
 	<delete id="deleteWorkOrder">
@@ -67,6 +100,7 @@
 				AND prod_code=#{search_prod} 
 			</if> 
 		</where>
+		ORDER BY work_code DESC 
 		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 작업지시 검색 -->
