@@ -22,16 +22,18 @@ public interface OrderStatusDAO {
 	// 수주 현황 검색 개수
 	public int getSearchCountOrderStatus(HashMap<String, Object> search) throws Exception;
 	
-	// 수주 관리 조회
-	public List<ClientsVO> readOrderManageList() throws Exception;
-	
 	// 수주 등록
 	public void registOrder(OrderStatusVO osvo) throws Exception;
 	
 	// 수주 삭제
-	
+	public void deleteOrder(List<String> checked) throws Exception;
 	
 	// 수주 수정
+	public void updateOrder(OrderStatusVO cvo) throws Exception;
+	
+	// 수주 관리 조회
+	public List<ClientsVO> readOrderManageList() throws Exception;
+	
 	
 	
 }

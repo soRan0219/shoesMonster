@@ -1,6 +1,7 @@
 package com.sm.persistence;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -53,24 +54,50 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
 		return sqlSession.selectOne(NameSpace+".searchOrderStatusCnt", search);
 	}
 
+	// 수주 등록
+	@Override
+	public void registOrder(OrderStatusVO osvo) throws Exception {
+		logger.debug("@@@ DAO : registOrder(OrderStatusVO osvo) 호출");
+		
+		sqlSession.insert(NameSpace+".registOrder", osvo);
+	}
+	
+	// 수주 삭제
+	@Override
+	public void deleteOrder(List<String> checked) throws Exception {
+		logger.debug("@@@ DAO : deleteOrder() 호출 @@@");
+		
+		Iterator<String> it = checked.iterator();
+		int result = 0;
+		
+		while(it.hasNext()) {
+			String order_code = it.next();
+			result += sqlSession.delete(NameSpace+".deleteOrder", order_code);
+		}
+		
+		logger.debug("@@@ DAO delete 결과 : "+result);
+		
+	}
+	
+	// 수주 수정
+	@Override
+	public void updateOrder(OrderStatusVO cvo) throws Exception {
+		logger.debug("@@@ DAO : updateOrder() 호출 @@@");
+		int result = sqlSession.update(NameSpace+".updateOrder", cvo);
+		logger.debug("@@@ DAO update 결과 : "+result);
+	}
+	
 	// 수주 관리 조회
 	@Override
 	public List<ClientsVO> readOrderManageList() throws Exception {
 		logger.debug(" readOrderManageList() 호출@@@@@ ");
 		return sqlSession.selectList(NameSpace + ".orderManageList");
 	}
-	
-	// 수주 등록
-	@Override
-	public void registOrder(OrderStatusVO osvo) throws Exception {
-		logger.debug("@#@# D : registOrder(OrderStatusVO osvo) 호출");
-		
-		sqlSession.insert(NameSpace+".registOrder", osvo);
-	}
 
 
 
-	
+
+
 	
 	
 }
