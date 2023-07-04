@@ -231,11 +231,13 @@
   </resultMap>
 	
 	<select id="orderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList">
-		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_name, p.prod_code, p.prod_name, 
-			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
+		select o.order_code, o.order_date, o.client_code, c.client_actname, e.emp_name, p.prod_code, p.prod_name, 
+				p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
 		from orders o
-		JOIN product p ON p.client_code = o.client_code
 		JOIN clients c ON c.client_code = o.client_code
+		JOIN product p ON p.prod_code = o.prod_code
+		JOIN employees e ON e.emp_id = o.emp_id
+		
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
 	
@@ -270,11 +272,12 @@
 
 	
 	<select id="searchOrderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList2">
-		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_name, p.prod_code, p.prod_name, 
-			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
-		from orders o
+		SELECT o.order_code, o.order_date, o.client_code, c.client_actname, e.emp_name, p.prod_code, p.prod_name, 
+				p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
+		FROM orders o
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
+		JOIN employees e ON e.emp_id = o.emp_id
 		
 		<where>
 			<if test="client_code != null and client_code != ''">
@@ -308,6 +311,7 @@
 		SELECT count(*) FROM orders o
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
+		JOIN employees e ON e.emp_id = o.emp_id
 		
 		<where>
 			<if test="client_actname != null and client_actname != ''">

@@ -337,6 +337,7 @@ public class PersonController {
 	// ================================================ 수주 현황 ==========================================================
 	
 	// http://localhost:8088/person/orderStatus
+	// http://localhost:8080/person/orderStatus
 	@RequestMapping(value="/orderStatus", method = RequestMethod.GET)
 	public void orderStatusGET(Model model, ClientPageVO cpvo, ProductVO pvo,
 								@RequestParam HashMap<String, Object> search, 
