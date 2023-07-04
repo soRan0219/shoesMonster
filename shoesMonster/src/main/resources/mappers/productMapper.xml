@@ -492,7 +492,7 @@
 		VALUES (#{line_code}, #{line_name}, #{line_use}, #{emp_id}, now(), #{line_note}, #{line_place})
 	</insert>
 	<!-- 라인 등록 -->
-	
+	 
 	<!-- 라인 삭제 -->
 	<delete id="deleteLine">
 		DELETE FROM line
