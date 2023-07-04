@@ -88,6 +88,9 @@ public interface PerformanceDAO {
 
 	// 소요량관리 검색리스트 불러오기
 	public List<RequirementsVO> readReqList(RequirementsVO vo, PagingVO pvo) throws Exception;
+	
+	// 소요량관리 추가버튼 클릭 시 품번코드 가져가기
+	public String readReqCode();
 
 	// 소요량관리 정보 다중 저장
 	public void insertReqList(RequirementsVO raw);
@@ -129,6 +132,9 @@ public interface PerformanceDAO {
 	
 	// 라인 조회(String line_code)
 	public LineVO getLine(String line_code) throws Exception;
+	
+	// 라인 추가 시 code값 가져가기
+	public String getLiCode(); 
 
 	// ================창고==========================
 
@@ -155,6 +161,9 @@ public interface PerformanceDAO {
 	
 	// 창고 조회(String wh_code)
 	public Wh_prodVO getWarehouse(String wh_code) throws Exception;
+	
+	// 창고 추가 시 code값 가져가기
+	public String getWhCode();
 
 	// ==========================================================================
 

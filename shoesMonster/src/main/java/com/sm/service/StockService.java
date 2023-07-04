@@ -1,6 +1,7 @@
 package com.sm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sm.domain.PageVO;
 import com.sm.domain.StockVO;
@@ -14,12 +15,6 @@ public interface StockService {
 		// 재고 목록 조회
 		public List<StockVO> getStock(PageVO vo) throws Exception;
 		
-		// 재고 검색 갯수
-//		public int count3(WarehouseVO wvo) throws Exception;
-		
-		// 재고 검색 목록 조회
-//		public List<StockVO> getStockList(int startRow, int pageSize , WarehouseVO wvo) throws Exception;
-		
 		// 검색 목록 개수
 		public int count3(StockVO svo) throws Exception;
 		
@@ -27,9 +22,13 @@ public interface StockService {
 		public List<StockVO> getStock(PageVO vo, StockVO svo) throws Exception;
 		
 		// 재고 실수량 
-        public void updateCount(String code, int newCount) throws Exception;
-		
-        // 재고 수정(팝업)
-        public List<StockVO> stockPopup(String code) throws Exception;
+    public void updateCount(String code, int newCount) throws Exception;
+
+    // 재고 수정(팝업)
+    public List<StockVO> stockPopup(String code) throws Exception;
+
+    // 재고 그래프
+    public Map<String, List<StockVO>> stockGraph1() throws Exception;
+
         
 }

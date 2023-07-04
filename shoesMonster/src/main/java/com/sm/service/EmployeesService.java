@@ -40,6 +40,9 @@ public interface EmployeesService {
 	
 	//사원 수정
 	public void modifyEmployees(EmployeesVO uvo) throws Exception;
+	
+	// 사원 사진
+	public void updateEmployeesImg(String img,String emp_id) throws Exception;
 
 		
 	

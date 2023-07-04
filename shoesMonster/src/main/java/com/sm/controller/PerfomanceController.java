@@ -98,7 +98,7 @@ public class PerfomanceController {
 	
 	// 품목관리 추가 시 code 값 가져가기
 	@ResponseBody
-	@RequestMapping(value = "prodCode", method = RequestMethod.GET)
+	@RequestMapping(value = "/prodCode", method = RequestMethod.GET)
     public String getProdCode() {
 		logger.debug(" getProdCode() 호출 ");
 		
@@ -107,7 +107,7 @@ public class PerfomanceController {
 	
 
 	// 품목관리 정보 추가
-	@RequestMapping(value = "product", method = RequestMethod.POST)
+	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String productPOST(ProductList products) throws Exception {
 
 		logger.debug("productPOST() 호출");
@@ -214,7 +214,7 @@ public class PerfomanceController {
 	
 	// 원자재관리 추가 시 code 값 가져가기
 	@ResponseBody
-	@RequestMapping(value = "rawCode", method = RequestMethod.GET)
+	@RequestMapping(value = "/rawCode", method = RequestMethod.GET)
     public String getRawCode() {
 		logger.debug(" getRawCode() 호출 ");
 		
@@ -222,7 +222,7 @@ public class PerfomanceController {
     }
 
 	// 원자재관리 정보 추가
-	@RequestMapping(value = "rawMaterial", method = RequestMethod.POST)
+	@RequestMapping(value = "/rawMaterial", method = RequestMethod.POST)
 	public String rawMaterialPOST(RawMaterialList raws) throws Exception {
 
 		logger.debug("rawMaterialPOST() 호출");
@@ -293,7 +293,7 @@ public class PerfomanceController {
 		}
 		logger.debug("vo : " + vo);
 
-		if (vo.getReq_code() != null || vo.getProd_code() != null || vo.getProd().getProd_name() != null) {
+		if (vo.getReq_code() != null || vo.getProd_code() != null) {
 			
 			logger.debug("if문 호출");
 			logger.debug("vo : " + vo);
@@ -320,9 +320,18 @@ public class PerfomanceController {
 		}
 
 	}
+	
+	// 소요량관리 추가 시 code 값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "/reqCode", method = RequestMethod.GET)
+	public String getReqCode() {
+		logger.debug(" getRawCode() 호출 ");
+
+		return service.getReqCode();
+	}
 
 	// 소요량관리 정보 추가
-	@RequestMapping(value = "requirement", method = RequestMethod.POST)
+	@RequestMapping(value = "/requirement", method = RequestMethod.POST)
 	public String requirementPOST(RequirementsList reqs) throws Exception {
 
 		logger.debug("requirementPOST() 호출");
@@ -449,8 +458,15 @@ public class PerfomanceController {
 		return "redirect:/performance/line?input="+input;
 	}
 	
+	// 라인 추가 시 code값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "/lineCode", method = RequestMethod.GET)
+	public String getLiCode() { 
+		
+		return service.getLiCode();
+	}
+	
 	// 라인 추가
-
 	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
 	public String addLine(LineVO lvo) throws Exception{
 		logger.debug("@#@#@# C : addLine(LineVO lvo) 호출 ");
@@ -518,9 +534,6 @@ public class PerfomanceController {
 
 
 		// 검색(+페이징)
-//		if(wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null ||
-//				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
-			
 		if(wvo.getWh_code() != null  || wvo.getWh_name() != null ||
 		   wvo.getEmp_id() != null || wvo.getWh_use() != 0) {
 		
@@ -566,24 +579,13 @@ public class PerfomanceController {
 		}
 	}
 	
-//	// 품목 검색 팝업창
-//	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
-//	public String popUpGET(@RequestParam("input") String input,
-//			   @RequestParam("type") String type) throws Exception{
-//	
-//		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
-//		logger.debug("@#@#@# C : type = "+type);
-//		
-//		if(type.equals("prod")) {
-//		return "redirect:/performance/product?input="+input;
-//		}
-//		else if(type.equals("raw")) {
-//			return "redirect:/performance/rawMaterial?input="+input;
-//		}
-//		
-//			return "redirect:/performance/warehouse?input="+input;
-//		
-//	}
+	// 창고 추가 시 code값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "/whCode", method = RequestMethod.GET)
+	public String getWhCode() {
+		
+		return service.getWhCode();
+	}
 	
 	// 담당자(사원) 팝업 검색
 	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
@@ -595,6 +597,10 @@ public class PerfomanceController {
 		
 		if(type.equals("emp")) {
 			return "redirect:/person/empinfo?input="+input;
+		}
+		
+		if(type.equals("raw")) {
+			return "redirect:/performance/rawMaterial?input="+input;
 		}
 		
 		return "redirect:/performance/warehouse?input="+input;

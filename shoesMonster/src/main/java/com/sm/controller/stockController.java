@@ -29,6 +29,7 @@ import com.sm.domain.In_materialVO;
 import com.sm.domain.OrderStatusVO;
 import com.sm.domain.Out_materialVO;
 import com.sm.domain.PageVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
 import com.sm.domain.StockVO;
@@ -263,8 +264,17 @@ public class stockController {
 //        service.updateIn(raw_order_num);
         
         // 로그인 정보
-        String emp_id = (String)session.getAttribute("emp_id");
-        request.setAttribute("emp_id", emp_id);
+//        String emp_id = (String)session.getAttribute("emp_id");
+//        request.setAttribute("emp_id", emp_id);
+        logger.debug("_______________^__________^^_________^^^^^^^^____^^^^^^^^^^__^^^^^_");
+//        service.inInsert(rvo, raw_order_num);
+//        
+//        service.updateIn(raw_order_num);
+//        
+        rttr.addFlashAttribute("result", "inInsert");
+        
+        logger.debug("@@@@@@@@@@@@ 리턴 확인용 : " + raw_order_num);
+  	
         
         
         boolean result = service.selectCheck(rawCode);
@@ -272,20 +282,25 @@ public class stockController {
         if(result) {
         	logger.debug("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         	service.updateStock(rawCode, raw_order_count);
+        	  
+        	
         } else {
         	logger.debug("XXXXXXXXXXXXXXXXX ");
         	service.insertStock(rawCode, raw_order_count, wh_code);
+        	
+        	
         }
         
         // 재고에 입고할 항목있는지 조회(select)
 //        service.selectCheck(rawCode);
         
         
-        
+
         
         rttr.addFlashAttribute("result", "inInsert");
         
         logger.debug("@@@@@@@@@@@@ 리턴 확인용 : " + raw_order_num);
+
         
         return "redirect:/stock/In_material";
     }
@@ -393,7 +408,20 @@ public class stockController {
 		
 	}
 	
-
+	@ResponseBody
+	@RequestMapping(value = "/stockGraph", method = RequestMethod.POST)
+	public Map<String, List<StockVO>> stockGraph() throws Exception {
+		logger.debug("@@@@@ CONTROLLER: status() 호출");
+		
+		Map<String, List<StockVO>> GraphMap = s_service.stockGraph1();
+		
+		logger.debug(""+GraphMap);
+		
+		
+		
+		return GraphMap;
+		
+	} //stockGraph
 	
 
     // ====================================== 재고 - 끝 ====================================== //

@@ -83,10 +83,6 @@ public class StockImpl implements StockDAO{
         
 		logger.debug("////////////////////DAOImpl code : " + code +"///////////////////////////");
 		logger.debug("////////////////////DAOImpl nCount : " + newCount +"///////////////////////////");
-		
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("stock_count", modify_Button);
-//        data.put("raw_code", nCount);
         
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
@@ -104,14 +100,34 @@ public class StockImpl implements StockDAO{
 	@Override
 	public List<StockVO> stockPopup(String code) throws Exception {
 		
-//		Map<String, Object> data = new HashMap<>();
-//		data.put("code", code);
-		
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
 		data.put("code", code);
 		
 		return sqlSession.selectList(NAMESPACE + ".stockPopup", data);
+	}
+
+  
+  @Override
+	public Map<String, List<StockVO>> stockGraph1() throws Exception {
+		
+		logger.debug("##### DAO: stockGraph1() 호출");
+		
+		Map<String, List<StockVO>> graph1 = new HashMap<>();
+		
+		List<StockVO> stockGraph1 = sqlSession.selectList(NAMESPACE + ".stockGraph1");
+		logger.debug("##### DAO: 라인별 양불현황 ===> " + stockGraph1);
+
+		List<StockVO> stockGraph2 = sqlSession.selectList(NAMESPACE + ".stockGraph2");
+		logger.debug("##### DAO: 라인별 양불현황 ===> " + stockGraph2);
+		
+	
+		
+		graph1.put("wh_dv", stockGraph1);
+		graph1.put("wh_code", stockGraph2);
+		
+		
+		return graph1;
 	}
 
 	

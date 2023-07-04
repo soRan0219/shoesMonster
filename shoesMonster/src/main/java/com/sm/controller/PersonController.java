@@ -24,6 +24,7 @@ import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
 import com.sm.domain.ManagementVO;
 import com.sm.domain.OrderStatusVO;
+import com.sm.domain.ProductVO;
 import com.sm.service.ClientsService;
 import com.sm.service.EmployeesService;
 import com.sm.service.OrderStatusService;
@@ -56,13 +57,8 @@ public class PersonController {
 
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
-		//페이지 정보
-		if(search.get("pageSize")!=null) {
-			int pageSize = Integer.parseInt(search.get("pageSize").toString());
-			cpvo.setPageSize(pageSize);
-		} else {
-			cpvo.setPageSize(2);
-		}
+		// 페이지 정보
+		cpvo.setPageSize(2);
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
@@ -84,7 +80,7 @@ public class PersonController {
 			logger.debug(" empList 검색 결과 : " + empList);
 			
 			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
-			pm.setTotalCount(empService.getTotalEmployees());
+			pm.setTotalCount(empService.getSearchEmployees(search));
 			
 			model.addAttribute("search", search);
 			model.addAttribute("empList", empList);
@@ -116,6 +112,7 @@ public class PersonController {
 		logger.debug(" addEmployees() 호출@@@@@ ");
 		logger.debug(" vo : " + vo);
 		
+		// 서비스 - 사원 추가
 		empService.regEmployees(vo);
 		
 		return "redirect:/person/empinfo";
@@ -127,7 +124,7 @@ public class PersonController {
 		logger.debug(" deleteEmployees() 호출@@@@@ ");
 		logger.debug(" checked : " + checked);
 		
-		//서비스 - 작업지시 삭제 
+		//서비스 - 사원 삭제 
 		empService.removeEmployees(checked);
 		
 		return "redirect:/person/empinfo";
@@ -139,10 +136,11 @@ public class PersonController {
 		logger.debug("modifyEmployees() 호출@@@@@");
 		logger.debug(" uvo : " + uvo);
 		
-		//서비스 - 작업지시 수정
+		//서비스 - 사원 수정
 		empService.modifyEmployees(uvo);
+		String emp_id = uvo.getEmp_id();
 		
-		return "redirect:/person/empinfo";
+		return "redirect:/person/empform?emp_id="+emp_id;
 	} //modifyEmployees()
 	
 	// 사원 상세 조회 POST
@@ -168,7 +166,7 @@ public class PersonController {
 		logger.debug(" empManageGET() 호출@@@@@ ");
 		
 		//페이지 정보
-		cpvo.setPageSize(20);
+		cpvo.setPageSize(2);
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
@@ -191,7 +189,7 @@ public class PersonController {
 			logger.debug(" empList 검색 결과 : " + empList);
 			
 			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
-			pm.setTotalCount(empService.getTotalEmployees());
+			pm.setTotalCount(empService.getSearchEmployees(search));
 			
 			model.addAttribute("search", search);
 			model.addAttribute("management", manageList);
@@ -217,8 +215,16 @@ public class PersonController {
 	
 	// http://localhost:8088/empform
 	@RequestMapping(value = "/empform", method = RequestMethod.GET)
-	public void fileForm() throws Exception{
+	public void fileForm(@RequestParam("emp_id") String emp_id, Model model) throws Exception{
 		logger.debug(" fileForm 호출 @@@ ");
+		EmployeesVO vo = empService.getEmployees(emp_id);
+		
+		logger.debug("vo : " + vo);
+		
+		
+		model.addAttribute("vo", vo);
+		
+		
 	}
 	
 	
@@ -332,7 +338,7 @@ public class PersonController {
 	
 	// http://localhost:8088/person/orderStatus
 	@RequestMapping(value="/orderStatus", method = RequestMethod.GET)
-	public void orderStatusGET(Model model, ClientPageVO cpvo, 
+	public void orderStatusGET(Model model, ClientPageVO cpvo, ProductVO pvo,
 								@RequestParam HashMap<String, Object> search, 
 								@RequestParam(value="input", required = false) Object input) throws Exception {
 		logger.debug("@@@ cnotroller : orderStatusGET() 호출 @@@");
@@ -342,18 +348,19 @@ public class PersonController {
 			int pageSize = Integer.parseInt(search.get("pageSize").toString());
 			cpvo.setPageSize(pageSize);
 		} else {
-			cpvo.setPageSize(10);
+			cpvo.setPageSize(2);
 		}
+//		cpvo.setPageSize(2);
 		
 		// 페이지 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
 		pm.setClientPageVO(cpvo);
-		pm.setPageBlock(10);
+		pm.setPageBlock(5);
 		
 		List<OrderStatusVO> searchOrderStatusList = new ArrayList<>();
 		
 		// 검색 있을 때
-		if((search.get("client_code") != null && !search.get("client_code").equals("")) 
+		if((search.get("client_actname") != null && !search.get("client_actname").equals("")) 
 				|| (search.get("prod_code") != null && !search.get("prod_code").equals(""))
 				|| (search.get("emp_id") != null && !search.get("emp_id").equals(""))
 				|| (search.get("order_finish") != null && !search.get("order_finish").equals(""))
@@ -366,10 +373,11 @@ public class PersonController {
 			search.put("pageSize", cpvo.getPageSize());
 			
 			// 검색
-			pm.setTotalCount(osService.getSearchCountOrderStatus(search));
-			
 			searchOrderStatusList = osService.getSearchOrderStatus(search);
+			
+			pm.setTotalCount(osService.getSearchCountOrderStatus(search));
 			logger.debug("@@@ cnotroller 검색결과 list 호출 = " + searchOrderStatusList);
+			
 			
 			model.addAttribute("search", search);
 			model.addAttribute("searchOrderStatusList", searchOrderStatusList);
@@ -431,18 +439,34 @@ public class PersonController {
 	// 수주 등록
 	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
 	public String addOrder(OrderStatusVO osvo) throws Exception{
-		logger.debug("@#@# C : addOrder(osvo) 호출 ");
-		logger.debug("@#@# C : osvo = "+osvo);
+		logger.debug("@@@ cnotroller : addOrder(osvo) 호출 ");
+		logger.debug("@@@ cnotroller : osvo = "+osvo);
 		
 		osService.registOrder(osvo);
 		
 		return "redirect:/person/orderStatus";
 	}
 	
+	// 거래처 삭제
+	@RequestMapping(value="/deleteOrder", method = RequestMethod.POST)
+	public String deleteOrder(@RequestParam(value="checked[]") List<String> checked) throws Exception {
+		logger.debug("@@@ cnotroller : deleteOrder() 호출 @@@");
+		
+		osService.deleteOrder(checked);
+		
+		return "redirect:/person/orderStatus";
+	}
+	
 	// 수주 수정
-	
-	// 수주 삭제
-	
+	@RequestMapping(value="/updateOrder", method = RequestMethod.POST)
+	public String updateOrder(OrderStatusVO cvo) throws Exception {
+		logger.debug("@@@ cnotroller : updateOrder() 호출 @@@");
+		logger.debug("@@@ cnotroller cvo : " + cvo);
+		
+		osService.updateOrder(cvo);
+		
+		return "redirect:/person/orderStatus";
+	}
 	
 	
 	// ===================================================== 수주 현황 ==========================================================

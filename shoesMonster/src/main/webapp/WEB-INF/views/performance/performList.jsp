@@ -472,6 +472,60 @@
 				$(this).prop("selected", true);
 			}
 		});
+		//n건씩 표시
+		
+		
+		//생산실적코드 클릭시 상세조회
+		$('#performCode a').click(function() {
+			var obj = { perform_code:$(this).text().trim() };
+				
+			$.ajax({
+				url: "/performance/detail",
+				type: "post",
+				data: JSON.stringify(obj),
+				contentType : "application/json; charset=UTF-8",
+				dataType : "json",
+				success: function(data) {
+					console.log(data);
+					
+					var tmp = "생산실적코드: ";
+					tmp += data.perform_code;
+					tmp += " 작업지시코드: ";
+					tmp += data.work_code;
+					tmp += " 라인코드: ";
+					tmp += data.workOrder.line_code;
+					tmp += " 품번: ";
+					tmp += ((data.prod_code===""||data.prod_code==null) ? "없음" : data.prod_code);
+					tmp += "<br>실적일: ";
+					tmp += getDate(data.perform_date);
+					tmp += " 실적수량: ";
+					tmp += data.perform_qt;
+					tmp += " 양품수: ";
+					tmp += data.perform_fair;
+					tmp += " 불량수: ";
+					tmp += data.perform_defect;
+					tmp += "<br>불량사유: ";
+					tmp += ((data.defect_note===""||data.defect_note==null) ? "없음" : data.defect_note);
+					tmp += " 현황: ";
+					tmp += data.perform_status;
+					tmp += " 등록자: ";
+					tmp += ((data.emp_id===""||data.emp_id==null) ? "없음" : data.emp_id);
+					tmp += " 변경자: ";
+					tmp += ((data.change_id===""||data.change_id==null) ? "없음" : data.change_id);
+					tmp += " 변경일: ";
+					tmp += ((data.change_date===""||data.change_date==null) ? "없음" : getDate(data.change_date));
+					tmp += " 비고: ";
+					tmp += ((data.perform_note===""||data.perform_note==null) ? "없음" : data.perform_note);
+					
+					$('#detail').html(tmp);
+				},
+				error: function() {
+					alert("아작스 실패");
+				}
+			}); //ajax
+				
+		}); //생산실적코드 클릭
+		
 		
 	}); //jQuery
 	
@@ -480,7 +534,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1> /performance/performList </h1>
+	<h1> 생산실적 관리 </h1>
 	
 	<div>
 		<form id="searchForm" method="get">
@@ -540,10 +594,10 @@
 				<c:forEach var="vo" items="${perfList }">
 					<tr>
 						<td></td>
-						<td id="performCode">${vo.perform_code }</td>
+						<td id="performCode"><a href="#" onclick="return false" class="t">${vo.perform_code }</a></td>
 						<td>${vo.work_code }</td>
 						<td>${vo.workOrder.line_code }</td>
-						<td>${vo.workOrder.prod_code }</td>
+						<td>${vo.prod_code }</td>
 						<td>${vo.perform_date }</td>
 						<td>${vo.perform_qt }</td>
 						<td>${vo.perform_fair }</td>
@@ -580,6 +634,8 @@
 				<a href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏩ </a>
 			</c:if>
 		</div>
+	
+	<div id="detail"></div>
 	
 </div>
 <!-- /page content -->

@@ -329,11 +329,13 @@
 <!-- 출고, 미출고 변경 -->
 
 <!-- 미입고, 입고완료 -->
+
 <!--     <update id="updateIn" parameterType="String"> -->
 <!--       UPDATE in_material  -->
 <!--       SET in_YN = '입고완료' -->
 <!--       WHERE raw_order_num = #{rawOrderNum} -->
 <!--     </update> -->
+
 <!-- 미입고, 입고완료 -->
 
 	<!-- 입고 등록 -->
@@ -365,6 +367,8 @@
 		values(#{raw_order_count}, #{rawCode}, #{wh_code})
 	</insert>
 	<!-- 재고 Insert -->
+	
+	
 	
 	
 
@@ -499,6 +503,25 @@
 	<!-- 재고 수정 팝업 -->
 
 	
+
+
+<!-- 재고 그래프 -->
+	<select id="stockGraph1" resultMap="stock_List">
+	SELECT w.wh_dv ,sum(s.stock_count) stock_count
+	FROM stock s
+	JOIN warehouse w ON s.wh_code = w.wh_code
+	GROUP BY w.wh_dv
+	</select>
+	<!-- 재고 그래프 -->
+<!-- 재고 그래프 -->
+	<select id="stockGraph2" resultMap="stock_List">
+	 SELECT s.wh_code ,sum(s.stock_count) stock_count
+	FROM stock s
+	JOIN warehouse w ON s.wh_code = w.wh_code
+	GROUP BY s.wh_code
+	</select>
+	<!-- 재고 그래프 -->
+
 
 
 	<!-- ========================= 출고 - 시작 ========================= -->

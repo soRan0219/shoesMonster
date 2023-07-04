@@ -41,16 +41,31 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 		return osdao.getSearchCountOrderStatus(search);
 	}
 
-	@Override
-	public List<ClientsVO> getOrderManageList() throws Exception {
-		return osdao.readOrderManageList();
-	}
-	
 	// 수주 등록
 	@Override
 	public void registOrder(OrderStatusVO osvo) throws Exception {
 		osdao.registOrder(osvo);
 	}
+	
+	// 수주 삭제
+	@Override
+	public void deleteOrder(List<String> checked) throws Exception {
+		osdao.deleteOrder(checked);
+	}
+	
+	// 수주 수정
+	@Override
+	public void updateOrder(OrderStatusVO cvo) throws Exception {
+		osdao.updateOrder(cvo);
+	}
+	
+	@Override
+	public List<ClientsVO> getOrderManageList() throws Exception {
+		return osdao.readOrderManageList();
+	}
+
+
+	
 
 
 	

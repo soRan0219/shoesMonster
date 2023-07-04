@@ -74,7 +74,14 @@ public class PerformanceImpl implements PerformanceDAO {
 	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
 	@Override
 	public String readProdCode() {
-		return sqlSession.selectOne(NAMESPACE+".readProdCode");
+		
+		String code = "PR000 ";
+		
+		if (sqlSession.selectOne(NAMESPACE + ".readProdCode") == null) {
+			return code;
+		} else {
+			return sqlSession.selectOne(NAMESPACE + ".readProdCode");
+		}
 	}
 
 	// 품목관리 정보 다중 저장
@@ -159,7 +166,15 @@ public class PerformanceImpl implements PerformanceDAO {
 	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
 	@Override
 	public String readRawCode() {
-		return sqlSession.selectOne(NAMESPACE+".readRawCode");
+		
+		String code = "RM000 ";
+		
+		if (sqlSession.selectOne(NAMESPACE + ".readRawCode") == null) {
+			return code;
+		} else {
+			return sqlSession.selectOne(NAMESPACE + ".readRawCode");
+		}
+		
 	}
 	
 	// 원자재관리 데이터 추가
@@ -217,7 +232,6 @@ public class PerformanceImpl implements PerformanceDAO {
 		HashMap<String, Object> data = new HashMap<String, Object>();
 
 		data.put("req_code", vo.getReq_code());
-		data.put("prod_name", vo.getProd().getProd_name());
 		data.put("prod_code", vo.getProd_code());
 		return sqlSession.selectOne(NAMESPACE + ".countSearchReq", data);
 	}
@@ -230,10 +244,23 @@ public class PerformanceImpl implements PerformanceDAO {
 		data.put("start", pvo.getStart());
 		data.put("cntPerPage", pvo.getCntPerPage());
 		data.put("req_code", vo.getReq_code());
-		data.put("prod_name", vo.getProd().getProd_name());
 		data.put("prod_code", vo.getProd_code());
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchReq", data);
+	}
+	
+	// 소요량 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String readReqCode() {
+		
+		String code = "RQ000 ";
+		
+		if (sqlSession.selectOne(NAMESPACE + ".readReqCode") == null) {
+			return code;
+		} else {
+			return sqlSession.selectOne(NAMESPACE + ".readReqCode");
+		}
+		
 	}
 	
 	// 소요량 데이터 추가
@@ -367,6 +394,19 @@ public class PerformanceImpl implements PerformanceDAO {
 			
 		return sqlSession.selectOne(NAMESPACE+".readLineList", line_code);
 	}
+	
+	// 라인 추가 시 code값 가져가기
+	@Override
+	public String getLiCode() {
+		
+		String code = "L000";
+		
+		if(sqlSession.selectOne(NAMESPACE+".getLiCode") == null) {
+			return code;
+		}else {
+			return sqlSession.selectOne(NAMESPACE+".getLiCode");
+		}
+	}
 
 	// ===========창고==============================================
 
@@ -479,6 +519,19 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".readWhList", wh_code);
 	}
+	
+	// 창고 추가 시 code값 가져가기
+	@Override
+	public String getWhCode() {
+		
+		String code = "WH000";
+		
+		if(sqlSession.selectOne(NAMESPACE+".getWhCode") == null) {
+			return code;
+		}else {
+			return sqlSession.selectOne(NAMESPACE+".getWhCode");
+		}
+	}
 
 	// ==========================================================================
 
@@ -512,13 +565,21 @@ public class PerformanceImpl implements PerformanceDAO {
 			int perform_fair = sqlSession.selectOne(NAMESPACE + ".sumFair", work_code);
 			logger.debug("##### DAO: 양품수 합 ===> " + perform_fair);
 			
+			//재고에서 해당 작업지시의 품목과 일치하는 품목 있는지 확인
 			StockVO stock = sqlSession.selectOne(NAMESPACE + ".searchStock", work_code);
-			logger.debug("##### DAO: 일치품목 ===> " + stock.getProd_code());
-//			String prod_code = stock.getProd_code();
 			
-			stock.setStock_count(perform_fair);
+			if(stock!=null) {
+				//일치 품목 있을 때
+				stock.setStock_count(perform_fair);
+				sqlSession.update(NAMESPACE + ".updateStock", stock);
+				logger.debug("##### DAO: 재고 수량 증가");
+			} else {
+				//일치 품목 없을 때(=> 새로 등록)
+				vo.setPerform_fair(perform_fair);
+				sqlSession.selectOne(NAMESPACE + ".insertStock", vo);
+				logger.debug("##### DAO: 재고 새로 추가");
+			}
 			
-			sqlSession.update(NAMESPACE + ".updateStock", stock);
 			
 			logger.debug("##### DAO: 재고등록완~~~~~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
 		} //if(마감쳤을때)
@@ -554,8 +615,42 @@ public class PerformanceImpl implements PerformanceDAO {
 	public void updatePerformance(PerformanceVO uvo) throws Exception {
 		logger.debug("##### DAO: updatePerformance() 호출");
 		int result = sqlSession.update(NAMESPACE + ".updatePerform", uvo);
-		
 		logger.debug("##### DAO: update 결과 ===> " + result);
+		
+		//DB작업 위해서 작업지시코드 변수에 저장
+		String work_code = uvo.getWork_code();
+		
+		//생산실적 중 양품수와 작업지시수량 비교
+		String updateStatus = sqlSession.selectOne(NAMESPACE + ".compare", work_code);
+		logger.debug("##### DAO: 양품수와 작업지시수량 비교 결과 있없 ===> " + updateStatus);
+		
+		//비교결과 해당 작업지시수량보다 생산한 양품수가 같거나 많으면 생산현황 마감으로 변경
+		// => 마감으로 변경됐을 경우 해당 작업지시 양품수 합해서 재고에 더하기
+		if(updateStatus != null) {
+			sqlSession.update(NAMESPACE + ".updateStatus", work_code);
+			
+			int perform_fair = sqlSession.selectOne(NAMESPACE + ".sumFair", work_code);
+			logger.debug("##### DAO: 양품수 합 ===> " + perform_fair);
+			
+			//재고에서 해당 작업지시의 품목과 일치하는 품목 있는지 확인
+			StockVO stock = sqlSession.selectOne(NAMESPACE + ".searchStock", work_code);
+			
+			if(stock!=null) {
+				//일치 품목 있을 때
+				stock.setStock_count(perform_fair);
+				sqlSession.update(NAMESPACE + ".updateStock", stock);
+				logger.debug("##### DAO: 재고 수량 증가");
+			} else {
+				//일치 품목 없을 때(=> 새로 등록)
+				uvo.setPerform_fair(perform_fair);
+				sqlSession.selectOne(NAMESPACE + ".insertStock", uvo);
+				logger.debug("##### DAO: 재고 새로 추가");
+			}
+			
+			
+			logger.debug("##### DAO: 재고등록완~~~~~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
+		} //if(마감쳤을때)
+				
 	} //updatePerformance()
 
 	//생산실적 전체 수
@@ -602,6 +697,10 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return statusMap;
 	} //getPerformStatus()
+
+
+
+
 
 
 }

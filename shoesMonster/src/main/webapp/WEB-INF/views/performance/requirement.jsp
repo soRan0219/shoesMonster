@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -44,42 +45,79 @@
 
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
-    			$(this).find('td:first').text(index);
+    			var num = "<c:out value='${paging.nowPage}'/>";
+    			var num2 = "<c:out value='${paging.cntPerPage}'/>";
+    			$(this).find('td:first').text(((num-1)*num2) + index);
     		});
         	
+    		// 추가 시 필요한 변수들
+
             var counter = 0;
+            var codeNum = 0;
+        	var reqCode = 0;
             
             // 추가 버튼 클릭 시 row 생성
+            
+
+            // 버튼 클릭시 addRow() 기능 불러오기
+            $('#addButton').click(function() {
+            	event.preventDefault();
+            	$('#delete').attr("disabled", true);
+				$('#modify').attr("disabled", true);
+				
+				$.ajax({
+  				  url: "/performance/reqCode",
+  				  method: "GET",
+  				  dataType: "text",
+  				  success: function(data) {
+  				    // Ajax 요청 안에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
+  				    codeNum = data;
+  				    console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+  				    
+  				    // 변수에 할당된 데이터를 기반으로 추가 작업 수행
+  				    someFunction(codeNum);
+  				  }
+  				}); // ajax 끝
+
+  				function someFunction(data) {
+  					 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
+ 						 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+ 						 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
+ 						 reqCode = codeNum.charAt(0) + codeNum.charAt(1) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+ 			             addRow();
+ 			             counter++;
+  				} // someFunction(data)
+				
+            });
+            
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'">' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_code" required></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" onclick=serchProd("prod_code'+counter+'");></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'"></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" onclick=serchRaw("raw_code'+counter+'");></td>' +
+                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" >' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" readonly required></td>' +
+                    '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" >' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'");></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'");></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_dan"></td>' +
                     '<td></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_note"></td>' +
                     '</tr>';
                     
                 $('#reqTable').append(row);
-                counter++;
                 
             	 // 테이블이 많이 생성되면 스크롤바 생성
                 var table = document.getElementById('reqTable');
                 table.scrollTop = table.scrollHeight;
 				
             }
-
-            // 버튼 클릭시 addRow() 기능 불러오기
-            $('#addButton').click(function() {
-                addRow();
-                
-            	$('#delete').attr("disabled", true);
-				$('#modify').attr("disabled", true);
-                
-            });
+            
+            function padNumber(number, length) {
+                var paddedNumber = number.toString();
+                while (paddedNumber.length < length) {
+                    paddedNumber = "0" + paddedNumber;
+                }
+                return paddedNumber;
+       		 } // padNumber(number, length)
             
             // =============================================================================================================
  
@@ -133,21 +171,21 @@
 //	 				alert(checked);
 					
 					if(checked.length > 0) {
-						
-						$.ajax({
-							url: "/performance/requirementDelete",
-							type: "post",
-							data: {checked:checked},
-							dataType: "text",
-							success: function() {
-								alert("삭제 성공");
-								location.reload();
-							},
-							error: function() {
-								alert("삭제 실패");
-							}
-						}); //ajax
-						
+						if(confirm("선택한 항목을 삭제하시겠습니까?")){
+							$.ajax({
+								url: "/performance/requirementDelete",
+								type: "post",
+								data: {checked:checked},
+								dataType: "text",
+								success: function() {
+									alert("삭제 성공");
+									location.reload();
+								},
+								error: function() {
+									alert("삭제 실패");
+								}
+							}); //ajax
+						}// 컨펌
 					} //체크된거 있을대
 					else {
 						alert("선택된 글이 없습니다.");
@@ -228,19 +266,7 @@
 								self.find('td').each(function(idx,item) {
 									if (idx > 0) {
 										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
-// 										if (idx == 5) {
-// 											var dropDown = "<select id='work_state' name='work_state'>";
-// 											dropDown += "<option value='지시'>지시</option>";
-// 											dropDown += "<option value='진행'>진행</option>";
-// 											dropDown += "<option value='마감'>마감</option>";
-// 											dropDown += "</select>";
-// 											$(this).html(dropDown);
-// 											$(this).find('option').each(function() {
-// 												if (this.value == preVOs[idx - 1]) {
-// 													$(this).attr("selected",true);
-// 												}
-// 											}); //option이 work_state와 일치하면 선택된 상태로
-// 										} //지시상태 - select
+// 									
 										if(idx==4){
 											var row = '<input type="hidden" name="'+names[7]+'" value="'+preVOs[7]+'" id="raw_code">'
 											$(".selected").append(row);
@@ -327,8 +353,8 @@
 				<tr>
 					<th>번호</th>
 					<th>소요코드</th>
-					<th>품번</th>
-					<th>품명</th>
+					<th type='hidden' style='display: none;'>품번</th>
+					<th>완제품</th>
 					<th>원자재</th>
 					<th>소요량</th>
 					<th>총 소요량</th>
@@ -338,7 +364,7 @@
 					<tr>
 						<td></td>
          			    <td id="reqCode">${vo.req_code }</td>
-         			    <td >${vo.prod_code }</td>
+         			    <td type='hidden' style='display: none;'>${vo.prod_code }</td>
 						<td id="prodName">${vo.prod.prod_name }</td>
 						<td>${vo.raw.raw_name }</td>
 						<td>${vo.req_dan }</td>
@@ -351,9 +377,9 @@
 		
 	</form>
 	
-	<div style="display: block; text-align: center;">		
+	<div  style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
-			<a href="/performance/rawMaterial?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&lt;</a>
+			<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">&lt;</a>
 		</c:if>
 		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
 			<c:choose>
@@ -361,12 +387,12 @@
 					<b>${p }</b>
 				</c:when>
 				<c:when test="${p != paging.nowPage }">
-					<a href="/performance/rawMaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">${p }</a>
+					<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">${p }</a>
 				</c:when>
 			</c:choose>
 		</c:forEach>
 		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/performance/rawMaterial?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&gt;</a>
+			<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">&gt;</a>
 		</c:if>
 	</div>
 	

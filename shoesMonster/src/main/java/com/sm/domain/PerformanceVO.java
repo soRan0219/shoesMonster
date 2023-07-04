@@ -8,6 +8,7 @@ import lombok.Data;
 public class PerformanceVO {
 	private String perform_code;
 	private String work_code;
+	private String prod_code;
 	private Date perform_date;
 	private int perform_qt;
 	private String emp_id;

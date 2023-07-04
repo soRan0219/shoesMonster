@@ -22,7 +22,7 @@ public class ProductVO {
 	public ProductVO() {
 		clients = new ClientsVO();
 		wh = new Wh_prodVO();
-		orders = new OrderStatusVO();
+//		orders = new OrderStatusVO();
 	}
 	
 	

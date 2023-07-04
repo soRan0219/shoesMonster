@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp"%>
+<link href="./resources/build/css/custom.css" rel="stylesheet" type="text/css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
@@ -94,7 +96,9 @@
 
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
-    			$(this).find('td:first').text(index);
+    			var num = "<c:out value='${paging.nowPage}'/>";
+    			var num2 = "<c:out value='${paging.cntPerPage}'/>";
+    			$(this).find('td:first').text(((num-1)*num2) + index);
     		});
 
         	popUp();
@@ -128,9 +132,9 @@
 
     				function someFunction(data) {
     					 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
-   						 var num = parseInt(codeNum.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
-   						 var paddedNum = padNumber(num, codeNum.length - 1); // 숫자를 패딩하여 길이 유지
-   			             rawCode = codeNum.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+   						 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+   						 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
+   			             rawCode = codeNum.charAt(0) + codeNum.charAt(1)+ paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
    			             addRow();
    			             counter++;
     				} // someFunction(data)
@@ -141,15 +145,15 @@
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                    '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" required></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" readonly required></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_name"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_color"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_unit"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_size"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_name'+counter+'"); required></td>' +
+                    '<input type="hidden" name="raws[' + counter + '].client_code" id="client_code'+counter+'" required>' +
+                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'");></td>' +
+                    '<input type="hidden" name="raws[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required>' +
+                    '<td><input type="text" name="raws[' + counter + '].wh.wh_name" id="wh_name'+counter+'" readonly onclick=serchWh("wh_code'+counter+'"); required></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_price"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_note"></td>' +
                     '</tr>';
@@ -242,18 +246,22 @@
 								self.find('td').each(function(idx,item) {
 									if (idx > 0) {
 										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
-
+										if (idx == 6) {
+										inputCng($(this),"hidden",names[5],preVOs[5]);
+										} else if (idx == 8){
+										inputCng($(this),"hidden",names[7],preVOs[7]);
+										}
 									} //라인코드부터 다 수정 가능하게
 		
 								}); // self.find(~~)
 								
 								//거래처 검색 
-								$('#client_code').click(function() {
+								$('#client_actname').click(function() {
 									openWindow("client","client_code");
 								}); //client_code click
 								
 								// 창고 검색
-								$('#wh_code').click(function() {
+								$('#wh_name').click(function() {
 									openWindow("wh","wh_code");
 								}); // wh_code click
 								
@@ -338,20 +346,21 @@
 //	 				alert(checked);
 					
 					if(checked.length > 0) {
-						
-						$.ajax({
-							url: "/performance/rawMaterialDelete",
-							type: "post",
-							data: {checked:checked},
-							dataType: "text",
-							success: function() {
-								alert("삭제 성공");
-								location.reload();
-							},
-							error: function() {
-								alert("삭제 실패");
-							}
-						}); //ajax
+						if(confirm("선택한 항목을 삭제하시겠습니까?")){
+							$.ajax({
+								url: "/performance/rawMaterialDelete",
+								type: "post",
+								data: {checked:checked},
+								dataType: "text",
+								success: function() {
+									alert("삭제 성공");
+									location.reload();
+								},
+								error: function() {
+									alert("삭제 실패");
+								}
+							}); //ajax
+						} // 컨펌
 						
 					} //체크된거 있을대
 					else {
@@ -382,7 +391,8 @@
        		<label>품번:</label>
         	<input type="text" name="raw_code" id="searchCode">
         	<label>거래처명:</label>
-        	<input type="text" name="clients.client_actname" id="searchName">
+        	<input type="hidden" name="client_code" id="client_code9999">
+        	<input type="text" name="clients.client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
         	<br>
         	<label>품명:</label>
         	<input type="text" name="raw_name" id="searchCategory"> 
@@ -396,19 +406,19 @@
 		<button id="modify">수정</button>
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
-		<input type="submit" value="저장" id="save">
-	
-		<table border="1" id="rawTable">
-				<tr>
-					<th>번호</th>
+		<input type="submit" value="저장" id="save" class ="btn btn-success">
+		<div class="col-md-12 col-sm-12">
+		<table border="1" id="rawTable" class="table table-striped jambo_table bulk_action">
+				<tr class="headings">
+					<th class="column-title">번호</th>
 					<th>품번</th>
 					<th>품명</th>
 					<th>색상</th>
 					<th>재고 단위</th>
 					<th>규격</th>
-					<th>거래처코드</th>
+					<th type='hidden' style='display: none;'>거래처코드</th>
 					<th>거래처명</th>
-					<th>창고코드</th>
+					<th type='hidden' style='display: none;'>창고코드</th>
 					<th>창고명</th>
 					<th>매입단가</th>
 					<th>비고</th>
@@ -421,20 +431,20 @@
 						<td>${vo.raw_color }</td>
 						<td>${vo.raw_unit }</td>
 						<td>${vo.raw_size }</td>
-						<td>${vo.client_code }</td>
+						<td type='hidden' style='display: none;'>${vo.client_code }</td>
 						<td>${vo.clients.client_actname }</td>
-						<td>${vo.wh_code }</td>
+						<td type='hidden' style='display: none;'>${vo.wh_code }</td>
 						<td>${vo.wh.wh_name }</td>
-						<td>${vo.raw_price }</td>
+						<td><fmt:formatNumber>${vo.raw_price }</fmt:formatNumber></td>
 						<td>${vo.raw_note }</td>
 					</tr>
 			</c:forEach>
 
 		</table>
-		
+		</div>
 	</form>
 	
-	<div style="display: block; text-align: center;">		
+	<div id="pagination" style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
 			<a href="/performance/rawMaterial?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&lt;</a>
 		</c:if>

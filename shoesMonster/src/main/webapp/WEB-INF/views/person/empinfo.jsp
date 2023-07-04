@@ -14,8 +14,26 @@
 
 <script type="text/javascript">
 
-var count = 0;
+// 팝업 창 조절
+function popupEmp(data) {
+	var cw = screen.availWidth;
+	var ch = screen.availHeight;
+	var emp_id = data;
+	
+	sw = 1024;
+	sh = 768;
+	
+	mw = (cw-sw) / 2;
+	mh = (ch-sh) / 2;
+	
+	window.open('/person/empform?emp_id=' + emp_id, 'popup', 'width=' + sw +
+		', height=' + sh + ',left=' + mw + ',top='+ mh +
+		',toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, scrollbars=no, copyhistory=no');
+}
+
+
 //날짜 + 시간 + 분 + 초 ==> 코드
+var count = 0;
 function codeCreation() {
 	Date.prototype.getYearYY = function(){
 		 var a = this.getYear();
@@ -25,11 +43,19 @@ function codeCreation() {
     var YY_year = date.getYearYY();
     var month = ("0" + (1 + date.getMonth())).slice(-2);
     var day = ("0" + date.getDate()).slice(-2);
+    var second = ("0" + date.getSeconds()).slice(-2);
     
-    var code = YY_year + month + day + count.toString().padStart(3,'0');
+    var code = YY_year + month + day + second + count.toString().padStart(1,'0');
     
+	count++;
     return code;
 }
+
+//input으로 바꾸기 
+function inputCng(obj, type, name, value) {
+	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+	obj.html(inputBox);
+} //inputCng
 
 
 // 혦넣
@@ -78,12 +104,12 @@ function popUp() {
     		window.close();
     	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
     		
-     		
 		} else {
 			console.log("팝업아님");
 	} //if(팝업으로 열었을 때)
 		
 } //popUp() 여기까지 혦넣
+
 
 //제이쿼리
 $(function() {
@@ -114,6 +140,10 @@ $(function() {
 			tbl += " <td>";
 			tbl += "  <input type='text' name='emp_id' id='emp_id' readonly>";
 			tbl += " </td>";
+			// 비밀번호
+			tbl += " <td>";
+			tbl += "  <input type='text' name='emp_pw' id='emp_pw' required>";
+			tbl += " </td>";
 			// 사원명
 			tbl += " <td>";
 			tbl += "  <input type='text' name='emp_name' id='emp_name' required>";
@@ -121,7 +151,7 @@ $(function() {
 			// 부서
 			tbl += " <td>";
 			tbl += "  <select name='emp_department' id='emp_department'>";
-			tbl += "   <option>부서</option>";
+			tbl += "   <option value='부서'>부서</option>";
 			tbl += "   <option value='영업팀'>영업팀</option>";
 			tbl += "   <option value='생산팀'>생산팀</option>";
 			tbl += "   <option value='인사팀'>인사팀</option>";
@@ -164,6 +194,24 @@ $(function() {
 	            }
 	        });
 			
+			//입사일자 달력
+			$('#emp_hiredate').datepicker({
+// 				showOn:'both',
+// 				buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+// 				buttonImageOnly:'true',
+				changeMonth:'true',
+				changeYear:'true',
+				nextText:'다음달',
+				prevText:'이전달',
+				showButtonPanel:'true',
+				currentText:'오늘',
+				closeText:'닫기',
+				dateFormat:'yy-mm-dd',
+				dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+				dayNamesMin:['월','화','수','목','금','토','일'],
+				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			});
+			
 			$(this).removeClass('true');
 		} //true 클래스 있을 때
 		
@@ -172,6 +220,7 @@ $(function() {
 			alert('저장버튼 누름');
 			
 			var emp_id = $('#emp_id').val();
+			var emp_pw = $('#emp_pw').val();
 			var emp_name = $('#emp_name').val();
 			var emp_department = $('#emp_department').val();
 			var emp_position = $('#emp_position').val();
@@ -180,7 +229,7 @@ $(function() {
 			var emp_hiredate = $('#emp_hiredate').val();
 			var emp_work = $('#emp_work').val();
 			
-			if (emp_name == "" || emp_department == "" || emp_position == "" || emp_email == "" || emp_phone == "" || emp_hiredate == "" || emp_work == "") {
+			if (emp_pw == "" || emp_name == "" || emp_department == "" || emp_position == "" || emp_email == "" || emp_phone == "" || emp_hiredate == "" || emp_work == "") {
 				alert("항목을 모두 입력하세요");
 			} else {
 				$('#fr').attr("action", "/person/addEmp");
@@ -196,12 +245,12 @@ $(function() {
 			});
 		}); //cacle click
 	}); //add click
-	
+
 	
 	var isExecuted = false	
 	// ------------- 수정 ------------------
 	$('#modifyEmp').click(function() {
-
+		
 		$('#addEmp').attr("disabled", true);
 		$('#deleteEmp').attr("disabled", true);
 
@@ -218,32 +267,14 @@ $(function() {
 				console.log(updateCode);
 				
 				var jsonData = {
-						emp_id : updateCode
-					};
+					emp_id : updateCode
+				};
 				
 				var self = $(this);
 				
-// 				$.ajax({
-// 					url : "/workorder/detail",
-// 					type : "post",
-// 					contentType : "application/json; charset=UTF-8",
-// 					dataType : "json",
-// 					data : JSON.stringify(jsonData),
-// 					success : function(data) {
-// 						// alert("*** 아작스 성공 ***");
-
-// 						var preVOs = [
-// 								data.work_code,
-// 								data.line_code,
-// 								data.order_code,
-// 								data.prod_code,
-// 								data.work_state,
-// 								data.work_date,
-// 								data.work_qt
-// 							];
-				
 				var names = [
 						"emp_id",
+						"emp_pw",
 						"emp_name",
 						"emp_department",
 						"emp_position",
@@ -251,13 +282,12 @@ $(function() {
 						"emp_phone",
 						"emp_hiredate",
 						"emp_work" ];
-
+				
 				//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
 				self.find('td').each(function(idx,item) {
-
 					if (idx > 0) {
-						inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
-						if (idx == 3) {
+						inputCng($(this),"text",names[idx - 1], $(this).text());
+						if (idx == 4) {
 							var dropDown = "<select id='emp_department' name='emp_department'>";
 							dropDown += "<option value='전체'>전체</option>";
 							dropDown += "<option value='영업팀'>영업팀</option>";
@@ -271,16 +301,9 @@ $(function() {
 								}
 							}); //option이 emp_department와 일치하면 선택된 상태로
 						} //사원부서 - select
-						
-						//지시수량 제외하고 readonly 속성 부여
-						$(this).find("input").each(function(){
-							if($(this).attr("name") != "emp_work") {
-								$(this).attr("readonly", true);
-							}
-						}); //readonly
-						
 					} //사원 아이디부터 다 수정 가능하게
 				}); // self.find(~~)
+				
 
 				//저장버튼 -> form 제출
 				$('#saveEmp').click(function() {
@@ -371,7 +394,6 @@ $(function() {
 			});
 		}); //delete click
 	
-	count++;
 }); //jquery
 </script>
 
@@ -397,6 +419,8 @@ $(function() {
 		</form>
 	</div>
 	
+	${empList.get(0) }
+	
 	<div style="margin: 5% 12% 0% 12%;">
 		<div style="text-align-last: right;">
 			총 ${pm.totalCount } 건
@@ -405,7 +429,8 @@ $(function() {
 			<button id="deleteEmp" class="true">삭제</button>
 			<button type="reset" id="cancelEmp">취소</button>
 			<button type="submit" id="saveEmp">저장</button>
-		</div>
+			<button onclick="location.href='/person/empinfo'">새로고침</button>
+		</div> 
 		<div>
 			<h6>사원</h6>
 			<form id = "fr">
@@ -413,6 +438,7 @@ $(function() {
 					<colgroup>
 					    <col style="width: 25px">
 					    <col style="width: 100px">
+					    <col style="width: 75px">
 					    <col style="width: 75px">
 					    <col style="width: 50px">
 					    <col style="width: 50px">
@@ -425,6 +451,7 @@ $(function() {
 					<tr>
 						<th>번호</th>
 						<th>사원번호</th>
+						<th>비밀번호</th>
 						<th>사원명</th>
 						<th>부서</th>
 						<th>직책</th>
@@ -439,6 +466,7 @@ $(function() {
 							<tr>
 								<td></td>
 								<td id="empCode">${vo.emp_id}</td> <!-- 혦넣 -->
+								<td>${vo.emp_pw}</td> 
 								<td id="empName">${vo.emp_name}</td> <!-- 혦넣 -->
 								<td>${vo.emp_department}</td>
 								<td>${vo.emp_position}</td>
@@ -446,9 +474,9 @@ $(function() {
 								<td>${vo.emp_phone}</td>
 								<td>${vo.emp_hiredate}</td>
 								<td>${vo.emp_work}</td>
-								<td>
-									<button class="details" data-id="${emp_id }">상세보기</button>
-								</td>
+								<th>
+									<input type="button" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
+								</th>
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -473,8 +501,6 @@ $(function() {
 			</c:if>
 		</div>
 		<!-- 페이징 -->
-
-	<div id="details"></div>
 	
 </div>
 <!-- /page content -->

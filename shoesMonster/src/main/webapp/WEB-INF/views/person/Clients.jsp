@@ -66,6 +66,7 @@
 		popUp();
 	});
 
+
 	
 	// ==================================== 버튼 =================================================
 		
@@ -274,6 +275,7 @@
 	
 					if (checked.length > 0) {
 	
+
 						$.ajax({
 							url : "/person/delete",
 							type : "post",
@@ -315,7 +317,7 @@
 			$('#addButton').attr("disabled", true);
 			$('#deleteButton').attr("disabled", true);
 
-			//행 하나 클릭했을 때	
+			// 행 하나 클릭했을 때	
 			$('table tr:not(:first-child)').click(function() {
 
 				//하나씩만 선택 가능
@@ -323,8 +325,8 @@
 					isExecuted = true;
 					
 					$(this).addClass('selected');
-					//작업지시 코드 저장
-					let updateCode = $(this).find('#clientCode').text().trim();
+					// 거래처코드 저장
+					let updateCode = $(this).find('#client_code').text().trim();
 					console.log(updateCode);
 	
 					var jsonData = {
@@ -368,6 +370,14 @@
 									}
 								}); // option이 client_type와 일치하면 선택된 상태로
 							} // 거래처구분 - select
+							
+							// 거래처코드 readonly 속성 부여
+							$(this).find("input").each(function(){
+								if($(this).attr("name") === "client_code") {
+									$(this).attr("readonly", true);
+								}
+							}); //readonly
+							
 						} // 거래처 코드부터 다 수정 가능하게
 
 					}); // self.find(~~)
@@ -449,7 +459,7 @@
 				<th>전화번호</th>
 				<th>휴대폰번호</th>
 				<th>팩스번호</th>
-				<th>이메일</th>
+				<th>email</th>
 				<th>비고</th>
 			</tr>
 			
