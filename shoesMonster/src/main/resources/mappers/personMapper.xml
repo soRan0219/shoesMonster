@@ -181,7 +181,7 @@
 	<!-- 거래처 삭제 -->
 	<delete id="deleteClient">
 		delete from clients
-		where client_code=#{client_code}
+		where client_code=#{client}
 	</delete>
 	<!-- 거래처 삭제 -->
 	
@@ -265,8 +265,9 @@
 		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_id, p.prod_code, p.prod_name, 
 			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
 		from orders o
-		JOIN product p ON p.client_code = o.client_code
 		JOIN clients c ON c.client_code = o.client_code
+		JOIN product p ON p.prod_code = o.prod_code
+		
 		<where>
 			<if test="client_code != null and client_code != ''">
 				o.client_code Like CONCAT ('%',#{client_code},'%')
@@ -296,10 +297,9 @@
 	
 	<!-- 수주 현황 검색 개수 -->
 	<select id="searchOrderStatusCnt" parameterType="hashMap" resultType="int">
-		select count(*)
-		from orders o
-<!-- 		JOIN product p ON p.client_code = o.client_code -->
+		SELECT count(*) FROM orders o
 		JOIN clients c ON c.client_code = o.client_code
+		JOIN product p ON p.prod_code = o.prod_code
 		
 		<where>
 			<if test="client_actname != null and client_actname != ''">
@@ -326,29 +326,13 @@
 	
 	<!-- 수주 등록 -->
 	<insert id="registOrder">
-		INSERT ALL
-		INTO orders VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id}, #{order_count}, #{client_code})
-		INTO clients VALUES (#{client_actname})
-		SELECT (order_code, order_date, order_deliveryDate, emp_id, order_count, client_code, client_actname) 
+		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_id,
+					order_count, client_code, order_finish) 
+		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id},
+				#{order_count}, #{client_code}, #{order_finish})
 	</insert>
 	<!-- 수주 등록 -->
 	
-	<!-- 수주 삭제 -->
-	<delete id="deleteOrder">
-		delete from orders
-		where order_code=#{order_code}
-	</delete>
-	<!-- 수주 삭제 -->
-	
-	<!-- 수주 수정 -->
-	<update id="updateOrder">
-		update clients
-		set client_code=#{client_code}, client_actname=#{client_actname}, client_type=#{client_type}, client_number=#{client_number}, client_sort=#{client_sort},
-		    client_ceo=#{client_ceo}, client_name=#{client_name}, client_addr=#{client_addr}, client_addr2=#{client_addr2}, client_tel=#{client_tel},
-		    client_phone=#{client_phone}, client_fax=#{client_fax}, client_email=#{client_email}, client_note=#{client_note}
-		where client_code=#{client_code}
-	</update>
-	<!-- 수주 수정 -->
 <!-- ===================================================== 수주 현황 ================================================================== -->
 	
 	

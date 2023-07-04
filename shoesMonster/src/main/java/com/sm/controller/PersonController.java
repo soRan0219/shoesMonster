@@ -24,6 +24,7 @@ import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
 import com.sm.domain.ManagementVO;
 import com.sm.domain.OrderStatusVO;
+import com.sm.domain.ProductVO;
 import com.sm.service.ClientsService;
 import com.sm.service.EmployeesService;
 import com.sm.service.OrderStatusService;
@@ -335,7 +336,7 @@ public class PersonController {
 	
 	// http://localhost:8088/person/orderStatus
 	@RequestMapping(value="/orderStatus", method = RequestMethod.GET)
-	public void orderStatusGET(Model model, ClientPageVO cpvo, 
+	public void orderStatusGET(Model model, ClientPageVO cpvo, ProductVO pvo,
 								@RequestParam HashMap<String, Object> search, 
 								@RequestParam(value="input", required = false) Object input) throws Exception {
 		logger.debug("@@@ cnotroller : orderStatusGET() 호출 @@@");
@@ -345,7 +346,7 @@ public class PersonController {
 			int pageSize = Integer.parseInt(search.get("pageSize").toString());
 			cpvo.setPageSize(pageSize);
 		} else {
-			cpvo.setPageSize(10);
+			cpvo.setPageSize(2);
 		}
 //		cpvo.setPageSize(2);
 		
@@ -374,6 +375,7 @@ public class PersonController {
 			
 			pm.setTotalCount(osService.getSearchCountOrderStatus(search));
 			logger.debug("@@@ cnotroller 검색결과 list 호출 = " + searchOrderStatusList);
+			
 			
 			model.addAttribute("search", search);
 			model.addAttribute("searchOrderStatusList", searchOrderStatusList);
