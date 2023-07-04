@@ -143,10 +143,6 @@
 			$('#modify').attr("disabled", true);
 			$('#delete').attr("disabled", true);
 
-			//작업지시코드 부여(임시로 그냥 1 증가로 해놓음)
-			let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
-			wCodeNum++;
-
 			let today = getToday();
 
 			if ($(this).hasClass('true')) {
@@ -163,15 +159,15 @@
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='line_code' id='line_code' required>";
-				tbl += " </td>";
-				// 품번
-				tbl += " <td>";
-				tbl += "  <input type='text' name='prod_code' id='prod_code' required>";
+				tbl += "  <input type='text' name='line_code' id='line_code' required readonly>";
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='order_code' id='order_code' required>";
+				tbl += "  <input type='text' name='order_code' id='order_code' required readonly>";
+				tbl += " </td>";
+				// 품번
+				tbl += " <td>";
+				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly>";
 				tbl += " </td>";
 				// 지시상태
 				tbl += " <td>";
@@ -200,10 +196,10 @@
 					openWindow("line", "line_code");
 				}); //lineCode click
 
-				//품번 검색 
-				$('#prod_code').click(function() {
-					openWindow("prod", "prod_code");
-				}); //prodCode click
+// 				//품번 검색 
+// 				$('#prod_code').click(function() {
+// 					openWindow("prod", "prod_code");
+// 				}); //prodCode click
 
 				//수주코드 검색
 				$('#order_code').click(function() {
@@ -280,20 +276,22 @@
 							var preVOs = [
 									data.work_code,
 									data.line_code,
-									data.prod_code,
 									data.order_code,
+									data.prod_code,
 									data.work_state,
 									data.work_date,
-									data.work_qt, ];
+									data.work_qt
+								];
 	
 							var names = [
 									"work_code",
 									"line_code",
-									"prod_code",
 									"order_code",
+									"prod_code",
 									"work_state",
 									"work_date",
-									"work_qt", ];
+									"work_qt" 
+								];
 	
 							//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
 							self.find('td').each(function(idx,item) {
@@ -313,8 +311,16 @@
 											}
 										}); //option이 work_state와 일치하면 선택된 상태로
 									} //지시상태 - select
+									
+									//지시수량 제외하고 readonly 속성 부여
+									$(this).find("input").each(function(){
+										if($(this).attr("name") != "work_qt") {
+											$(this).attr("readonly", true);
+										}
+									}); //readonly
+									
 								} //라인코드부터 다 수정 가능하게
-	
+								
 							}); // self.find(~~)
 	
 							//라인코드 검색
@@ -322,10 +328,10 @@
 								openWindow("line","line_code");
 							}); //lineCode click
 	
-							//품번 검색 
-							$('#prod_code').click(function() {
-								openWindow("prod","prod_code");
-							}); //prodCode click
+// 							//품번 검색 
+// 							$('#prod_code').click(function() {
+// 								openWindow("prod","prod_code");
+// 							}); //prodCode click
 	
 							//수주코드 검색
 							$('#order_code').click(function() {
@@ -514,6 +520,53 @@
 				$(this).prop("selected", true);
 			}
 		});
+		//n건씩 표시
+		
+		
+		//작업지시코드 클릭시 상세조회
+		$('#workCode a').click(function() {
+			var obj = { work_code:$(this).text().trim() };
+				
+			$.ajax({
+				url : "/workorder/detail",
+				type : "post",
+				contentType : "application/json; charset=UTF-8",
+				dataType : "json",
+				data : JSON.stringify(obj),
+				success : function(data) {
+					console.log(data);
+					
+					var tmp = "작업지시코드: ";
+					tmp += data.work_code;
+					tmp += " 라인코드: ";
+					tmp += data.line_code;
+					tmp += " 수주코드: ";
+					tmp += data.order_code;
+					tmp += " 품번: ";
+					tmp += data.prod_code;
+					tmp += "<br>지시상태: ";
+					tmp += data.work_state;
+					tmp += " 지시일: ";
+					tmp += data.work_date;
+					tmp += " 지시수량: ";
+					tmp += data.work_qt;
+					tmp += "<br>등록자: ";
+					tmp += ((data.emp_id===""||data.emp_id==null) ? "없음" : data.emp_id);
+					tmp += " 변경자: ";
+					tmp += ((data.change_id===""||data.change_id==null) ? "없음" : data.change_id);
+					tmp += " 변경일: ";
+					tmp += ((data.change_date===""||data.change_date==null) ? "없음" : data.change_date);
+					tmp += " 비고: ";
+					tmp += ((data.work_note===""||data.work_note==null) ? "없음" : data.work_note);
+					
+					$('#detail').html(tmp);
+				},
+				error: function() {
+					alert("아작스 실패");
+				}
+			}); //ajax
+				
+		}); //작업지시코드 클릭
 		
 		
 	}); //jQuery
@@ -546,7 +599,6 @@
 
 	<br><br>
 
-	<div id="body">
 	
 		<button id="add" class="true">추가</button>
 		<button id="modify">수정</button>
@@ -554,6 +606,7 @@
 		<button type="reset" id="cancle">취소</button>
 		<button type="submit" id="save">저장</button>
 		
+	<div id="body">
 	
 		총 <span id="total">${pm.totalCount }</span>건
 		
@@ -563,6 +616,7 @@
 			<option value="7">7</option>
 		</select>
 		건씩 표시
+	</div>
 		
 		<form id="fr">
 			<table border="1">
@@ -570,8 +624,8 @@
 					<th>번호</th>
 					<th>작업지시코드</th>
 					<th>라인코드</th>
-					<th>품번</th>
 					<th>수주코드</th>
+					<th>품번</th>
 					<th>지시상태</th>
 					<th>지시일</th>
 					<th>지시수량</th>
@@ -579,10 +633,10 @@
 				<c:forEach var="w" items="${workList }">
 					<tr>
 						<td></td>
-						<td id="workCode">${w.work_code }</td>
+						<td id="workCode"><a href="#" onclick="return false">${w.work_code }</a></td>
 						<td id="lineCode">${w.line_code }</td>
-						<td id="prodCode">${w.prod_code }</td>
 						<td>${w.order_code }</td>
+						<td id="prodCode">${w.prod_code }</td>
 						<td>${w.work_state }</td>
 						<td>${w.work_date }</td>
 						<td id="workQt">${w.work_qt }</td>
@@ -607,9 +661,8 @@
 				<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏩ </a>
 			</c:if>
 		</div>
-	</div>
 
-	<div id="details"></div>
+	<div id="detail"></div>
 
 </div>
 <!-- /page content -->

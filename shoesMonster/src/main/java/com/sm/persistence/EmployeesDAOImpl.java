@@ -55,29 +55,27 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	} //readManagement()
 
 	@Override
-	public List<EmployeesVO> selectEmployees(HashMap<String, Object> search) throws Exception {
-		logger.debug(" selectEmployees(HashMap) 호출@@@@@ ");
-		List<EmployeesVO> searchList = sqlSession.selectList(NAMESPACE2 + ".searchEmployees", search);
-		logger.debug(" search 결과 : " + searchList);
-		return searchList;
-	} //selectEmployees()
+	public List<EmployeesVO> getSearchEmployeesList(HashMap<String, Object> search) throws Exception {
+		logger.debug(" getSearchEmployees() 호출@@@@@ ");
+		return sqlSession.selectList(NAMESPACE2 + ".searchEmployeesList", search);
+	} //getSearchEmployees()
 
 	@Override
 	public int getTotalEmployees() throws Exception {
 		logger.debug(" getTotalEmployees() 호출@@@@@ ");
 		return sqlSession.selectOne(NAMESPACE2 + ".employeesAllCnt");
 	} //getTotalEmployees()
-
+	
 	@Override
-	public List<EmployeesVO> getSearchEmployees(HashMap<String, Object> search) throws Exception {
+	public int getSearchEmployees(HashMap<String, Object> search) throws Exception {
 		logger.debug(" getSearchEmployees() 호출@@@@@ ");
-		return sqlSession.selectList(NAMESPACE2 + ".employeesSearchCnt", search);
-	} //getSearchEmployees()
+		return sqlSession.selectOne(NAMESPACE2 + ".searchEmployeesCnt", search);
+	}
 
 	@Override
-	public void insertEmployees(EmployeesVO vo) throws Exception {
+	public void insertEmployees(EmployeesVO evo) throws Exception {
 		logger.debug(" insertEmployees() 호출@@@@@ ");
-		int result = sqlSession.insert(NAMESPACE2 + ".insertEmployees", vo);
+		int result = sqlSession.insert(NAMESPACE2 + ".insertEmployees", evo);
 		logger.debug(" result : " + result);
 	} // insertEmployees()
 

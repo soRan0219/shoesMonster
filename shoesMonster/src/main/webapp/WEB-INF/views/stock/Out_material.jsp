@@ -13,13 +13,56 @@
 
 	<h1> 출고 관리 </h1>
 		
-	<div>
-	    <form action="" name="ro">
-		    <input type="button" value="발주 현황" onclick="toggleDiv('list')"></input>
-		    <input type="button" value="발주 등록" onclick="toggleDiv('regist')"></input>
-	    </form>
-    </div>
+	<input type="button" value="전체" onclick="showAll()"></input>
+    <input type="button" value="미출고" onclick="show1()"></input>
+    <input type="button" value="출고완료" onclick="show2()"></input>
+    
 
+
+<script>
+    function show1() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[10];
+
+            if (statusCell.innerText.trim() !== "미출고") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function show2() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[10];
+
+            if (statusCell.innerText.trim() !== "출고완료") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function showAll() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            row.style.display = "";
+        }
+    }
+
+</script>	
 	<hr>
 		
 		
@@ -45,7 +88,7 @@
 
 	<form action="/stock/Out_material" method="post">
 
-	<table border="1">
+	<table id="data-table" border="1">
 		<tr>
 			<th>출고 번호</th>
 			<th>수주번호</th>
@@ -61,24 +104,22 @@
 			<th>담당자</th>
 			<th>출고 처리</th>
 		</tr>
-		<c:forEach var="out" items="${out_matList }">
-			<tr>
-				<td>${out.out_mat.out_num}</td>
-				<td>${out.order_code}</td>
-				<td>${out.clients.client_actname}</td>
-				<td>${out.client_code}</td>
-				<td>${out.prod.prod_code}</td>
-				<td>${out.prod.prod_name}</td>
-				<td>${out.order_count}</td>
-				<td>${out.prod.prod_price}원</td>
-				<td>${out.order_deliveryDate}</td>
-				<td>${out.out_mat.out_date}</td>
-				<td>${out.out_mat.out_YN}</td>
-				<td>${out.out_mat.emp_id}</td>
-				<td>
-					<button type="submit" name="orderCode" value="${out.order_code}">출고 처리</button>
-        		</td>
-		</c:forEach>
+		<c:forEach var="out" items="${out_List }">
+            <tr>
+                <td>${out.out_num}</td>
+                <td>${out.orders.order_code}</td>
+                <td>${out.clients.client_actname}</td>
+                <td>${out.orders.client_code}</td>
+                <td>${out.prod.prod_code}</td>
+                <td>${out.prod.prod_name}</td>
+                <td>${out.orders.order_count}</td>
+                <td>${out.prod.prod_price}원</td>
+                <td>${out.orders.order_deliveryDate}</td>
+                <td>${out.out_date}</td>
+                <td>${out.out_YN}</td>
+                <td>${out.emp_id}</td>
+                </tr>
+        </c:forEach>
 	</table>
 	</form>
 	

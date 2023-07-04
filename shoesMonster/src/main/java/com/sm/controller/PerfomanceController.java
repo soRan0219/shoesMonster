@@ -95,9 +95,19 @@ public class PerfomanceController {
 		}
 
 	}
+	
+	// 품목관리 추가 시 code 값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "/prodCode", method = RequestMethod.GET)
+    public String getProdCode() {
+		logger.debug(" getProdCode() 호출 ");
+		
+        return service.getProdCode();
+    }
+	
 
 	// 품목관리 정보 추가
-	@RequestMapping(value = "product", method = RequestMethod.POST)
+	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String productPOST(ProductList products) throws Exception {
 
 		logger.debug("productPOST() 호출");
@@ -107,7 +117,7 @@ public class PerfomanceController {
 
 		return "redirect:/performance/product";
 	}
-
+	
 	// 품목관리 삭제
 	@RequestMapping(value = "/prodDelete", method = RequestMethod.POST)
 	public String deleteProd(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
@@ -201,9 +211,18 @@ public class PerfomanceController {
 		}
 
 	}
+	
+	// 원자재관리 추가 시 code 값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "/rawCode", method = RequestMethod.GET)
+    public String getRawCode() {
+		logger.debug(" getRawCode() 호출 ");
+		
+        return service.getRawCode();
+    }
 
 	// 원자재관리 정보 추가
-	@RequestMapping(value = "rawMaterial", method = RequestMethod.POST)
+	@RequestMapping(value = "/rawMaterial", method = RequestMethod.POST)
 	public String rawMaterialPOST(RawMaterialList raws) throws Exception {
 
 		logger.debug("rawMaterialPOST() 호출");
@@ -301,9 +320,18 @@ public class PerfomanceController {
 		}
 
 	}
+	
+	// 소요량관리 추가 시 code 값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "/reqCode", method = RequestMethod.GET)
+	public String getReqCode() {
+		logger.debug(" getRawCode() 호출 ");
+
+		return service.getReqCode();
+	}
 
 	// 소요량관리 정보 추가
-	@RequestMapping(value = "requirement", method = RequestMethod.POST)
+	@RequestMapping(value = "/requirement", method = RequestMethod.POST)
 	public String requirementPOST(RequirementsList reqs) throws Exception {
 
 		logger.debug("requirementPOST() 호출");
@@ -502,7 +530,7 @@ public class PerfomanceController {
 //				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
 			
 		if(wvo.getWh_code() != null  || wvo.getWh_name() != null ||
-		   wvo.getEmp() != null || wvo.getWh_use() != 0) {
+		   wvo.getEmp_id() != null || wvo.getWh_use() != 0) {
 		
 			if(wvo.getWh_use() == 0) {
 				wvo.setWh_use(3);
@@ -523,6 +551,9 @@ public class PerfomanceController {
 			lwpm.setTotalCount(service.searchWh_TotalCount(wvo));
 			logger.debug("lwpm (서치) : " + lwpm.getTotalCount());
 			model.addAttribute("lwpm", lwpm);
+			
+			logger.debug("검색"+whList);
+			
 
 			
 		}else {
@@ -562,6 +593,14 @@ public class PerfomanceController {
 //		
 //	}
 	
+	// 창고 추가 시 code값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "/whCode", method = RequestMethod.GET)
+	public String getWhCode() {
+		
+		return service.getWhCode();
+	}
+	
 	// 담당자(사원) 팝업 검색
 	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
 	public String popUpGET(@RequestParam("input") String input,
@@ -572,6 +611,10 @@ public class PerfomanceController {
 		
 		if(type.equals("emp")) {
 			return "redirect:/person/empinfo?input="+input;
+		}
+		
+		if(type.equals("raw")) {
+			return "redirect:/performance/rawMaterial?input="+input;
 		}
 		
 		return "redirect:/performance/warehouse?input="+input;
@@ -654,11 +697,12 @@ public class PerfomanceController {
 		List<PerformanceVO> perfList = new ArrayList<>();
 		
 		//검색 있을 때
-		if((search.get("search_work_code")!=null && search.get("search_work_code").equals("")) || 
-				(search.get("search_fromDate")!=null && search.get("search_fromDate").equals("")) || 
-				(search.get("search_toDate")!=null && search.get("search_toDate").equals("")) ||
-				(search.get("search_line_code")!=null && search.get("search_line_code").equals("")) ||
-				(search.get("search_prod_code")!=null && search.get("search_prod_code").equals(""))) {
+		if((search.get("search_work_code")!=null && !search.get("search_work_code").equals("")) || 
+				(search.get("search_fromDate")!=null && !search.get("search_fromDate").equals("")) || 
+				(search.get("search_toDate")!=null && !search.get("search_toDate").equals("")) ||
+				(search.get("search_line_code")!=null && !search.get("search_line_code").equals("")) ||
+				(search.get("search_prod_code")!=null && !search.get("search_prod_code").equals("")) ||
+				(search.get("search_perform_status")!=null && !search.get("search_perform_status").equals("") && !search.get("search_perform_status").equals("전체"))) {
 			
 			logger.debug("@@@@@ CONTROLLER: 검색 service 호출");
 			
@@ -699,7 +743,7 @@ public class PerfomanceController {
 		model.addAttribute("perfList", perfList);
 	} // performanceList()
 
-	// 작업지시, 라인, 품번 검색
+	// 작업지시, 라인, 품번 팝업
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String workOrderGET(Model model, @RequestParam("type") String type, @RequestParam("input") String input,
 			PagingVO pvo) throws Exception {

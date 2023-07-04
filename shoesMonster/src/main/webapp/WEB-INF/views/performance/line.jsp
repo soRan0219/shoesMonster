@@ -103,8 +103,140 @@
 	// 제이쿼리
 	$(function() {
 		popUp();
+			
+	// 여기까지 지우기
+	// 추가 시 필요한 변수들
+	
+	var counter = 0;
+	var codeNum = 0;
+	var whCode = 0;
 		
 	//============================ 버튼 구현 ====================================//	
+		////수정//////////////////////////////////////////////////
+	var isExecuted = false;
+	
+	$('#modify').click(function () {
+		
+		$('#add').attr("disabled", true);
+		$('#delete').attr("disabled", true);
+				
+			//행 하나 클릭했을 때	
+			$('table tr:not(:first-child)').click(function() {
+
+				//하나씩만 선택 가능
+				if(!isExecuted) {
+					isExecuted = true;
+						
+					$(this).addClass('selected');
+					
+					// 라인코드 저장
+					let updateCode = $(this).find('#lineCode').text().trim();
+					console.log(updateCode);
+						
+					var jsonData = {
+						line_code : updateCode
+					};
+						
+					console.log(jsonData);
+						
+					var self = $(this);
+		
+					$.ajax({
+						url : "/performance/line",
+						type : "post",
+						contentType : "application/json; charset=UTF-8",
+						dataType : "json",
+						data : JSON.stringify(jsonData),
+						success : function(data) {
+							// alert("*** 아작스 성공 ***");
+		
+						var preVOs = [
+							data.line_code,
+							data.line_name,
+							data.line_place,
+							data.line_use,
+							data.emp_id,
+							data.emp.emp_name,
+							data.insert_date,
+							data.line_note, 
+							];
+		
+						var names = [
+							"line_code",
+							"line_name",
+							"line_place",
+							"line_use",
+							"emp_id",
+							"emp_name",
+							"insert_date",
+							"line_note"
+							];
+		
+						//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+						self.find('td').each(function(idx,item) {
+		
+							if(idx > 0){
+								inputCng($(this), "text", names[idx - 1], preVOs[idx - 1]);
+									if(idx == 4 ){
+										var dropDown = "<select id = 'line_use' name = 'line_use'>";
+											dropDown += "<option value = '1'>Y</option>";
+											dropDown += "<option value = '2'>N</option>";
+											dropDown += "</select>";
+											$(this).html(dropDown);
+											$(this).find('option').each(function () {
+												if(this.value == preVOs[idx - 1]){
+													$(this).attr("selected", true);
+												}
+										
+											});// this.find('option')
+									
+									}// if(idx==4)
+							
+							}//if(idx>0)
+		
+						}); // self.find(~~)
+		
+						// 등록자(사원) 검색
+						$('#emp_name').click(function () {
+						openWindow("emp", "emp_name");
+						}); // #emp_id click
+		
+						},
+						
+						error : function(data) {
+							alert("아작스 실패 ~~");
+						}
+					}); //ajax
+				
+				// 저장 -> 수정완료
+				$('#save').click(function () {
+					
+					if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
+						|| emp_id == ""){
+						
+						alert("항목을 모두 입력하세요");
+					
+					}else{
+						$('#fr').attr("action", "/performance/linemodify"); 
+						$('#fr').attr("method", "POST");
+						$('#fr').submit();
+				}
+					
+				});//save
+					
+			}// if(!isExecuted)
+				
+			// 취소 -> 리셋
+			$('#cancle').click(function () {
+				$('#fr').each(function () {
+					this.reset();
+				});
+				
+			}); // cancle
+			
+		}); // table .click
+		
+	});// modify.click
 	
 	////////////////// 추가/////////////////////////
 	$('#add').click(function () {
@@ -113,7 +245,7 @@
 		$('#delete').attr("disabled", true);
 		
 		// 라인코드 부여
-		let wCodeNum = Number(000);
+		let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
 		wCodeNum++;
 		
 		let lineNum = lineCodeNum(wCodeNum, 3);
@@ -149,14 +281,15 @@
 			// 사용여부
 			tbl += " <td>";
 			tbl += " <select name='line_use' id='line_use'>";
-			tbl += " <option>Y</option>";
-			tbl += " <option>N</option>";
+			tbl += " <option value='1'>Y</option>";
+			tbl += " <option value='2'>N</option>";
 			tbl += " </select>";
 			tbl += " </td>";
 			
 			// 등록자			
 			tbl += " <td>";
-			tbl += " <input type='text' name='emp_id' id='emp_id' required>";
+			tbl += " <input type='hidden' name='emp_id' id='emp_id' required>";
+			tbl += " <input type='text' name='emp_name' id='emp_name' required>";
 			tbl += " </td>";
 			
 			// 등록일			
@@ -175,8 +308,8 @@
 			$('table').append(tbl);
 			
 			// 등록자(사원) 검색
-			$('#emp_id').click(function () {
-				openWindow("emp", "emp_id");
+			$('#emp_name').click(function () {
+				openWindow("emp", "emp_name");
 			}); // #emp_id click
 			
 			$(this).removeClass('true');
@@ -213,95 +346,7 @@
 	});// 추가 add click
 
 	
-	////수정//////////////////////////////////////////////////
-	var isExecuted = false;
-	
-	$('#modify').click(function () {
-		
-		$('#add').attr("disabled", true);
-		$('#delete').attr("disabled", true);
-		
-		// 행 하나 선택시
-		$('table tr:not(:first-child)').click(function () {
-			
-			// 하나씩 선택 가능
-			if(!isExecuted){
-				isExecuted = true;
-				
-				$(this).addClass('selected');
-				
-				// 라인코드 저장
-				let updateCode = $(this).find('#lineCode').text().trim();
-				console.log(updateCode);
-				
-				var jsonData = {
-						lineCode : updateCode
-				};
-				
-				var self = $(this);
-				
-				var names = [
-						"line_code",
-						"line_name",
-						"line_place",
-						"line_use",
-						"emp_id",
-						"insert_date",
-						"line_note"
-						];
-				
-				// tr안 td 요소들 input으로 변경 후 기존 값 띄움
-				self.find('td').each(function (idx, item) {
-					
-					if(idx > 0){
-						inputCng($(this), "text", names[idx - 1], $(this).text());
-						if(idx == 4 ){
-							var dropDown = "<select id = 'line_use' name = 'line_use'>";
-// 								dropDown += "<option value = '전체'></option>";
-								dropDown += "<option value = '1'>Y</option>";
-								dropDown += "<option value = '2'>N</option>";
-								dropDown += "</select>";
-								$(this).html(dropDown);
-								$(this).find('option').each(function () {
-									if(this.value == $(this).text()){
-										$(this).attr("selected", true);
-									}
-						
-								});// this.find('option')
-					
-						}// if(idx==2)
-			
-					}//if
-					
-				}); // self.find
-				
-				// 등록자(사원) 검색
-				$('#emp_id').click(function () {
-					openWindow("emp", "emp_id");
-				}); // #emp_id click
-				
-				// 저장 -> 수정완료
-				$('#save').click(function () {
-					
-					$('#fr').attr("action", "/performance/linemodify");
-					$('#fr').attr("method", "POST");
-					$('#fr').submit();
-					
-				});//save
-					
-			}// if(!isExecuted)
-				
-			// 취소 -> 리셋
-			$('#cancle').click(function () {
-				$('#fr').each(function () {
-					this.reset();
-				});
-				
-			}); // cancle
-			
-		}); // table .click
-		
-	});// modify.click
+
 	
 	
 	////삭제/////////////////////////////////////////////////////////
@@ -448,6 +493,7 @@
 	<button id="delete" class="true">삭제</button>
 	<button type="reset" id="cancle" >취소</button>
 	<button type="submit" id="save">저장</button>
+	<button onclick="location.reload()">새로고침</button>
 
 	<br>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
@@ -461,6 +507,7 @@
 			<th>라인명</th>
 			<th>작업장</th>
 			<th>사용여부</th>
+			<th type='hidden' style='display: none;'>등록자 코드</th>
 			<th>등록자</th>
 			<th>등록일</th>
 			<th>비고</th>
@@ -482,7 +529,8 @@
 						</c:when>
 					</c:choose>
 					
-					<td>${vo.emp_id}</td>
+					<td type='hidden' style='display: none;'>${vo.emp_id}</td>
+					<td>${vo.emp.emp_name}</td>
 					<td>${vo.insert_date}</td>
 					<td>${vo.line_note}</td>
 				</tr>

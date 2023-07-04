@@ -106,7 +106,32 @@ public class Raw_orderImpl implements Raw_orderDAO{
     }
 	
 	
+	@Override
+    public int countPop(Raw_orderVO rvo) throws Exception {
+        
+        HashMap<String, Object> data = new HashMap<String, Object>();
 
+        data.put("client_actname", rvo.getClients().getClient_actname());
+        data.put("raw_name", rvo.getRawMaterial().getRaw_name());
+        
+        return sqlSession.selectOne(NAMESPACE+".roPopupCountSearch", data);
+    }
+
+
+
+    @Override
+    public List<Raw_orderVO> Popup(PageVO vo, Raw_orderVO rvo) throws Exception {
+        
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        data.put("startPage", vo.getStartPage());
+        data.put("pageSize", vo.getPageSize());
+        data.put("client_actname", rvo.getClients().getClient_actname());
+        data.put("raw_name", rvo.getRawMaterial().getRaw_name());
+        
+        
+        return sqlSession.selectList(NAMESPACE+".roPopupSearch", data);
+    }
 
 
 	

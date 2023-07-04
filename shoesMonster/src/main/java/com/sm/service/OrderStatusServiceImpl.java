@@ -45,6 +45,12 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 	public List<ClientsVO> getOrderManageList() throws Exception {
 		return osdao.readOrderManageList();
 	}
+	
+	// 수주 등록
+	@Override
+	public void registOrder(OrderStatusVO osvo) throws Exception {
+		osdao.registOrder(osvo);
+	}
 
 
 	

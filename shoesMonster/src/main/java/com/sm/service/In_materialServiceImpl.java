@@ -45,14 +45,11 @@ public class In_materialServiceImpl implements In_materialService{
 
 
 	@Override
-	public void inInsert(Raw_orderVO rvo, String raw_order_num) throws Exception {
-		idao.inInsert(rvo, raw_order_num);
+	public void inInsert(String raw_order_num) throws Exception {
+		idao.inInsert(raw_order_num);
 	}
 
 	
-	
-	
-
 
 	@Override
     public void updateIn(String raw_order_num) throws Exception {
@@ -62,11 +59,22 @@ public class In_materialServiceImpl implements In_materialService{
 
 	
 	// 입고 버튼용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-//	@Override
-//	public void selectCheck() throws Exception {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public boolean selectCheck(String rawCode) throws Exception {
+		return idao.selectCheck(rawCode);
+	}
+
+
+	@Override
+	public void updateStock(String rawCode, int raw_order_count) throws Exception {
+		idao.updateStock(rawCode, raw_order_count);
+	}
+
+
+	@Override
+	public void insertStock(String rawCode, int raw_order_count, String wh_code) throws Exception {
+		idao.insertStock(rawCode, raw_order_count, wh_code);
+	}
 	
 	
 	

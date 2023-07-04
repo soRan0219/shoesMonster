@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp"%>
 	
@@ -11,9 +12,56 @@
 	
 	<h1>입고 관리</h1>
 
-	<button type="submit">전체</button>
-	<button type="submit">미입고</button>
-	<button type="submit">입고 완료</button>
+	<input type="button" value="전체" onclick="showAll()"></input>
+    <input type="button" value="미입고" onclick="show1()"></input>
+    <input type="button" value="입고완료" onclick="show2()"></input>
+    
+
+
+<script>
+    function show1() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[13];
+
+            if (statusCell.innerText.trim() !== "미입고") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function show2() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[13];
+
+            if (statusCell.innerText.trim() !== "입고완료") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function showAll() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            row.style.display = "";
+        }
+    }
+
+</script>
 
 	
 	
@@ -44,35 +92,14 @@
 
 	<hr>
 
-	<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var buttons = document.querySelectorAll('input[type="button"]');
-            for (var i = 0; i < buttons.length; i++) {
-                var button = buttons[i];
-                var inYNElement = button.parentNode.previousElementSibling;
-                button.value = "입고처리";
-                inYNElement.innerText = "미입고";
-            }
-        });
-        function changeButtonValue(button) {
-            var inYNElement = button.parentNode.previousElementSibling;
-            if (button.value === "입고처리") {
-                button.value = "입고취소";
-                inYNElement.innerText = "입고완료";
-            } else {
-                button.value = "입고처리";
-                inYNElement.innerText = "미입고";
-            }
-        }
-        
-      
-    </script>
+	
 
 	<form action="" method="post">
-	<table border="1">
+	<table id="data-table" border="1">
         <tr>
-            <th>입고번호</th>
-            <th>발주번호</th>
+            <th>입고 번호</th>
+            <th>발주 번호</th>
+            <th>입고 창고</th>
             <th>거래처명</th>
             <th>품번</th>
             <th>품명</th>
@@ -83,6 +110,7 @@
             <th>총액</th>
             <th>입고일</th>
             <th>담당자</th>
+            <th>입고 확인</th>
             <th>입고 버튼</th>
         </tr>
 
@@ -90,19 +118,20 @@
             <tr>
                 <td>${rvo.in_mat.in_num }</td>
                 <td>${rvo.raw_order_num }</td>
+                <td>${rvo.rawMaterial.wh_code }</td>
                 <td>${rvo.clients.client_actname }</td>
                 <td>${rvo.raw_code }</td>
                 <td>${rvo.rawMaterial.raw_name }</td>
                 <td>${rvo.rawMaterial.raw_color }</td>
                 <td>${rvo.raw_order_count}</td>
-                <td>${rvo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
-                <td>${rvo.rawMaterial.raw_price}원</td>
-                <td>${rvo.rawMaterial.raw_price*vo.raw_order_count}원</td>
+                <td>${rvo.stock.stock_count != null ? rvo.stock.stock_count : 0}</td>
+                <td><fmt:formatNumber value=" ${rvo.rawMaterial.raw_price}"/>원</td>
+        		<td><fmt:formatNumber value=" ${rvo.rawMaterial.raw_price*rvo.raw_order_count}"/>원</td>
                 <td>${rvo.in_mat.in_date }</td>
                 <td>${rvo.emp_id }</td>
-				 <td>${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
+				<td>${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
 				<td>
-					<button type="submit" name="raw_order_num" value="${rvo.raw_order_num}">입고 처리</button>
+					<button type="submit" name="in_Button" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
 				</td>
             </tr>
         </c:forEach>

@@ -2,6 +2,7 @@ package com.sm.persistence;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -55,22 +56,58 @@ public class In_materialImpl implements In_materialDAO {
 	}
 
 	@Override
-	public void inInsert(Raw_orderVO rvo, String raw_order_num) throws Exception {
+	public void inInsert(String raw_order_num) throws Exception {
 		
-		int result = sqlSession.insert(NAMESPACE + ".inRegist", rvo);
+		logger.debug("////////////// raw_order_num1 : " + raw_order_num + "//////////////");
+		
+		int result = sqlSession.insert(NAMESPACE + ".inRegist", raw_order_num);
+		
+		logger.debug("////////////// raw_order_num2 : " + raw_order_num + "//////////////");
     
 		if(result != 0) {
-			logger.debug("입고 등록완료");
+			logger.debug("입고 등록완료********************************************");
         }
 		
 	}
+	
 
 	
 	@Override
     public void updateIn(String raw_order_num) throws Exception {
 
-        sqlSession.update(NAMESPACE+".updateIn",raw_order_num);
+        sqlSession.update(NAMESPACE+".updateIn", raw_order_num);
     }
+
+	@Override
+	public boolean selectCheck(String rawCode) throws Exception {
+		
+		boolean result = sqlSession.selectOne(NAMESPACE+".selectCheck", rawCode);
+		
+		return result;
+	}
+
+	@Override
+	public void updateStock(String rawCode, int raw_order_count) throws Exception {
+		
+		Map<String, Object> data = new HashMap<>();
+		data.put("rawCode", rawCode);
+		data.put("raw_order_count", raw_order_count);
+	    sqlSession.update(NAMESPACE + ".updateStock", data);
+		
+	}
+
+	@Override
+	public void insertStock(String rawCode, int raw_order_count, String wh_code) throws Exception {
+		
+		Map<String, Object> data = new HashMap<>();
+		data.put("rawCode", rawCode);
+		data.put("raw_order_count", raw_order_count);
+		data.put("wh_code", wh_code);
+	    sqlSession.insert(NAMESPACE + ".insertStock", data);
+		
+	}
+	
+	
 	
 	
 //	@Override
