@@ -1,5 +1,5 @@
-
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 
 <link href="../resources/build/css/custom.css" rel="stylesheet">
@@ -62,7 +62,7 @@
 				<div class="row x_title">
 					<div class="col-md-6">
 						<h3>
-							Network Activities <small>Graph title sub-title</small>
+							Shoes Monster! <small>판매 실적 현황</small>
 						</h3>
 					</div>
 					<div class="col-md-6">
@@ -79,13 +79,13 @@
 				</div>
 				<div class="col-md-3 col-sm-3  bg-white">
 					<div class="x_title">
-						<h2>Top Campaign Performance</h2>
+						<h2>수주 현황</h2>
 						<div class="clearfix"></div>
 					</div>
 
 					<div class="col-md-12 col-sm-12 ">
 						<div>
-							<p>Facebook Campaign</p>
+							<p>NIKE X SUPREME</p>
 							<div class="">
 								<div class="progress progress_sm" style="width: 76%;">
 									<div class="progress-bar bg-green" role="progressbar"
@@ -94,7 +94,7 @@
 							</div>
 						</div>
 						<div>
-							<p>Twitter Campaign</p>
+							<p>NIKE</p>
 							<div class="">
 								<div class="progress progress_sm" style="width: 76%;">
 									<div class="progress-bar bg-green" role="progressbar"
@@ -105,7 +105,7 @@
 					</div>
 					<div class="col-md-12 col-sm-12 ">
 						<div>
-							<p>Conventional Media</p>
+							<p>PRADA X SUPREME</p>
 							<div class="">
 								<div class="progress progress_sm" style="width: 76%;">
 									<div class="progress-bar bg-green" role="progressbar"
@@ -114,7 +114,7 @@
 							</div>
 						</div>
 						<div>
-							<p>Bill boards</p>
+							<p>SALOMON</p>
 							<div class="">
 								<div class="progress progress_sm" style="width: 76%;">
 									<div class="progress-bar bg-green" role="progressbar"
@@ -139,7 +139,7 @@
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320">
 				<div class="x_title">
-					<h2>App Versions</h2>
+					<h2>휴가</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -155,10 +155,10 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<h4>App Usage across versions</h4>
+					<h4> 지각(휴가) 횟수 </h4>
 					<div class="widget_summary">
 						<div class="w_left w_25">
-							<span>0.1.5.2</span>
+							<span>이도희</span>
 						</div>
 						<div class="w_center w_55">
 							<div class="progress">
@@ -170,14 +170,14 @@
 							</div>
 						</div>
 						<div class="w_right w_20">
-							<span>123k</span>
+							<span>28회</span>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 
 					<div class="widget_summary">
 						<div class="w_left w_25">
-							<span>0.1.5.3</span>
+							<span>박언효</span>
 						</div>
 						<div class="w_center w_55">
 							<div class="progress">
@@ -189,13 +189,13 @@
 							</div>
 						</div>
 						<div class="w_right w_20">
-							<span>53k</span>
+							<span>14회</span>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 					<div class="widget_summary">
 						<div class="w_left w_25">
-							<span>0.1.5.4</span>
+							<span>윤선길</span>
 						</div>
 						<div class="w_center w_55">
 							<div class="progress">
@@ -207,13 +207,13 @@
 							</div>
 						</div>
 						<div class="w_right w_20">
-							<span>23k</span>
+							<span>8회</span>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 					<div class="widget_summary">
 						<div class="w_left w_25">
-							<span>0.1.5.5</span>
+							<span>류혜림</span>
 						</div>
 						<div class="w_center w_55">
 							<div class="progress">
@@ -225,13 +225,13 @@
 							</div>
 						</div>
 						<div class="w_right w_20">
-							<span>3k</span>
+							<span>3회</span>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 					<div class="widget_summary">
 						<div class="w_left w_25">
-							<span>0.1.5.6</span>
+							<span>정애령</span>
 						</div>
 						<div class="w_center w_55">
 							<div class="progress">
@@ -243,7 +243,7 @@
 							</div>
 						</div>
 						<div class="w_right w_20">
-							<span>1k</span>
+							<span>1회</span>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -255,7 +255,7 @@
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320 overflow_hidden">
 				<div class="x_title">
-					<h2>Device Usage</h2>
+					<h2>판 매 왕</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -295,42 +295,42 @@
 									<tr>
 										<td>
 											<p>
-												<i class="fa fa-square blue"></i>IOS
+												<i class="fa fa-square blue"></i>정창원
 											</p>
 										</td>
-										<td>30%</td>
+										<td>30회</td>
 									</tr>
 									<tr>
 										<td>
 											<p>
-												<i class="fa fa-square green"></i>Android
+												<i class="fa fa-square green"></i>류혜림
 											</p>
 										</td>
-										<td>10%</td>
+										<td>10회</td>
 									</tr>
 									<tr>
 										<td>
 											<p>
-												<i class="fa fa-square purple"></i>Blackberry
+												<i class="fa fa-square purple"></i>정애령
 											</p>
 										</td>
-										<td>20%</td>
+										<td>20회</td>
 									</tr>
 									<tr>
 										<td>
 											<p>
-												<i class="fa fa-square aero"></i>Symbian
+												<i class="fa fa-square aero"></i>윤선길
 											</p>
 										</td>
-										<td>15%</td>
+										<td>15회</td>
 									</tr>
 									<tr>
 										<td>
 											<p>
-												<i class="fa fa-square red"></i>Others
+												<i class="fa fa-square red"></i>윤소란
 											</p>
 										</td>
-										<td>30%</td>
+										<td>28회</td>
 									</tr>
 								</table>
 							</td>
@@ -399,7 +399,7 @@
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>
-						Recent Activities <small>Sessions</small>
+						최근 HOT 뉴스 <small>정보</small>
 					</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -423,16 +423,47 @@
 								<div class="block">
 									<div class="block_content">
 										<h2 class="title">
-											<a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+											<a>빈지노 7년 만에 정규 앨범 2집 발매 !!</a>
 										</h2>
 										<div class="byline">
-											<span>13 hours ago</span> by <a>Jane Smith</a>
+											<span>13 hours ago</span> by <a>정창원</a>
+										</div>
+										<p class="excerpt">빈지노는 어제(4일) 유튜브 힙합엘이 채널에 출연해 최근 발매한 정규 2집
+											'노비츠키(NOWITZKI)'에 대한 다양한 이야기를 전했습니다. 이날 빈지노는 '노비츠키'에 대해 "늘
+											그랬듯 전반적인 대주제는 인생인 것 같다. 군대 가기 전인 2017년부터 2022년까지 나한테 있었던 일들,
+											내가 했던 생각들 그리고 어떤 날의 찰나들 총망라해 놓은 앨범이다"라고 설명했습니다. 빈지노는 "앨범 이름은
+											사실 '스테파니'였다"며 지난해 8월 오랜 연애를 끝내고 부부의 연을 맺은 아내 스테파니 미초바를
+											언급했습니다.</p>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="block">
+									<div class="block_content">
+										<h2 class="title">
+											<a>HERE WE GO !! 김민재 독일 명문 바이에른 뮌헨 이적 임박</a>
+										</h2>
+										<div class="byline">
+											<span>13 hours ago</span> by <a>정창원</a>
+										</div>
+										<p class="excerpt">유럽 이적시장 전문가 파브리시오 로마노는 16일(이하 한국시간) “뮌헨은 이번
+											주 김민재에게 그들의 프로젝트를 제시했으며 이제 개인 조건에 대한 합의가 임박했다”라고 알렸다. 이어 “회담이
+											빠르게 진행됐으며 김민재는 뮌헨에 설득됐다. 맨체스터 유나이티드의 김민재를 향한 관심은 여전하나, 결코
+											이뤄지지 않았다. 바이아웃 조항은 오는 7월에 발동된다”라고 덧붙였다.</p>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="block">
+									<div class="block_content">
+										<h2 class="title">
+											<a><b>속보! 정애령 결석</b></a>
+										</h2>
+										<div class="byline">
+											<span>13 hours ago</span> by <a>정창원</a>
 										</div>
 										<p class="excerpt">
-											Film festivals used to be do-or-die moments for movie makers.
-											They were where you met the producers that could fund your
-											project, and if the buyers liked your flick, they’d pay to
-											Fast-forward and… <a>Read&nbsp;More</a>
+											7강의장 정모씨(28세)는 금일7/4일 결석을 해버렸다...
 										</p>
 									</div>
 								</div>
@@ -441,52 +472,13 @@
 								<div class="block">
 									<div class="block_content">
 										<h2 class="title">
-											<a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+											<a>7/5일 그 날이 왔다 !</a>
 										</h2>
 										<div class="byline">
-											<span>13 hours ago</span> by <a>Jane Smith</a>
+											<span>13 hours ago</span> by <a>정창원</a>
 										</div>
 										<p class="excerpt">
-											Film festivals used to be do-or-die moments for movie makers.
-											They were where you met the producers that could fund your
-											project, and if the buyers liked your flick, they’d pay to
-											Fast-forward and… <a>Read&nbsp;More</a>
-										</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="block">
-									<div class="block_content">
-										<h2 class="title">
-											<a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-										</h2>
-										<div class="byline">
-											<span>13 hours ago</span> by <a>Jane Smith</a>
-										</div>
-										<p class="excerpt">
-											Film festivals used to be do-or-die moments for movie makers.
-											They were where you met the producers that could fund your
-											project, and if the buyers liked your flick, they’d pay to
-											Fast-forward and… <a>Read&nbsp;More</a>
-										</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="block">
-									<div class="block_content">
-										<h2 class="title">
-											<a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-										</h2>
-										<div class="byline">
-											<span>13 hours ago</span> by <a>Jane Smith</a>
-										</div>
-										<p class="excerpt">
-											Film festivals used to be do-or-die moments for movie makers.
-											They were where you met the producers that could fund your
-											project, and if the buyers liked your flick, they’d pay to
-											Fast-forward and… <a>Read&nbsp;More</a>
+											7월 5일 일 년에 한 번 뿐인 그날이 와버렸다 ..!
 										</p>
 									</div>
 								</div>
@@ -508,7 +500,7 @@
 					<div class="x_panel">
 						<div class="x_title">
 							<h2>
-								Visitors location <small>geo-presentation</small>
+								거래처 <small>나라별 거래처 현황</small>
 							</h2>
 							<ul class="nav navbar-right panel_toolbox">
 								<li><a class="collapse-link"><i
@@ -527,28 +519,28 @@
 						<div class="x_content">
 							<div class="dashboard-widget-content">
 								<div class="col-md-4 hidden-small">
-									<h2 class="line_30">125.7k Views from 60 countries</h2>
+									<h2 class="line_30">72개국의 거래처 현황</h2>
 
 									<table class="countries_list">
 										<tbody>
 											<tr>
-												<td>United States</td>
+												<td>미국</td>
 												<td class="fs15 fw700 text-right">33%</td>
 											</tr>
 											<tr>
-												<td>France</td>
+												<td>프랑스</td>
 												<td class="fs15 fw700 text-right">27%</td>
 											</tr>
 											<tr>
-												<td>Germany</td>
+												<td>독일</td>
 												<td class="fs15 fw700 text-right">16%</td>
 											</tr>
 											<tr>
-												<td>Spain</td>
+												<td>스페인</td>
 												<td class="fs15 fw700 text-right">11%</td>
 											</tr>
 											<tr>
-												<td>Britain</td>
+												<td>영국</td>
 												<td class="fs15 fw700 text-right">10%</td>
 											</tr>
 										</tbody>
@@ -570,7 +562,7 @@
 					<div class="x_panel">
 						<div class="x_title">
 							<h2>
-								To Do List <small>Sample tasks</small>
+								이번주 할 일 <small>간단히 보기</small>
 							</h2>
 							<ul class="nav navbar-right panel_toolbox">
 								<li><a class="collapse-link"><i
@@ -592,56 +584,47 @@
 								<ul class="to_do">
 									<li>
 										<p>
-											<input type="checkbox" class="flat"> Schedule meeting
-											with new client
+											<input type="checkbox" class="flat"> 새로운 거래처 미팅
 										</p>
 									</li>
 									<li>
 										<p>
-											<input type="checkbox" class="flat"> Create email
-											address for new intern
+											<input type="checkbox" class="flat"> css 테이블 만들기
 										</p>
 									</li>
 									<li>
 										<p>
-											<input type="checkbox" class="flat"> Have IT fix the
-											network printer
+											<input type="checkbox" class="flat"> 서버 해결하기
 										</p>
 									</li>
 									<li>
 										<p>
-											<input type="checkbox" class="flat"> Copy backups to
-											offsite location
+											<input type="checkbox" class="flat"> 출고 페이지 마무리하기
 										</p>
 									</li>
 									<li>
 										<p>
-											<input type="checkbox" class="flat"> Food truck fixie
-											locavors mcsweeney
+											<input type="checkbox" class="flat"> 꾸덕한 초코케이크
 										</p>
 									</li>
 									<li>
 										<p>
-											<input type="checkbox" class="flat"> Food truck fixie
-											locavors mcsweeney
+											<input type="checkbox" class="flat"> 세부기능 마무리하기
 										</p>
 									</li>
 									<li>
 										<p>
-											<input type="checkbox" class="flat"> Create email
-											address for new intern
+											<input type="checkbox" class="flat"> 서성찬과 오붓한 식사데이트
 										</p>
 									</li>
 									<li>
 										<p>
-											<input type="checkbox" class="flat"> Have IT fix the
-											network printer
+											<input type="checkbox" class="flat"> 정애령 결석
 										</p>
 									</li>
 									<li>
 										<p>
-											<input type="checkbox" class="flat"> Copy backups to
-											offsite location
+											<input type="checkbox" class="flat"> 정창원 생일
 										</p>
 									</li>
 								</ul>
@@ -656,7 +639,7 @@
 					<div class="x_panel">
 						<div class="x_title">
 							<h2>
-								Daily active users <small>Sessions</small>
+								날씨 <small>이번주</small>
 							</h2>
 							<ul class="nav navbar-right panel_toolbox">
 								<li><a class="collapse-link"><i
@@ -676,7 +659,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="temperature">
-										<b>Monday</b>, 07:30 AM <span>F</span> <span><b>C</b></span>
+										<b>월</b>, 07:30 AM <span>F</span> <span><b>C</b></span>
 									</div>
 								</div>
 							</div>
@@ -689,8 +672,8 @@
 								<div class="col-sm-8">
 									<div class="weather-text">
 										<h2>
-											Texas <br>
-											<i>Partly Cloudy Day</i>
+											부산 <br>
+											<i>약간 흐림</i>
 										</h2>
 									</div>
 								</div>
@@ -706,7 +689,7 @@
 							<div class="row weather-days">
 								<div class="col-sm-2">
 									<div class="daily-weather">
-										<h2 class="day">Mon</h2>
+										<h2 class="day">월</h2>
 										<h3 class="degrees">25</h3>
 										<canvas id="clear-day" width="32" height="32"></canvas>
 										<h5>
@@ -716,7 +699,7 @@
 								</div>
 								<div class="col-sm-2">
 									<div class="daily-weather">
-										<h2 class="day">Tue</h2>
+										<h2 class="day">화</h2>
 										<h3 class="degrees">25</h3>
 										<canvas height="32" width="32" id="rain"></canvas>
 										<h5>
@@ -726,7 +709,7 @@
 								</div>
 								<div class="col-sm-2">
 									<div class="daily-weather">
-										<h2 class="day">Wed</h2>
+										<h2 class="day">수</h2>
 										<h3 class="degrees">27</h3>
 										<canvas height="32" width="32" id="snow"></canvas>
 										<h5>
@@ -736,7 +719,7 @@
 								</div>
 								<div class="col-sm-2">
 									<div class="daily-weather">
-										<h2 class="day">Thu</h2>
+										<h2 class="day">목</h2>
 										<h3 class="degrees">28</h3>
 										<canvas height="32" width="32" id="sleet"></canvas>
 										<h5>
@@ -746,7 +729,7 @@
 								</div>
 								<div class="col-sm-2">
 									<div class="daily-weather">
-										<h2 class="day">Fri</h2>
+										<h2 class="day">금</h2>
 										<h3 class="degrees">28</h3>
 										<canvas height="32" width="32" id="wind"></canvas>
 										<h5>
@@ -756,7 +739,7 @@
 								</div>
 								<div class="col-sm-2">
 									<div class="daily-weather">
-										<h2 class="day">Sat</h2>
+										<h2 class="day">토</h2>
 										<h3 class="degrees">26</h3>
 										<canvas height="32" width="32" id="cloudy"></canvas>
 										<h5>
