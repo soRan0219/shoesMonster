@@ -613,6 +613,10 @@ public class PerfomanceController {
 			return "redirect:/person/empinfo?input="+input;
 		}
 		
+		if(type.equals("raw")) {
+			return "redirect:/performance/rawMaterial?input="+input;
+		}
+		
 		return "redirect:/performance/warehouse?input="+input;
 		
 	}
