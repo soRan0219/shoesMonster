@@ -45,7 +45,9 @@
 
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
-    			$(this).find('td:first').text(index);
+    			var num = "<c:out value='${paging.nowPage}'/>";
+    			var num2 = "<c:out value='${paging.cntPerPage}'/>";
+    			$(this).find('td:first').text(((num-1)*num2) + index);
     		});
         	
     		// 추가 시 필요한 변수들
@@ -169,21 +171,21 @@
 //	 				alert(checked);
 					
 					if(checked.length > 0) {
-						
-						$.ajax({
-							url: "/performance/requirementDelete",
-							type: "post",
-							data: {checked:checked},
-							dataType: "text",
-							success: function() {
-								alert("삭제 성공");
-								location.reload();
-							},
-							error: function() {
-								alert("삭제 실패");
-							}
-						}); //ajax
-						
+						if(confirm("선택한 항목을 삭제하시겠습니까?")){
+							$.ajax({
+								url: "/performance/requirementDelete",
+								type: "post",
+								data: {checked:checked},
+								dataType: "text",
+								success: function() {
+									alert("삭제 성공");
+									location.reload();
+								},
+								error: function() {
+									alert("삭제 실패");
+								}
+							}); //ajax
+						}// 컨펌
 					} //체크된거 있을대
 					else {
 						alert("선택된 글이 없습니다.");
