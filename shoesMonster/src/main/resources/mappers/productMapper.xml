@@ -490,7 +490,6 @@
 	<insert id="registLine">
 		INSERT INTO line (line_code, line_name, line_use, emp_id, insert_date, line_note, line_place)
 		VALUES (#{line_code}, #{line_name}, #{line_use}, #{emp_id}, now(), #{line_note}, #{line_place})
-		WHERE line_code = #{line_code} 
 	</insert>
 	<!-- 라인 등록 -->
 	
@@ -518,6 +517,14 @@
 		where l.line_code = #{line_code}
 	</select>
 	<!-- 라인 조회(String line_code) -->
+	
+	<!-- 라인 추가 시 코드값 가져가기 -->
+	<select id="getLiCode" resultType="String">
+		SELECT line_code 
+		FROM line 
+		ORDER BY line_code desc limit 1
+	</select>
+	<!-- 라인 추가 시 코드값 가져가기 -->
 	
 
 	<!-- ///////////////////////////////////////////////////////// -->

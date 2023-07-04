@@ -367,6 +367,13 @@ public class PerformanceImpl implements PerformanceDAO {
 			
 		return sqlSession.selectOne(NAMESPACE+".readLineList", line_code);
 	}
+	
+	// 라인 추가 시 code값 가져가기
+	@Override
+	public String getLiCode() {
+		
+		return sqlSession.selectOne(NAMESPACE+".getLiCode");
+	}
 
 	// ===========창고==============================================
 
@@ -609,6 +616,8 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return statusMap;
 	} //getPerformStatus()
+
+
 
 
 

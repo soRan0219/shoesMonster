@@ -258,6 +258,13 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return pdao.getLine(line_code);
 	}
 	
+	// 라인 추가 시 코드값 가져가기
+	@Override
+	public String getLiCode() {
+		
+		return pdao.getLiCode();
+	}
+	
 	// 창고=======================================================================
 
 	// 창고 목록 조회 + 페이징처리
@@ -379,6 +386,9 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception {
 		return pdao.getPerformStatus();
 	} //getPerformStatus()
+
+	
+
 
 
 
