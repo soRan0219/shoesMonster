@@ -66,8 +66,13 @@
 	<hr>
 		
 		
-<!-- 		<label>출고 번호</label> -->
-<!-- 			<input type="text" name="out_num" value="out_num" placeholder="검색어를 입력해주세요"> -->
+		
+		
+		
+		
+		
+		
+		
 		<form action="" method="get">
 		<fieldset>
        		<label>출고번호:</label>
@@ -80,50 +85,101 @@
 		</fieldset>
 		</form>
 		
-<!-- 		<!-- 이것도 옵션으로 바꿀까 생각해보기 --> 
-<!-- 		<label>품명</label> -->
-<!-- 		<input type="text" name="prod_name" value="prod_name" placeholder="검색어를 입력해주세요"> -->
 
 
+  <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    
+    <div class="col-md-12 col-sm-12  ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					출고 목록 <small>Out_material</small>
+				</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a> <a
+								class="dropdown-item" href="#">Settings 2</a>
+						</div></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<p>
+					출고 테이블
+					<code>Shoes Monseter</code>
+					since 2023
+				</p>
+				<div class="table-responsive">
+					<form action="" method="post">
+						<table class="table table-striped jambo_table bulk_action" id="data-table">
+							<thead>
+								<tr class="headings">
+									<th>
+										<div class="icheckbox_flat-green" style="position: relative;">
+											<input type="checkbox" id="check-all" class="flat"
+												style="position: absolute; opacity: 0;">
+											<ins class="iCheck-helper"
+												style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+										</div>
+									</th>
+									<th class="column-title">출고 번호</th>
+									<th class="column-title">수주번호</th>
+									<th class="column-title">거래처명</th>
+									<th class="column-title">거래처코드</th>
+									<th class="column-title">제품 코드</th>
+									<th class="column-title">제품 이름</th>
+									<th class="column-title">주문 수량</th>
+									<th class="column-title">납품가</th>
+									<th class="column-title">납품예정일</th>
+									<th class="column-title">출고 날짜</th>
+									<th class="column-title">출고 여부</th>
+									<th class="column-title">담당자</th>
+									<th class="column-title">출고 처리</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="out" items="${out_List }">
+									<tr class="even pointer">
+										<td class="a-center ">
+											<div class="icheckbox_flat-green" style="position: relative;">
+												<input type="checkbox" class="flat" name="table_records"
+													style="position: absolute; opacity: 0;">
+												<ins class="iCheck-helper"
+													style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+											</div>
+										</td>
+										<td class=" ">${out.out_num}</td>
+										<td class=" ">${out.orders.order_code}</td>
+										<td class=" ">${out.clients.client_actname}</td>
+										<td class=" ">${out.orders.client_code}</td>
+										<td class=" ">${out.prod.prod_code}</td>
+										<td class=" ">${out.prod.prod_name}</td>
+										<td class=" ">${out.orders.order_count}</td>
+										<td class=" ">${out.prod.prod_price}원</td>
+										<td class=" ">${out.orders.order_deliveryDate}</td>
+										<td class=" ">$${out.out_date}<i
+											class="success fa fa-long-arrow-up"></i></td>
+										<td class=" ">${out.out_YN}</td>
+										<td class=" ">${out.emp_id}</td>
+										<td class=" "><button type="submit">출고 처리</button></td>
+									</tr>
 
-	<form action="/stock/Out_material" method="post">
+								</c:forEach>
+							</tbody>
+						</table>
+					</form>
 
-	<table id="data-table" border="1">
-		<tr>
-			<th>출고 번호</th>
-			<th>수주번호</th>
-			<th>거래처명</th>
-			<th>거래처 코드</th>
-			<th>제품 코드</th>
-			<th>제품 이름</th>
-			<th>주문 수량</th>
-			<th>납품가</th>
-			<th>납품예정일</th>
-			<th>출고 날짜</th>
-			<th>출고 여부</th>
-			<th>담당자</th>
-			<th>출고 처리</th>
-		</tr>
-		<c:forEach var="out" items="${out_List }">
-            <tr>
-                <td>${out.out_num}</td>
-                <td>${out.orders.order_code}</td>
-                <td>${out.clients.client_actname}</td>
-                <td>${out.orders.client_code}</td>
-                <td>${out.prod.prod_code}</td>
-                <td>${out.prod.prod_name}</td>
-                <td>${out.orders.order_count}</td>
-                <td>${out.prod.prod_price}원</td>
-                <td>${out.orders.order_deliveryDate}</td>
-                <td>${out.out_date}</td>
-                <td>${out.out_YN}</td>
-                <td>${out.emp_id}</td>
-                </tr>
-        </c:forEach>
-	</table>
-	</form>
-	
-	<c:if test="${count4 > 10 }">
+				</div>
+			</div>
+		</div>
+		<div>
+   		<c:if test="${count4 > 10 }">
 		<c:if test="${bp.prev}">
 
 		    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
@@ -139,7 +195,19 @@
 		    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
 
 		</c:if>
-	</c:if>
+		</c:if>
+		</div>
+
+	</div>
+    
+    
+    <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
+
+
+
+
+
+	
 	<br><br>
     bp.startPage : ${bp.startPage } <br>
     bp.endPage : ${bp.endPage } <br>
@@ -149,22 +217,7 @@
    
     
 <!-- <div> -->
-<%--     <c:if test="${count2 > 0 }"> --%>
-<%--     	<c:if test="${startPage > pageBlock }"> --%>
-<%--     		<span><a href="/stock/Out_material?num=${startPage - pageBlock}&client_actname=${out.client.client_actname} --%>
-<%--     		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">이전</a></span> --%>
-<%--     	</c:if> --%>
-	
-<%-- 		<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1"> --%>
-<%-- 			<a href="/stock/Out_material?num=${i }&client_actname=${out.client.client_actname} --%>
-<%--     		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">${i }</a> --%>
-<%-- 		</c:forEach> --%>
-		
-<%-- 		<c:if test="${endPage < count2 }"> --%>
-<%-- 			<a href="/stock/Out_material?num=${startPage + pageBlock}&client_actname=${out.client.client_actname} --%>
-<%--     		&prod_name=${out.prod_name}&out_num=${out.out_mat.out_num}">다음</a> --%>
-<%-- 		</c:if> --%>
-<%--     </c:if> --%>
+
 <!-- </div> -->
 
 

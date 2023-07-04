@@ -423,7 +423,7 @@
 								<div class="block">
 									<div class="block_content">
 										<h2 class="title">
-											<a>빈지노 7년 만에 정규 앨범 2집 발매 !!</a>
+											<a><b>빈지노 7년 만에 정규 앨범 2집 발매 !!</b></a>
 										</h2>
 										<div class="byline">
 											<span>13 hours ago</span> by <a>정창원</a>
@@ -441,7 +441,7 @@
 								<div class="block">
 									<div class="block_content">
 										<h2 class="title">
-											<a>HERE WE GO !! 김민재 독일 명문 바이에른 뮌헨 이적 임박</a>
+											<a><b>HERE WE GO !! 김민재 독일 명문 바이에른 뮌헨 이적 임박</b></a>
 										</h2>
 										<div class="byline">
 											<span>13 hours ago</span> by <a>정창원</a>
@@ -472,7 +472,7 @@
 								<div class="block">
 									<div class="block_content">
 										<h2 class="title">
-											<a>7/5일 그 날이 왔다 !</a>
+											<a><b>7/5일 그 날이 왔다 !</b></a>
 										</h2>
 										<div class="byline">
 											<span>13 hours ago</span> by <a>정창원</a>
