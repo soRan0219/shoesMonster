@@ -495,7 +495,7 @@
 					tmp += " 라인코드: ";
 					tmp += data.workOrder.line_code;
 					tmp += " 품번: ";
-					tmp += data.workOrder.prod_code;
+					tmp += ((data.prod_code===""||data.prod_code==null) ? "없음" : data.prod_code);
 					tmp += "<br>실적일: ";
 					tmp += getDate(data.perform_date);
 					tmp += " 실적수량: ";
@@ -534,7 +534,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1> /performance/performList </h1>
+	<h1> 생산실적 관리 </h1>
 	
 	<div>
 		<form id="searchForm" method="get">
@@ -597,7 +597,7 @@
 						<td id="performCode"><a href="#" onclick="return false" class="t">${vo.perform_code }</a></td>
 						<td>${vo.work_code }</td>
 						<td>${vo.workOrder.line_code }</td>
-						<td>${vo.workOrder.prod_code }</td>
+						<td>${vo.prod_code }</td>
 						<td>${vo.perform_date }</td>
 						<td>${vo.perform_qt }</td>
 						<td>${vo.perform_fair }</td>
