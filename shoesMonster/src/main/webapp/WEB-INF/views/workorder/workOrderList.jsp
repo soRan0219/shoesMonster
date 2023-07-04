@@ -167,6 +167,7 @@
 				tbl += " </td>";
 				// 품번
 				tbl += " <td>";
+				//																수주현황 품번 이상함
 				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly>";
 				tbl += " </td>";
 				// 지시상태

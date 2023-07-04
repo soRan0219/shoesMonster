@@ -58,7 +58,8 @@ function popUp() {
    			var prodCode = $(this).find('#prodCode').text();
      		
    			if(isPop === "order_code") {
-   				$('#prod_code', opener.document).val(prodCode);
+   				//수주현황 품번 출력 이상해서 주석해놓음 해결되면 풀것
+//    				$('#prod_code', opener.document).val(prodCode);
    			}
  			$('#'+isPop, opener.document).val(orderCode);
      			
