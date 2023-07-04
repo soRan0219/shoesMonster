@@ -69,6 +69,12 @@ public class EmployeesServiceImpl implements EmployeesService{
 		empdao.updateEmployees(uvo);
 	}
 
+	@Override
+	public void updateEmployeesImg(String img, String emp_id) throws Exception {
+		empdao.updateEmployeesImg(img,emp_id);
+		
+	}
+
 	
 	
 	

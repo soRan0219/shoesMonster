@@ -220,6 +220,7 @@ public class PersonController {
 		
 		logger.debug("vo : " + vo);
 		
+		
 		model.addAttribute("vo", vo);
 		
 		

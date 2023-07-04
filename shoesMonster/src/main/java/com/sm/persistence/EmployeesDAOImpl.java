@@ -106,6 +106,18 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 		logger.debug(" result " + result);
 	} // updateEmployees
 
+	@Override
+	public void updateEmployeesImg(String img, String emp_id) throws Exception {
+		logger.debug("updateEmployeesImg() 호출");
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("img", img);
+		params.put("emp_id", emp_id);
+		
+		sqlSession.update(NAMESPACE2+".updateEmployeesImg",params);
+		
+	}
+
 	
 	
 	

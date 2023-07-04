@@ -102,6 +102,13 @@
 	</update>
 	<!-- 사원 수정 -->
 	
+	<update id="updateEmployeesImg" parameterType="hashMap">
+		update employees
+		set img=#{img}
+		where emp_id=#{emp_id}
+	</update>
+	<!-- 사원 수정 -->
+	
 	
 	
 	
