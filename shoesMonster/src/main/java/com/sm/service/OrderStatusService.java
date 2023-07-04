@@ -25,6 +25,13 @@ public interface OrderStatusService {
 	// 수주 관리 조회
 	public List<ClientsVO> getOrderManageList() throws Exception;
 	
+	// 수주 등록
+	public void registOrder(OrderStatusVO osvo) throws Exception;
+	
+	// 수주 삭제
+	
+	
+	// 수주 수정
 	
 	
 }

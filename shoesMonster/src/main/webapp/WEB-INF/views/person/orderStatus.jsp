@@ -7,7 +7,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 <script type="text/javascript">
+//========================================= 함수, 상수 ===================================================	
 
+//오늘 날짜 yyyy-mm-dd
+function getToday() {
+	var date = new Date();
+	var year = date.getFullYear();
+	var month = ("0" + (1 + date.getMonth())).slice(-2);
+	var day = ("0" + date.getDate()).slice(-2);
+
+	return year + "-" + month + "-" + day;
+} //getToday()
+	
 function popUp() {
 	var queryString = window.location.search;
 	var urlParams = new URLSearchParams(queryString);
@@ -63,6 +74,111 @@ function popUp() {
 $(function(){
 	
 	popUp();
+	
+// ========================================= 등록 ===================================================	
+	$('#add').click(function () {
+		
+		$('#modify').attr("disabled", true);
+		$('#delete').attr("disabled", true);
+		
+		let today = getToday();
+		
+		if($(this).hasClass('true')){
+
+			var tbl = "<tr>";
+			
+			// 번호
+			tbl += "<td>";
+			tbl += "</td>";
+			
+			// 수주번호
+			tbl += "<td>";
+			tbl += "<input type='text' name='order_code' id='order_code' required>";
+			tbl += "</td>";
+			
+			// 업체
+			tbl += "<td>";
+			tbl += "<input type='text' name='client_code' id='client_code' required>";
+			tbl += "</td>";
+			
+			// 수주일자
+			tbl += "<td>";
+			tbl += "<input type='text' name='order_date' id='order_date' readonly value='";
+			tbl += today;
+			tbl += "'>";
+			tbl += "</td>";
+			
+			// 담당자
+			tbl += "<td>";
+			tbl += "<input type='text' name='emp_id' id='emp_id' required>";
+			tbl += "</td>";
+			
+			// 품번
+			tbl += "<td>";
+			tbl += "<input type='text' name='prod_code' id='prod_code' required>";
+			tbl += "</td>";
+			
+			// 품명
+			tbl += "<td>";
+			tbl += "<input type='text' name='prod_name' id='prod_name' required>";
+			tbl += "</td>";
+			
+			// 단위
+			tbl += "<td>";
+			tbl += "<input type='text' name='prod_unit' id='prod_unit' required>";
+			tbl += "</td>";
+			
+			// 납품예정일
+			tbl += "<td>";
+			tbl += "<input type='text' name='order_deliveryDate' id='order_deliveryDate' required>";
+			tbl += "</td>";
+			
+			// 수주량
+			tbl += "<td>";
+			tbl += "<input type='text' name='order_count' id='order_count' required>";
+			tbl += "</td>";
+			tbl += "</tr>";
+			
+			$('table').append(tbl);
+			
+			$(this).removeClass('true');
+		}//if($(this).hasClass
+		
+		// (등록)저장
+		$('#save').click(function () {
+			
+			var order_code = $('#order_code').val();
+			var client_code = $('#client_code').val();
+			var order_date = $('#order_date').val();
+			var emp_id = $('#emp_id').val();
+			var prod_code = $('#prod_code').val();
+			var prod_name = $('#prod_name').val();
+			var prod_unit = $('#prod_unit').val();
+			var order_deliveryDate = $('#order_deliveryDate').val();
+			var order_count = $('#order_count').val();
+			
+			if(order_code == "" || client_code == "" || order_date == "" ||
+			   emp_id == "" || prod_code == "" || prod_name == "" || prod_unit == "" 
+			   || order_deliveryDate== "" || order_count == "" ){
+				alert("항목을 모두 입력하세요");
+			}else{
+				$('#fr').attr("action", "/person/addOrder");
+				$('#fr').attr("method", "POST");
+				$('#fr').submit();
+			}
+			
+		});//save.click
+		
+		// 취소버튼(=리셋)
+		$('#cancle').click(function () {
+			$('#fr').each(function () {
+				this.reset();
+			});
+		}); // cancle click		
+		
+	});//add.click
+
+// ========================================= 등록 ===================================================	
 	
 // ========================================= 검색 ===================================================
 	// 수주 일자 이날부터
@@ -170,7 +286,18 @@ $(function(){
 <!-- 		</select> -->
 	</form>
 	
+	<!-- //////////////////////////////////////////////////////////////////////// -->	
 	<br>
+	
+	<button id="add" class="true">추가</button>
+	<button id="modify" >수정</button>
+	<button id="delete" class="true">삭제</button>
+	<button type="reset" id="cancle" >취소</button>
+	<button type="submit" id="save">저장</button>
+	<button onclick="location.reload()">새로고침</button>
+
+	<br>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
 	
 	<form id="fr">
 	

@@ -520,6 +520,53 @@
 				$(this).prop("selected", true);
 			}
 		});
+		//n건씩 표시
+		
+		
+		//작업지시코드 클릭시 상세조회
+		$('#workCode a').click(function() {
+			var obj = { work_code:$(this).text().trim() };
+				
+			$.ajax({
+				url : "/workorder/detail",
+				type : "post",
+				contentType : "application/json; charset=UTF-8",
+				dataType : "json",
+				data : JSON.stringify(obj),
+				success : function(data) {
+					console.log(data);
+					
+					var tmp = "작업지시코드: ";
+					tmp += data.work_code;
+					tmp += " 라인코드: ";
+					tmp += data.line_code;
+					tmp += " 수주코드: ";
+					tmp += data.order_code;
+					tmp += " 품번: ";
+					tmp += data.prod_code;
+					tmp += "<br>지시상태: ";
+					tmp += data.work_state;
+					tmp += " 지시일: ";
+					tmp += data.work_date;
+					tmp += " 지시수량: ";
+					tmp += data.work_qt;
+					tmp += "<br>등록자: ";
+					tmp += ((data.emp_id===""||data.emp_id==null) ? "없음" : data.emp_id);
+					tmp += " 변경자: ";
+					tmp += ((data.change_id===""||data.change_id==null) ? "없음" : data.change_id);
+					tmp += " 변경일: ";
+					tmp += ((data.change_date===""||data.change_date==null) ? "없음" : data.change_date);
+					tmp += " 비고: ";
+					tmp += ((data.work_note===""||data.work_note==null) ? "없음" : data.work_note);
+					
+					$('#detail').html(tmp);
+				},
+				error: function() {
+					alert("아작스 실패");
+				}
+			}); //ajax
+				
+		}); //작업지시코드 클릭
 		
 		
 	}); //jQuery
@@ -552,7 +599,6 @@
 
 	<br><br>
 
-	<div id="body">
 	
 		<button id="add" class="true">추가</button>
 		<button id="modify">수정</button>
@@ -560,6 +606,7 @@
 		<button type="reset" id="cancle">취소</button>
 		<button type="submit" id="save">저장</button>
 		
+	<div id="body">
 	
 		총 <span id="total">${pm.totalCount }</span>건
 		
@@ -569,6 +616,7 @@
 			<option value="7">7</option>
 		</select>
 		건씩 표시
+	</div>
 		
 		<form id="fr">
 			<table border="1">
@@ -585,7 +633,7 @@
 				<c:forEach var="w" items="${workList }">
 					<tr>
 						<td></td>
-						<td id="workCode">${w.work_code }</td>
+						<td id="workCode"><a href="#" onclick="return false">${w.work_code }</a></td>
 						<td id="lineCode">${w.line_code }</td>
 						<td>${w.order_code }</td>
 						<td id="prodCode">${w.prod_code }</td>
@@ -613,9 +661,8 @@
 				<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏩ </a>
 			</c:if>
 		</div>
-	</div>
 
-	<div id="details"></div>
+	<div id="detail"></div>
 
 </div>
 <!-- /page content -->

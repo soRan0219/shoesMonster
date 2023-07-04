@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.mysql.cj.util.DnsSrv.SrvRecord;
-import com.mysql.cj.xdevapi.Result;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageVO;
 import com.sm.domain.PagingVO;
@@ -20,6 +18,7 @@ import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.RawMaterialVO;
 import com.sm.domain.RequirementsVO;
+import com.sm.domain.StockVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.domain.Wh_prodVO;
 
@@ -69,6 +68,13 @@ public class PerformanceImpl implements PerformanceDAO {
 		data.put("client_code", vo.getClient_code());
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchProd", data);
+	}
+	
+	
+	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String readProdCode() {
+		return sqlSession.selectOne(NAMESPACE+".readProdCode");
 	}
 
 	// 품목관리 정보 다중 저장
@@ -148,6 +154,12 @@ public class PerformanceImpl implements PerformanceDAO {
 		data.put("client_actname", vo.getClients().getClient_actname());
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchRaw", data);
+	}
+	
+	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String readRawCode() {
+		return sqlSession.selectOne(NAMESPACE+".readRawCode");
 	}
 	
 	// 원자재관리 데이터 추가
@@ -467,6 +479,13 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".readWhList", wh_code);
 	}
+	
+	// 창고 추가 시 code값 가져가기
+	@Override
+	public String getWhCode() {
+		
+		return sqlSession.selectOne(NAMESPACE+".getWhCode");
+	}
 
 	// ==========================================================================
 
@@ -493,9 +512,23 @@ public class PerformanceImpl implements PerformanceDAO {
 		logger.debug("##### DAO: 양품수와 작업지시수량 비교 결과 있없 ===> " + result);
 		
 		//비교결과 해당 작업지시수량보다 생산한 양품수가 같거나 많으면 생산현황 마감으로 변경
+		// => 마감으로 변경됐을 경우 해당 작업지시 양품수 합해서 재고에 더하기
 		if(result != null) {
 			sqlSession.update(NAMESPACE + ".updateStatus", work_code);
-		}
+			
+			int perform_fair = sqlSession.selectOne(NAMESPACE + ".sumFair", work_code);
+			logger.debug("##### DAO: 양품수 합 ===> " + perform_fair);
+			
+			StockVO stock = sqlSession.selectOne(NAMESPACE + ".searchStock", work_code);
+			logger.debug("##### DAO: 일치품목 ===> " + stock.getProd_code());
+//			String prod_code = stock.getProd_code();
+			
+			stock.setStock_count(perform_fair);
+			
+			sqlSession.update(NAMESPACE + ".updateStock", stock);
+			
+			logger.debug("##### DAO: 재고등록완~~~~~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
+		} //if(마감쳤을때)
 		
 		
 	} // createPerformance()
@@ -576,6 +609,8 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return statusMap;
 	} //getPerformStatus()
+
+
 
 
 }

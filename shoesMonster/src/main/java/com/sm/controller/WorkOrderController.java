@@ -130,6 +130,10 @@ public class WorkOrderController {
 			return "redirect:/person/Clients?input="+input;
 		}
 		
+		else if(type.equals("wh")) {
+			return "redirect:/performance/warehouse?input="+input;
+		}
+		
 		else /* if(type.equals("order"))*/ {
 			return "redirect:/person/orderStatus?input="+input;
 		}

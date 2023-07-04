@@ -248,10 +248,13 @@ public class stockController {
         int raw_order_count = Integer.parseInt(values[2]);
         String wh_code = values[3];
 
-        logger.debug("@@@@@@@@@@@@@@@ 발주 번호 확인용 : " + raw_order_num);
+        logger.debug("@@@@@@@@@@@@@@@ 버튼 발주 번호 확인용 : " + raw_order_num);
         logger.debug("@@@@@@@@@@@@@@@ 원자재 코드 확인용 : " + rawCode);
         logger.debug("@@@@@@@@@@@@@@@ 발주 개수 확인용 : " + raw_order_count);
         logger.debug("@@@@@@@@@@@@@@@ 입고 창고 확인용 : " + wh_code);
+        
+        service.inInsert(raw_order_num);
+//        service.updateIn(raw_order_num);
         
         // 로그인 정보
 //        String emp_id = (String)session.getAttribute("emp_id");
@@ -265,6 +268,7 @@ public class stockController {
         
         logger.debug("@@@@@@@@@@@@ 리턴 확인용 : " + raw_order_num);
   	
+        
         
         boolean result = service.selectCheck(rawCode);
         
@@ -286,14 +290,12 @@ public class stockController {
 //        service.selectCheck(rawCode);
         
         
+
         
-//        service.inInsert(rvo, raw_order_num);
-//        
-//        service.updateIn(raw_order_num);
-//        
-//        rttr.addFlashAttribute("result", "inInsert");
-//        
-//        logger.debug("@@@@@@@@@@@@ 리턴 확인용 : " + raw_order_num);
+        rttr.addFlashAttribute("result", "inInsert");
+        
+        logger.debug("@@@@@@@@@@@@ 리턴 확인용 : " + raw_order_num);
+
         
         return "redirect:/stock/In_material";
     }

@@ -99,6 +99,12 @@
 
 	</select>
 	<!-- 품목관리 검색리스트 불러오기 -->
+	
+	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
+	<select id="readProdCode" resultType="String">
+		select prod_code from product order by prod_code desc limit 1;
+	</select>
+	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
 
 	<!-- 품목관리 정보 다중 입력 -->
 	<insert id="prodIn">
@@ -227,12 +233,18 @@
 
 	</select>
 	<!-- 원자재관리 검색리스트 불러오기 -->
+	
+	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
+	<select id="readRawCode" resultType="String">
+		select raw_code from raw_material order by raw_code desc limit 1;
+	</select>
+	<!-- 품목관리 추가버튼 클릭 시 품목코드 가져가기 -->
 
 	<!-- 원자재관리 정보 다중 입력 -->
 	<insert id="rawIn">
 		insert into raw_material
 		values
-		(#{raw_code},#{raw_name},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{raw_note})
+		(#{raw_code},#{raw_name},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{raw_note},#{wh_code})
 	</insert>
 	<!-- 원자재관리 정보 다중 입력 -->
 
@@ -257,7 +269,8 @@
 	<update id="updateRaw">
 		UPDATE raw_material
 		SET raw_code=#{raw_code},raw_name=#{raw_name},raw_color=#{raw_color},raw_unit=#{raw_unit},
-		raw_size=#{raw_size},raw_price=#{raw_price},client_code=#{client_code},raw_note=#{raw_note}
+		raw_size=#{raw_size},raw_price=#{raw_price},client_code=#{client_code},raw_note=#{raw_note},
+		wh_code=#{wh_code}
 		WHERE raw_code=#{raw_code}
 	</update>
 	<!-- 원자재관리 수정 -->
@@ -707,6 +720,14 @@
 	</select>
 	<!-- 창고 조회(String wh_code) -->
 	
+	<!-- 창고 추가 시 코드값 가져가기 -->
+	<select id="getWhCode" resultType="WorkOrderVO">
+		SELECT wh_code 
+		FROM warehouse 
+		ORDER BY wh_code desc limit 1
+	</select>
+	<!-- 창고 추가 시 코드값 가져가기 -->
+	
 	<!-- ///////////////////////////////////////////////////////// -->
 
 	<!-- 생산실적 목록 -->
@@ -829,6 +850,15 @@
 	</select>
 	<!-- 생산실적 검색 수 -->
 
+
+
+
+
+
+
+
+
+
 	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
 	
 	<!-- 생산실적 등록 -->
@@ -841,36 +871,41 @@
 	<!-- 생산실적 등록 -->
 	
 	
-	
-	
-	
-	
+	<!-- 작업지시코드에 해당하는 양품 수 합 -->
+	<select id="sumFair" resultType="int">
+		SELECT sum(perform_fair) 
+		FROM performance 
+		WHERE work_code=#{work_code}
+	</select>
+	<!-- 작업지시코드에 해당하는 양품 수 합 -->
 	
 	
 	<!-- 재고에 해당 품목 있는지 확인 -->
-<!-- 	<select id="searchStock" resultMap="stock"> -->
-<!-- 		SELECT DISTINCT s.prod_code, s.stock_num  -->
-<!-- 		FROM stock s  -->
-<!-- 		JOIN work_order w ON w.prod_code = s.prod_code  -->
-<!-- 		JOIN performance pf ON pf.work_code = w.work_code  -->
-<!-- 		WHERE s.prod_code = w.prod_code AND w.prod_code= -->
-<!-- 		(SELECT DISTINCT w.prod_code  -->
-<!-- 		FROM work_order w  -->
-<!-- 		JOIN performance p ON p.work_code=w.work_code  -->
-<!-- 		WHERE w.work_code=#{work_code}) -->
-<!-- 	</select> -->
+	<sql id="subQuery">
+		(SELECT DISTINCT w.prod_code 
+		FROM work_order w 
+		JOIN performance p ON p.work_code=w.work_code 
+		WHERE w.work_code=#{work_code})
+	</sql>
+	
+	<select id="searchStock" resultMap="stock">
+		SELECT DISTINCT s.prod_code 
+		FROM stock s 
+		JOIN work_order w ON w.prod_code = s.prod_code 
+		JOIN performance pf ON pf.work_code = w.work_code 
+		WHERE s.prod_code = w.prod_code AND w.prod_code=
+		<include refid="subQuery"/>
+	</select>
 	<!-- 재고에 해당 품목 있는지 확인 -->
 	
 	
 	<!-- 양품수만큼 재고등록 -->
-	
-	
-	
-	
-	
-	
-	
-	
+	<update id="updateStock">
+		UPDATE stock 
+		SET stock_count = stock_count + #{stock_count} 
+		WHERE prod_code = #{prod_code}
+	</update>
+	<!-- 양품수만큼 재고등록 -->
 	
 	
 	
@@ -894,6 +929,19 @@
 
 	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<!-- 생산실적 삭제 -->
 	<delete id="deletePerformance">
 		DELETE FROM performance  
@@ -903,10 +951,10 @@
 
 
 	<!-- 생산실적 조회 -->
-	<select id="performInfo" resultMap="perfList" resultType="PerformanceVO">
+	<select id="performInfo" resultMap="perfList">
 		SELECT p.perform_code, p.work_code, w.line_code,
 		w.prod_code, p.perform_date, p.perform_qt, p.perform_fair, p.perform_defect, 
-		p.defect_note, p.perform_status, p.perform_note 
+		p.defect_note, p.perform_status, p.emp_id, p.change_id, p.change_date, p.perform_note 
 		FROM performance p JOIN work_order w 
 		ON p.work_code = w.work_code 
 		WHERE p.perform_code=#{perform_code}

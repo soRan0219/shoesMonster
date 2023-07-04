@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -96,6 +95,16 @@ public class PerfomanceController {
 		}
 
 	}
+	
+	// 품목관리 추가 시 code 값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "prodCode", method = RequestMethod.GET)
+    public String getProdCode() {
+		logger.debug(" getProdCode() 호출 ");
+		
+        return service.getProdCode();
+    }
+	
 
 	// 품목관리 정보 추가
 	@RequestMapping(value = "product", method = RequestMethod.POST)
@@ -108,7 +117,7 @@ public class PerfomanceController {
 
 		return "redirect:/performance/product";
 	}
-
+	
 	// 품목관리 삭제
 	@RequestMapping(value = "/prodDelete", method = RequestMethod.POST)
 	public String deleteProd(@RequestParam(value = "checked[]") List<String> checked) throws Exception {
@@ -202,6 +211,15 @@ public class PerfomanceController {
 		}
 
 	}
+	
+	// 원자재관리 추가 시 code 값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "rawCode", method = RequestMethod.GET)
+    public String getRawCode() {
+		logger.debug(" getRawCode() 호출 ");
+		
+        return service.getRawCode();
+    }
 
 	// 원자재관리 정보 추가
 	@RequestMapping(value = "rawMaterial", method = RequestMethod.POST)
@@ -432,11 +450,7 @@ public class PerfomanceController {
 	}
 	
 	// 라인 추가
-
 	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
-
-
-
 	public String addLine(LineVO lvo) throws Exception{
 		logger.debug("@#@#@# C : addLine(LineVO lvo) 호출 ");
 		logger.debug("@#@#@# C : lvo = "+lvo);
@@ -569,6 +583,14 @@ public class PerfomanceController {
 //			return "redirect:/performance/warehouse?input="+input;
 //		
 //	}
+	
+	// 창고 추가 시 code값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "whCode", method = RequestMethod.GET)
+	public String getWhCode() {
+		
+		return service.getWhCode();
+	}
 	
 	// 담당자(사원) 팝업 검색
 	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)

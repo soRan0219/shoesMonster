@@ -27,6 +27,9 @@ public interface PerformanceService {
 
 	// 품목관리 검색리스트 불러오기
 	public List<ProductVO> getProdList(ProductVO vo, PagingVO pvo) throws Exception;
+	
+	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
+	public String getProdCode(); 
 
 	// 품목관리 정보 다중 저장
 	public void insertProd(List<ProductVO> products);
@@ -53,6 +56,9 @@ public interface PerformanceService {
 
 	// 원자재관리 검색리스트 불러오기
 	public List<RawMaterialVO> getRawList(RawMaterialVO vo, PagingVO pvo) throws Exception;
+	
+	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
+	public String getRawCode(); 
 
 	// 원자재관리 정보 다중 저장
 	public void insertRaw(List<RawMaterialVO> raw) throws Exception;
@@ -146,6 +152,9 @@ public interface PerformanceService {
 	
 	// 창고 조회(String wh_code)
 	public Wh_prodVO getWarehouse(String wh_code) throws Exception;
+	
+	// 창고 추가 시 code값 가져가기
+	public String getWhCode();
 
 	// ==========================================================================
 

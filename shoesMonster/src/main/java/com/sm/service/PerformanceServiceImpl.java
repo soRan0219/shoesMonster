@@ -52,6 +52,12 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 		return pdao.readProdList(vo, pvo);
 	}
+	
+	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String getProdCode() {
+		return pdao.readProdCode();
+	}
 
 	// 품목관리 정보 다중
 	@Override
@@ -105,6 +111,12 @@ public class PerformanceServiceImpl implements PerformanceService {
 	@Override
 	public List<RawMaterialVO> getRawList(RawMaterialVO vo, PagingVO pvo) throws Exception {
 		return pdao.readRawList(vo, pvo);
+	}
+	
+	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String getRawCode() {
+		return pdao.readRawCode();
 	}
 	
 	// 원자재관리 데이터 추가
@@ -303,6 +315,13 @@ public class PerformanceServiceImpl implements PerformanceService {
 	
 		return pdao.getWarehouse(wh_code);
 	}
+	
+	// 창고 추가 선택 시 코드 가져오기
+	@Override
+	public String getWhCode() {
+
+		return pdao.getWhCode();
+	}
 
 	// ==========================================================================
 
@@ -360,6 +379,8 @@ public class PerformanceServiceImpl implements PerformanceService {
 	public Map<String, List<PerformanceVO>> getPerformStatus() throws Exception {
 		return pdao.getPerformStatus();
 	} //getPerformStatus()
+
+
 
 
 }
