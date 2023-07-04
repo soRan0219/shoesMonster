@@ -146,7 +146,7 @@ $(function(){
 			
 			// 담당자
 			tbl += "<td>";
-			tbl += "<input type='text' name='emp_id' id='emp_id' required>";
+			tbl += "<input type='text' name='emp_name' id='emp_name' required>";
 			tbl += "</td>";
 			
 			// 품번
@@ -202,7 +202,7 @@ $(function(){
 			var client_code = $('#client_code').val();
 			var client_actname = $('#client_actname').val();
 			var order_date = $('#order_date').val();
-			var emp_id = $('#emp_id').val();
+			var emp_name = $('#emp_name').val();
 			var prod_code = $('#prod_code').val();
 			var prod_name = $('#prod_name').val();
 			var prod_unit = $('#prod_unit').val();
@@ -210,7 +210,7 @@ $(function(){
 			var order_count = $('#order_count').val();
 			
 // 			if(order_code == "" || client_code == "" || order_date == "" ||
-// 			   emp_id == "" || prod_code == "" || prod_name == "" || prod_unit == "" 
+// 			   emp_name == "" || prod_code == "" || prod_name == "" || prod_unit == "" 
 // 			   || order_deliveryDate== "" || order_count == "" ){
 // 				alert("항목을 모두 입력하세요");
 // 			}else{
@@ -338,7 +338,7 @@ $(function(){
 						"client_code",
 						"client.client_actname",
 						"order_date",
-						"emp_id",
+						"emp_name",
 						"prod.prod_code",
 						"prod.prod_name", 
 						"prod.prod_unit", 
@@ -477,18 +477,11 @@ $(function(){
 		품번 <input type="text" name="prod_code">
 		<input type="submit" value="조회">
 		<br>
-		담당자 <input type="text" name="emp_id" >
+		담당자 <input type="text" name="emp_name" >
 		납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
 				    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
-<!-- 		출하완료여부  -->
-<!-- 		<select name="order_finish"> -->
-<!-- 			<option selected value= "전체">전체</option> -->
-<!-- 			<option value="Y">Y</option> -->
-<!-- 			<option value="N">N</option> -->
-<!-- 		</select> -->
 	</form>
 	
-	<!-- //////////////////////////////////////////////////////////////////////// -->	
 	<br>
 	
 	<button id="add" class="true">추가</button>
@@ -496,10 +489,9 @@ $(function(){
 	<button id="delete" class="true">삭제</button>
 	<button type="reset" id="cancle" >취소</button>
 	<button type="submit" id="save">저장</button>
-	<button onclick="location.reload()">새로고침</button>
+	<button onclick="location.href='/person/orderStatus'">새로고침</button>
 
 	<br>
-<!-- //////////////////////////////////////////////////////////////////////// -->	
 	
 	<form id="fr">
 	
@@ -518,57 +510,22 @@ $(function(){
 			<th>단위</th>
 			<th>납품예정일</th>
 			<th>수주량</th>
-<!-- 			<th>완료여부</th> -->
     </tr>
 		
 		<c:forEach var="vo" items="${searchOrderStatusList }" varStatus="i">
-<%-- 			<c:if test="${vo.orders.order_finish == '전체' }"> --%>
 				<tr>
 					<td>${i.count }</td>
 					<td id="orderCode">${vo.order_code}</td>
 					<td>${vo.client_code}</td>
 					<td>${vo.clients.client_actname}</td>
 					<td>${vo.order_date}</td>
-					<td>${vo.emp_id}</td>
+					<td>${vo.emp_name}</td>
 					<td id="prodCode">${vo.prod.prod_code}</td>
 					<td>${vo.prod.prod_name}</td>
 					<td>${vo.prod.prod_unit}</td>
 					<td>${vo.order_deliveryDate}</td>
 					<td>${vo.order_count}</td>
 				</tr>
-<%-- 			</c:if> --%>
-			
-<%-- 			<c:if test="${vo.orders.order_finish == 'Y' }"> --%>
-<!-- 				<tr> -->
-<%-- 					<td>${i.count }</td> --%>
-<%-- 					<td>${vo.orders.order_code}</td> --%>
-<%-- 					<td>${vo.orders.client_code}</td> --%>
-<%-- 					<td>${vo.orders.order_date}</td> --%>
-<%-- 					<td>${vo.orders.emp_id}</td> --%>
-<%-- 					<td>${vo.prod_code}</td> --%>
-<%-- 					<td>${vo.prod_name}</td> --%>
-<%-- 					<td>${vo.prod_unit}</td> --%>
-<%-- 					<td>${vo.orders.order_deliveryDate}</td> --%>
-<%-- 					<td>${vo.orders.order_count}</td> --%>
-<%-- 					<td><input type="checkbox">${vo.orders.order_finish}</td> --%>
-<!-- 				</tr> -->
-<%-- 			</c:if> --%>
-			
-<%-- 			<c:if test="${vo.orders.order_finish == 'N' }"> --%>
-<!-- 				<tr> -->
-<%-- 					<td>${i.count }</td> --%>
-<%-- 					<td>${vo.orders.order_code}</td> --%>
-<%-- 					<td>${vo.orders.client_code}</td> --%>
-<%-- 					<td>${vo.orders.order_date}</td> --%>
-<%-- 					<td>${vo.orders.emp_id}</td> --%>
-<%-- 					<td>${vo.prod_code}</td> --%>
-<%-- 					<td>${vo.prod_name}</td> --%>
-<%-- 					<td>${vo.prod_unit}</td> --%>
-<%-- 					<td>${vo.orders.order_deliveryDate}</td> --%>
-<%-- 					<td>${vo.orders.order_count}</td> --%>
-<%-- 					<td><input type="checkbox">${vo.orders.order_finish}</td> --%>
-<!-- 				</tr> -->
-<%-- 			</c:if> --%>
 
 		</c:forEach>
 	</table>
@@ -576,20 +533,20 @@ $(function(){
 	
 	<div id="pagination">
 		<c:if test="${pm.prev }">
-			<a href="/person/orderStatus?page=${pm.startPage - 1 }&pageSize=${pm.clientPageVO.pageSize }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
+			<a href="/person/orderStatus?page=${pm.startPage - 1 }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_name=${search.emp_name}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
 		</c:if>
 		
 		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-			<a href="/person/orderStatus?page=${page }&pageSize=${pm.clientPageVO.pageSize }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
+			<a href="/person/orderStatus?page=${page }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_name=${search.emp_name}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
 		</c:forEach>
 
 		<c:if test="${pm.next }">
-			<a href="/person/orderStatus?page=${pm.endPage + 1 }&pageSize=${pm.clientPageVO.pageSize }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
+			<a href="/person/orderStatus?page=${pm.endPage + 1 }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_name=${search.emp_name}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
 		</c:if>
 	</div>
 
-	<div id="details"></div>
-	
+<div id="detail"></div>
+
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
