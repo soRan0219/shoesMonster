@@ -45,7 +45,8 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="../smmain/smMain" class="site_title"><i class="fa fa-paw"></i>
+						<a href="../smmain/smMain" class="site_title">
+							<img src="/resources/images/shoes.png" width="50" height="50"> </i>
 							<span>Shoes Monster!</span></a>
 					</div>
 
@@ -174,7 +175,7 @@
 			<div class="top_nav">
 				<div class="nav_menu">
 					<div class="nav toggle">
-						<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+						<a id="menu_toggle"><i class="fa fa-bars"></i></a> 
 					</div>
 					<nav class="nav navbar-nav">
 						<ul class=" navbar-right">
