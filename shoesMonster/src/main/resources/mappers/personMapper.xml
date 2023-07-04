@@ -83,7 +83,7 @@
 	</delete>
 	<!-- 사원 삭제 -->
 	
- 	<!-- 사원 조회 -->
+ 	<!-- 사원 상세 조회 -->
 	<select id="realEmployees" resultType="EmployeesVO">
 		select * from employees
 		where emp_id=#{emp_id}

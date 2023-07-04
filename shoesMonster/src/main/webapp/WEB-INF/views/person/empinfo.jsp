@@ -15,9 +15,10 @@
 <script type="text/javascript">
 
 // 팝업 창 조절
-function popupEmp() {
+function popupEmp(data) {
 	var cw = screen.availWidth;
 	var ch = screen.availHeight;
+	var emp_id = data;
 	
 	sw = 1024;
 	sh = 768;
@@ -25,7 +26,7 @@ function popupEmp() {
 	mw = (cw-sw) / 2;
 	mh = (ch-sh) / 2;
 	
-	window.open('/person/empform', 'popup', 'width=' + sw +
+	window.open('/person/empform?emp_id=' + emp_id, 'popup', 'width=' + sw +
 		', height=' + sh + ',left=' + mw + ',top='+ mh +
 		',toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, scrollbars=no, copyhistory=no');
 }
@@ -438,6 +439,8 @@ $(function() {
 		</form>
 	</div>
 	
+	${empList.get(0) }
+	
 	<div style="margin: 5% 12% 0% 12%;">
 		<div style="text-align-last: right;">
 			총 ${pm.totalCount } 건
@@ -492,8 +495,7 @@ $(function() {
 								<td>${vo.emp_hiredate}</td>
 								<td>${vo.emp_work}</td>
 								<td>
-<%-- 									<button onclick="window.open('/person/empform?emp_id=${vo.emp_id}', 'popupEmployees', 'width=1024, height=768, location=no, status=no, scrollbars=yes, top=50%, left=50%') " >상세보기</button> --%>
-									<input type="button" value="상세보기" onclick="popupEmp()"/>
+									<input type="button" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
 								</td>
 							</tr>
 						</c:if>
@@ -519,8 +521,6 @@ $(function() {
 			</c:if>
 		</div>
 		<!-- 페이징 -->
-	
-	<div id=win_size ></div>
 	
 </div>
 <!-- /page content -->
