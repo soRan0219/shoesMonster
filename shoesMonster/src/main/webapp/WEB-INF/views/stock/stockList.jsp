@@ -21,10 +21,56 @@
 
 	<h1> 재고 관리 </h1>
 	
-	<input type="button" value="전체" onclick=""></input>
-	<input type="button" value="원자재" onclick=""></input>
-	<input type="button" value="완제품" onclick=""></input>
-	
+	<input type="button" value="전체" onclick="showAll()"></input>
+    <input type="button" value="원자재" onclick="raw()"></input>
+    <input type="button" value="완제품" onclick="prod()"></input>
+    
+    
+    
+    <script>
+    function raw() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[0];
+
+            if (statusCell.innerText.trim() !== "원자재") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function prod() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[0];
+
+            if (statusCell.innerText.trim() !== "완제품") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function showAll() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            row.style.display = "";
+        }
+    }
+
+</script>
 	<hr>
 
 		<form action="" method="get">
@@ -36,7 +82,7 @@
 
 
 	<form action="" method="post">
-	<table border="1">
+	<table id="data-table" border="1">
     <tr>
  		<th>유형</th>
  		<th>제품 코드</th>

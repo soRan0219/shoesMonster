@@ -75,6 +75,7 @@ $(function(){
 	
 	popUp();
 	
+  
 // ========================================= 등록 ===================================================	
 	$('#add').click(function () {
 		
@@ -269,14 +270,14 @@ $(function(){
 	
 	<form method="get">
 		<input type="hidden" name="input" id="input" value="${input }">
-		업체 <input type="text" name="client_code">
+		업체 <input type="text" name="client_actname" >
 		수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
 				  <input type="text" name="order_date_toDate" id="order_date_toDate">
 		품번 <input type="text" name="prod_code">
 		<input type="submit" value="조회">
 		<br>
-		담당자 <input type="text" name="emp_id">
-		납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate">
+		담당자 <input type="text" name="emp_id" >
+		납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
 				    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
 <!-- 		출하완료여부  -->
 <!-- 		<select name="order_finish"> -->
@@ -307,6 +308,7 @@ $(function(){
 		<tr>
 			<th></th>
 			<th>수주번호</th>
+			<th>수주업체코드</th>
 			<th>업체</th>
 			<th>수주일자</th>
 			<th>담당자</th>
@@ -316,21 +318,22 @@ $(function(){
 			<th>납품예정일</th>
 			<th>수주량</th>
 <!-- 			<th>완료여부</th> -->
-		</tr>
+    </tr>
 		
 		<c:forEach var="vo" items="${searchOrderStatusList }" varStatus="i">
 <%-- 			<c:if test="${vo.orders.order_finish == '전체' }"> --%>
 				<tr>
 					<td>${i.count }</td>
-					<td id="orderCode">${vo.orders.order_code}</td>
-					<td>${vo.orders.client_code}</td>
-					<td>${vo.orders.order_date}</td>
-					<td>${vo.orders.emp_id}</td>
-					<td id="prodCode">${vo.prod_code}</td>
-					<td>${vo.prod_name}</td>
-					<td>${vo.prod_unit}</td>
-					<td>${vo.orders.order_deliveryDate}</td>
-					<td>${vo.orders.order_count}</td>
+					<td id="orderCode">${vo.order_code}</td>
+					<td>${vo.client_code}</td>
+					<td>${vo.clients.client_actname}</td>
+					<td>${vo.order_date}</td>
+					<td>${vo.emp_id}</td>
+					<td id="prodCode">${vo.prod.prod_code}</td>
+					<td>${vo.prod.prod_name}</td>
+					<td>${vo.prod.prod_unit}</td>
+					<td>${vo.order_deliveryDate}</td>
+					<td>${vo.order_count}</td>
 				</tr>
 <%-- 			</c:if> --%>
 			
@@ -372,15 +375,15 @@ $(function(){
 	
 	<div id="pagination">
 		<c:if test="${pm.prev }">
-			<a href="/person/orderStatus?page=${pm.startPage - 1 }&pageSize=${pm.clientPageVO.pageSize }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&search_prod=${search.search_prod}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
+			<a href="/person/orderStatus?page=${pm.startPage - 1 }&pageSize=${pm.clientPageVO.pageSize }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
 		</c:if>
 		
 		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-			<a href="/person/orderStatus?page=${page }&pageSize=${pm.clientPageVO.pageSize }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&search_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&search_prod=${search.search_prod}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
+			<a href="/person/orderStatus?page=${page }&pageSize=${pm.clientPageVO.pageSize }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
 		</c:forEach>
 
 		<c:if test="${pm.next }">
-			<a href="/person/orderStatus?page=${pm.endPage + 1 }&pageSize=${pm.clientPageVO.pageSize }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&search_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&search_prod=${search.search_prod}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
+			<a href="/person/orderStatus?page=${pm.endPage + 1 }&pageSize=${pm.clientPageVO.pageSize }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
 		</c:if>
 	</div>
 

@@ -199,12 +199,7 @@
 <!-- ===================================================== 수주 현황 ================================================================== -->
 	
 	<!-- 수주 현황 목록 불러오기 -->
-	<resultMap type="com.sm.domain.ProductVO" id="productList">
-			<result column="prod_code" property="prod_code" />
-			<result column="prod_name" property="prod_name" />
-			<result column="prod_unit" property="prod_unit" />
-	
-		<collection property="orders" ofType="com.sm.domain.OrderStatusVO">
+	<resultMap type="com.sm.domain.OrderStatusVO" id="orderStatusList">
 			<result column="order_code" property="order_code" />
 			<result column="order_date" property="order_date" />
 			<result column="order_deliveryDate" property="order_deliveryDate" />
@@ -213,50 +208,69 @@
 			<result column="client_code" property="client_code" />
 <!-- 			<result column="order_finish" property="order_finish" /> -->
 			<result column="order_note" property="order_note" />
+	
+		<collection property="prod" ofType="com.sm.domain.ProductVO">
+			<result column="prod_code" property="prod_code" />
+			<result column="prod_name" property="prod_name" />
+			<result column="prod_unit" property="prod_unit" />
+		</collection>
+		
+		<collection property="clients" ofType="com.sm.domain.ClientsVO">
+			<result column="client_actname" property="client_actname" />
 		</collection>
   </resultMap>
 	
-	<select id="orderStatusList" resultType="com.sm.domain.ProductVO" resultMap="productList">
-		select o.order_code, o.order_date, o.client_code, o.emp_id, p.prod_code, p.prod_name, 
+	<select id="orderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList">
+		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_id, p.prod_code, p.prod_name, 
 			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
 		from orders o
 		JOIN product p ON p.client_code = o.client_code
+		JOIN clients c ON c.client_code = o.client_code
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
 	
 	<!-- 수주 현황 전체 개수 -->
 	<select id="orderStatusALLcnt" resultType="int">
 		select count(*) 
-		from orders o
-		JOIN product p ON p.client_code = o.client_code
+		from orders 
 	</select>
 	<!-- 수주 현황 전체 개수 -->
 	
 	<!-- 수주현황 검색 -->
-    <resultMap type="com.sm.domain.ProductVO" id="productList2"> 
-			<result column="prod_code" property="prod_code" /> 
-		  <result column="prod_name" property="prod_name" />
-  		<result column="prod_unit" property="prod_unit" /> 
+    <resultMap type="com.sm.domain.OrderStatusVO" id="orderStatusList2">
+			<result column="order_code" property="order_code" />
+			<result column="order_date" property="order_date" />
+			<result column="order_deliveryDate" property="order_deliveryDate" />
+			<result column="emp_id" property="emp_id" />
+			<result column="order_count" property="order_count" />
+			<result column="client_code" property="client_code" />
+<!-- 			<result column="order_finish" property="order_finish" /> -->
+			<result column="order_note" property="order_note" />
 	
- 		<collection property="orders" ofType="com.sm.domain.OrderStatusVO"> 
- 			<result column="order_code" property="order_code" /> 
- 			<result column="order_date" property="order_date" /> 
- 			<result column="order_deliveryDate" property="order_deliveryDate" />
- 			<result column="emp_id" property="emp_id" /> 
- 			<result column="order_count" property="order_count" /> 
- 			<result column="client_code" property="client_code" /> 
-<!--  			<result column="order_finish" property="order_finish" />  -->
- 		</collection> 
- 	</resultMap> 
+		<collection property="prod" ofType="com.sm.domain.ProductVO">
+			<result column="prod_code" property="prod_code" />
+			<result column="prod_name" property="prod_name" />
+			<result column="prod_unit" property="prod_unit" />
+		</collection>
+		
+		<collection property="clients" ofType="com.sm.domain.ClientsVO">
+			<result column="client_actname" property="client_actname" />
+		</collection>
+  </resultMap>
+
 	
-	<select id="searchOrderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="productList2">
-		select o.order_code, o.client_code, o.order_date, o.emp_id, p.prod_code, p.prod_name, 
-			   p.prod_unit, o.order_deliveryDate, o.order_count
+	<select id="searchOrderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList2">
+		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_id, p.prod_code, p.prod_name, 
+			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
 		from orders o
 		JOIN product p ON p.client_code = o.client_code
+		JOIN clients c ON c.client_code = o.client_code
 		<where>
 			<if test="client_code != null and client_code != ''">
 				o.client_code Like CONCAT ('%',#{client_code},'%')
+			</if>
+			<if test="client_actname != null and client_actname != ''">
+				c.client_actname Like CONCAT ('%',#{client_actname},'%')
 			</if>
 			<if test="(order_date_fromDate!=null and !order_date_fromDate.equals('')) and (order_date_toDate!=null and !order_date_toDate.equals(''))">
 				AND (order_date &gt;= #{order_date_fromDate} AND order_date &lt;= #{order_date_toDate}) 
@@ -265,7 +279,7 @@
 				AND p.prod_code Like CONCAT ('%',#{prod_code},'%')
 			</if>
 			<if test="emp_id != null and emp_id != ''">
-				AND o.emp_id Like CONCAT ('%',#{emp_id},'%')
+				AND o.emp_id Like CONCAT ('%',#{search_emp_id},'%')
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
@@ -280,12 +294,14 @@
 	
 	<!-- 수주 현황 검색 개수 -->
 	<select id="searchOrderStatusCnt" parameterType="hashMap" resultType="int">
-		select count(*) 
+		select count(*)
 		from orders o
-		JOIN product p ON p.client_code = o.client_code
+<!-- 		JOIN product p ON p.client_code = o.client_code -->
+		JOIN clients c ON c.client_code = o.client_code
+		
 		<where>
-			<if test="client_code != null and client_code != ''">
-				o.client_code Like CONCAT ('%',#{client_code},'%')
+			<if test="client_actname != null and client_actname != ''">
+				c.client_actname Like CONCAT ('%',#{client_actname},'%')
 			</if>
 			<if test="(order_date_fromDate!=null and !order_date_fromDate.equals('')) and (order_date_toDate!=null and !order_date_toDate.equals(''))">
 				AND (order_date &gt;= #{order_date_fromDate} AND order_date &lt;= #{order_date_toDate}) 

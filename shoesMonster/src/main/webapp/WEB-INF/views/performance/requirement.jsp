@@ -47,14 +47,51 @@
     			$(this).find('td:first').text(index);
     		});
         	
+    		// 추가 시 필요한 변수들
+
             var counter = 0;
+            var codeNum = 0;
+        	var reqCode = 0;
             
             // 추가 버튼 클릭 시 row 생성
+            
+
+            // 버튼 클릭시 addRow() 기능 불러오기
+            $('#addButton').click(function() {
+            	event.preventDefault();
+            	$('#delete').attr("disabled", true);
+				$('#modify').attr("disabled", true);
+				
+				$.ajax({
+  				  url: "/performance/reqCode",
+  				  method: "GET",
+  				  dataType: "text",
+  				  success: function(data) {
+  				    // Ajax 요청 안에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행
+  				    codeNum = data;
+  				    console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+  				    
+  				    // 변수에 할당된 데이터를 기반으로 추가 작업 수행
+  				    someFunction(codeNum);
+  				  }
+  				}); // ajax 끝
+
+  				function someFunction(data) {
+  					 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
+ 						 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+ 						 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
+ 						 reqCode = codeNum.charAt(0) + codeNum.charAt(1) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+ 			             addRow();
+ 			             counter++;
+  				} // someFunction(data)
+				
+            });
+            
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
                 	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'">' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_code" required></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" required></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" onclick=serchProd("prod_code'+counter+'");></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'"></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" onclick=serchRaw("raw_code'+counter+'");></td>' +
@@ -64,22 +101,20 @@
                     '</tr>';
                     
                 $('#reqTable').append(row);
-                counter++;
                 
             	 // 테이블이 많이 생성되면 스크롤바 생성
                 var table = document.getElementById('reqTable');
                 table.scrollTop = table.scrollHeight;
 				
             }
-
-            // 버튼 클릭시 addRow() 기능 불러오기
-            $('#addButton').click(function() {
-                addRow();
-                
-            	$('#delete').attr("disabled", true);
-				$('#modify').attr("disabled", true);
-                
-            });
+            
+            function padNumber(number, length) {
+                var paddedNumber = number.toString();
+                while (paddedNumber.length < length) {
+                    paddedNumber = "0" + paddedNumber;
+                }
+                return paddedNumber;
+       		 } // padNumber(number, length)
             
             // =============================================================================================================
  

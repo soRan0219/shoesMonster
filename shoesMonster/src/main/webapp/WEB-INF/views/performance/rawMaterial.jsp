@@ -128,9 +128,9 @@
 
     				function someFunction(data) {
     					 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
-   						 var num = parseInt(codeNum.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
-   						 var paddedNum = padNumber(num, codeNum.length - 1); // 숫자를 패딩하여 길이 유지
-   			             rawCode = codeNum.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+   						 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+   						 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
+   			             rawCode = codeNum.charAt(0) + codeNum.charAt(1)+ paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
    			             addRow();
    			             counter++;
     				} // someFunction(data)

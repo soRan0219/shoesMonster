@@ -13,13 +13,56 @@
 
 	<h1> 출고 관리 </h1>
 		
-	<div>
-	    <form action="" name="ro">
-		    <input type="button" value="발주 현황" onclick="toggleDiv('list')"></input>
-		    <input type="button" value="발주 등록" onclick="toggleDiv('regist')"></input>
-	    </form>
-    </div>
+	<input type="button" value="전체" onclick="showAll()"></input>
+    <input type="button" value="미출고" onclick="show1()"></input>
+    <input type="button" value="출고완료" onclick="show2()"></input>
+    
 
+
+<script>
+    function show1() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[10];
+
+            if (statusCell.innerText.trim() !== "미출고") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function show2() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[10];
+
+            if (statusCell.innerText.trim() !== "출고완료") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function showAll() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            row.style.display = "";
+        }
+    }
+
+</script>	
 	<hr>
 		
 		
@@ -45,7 +88,7 @@
 
 	<form action="/stock/Out_material" method="post">
 
-	<table border="1">
+	<table id="data-table" border="1">
 		<tr>
 			<th>출고 번호</th>
 			<th>수주번호</th>

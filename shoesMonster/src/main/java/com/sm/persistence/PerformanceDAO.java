@@ -88,6 +88,9 @@ public interface PerformanceDAO {
 
 	// 소요량관리 검색리스트 불러오기
 	public List<RequirementsVO> readReqList(RequirementsVO vo, PagingVO pvo) throws Exception;
+	
+	// 소요량관리 추가버튼 클릭 시 품번코드 가져가기
+	public String readReqCode();
 
 	// 소요량관리 정보 다중 저장
 	public void insertReqList(RequirementsVO raw);
