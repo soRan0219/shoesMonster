@@ -106,6 +106,19 @@ $(document).ready(function() {
 		</div>
 		<div>
 			<h1>상세보기</h1>
+			<div style="border: 1px solid;">
+			<form action="/fileUpload" method="post" enctype="multipart/form-data">
+				<img alt="" src="/imgDown?fileName=${vo.img }">
+				<input type='hidden' name = 'emp_id' value="${vo.emp_id }">
+				<input type='file' name = 'file' accept='image/*'>
+					<c:forEach var="list" items="${map.fileList }">
+					</c:forEach>
+						
+				<input type="submit" value="사진 변경">
+			</form>
+			</div>
+			
+			
 			<form id = "fr">
 				<table border="1" style="width: 100%" id="empTable">
 					<tr>
