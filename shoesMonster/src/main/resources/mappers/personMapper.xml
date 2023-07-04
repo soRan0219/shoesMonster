@@ -84,7 +84,7 @@
 	<!-- 사원 삭제 -->
 	
  	<!-- 사원 상세 조회 -->
-	<select id="realEmployees" resultType="EmployeesVO">
+	<select id="readEmployees" resultType="EmployeesVO">
 		select * from employees
 		where emp_id=#{emp_id}
 		order by emp_department ASC

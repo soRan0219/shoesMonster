@@ -212,8 +212,15 @@ public class PersonController {
 	
 	// http://localhost:8088/empform
 	@RequestMapping(value = "/empform", method = RequestMethod.GET)
-	public void fileForm() throws Exception{
+	public void fileForm(@RequestParam("emp_id") String emp_id, Model model) throws Exception{
 		logger.debug(" fileForm 호출 @@@ ");
+		EmployeesVO vo = empService.getEmployees(emp_id);
+		
+		logger.debug("vo : " + vo);
+		
+		model.addAttribute("vo", vo);
+		
+		
 	}
 	
 	
