@@ -111,12 +111,31 @@
 } //popUp()
 
 
+
+
 //===========검색==========================
 	
 	// 제이쿼리
 	$(function () {
 		
 	popUp();
+	
+	
+	//테이블 항목들 인덱스 부여
+// 	$('table tr').each(function(index){
+// 		var num = "<c:out value='${lwpm.startPage}'/>";
+// 		var num2 = "<c:out value='${pvo.pageSize}'/>";
+// 		$(this).find('td:second').text(((num)*num2) + index);
+// 	});
+	
+// 	var pageSize = "<c:out value='${pvo.pageSize}'/>"; // 한 페이지당 보여줄 항목 개수
+// var currentPage = "<c:out value='${pvo.page}'/>"; // 현재 페이지 번호 (변경 가능)
+
+// $('table tr').each(function(index){
+//   var pageNumber = currentPage - 1;
+//   var itemNumber = (pageNumber * pageSize) + index + 1;
+//   $(this).find('td:eq(0)').text(itemNumber);
+// });
 
 	
 	//============================ 버튼 구현 ====================================//	
@@ -524,7 +543,7 @@
 	class="table table-striped jambo_table bulk_action"
 	style="width:100%" role="grid" aria-describedby="datatable-fixed-header_info"> 
 		<a>총 ${lwpm.totalCount } 건</a>
-		<thead> <!-- 안되면 지우삼 -->
+<!-- 		<thead> 안되면 지우삼 -->
 		<tr class="headings">
 			<td>번호</td>
 			<td>창고코드</td>
@@ -536,11 +555,12 @@
 			<td>담당자</td>
 			<td>비고</td>
 		</tr>
-	  	</thead>
+<!-- 	  	</thead> -->
 	  
 		<c:forEach var="ww" items="${whList }" varStatus="i">
 				<tr>	
-					<td>${i.count }</td>
+<%-- 					<td>${i.count }</td> --%>
+					<td></td>
 					<td id="whCode">${ww.wh_code}</td>
 					<td id="whName">${ww.wh_name}</td>
 					<td>${ww.wh_addr}</td>
