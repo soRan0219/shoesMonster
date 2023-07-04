@@ -406,11 +406,11 @@
 		<button id="modify">수정</button>
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
-		<input type="submit" value="저장" id="save">
+		<input type="submit" value="저장" id="save" class ="btn btn-success">
 		<div class="col-md-12 col-sm-12">
-		<table border="1" id="rawTable">
-				<tr>
-					<th>번호</th>
+		<table border="1" id="rawTable" class="table table-striped jambo_table bulk_action">
+				<tr class="headings">
+					<th class="column-title">번호</th>
 					<th>품번</th>
 					<th>품명</th>
 					<th>색상</th>
@@ -444,7 +444,7 @@
 		</div>
 	</form>
 	
-	<div style="display: block; text-align: center;">		
+	<div id="pagination" style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
 			<a href="/performance/rawMaterial?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&lt;</a>
 		</c:if>

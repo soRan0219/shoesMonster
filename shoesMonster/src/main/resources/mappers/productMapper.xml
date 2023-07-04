@@ -333,9 +333,6 @@
 			<if test="prod_code != ''">
 				and p.prod_code like concat ('%', #{prod_code}, '%')
 			</if>
-			<if test="prod_name != ''">
-				and p.prod_name like concat ('%', #{prod_name},'%')
-			</if>
 		</where>
 	</select>
 	<!-- 소요량관리 검색 게시글 갯수 출력 -->
@@ -355,9 +352,6 @@
 			</if>
 			<if test="prod_code != ''">
 				and p.prod_code like concat ('%', #{prod_code}, '%')
-			</if>
-			<if test="prod_name != ''">
-				and p.prod_name like concat ('%', #{prod_name},'%')
 			</if>
 		</where>
 		limit #{start},#{cntPerPage}

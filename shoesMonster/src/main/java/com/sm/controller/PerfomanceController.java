@@ -293,7 +293,7 @@ public class PerfomanceController {
 		}
 		logger.debug("vo : " + vo);
 
-		if (vo.getReq_code() != null || vo.getProd_code() != null || vo.getProd().getProd_name() != null) {
+		if (vo.getReq_code() != null || vo.getProd_code() != null) {
 			
 			logger.debug("if문 호출");
 			logger.debug("vo : " + vo);

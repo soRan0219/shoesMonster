@@ -232,7 +232,6 @@ public class PerformanceImpl implements PerformanceDAO {
 		HashMap<String, Object> data = new HashMap<String, Object>();
 
 		data.put("req_code", vo.getReq_code());
-		data.put("prod_name", vo.getProd().getProd_name());
 		data.put("prod_code", vo.getProd_code());
 		return sqlSession.selectOne(NAMESPACE + ".countSearchReq", data);
 	}
@@ -245,13 +244,12 @@ public class PerformanceImpl implements PerformanceDAO {
 		data.put("start", pvo.getStart());
 		data.put("cntPerPage", pvo.getCntPerPage());
 		data.put("req_code", vo.getReq_code());
-		data.put("prod_name", vo.getProd().getProd_name());
 		data.put("prod_code", vo.getProd_code());
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchReq", data);
 	}
 	
-	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
+	// 소요량 추가버튼 클릭 시 품번코드 가져가기
 	@Override
 	public String readReqCode() {
 		
