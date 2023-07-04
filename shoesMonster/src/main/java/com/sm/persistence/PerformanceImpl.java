@@ -519,13 +519,21 @@ public class PerformanceImpl implements PerformanceDAO {
 			int perform_fair = sqlSession.selectOne(NAMESPACE + ".sumFair", work_code);
 			logger.debug("##### DAO: 양품수 합 ===> " + perform_fair);
 			
+			//재고에서 해당 작업지시의 품목과 일치하는 품목 있는지 확인
 			StockVO stock = sqlSession.selectOne(NAMESPACE + ".searchStock", work_code);
-			logger.debug("##### DAO: 일치품목 ===> " + stock.getProd_code());
-//			String prod_code = stock.getProd_code();
 			
-			stock.setStock_count(perform_fair);
+			if(stock!=null) {
+				//일치 품목 있을 때
+				stock.setStock_count(perform_fair);
+				sqlSession.update(NAMESPACE + ".updateStock", stock);
+				logger.debug("##### DAO: 재고 수량 증가");
+			} else {
+				//일치 품목 없을 때(=> 새로 등록)
+				vo.setPerform_fair(perform_fair);
+				sqlSession.selectOne(NAMESPACE + ".insertStock", vo);
+				logger.debug("##### DAO: 재고 새로 추가");
+			}
 			
-			sqlSession.update(NAMESPACE + ".updateStock", stock);
 			
 			logger.debug("##### DAO: 재고등록완~~~~~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
 		} //if(마감쳤을때)

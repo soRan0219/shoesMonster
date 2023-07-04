@@ -510,8 +510,13 @@
 		//n건씩 표시
 		$('#perPage').on('change', function() {
 			var pageSize = $(this).val();
-			
 			$('#pageSize').val(pageSize);
+			
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var isPop = urlParams.get("search_state");
+			$('#search_state').val(isPop);
+			
 			$('#searchForm').submit();
 		});
 		
@@ -562,7 +567,7 @@
 					$('#detail').html(tmp);
 				},
 				error: function() {
-					alert("아작스 실패");
+					console.log("아작스 실패");
 				}
 			}); //ajax
 				

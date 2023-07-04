@@ -734,6 +734,7 @@
 	<resultMap id="perfList" type="PerformanceVO">
 		<result property="perform_code" column="perform_code" />
 		<result property="work_code" column="work_code" />
+		<result property="prod_code" column="prod_code" />
 		<result property="perform_date" column="perform_date" />
 		<result property="perform_qt" column="perform_qt" />
 		<result property="emp_id" column="emp_id" />
@@ -747,7 +748,6 @@
 
 		<collection property="workOrder" ofType="WorkOrderVO">
 			<result property="line_code" column="line_code" />
-			<result property="prod_code" column="prod_code" />
 		</collection>
 	</resultMap>
 	
@@ -775,7 +775,7 @@
 	<select id="performList" resultMap="perfList"
 		resultType="PerformanceVO">
 		SELECT p.perform_code, p.work_code, w.line_code,
-		w.prod_code, p.perform_date,
+		p.prod_code, p.perform_date,
 		p.perform_qt, p.perform_fair, p.perform_defect, 
 		p.defect_note, p.perform_status, p.perform_note
 		FROM performance p JOIN
@@ -794,7 +794,7 @@
 
 	<!-- 생산실적 검색 -->
 	<select id="performSearchList" resultMap="perfList" parameterType="hashMap">
-		SELECT p.perform_code, p.work_code, w.line_code, w.prod_code, 
+		SELECT p.perform_code, p.work_code, w.line_code, p.prod_code, 
 		p.perform_date,
 		p.perform_qt, p.perform_fair, p.perform_defect, 
 		p.defect_note, p.perform_status, p.perform_note 
@@ -813,7 +813,7 @@
 				AND w.line_code=#{search_line_code}
 			</if>
 			<if test="search_prod_code!=null and !search_prod_code.isEmpty()">
-				AND w.prod_code=#{search_prod_code}
+				AND p.prod_code=#{search_prod_code}
 			</if>
 			<if test="search_perform_status!=null and !search_perform_status.isEmpty() and !search_perform_status.equals('전체')">
 				AND p.perform_status=#{search_perform_status}
@@ -841,7 +841,7 @@
 				AND w.line_code=#{search_line_code}
 			</if>
 			<if test="search_prod_code!=null and !search_prod_code.isEmpty()">
-				AND w.prod_code=#{search_prod_code}
+				AND p.prod_code=#{search_prod_code}
 			</if>
 			<if test="search_perform_status!=null and !search_perform_status.isEmpty() and !search_perform_status.equals('전체')">
 				AND p.perform_status=#{search_perform_status}
@@ -851,22 +851,14 @@
 	<!-- 생산실적 검색 수 -->
 
 
-
-
-
-
-
-
-
-
 	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
 	
 	<!-- 생산실적 등록 -->
 	<insert id="insertPerform">
 		INSERT INTO performance
-		(perform_code,work_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_status,perform_note) 
+		(perform_code,work_code,prod_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_status,perform_note) 
 		VALUES 
-		(#{perform_code},#{work_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},'진행',#{perform_note});
+		(#{perform_code},#{work_code},#{prod_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},'진행',#{perform_note});
 	</insert>
 	<!-- 생산실적 등록 -->
 	
@@ -878,36 +870,6 @@
 		WHERE work_code=#{work_code}
 	</select>
 	<!-- 작업지시코드에 해당하는 양품 수 합 -->
-	
-	
-	<!-- 재고에 해당 품목 있는지 확인 -->
-	<sql id="subQuery">
-		(SELECT DISTINCT w.prod_code 
-		FROM work_order w 
-		JOIN performance p ON p.work_code=w.work_code 
-		WHERE w.work_code=#{work_code})
-	</sql>
-	
-	<select id="searchStock" resultMap="stock">
-		SELECT DISTINCT s.prod_code 
-		FROM stock s 
-		JOIN work_order w ON w.prod_code = s.prod_code 
-		JOIN performance pf ON pf.work_code = w.work_code 
-		WHERE s.prod_code = w.prod_code AND w.prod_code=
-		<include refid="subQuery"/>
-	</select>
-	<!-- 재고에 해당 품목 있는지 확인 -->
-	
-	
-	<!-- 양품수만큼 재고등록 -->
-	<update id="updateStock">
-		UPDATE stock 
-		SET stock_count = stock_count + #{stock_count} 
-		WHERE prod_code = #{prod_code}
-	</update>
-	<!-- 양품수만큼 재고등록 -->
-	
-	
 	
 	<!-- 양품수와 작업지시 수량 비교 -->
 	<select id="compare" resultType="String">
@@ -926,19 +888,49 @@
 		WHERE work_code=#{work_code}
 	</update>
 	<!-- 생산현황 마감으로 변경 -->
+	
+	<!-- 재고에 해당 품목 있는지 확인 -->
+
+	<select id="searchStock" resultMap="stock">
+		SELECT DISTINCT s.prod_code 
+		FROM stock s 
+		JOIN performance p ON p.prod_code = s.prod_code 
+		WHERE p.work_code=#{work_code}
+	</select>
+	<!-- 재고에 해당 품목 있는지 확인 -->
+	
+	
+	<!-- 양품수만큼 재고등록 - 해당 품목 재고에 있을 때 -->
+	<update id="updateStock">
+		UPDATE stock 
+		SET stock_count = stock_count + #{stock_count} 
+		WHERE prod_code = #{prod_code}
+	</update>
+	<!-- 양품수만큼 재고등록 - 해당 품목 재고에 있을 때 -->
+	
+	<!-- 양품수만큼 재고등록 - 해당 품목 재고에 새로 등록 -->
+	<sql id="prodSub">
+		(SELECT DISTINCT prod_code 
+		FROM performance 
+		WHERE work_code=#{work_code})
+	</sql>
+	<sql id="wareSub">
+		(SELECT DISTINCT p.wh_code 
+		FROM product p 
+		JOIN performance pf ON pf.prod_code = p.prod_code 
+		WHERE pf.work_code=#{work_code} 
+		AND pf.prod_code = p.prod_code)
+	</sql>
+	
+	<insert id="insertStock">
+		INSERT INTO stock (stock_count, prod_code, wh_code) 
+		VALUES (#{perform_fair}, <include refid="prodSub"/>, <include refid="wareSub"/>)
+	</insert>
+	<!-- 양품수만큼 재고등록 - 해당 품목 재고에 새로 등록 -->
+	
+	
 
 	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -953,7 +945,7 @@
 	<!-- 생산실적 조회 -->
 	<select id="performInfo" resultMap="perfList">
 		SELECT p.perform_code, p.work_code, w.line_code,
-		w.prod_code, p.perform_date, p.perform_qt, p.perform_fair, p.perform_defect, 
+		p.prod_code, p.perform_date, p.perform_qt, p.perform_fair, p.perform_defect, 
 		p.defect_note, p.perform_status, p.emp_id, p.change_id, p.change_date, p.perform_note 
 		FROM performance p JOIN work_order w 
 		ON p.work_code = w.work_code 
@@ -964,7 +956,7 @@
 	<!-- 생산실적 수정 -->
 	<update id="updatePerform">
 		UPDATE performance 
-		SET work_code=#{work_code}, perform_qt=#{perform_qt}, change_date=now(),
+		SET work_code=#{work_code}, prod_code=#{prod_code}, perform_qt=#{perform_qt}, change_date=now(),
 		perform_fair=#{perform_fair}, perform_defect=#{perform_defect},
 		defect_note=#{defect_note}, perform_status=#{perform_status},  
 		perform_note=#{perform_note} 
@@ -982,16 +974,15 @@
 	<!-- 생산실적 양불 현황: 라인별 -->
 
 	<!-- 생산실적 양불 현황: 품목별 -->
-	<select id="statusProd" resultMap="perfList">
-		SELECT w.prod_code, sum(p.perform_qt) perform_qt, sum(p.perform_fair) perform_fair, sum(p.perform_defect) perform_defect 
-		FROM performance p 
-		JOIN work_order w ON p.work_code = w.work_code 
-		GROUP BY w.prod_code
+	<select id="statusProd" resultType="PerformanceVO">
+		SELECT prod_code, sum(perform_qt) perform_qt, sum(perform_fair) perform_fair, sum(perform_defect) perform_defect 
+		FROM performance  
+		GROUP BY prod_code
 	</select>
 	<!-- 생산실적 양불 현황: 품목별 -->
 	
 	<!-- 생산실적 양불 현황: 일자별 -->
-	<select id="statusDate" resultMap="perfList">
+	<select id="statusDate" resultType="PerformanceVO">
 		SELECT perform_date, sum(perform_qt) perform_qt, sum(perform_fair) perform_fair, sum(perform_defect) perform_defect 
 		FROM performance 
 		GROUP BY perform_date
