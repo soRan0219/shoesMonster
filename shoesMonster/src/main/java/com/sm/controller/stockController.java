@@ -2,6 +2,7 @@ package com.sm.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,6 +25,7 @@ import com.sm.domain.In_materialVO;
 import com.sm.domain.OrderStatusVO;
 import com.sm.domain.Out_materialVO;
 import com.sm.domain.PageVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.ProductVO;
 import com.sm.domain.Raw_orderVO;
 import com.sm.domain.StockVO;
@@ -385,6 +388,18 @@ public class stockController {
         
         return "redirect:/stock/stockList";
     }
+	
+//	@ResponseBody
+//	@RequestMapping(value = "/stockList", method = RequestMethod.POST)
+//	public Map<String, List<StockVO>> stockGraph() throws Exception {
+//		logger.debug("@@@@@ CONTROLLER: status() 호출");
+//		
+//		Map<String, List<StockVO>> GraphMap = s_service.stockGraph1();
+//		
+//		return GraphMap;
+//		
+//	} //stockGraph
+	
 
     // ====================================== 재고 - 끝 ====================================== //
     	
