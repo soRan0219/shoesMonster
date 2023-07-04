@@ -74,7 +74,14 @@ public class PerformanceImpl implements PerformanceDAO {
 	// 품목관리 추가버튼 클릭 시 품번코드 가져가기
 	@Override
 	public String readProdCode() {
-		return sqlSession.selectOne(NAMESPACE+".readProdCode");
+		
+		String code = "PR000 ";
+		
+		if (sqlSession.selectOne(NAMESPACE + ".readProdCode") == null) {
+			return code;
+		} else {
+			return sqlSession.selectOne(NAMESPACE + ".readProdCode");
+		}
 	}
 
 	// 품목관리 정보 다중 저장
@@ -159,7 +166,15 @@ public class PerformanceImpl implements PerformanceDAO {
 	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
 	@Override
 	public String readRawCode() {
-		return sqlSession.selectOne(NAMESPACE+".readRawCode");
+		
+		String code = "RM000 ";
+		
+		if (sqlSession.selectOne(NAMESPACE + ".readRawCode") == null) {
+			return code;
+		} else {
+			return sqlSession.selectOne(NAMESPACE + ".readRawCode");
+		}
+		
 	}
 	
 	// 원자재관리 데이터 추가
@@ -247,6 +262,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		} else {
 			return sqlSession.selectOne(NAMESPACE + ".readReqCode");
 		}
+		
 	}
 	
 	// 소요량 데이터 추가

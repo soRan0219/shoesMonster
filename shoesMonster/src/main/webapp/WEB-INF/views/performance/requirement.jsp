@@ -78,9 +78,9 @@
 
   				function someFunction(data) {
   					 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
- 						 var num = parseInt(codeNum.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
- 						 var paddedNum = padNumber(num, codeNum.length - 1); // 숫자를 패딩하여 길이 유지
- 			             prodCode = codeNum.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+ 						 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+ 						 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
+ 						 reqCode = codeNum.charAt(0) + codeNum.charAt(1) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
  			             addRow();
  			             counter++;
   				} // someFunction(data)
@@ -90,8 +90,8 @@
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" value="'+ reqCode +'">' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_code" required></td>' +
+                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'">' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" required></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" onclick=serchProd("prod_code'+counter+'");></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'"></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" onclick=serchRaw("raw_code'+counter+'");></td>' +
