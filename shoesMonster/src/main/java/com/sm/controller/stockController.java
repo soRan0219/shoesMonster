@@ -285,8 +285,6 @@ public class stockController {
         	service.insertStock(rawCode, raw_order_count, wh_code);
         	
         	
-        	 
-        	
         }
         
         // 재고에 입고할 항목있는지 조회(select)

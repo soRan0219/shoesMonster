@@ -120,39 +120,99 @@ function toggleDiv(divId) {
 
     </form>
     
-    <table border="1">
-	    <tr>
-	 		<th>발주 번호</th>
-	 		<th>거래처명</th>
-	 		<th>품번</th>
-	 		<th>품명</th>
-	 		<th>색상</th>
-	 		<th>발주 수량</th>
-	 		<th>재고 수량</th>
-	 		<th>단가</th>
-	 		<th>총액</th>
-	 		<th>입고 창고</th>
-	 		<th>발주일</th>
-	 		<th>담당자</th>
-	 	</tr>
-        <c:forEach var="vo" items="${ro_List }">
-            <tr>
-                <td>${vo.raw_order_num}</td>
-                <td>${vo.clients.client_actname}</td>
-        		<td><input type="button" onclick="detailPopup('${vo.raw_code}')">${vo.raw_code }</td>
-        		<td>${vo.rawMaterial.raw_name }</td>
-        		<td>${vo.rawMaterial.raw_color }</td>
-                <td>${vo.raw_order_count}</td>
-	            <td>${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
-        		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}"/>원</td>
-        		<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}"/>원</td>
-                <td>${vo.rawMaterial.wh_code }</td>
-                <td>${vo.raw_order_date}</td>
-        		<td>${vo.emp_id }</td>
-            </tr>
-        </c:forEach>
-    </table>
+    <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     
+    <div class="col-md-12 col-sm-12  ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					발주 목록 <small>Raw_order</small>
+				</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Settings 1</a> <a
+								class="dropdown-item" href="#">Settings 2</a>
+						</div></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<p>
+					발주 테이블
+					<code>Shoes Monseter</code>
+					since 2023
+				</p>
+				<div class="table-responsive">
+					<form action="" method="post">
+						<table class="table table-striped jambo_table bulk_action">
+							<thead>
+								<tr class="headings">
+									<th>
+										<div class="icheckbox_flat-green" style="position: relative;">
+											<input type="checkbox" id="check-all" class="flat"
+												style="position: absolute; opacity: 0;">
+											<ins class="iCheck-helper"
+												style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+										</div>
+									</th>
+									<th class="column-title">발주 번호</th>
+									<th class="column-title">거래처명</th>
+									<th class="column-title">품번</th>
+									<th class="column-title">품명</th>
+									<th class="column-title">색상</th>
+									<th class="column-title">발주 수량</th>
+									<th class="column-title">재고 수량</th>
+									<th class="column-title">단가</th>
+									<th class="column-title">총액</th>
+									<th class="column-title">입고 창고</th>
+									<th class="column-title">발주일</th>
+									<th class="column-title">담당자</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="vo" items="${ro_List }">
+									<tr class="even pointer">
+										<td class="a-center ">
+											<div class="icheckbox_flat-green" style="position: relative;">
+												<input type="checkbox" class="flat" name="table_records"
+													style="position: absolute; opacity: 0;">
+												<ins class="iCheck-helper"
+													style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+											</div>
+										</td>
+										<td class=" ">${vo.raw_order_num }</td>
+										<td class=" ">${vo.clients.client_actname }</td>
+										<td class=" "><input type="button" onclick="detailPopup('${vo.raw_code}')">${vo.raw_code }</td>
+										<td class=" ">${vo.rawMaterial.raw_name }</td>
+										<td class=" ">${vo.rawMaterial.raw_color }</td>
+										<td class=" ">${vo.raw_order_count}</td>
+										<td class=" ">${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
+										<td class=" "><fmt:formatNumber
+												value=" ${vo.rawMaterial.raw_price}" />원</td>
+										<td class=" "><fmt:formatNumber
+												value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}" />원</td>
+										<td class=" ">${vo.rawMaterial.wh_code }<i
+											class="success fa fa-long-arrow-up"></i></td>
+										<td class=" ">${vo.raw_order_date}</td>
+										<td class=" ">${vo.emp_id }</td>
+										
+									</tr>
+
+								</c:forEach>
+							</tbody>
+						</table>
+					</form>
+
+				</div>
+			</div>
+		</div>
+		<div>
    		<c:if test="${count1 > 10 }">
 			<c:if test="${bp.prev}">
 
@@ -170,6 +230,40 @@ function toggleDiv(divId) {
 
 			</c:if>
 		</c:if>
+		</div>
+
+	</div>
+    
+    
+    <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 		<br><br>
     bp.startPage : ${bp.startPage } <br>
     bp.endPage : ${bp.endPage } <br>
