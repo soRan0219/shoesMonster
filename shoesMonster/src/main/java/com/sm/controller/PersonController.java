@@ -432,18 +432,34 @@ public class PersonController {
 	// 수주 등록
 	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
 	public String addOrder(OrderStatusVO osvo) throws Exception{
-		logger.debug("@#@# C : addOrder(osvo) 호출 ");
-		logger.debug("@#@# C : osvo = "+osvo);
+		logger.debug("@@@ cnotroller : addOrder(osvo) 호출 ");
+		logger.debug("@@@ cnotroller : osvo = "+osvo);
 		
 		osService.registOrder(osvo);
 		
 		return "redirect:/person/orderStatus";
 	}
 	
+	// 거래처 삭제
+	@RequestMapping(value="/deleteOrder", method = RequestMethod.POST)
+	public String deleteOrder(@RequestParam(value="checked[]") List<String> checked) throws Exception {
+		logger.debug("@@@ cnotroller : deleteOrder() 호출 @@@");
+		
+		osService.deleteOrder(checked);
+		
+		return "redirect:/person/orderStatus";
+	}
+	
 	// 수주 수정
-	
-	// 수주 삭제
-	
+	@RequestMapping(value="/updateOrder", method = RequestMethod.POST)
+	public String updateOrder(OrderStatusVO cvo) throws Exception {
+		logger.debug("@@@ cnotroller : updateOrder() 호출 @@@");
+		logger.debug("@@@ cnotroller cvo : " + cvo);
+		
+		osService.updateOrder(cvo);
+		
+		return "redirect:/person/orderStatus";
+	}
 	
 	
 	// ===================================================== 수주 현황 ==========================================================

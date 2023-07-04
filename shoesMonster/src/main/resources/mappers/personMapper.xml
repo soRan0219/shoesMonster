@@ -179,7 +179,7 @@
 	<!-- 거래처 삭제 -->
 	<delete id="deleteClient">
 		delete from clients
-		where client_code=#{client}
+		where client_code=#{client_code}
 	</delete>
 	<!-- 거래처 삭제 -->
 	
@@ -324,13 +324,29 @@
 	
 	<!-- 수주 등록 -->
 	<insert id="registOrder">
-		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_id,
-					order_count, client_code, order_finish) 
-		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id},
-				#{order_count}, #{client_code}, #{order_finish})
+		INSERT ALL
+		INTO orders VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id}, #{order_count}, #{client_code})
+		INTO clients VALUES (#{client_actname})
+		SELECT (order_code, order_date, order_deliveryDate, emp_id, order_count, client_code, client_actname) 
 	</insert>
 	<!-- 수주 등록 -->
 	
+	<!-- 수주 삭제 -->
+	<delete id="deleteOrder">
+		delete from orders
+		where order_code=#{order_code}
+	</delete>
+	<!-- 수주 삭제 -->
+	
+	<!-- 수주 수정 -->
+	<update id="updateOrder">
+		update clients
+		set client_code=#{client_code}, client_actname=#{client_actname}, client_type=#{client_type}, client_number=#{client_number}, client_sort=#{client_sort},
+		    client_ceo=#{client_ceo}, client_name=#{client_name}, client_addr=#{client_addr}, client_addr2=#{client_addr2}, client_tel=#{client_tel},
+		    client_phone=#{client_phone}, client_fax=#{client_fax}, client_email=#{client_email}, client_note=#{client_note}
+		where client_code=#{client_code}
+	</update>
+	<!-- 수주 수정 -->
 <!-- ===================================================== 수주 현황 ================================================================== -->
 	
 	
