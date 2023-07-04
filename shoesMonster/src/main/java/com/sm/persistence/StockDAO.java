@@ -1,8 +1,10 @@
 package com.sm.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sm.domain.PageVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.StockVO;
 import com.sm.domain.WarehouseVO;
 
@@ -30,5 +32,6 @@ public interface StockDAO {
 		// 재고 실수량 
         public void updateCount(int stock_count , String raw_code) throws Exception;
 		
-		
+        // 재고 그래프
+        public Map<String, List<StockVO>> stockGraph1() throws Exception;
 }

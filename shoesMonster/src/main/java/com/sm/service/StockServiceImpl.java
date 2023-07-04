@@ -1,6 +1,7 @@
 package com.sm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,12 @@ public class StockServiceImpl implements StockService{
 
         sdao.updateCount(stock_count ,raw_code);
     }
+
+	@Override
+	public Map<String, List<StockVO>> stockGraph1() throws Exception {
+		
+		return sdao.stockGraph1();
+	}
 
 	
 	

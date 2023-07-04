@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.PageVO;
+import com.sm.domain.PerformanceVO;
 import com.sm.domain.StockVO;
 import com.sm.domain.WarehouseVO;
 
@@ -86,6 +87,24 @@ public class StockImpl implements StockDAO{
         
         sqlSession.update(NAMESPACE + ".updateCount", data);
     }
+
+	@Override
+	public Map<String, List<StockVO>> stockGraph1() throws Exception {
+		
+		logger.debug("##### DAO: stockGraph1() 호출");
+		
+		Map<String, List<StockVO>> graph1 = new HashMap<>();
+		
+		List<StockVO> stockGraph1 = sqlSession.selectList(NAMESPACE + ".stockGraph");
+		logger.debug("##### DAO: 라인별 양불현황 ===> " + stockGraph1);
+		
+	
+		
+		graph1.put("perLine", stockGraph1);
+		
+		
+		return graph1;
+	}
 
 
 
