@@ -4,6 +4,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp"%>
+<link href="./resources/build/css/custom.css" rel="stylesheet" type="text/css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
@@ -95,7 +96,9 @@
 
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
-    			$(this).find('td:first').text(index);
+    			var num = "<c:out value='${paging.nowPage}'/>";
+    			var num2 = "<c:out value='${paging.cntPerPage}'/>";
+    			$(this).find('td:first').text(((num-1)*num2) + index);
     		});
 
         	popUp();
@@ -343,20 +346,21 @@
 //	 				alert(checked);
 					
 					if(checked.length > 0) {
-						
-						$.ajax({
-							url: "/performance/rawMaterialDelete",
-							type: "post",
-							data: {checked:checked},
-							dataType: "text",
-							success: function() {
-								alert("삭제 성공");
-								location.reload();
-							},
-							error: function() {
-								alert("삭제 실패");
-							}
-						}); //ajax
+						if(confirm("선택한 항목을 삭제하시겠습니까?")){
+							$.ajax({
+								url: "/performance/rawMaterialDelete",
+								type: "post",
+								data: {checked:checked},
+								dataType: "text",
+								success: function() {
+									alert("삭제 성공");
+									location.reload();
+								},
+								error: function() {
+									alert("삭제 실패");
+								}
+							}); //ajax
+						} // 컨펌
 						
 					} //체크된거 있을대
 					else {
@@ -403,7 +407,7 @@
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save">
-	
+		<div class="col-md-12 col-sm-12">
 		<table border="1" id="rawTable">
 				<tr>
 					<th>번호</th>
@@ -437,7 +441,7 @@
 			</c:forEach>
 
 		</table>
-		
+		</div>
 	</form>
 	
 	<div style="display: block; text-align: center;">		

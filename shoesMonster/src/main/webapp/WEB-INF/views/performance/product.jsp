@@ -6,7 +6,7 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
+<script>
     
   //input으로 바꾸기 
 	function inputCng(obj, type, name, value) {
@@ -96,7 +96,9 @@
         	
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
-    			$(this).find('td:first').text(index);
+    			var num = "<c:out value='${paging.nowPage}'/>";
+    			var num2 = "<c:out value='${paging.cntPerPage}'/>";
+    			$(this).find('td:first').text(((num-1)*num2) + index);
     		});
         	
       	 // 추가 시 필요한 변수들
@@ -231,21 +233,24 @@
 					
 //	 				alert(checked);
 					
+
+					
 					if(checked.length > 0) {
-						
-						$.ajax({
-							url: "/performance/prodDelete",
-							type: "post",
-							data: {checked:checked},
-							dataType: "text",
-							success: function() {
-								alert("삭제 성공");
-								location.reload();
-							},
-							error: function() {
-								alert("삭제 실패");
-							}
-						}); //ajax
+						if(confirm("선택한 항목을 삭제하시겠습니까?")){
+							$.ajax({
+								url: "/performance/prodDelete",
+								type: "post",
+								data: {checked:checked},
+								dataType: "text",
+								success: function() {
+									alert("삭제 성공");
+									location.reload();
+								},
+								error: function() {
+									alert("삭제 실패");
+								}
+							}); //ajax
+					    }// 컨펌
 						
 					} //체크된거 있을대
 					else {
