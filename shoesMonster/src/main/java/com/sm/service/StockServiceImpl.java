@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sm.domain.PageVO;
+import com.sm.domain.Raw_orderVO;
 import com.sm.domain.StockVO;
 import com.sm.domain.WarehouseVO;
 import com.sm.persistence.StockDAO;
@@ -42,17 +43,21 @@ public class StockServiceImpl implements StockService{
 	}
 	
 	@Override
-    public void updateCount(int stock_count ,String raw_code) throws Exception {
+    public void updateCount(String code, int newCount) throws Exception {
 
-        sdao.updateCount(stock_count ,raw_code);
+        sdao.updateCount(code, newCount);
     }
 
 	@Override
+	public List<StockVO> stockPopup(String code) throws Exception {
+		return sdao.stockPopup(code);
+	}
+
+  @Override
 	public Map<String, List<StockVO>> stockGraph1() throws Exception {
 		
 		return sdao.stockGraph1();
 	}
 
-	
 	
 }

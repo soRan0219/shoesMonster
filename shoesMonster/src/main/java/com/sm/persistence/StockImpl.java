@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sm.domain.PageVO;
-import com.sm.domain.PerformanceVO;
+import com.sm.domain.Raw_orderVO;
 import com.sm.domain.StockVO;
 import com.sm.domain.WarehouseVO;
 
@@ -79,16 +79,36 @@ public class StockImpl implements StockDAO{
 	}
 	
 	@Override
-    public void updateCount(int stock_count ,String raw_code) throws Exception {
+    public void updateCount(String code, int newCount) throws Exception {
         
-        Map<String, Object> data = new HashMap<>();
-        data.put("stock_count", stock_count);
-        data.put("raw_code", raw_code);
+		logger.debug("////////////////////DAOImpl code : " + code +"///////////////////////////");
+		logger.debug("////////////////////DAOImpl nCount : " + newCount +"///////////////////////////");
         
-        sqlSession.update(NAMESPACE + ".updateCount", data);
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("code", code);
+		data.put("newCount", newCount);
+		
+		int result = sqlSession.update(NAMESPACE + ".updateCount", data);
+		
+		if(result == 1) {
+			logger.debug("코드 : " + code + ", 재고 " + newCount + "개로 수정완료");
+		}
+		
     }
 
 	@Override
+	public List<StockVO> stockPopup(String code) throws Exception {
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("code", code);
+		
+		return sqlSession.selectList(NAMESPACE + ".stockPopup", data);
+	}
+
+  
+  @Override
 	public Map<String, List<StockVO>> stockGraph1() throws Exception {
 		
 		logger.debug("##### DAO: stockGraph1() 호출");
@@ -110,7 +130,7 @@ public class StockImpl implements StockDAO{
 		return graph1;
 	}
 
-
+	
 
 	
 	

@@ -10,8 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -365,27 +369,44 @@ public class stockController {
             
     	}
 	
-	@RequestMapping(value ="/stockList" , method = RequestMethod.POST)
-    public String updateCount(@RequestParam("modify_Button") String modify_Button,
-    							@RequestParam("new_stock_count") String new_stock_count,
-    						  HttpSession session, HttpServletRequest request) throws Exception{
-        
-		String[] values = modify_Button.split(",");
-        String code = values[0];
-//        String new_stock_count = values[1];
+	
+	
+	// 재고 팝업
+	@RequestMapping(value = "/stockPopup", method = RequestMethod.GET)
+	public void stockPopup(@RequestParam("code") String code, Model model, HttpServletRequest request) throws Exception {
 		
-		logger.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ" + modify_Button + "ㅁㅁㅁㅁㅁㅁㅁㅁ");
-		logger.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ" + code + "ㅁㅁㅁㅁㅁㅁㅁㅁ");
-		logger.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ" + new_stock_count + "ㅁㅁㅁㅁㅁㅁㅁㅁ");
+		logger.debug("@@@@@@@@2222222222 재고 GET 방식 호출 code : " + code);
 		
-        String emp_id = (String)session.getAttribute("emp_id");
-        request.setAttribute("emp_id", emp_id);
-        
-        
-//        s_service.updateCount(stock_count,raw_code);
-        
-        return "redirect:/stock/stockList";
-    }
+		List<StockVO> stockPopup = s_service.stockPopup(code);
+		
+		model.addAttribute("code", code);
+		model.addAttribute("stockPopup", stockPopup);
+		
+		
+	}
+	
+	// 재고 팝업 수정 버튼
+	//http://localhost:8080/stock/stockList
+	//http://localhost:8088/stock/stockList
+	@RequestMapping(value ="/stockPopup", method = RequestMethod.POST)
+	public void updateCount(@RequestBody Map<String, String> requestData, Model model,
+							  HttpSession session, HttpServletRequest request) throws Exception{
+		
+		
+		String stockCount = requestData.get("stock_count");
+        String code = requestData.get("code");
+
+        int newCount = Integer.parseInt(stockCount);
+		
+		
+		logger.debug("stockPopup() POST 호출");
+		
+		logger.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ컨트롤러 재고 POST 방식 code : " + code + "ㅁㅁㅁㅁㅁㅁㅁㅁ");
+		logger.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ컨트롤러 재고 POST 방식 newCount : " + newCount + "ㅁㅁㅁㅁㅁㅁㅁㅁ");
+
+		s_service.updateCount(code, newCount);
+		
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/stockGraph", method = RequestMethod.POST)
