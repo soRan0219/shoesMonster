@@ -98,7 +98,7 @@ public class PerfomanceController {
 	
 	// 품목관리 추가 시 code 값 가져가기
 	@ResponseBody
-	@RequestMapping(value = "prodCode", method = RequestMethod.GET)
+	@RequestMapping(value = "/prodCode", method = RequestMethod.GET)
     public String getProdCode() {
 		logger.debug(" getProdCode() 호출 ");
 		
@@ -107,7 +107,7 @@ public class PerfomanceController {
 	
 
 	// 품목관리 정보 추가
-	@RequestMapping(value = "product", method = RequestMethod.POST)
+	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String productPOST(ProductList products) throws Exception {
 
 		logger.debug("productPOST() 호출");
@@ -214,7 +214,7 @@ public class PerfomanceController {
 	
 	// 원자재관리 추가 시 code 값 가져가기
 	@ResponseBody
-	@RequestMapping(value = "rawCode", method = RequestMethod.GET)
+	@RequestMapping(value = "/rawCode", method = RequestMethod.GET)
     public String getRawCode() {
 		logger.debug(" getRawCode() 호출 ");
 		
@@ -222,7 +222,7 @@ public class PerfomanceController {
     }
 
 	// 원자재관리 정보 추가
-	@RequestMapping(value = "rawMaterial", method = RequestMethod.POST)
+	@RequestMapping(value = "/rawMaterial", method = RequestMethod.POST)
 	public String rawMaterialPOST(RawMaterialList raws) throws Exception {
 
 		logger.debug("rawMaterialPOST() 호출");
@@ -320,9 +320,18 @@ public class PerfomanceController {
 		}
 
 	}
+	
+	// 소요량관리 추가 시 code 값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "/reqCode", method = RequestMethod.GET)
+	public String getReqCode() {
+		logger.debug(" getRawCode() 호출 ");
+
+		return service.getReqCode();
+	}
 
 	// 소요량관리 정보 추가
-	@RequestMapping(value = "requirement", method = RequestMethod.POST)
+	@RequestMapping(value = "/requirement", method = RequestMethod.POST)
 	public String requirementPOST(RequirementsList reqs) throws Exception {
 
 		logger.debug("requirementPOST() 호출");

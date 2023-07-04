@@ -235,6 +235,19 @@ public class PerformanceImpl implements PerformanceDAO {
 		return sqlSession.selectList(NAMESPACE + ".readSearchReq", data);
 	}
 	
+	// 원자재관리 추가버튼 클릭 시 품번코드 가져가기
+	@Override
+	public String readReqCode() {
+		
+		String code = "RQ000 ";
+		
+		if (sqlSession.selectOne(NAMESPACE + ".readReqCode") == null) {
+			return code;
+		} else {
+			return sqlSession.selectOne(NAMESPACE + ".readReqCode");
+		}
+	}
+	
 	// 소요량 데이터 추가
 	@Override
 	public void insertReqList(RequirementsVO req) {

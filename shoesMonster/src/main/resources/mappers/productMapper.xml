@@ -362,6 +362,12 @@
 		limit #{start},#{cntPerPage}
 	</select>
 	<!-- 소요량관리 검색리스트 불러오기 -->
+	
+	<!-- 소요량관리 추가버튼 클릭 시 품목코드 가져가기 -->
+	<select id="readReqCode" resultType="String">
+		select requirement from product order by requirement desc limit 1;
+	</select>
+	<!-- 소요량관리 추가버튼 클릭 시 품목코드 가져가기 -->
 
 	<!-- 소요량관리 정보 다중 입력 -->
 	<insert id="reqIn">
