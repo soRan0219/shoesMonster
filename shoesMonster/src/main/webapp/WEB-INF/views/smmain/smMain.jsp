@@ -2,6 +2,8 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<link href="../resources/build/css/custom.css" rel="stylesheet">
+
 <!-- page content -->
 <div class="right_col" role="main">
 	<!-- top tiles -->
@@ -10,7 +12,7 @@
 			<div class="col-md-2 col-sm-4  tile_stats_count">
 				<span class="count_top"><i class="fa fa-user"></i> Total
 					Users</span>
-				<div class="count">2500</div>
+				<div class="count">2400</div>
 				<span class="count_bottom"><i class="green">4% </i> From last
 					Week</span>
 			</div>

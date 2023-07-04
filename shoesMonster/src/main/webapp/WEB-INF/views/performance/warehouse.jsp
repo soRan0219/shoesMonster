@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="../resources/build/css/custom.css" rel="stylesheet">
 
 <style type="text/css">
 .selected {
@@ -153,7 +154,7 @@
 				 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
 // 				 alert("codeNum"+codeNum);
 				 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
-				 alert("num : "+num);
+// 				 alert("num : "+num);
 				 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
 	             whCode = codeNum.charAt(0)+ codeNum.charAt(1) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
 	             if ($('#add').hasClass('true')) {
@@ -510,11 +511,21 @@
 	<button onclick="location.reload()">새로고침</button>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
+<div class="col-md-12 col-sm-12">
+<div class="x_panel">
+<div class="x_content">
+<div class="row">
+<div class="col-sm-12">
+<div class="card-box table-responsive">
+<div class="table-responsive">
 
 <form id="fr">
-	<table border="1" id="whTable"> 
+	<table border="1" id="whTable" 
+	class="table table-striped jambo_table bulk_action"
+	style="width:100%" role="grid" aria-describedby="datatable-fixed-header_info"> 
 		<a>총 ${lwpm.totalCount } 건</a>
-		<tr>
+		<thead> <!-- 안되면 지우삼 -->
+		<tr class="headings">
 			<td>번호</td>
 			<td>창고코드</td>
 			<td>창고명</td>
@@ -525,6 +536,7 @@
 			<td>담당자</td>
 			<td>비고</td>
 		</tr>
+	  	</thead>
 	  
 		<c:forEach var="ww" items="${whList }" varStatus="i">
 				<tr>	
@@ -546,10 +558,14 @@
 					<td id="">${ww.emp.emp_name}</td>
 					<td>${ww.wh_note}</td>
 				</tr>
-		</c:forEach>
-	</table>
-</form>
-	<div>
+			</c:forEach>
+		</table>
+	</form>
+
+
+</div><!-- col-sm-12 -->
+
+
 
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 	
@@ -566,10 +582,15 @@
 			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}">다 음</a>
 		</c:if>
 
-	</div>
-</div>
-
+	</div><!--id="pagination"  -->
 	
+
+</div><!-- card-box table-responsive -->	
+	
+</div><!-- row -->	
+</div><!-- x_content -->
+</div> <!-- x_panel -->		
+</div><!-- class="col-md-12 col-sm-12" -->
 
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
