@@ -260,10 +260,10 @@ public class stockController {
 //        String emp_id = (String)session.getAttribute("emp_id");
 //        request.setAttribute("emp_id", emp_id);
         logger.debug("_______________^__________^^_________^^^^^^^^____^^^^^^^^^^__^^^^^_");
-        service.inInsert(rvo, raw_order_num);
-        
-        service.updateIn(raw_order_num);
-        
+//        service.inInsert(rvo, raw_order_num);
+//        
+//        service.updateIn(raw_order_num);
+//        
         rttr.addFlashAttribute("result", "inInsert");
         
         logger.debug("@@@@@@@@@@@@ 리턴 확인용 : " + raw_order_num);
