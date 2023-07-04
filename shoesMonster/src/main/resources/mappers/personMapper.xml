@@ -213,7 +213,7 @@
 			<result column="order_code" property="order_code" />
 			<result column="order_date" property="order_date" />
 			<result column="order_deliveryDate" property="order_deliveryDate" />
-			<result column="emp_id" property="emp_id" />
+			<result column="emp_name" property="emp_name" />
 			<result column="order_count" property="order_count" />
 			<result column="client_code" property="client_code" />
 <!-- 			<result column="order_finish" property="order_finish" /> -->
@@ -231,7 +231,7 @@
   </resultMap>
 	
 	<select id="orderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList">
-		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_id, p.prod_code, p.prod_name, 
+		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_name, p.prod_code, p.prod_name, 
 			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
 		from orders o
 		JOIN product p ON p.client_code = o.client_code
@@ -251,7 +251,7 @@
 			<result column="order_code" property="order_code" />
 			<result column="order_date" property="order_date" />
 			<result column="order_deliveryDate" property="order_deliveryDate" />
-			<result column="emp_id" property="emp_id" />
+			<result column="emp_name" property="emp_name" />
 			<result column="order_count" property="order_count" />
 			<result column="client_code" property="client_code" />
 <!-- 			<result column="order_finish" property="order_finish" /> -->
@@ -270,7 +270,7 @@
 
 	
 	<select id="searchOrderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList2">
-		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_id, p.prod_code, p.prod_name, 
+		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_name, p.prod_code, p.prod_name, 
 			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
 		from orders o
 		JOIN clients c ON c.client_code = o.client_code
@@ -289,8 +289,8 @@
 			<if test="prod_code != null and prod_code != ''">
 				AND p.prod_code Like CONCAT ('%',#{prod_code},'%')
 			</if>
-			<if test="emp_id != null and emp_id != ''">
-				AND o.emp_id Like CONCAT ('%',#{search_emp_id},'%')
+			<if test="emp_name != null and emp_name != ''">
+				AND o.emp_name Like CONCAT ('%',#{search_emp_name},'%')
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
@@ -319,8 +319,8 @@
 			<if test="prod_code != null and prod_code != ''">
 				AND p.prod_code Like CONCAT ('%',#{prod_code},'%')
 			</if>
-			<if test="emp_id != null and emp_id != ''">
-				AND o.emp_id Like CONCAT ('%',#{emp_id},'%')
+			<if test="emp_name != null and emp_name != ''">
+				AND o.emp_name Like CONCAT ('%',#{emp_name},'%')
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
@@ -334,9 +334,9 @@
 	
 	<!-- 수주 등록 -->
 	<insert id="registOrder">
-		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_id,
+		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_name,
 					order_count, client_code, order_finish) 
-		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id},
+		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_name},
 				#{order_count}, #{client_code}, #{order_finish})
 	</insert>
 	<!-- 수주 등록 -->
