@@ -4,17 +4,14 @@
     
 <%@ include file="../include/header.jsp"%>
 
-<!-- <script>
-    function updateStockCount() {
-        var newStockCountInput = document.getElementById("new_stock_count");
-        var newStockCount = newStockCountInput.value;
-
-        var stockCountElement = document.getElementById("stock_count");
-        stockCountElement.innerText = newStockCount;
-
-        newStockCountInput.value = "";
-    }
-</script> -->
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	
+	function stockPopup(code) {
+		window.open("stockPopup?code=" + code, "재고 상세", "width=600, height=300, left=200, top=150, location=no");
+	}
+	
+</script>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -35,7 +32,6 @@
 		</form>
 
 
-	<form action="" method="post">
 	<table border="1">
     <tr>
  		<th>유형</th>
@@ -44,7 +40,6 @@
  		<th>색상</th>
  		<th>사이즈</th>
  		<th>재고 수량</th>
- 		<th>실제 수량</th>
  		<th>창고 코드</th>
  		<th>담당자</th>
  		<th>수정 버튼</th>
@@ -60,12 +55,9 @@
 		 		<td>${s.product.prod_color}</td>
 		 		<td>${s.product.prod_size}</td>
 		   		<td>${s.stock_count}</td>
-                <td><input type="text" id="new_stock_count" name="new_stock_count"></td>
 		   		<td>${s.wh_code}</td>
 		   		<td>${s.warehouse.emp_id}</td>
-		   		<td>
-					<button type="submit" name="modify_Button" value="${s.prod_code}">수정</button>
-				</td>
+		   		<td><input type="button" onclick="stockPopup('${s.prod_code}')" value="수정"></td>
 		 	</tr>
 	 	</c:if>
 	 	<c:if test="${s.warehouse.wh_dv  == '원자재'}">
@@ -76,18 +68,14 @@
 		 		<td>${s.raw_mat.raw_color}</td>
 		 		<td></td>
 		   		<td>${s.stock_count}</td>
-                <td><input type="text" id="new_stock_count" name="new_stock_count"></td>
 		   		<td>${s.wh_code}</td>
 		   		<td>${s.warehouse.emp_id}</td>
-				<td>
-					<button type="submit" name="modify_Button" value="${s.raw_code}">수정</button>
-				</td>
+				<td><input type="button" onclick="stockPopup('${s.raw_code}')" value="수정"></td>
 		 	</tr>
 	 	</c:if>
 	 	
  	</c:forEach>
     </table>
-    </form>
    
            		
 <div>
@@ -109,6 +97,10 @@
 	bp.startPage : ${bp.startPage } <br>
     bp.endPage : ${bp.endPage } <br>
     param : ${param } <br>
+
+
+	
+
 
 </div>
 <!-- /page content -->
