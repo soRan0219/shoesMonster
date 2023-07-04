@@ -51,6 +51,9 @@
 	
 	<!-- 사원 검색 개수 -->
 	<select id="searchEmployeesCnt" parameterType="hashMap" resultType="int">
+		<bind name="emp_id" value="'%' + search_emp_id + '%'"/>
+		<bind name="emp_name" value="'%' + search_emp_name + '%'"/>
+		
 		select count(*) from employees 
 		<where>
 			<if test="emp_id != null and !emp_id.isEmpty()">
@@ -63,14 +66,13 @@
 				and emp_department=#{search_emp_department}
 			</if>
 		</where>
-		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 사원 검색 개수 -->
 	
 	<!-- 사원 추가 -->
 	<insert id="insertEmployees">
-		insert into employees (emp_id, emp_name, emp_department, emp_position, emp_email, emp_phone, emp_hiredate, emp_work)
-		values (#{emp_id}, #{emp_name}, #{emp_department}, #{emp_position}, #{hyphenEmail}, #{hyphenPhone}, #{emp_hiredate}, #{emp_work})
+		insert into employees (emp_id, emp_pw, emp_name, emp_department, emp_position, emp_email, emp_phone, emp_hiredate, emp_work)
+		values (#{emp_id}, #{emp_pw}, #{emp_name}, #{emp_department}, #{emp_position}, #{emp_email}, #{emp_phone}, #{emp_hiredate}, #{emp_work})
 	</insert>
 	<!-- 사원 추가 -->
 	
@@ -81,18 +83,18 @@
 	</delete>
 	<!-- 사원 삭제 -->
 	
-	<!-- 사원 조회 -->
+ 	<!-- 사원 상세 조회 -->
 	<select id="realEmployees" resultType="EmployeesVO">
 		select * from employees
 		where emp_id=#{emp_id}
 		order by emp_department ASC
 	</select>
-	<!-- 사원 조회 -->
+ 	<!-- 사원 조회 -->
 	
 	<!-- 사원 수정 -->
 	<update id="updateEmployees">
 		update employees
-		set emp_id=#{emp_id}, emp_name=#{emp_name}, emp_department=#{emp_department}, 
+		set emp_id=#{emp_id}, emp_pw=#{emp_pw}, emp_name=#{emp_name}, emp_department=#{emp_department}, 
 			emp_position=#{emp_position}, emp_email=#{emp_email}, emp_phone=#{emp_phone},
 			emp_hiredate=#{emp_hiredate}, emp_work=#{emp_work}
 		where emp_id=#{emp_id}

@@ -56,13 +56,8 @@ public class PersonController {
 
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
-		//페이지 정보
-		if(search.get("pageSize")!=null) {
-			int pageSize = Integer.parseInt(search.get("pageSize").toString());
-			cpvo.setPageSize(pageSize);
-		} else {
-			cpvo.setPageSize(2);
-		}
+		// 페이지 정보
+		cpvo.setPageSize(2);
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
@@ -84,7 +79,7 @@ public class PersonController {
 			logger.debug(" empList 검색 결과 : " + empList);
 			
 			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
-			pm.setTotalCount(empService.getTotalEmployees());
+			pm.setTotalCount(empService.getSearchEmployees(search));
 			
 			model.addAttribute("search", search);
 			model.addAttribute("empList", empList);
@@ -168,7 +163,7 @@ public class PersonController {
 		logger.debug(" empManageGET() 호출@@@@@ ");
 		
 		//페이지 정보
-		cpvo.setPageSize(20);
+		cpvo.setPageSize(2);
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
@@ -191,7 +186,7 @@ public class PersonController {
 			logger.debug(" empList 검색 결과 : " + empList);
 			
 			logger.debug(" search 검색 결과 수 : " + empService.getSearchEmployees(search));
-			pm.setTotalCount(empService.getTotalEmployees());
+			pm.setTotalCount(empService.getSearchEmployees(search));
 			
 			model.addAttribute("search", search);
 			model.addAttribute("management", manageList);
