@@ -17,32 +17,87 @@
 </script> -->
 
 <!-- page content -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
+     
+    
+    $(function(){
+        
+        let wh_dvArr = [ ['유형', '재고 갯수'] ];
+        let wh_codeArr = [ ['창고종류', '재고갯수'] ];
+        
+      $.ajax({
+         url: "/stock/stockGraph",
+         type: "post",
+          success: function(data){
+              
+              var wh_dv = data.wh_dv;
+              var wh_code = data.wh_code;
+             
+              
+              for(var i=0; i<wh_dv.length; i++) {
+                  
+            	  console.log(wh_dv[i].warehouse.wh_dv);
+            	  
+                var arr = [
+                    wh_dv[i].warehouse.wh_dv,
+                    wh_dv[i].stock_count,
+                    
+                ];
+                wh_dvArr.push(arr);
+            }
+              console.log(wh_dvArr);
+              for(var i=0; i<wh_code.length; i++) {
+                  
+            	  console.log(wh_code[i].wh_code);
+            	  
+                  var arr = [
+                      wh_code[i].wh_code,
+                      wh_code[i].stock_count,
+                      
+                  ];
+                  wh_codeArr.push(arr);
+              } 
+              
+              
+              console.log("유형별: " + wh_dvArr);
+              console.log("창고 코드별: " + wh_codeArr);
+              
+              drawGoogleChart("유형", wh_dvArr , 'wh_dv');
+              drawGoogleChart("창고코드", wh_codeArr , 'wh_code');
+              
+          },error: function() {
+            alert("실패실패실패");
+        } //
+      }); // ajax
+        
+      
+      
+      
+   
+      function drawGoogleChart(name, array, id) {
+    
+    
+    
+    google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
+      
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['eonhyo',33],
-          ['changwon',30],
-          ['soran',29],
-          ['aeryong',28],
-          ['seongil',27],
-          ['hyerim',26],
-          ['dohee',25]
-        ]);
+        var data = google.visualization.arrayToDataTable(array);
 
         var options = {
-          title: 'Group2 Age',
+          title: '재고 갯수 현황',
           is3D: true,
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        var chart = new google.visualization.PieChart(document.getElementById(id));
         chart.draw(data, options);
-      }
+      } //drawChart
+      
+      } //drawGoogleChart
+    }); // JQuery
     </script>
-    
   
     
 
@@ -330,9 +385,9 @@ function toggleDiv(divId) {
 </div>
 
 <div id="graph">
- <h1> Group2 Age  </h1>
-  <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
-  <div id="piechart_3d2" style="width: 900px; height: 500px;"></div>
+ <h1> Stock Graph </h1>
+  <div id="wh_dv" style="width: 50%; height: 50%;"></div>
+  <div id="wh_code" style="width: 50%; height: 50%;"></div>
 </div>
 
 
