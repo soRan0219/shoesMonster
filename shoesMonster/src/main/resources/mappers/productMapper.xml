@@ -257,10 +257,11 @@
 	
 	<!-- 원자재관리 수정 시 조회 -->
 	<select id="readRawOne" resultMap="rawMaterial" resultType="RawMaterialVO">
-		SELECT r.*, c.client_actname
+		SELECT r.*, c.client_actname, w.wh_name
 		from raw_material r
 		join clients c
 		on r.client_code = c.client_code
+		join warehouse w ON r.wh_code =w.wh_code
 		WHERE r.raw_code=#{raw_code}
 	</select>
 	<!-- 원자재관리 수정 시 조회 -->

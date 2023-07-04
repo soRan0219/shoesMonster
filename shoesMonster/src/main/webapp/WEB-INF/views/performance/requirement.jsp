@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -90,11 +91,11 @@
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'">' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" required></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" onclick=serchProd("prod_code'+counter+'");></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'"></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" onclick=serchRaw("raw_code'+counter+'");></td>' +
+                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" >' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" readonly required></td>' +
+                    '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" >' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'");></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'");></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_dan"></td>' +
                     '<td></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_note"></td>' +
@@ -263,19 +264,7 @@
 								self.find('td').each(function(idx,item) {
 									if (idx > 0) {
 										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
-// 										if (idx == 5) {
-// 											var dropDown = "<select id='work_state' name='work_state'>";
-// 											dropDown += "<option value='지시'>지시</option>";
-// 											dropDown += "<option value='진행'>진행</option>";
-// 											dropDown += "<option value='마감'>마감</option>";
-// 											dropDown += "</select>";
-// 											$(this).html(dropDown);
-// 											$(this).find('option').each(function() {
-// 												if (this.value == preVOs[idx - 1]) {
-// 													$(this).attr("selected",true);
-// 												}
-// 											}); //option이 work_state와 일치하면 선택된 상태로
-// 										} //지시상태 - select
+// 									
 										if(idx==4){
 											var row = '<input type="hidden" name="'+names[7]+'" value="'+preVOs[7]+'" id="raw_code">'
 											$(".selected").append(row);
@@ -362,8 +351,8 @@
 				<tr>
 					<th>번호</th>
 					<th>소요코드</th>
-					<th>품번</th>
-					<th>품명</th>
+					<th type='hidden' style='display: none;'>품번</th>
+					<th>완제품</th>
 					<th>원자재</th>
 					<th>소요량</th>
 					<th>총 소요량</th>
@@ -373,7 +362,7 @@
 					<tr>
 						<td></td>
          			    <td id="reqCode">${vo.req_code }</td>
-         			    <td >${vo.prod_code }</td>
+         			    <td type='hidden' style='display: none;'>${vo.prod_code }</td>
 						<td id="prodName">${vo.prod.prod_name }</td>
 						<td>${vo.raw.raw_name }</td>
 						<td>${vo.req_dan }</td>
