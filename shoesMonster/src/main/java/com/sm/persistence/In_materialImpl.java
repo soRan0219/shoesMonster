@@ -65,7 +65,7 @@ public class In_materialImpl implements In_materialDAO {
 		logger.debug("////////////// raw_order_num2 : " + raw_order_num + "//////////////");
     
 		if(result != 0) {
-			logger.debug("입고 등록완료");
+			logger.debug("입고 등록완료********************************************");
         }
 		
 	}

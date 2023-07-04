@@ -257,8 +257,17 @@ public class stockController {
 //        service.updateIn(raw_order_num);
         
         // 로그인 정보
-        String emp_id = (String)session.getAttribute("emp_id");
-        request.setAttribute("emp_id", emp_id);
+//        String emp_id = (String)session.getAttribute("emp_id");
+//        request.setAttribute("emp_id", emp_id);
+        logger.debug("_______________^__________^^_________^^^^^^^^____^^^^^^^^^^__^^^^^_");
+        service.inInsert(rvo, raw_order_num);
+        
+        service.updateIn(raw_order_num);
+        
+        rttr.addFlashAttribute("result", "inInsert");
+        
+        logger.debug("@@@@@@@@@@@@ 리턴 확인용 : " + raw_order_num);
+  	
         
         
         boolean result = service.selectCheck(rawCode);
@@ -266,20 +275,27 @@ public class stockController {
         if(result) {
         	logger.debug("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         	service.updateStock(rawCode, raw_order_count);
+        	  
+        	
         } else {
         	logger.debug("XXXXXXXXXXXXXXXXX ");
         	service.insertStock(rawCode, raw_order_count, wh_code);
+        	
+        	
+        	 
+        	
         }
         
         // 재고에 입고할 항목있는지 조회(select)
 //        service.selectCheck(rawCode);
         
         
-        
+
         
         rttr.addFlashAttribute("result", "inInsert");
         
         logger.debug("@@@@@@@@@@@@ 리턴 확인용 : " + raw_order_num);
+
         
         return "redirect:/stock/In_material";
     }

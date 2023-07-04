@@ -12,9 +12,56 @@
 	
 	<h1>입고 관리</h1>
 
-	<button type="submit">전체</button>
-	<button type="submit">미입고</button>
-	<button type="submit">입고 완료</button>
+	<input type="button" value="전체" onclick="showAll()"></input>
+    <input type="button" value="미입고" onclick="show1()"></input>
+    <input type="button" value="입고완료" onclick="show2()"></input>
+    
+
+
+<script>
+    function show1() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[13];
+
+            if (statusCell.innerText.trim() !== "미입고") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function show2() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var statusCell = row.cells[13];
+
+            if (statusCell.innerText.trim() !== "입고완료") {
+                row.style.display = "none";
+            } else {
+                row.style.display = "";
+            }
+        }
+    }
+    
+    function showAll() {
+        var table = document.getElementById("data-table");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            row.style.display = "";
+        }
+    }
+
+</script>
 
 	
 	
@@ -45,32 +92,10 @@
 
 	<hr>
 
-	<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var buttons = document.querySelectorAll('input[type="button"]');
-            for (var i = 0; i < buttons.length; i++) {
-                var button = buttons[i];
-                var inYNElement = button.parentNode.previousElementSibling;
-                button.value = "입고처리";
-                inYNElement.innerText = "미입고";
-            }
-        });
-        function changeButtonValue(button) {
-            var inYNElement = button.parentNode.previousElementSibling;
-            if (button.value === "입고처리") {
-                button.value = "입고취소";
-                inYNElement.innerText = "입고완료";
-            } else {
-                button.value = "입고처리";
-                inYNElement.innerText = "미입고";
-            }
-        }
-        
-      
-    </script>
+	
 
 	<form action="" method="post">
-	<table border="1">
+	<table id="data-table" border="1">
         <tr>
             <th>입고 번호</th>
             <th>발주 번호</th>
