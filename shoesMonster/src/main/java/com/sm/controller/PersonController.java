@@ -111,6 +111,7 @@ public class PersonController {
 		logger.debug(" addEmployees() 호출@@@@@ ");
 		logger.debug(" vo : " + vo);
 		
+		// 서비스 - 사원 추가
 		empService.regEmployees(vo);
 		
 		return "redirect:/person/empinfo";
@@ -122,7 +123,7 @@ public class PersonController {
 		logger.debug(" deleteEmployees() 호출@@@@@ ");
 		logger.debug(" checked : " + checked);
 		
-		//서비스 - 작업지시 삭제 
+		//서비스 - 사원 삭제 
 		empService.removeEmployees(checked);
 		
 		return "redirect:/person/empinfo";
@@ -134,7 +135,7 @@ public class PersonController {
 		logger.debug("modifyEmployees() 호출@@@@@");
 		logger.debug(" uvo : " + uvo);
 		
-		//서비스 - 작업지시 수정
+		//서비스 - 사원 수정
 		empService.modifyEmployees(uvo);
 		
 		return "redirect:/person/empinfo";

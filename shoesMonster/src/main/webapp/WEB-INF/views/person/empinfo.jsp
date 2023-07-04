@@ -51,6 +51,13 @@ function codeCreation() {
     return code;
 }
 
+//input으로 바꾸기 
+function inputCng(obj, type, name, value) {
+	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+	obj.html(inputBox);
+} //inputCng
+
+
 // 혦넣
 //팝업으로 열었을 때
 function popUp() {
@@ -243,7 +250,7 @@ $(function() {
 	var isExecuted = false	
 	// ------------- 수정 ------------------
 	$('#modifyEmp').click(function() {
-
+		
 		$('#addEmp').attr("disabled", true);
 		$('#deleteEmp').attr("disabled", true);
 
@@ -260,29 +267,10 @@ $(function() {
 				console.log(updateCode);
 				
 				var jsonData = {
-						emp_id : updateCode
-					};
+					emp_id : updateCode
+				};
 				
 				var self = $(this);
-				
-// 				$.ajax({
-// 					url : "/workorder/detail",
-// 					type : "post",
-// 					contentType : "application/json; charset=UTF-8",
-// 					dataType : "json",
-// 					data : JSON.stringify(jsonData),
-// 					success : function(data) {
-// 						// alert("*** 아작스 성공 ***");
-
-// 						var preVOs = [
-// 								data.work_code,
-// 								data.line_code,
-// 								data.order_code,
-// 								data.prod_code,
-// 								data.work_state,
-// 								data.work_date,
-// 								data.work_qt
-// 							];
 				
 				var names = [
 						"emp_id",
@@ -294,13 +282,12 @@ $(function() {
 						"emp_phone",
 						"emp_hiredate",
 						"emp_work" ];
-
+				
 				//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
 				self.find('td').each(function(idx,item) {
-
 					if (idx > 0) {
-						inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
-						if (idx == 3) {
+						inputCng($(this),"text",names[idx - 1], $(this).text());
+						if (idx == 4) {
 							var dropDown = "<select id='emp_department' name='emp_department'>";
 							dropDown += "<option value='전체'>전체</option>";
 							dropDown += "<option value='영업팀'>영업팀</option>";
@@ -314,16 +301,9 @@ $(function() {
 								}
 							}); //option이 emp_department와 일치하면 선택된 상태로
 						} //사원부서 - select
-						
-						//지시수량 제외하고 readonly 속성 부여
-						$(this).find("input").each(function(){
-							if($(this).attr("name") != "emp_work") {
-								$(this).attr("readonly", true);
-							}
-						}); //readonly
-						
 					} //사원 아이디부터 다 수정 가능하게
 				}); // self.find(~~)
+				
 
 				//저장버튼 -> form 제출
 				$('#saveEmp').click(function() {
@@ -494,9 +474,9 @@ $(function() {
 								<td>${vo.emp_phone}</td>
 								<td>${vo.emp_hiredate}</td>
 								<td>${vo.emp_work}</td>
-								<td>
+								<th>
 									<input type="button" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
-								</td>
+								</th>
 							</tr>
 						</c:if>
 					</c:forEach>
