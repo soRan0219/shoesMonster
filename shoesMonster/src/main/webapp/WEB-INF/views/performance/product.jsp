@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -140,16 +141,16 @@
             	
                 var row = '<tr>' +
                 	'<td></td>'+
-                    '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" readonly required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_name"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_category"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_unit"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_size"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_color"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" onclick=serchClient("client_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_name'+counter+'"); required></td>' +
+                    '<input type="hidden" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required>' +
+                    '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); required></td>' +
+                    '<input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required>' +
+                    '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_name'+counter+'"); readonly required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_price"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_note"></td>' +
                     '</tr>';
@@ -320,7 +321,7 @@
 										"prod_color",
 										"prod_size",
 										"client_code",
-										"client_name",
+										"client_actname",
 										"wh_code",
 										"wh_name",
 										"prod_price",
@@ -332,18 +333,19 @@
 		
 									if (idx > 0) {
 										inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
+										
 									} //품목코드부터 다 수정 가능하게
 		
 								}); // self.find(~~)
 		
 		
 								// 거래처 검색 
-								$('#client_code').click(function() {
+								$('#client_actname').click(function() {
 									openWindow("client","client_code");
 								}); //client_code click
 								
 								// 창고 검색
-								$('#wh_code').click(function() {
+								$('#wh_name').click(function() {
 									openWindow("wh","wh_code");
 								}); // wh_code click
 		
@@ -400,7 +402,8 @@
         	<label>카테고리:</label>
         	<input type="text" name="prod_category" id="searchCategory"> 
         	<label>거래처 : </label>
-        	<input type="text" name="client_code" id="searchUnit">
+        	<input type="hidden" name="client_code" id="client_code9999">
+        	<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
         	<input type="submit" value="검색">
 		</fieldset>
 	</form>
@@ -423,9 +426,9 @@
 					<th>품목 단위</th>
 					<th>컬러</th>
 					<th>사이즈</th>
-					<th>거래처코드</th>
+					<th type='hidden' style='display: none;'>거래처코드</th>
 					<th>거래처명</th>
-					<th>창고코드</th>
+					<th type='hidden' style='display: none;'>창고코드</th>
 					<th>창고명</th>
 					<th>매출단가</th>
 					<th>비고</th>
@@ -439,11 +442,11 @@
 						<td>${vo.prod_unit }</td>
 						<td>${vo.prod_color }</td>
 						<td>${vo.prod_size }</td>
-						<td>${vo.client_code }</td>
+						<td type='hidden' style='display: none;'>${vo.client_code }</td>
 						<td>${vo.clients.client_actname }</td>
-						<td>${vo.wh_code }</td>
+						<td type='hidden' style='display: none;'>${vo.wh_code }</td>
 						<td>${vo.wh.wh_name }</td>
-						<td>${vo.prod_price }</td>
+						<td><fmt:formatNumber>${vo.prod_price }</fmt:formatNumber></td>
 						<td>${vo.prod_note }</td>
 					</tr>
 			</c:forEach>
