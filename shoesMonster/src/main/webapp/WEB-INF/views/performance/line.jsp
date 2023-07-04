@@ -27,14 +27,14 @@
 		return year+"-"+month+"-"+day;
 	}//getToday()
 
-	// 코드 자동 부여
-	function lineCodeNum(num, length) {
-		let str = num.toString();
-		while (str.length < length){
-			str = '0' + str;
-		}
-		return str;
-	}
+// 	// 코드 자동 부여
+// 	function lineCodeNum(num, length) {
+// 		let str = num.toString();
+// 		while (str.length < length){
+// 			str = '0' + str;
+// 		}
+// 		return str;
+// 	}
 	
 	// input으로 바꾸기
 	function inputCng(obj, type, name, value) {
@@ -104,12 +104,6 @@
 	$(function() {
 		popUp();
 			
-	// 여기까지 지우기
-	// 추가 시 필요한 변수들
-	
-	var counter = 0;
-	var codeNum = 0;
-	var whCode = 0;
 		
 	//============================ 버튼 구현 ====================================//	
 		////수정//////////////////////////////////////////////////
@@ -237,115 +231,158 @@
 		}); // table .click
 		
 	});// modify.click
-	
-	////////////////// 추가/////////////////////////
-	$('#add').click(function () {
-		
-		$('#modify').attr("disabled", true);
-		$('#delete').attr("disabled", true);
-		
-		// 라인코드 부여
-		let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
-		wCodeNum++;
-		
-		let lineNum = lineCodeNum(wCodeNum, 3);
+	 
+
+	//추가//////////////////////////////////////////////////
+	// 추가 시 필요한 변수들
+    var counter = 0;
+    var codeNum = 0;
+   	var lineCode = 0;
 		
 		// 오늘날짜 -> 등록일
 		let today = getToday();
-		
-		if($(this).hasClass('true')){
+   	
+       	$('#add').click(function () {
 			
-			var tbl = "<tr>";
+        	event.preventDefault();
+        	$('#modify').attr("disabled", true);
+			$('#delete').attr("disabled", true);       		
+       		
+
+			
+			$.ajax({
+				url: "/performance/lineCode",
+				method: "GET",
+	 			dataType: "text",
+	 			success: function (data) {
+	 				 // Ajax 요청 안에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행	 				
+	 				codeNum = data;
+	 				 console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+			
+					// 변수에 할당된 데이터를 기반으로 추가 작업 수행
+ 				    someFunction(codeNum);
+	 			
+	 			}//success
+			
+			})//ajax
+			
+			function someFunction(data) {
+// 				alert("someFunction");
+				 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
+// 				 alert("codeNum"+codeNum);
+				 var num = parseInt(codeNum.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+// 				 alert("num : "+num);
+				 var paddedNum = padNumber(num, codeNum.length - 1); // 숫자를 패딩하여 길이 유지
+				 lineCode = codeNum.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+	             
+				 if ($('#add').hasClass('true')) {
+	             addRow();
+	          	$('#add').removeClass('true');
+	             }
+	             counter++;
+			} // someFunction(data)
+			
+			function padNumber(number, length) {
+// 				alert("padNum");
+                var paddedNumber = number.toString();
+                while (paddedNumber.length < length) {
+                    paddedNumber = "0" + paddedNumber;
+                }
+                return paddedNumber;
+        } // padNumber(number, length)
+        
+	});//add.click
+		
+        // 추가 버튼 클릭 시 row 생성
+        function addRow() {
+        	
+			var row = "<tr>";
 			
 			// 번호
-			tbl += "<td>";
-			tbl += "</td>";
+			row += "<td>";
+			row += "</td>";
 			
 			// 라인코드 
-			tbl += " <td>";
-			tbl += " <input type='text' name='line_code' id='line_code'required value='";
-			tbl += "L"+ lineNum;
-			tbl += "'>";
-			tbl += " </td>";
+			row += "<td>";
+			row += "<input type='text' name='line_code' id='line_code' required value='"+lineCode+"'>";
+			row += "</td>";
 			
 			// 라인명
-			tbl += " <td>";
-			tbl += " <input type='text' name='line_name' id='line_name' required>"
-			tbl += " </td>";
+			row += "<td>";
+			row += "<input type='text' name='line_name' id='line_name' required>";
+			row += "</td>";
 			
 			// 작업장
-			tbl += " <td>";
-			tbl += "  <input type='text' name='line_place' id='line_place' required>";
-			tbl += " </td>";
+			row += "<td>";
+			row += "<input type='text' name='line_place' id='line_place' required>";
+			row += "</td>";
 			
 			// 사용여부
-			tbl += " <td>";
-			tbl += " <select name='line_use' id='line_use'>";
-			tbl += " <option value='1'>Y</option>";
-			tbl += " <option value='2'>N</option>";
-			tbl += " </select>";
-			tbl += " </td>";
+			row += " <td>";
+			row += " <select name='line_use' id='line_use'>";
+			row += " <option value='1'>Y</option>";
+			row += " <option value='2'>N</option>";
+			row += " </select>";
+			row += " </td>";
 			
-			// 등록자			
-			tbl += " <td>";
-			tbl += " <input type='hidden' name='emp_id' id='emp_id' required>";
-			tbl += " <input type='text' name='emp_name' id='emp_name' required>";
-			tbl += " </td>";
+			// 등록자	
+			row += "<td>";
+			row += " <input type='hidden' name='emp_id' id='emp_id' required>";
+			row += " <input type='text' name='emp_name' id='emp_name' required>";
+			row += "</td>";
 			
-			// 등록일			
-			tbl += " <td>";
-			tbl += " <input type='text' name='insert_date' readonly value='";
-			tbl += today;
-			tbl += "'>";
-			tbl += " </td>";
+			// 등록일
+			row += " <td>";
+			row += " <input type='text' name='insert_date' readonly value='";
+			row += today;
+			row += "'>";
+			row += " </td>";
+			
+			// 비고
+			row += "<td>";
+			row += "<input type='text' name='line_note' id='line_note'>";
+			row += "</td>";
+			row += "</tr>";
+			
+            $('#lineTable').append(row);
 
-			// 비고			
-			tbl += " <td>";
-			tbl += " <input type='text' name='line_note' id='line_note'>";
-			tbl += " </td>";
-			tbl += " </tr>";
+    		// 등록자(사원) 검색
+    		$('#emp_name').click(function () {
+//     			alert("등록자검색");
+    			openWindow("emp", "emp_name");
+    		}); // #emp_id click
 		
-			$('table').append(tbl);
-			
-			// 등록자(사원) 검색
-			$('#emp_name').click(function () {
-				openWindow("emp", "emp_name");
-			}); // #emp_id click
-			
-			$(this).removeClass('true');
-		}// if (true 클래스 있을 때)
-		
-		// 저장 -> 저장
-		$('#save').click(function () {
-			
-			var line_code = $('#line_code').val();
-			var line_name = $('#line_name').val();
-			var line_place = $('#line_place').val();
-			var line_use = $('#line_use').val();
-			var emp_id = $('#emp_id').val();
-			var line_note = $('#line_note').val();
-			
-			if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
+		} // addRow()
+            
+			// 저장 -> 저장
+			$('#save').click(function () {
+				
+	 			var line_code = $('#line_code').val();
+	 			var line_name = $('#line_name').val();
+	 			var line_place = $('#line_place').val();
+	 			var line_use = $('#line_use').val();
+	 			var emp_id = $('#emp_id').val();
+	 			var emp_name = $('#emp_name').val();//
+	 			var line_note = $('#line_note').val();
+				
+	 			if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
 					|| emp_id == ""){
 				alert("항목을 모두 입력하세요");
-			}else{
-				$('#fr').attr("action", "/performance/lineadd"); 
-				$('#fr').attr("method", "POST");
-				$('#fr').submit();
-			}
+					}else{
+						$('#fr').attr("action", "/performance/lineadd"); 
+						$('#fr').attr("method", "POST");
+						$('#fr').submit();
+					}
+			}); // save
 			
-		}); //저장 save
-		
-		// 취소버튼 (=리셋)
-		$('#cancle').click(function () {
-			$('#fr').each(function () {
-				this.reset();
-			});
-		}); // cancle click
-		
-	});// 추가 add click
+			// 취소버튼(=리셋)
+			$('#cancle').click(function () {
+				$('#fr').each(function () {
+					this.reset();
+				});
+			}); // cancle click	
 
-	
+			
 
 	
 	
@@ -499,7 +536,7 @@
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 
 <form id="fr">
-	<table border="1">
+	<table border="1" id="lineTable">
 	<a>총 ${lwpm.totalCount } 건</a>
 		<tr>	
 			<th>번호</th>

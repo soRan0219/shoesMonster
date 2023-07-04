@@ -25,15 +25,6 @@
 		obj.html(inputBox);
 	} //inputCng
 	
-	// 코드 자동 부여
-// 	function whCodeNum(num, length) {
-// 		let str = num.toString();
-// 		while (str.length < length){
-// 			str = '0' + str;
-// 		}
-// 		return str;
-// 	}
-	
 	//팝업창 옵션
 	const popupOpt = "top=60,left=140,width=600,height=600";
 	
@@ -76,22 +67,11 @@
    			
    			$(this).css('background', '#ccc');
     		
-//    			if(isPop==="wh_code") {
-//         		var rawCode = $(this).find('#rawCode').text();
-//         		var prodCode = $(this).find('#prodCode').text();
-        		
-//         		$('#'+isPop, opener.document).val(whCode);
-//         		$('#raw_code', opener.document).val(rawCode);
-//         		$('#prod_code', opener.document).val(prodCode);
-
-
 		   	if(isPop==="wh_code") {
         		var empCode = $(this).find('#empName').text();
-//         		var prodCode = $(this).find('#prodCode').text();
         		
         		$('#'+isPop, opener.document).val(whCode);
         		$('#emp_name', opener.document).val(empCode);
-//         		$('#prod_code', opener.document).val(prodCode);
 
         		var whCode = $(this).find('#whCode').text();
         		var whName = $(this).find('#whName').text();
@@ -169,9 +149,9 @@
 			})//ajax
 			
 			function someFunction(data) {
-				alert("someFunction");
+// 				alert("someFunction");
 				 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
-				 alert("codeNum"+codeNum);
+// 				 alert("codeNum"+codeNum);
 				 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
 				 alert("num : "+num);
 				 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
@@ -182,9 +162,9 @@
 	             }
 	             counter++;
 			} // someFunction(data)
-			
+			 
 			function padNumber(number, length) {
-				alert("padNum");
+// 				alert("padNum");
                 var paddedNumber = number.toString();
                 while (paddedNumber.length < length) {
                     paddedNumber = "0" + paddedNumber;
@@ -247,7 +227,7 @@
 
     		// 등록자(사원) 검색
     		$('#emp_name').click(function () {
-    			alert("등록자검색");
+//     			alert("등록자검색");
     			openWindow("emp", "emp_name");
     		}); // #emp_id click
 		

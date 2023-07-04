@@ -396,6 +396,19 @@ public class PerformanceImpl implements PerformanceDAO {
 			
 		return sqlSession.selectOne(NAMESPACE+".readLineList", line_code);
 	}
+	
+	// 라인 추가 시 code값 가져가기
+	@Override
+	public String getLiCode() {
+		
+		String code = "L000";
+		
+		if(sqlSession.selectOne(NAMESPACE+".getLiCode") == null) {
+			return code;
+		}else {
+			return sqlSession.selectOne(NAMESPACE+".getLiCode");
+		}
+	}
 
 	// ===========창고==============================================
 
@@ -513,7 +526,13 @@ public class PerformanceImpl implements PerformanceDAO {
 	@Override
 	public String getWhCode() {
 		
-		return sqlSession.selectOne(NAMESPACE+".getWhCode");
+		String code = "WH000";
+		
+		if(sqlSession.selectOne(NAMESPACE+".getWhCode") == null) {
+			return code;
+		}else {
+			return sqlSession.selectOne(NAMESPACE+".getWhCode");
+		}
 	}
 
 	// ==========================================================================
@@ -638,6 +657,8 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		return statusMap;
 	} //getPerformStatus()
+
+
 
 
 

@@ -126,9 +126,12 @@ public interface PerformanceService {
 	
 	// 라인 수정
 	public void modifyLine(LineVO lvo) throws Exception;
-	
+	 
 	// 라인 조회(String line_code)
 	public LineVO getLine(String line_code) throws Exception;
+	
+	// 라인 추가 시 code값 가져가기
+	public String getLiCode();
 
 	// ===============창고======================================
 

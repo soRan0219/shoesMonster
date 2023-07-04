@@ -458,6 +458,14 @@ public class PerfomanceController {
 		return "redirect:/performance/line?input="+input;
 	}
 	
+	// 라인 추가 시 code값 가져가기
+	@ResponseBody
+	@RequestMapping(value = "/lineCode", method = RequestMethod.GET)
+	public String getLiCode() { 
+		
+		return service.getLiCode();
+	}
+	
 	// 라인 추가
 	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
 	public String addLine(LineVO lvo) throws Exception{
@@ -526,9 +534,6 @@ public class PerfomanceController {
 
 
 		// 검색(+페이징)
-//		if(wvo.getWh_code() != null || wvo.getProd_code() != null || wvo.getRaw_code() != null ||
-//				wvo.getWh_name() != null || wvo.getWh_use() != 0) {
-			
 		if(wvo.getWh_code() != null  || wvo.getWh_name() != null ||
 		   wvo.getEmp_id() != null || wvo.getWh_use() != 0) {
 		
@@ -573,25 +578,6 @@ public class PerfomanceController {
 		
 		}
 	}
-	
-//	// 품목 검색 팝업창
-//	@RequestMapping(value = "/whsearch", method = RequestMethod.GET)
-//	public String popUpGET(@RequestParam("input") String input,
-//			   @RequestParam("type") String type) throws Exception{
-//	
-//		logger.debug("@#@#@# C : popUpGET() 호출 @#@#@#");
-//		logger.debug("@#@#@# C : type = "+type);
-//		
-//		if(type.equals("prod")) {
-//		return "redirect:/performance/product?input="+input;
-//		}
-//		else if(type.equals("raw")) {
-//			return "redirect:/performance/rawMaterial?input="+input;
-//		}
-//		
-//			return "redirect:/performance/warehouse?input="+input;
-//		
-//	}
 	
 	// 창고 추가 시 code값 가져가기
 	@ResponseBody
