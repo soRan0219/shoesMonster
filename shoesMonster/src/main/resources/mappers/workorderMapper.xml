@@ -43,11 +43,27 @@
 		SELECT s.raw_code, stock_count 
 		FROM stock s 
 		JOIN requirement r ON s.raw_code = r.raw_code 
-		WHERE r.prod_code = #{prod_code}
+		WHERE r.prod_code = #{prod_code} 
+		ORDER BY s.raw_code;
 	</select>
 	<!-- 특정 완제품에 들어가는 원자재 코드와 재고량 조회 -->
 	
+	<!-- 원자재 소요량 -->
+	<select id="consumption" resultType="RequirementsVO">
+		SELECT prod_code, raw_code, req_dan 
+		FROM requirement 
+		WHERE prod_code = #{prod_code} 
+		ORDER BY raw_code;
+	</select>
+	<!-- 원자재 소요량 -->
 	
+	<!-- 재고에서 원자재 지시수량*소요량만큼 차감 -->
+	<update id="reduceRaw">
+		UPDATE stock 
+		SET stock_count = stock_count - #{stock_count} 
+		WHERE raw_code = #{raw_code}
+	</update>
+	<!-- 재고에서 원자재 지시수량*소요량만큼 차감 -->
 	
 	<!-- 작업지시 등록 -->
 	<insert id="insertWorkOrder">
