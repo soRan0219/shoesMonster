@@ -23,7 +23,7 @@ public class EmployeesVO {
 	
 	private String hyphenPhone;
 	private String hyphenEmail;
-	
+	 
 	public void setEmp_ehone(String emp_phone) {
 		this.emp_phone = emp_phone;
 		this.hyphenPhone = emp_phone.replace("-", "");
