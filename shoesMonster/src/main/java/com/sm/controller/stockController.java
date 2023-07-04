@@ -389,16 +389,20 @@ public class stockController {
         return "redirect:/stock/stockList";
     }
 	
-//	@ResponseBody
-//	@RequestMapping(value = "/stockList", method = RequestMethod.POST)
-//	public Map<String, List<StockVO>> stockGraph() throws Exception {
-//		logger.debug("@@@@@ CONTROLLER: status() 호출");
-//		
-//		Map<String, List<StockVO>> GraphMap = s_service.stockGraph1();
-//		
-//		return GraphMap;
-//		
-//	} //stockGraph
+	@ResponseBody
+	@RequestMapping(value = "/stockGraph", method = RequestMethod.POST)
+	public Map<String, List<StockVO>> stockGraph() throws Exception {
+		logger.debug("@@@@@ CONTROLLER: status() 호출");
+		
+		Map<String, List<StockVO>> GraphMap = s_service.stockGraph1();
+		
+		logger.debug(""+GraphMap);
+		
+		
+		
+		return GraphMap;
+		
+	} //stockGraph
 	
 
     // ====================================== 재고 - 끝 ====================================== //

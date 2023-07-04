@@ -95,12 +95,16 @@ public class StockImpl implements StockDAO{
 		
 		Map<String, List<StockVO>> graph1 = new HashMap<>();
 		
-		List<StockVO> stockGraph1 = sqlSession.selectList(NAMESPACE + ".stockGraph");
+		List<StockVO> stockGraph1 = sqlSession.selectList(NAMESPACE + ".stockGraph1");
 		logger.debug("##### DAO: 라인별 양불현황 ===> " + stockGraph1);
+
+		List<StockVO> stockGraph2 = sqlSession.selectList(NAMESPACE + ".stockGraph2");
+		logger.debug("##### DAO: 라인별 양불현황 ===> " + stockGraph2);
 		
 	
 		
-		graph1.put("perLine", stockGraph1);
+		graph1.put("wh_dv", stockGraph1);
+		graph1.put("wh_code", stockGraph2);
 		
 		
 		return graph1;

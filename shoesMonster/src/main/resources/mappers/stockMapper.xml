@@ -483,12 +483,20 @@
 
 
 <!-- 재고 그래프 -->
-<!-- 	<select id="stockGraph" resultMap="stock_List"> -->
-<!-- 	SELECT w.wh_dv ,sum(s.stock_count) -->
-<!-- 	FROM stock s -->
-<!-- 	JOIN warehouse w ON s.wh_code = w.wh_code -->
-<!-- 	GROUP BY w.wh_dv; -->
-<!-- 	</select> -->
+	<select id="stockGraph1" resultMap="stock_List">
+	SELECT w.wh_dv ,sum(s.stock_count) stock_count
+	FROM stock s
+	JOIN warehouse w ON s.wh_code = w.wh_code
+	GROUP BY w.wh_dv
+	</select>
+	<!-- 재고 그래프 -->
+<!-- 재고 그래프 -->
+	<select id="stockGraph2" resultMap="stock_List">
+	 SELECT s.wh_code ,sum(s.stock_count) stock_count
+	FROM stock s
+	JOIN warehouse w ON s.wh_code = w.wh_code
+	GROUP BY s.wh_code
+	</select>
 	<!-- 재고 그래프 -->
 
 
