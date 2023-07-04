@@ -50,9 +50,6 @@ public class In_materialServiceImpl implements In_materialService{
 	}
 
 	
-	
-	
-
 
 	@Override
     public void updateIn(String raw_order_num) throws Exception {

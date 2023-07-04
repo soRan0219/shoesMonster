@@ -61,7 +61,7 @@ public class In_materialImpl implements In_materialDAO {
 		int result = sqlSession.insert(NAMESPACE + ".inRegist", rvo);
     
 		if(result != 0) {
-			logger.debug("입고 등록완료");
+			logger.debug("입고 등록완료********************************************");
         }
 		
 	}
