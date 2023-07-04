@@ -569,8 +569,42 @@ public class PerformanceImpl implements PerformanceDAO {
 	public void updatePerformance(PerformanceVO uvo) throws Exception {
 		logger.debug("##### DAO: updatePerformance() 호출");
 		int result = sqlSession.update(NAMESPACE + ".updatePerform", uvo);
-		
 		logger.debug("##### DAO: update 결과 ===> " + result);
+		
+		//DB작업 위해서 작업지시코드 변수에 저장
+		String work_code = uvo.getWork_code();
+		
+		//생산실적 중 양품수와 작업지시수량 비교
+		String updateStatus = sqlSession.selectOne(NAMESPACE + ".compare", work_code);
+		logger.debug("##### DAO: 양품수와 작업지시수량 비교 결과 있없 ===> " + updateStatus);
+		
+		//비교결과 해당 작업지시수량보다 생산한 양품수가 같거나 많으면 생산현황 마감으로 변경
+		// => 마감으로 변경됐을 경우 해당 작업지시 양품수 합해서 재고에 더하기
+		if(updateStatus != null) {
+			sqlSession.update(NAMESPACE + ".updateStatus", work_code);
+			
+			int perform_fair = sqlSession.selectOne(NAMESPACE + ".sumFair", work_code);
+			logger.debug("##### DAO: 양품수 합 ===> " + perform_fair);
+			
+			//재고에서 해당 작업지시의 품목과 일치하는 품목 있는지 확인
+			StockVO stock = sqlSession.selectOne(NAMESPACE + ".searchStock", work_code);
+			
+			if(stock!=null) {
+				//일치 품목 있을 때
+				stock.setStock_count(perform_fair);
+				sqlSession.update(NAMESPACE + ".updateStock", stock);
+				logger.debug("##### DAO: 재고 수량 증가");
+			} else {
+				//일치 품목 없을 때(=> 새로 등록)
+				uvo.setPerform_fair(perform_fair);
+				sqlSession.selectOne(NAMESPACE + ".insertStock", uvo);
+				logger.debug("##### DAO: 재고 새로 추가");
+			}
+			
+			
+			logger.debug("##### DAO: 재고등록완~~~~~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
+		} //if(마감쳤을때)
+				
 	} //updatePerformance()
 
 	//생산실적 전체 수

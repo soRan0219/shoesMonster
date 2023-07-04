@@ -781,7 +781,8 @@
 		FROM performance p JOIN
 		work_order w
 		ON p.work_code = w.work_code
-		LIMIT #{startPage},#{pageSize}
+		ORDER BY p.perform_code DESC
+		LIMIT #{startPage},#{pageSize} 
 	</select>
 	<!-- 생산실적 목록 -->
 
@@ -819,6 +820,7 @@
 				AND p.perform_status=#{search_perform_status}
 			</if>
 		</where>
+		ORDER BY p.perform_code DESC 
 		LIMIT #{startPage},#{pageSize}
 	</select>
 	<!-- 생산실적 검색 -->
@@ -928,11 +930,7 @@
 	</insert>
 	<!-- 양품수만큼 재고등록 - 해당 품목 재고에 새로 등록 -->
 	
-	
-
 	<!-- **** 생산실적 등록 + 자동마감 + 재고등록 **** -->
-
-
 
 	<!-- 생산실적 삭제 -->
 	<delete id="deletePerformance">
