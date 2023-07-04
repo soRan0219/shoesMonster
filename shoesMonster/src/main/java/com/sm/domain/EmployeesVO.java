@@ -1,7 +1,5 @@
 package com.sm.domain;
 
-import java.sql.Date;
-
 import lombok.Data;
 
 @Data
@@ -16,10 +14,10 @@ public class EmployeesVO {
 	private String emp_phone;
 	private String emp_work;
 	private String emp_addr;
-	private Date emp_birth;
+	private String emp_birth;
 	private String emp_gender;
 	private String emp_file;
-	private Date emp_hiredate;
+	private String emp_hiredate;
 	private String emp_tel;
 	
 	private String hyphenPhone;

@@ -137,8 +137,9 @@ public class PersonController {
 		
 		//서비스 - 사원 수정
 		empService.modifyEmployees(uvo);
+		String emp_id = uvo.getEmp_id();
 		
-		return "redirect:/person/empinfo";
+		return "redirect:/person/empform?emp_id="+emp_id;
 	} //modifyEmployees()
 	
 	// 사원 상세 조회 POST
