@@ -26,13 +26,13 @@
 	} //inputCng
 	
 	// 코드 자동 부여
-	function whCodeNum(num, length) {
-		let str = num.toString();
-		while (str.length < length){
-			str = '0' + str;
-		}
-		return str;
-	}
+// 	function whCodeNum(num, length) {
+// 		let str = num.toString();
+// 		while (str.length < length){
+// 			str = '0' + str;
+// 		}
+// 		return str;
+// 	}
 	
 	//팝업창 옵션
 	const popupOpt = "top=60,left=140,width=600,height=600";
@@ -139,195 +139,153 @@
 
 	
 	//============================ 버튼 구현 ====================================//	
+	//추가//////////////////////////////////////////////////
 	
-	
-	////////////////// 추가/////////////////////////
-	$("#add").click(function () {
+	// 추가 시 필요한 변수들
+    var counter = 0;
+    var codeNum = 0;
+   	var whCode = 0;
 		
-		$('#modify').attr("disabled", true);
-		$('#delete').attr("disabled", true);
-		
-		//창고코드 부여
-		let wCodeNum = Number($('table tr:last').find('td:nth-child(2)').text().substring(2));
-		wCodeNum++;
-		
-		let whNum = whCodeNum(wCodeNum, 3);
-
-
-// 페이지 수 확인
-// let totalPages = getTotalPages(); // 페이지 수를 얻는 방법에 따라 getTotalPages() 함수를 작성해야 합니다.
-
-// // 전체 페이지를 합친 테이블에서 마지막 행의 두 번째 열에서 숫자 추출
-// let wCodeNum = 0;
-// for (let page = 1; page <= totalPages; page++) {
-//   // 각 페이지에 접근하여 테이블의 마지막 행 찾기
-//   let lastRow = $(getPageTable(page)).find('tr:last');
-
-//   // 마지막 행의 두 번째 열에서 숫자 추출
-//   let pageWCodeNum = Number(lastRow.find('td:nth-child(2)').text().substring(2));
-
-//   // 페이지별로 가장 큰 숫자 저장
-//   wCodeNum = Math.max(wCodeNum, pageWCodeNum);
-// }
-
-// // 숫자에 1을 더한 후 창고 코드 생성
-// let whNum = whCodeNum(wCodeNum + 1, 3);
-		
-		if($(this).hasClass('true')){
+       	$('#add').click(function () {
 			
-			var tbl = "<tr>";
+        	event.preventDefault();
+        	$('#modify').attr("disabled", true);
+			$('#delete').attr("disabled", true);       		
+       		
+			$.ajax({
+				url: "/performance/whCode",
+				method: "GET",
+	 			dataType: "text",
+	 			success: function (data) {
+	 				 // Ajax 요청 안에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행	 				
+	 				codeNum = data;
+	 				 console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+			
+					// 변수에 할당된 데이터를 기반으로 추가 작업 수행
+ 				    someFunction(codeNum);
+	 			
+	 			}//success
+			
+			})//ajax
+			
+			function someFunction(data) {
+				alert("someFunction");
+				 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
+				 alert("codeNum"+codeNum);
+				 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+				 alert("num : "+num);
+				 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
+	             whCode = codeNum.charAt(0)+ codeNum.charAt(1) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+	             if ($('#add').hasClass('true')) {
+	             addRow();
+	          	$('#add').removeClass('true');
+	             }
+	             counter++;
+			} // someFunction(data)
+			
+			function padNumber(number, length) {
+				alert("padNum");
+                var paddedNumber = number.toString();
+                while (paddedNumber.length < length) {
+                    paddedNumber = "0" + paddedNumber;
+                }
+                return paddedNumber;
+        } // padNumber(number, length)
+        
+	});//add.click
+		
+        // 추가 버튼 클릭 시 row 생성
+        function addRow() {
+        	
+			var row = "<tr>";
 			
 			// 번호
-			tbl += "<td>";
-			tbl += "</td>";
+			row += "<td>";
+			row += "</td>";
 			
 			// 창고코드
-			tbl += "<td>";
-			tbl += "<input type='text' name='wh_code' id='wh_code' required value='";
-			tbl += "WH" + whNum;
-			tbl += "'>";
-			tbl += "</td>";
+			row += "<td>";
+			row += "<input type='text' name='wh_code' id='wh_code' required value='"+whCode+"'>";
+			row += "</td>";
 			
 			// 창고명
-			tbl += "<td>";
-			tbl += "<input type='text' name='wh_name' id='wh_name' required>";
-			tbl += "</td>";
-			
-			// 창고유형
-// 			tbl += "<td>";
-// 			tbl += "<select name='wh_dv' id='wh_dv'onchange='whdv(this)'>";
-// 			tbl += "<option>선택</option>";
-// 			tbl += "<option value='완제품'>완제품</option>";
-// 			tbl += "<option value='원자재'>원자재</option>";
-// 			tbl += "</select>";
-// 			tbl += "</td>";
-			
-// 			// 품번
-// 			tbl += "<td>";
-// 			tbl += "<input type='text' name='' id='Code' required>";
-// // 			tbl += "<input type='text' name='raw_code' id='raw_code' required>";
-// 			tbl += "</td>";
-			
-// // 			tbl += "<td>";
-// // 			tbl += "<input type='text' name='raw_code' id='raw_code' required>";
-// // 			tbl += "</td>";
-			
-// 			// 품명
-// 			tbl += "<td>";
-// 			tbl += "<input type='text' name='' id='Name'>";
-// // 			tbl += "<input type='text' name='raw_name' id='raw_name'>";
-// 			tbl += "</td>";
-			
-// // 			tbl += "<td>";
-// // 			tbl += "<input type='text' name='raw_name' id='raw_name'>";
-// // 			tbl += "</td>";
+			row += "<td>";
+			row += "<input type='text' name='wh_name' id='wh_name' required>";
+			row += "</td>";
 			
 			// 지역
-			tbl += "<td>";
-			tbl += "<input type='text' name='wh_addr' id='wh_addr' required>";
-			tbl += "</td>";
+			row += "<td>";
+			row += "<input type='text' name='wh_addr' id='wh_addr' required>";
+			row += "</td>";
 			
 			// 전화번호
-			tbl += "<td>";
-			tbl += "<input type='text' name='wh_tel' id='wh_tel' required>";
-			tbl += "</td>";
+			row += "<td>";
+			row += "<input type='text' name='wh_tel' id='wh_tel' required>";
+			row += "</td>";
 			
 			// 사용여부
-			tbl += "<td>";
-			tbl += "<select name='wh_use' id='wh_use'>";
-			tbl += "<option value='1'>Y</option>";
-			tbl += "<option value='2'>N</option>";
-			tbl += "</select>";
-			tbl += "</td>";
+			row += "<td>";
+			row += "<select name='wh_use' id='wh_use'>";
+			row += "<option value='1'>Y</option>";
+			row += "<option value='2'>N</option>";
+			row += "</select>";
+			row += "</td>";
 			
 			// 담당자
-			tbl += "<td>";
-			tbl += "<input type='hidden' name='emp_id' id='emp_id' required>";
-			tbl += "<input type='text' name='emp_name' id='emp_name' required>";
-			tbl += "</td>";
+			row += "<td>";
+			row += "<input type='hidden' name='emp_id' id='emp_id' required>";
+			row += "<input type='text' name='emp_name' id='emp_name' required>";
+			row += "</td>";
 			
 			// 비고
-			tbl += "<td>";
-			tbl += "<input type='text' name='wh_note' id='wh_note'>";
-			tbl += "</td>";
-			tbl += "</tr>";
+			row += "<td>";
+			row += "<input type='text' name='wh_note' id='wh_note'>";
+			row += "</td>";
+			row += "</tr>";
 			
-			$('table').append(tbl);
-			
-			// 0630 추가
-// 			$("#wh_dv").on("change", function () {
-// 				if($("#wh_dv option:selected").val() === '완제품'){
-// 					$('input[name="wh_dv"]').val('OR'+codeCreation());
-// 				}else if($("#wh_dv option:selected").val() === '원자재'){
-// 					$('input[name="wh_dv"]').val('CL'+codeCreation());
-// 				}
-// 			});
-			
+            $('#whTable').append(row);
 
-			
-			//품번 검색 팝업(prod or raw)
-// 			$('#Code').click(function() {
-// 				var name = $('input#Code').attr("name");
-// 				if (name == "prod_code") {
-// 					openWindow("prod", "search_prod");
-// 				} else if(name == "raw_code"){
-// 					openWindow("raw", "search_raw");
-// 				}
+    		// 등록자(사원) 검색
+    		$('#emp_name').click(function () {
+    			alert("등록자검색");
+    			openWindow("emp", "emp_name");
+    		}); // #emp_id click
+		
+		} // addRow()
+            
+			// 저장 -> 저장
+			$('#save').click(function () {
 				
-// 			}); //prodCode click
+				var wh_code = $('#wh_code').val();
+				var wh_name = $('#wh_name').val();
+				var wh_addr = $('#wh_addr').val();
+				var wh_tel = $('#wh_tel').val();
+				var wh_use = $('#wh_use').val();
+				var emp_id = $('#emp_id').val();
+				var emp_name = $('#emp_name').val();
+				var wh_note = $('#wh_note').val();
+				
+				if(wh_code == "" || wh_name == "" || 
+				  emp_id == "" || wh_addr == "" || wh_tel == "" || wh_use == ""){
+					alert("항목을 모두 입력하세요");
+				}else{
+					$('#fr').attr("action", "/performance/whadd");
+					$('#fr').attr("method", "POST");
+					$('#fr').submit();
+				}
+				
+			}); // save
+			
+			// 취소버튼(=리셋)
+			$('#cancle').click(function () {
+				$('#fr').each(function () {
+					this.reset();
+				});
+			}); // cancle click	
 
-			// 등록자(사원) 검색
-			$('#emp_name').click(function () {
-// 				alert("검색클릭");
 			
-				openWindow("emp", "emp_name");
-			}); // #emp_id click
 			
-			$(this).removeClass('true');
 			
-		}// if
-		
-		// 저장 -> 저장
-		$('#save').click(function () {
-			
-			var wh_code = $('#wh_code').val();
-			var wh_name = $('#wh_name').val();
-// 			var wh_dv = $('#wh_dv').val();
-// 			var prod_code = $('#prod_code').val();
-// 			var raw_code = $('#raw_code').val();
-			/////
-// 			var prod_name = $('#prod_name').val();
-// 			var raw_name = $('#raw_name').val();
-			var wh_addr = $('#wh_addr').val();
-			var wh_tel = $('#wh_tel').val();
-			var wh_use = $('#wh_use').val();
-			var emp_id = $('#emp_id').val();
-			var emp_name = $('#emp_name').val();
-			var wh_note = $('#wh_note').val();
-			
-// 			if(wh_code == "" || wh_name == "" || wh_dv == "" || 
-// 			  (prod_code == "" || raw_code == "" ) || wh_addr == "" || wh_tel == "" || wh_use == ""){
-			if(wh_code == "" || wh_name == "" || 
-			  emp_id == "" || wh_addr == "" || wh_tel == "" || wh_use == ""){
-				alert("항목을 모두 입력하세요");
-			}else{
-				$('#fr').attr("action", "/performance/whadd");
-				$('#fr').attr("method", "POST");
-				$('#fr').submit();
-			}
-			
-		}); // save
-		
-		// 취소버튼(=리셋)
-		$('#cancle').click(function () {
-			$('#fr').each(function () {
-				this.reset();
-			});
-		}); // cancle click		
-		
-	});// add.click
-	
-	
 	////수정//////////////////////////////////////////////////
 	var isExecuted = false;
 	
@@ -358,8 +316,6 @@
 				var names = [
 						"wh_code",
 						"wh_name",
-// 						"wh_dv",
-// 						"prod_code", //"raw_code"
 						"wh_addr",
 						"wh_tel",
 						"wh_use",
@@ -374,22 +330,6 @@
 					if(idx > 0){
 						inputCng($(this), "text", names[idx - 1], $(this).text());
 						
-						
-// 						if(idx == 3){
-// 							var dropDown = "<select id='wh_dv' name='wh_dv'>";
-// 							 	dropDown += "<option>완제품</option>";
-// 							 	dropDown += "<option>원자재</option>";
-// 							 	dropDown += "</select>";
-							 	
-// 								$(this).html(dropDown);
-// 								$(this).find('option').each(function () {
-// 									if(this.value == $(this).text()){
-// 										$(this).attr("selected", true);
-// 									}
-						
-// 								});// this.find('option')						
-						
-// 						}//if(idx==3)
 						if(idx == 5){
 							
 							var origin = $(this).find("input").val();
@@ -415,16 +355,6 @@
 					}// if
 					
 				});//self.find
-				
-// 				//품번 검색 팝업(prod)
-// // 				$('#search_prod').click(function() {
-// // 					openWindow("prod", "search_prod");
-// // 				}); //prodCode click
-				
-// // 				//품번 검색 팝업(raw)
-// // 				$('#search_raw').click(function() {
-// // 					openWindow("raw", "search_raw");
-// // 				}); //rawCode click
 
 				// 등록자(사원) 검색
 				$('#emp_name').click(function () {
@@ -519,19 +449,6 @@
 						alert("삭제가 취소되었습니다");
 					}// if(confirm)
 					
-// 					$.ajax({
-// 						url: "/performance/whdelete",
-// 						type: "POST",
-// 						data: {checked : checked},
-// 						dataType: "text",
-// 						success: function () {
-// 							alert("에이잭스 예에~!~!");
-// 							location.reload();
-// 						},
-// 						error: function () {
-// 							alert("에이잭스 우우~!~!");
-// 						}
-// 					}); //ajax
 					
 				}// 체크OOO
 				else{
@@ -553,15 +470,6 @@
 	
 	
 	//============================ 검색 =========================================//
-//  		//품번 검색 팝업(prod) 
-//  		$('#search_prod').click(function() { 
-//  			openWindow("prod", "search_prod");
-//  		}); //prodCode click 
-		
-//  		//품번 검색 팝업(raw) 
-//  		$('#search_raw').click(function() { 
-// 			openWindow("raw", "search_raw"); 
-//  		}); //rawCode click 
 		
 		
 				// 야ㅕ기까지 삭제
@@ -571,28 +479,6 @@
 			}); // #emp_id click
 	
 	}); // 제이쿼리
-	
-// 	// onchance
-// 	function whdv(selectElement) {
-// 		 var selectedValue = selectElement.value; // 선택된 옵션의 값
-		 
-// 		  var inputElement = document.getElementById("Code");
-// 		  var inputElement2 = document.getElementById("Name");
-// 		  var newName = "defaultName"; // 기본 이름
-// 		  var newName2 = "defaultName"; // 기본 이름
-		  
-// 		  // 옵션 값에 따라 이름 변경
-// 		  if (selectedValue === "완제품") {
-// 		    newName = "prod_code";
-// 		    newName2 = "prod_name";
-// 		  } else if (selectedValue === "원자재") {
-// 		    newName = "raw_code";
-// 		    newName2 = "raw_name";
-// 		  } 
-		  
-// 		  inputElement.name = newName; // input 태그의 name 값을 변경
-// 		  inputElement2.name = newName2; // input 태그의 name 값을 변경
-// 	};
 	
 	
 	
@@ -611,11 +497,6 @@
 			<label>창고코드</label>
 				<input type="text" name="wh_code"  placeholder="검색어를 입력해주세요">
 			
-<!-- 			<label>품번</label> 품번 팝업창 + 라디오버튼 완제품/원자재 구분 한번 더 -->
-<!-- 					<input type="text" name="prod_code" id="search_prod" placeholder="prod"> -->
-<!-- 					<input type="text" name="raw_code" id="search_raw" placeholder="raw"> -->
-<!-- 			<br> -->
-	
 			<label>지역</label>
 				<input type="text" name="wh_addr"  placeholder="검색어를 입력해주세요">
 			
@@ -657,9 +538,6 @@
 			<td>번호</td>
 			<td>창고코드</td>
 			<td>창고명</td>
-<!-- 			<td>창고유형</td> -->
-<!-- 			<td>품번</td> -->
-<!-- 			<td>품명</td> -->
 			<td>지역</td>
 			<td>전화번호</td>
 			<td>사용여부</td>
@@ -673,19 +551,6 @@
 					<td>${i.count }</td>
 					<td id="whCode">${ww.wh_code}</td>
 					<td id="whName">${ww.wh_name}</td>
-<%-- 					<td>${ww.wh_dv}</td> --%>
-					
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${ww.wh_dv == '원자재'}"> --%>
-<%-- 							<td id="rawCode">${ww.raw_code }</td> --%>
-<%-- 							<td>${ww.raw.raw_name }</td> --%>
-<%-- 						</c:when> --%>
-<%-- 						<c:when test="${ww.wh_dv == '완제품'}"> --%>
-<%-- 							<td id="prodCode">${ww.prod_code }</td> --%>
-<%-- 							<td>${ww.prod.prod_name }</td> --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
-					
 					<td>${ww.wh_addr}</td>
 					<td>${ww.wh_tel}</td>
 				

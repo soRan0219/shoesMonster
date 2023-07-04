@@ -595,7 +595,7 @@ public class PerfomanceController {
 	
 	// 창고 추가 시 code값 가져가기
 	@ResponseBody
-	@RequestMapping(value = "whCode", method = RequestMethod.GET)
+	@RequestMapping(value = "/whCode", method = RequestMethod.GET)
 	public String getWhCode() {
 		
 		return service.getWhCode();
