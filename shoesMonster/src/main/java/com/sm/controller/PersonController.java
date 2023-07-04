@@ -332,16 +332,17 @@ public class PersonController {
 		} else {
 			cpvo.setPageSize(10);
 		}
+//		cpvo.setPageSize(2);
 		
 		// 페이지 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
 		pm.setClientPageVO(cpvo);
-		pm.setPageBlock(10);
+		pm.setPageBlock(5);
 		
 		List<OrderStatusVO> searchOrderStatusList = new ArrayList<>();
 		
 		// 검색 있을 때
-		if((search.get("client_code") != null && !search.get("client_code").equals("")) 
+		if((search.get("client_actname") != null && !search.get("client_actname").equals("")) 
 				|| (search.get("prod_code") != null && !search.get("prod_code").equals(""))
 				|| (search.get("emp_id") != null && !search.get("emp_id").equals(""))
 				|| (search.get("order_finish") != null && !search.get("order_finish").equals(""))
@@ -354,9 +355,9 @@ public class PersonController {
 			search.put("pageSize", cpvo.getPageSize());
 			
 			// 검색
-			pm.setTotalCount(osService.getSearchCountOrderStatus(search));
-			
 			searchOrderStatusList = osService.getSearchOrderStatus(search);
+			
+			pm.setTotalCount(osService.getSearchCountOrderStatus(search));
 			logger.debug("@@@ cnotroller 검색결과 list 호출 = " + searchOrderStatusList);
 			
 			model.addAttribute("search", search);
