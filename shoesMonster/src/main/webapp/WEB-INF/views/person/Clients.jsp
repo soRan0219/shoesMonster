@@ -415,10 +415,10 @@
 <!-- page content -->
 <div class="right_col" role="main">
 	
-	<h1>거래처 정보 관리</h1>
+	<h1 style="margin-left: 1%;">거래처 정보 관리</h1>
 
-	<div>
-		<form method="get">
+	<div style="margin-left: 1%;">
+		<form method="get" >
 			<input type="hidden" name="input" id="input" value="${input }">
 			거래처코드
 			<input type="text" name="search_client_code" id="search_client_code"> 
@@ -436,105 +436,133 @@
 
 	<hr>
 	
-	<div>
-	<form id="fr">
-	
-		거래처 총 ${pm.totalCount } 건
-		
-		<div style="float: right;">
-			<input type="button" value="추가" id="addButton" class="true">
-			<input type="button" value="수정" id="updateButton">
-			<input type="button" value="삭제" id="deleteButton" class="true">
-			<input type="button" value="취소" id="cancelButton">
-			<input type="button" value="저장" id="saveButton">
+	<div class="col-md-12 col-sm-12">
+		<div class="x_panel">
+			<form id="fr">
+
+				<div class="x_title">
+					<h2>거래처 목록</h2>
+
+					<span style="float: right; margin-top: 1%;"> 거래처 총 ${pm.totalCount } 건 </span>
+					<div class="clearfix"></div>
+				</div>
+
+				<div style="margin-bottom: 1%;">
+					<input type="button" value="추가" id="addButton" class="true">
+					<input type="button" value="수정" id="updateButton"> 
+					<input type="button" value="삭제" id="deleteButton" class="true"> 
+					<input type="button" value="취소" id="cancelButton"> 
+					<input type="button" value="저장" id="saveButton">
+				</div>
+
+<!--  overflow-x: auto; -->
+
+				<div style="overflow-x: auto;">
+<!-- 				<div> 화면 벗어나서 일단 스크롤 넣어둠-->
+					<table border="1" id="clientsTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+						<colgroup>
+						    <col style="width: 50px">
+						    <col style="width: 100px">
+						    <col style="width: 100px">
+						    <col style="width: 100px">
+						    <col style="width: 100px">
+						    <col style="width: 75px">
+						    <col style="width: 75px">
+						    <col style="width: 75px">
+						    <col style="width: 75px">
+						    <col style="width: 100px">
+						    <col style="width: 100px">
+						    <col style="width: 100px">
+						    <col style="width: 100px">
+						    <col style="width: 75px">
+						</colgroup>
+						<thead>
+							<tr class="headings">
+								<th></th>
+								<th>거래처코드</th>
+								<th>거래처명</th>
+								<th>거래처구분</th>
+								<th>사업자번호</th>
+								<th>업태</th>
+								<th>대표자</th>
+								<th>담당자</th>
+								<th>주소</th>
+								<th>상세주소</th>
+								<th>전화번호</th>
+								<th>휴대폰번호</th>
+								<th>팩스번호</th>
+								<th>email</th>
+								<th>비고</th>
+							</tr>
+						</thead>
+						<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
+							<c:if test="${vo.client_type == '전체' }">
+								<tr>
+									<td>${i.count }</td>
+									<td id="client_code">${vo.client_code}</td>
+									<td id="client_actname">${vo.client_actname}</td>
+									<td>${vo.client_type}</td>
+									<td>${vo.client_number}</td>
+									<td>${vo.client_sort}</td>
+									<td>${vo.client_ceo}</td>
+									<td>${vo.client_name}</td>
+									<td>${vo.client_addr}</td>
+									<td>${vo.client_addr2}</td>
+									<td>${vo.client_tel}</td>
+									<td>${vo.client_phone}</td>
+									<td>${vo.client_fax}</td>
+									<td>${vo.client_email}</td>
+									<td>${vo.client_note}</td>
+								</tr>
+							</c:if>
+
+							<c:if test="${vo.client_type == '발주처' }">
+								<tr>
+									<td>${i.count }</td>
+									<td id="client_code">${vo.client_code}</td>
+									<td id="client_actname">${vo.client_actname}</td>
+									<td>${vo.client_type}</td>
+									<td>${vo.client_number}</td>
+									<td>${vo.client_sort}</td>
+									<td>${vo.client_ceo}</td>
+									<td>${vo.client_name}</td>
+									<td>${vo.client_addr}</td>
+									<td>${vo.client_addr2}</td>
+									<td>${vo.client_tel}</td>
+									<td>${vo.client_phone}</td>
+									<td>${vo.client_fax}</td>
+									<td>${vo.client_email}</td>
+									<td>${vo.client_note}</td>
+								</tr>
+							</c:if>
+
+							<c:if test="${vo.client_type == '수주처' }">
+								<tr>
+									<td>${i.count }</td>
+									<td id="client_code">${vo.client_code}</td>
+									<td id="client_actname">${vo.client_actname}</td>
+									<td>${vo.client_type}</td>
+									<td>${vo.client_number}</td>
+									<td>${vo.client_sort}</td>
+									<td>${vo.client_ceo}</td>
+									<td>${vo.client_name}</td>
+									<td>${vo.client_addr}</td>
+									<td>${vo.client_addr2}</td>
+									<td>${vo.client_tel}</td>
+									<td>${vo.client_phone}</td>
+									<td>${vo.client_fax}</td>
+									<td>${vo.client_email}</td>
+									<td>${vo.client_note}</td>
+								</tr>
+							</c:if>
+						</c:forEach>
+					</table>
+				</div>
+			</form>
 		</div>
-	
-		<div class="table-responsive">
-			<table border="1" id="clientsTable" class="table table-striped jambo_table bulk_action">  
-				<tr class="headings">
-					<th></th>
-					<th>거래처코드</th>
-					<th>거래처명</th>
-					<th>거래처구분</th>
-					<th>사업자번호</th>
-					<th>업태</th>
-					<th>대표자</th>
-					<th>담당자</th>
-					<th>주소</th>
-					<th>상세주소</th>
-					<th>전화번호</th>
-					<th>휴대폰번호</th>
-					<th>팩스번호</th>
-					<th>email</th>
-					<th>비고</th>
-				</tr>
-				<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
-					<c:if test="${vo.client_type == '전체' }">
-						<tr>
-							<td>${i.count }</td>
-							<td id="client_code">${vo.client_code}</td>
-							<td id="client_actname">${vo.client_actname}</td>
-							<td>${vo.client_type}</td>
-							<td>${vo.client_number}</td>
-							<td>${vo.client_sort}</td>
-							<td>${vo.client_ceo}</td>
-							<td>${vo.client_name}</td>
-							<td>${vo.client_addr}</td>
-							<td>${vo.client_addr2}</td>
-							<td>${vo.client_tel}</td>
-							<td>${vo.client_phone}</td>
-							<td>${vo.client_fax}</td>
-							<td>${vo.client_email}</td>
-							<td>${vo.client_note}</td>
-						</tr>
-					</c:if>
-						
-					<c:if test="${vo.client_type == '발주처' }">
-						<tr>
-							<td>${i.count }</td>
-							<td id="client_code">${vo.client_code}</td>
-							<td id="client_actname">${vo.client_actname}</td>
-							<td>${vo.client_type}</td>
-							<td>${vo.client_number}</td>
-							<td>${vo.client_sort}</td>
-							<td>${vo.client_ceo}</td>
-							<td>${vo.client_name}</td>
-							<td>${vo.client_addr}</td>
-							<td>${vo.client_addr2}</td>
-							<td>${vo.client_tel}</td>
-							<td>${vo.client_phone}</td>
-							<td>${vo.client_fax}</td>
-							<td>${vo.client_email}</td>
-							<td>${vo.client_note}</td>
-						</tr>
-					</c:if>
-						
-					<c:if test="${vo.client_type == '수주처' }">
-						<tr>
-							<td>${i.count }</td>
-							<td id="client_code">${vo.client_code}</td>
-							<td id="client_actname">${vo.client_actname}</td>
-							<td>${vo.client_type}</td>
-							<td>${vo.client_number}</td>
-							<td>${vo.client_sort}</td>
-							<td>${vo.client_ceo}</td>
-							<td>${vo.client_name}</td>
-							<td>${vo.client_addr}</td>
-							<td>${vo.client_addr2}</td>
-							<td>${vo.client_tel}</td>
-							<td>${vo.client_phone}</td>
-							<td>${vo.client_fax}</td>
-							<td>${vo.client_email}</td>
-							<td>${vo.client_note}</td>
-						</tr>
-					</c:if>
-				</c:forEach>
-			</table>
-		</div>
-	</form>
 	</div>
 		
-		<div id="pagination">
+		<div id="pagination" style="margin-left: 1%;">
 			<c:if test="${pm.prev }">
 				<a href="/person/Clients?page=${pm.startPage - 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> ⏪ </a>
 			</c:if>
