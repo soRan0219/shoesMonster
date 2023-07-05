@@ -11,7 +11,7 @@
 	
 	// 발주 팝업
 	function roPopup() {
-		window.open("roPopup","거래처 목록","width=650, height=500, left=300, top=150, location=no");
+		window.open("roPopup","거래처 목록","width=800, height=700, left=300, top=150, location=no");
 	}
 	
 	// 발주 현황 상세페이지
@@ -127,7 +127,7 @@ function toggleDiv(divId) {
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					발주 목록 
+					발주 목록 <small>총 ${count1 }건</small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>

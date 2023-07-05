@@ -73,12 +73,10 @@
 
 	<form action="" method="get">
 
-		<label>품명</label> <input type="text" name="rawMaterial.raw_name"
-			placeholder="검색어를 입력해주세요"> <label>입고번호</label> <input
-			type="text" name="in_mat.in_num" placeholder="검색어를 입력해주세요">
-		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
-		<label>거래처명</label> <input type="text" name="clients.client_actname"
-			placeholder="검색어를 입력해주세요"> <input type="submit" class="btn btn-info" value="검색">
+		<label>품명</label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요">
+		<label>입고 번호</label> <input type="text" name="in_mat.in_num" placeholder="입고 번호를 입력해주세요">
+		<label>거래처명</label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요">
+		<input type="submit" class="btn btn-info" value="검색">
 
 	</form>
 
@@ -90,7 +88,7 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					입고 목록 <small>In_material</small>
+					입고 목록 <small>총 ${count1}건</small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li>
@@ -108,11 +106,6 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p>
-					입고 테이블
-					<code>Shoes Monseter</code>
-					since 2023
-				</p>
 				<div class="table-responsive">
 					<form action="" method="post">
 						<table class="table table-striped jambo_table bulk_action"
@@ -146,8 +139,7 @@
 									<tr class="even pointer">
 										<td class=" ">${rvo.in_mat.in_num }</td>
 										<td class=" ">${rvo.raw_order_num }</td>
-										<td class=" ">${rvo.rawMaterial.wh_code }<i
-											class="success fa fa-long-arrow-up"></i></td>
+										<td class=" ">${rvo.rawMaterial.wh_code }</td>
 										<td class=" ">${rvo.clients.client_actname }</td>
 										<td class=" ">${rvo.raw_code }</td>
 										<td class=" ">${rvo.rawMaterial.raw_name }</td>

@@ -601,12 +601,12 @@
     </select>
     
     <select id="out_matPage" parameterType="hashMap" resultType="com.sm.domain.Out_materialVO" resultMap="out_List">
-        SELECT om.out_num, o.order_code, c.client_actname, c.client_code, p.prod_code, p.prod_name, o.order_count,
-               p.prod_price, o.order_deliveryDate, om.out_date,om.out_YN, om.emp_id
-        FROM orders o
-        JOIN clients c ON c.client_code = o.client_code
-        JOIN product p ON p.client_code = c.client_code
-        JOIN out_material om ON om.prod_code = p.prod_code
+        SELECT om.out_num, o.order_code, c.client_actname, o.client_code, p.prod_code, p.prod_name, o.order_count,
+		       p.prod_price, o.order_deliveryDate, om.out_date,om.out_YN, om.emp_id
+		FROM orders o
+		LEFT JOIN out_material om ON o.order_code = om.order_code
+		LEFT JOIN product p ON p.prod_code = om.prod_code
+		LEFT JOIN clients c ON c.client_code = o.client_code
         order by om.out_num desc
         limit #{startPage}, #{pageSize}
     </select>
