@@ -331,7 +331,10 @@
 				r.req_code like concat ('%', #{req_code}, '%')
 			</if>
 			<if test="prod_code != ''">
-				and p.prod_code like concat ('%', #{prod_code}, '%')
+				and r.prod_code = #{prod_code}
+			</if>
+			<if test="raw_code != ''">
+				and r.raw_code = #{raw_code}
 			</if>
 		</where>
 	</select>
@@ -351,7 +354,10 @@
 				r.req_code like concat ('%', #{req_code}, '%')
 			</if>
 			<if test="prod_code != ''">
-				and p.prod_code like concat ('%', #{prod_code}, '%')
+				and r.prod_code = #{prod_code}
+			</if>
+			<if test="raw_code != ''">
+				and r.raw_code = #{raw_code}
 			</if>
 		</where>
 		limit #{start},#{cntPerPage}

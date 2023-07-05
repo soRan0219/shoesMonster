@@ -36,7 +36,7 @@
 	    	$('#cancelButton').hide();
 	    	$('#saveButton').hide();
 	    	
-	   		$('table tr:not(:first-child)').click(function(){
+	    	$('table tr:not(:first-child)').click(function(){
 	   			$(this).css('background', '#ccc');
 	    		
 	        		var client_code = $(this).find('#client_code').text();
@@ -450,8 +450,7 @@
 		</div>
 	
 		<div class="table-responsive">
-			<table border="1" id="clientsTable" class="table table-striped jambo_table bulk_action">
-			<thead>
+			<table border="1" id="clientsTable" class="table table-striped jambo_table bulk_action">  
 				<tr class="headings">
 					<th></th>
 					<th>거래처코드</th>
@@ -469,7 +468,6 @@
 					<th>email</th>
 					<th>비고</th>
 				</tr>
-			</thead>
 				<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
 					<c:if test="${vo.client_type == '전체' }">
 						<tr>
