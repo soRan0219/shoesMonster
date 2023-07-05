@@ -250,7 +250,6 @@ $(function() {
 	var isExecuted = false	
 	// ------------- 수정 ------------------
 	$('#modifyEmp').click(function() {
-		
 		$('#addEmp').attr("disabled", true);
 		$('#deleteEmp').attr("disabled", true);
 

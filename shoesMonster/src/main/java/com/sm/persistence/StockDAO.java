@@ -30,7 +30,10 @@ public interface StockDAO {
 		public List<StockVO> getStock(PageVO vo, StockVO svo) throws Exception;
 		
 		// 재고 실수량 
-        public void updateCount(int stock_count , String raw_code) throws Exception;
+        public void updateCount(String code, int newCount) throws Exception;
+        
+        // 재고 수정(팝업)
+        public List<StockVO> stockPopup(String code) throws Exception;
 		
         // 재고 그래프
         public Map<String, List<StockVO>> stockGraph1() throws Exception;

@@ -12,19 +12,19 @@ public class OrderStatusVO {
 	private String emp_id;
 	private int order_count;
 	private String client_code;
-	private String order_finish;
 	private String oreder_note;
+	private String prod_code;
 	
 	private ClientsVO clients;
 	private ProductVO prod;
+	private EmployeesVO employees;
 	private Out_materialVO out_mat;
 	
 	public OrderStatusVO() {
 		clients = new ClientsVO();
-//		out_mat = new Out_materialVO();
 		prod = new  ProductVO();
+		employees = new EmployeesVO();
 		
-//		clients = new ClientsVO();	
 	}
 	
 	

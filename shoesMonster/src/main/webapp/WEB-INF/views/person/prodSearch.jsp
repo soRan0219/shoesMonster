@@ -40,29 +40,25 @@
 
 </head>
 <body>
-	<h1>/workorder/prodSearch</h1>
+	<h1>/person/prodSearch.jsp</h1>
 	
-	${prodList }
+<%-- 	${prodList } --%>
 	
 	<table border="1">
 		<tr>
 			<th>품번</th>
 			<th>품명</th>
-			<th>카테고리</th>
 			<th>단위</th>
-			<th>색상</th>
-			<th>규격</th>
-			<th>거래처코드</th>
+			<th>수량</th>
+			<th>비고</th>
 		</tr>
 		<c:forEach var="prod" items="${prodList }">
 			<tr>
 				<td id="prodCode">${prod.prod_code }</td>
 				<td>${prod.prod_name }</td>
-				<td>${prod.prod_category }</td>
 				<td>${prod.prod_unit }</td>
-				<td>${prod.prod_color }</td>
 				<td>${prod.prod_size }</td>
-				<td>${prod.order_count }</td>
+				<td>${prod.prod_note }</td>
 			</tr>
 		</c:forEach>
 	</table>

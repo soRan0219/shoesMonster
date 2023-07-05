@@ -1,9 +1,13 @@
 package com.sm.controller;
 
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sm.domain.ClientPageMaker;
 import com.sm.domain.ClientPageVO;
@@ -24,6 +30,7 @@ import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
 import com.sm.domain.ManagementVO;
 import com.sm.domain.OrderStatusVO;
+import com.sm.domain.ProductVO;
 import com.sm.service.ClientsService;
 import com.sm.service.EmployeesService;
 import com.sm.service.OrderStatusService;
@@ -131,16 +138,98 @@ public class PersonController {
 	
 	//사원 수정 
 	@RequestMapping(value = "/modifyEmp", method = RequestMethod.POST)
-	public String modifyEmployees(EmployeesVO uvo) throws Exception {
+	public String modifyEmployees(MultipartHttpServletRequest multi, Model model,
+								  @RequestParam("emp_id") String emp_id) throws Exception {
 		logger.debug("modifyEmployees() 호출@@@@@");
-		logger.debug(" uvo : " + uvo);
+
+		// 인코딩
+		multi.setCharacterEncoding("UTF-8");
+		
+		// 파일 업로드
+		
+		// 다중 파일정보 저장(Map)
+		// 1. 파라메터 저장 2. 파일정보 저장
+		Map map = new HashMap();
+		
+		// 전달하는 파라메터정보를 저장
+		Enumeration enu = multi.getParameterNames();
+		
+		while(enu.hasMoreElements()){
+			String name = (String)enu.nextElement();
+			String value = multi.getParameter(name);
+			// logger.debug("name : " + name+", value : " + value);
+			map.put(name, value);
+		}
+		
+		logger.debug("전달된 파라메터 정보(이름, 값) 저장완료(파일정보 제외)");
+		
+		logger.debug("map : " + map);
+		
+		// 파일정보(파라메터) + 파일업로드 처리
+		List fileList = fileProcess(multi,emp_id);
+		
+		map.put("fileList", fileList);
+		
+		logger.debug("map : " + map);
+		
+		model.addAttribute("map",map);
 		
 		//서비스 - 사원 수정
-		empService.modifyEmployees(uvo);
-		String emp_id = uvo.getEmp_id();
+		empService.modifyEmployees(map);
+		
 		
 		return "redirect:/person/empform?emp_id="+emp_id;
 	} //modifyEmployees()
+	
+	public List<String> fileProcess(MultipartHttpServletRequest multi, String emp_id) throws Exception {
+		logger.debug("파일정보 저장 + 파일업로드 ");
+		
+		// 1) 파일의 정보(파라메터)
+		List<String> fileList = new ArrayList<String>();
+		
+		Iterator<String> fileNames = multi.getFileNames();
+		
+		while(fileNames.hasNext()) {
+			// 파일의 정보를 전달하는 input태그 이름(파라메터명)
+			String fileName = fileNames.next();
+			logger.debug("fileName : " + fileName);
+			MultipartFile mFile = multi.getFile(fileName);
+			
+			String oFileName = mFile.getOriginalFilename();
+			logger.debug("fileName(파일명)" + oFileName);
+			
+			// 파일의 정보를 저장
+			fileList.add(oFileName);
+			
+			empService.updateEmployeesImg(oFileName,emp_id);
+			
+			
+			// 2) 파일업로드
+			File file = new File("C:\\spring\\upload"+"\\"+fileName);
+			
+			if (mFile.getSize() != 0) {
+				// 폼태그에서 업로드한 파일의 정보가 있을 때
+				
+				if (!file.exists()) { // 업로드 폴더에 파일이 없을 때
+					
+					if(file.getParentFile().mkdirs()) {
+						file.createNewFile();
+					} // file.getParentFile().mkdirs()
+					
+				} //!file.exists()
+
+				// 업로드에 필요한 임시 파일정보를 실제 업로드 위치로 이동
+				mFile.transferTo(new File("C:\\spring\\upload"+"\\"+oFileName));
+				
+			} // mFile.getSize() != 0
+			
+		} // wile문
+		
+		logger.debug("파일정보 저장, 파일업로드 완료");
+		
+		return fileList;
+	} // fileProcess()
+	
 	
 	// 사원 상세 조회 POST
 	@ResponseBody
@@ -336,8 +425,9 @@ public class PersonController {
 	// ================================================ 수주 현황 ==========================================================
 	
 	// http://localhost:8088/person/orderStatus
+	// http://localhost:8080/person/orderStatus
 	@RequestMapping(value="/orderStatus", method = RequestMethod.GET)
-	public void orderStatusGET(Model model, ClientPageVO cpvo, 
+	public void orderStatusGET(Model model, ClientPageVO cpvo, ProductVO pvo,
 								@RequestParam HashMap<String, Object> search, 
 								@RequestParam(value="input", required = false) Object input) throws Exception {
 		logger.debug("@@@ cnotroller : orderStatusGET() 호출 @@@");
@@ -347,22 +437,20 @@ public class PersonController {
 			int pageSize = Integer.parseInt(search.get("pageSize").toString());
 			cpvo.setPageSize(pageSize);
 		} else {
-			cpvo.setPageSize(10);
+			cpvo.setPageSize(2);
 		}
-//		cpvo.setPageSize(2);
 		
 		// 페이지 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
 		pm.setClientPageVO(cpvo);
-		pm.setPageBlock(5);
+		pm.setPageBlock(2);
 		
 		List<OrderStatusVO> searchOrderStatusList = new ArrayList<>();
 		
 		// 검색 있을 때
-		if((search.get("client_actname") != null && !search.get("client_actname").equals("")) 
-				|| (search.get("prod_code") != null && !search.get("prod_code").equals(""))
+		if(		   (search.get("prod_code") != null && !search.get("prod_code").equals(""))
 				|| (search.get("emp_id") != null && !search.get("emp_id").equals(""))
-				|| (search.get("order_finish") != null && !search.get("order_finish").equals(""))
+				|| (search.get("client_code") != null && !search.get("client_code").equals(""))
 				|| (search.get("order_date_fromDate") != null && !search.get("order_date_fromDate").equals(""))
 				|| (search.get("order_date_toDate") != null && !search.get("order_date_toDate").equals(""))
 				|| (search.get("order_deliveryDate_fromDate") != null && !search.get("order_deliveryDate_fromDate").equals(""))
@@ -376,6 +464,7 @@ public class PersonController {
 			
 			pm.setTotalCount(osService.getSearchCountOrderStatus(search));
 			logger.debug("@@@ cnotroller 검색결과 list 호출 = " + searchOrderStatusList);
+			
 			
 			model.addAttribute("search", search);
 			model.addAttribute("searchOrderStatusList", searchOrderStatusList);
@@ -406,33 +495,28 @@ public class PersonController {
 		} // else
 	} // orderStatusGET()
 	
-	// 팝업 검색
-//	@RequestMapping(value = "/osSearch", method = RequestMethod.GET)
-//	public String popUpGET(Model model, @RequestParam("type") String type, 
-//			@RequestParam("input") String input) throws Exception {
-//		logger.debug("@@@ cnotroller : popUpGET() 호출");
-//		logger.debug("@@@ cnotroller : type = " + type);
-//		
-//		
-//		if(type.equals("line")) {
-//			return "redirect:/performance/line?input="+input;
-//		}
-//		
-//		else if(type.equals("prod")) {
-//			return "redirect:/performance/product?input="+input;
-//
-//		}
-//		
-//		else if(type.equals("client")) {
-//			return "redirect:/person/Clients?input="+input;
-//		}
-//		
-//		else /* if(type.equals("order"))*/ {
-//			return "redirect:/person/orderStatus?input="+input;
-//		}
-//		
-//		
-//	} //popUpGET()
+	// 거래처, 사원, 품목
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String popUpGET(Model model, @RequestParam("type") String type, 
+			@RequestParam("input") String input) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: popUpGET() 호출");
+		logger.debug("@@@@@ CONTROLLER: type = " + type);
+		
+		
+		if(type.equals("client")) {
+			return "redirect:/person/Clients?input="+input;
+		}
+		
+		else if(type.equals("employee")) {
+			return "redirect:/person/empinfo?input="+input;
+
+		}
+		
+		else /* if(type.equals("prod")) */ {
+			return "redirect:/erformance/product?input="+input;
+		}
+		
+	} //popUpGET()
 	
 	// 수주 등록
 	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
@@ -445,7 +529,7 @@ public class PersonController {
 		return "redirect:/person/orderStatus";
 	}
 	
-	// 거래처 삭제
+	// 수주 삭제
 	@RequestMapping(value="/deleteOrder", method = RequestMethod.POST)
 	public String deleteOrder(@RequestParam(value="checked[]") List<String> checked) throws Exception {
 		logger.debug("@@@ cnotroller : deleteOrder() 호출 @@@");
@@ -469,27 +553,4 @@ public class PersonController {
 	
 	// ===================================================== 수주 현황 ==========================================================
 	
-	// ===================================================== 수주 관리 ==========================================================
-	
-	// http://localhost:8088/person/orderManage
-	// 수주 관리 목록 조회
-	@RequestMapping(value = "/orderManage", method = RequestMethod.GET)
-	public void orderManageGET(Model model) throws Exception {
-		logger.debug(" orderManageGET() 호출@@@@@ ");
-		
-		List<ClientsVO> orderManageList = osService.getOrderManageList();
-		logger.debug("orderManageList : " + orderManageList);
-
-		model.addAttribute("orderManageList", orderManageList);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// ===================================================== 수주 관리 ==========================================================
 }

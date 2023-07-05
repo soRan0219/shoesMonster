@@ -24,9 +24,9 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	} //getAllWorkOrder()
 
 	@Override
-	public void regWorkOrder(WorkOrderVO vo) throws Exception {
+	public int regWorkOrder(WorkOrderVO vo) throws Exception {
 		// DAO - 작업지시 등록
-		wdao.insertWorkOrder(vo);
+		return wdao.insertWorkOrder(vo);
 	} //regWorkOrder()
 
 	@Override
@@ -42,9 +42,9 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	} //getWorkOrder()
 	
 	@Override
-	public void modifyWorkOrder(WorkOrderVO uvo) throws Exception {
+	public int modifyWorkOrder(WorkOrderVO uvo) throws Exception {
 		// DAO - 작업지시 수정
-		wdao.updateWorkOrder(uvo);
+		return wdao.updateWorkOrder(uvo);
 	} //modifyWorkOrder()
 
 	@Override

@@ -15,6 +15,7 @@ $(document).ready(function() {
 	  // 수정 버튼 클릭 시
 	  $('#modifyEmp').click(function() {
 	    // 첫 번째 테이블 처리
+	    $('#empImg').append("<input type='file' name = 'file' accept='image/*'>");
 	    $('#empTable tr').each(function(rowIndex) {
 	      var $cells = $(this).find('td'); // 현재 행의 셀들을 선택
 	      
@@ -84,9 +85,6 @@ $(document).ready(function() {
 	  });
 	  
 	  $('#saveEmp').click(function() {
-			
-			$('#fr').attr("action","/person/modifyEmp");
-			$('#fr').attr("method","post");
 			$('#fr').submit();
 
 	  }); //save
@@ -106,20 +104,11 @@ $(document).ready(function() {
 		</div>
 		<div>
 			<h1>상세보기</h1>
-			<div style="border: 1px solid;">
-			<form action="/fileUpload" method="post" enctype="multipart/form-data">
-				<img alt="" src="/imgDown?fileName=${vo.img }">
-				<input type='hidden' name = 'emp_id' value="${vo.emp_id }">
-				<input type='file' name = 'file' accept='image/*'>
-					<c:forEach var="list" items="${map.fileList }">
-					</c:forEach>
-						
-				<input type="submit" value="사진 변경">
-			</form>
+			<form id="fr" action="/person/modifyEmp" method="post" enctype="multipart/form-data">
+			<div id="empImg" style="border: 1px solid; width: 300px; height: 230px;">
+				<img alt="" src="/imgDown?fileName=${vo.file }" width="300px" height="200px">
 			</div>
 			
-			
-			<form id = "fr">
 				<table border="1" style="width: 100%" id="empTable">
 					<tr>
 						<th>사원번호</th>

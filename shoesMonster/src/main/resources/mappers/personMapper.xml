@@ -92,7 +92,7 @@
  	<!-- 사원 조회 -->
 	
 	<!-- 사원 수정 -->
-	<update id="updateEmployees">
+	<update id="updateEmployees" parameterType="hashMap">
 		update employees
 		set emp_id=#{emp_id}, emp_pw=#{emp_pw}, emp_name=#{emp_name}, emp_department=#{emp_department}, 
 			emp_position=#{emp_position}, emp_email=#{emp_email}, emp_phone=#{emp_phone},
@@ -104,7 +104,7 @@
 	
 	<update id="updateEmployeesImg" parameterType="hashMap">
 		update employees
-		set img=#{img}
+		set file=#{file}
 		where emp_id=#{emp_id}
 	</update>
 	<!-- 사원 수정 -->
@@ -126,7 +126,7 @@
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
 		select * from clients
 		order by client_code ASC
-		limit #{startPage}, #{pageSize}
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 거래처 목록 불러오기 -->
 	
@@ -213,14 +213,13 @@
 			<result column="order_code" property="order_code" />
 			<result column="order_date" property="order_date" />
 			<result column="order_deliveryDate" property="order_deliveryDate" />
-			<result column="emp_id" property="emp_id" />
 			<result column="order_count" property="order_count" />
 			<result column="client_code" property="client_code" />
-<!-- 			<result column="order_finish" property="order_finish" /> -->
+			<result column="prod_code" property="prod_code" />
 			<result column="order_note" property="order_note" />
+			<result column="emp_id" property="emp_id" />
 	
 		<collection property="prod" ofType="com.sm.domain.ProductVO">
-			<result column="prod_code" property="prod_code" />
 			<result column="prod_name" property="prod_name" />
 			<result column="prod_unit" property="prod_unit" />
 		</collection>
@@ -228,14 +227,19 @@
 		<collection property="clients" ofType="com.sm.domain.ClientsVO">
 			<result column="client_actname" property="client_actname" />
 		</collection>
+		
+		<collection property="employees" ofType="com.sm.domain.EmployeesVO">
+			<result column="emp_name" property="emp_name" />
+		</collection>
   </resultMap>
 	
 	<select id="orderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList">
-		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_id, p.prod_code, p.prod_name, 
-			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
+		SELECT o.*, p.prod_name, p.prod_unit,c.client_actname ,e.emp_name
 		from orders o
-		JOIN product p ON p.client_code = o.client_code
 		JOIN clients c ON c.client_code = o.client_code
+		JOIN product p ON p.prod_code = o.prod_code
+		JOIN employees e ON e.emp_id = o.emp_id
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
 	
@@ -250,15 +254,14 @@
     <resultMap type="com.sm.domain.OrderStatusVO" id="orderStatusList2">
 			<result column="order_code" property="order_code" />
 			<result column="order_date" property="order_date" />
-			<result column="order_deliveryDate" property="order_deliveryDate" />
 			<result column="emp_id" property="emp_id" />
+			<result column="order_deliveryDate" property="order_deliveryDate" />
 			<result column="order_count" property="order_count" />
 			<result column="client_code" property="client_code" />
-<!-- 			<result column="order_finish" property="order_finish" /> -->
 			<result column="order_note" property="order_note" />
+			<result column="prod_code" property="prod_code" />
 	
 		<collection property="prod" ofType="com.sm.domain.ProductVO">
-			<result column="prod_code" property="prod_code" />
 			<result column="prod_name" property="prod_name" />
 			<result column="prod_unit" property="prod_unit" />
 		</collection>
@@ -266,37 +269,36 @@
 		<collection property="clients" ofType="com.sm.domain.ClientsVO">
 			<result column="client_actname" property="client_actname" />
 		</collection>
+		
+		<collection property="employees" ofType="com.sm.domain.EmployeesVO">
+			<result column="emp_name" property="emp_name" />
+		</collection>
   </resultMap>
 
 	
 	<select id="searchOrderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList2">
-		select o.order_code, o.order_date, o.client_code, c.client_actname, o.emp_id, p.prod_code, p.prod_name, 
-			   p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
-		from orders o
-		JOIN product p ON p.client_code = o.client_code
+		SELECT o.*, p.prod_name, p.prod_unit,c.client_actname ,e.emp_name
+		FROM orders o
 		JOIN clients c ON c.client_code = o.client_code
+		JOIN product p ON p.prod_code = o.prod_code
+		JOIN employees e ON e.emp_id = o.emp_id
+		
 		<where>
 			<if test="client_code != null and client_code != ''">
-				o.client_code Like CONCAT ('%',#{client_code},'%')
-			</if>
-			<if test="client_actname != null and client_actname != ''">
-				c.client_actname Like CONCAT ('%',#{client_actname},'%')
+				o.client_code = #{client_code}
 			</if>
 			<if test="(order_date_fromDate!=null and !order_date_fromDate.equals('')) and (order_date_toDate!=null and !order_date_toDate.equals(''))">
 				AND (order_date &gt;= #{order_date_fromDate} AND order_date &lt;= #{order_date_toDate}) 
 			</if> 
 			<if test="prod_code != null and prod_code != ''">
-				AND p.prod_code Like CONCAT ('%',#{prod_code},'%')
+				AND o.prod_code = #{prod_code}
 			</if>
 			<if test="emp_id != null and emp_id != ''">
-				AND o.emp_id Like CONCAT ('%',#{search_emp_id},'%')
+				AND o.emp_id = #{emp_id}
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
 			</if> 
-<!-- 			<if test="order_finish != '전체'"> -->
-<!-- 				AND order_finish Like CONCAT ('%',#{order_finish},'%') -->
-<!-- 			</if> -->
 		</where>
 		LIMIT #{startPage}, #{pageSize}
 	</select>
@@ -304,59 +306,56 @@
 	
 	<!-- 수주 현황 검색 개수 -->
 	<select id="searchOrderStatusCnt" parameterType="hashMap" resultType="int">
-		select count(*)
-		from orders o
-<!-- 		JOIN product p ON p.client_code = o.client_code -->
+		SELECT count(*) FROM orders o
 		JOIN clients c ON c.client_code = o.client_code
+		JOIN product p ON p.prod_code = o.prod_code
+		JOIN employees e ON e.emp_id = o.emp_id
 		
 		<where>
-			<if test="client_actname != null and client_actname != ''">
-				c.client_actname Like CONCAT ('%',#{client_actname},'%')
+			<if test="client_code != null and client_code != ''">
+				o.client_code = #{client_code}
 			</if>
 			<if test="(order_date_fromDate!=null and !order_date_fromDate.equals('')) and (order_date_toDate!=null and !order_date_toDate.equals(''))">
 				AND (order_date &gt;= #{order_date_fromDate} AND order_date &lt;= #{order_date_toDate}) 
 			</if> 
 			<if test="prod_code != null and prod_code != ''">
-				AND p.prod_code Like CONCAT ('%',#{prod_code},'%')
+				AND o.prod_code = #{prod_code}
 			</if>
 			<if test="emp_id != null and emp_id != ''">
-				AND o.emp_id Like CONCAT ('%',#{emp_id},'%')
+				AND o.emp_id = #{emp_id}
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
 			</if> 
-<!-- 			<if test="order_finish != '전체'"> -->
-<!-- 				AND order_finish Like CONCAT ('%',#{order_finish},'%') -->
-<!-- 			</if> -->
 		</where>
 	</select>
 	<!-- 수주 현황 검색 개수 -->
 	
 	<!-- 수주 등록 -->
 	<insert id="registOrder">
-		INSERT ALL
-		INTO orders VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id}, #{order_count}, #{client_code})
-		INTO clients VALUES (#{client_actname})
-		SELECT (order_code, order_date, order_deliveryDate, emp_id, order_count, client_code, client_actname) 
+		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_id,
+					order_count, client_code, prod_code) 
+		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id},
+				#{order_count}, #{client_code}, #{prod_code})
+<!-- 		orders에 있는 값만 저장하고 나머지값은,,,받아와서 저장,,,,음,, -->
 	</insert>
 	<!-- 수주 등록 -->
 	
-	<!-- 수주 삭제 -->
-	<delete id="deleteOrder">
+	<!-- 수주 삭제 --> 
+	<update id="deleteOrder">
 		delete from orders
 		where order_code=#{order_code}
-	</delete>
-	<!-- 수주 삭제 -->
-	
-	<!-- 수주 수정 -->
-	<update id="updateOrder">
-		update clients
-		set client_code=#{client_code}, client_actname=#{client_actname}, client_type=#{client_type}, client_number=#{client_number}, client_sort=#{client_sort},
-		    client_ceo=#{client_ceo}, client_name=#{client_name}, client_addr=#{client_addr}, client_addr2=#{client_addr2}, client_tel=#{client_tel},
-		    client_phone=#{client_phone}, client_fax=#{client_fax}, client_email=#{client_email}, client_note=#{client_note}
-		where client_code=#{client_code}
 	</update>
-	<!-- 수주 수정 -->
+ 	<!-- 수주 삭제 --> 
+ 	
+	<!-- 수주 수정 --> 
+	<update id="updateOrder">
+		UPDATE orders
+		SET order_code=#{order_code}, order_date=#{order_date}, order_deliveryDate= #{order_deliveryDate},
+		emp_id=#{emp_id},order_count=#{order_count},client_code=#{client_code},prod_code=#{prod_code}
+		WHERE order_code=#{order_code}
+	</update>
+ 	<!-- 수주 수정 --> 
 <!-- ===================================================== 수주 현황 ================================================================== -->
 	
 	

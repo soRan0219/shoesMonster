@@ -2,6 +2,7 @@ package com.sm.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sm.domain.ClientPageVO;
 import com.sm.domain.EmployeesVO;
@@ -39,10 +40,10 @@ public interface EmployeesService {
 	public EmployeesVO getEmployees(String emp_id) throws Exception;
 	
 	//사원 수정
-	public void modifyEmployees(EmployeesVO uvo) throws Exception;
+	public void modifyEmployees(Map map) throws Exception;
 	
 	// 사원 사진
-	public void updateEmployeesImg(String img,String emp_id) throws Exception;
+	public void updateEmployeesImg(String file,String emp_id) throws Exception;
 
 		
 	

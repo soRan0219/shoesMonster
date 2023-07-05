@@ -19,11 +19,11 @@ public class EmployeesVO {
 	private String emp_file;
 	private String emp_hiredate;
 	private String emp_tel;
-	private String img;
+	private String file;
 	
 	private String hyphenPhone;
 	private String hyphenEmail;
-	
+	 
 	public void setEmp_ehone(String emp_phone) {
 		this.emp_phone = emp_phone;
 		this.hyphenPhone = emp_phone.replace("-", "");
@@ -33,6 +33,16 @@ public class EmployeesVO {
 		this.emp_email = emp_email;
 		this.hyphenEmail = emp_email.replace("-", "");
 	}
+
+	public String getEmp_id() {
+		return emp_id;
+	}
+
+	public void setEmp_id(String emp_id) {
+		this.emp_id = emp_id;
+	}
+
+	
 	
 	
 	

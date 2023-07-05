@@ -2,6 +2,7 @@ package com.sm.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,13 +66,13 @@ public class EmployeesServiceImpl implements EmployeesService{
 	}
 
 	@Override
-	public void modifyEmployees(EmployeesVO uvo) throws Exception {
-		empdao.updateEmployees(uvo);
+	public void modifyEmployees(Map map) throws Exception {
+		empdao.updateEmployees(map);
 	}
 
 	@Override
-	public void updateEmployeesImg(String img, String emp_id) throws Exception {
-		empdao.updateEmployeesImg(img,emp_id);
+	public void updateEmployeesImg(String file, String emp_id) throws Exception {
+		empdao.updateEmployeesImg(file,emp_id);
 		
 	}
 

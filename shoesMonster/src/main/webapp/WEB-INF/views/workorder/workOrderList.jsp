@@ -196,11 +196,6 @@
 					openWindow("line", "line_code");
 				}); //lineCode click
 
-// 				//품번 검색 
-// 				$('#prod_code').click(function() {
-// 					openWindow("prod", "prod_code");
-// 				}); //prodCode click
-
 				//수주코드 검색
 				$('#order_code').click(function() {
 					openWindow("order", "order_code");
@@ -233,10 +228,24 @@
 				$('#fr').each(function() {
 					this.reset();
 				});
-			}); //cacle click
+			}); //cancle click
 
 		}); //add click
 
+		
+		
+		let queryString = window.location.search;
+		let urlParams = new URLSearchParams(queryString);
+		var fromController = urlParams.get("woInsert");
+		
+		console.log(fromController);
+		
+		if(fromController==0) {
+			if(confirm("재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?")) {
+				location.href = "/stock/raw_order";
+			}
+		}
+		
 		
 		var isExecuted = false;
 		/////////////// 수정 //////////////////////////////
@@ -328,11 +337,6 @@
 								openWindow("line","line_code");
 							}); //lineCode click
 	
-// 							//품번 검색 
-// 							$('#prod_code').click(function() {
-// 								openWindow("prod","prod_code");
-// 							}); //prodCode click
-	
 							//수주코드 검색
 							$('#order_code').click(function() {
 								openWindow("order","order_code");
@@ -367,6 +371,18 @@
 
 		}); //modify click
 
+		
+		queryString = window.location.search;
+		urlParams = new URLSearchParams(queryString);
+		var fromController = urlParams.get("woModify");
+		
+		console.log(fromController);
+		
+		if(fromController==0) {
+			if(confirm("재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?")) {
+				location.href = "/stock/raw_order";
+			}
+		}
 		
 		
 		/////////////// 삭제 //////////////////////////////
@@ -603,7 +619,7 @@
 	</div>
 
 	<br><br>
-
+	
 	
 		<button id="add" class="true">추가</button>
 		<button id="modify">수정</button>
@@ -668,7 +684,8 @@
 		</div>
 
 	<div id="detail"></div>
-
+	
+	
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>

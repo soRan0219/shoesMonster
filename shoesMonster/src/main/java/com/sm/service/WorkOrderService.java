@@ -12,7 +12,7 @@ public interface WorkOrderService {
 	public List<WorkOrderVO> getAllWorkOrder(LineWhPageVO pvo) throws Exception;
 	
 	//작업지시 등록
-	public void regWorkOrder(WorkOrderVO vo) throws Exception;
+	public int regWorkOrder(WorkOrderVO vo) throws Exception;
 	
 	//작업지시 삭제
 	public void removeWorkOrder(List<String> checked) throws Exception;
@@ -21,7 +21,7 @@ public interface WorkOrderService {
 	public WorkOrderVO getWorkOrder(String work_code) throws Exception;
 	
 	//작업지시 수정
-	public void modifyWorkOrder(WorkOrderVO uvo) throws Exception;
+	public int modifyWorkOrder(WorkOrderVO uvo) throws Exception;
 	
 	//작업지시 검색
 	public List<WorkOrderVO> searchWorkOrder(HashMap<String, Object> search) throws Exception;

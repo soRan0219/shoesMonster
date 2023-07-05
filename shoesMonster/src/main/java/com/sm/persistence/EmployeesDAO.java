@@ -2,6 +2,7 @@ package com.sm.persistence;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sm.domain.ClientPageVO;
 import com.sm.domain.EmployeesVO;
@@ -41,8 +42,8 @@ public interface EmployeesDAO {
 	public EmployeesVO readEmployees(String emp_id) throws Exception;
 	
 	// 사원 수정
-	public void updateEmployees(EmployeesVO uvo) throws Exception;
+	public void updateEmployees(Map map) throws Exception;
 	
 	// 사원 사진 
-	public void updateEmployeesImg(String img,String emp_id) throws Exception;
+	public void updateEmployeesImg(String file,String emp_id) throws Exception;
 }

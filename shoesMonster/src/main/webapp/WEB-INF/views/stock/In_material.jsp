@@ -4,17 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file="../include/header.jsp"%>
-	
-
-
-<style type="text/css">
-
-</style>
 
 <!-- page content -->
 <div class="right_col" role="main">
 
 	<h1>입고 관리</h1>
+
 
 	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input> <input
 		type="button" value="미입고" class="btn btn-info" onclick="show1()"></input> 
@@ -84,6 +79,7 @@
 		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
 		<label>거래처명</label> <input type="text" name="clients.client_actname"
 			placeholder="검색어를 입력해주세요"> <input type="submit" class="btn btn-info" value="검색">
+
 	</form>
 
 	<hr>
@@ -97,7 +93,8 @@
 					입고 목록 <small>In_material</small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-expanded="false"><i
@@ -164,9 +161,13 @@
 										<td class=" ">${rvo.in_mat.in_date }</td>
 										<td class=" ">${rvo.emp_id }</td>
 										<td class="a-right a-right ">${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
-										<td class=" "><button type="submit" class="btn btn-info" name="in_Button"
-												value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고
-												처리</button></td>
+
+										<td class=" ">
+										<c:if test="${rvo.in_mat.in_num == null}">
+											<button type="submit" name="in_Button" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+										</c:if>
+										</td>
+
 									</tr>
 
 								</c:forEach>

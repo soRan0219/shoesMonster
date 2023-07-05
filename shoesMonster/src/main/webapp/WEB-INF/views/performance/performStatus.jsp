@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>생산실적 현황</title>
+<%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -46,7 +42,7 @@
 					}
 					for(var i=0; i<prod.length; i++) {
 						var arr = [
-							prod[i].workOrder.prod_code,
+							prod[i].prod_code,
 							prod[i].perform_qt,
 							prod[i].perform_fair,
 							prod[i].perform_defect
@@ -110,9 +106,9 @@
 			
 		}); //jQuery
 	</script>
-</head>
-
-<body>
+	
+<!-- page content -->
+<div class="right_col" role="main">
 	<h1> 생산실적 현황</h1>
 	
 	
@@ -121,6 +117,7 @@
 	<div id="chart_date" style="width: 900px; height: 500px;"></div>
 	
 	
-	
-</body>
-</html>
+</div>
+<!-- /page content -->
+
+<%@ include file="../include/footer.jsp"%>
