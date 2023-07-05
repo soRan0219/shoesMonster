@@ -44,6 +44,31 @@ function getToday() {
 
 	return year + "-" + month + "-" + day;
 } //getToday()
+
+// 팝업 옵션
+const popupOpt = "top=60,left=140,width=600,height=600";
+
+//검색 팝업
+function openWindow(search, inputId) {
+ 	var url = "/workorder/search?type=" + search + "&input=" + inputId;
+ 	var popup = window.open(url, "", popupOpt);
+} //openWindow()
+   
+
+// 거래처 검색 
+function serchClient(inputId){
+  	openWindow("client",inputId);
+}
+
+// 완제품 검색
+function serchProd(inputId){
+  	openWindow("prod",inputId);
+}
+
+// 담당자 검색
+function serchEmp(inputId){
+  	openWindow("emp",inputId);
+}
 	
 
 //팝업창 옵션
@@ -484,13 +509,16 @@ $(function(){
 	
 	<form method="get">
 		<input type="hidden" name="input" id="input" value="${input }">
-		업체 <input type="text" name="client_actname" >
+		<input type="hidden" name="client_code" id="client_code9999" >
+		업체 <input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
 		수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
 				  <input type="text" name="order_date_toDate" id="order_date_toDate">
-		품번 <input type="text" name="prod_code">
+		<input type="hidden" name="prod_code" id="prod_code9999">
+		품명 <input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')">
 		<input type="submit" value="조회">
 		<br>
-		담당자 <input type="text" name="emp_name" id="emp_name">
+		<input type="hidden" name="emp_id" id="s_emp_id"> 
+		담당자 <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')">
 		납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
 				    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
 	</form>
@@ -544,15 +572,15 @@ $(function(){
 	
 	<div id="pagination">
 		<c:if test="${pm.prev }">
-			<a href="/person/orderStatus?page=${pm.startPage - 1 }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_name=${search.emp_name}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
+			<a href="/person/orderStatus?page=${pm.startPage - 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
 		</c:if>
 		
 		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-			<a href="/person/orderStatus?page=${page }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_name=${search.emp_name}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
+			<a href="/person/orderStatus?page=${page }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
 		</c:forEach>
 
 		<c:if test="${pm.next }">
-			<a href="/person/orderStatus?page=${pm.endPage + 1 }&client_actname=${search.client_actname}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_name=${search.emp_name}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
+			<a href="/person/orderStatus?page=${pm.endPage + 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
 		</c:if>
 	</div>
 
