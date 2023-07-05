@@ -46,7 +46,7 @@
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
 						<a href="../smmain/smMain" class="site_title">
-							<img src="/resources/images/shoes.png" width="50" height="50"> </i>
+							<img src="/resources/images/logo1.png" width="100" height="100"> </i>
 							<span>Shoes Monster!</span></a>
 					</div>
 

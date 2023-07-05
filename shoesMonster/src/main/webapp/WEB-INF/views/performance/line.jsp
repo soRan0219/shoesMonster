@@ -487,10 +487,11 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h2>라인관리</h2>
+	<h2 style="margin-left: 1%;">라인관리</h2>
 
+<div style="margin-left: 1%;">
 	<form action="" method="get">
-		
+	<fieldset>
 		<input type="hidden" name="input" id="input" value="${input}">
 		
 		<label>라인코드</label>
@@ -500,55 +501,70 @@
 			<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
 		
 		<br>
-		
-<!-- 		<label>사용여부</label> -->
-<!-- 			<select name="line_use" > -->
-<!-- 				<option selected value="3">전 체</option> -->
-<!-- 				<option value="1">Y</option> -->
-<!-- 				<option value="2">N</option> -->
-<!-- 			</select> -->
 
 		<label>사용여부</label>
 			<input type="radio" name="line_use" value="3" checked>전 체
 			<input type="radio" name="line_use" value="1">Y
 			<input type="radio" name="line_use" value="2">N
 			
-			
-		
 		<label>작업장</label>
 			<input type="text" name="line_place" placeholder="검색어를 입력해주세요">
 				
-
 		 <input type="submit" value="검색">
+		</fieldset>
 	</form>
-	
-<!-- //////////////////////////////////////////////////////////////////////// -->	
-	<br>
-	
-	<button id="add" class="true">추가</button>
-	<button id="modify" >수정</button>
-	<button id="delete" class="true">삭제</button>
-	<button type="reset" id="cancle" >취소</button>
-	<button type="submit" id="save">저장</button>
-	<button onclick="location.reload()">새로고침</button>
+</div>
 
-	<br>
-<!-- //////////////////////////////////////////////////////////////////////// -->	
+<hr>
 
-<form id="fr">
-	<table border="1" id="lineTable">
-	<a>총 ${lwpm.totalCount } 건</a>
-		<tr>	
-			<th>번호</th>
-			<th>라인코드</th>
-			<th>라인명</th>
-			<th>작업장</th>
-			<th>사용여부</th>
-			<th type='hidden' style='display: none;'>등록자 코드</th>
-			<th>등록자</th>
-			<th>등록일</th>
-			<th>비고</th>
-		</tr>
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form id="fr">
+
+			<div class="x_title">
+				<h2>라인 관리</h2>
+				
+				<span style="float: right; margin-top: 1%;">총 ${lwpm.totalCount } 건</span>
+					<div class="clearfix"></div>
+				</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+	<div style="margin-bottom: 1%;">
+		<button id="add" class="true">추가</button>
+		<button id="modify" >수정</button>
+		<button id="delete" class="true">삭제</button>
+		<button type="reset" id="cancle" >취소</button>
+		<button type="submit" id="save">저장</button>
+		<button onclick="location.reload()">새로고침</button>
+	</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+	
+	<div style="overflow-x: auto;">
+	
+	<table border="1" id="lineTable"
+	class="table table-striped jambo_table bulk_action" style="text-align:center;">
+		<colgroup>
+		    <col style="width: 50px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 150px">
+		</colgroup>
+		<thead>
+			<tr class="headings">	
+				<th>번호</th>
+				<th>라인코드</th>
+				<th>라인명</th>
+				<th>작업장</th>
+				<th>사용여부</th>
+				<th type='hidden' style='display: none;'>등록자 코드</th>
+				<th>등록자</th>
+				<th>등록일</th>
+				<th>비고</th>
+			</tr>
+		</thead>
 		
 		<c:forEach var="vo" items="${boardList }" varStatus="i">
 				<tr>
@@ -573,7 +589,10 @@
 				</tr>
 		</c:forEach>
 	</table>
+	</div>
 </form>
+</div>
+</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 	
 	<div id="pagination">
