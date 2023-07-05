@@ -495,7 +495,6 @@ $(function(){
 	<br>
 	
 	<form id="fr">
-	
 	총 ${pm.totalCount } 건
 	
 	<table border="1" id="">
@@ -520,8 +519,8 @@ $(function(){
 					<td>${vo.client_code}</td>
 					<td>${vo.clients.client_actname}</td>
 					<td>${vo.order_date}</td>
-					<td>${vo.emp_name}</td>
-					<td id="prodCode">${vo.prod.prod_code}</td>
+					<td>${vo.employees.emp_name}</td>
+					<td id="prodCode">${vo.prod_code}</td>
 					<td>${vo.prod.prod_name}</td>
 					<td>${vo.prod.prod_unit}</td>
 					<td>${vo.order_deliveryDate}</td>

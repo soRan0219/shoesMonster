@@ -448,7 +448,7 @@ public class PersonController {
 		return "redirect:/person/orderStatus";
 	}
 	
-	// 거래처 삭제
+	// 수주 삭제
 	@RequestMapping(value="/deleteOrder", method = RequestMethod.POST)
 	public String deleteOrder(@RequestParam(value="checked[]") List<String> checked) throws Exception {
 		logger.debug("@@@ cnotroller : deleteOrder() 호출 @@@");
