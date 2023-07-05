@@ -151,11 +151,6 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 	} //readWorkOrder()
 
 	
-	
-	
-	
-	
-	
 	//작업지시 수정
 	@Override
 	public int updateWorkOrder(WorkOrderVO uvo) throws Exception {
@@ -247,14 +242,6 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 		return rawExist;
 	} //updateWorkOrder()
 
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	//작업지시 검색
 	@Override
