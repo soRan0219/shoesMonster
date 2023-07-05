@@ -64,7 +64,7 @@ public class PersonController {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
 		// 페이지 정보
-		cpvo.setPageSize(2);
+		cpvo.setPageSize(10);
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
@@ -254,7 +254,7 @@ public class PersonController {
 		logger.debug(" empManageGET() 호출@@@@@ ");
 		
 		//페이지 정보
-		cpvo.setPageSize(2);
+		cpvo.setPageSize(10);
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();

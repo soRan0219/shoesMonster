@@ -4,6 +4,9 @@
 
 <link href="../resources/build/css/custom.css" rel="stylesheet">
 
+class="column-title"
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 	<!-- top tiles -->
@@ -134,8 +137,6 @@
 	<br />
 
 	<div class="row">
-
-
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320">
 				<div class="x_title">
@@ -322,7 +323,7 @@
 												<i class="fa fa-square aero"></i>윤선길
 											</p>
 										</td>
-										<td>15회</td>
+										<td>	회</td>
 									</tr>
 									<tr>
 										<td>

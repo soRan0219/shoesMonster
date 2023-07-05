@@ -111,6 +111,38 @@ function popUp() {
 } //popUp() 여기까지 혦넣
 
 
+//직급에 따라 버튼들을 제어하는 함수
+function controlButtonsByRank(rank) {
+  var addButton = document.getElementById("addEmp");
+  var modifyButton = document.getElementById("modifyEmp");
+  var deleteButton = document.getElementById("deleteEmp");
+  var cancelButton = document.getElementById("cancelEmp");
+  var saveButton = document.getElementById("saveEmp");
+
+  if (rank === "부장") {
+    // 부장인 경우 버튼들을 보여줌
+    addButton.style.display = "inline";
+    modifyButton.style.display = "inline";
+    deleteButton.style.display = "inline";
+    cancelButton.style.display = "inline";
+    saveButton.style.display = "inline";
+  } else {
+    // 사원인 경우 버튼들을 숨김
+    addButton.style.display = "none";
+    modifyButton.style.display = "none";
+    deleteButton.style.display = "none";
+    cancelButton.style.display = "none";
+    saveButton.style.display = "none";
+  }
+}
+
+// 직급에 따라 버튼들을 제어하는 예시 사용
+var rank = "사원"; // 직급을 설정해주세요
+controlButtonsByRank(rank);
+
+
+
+
 //제이쿼리
 $(function() {
 	
@@ -396,9 +428,18 @@ $(function() {
 }); //jquery
 </script>
 
+<style>
+
+#titlebg {
+	background: #2A3F54;
+	color: white;
+}
+
+</style>
+
 <!-- page content -->
 <div class="right_col" role="main">
-	<div style="margin: 5% 0% 0% 12%; width: 88%;">
+	<div style="margin: 7% 10% 0% 10%; width: 88%;">
 		<h1>사원 관리</h1>
 		<form id="searchForm" method="get">
        		<input type="hidden" name="input" id="input" value="${input }">
@@ -418,69 +459,80 @@ $(function() {
 		</form>
 	</div>
 	
-	${empList.get(0) }
-	
-	<div style="margin: 5% 12% 0% 12%;">
-		<div style="text-align-last: right;">
-			총 ${pm.totalCount } 건
-			<button id="addEmp" class="true">추가</button>
-			<button id="modifyEmp">수정</button>
-			<button id="deleteEmp" class="true">삭제</button>
-			<button type="reset" id="cancelEmp">취소</button>
-			<button type="submit" id="saveEmp">저장</button>
-			<button onclick="location.href='/person/empinfo'">새로고침</button>
-		</div> 
-		<div>
-			<h6>사원</h6>
-			<form id = "fr">
-				<table border="1" style="width: 100%">
-					<colgroup>
-					    <col style="width: 25px">
-					    <col style="width: 100px">
-					    <col style="width: 75px">
-					    <col style="width: 75px">
-					    <col style="width: 50px">
-					    <col style="width: 50px">
-					    <col style="width: 150px">
-					    <col style="width: 150px">
-					    <col style="width: 100px">
-					    <col style="width: 75px">
-					    <col style="width: 75px">
-					</colgroup>
-					<tr>
-						<th>번호</th>
-						<th>사원번호</th>
-						<th>비밀번호</th>
-						<th>사원명</th>
-						<th>부서</th>
-						<th>직책</th>
-						<th>이메일</th>
-						<th>전화번호</th>
-						<th>입사일자</th>
-						<th>재직구분</th>
-						<th></th>
-					</tr>
-					<c:forEach var="vo" items="${empList }">
-						<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀'}">
-							<tr>
-								<td></td>
-								<td id="empCode">${vo.emp_id}</td> <!-- 혦넣 -->
-								<td>${vo.emp_pw}</td> 
-								<td id="empName">${vo.emp_name}</td> <!-- 혦넣 -->
-								<td>${vo.emp_department}</td>
-								<td>${vo.emp_position}</td>
-								<td>${vo.emp_email}</td>
-								<td>${vo.emp_phone}</td>
-								<td>${vo.emp_hiredate}</td>
-								<td>${vo.emp_work}</td>
-								<th>
-									<input type="button" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
-								</th>
-							</tr>
-						</c:if>
-					</c:forEach>
-				</table>
-			</form>
+	<div style="margin: 5% 5% 0% 5%;">
+		<div class="col-md-12 col-sm-12 ">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>
+						사원 관리 <small> 사원 인원 수 : ${pm.totalCount } </small>
+					</h2>
+					<div style="text-align-last: right;" class="nav navbar-right panel_toolbox">
+						<button id="addEmp" class="true">추가</button>
+						<button id="modifyEmp">수정</button>
+						<button id="deleteEmp" class="true">삭제</button>
+						<button type="reset" id="cancelEmp">취소</button>
+						<button type="submit" id="saveEmp">저장</button>
+						<button onclick="location.href='/person/empinfo'">새로고침</button>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+				<p>&nbsp;&nbsp;발주 테이블 <code>Shoes Monseter</code> since 2023 </p>
+					<div class="table-responsive">
+						<div>
+						<form id = "fr">
+							<table class="table table-striped jambo_table bulk_action" style="text-align:center">
+								<colgroup>
+								    <col style="width: 50px">
+								    <col style="width: 100px">
+								    <col style="width: 100px">
+								    <col style="width: 75px">
+								    <col style="width: 75px">
+								    <col style="width: 75px">
+								    <col style="width: 150px">
+								    <col style="width: 150px">
+								    <col style="width: 100px">
+								    <col style="width: 75px">
+								    <col style="width: 75px">
+								</colgroup>
+								<tr id=titlebg>
+									<th>번호</th>
+									<th>사원번호</th>
+									<th>비밀번호</th>
+									<th>사원명</th>
+									<th>부서</th>
+									<th>직책</th>
+									<th>이메일</th>
+									<th>전화번호</th>
+									<th>입사일자</th>
+									<th>재직구분</th>
+									<th></th>
+								</tr>
+								<c:forEach var="vo" items="${empList }">
+									<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀'}">
+										<tr>
+											<td></td>
+											<td id="empCode">${vo.emp_id}</td> <!-- 혦넣 -->
+											<td>${vo.emp_pw}</td> 
+											<td id="empName">${vo.emp_name}</td> <!-- 혦넣 -->
+											<td>${vo.emp_department}</td>
+											<td>${vo.emp_position}</td>
+											<td>${vo.emp_email}</td>
+											<td>${vo.emp_phone}</td>
+											<td>${vo.emp_hiredate}</td>
+											<td>${vo.emp_work}</td>
+											<th>
+												<input type="button" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
+											</th>
+										</tr>
+									</c:if>
+								</c:forEach>
+							</table>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 		
