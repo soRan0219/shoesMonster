@@ -18,6 +18,7 @@ public class OrderStatusVO {
 	private ClientsVO clients;
 	private ProductVO prod;
 	private EmployeesVO employees;
+	private Out_materialVO out_mat;
 	
 	public OrderStatusVO() {
 		clients = new ClientsVO();

@@ -126,7 +126,7 @@
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
 		select * from clients
 		order by client_code ASC
-		limit #{startPage}, #{pageSize}
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 거래처 목록 불러오기 -->
 	
@@ -217,7 +217,6 @@
 			<result column="client_code" property="client_code" />
 			<result column="prod_code" property="prod_code" />
 			<result column="order_note" property="order_note" />
-			<result column="emp_id" property="emp_id" />
 	
 		<collection property="prod" ofType="com.sm.domain.ProductVO">
 			<result column="prod_name" property="prod_name" />
@@ -240,7 +239,7 @@
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
 		JOIN employees e ON e.emp_id = o.emp_id
-		
+<!-- 		LIMIT #{startPage}, #{pageSize} -->
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
 	
@@ -260,7 +259,6 @@
 			<result column="client_code" property="client_code" />
 			<result column="order_note" property="order_note" />
 			<result column="prod_code" property="prod_code" />
-			<result column="emp_id" property="emp_id" />
 	
 		<collection property="prod" ofType="com.sm.domain.ProductVO">
 			<result column="prod_name" property="prod_name" />
@@ -299,7 +297,7 @@
 				AND o.prod_code Like CONCAT ('%',#{prod_code},'%')
 			</if>
 			<if test="emp_name != null and emp_name != ''">
-				AND e.emp_name Like CONCAT ('%',#{search_emp_name},'%')
+				AND e.emp_name Like CONCAT ('%',#{emp_name},'%')
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 

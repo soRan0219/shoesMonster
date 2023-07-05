@@ -439,12 +439,11 @@ public class PersonController {
 		} else {
 			cpvo.setPageSize(2);
 		}
-//		cpvo.setPageSize(2);
 		
 		// 페이지 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
 		pm.setClientPageVO(cpvo);
-		pm.setPageBlock(5);
+		pm.setPageBlock(2);
 		
 		List<OrderStatusVO> searchOrderStatusList = new ArrayList<>();
 		
