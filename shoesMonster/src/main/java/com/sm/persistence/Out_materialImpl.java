@@ -2,6 +2,7 @@ package com.sm.persistence;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class Out_materialImpl implements Out_materialDAO {
 	@Override
 	public List<Out_materialVO> Out_matList(PageVO vo) throws Exception {
 		
-HashMap<String, Object> data = new HashMap<String, Object>();
+		HashMap<String, Object> data = new HashMap<String, Object>();
 		
 		
 		data.put("startPage", vo.getStartPage());
@@ -76,8 +77,8 @@ HashMap<String, Object> data = new HashMap<String, Object>();
 //	}
 
 	@Override
-	public void omButton(OrderStatusVO vo ,String order_code) throws Exception {
-		int result = sqlSession.insert(NAMESPACE + ".omButton", vo);
+	public void omButton(String order_code) throws Exception {
+		int result = sqlSession.insert(NAMESPACE + ".omButton", order_code);
         logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result : " + result);
         
         if(result != 0) {
@@ -113,6 +114,18 @@ HashMap<String, Object> data = new HashMap<String, Object>();
 		
 		return sqlSession.selectList(NAMESPACE+".searchOut", data);
 	}
+
+	@Override
+    public void deleteStock(int order_count, String prod_code) throws Exception {
+
+		logger.debug("출고 재고 빠짐 @@@@@@@@@@@@@@@@@");
+		
+        Map<String, Object> data = new HashMap<>();
+        data.put("prod_code", prod_code);
+        data.put("order_count", order_count);
+        sqlSession.update(NAMESPACE + ".deleteStock", data);
+
+    }
 
 	
 	

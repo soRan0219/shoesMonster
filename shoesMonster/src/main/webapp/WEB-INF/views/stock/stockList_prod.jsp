@@ -102,51 +102,19 @@
 
 	<h1> 재고 관리 </h1>
 	
-    <input type="button" value="원자재" class="btn btn-info" onclick="show1()"></input>
-    <input type="button" value="완제품" class="btn btn-info" onclick="show2()"></input>
+    <a href="/stock/stockList_raw"><input type="button" value="원자재" class="btn btn-info" ></input></a>
+    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="btn btn-info" ></input></a>
     
     
- <script type="text/javascript">
-
- function show1() {
-		var table = document.getElementById("data-table");
-		var rows = table.getElementsByTagName("tr");
-
-		for (var i = 1; i < rows.length; i++) {
-			var row = rows[i];
-			var statusCell = row.cells[0];
-
-			if (statusCell.innerText.trim() !== "원자재") {
-				row.style.display = "none";
-			} else {
-				row.style.display = "";
-			}
-		}
-	}
-
-	function show2() {
-		var table = document.getElementById("data-table1");
-		var rows = table.getElementsByTagName("tr");
-
-		for (var i = 1; i < rows.length; i++) {
-			var row = rows[i];
-			var statusCell = row.cells[0];
-
-			if (statusCell.innerText.trim() !== "완제품") {
-				row.style.display = "none";
-			} else {
-				row.style.display = "";
-			}
-		}
-	}
-
+    <form action="" method="get">
+ 		완제품 코드 <input type="text" name="prod_code" placeholder="완제품 코드를 입력하세요">
+	   	완제품 품명<input type="text" name="product.prod_name" placeholder="품명을 입력하세요">
+	   	창고 코드 <input type="text" name="wh_code" placeholder="창고 코드를 입력하세요"> 
+	   	<input type="submit" class="btn btn-info" value="검색"></input>
+  </form>
 	
 
-</script>
-  
-	<hr>
 
-<div id="data-table1">
 
 	<form action="" method="post">
 	<table id="data-table" border="1">
@@ -163,9 +131,9 @@
  		<th>수정 버튼</th>
  	</tr>
  	
- 	<c:forEach var="s" items="${stock_List}">
+ 	<c:forEach var="s" items="${stock_ListP}">
  	
-	 	<c:if test="${s.warehouse.wh_dv  == '완제품'}">
+	 	
 		 	<tr>
 		 		<th>${s.warehouse.wh_dv}</th>
 		 		<th>${s.prod_code}</th>
@@ -177,7 +145,7 @@
 		   		<td>${s.warehouse.emp_id}</td>
 		   		<td><input type="button" onclick="stockPopup('${s.prod_code}')" value="수정"></td>
 		 	</tr>
-	 	</c:if>
+	 	
 	 	
 	 </c:forEach>
 
@@ -186,76 +154,17 @@
        
            		
 <div>
-    <c:if test="${count3 > 10 }">
+    <c:if test="${countP3 > 10 }">
 		<c:if test="${bp.prev}">
-		    <span><a class="btn btn-secondary" href="/stock/stockList?page=${bp.startPage - 1}&wh_code=${wh_code}">이전</a></span>
+		    <span><a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
 		</c:if>
 		
 		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-		    <a class="btn btn-secondary" href="/stock/stockList?page=${idx }&wh_code=${wh_code}">${idx }</a>
+		    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${idx }&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">${idx }</a>
 		</c:forEach>
 		
 		<c:if test="${bp.next && bp.endPage > 0}">
-		    <a class="btn btn-secondary" href="/stock/stockList?page=${bp.endPage + 1}&wh_code=${wh_code}">다음</a>
-		</c:if>
-	</c:if>
-</div>
-
-
-</div>
-
-
-<div id="data-table2">
-
-	<form action="" method="post">
-	<table id="data-table" border="1">
-	
-    <tr>
- 		<th>유형</th>
- 		<th>제품 코드</th>
- 		<th>제품명</th>
- 		<th>색상</th>
- 		<th>사이즈</th>
- 		<th>재고 수량</th>
- 		<th>창고 코드</th>
- 		<th>담당자</th>
- 		<th>수정 버튼</th>
- 	</tr>
- 	
- 	<c:forEach var="s" items="${stock_List}">
- 	
-	 	<c:if test="${s.warehouse.wh_dv  == '원자재'}">
-             <tr>
-                 <th>${s.warehouse.wh_dv}</th>
-                 <th>${s.raw_code}</th>
-                 <td>${s.raw_mat.raw_name}</td>
-                 <td>${s.raw_mat.raw_color}</td>
-                 <td> </td>
-                 <td>${s.stock_count}</td>
-                 <td>${s.wh_code}</td>
-                 <td>${s.warehouse.emp_id}</td>
-                 <td><input type="button" onclick="stockPopup('${s.raw_code}')" value="수정"></td>
-             </tr>
-         </c:if>
-	 	
-	 </c:forEach>
-
-   </table>
-   </form>
-       
-           		
-<div>
-    <c:if test="${count3 > 10 }">
-		<c:if test="${bp.prev}">
-		    <span><a class="btn btn-secondary" href="/stock/stockList?page=${bp.startPage - 1}&wh_code=${wh_code}">이전</a></span>
-		</c:if>
-		
-		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-		    <a class="btn btn-secondary" href="/stock/stockList?page=${idx }&wh_code=${wh_code}">${idx }</a>
-		</c:forEach>
-		
-		<c:if test="${bp.next && bp.endPage > 0}">
-		    <a class="btn btn-secondary" href="/stock/stockList?page=${bp.endPage + 1}&wh_code=${wh_code}">다음</a>
+		    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
 		</c:if>
 	</c:if>
 </div>
@@ -265,7 +174,10 @@
 
 
 
-</div>
+
+
+
+
 
 
 

@@ -20,7 +20,7 @@ public interface Out_materialService {
 //	public int count4(OrderStatusVO ovo) throws Exception;
 	
 	// 출고 버튼
-//	public void omButton(OrderStatusVO vo , String order_code) throws Exception;
+	public void omButton(String order_code) throws Exception;
 	
 	// 출고 검색 목록 개수
 	public int count4(Out_materialVO rvo) throws Exception;
@@ -29,5 +29,8 @@ public interface Out_materialService {
 	public List<Out_materialVO> getSearch_Out(PageVO vo, Out_materialVO rvo) throws Exception;
 //	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize , OrderStatusVO ovo) throws Exception;
 
+	// 출고 재고빠짐
+	public void deleteStock(int order_count, String prod_code) throws Exception;
+	
 
 }

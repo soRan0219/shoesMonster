@@ -326,10 +326,10 @@ public class stockController {
     
     // ====================================== 재고 - 시작 ====================================== //
    
-	//http://localhost:8080/stock/stockList
-	//http://localhost:8088/stock/stockList
-	@RequestMapping(value="/stockList" ,method = RequestMethod.GET)
-	public void stockList(PageVO vo, HttpServletRequest request , Model model, StockVO svo) throws Exception {
+    //http://localhost:8080/stock/stockList_raw
+	//http://localhost:8088/stock/stockList_raw
+	@RequestMapping(value="/stockList_raw" ,method = RequestMethod.GET)
+	public void stockList_raw(PageVO vo, HttpServletRequest request , Model model, StockVO svo) throws Exception {
 		
 		logger.debug("/////////////////////////////////////svo /////////////////////////////////////" + svo);
 		logger.debug("//////////// "+ svo.getRaw_code());
@@ -339,28 +339,85 @@ public class stockController {
 		logger.debug("//////////// "+ svo.getWh_code());
 		
 		if((svo.getRaw_code() != null && !svo.getRaw_code().equals("")) ||
-		   (svo.getProd_code() != null && !svo.getProd_code().equals("")) ||
-		   (svo.getRaw_mat().getRaw_name() != null && !svo.getRaw_mat().getRaw_name().equals("")) || 
+				(svo.getRaw_mat().getRaw_name() != null && !svo.getRaw_mat().getRaw_name().equals("")) || 
+				(svo.getWh_code() != null && !svo.getWh_code().equals(""))) {
+			
+			logger.debug("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+			
+			// 게시물 총 개수
+			int countR3 = s_service.countR3(svo);
+			logger.debug("검색 재고 개수 : " + countR3);
+			
+			List<StockVO> stock_ListR = s_service.getStockR(vo, svo);
+			logger.debug("@@@@@@@@@@@@@@ : " + vo);
+			logger.debug("@@@@@@@@@@@@@@ : " + stock_ListR);
+			
+			BottomPaging bp = new BottomPaging();
+			bp.setPageVO(vo);
+			bp.setTotalCount(countR3);
+			logger.debug("@@@@@@@@@@@@@@ : " + bp);
+			
+			model.addAttribute("stock_ListR", stock_ListR);
+			model.addAttribute("count3", countR3);
+			model.addAttribute("bp", bp);
+			model.addAttribute("svo", svo);
+			
+		} else {
+			
+			logger.debug("ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ");
+			
+			int countR3 = s_service.countR3();
+			logger.debug("재고 총 개수 : " + countR3);
+			
+			List<StockVO> stock_ListR = s_service.getStockR(vo);
+			
+			BottomPaging bp = new BottomPaging();
+			bp.setPageVO(vo);
+			bp.setTotalCount(countR3);
+			
+			model.addAttribute("stock_ListR", stock_ListR);
+			model.addAttribute("countR3", countR3);
+			model.addAttribute("bp", bp);
+			request.setAttribute("svo", svo);
+		}
+		
+		
+	}
+    
+    
+    //http://localhost:8080/stock/stockList_prod
+	//http://localhost:8088/stock/stockList_prod
+	@RequestMapping(value="/stockList_prod" ,method = RequestMethod.GET)
+	public void stockList_prod(PageVO vo, HttpServletRequest request , Model model, StockVO svo) throws Exception {
+		
+		logger.debug("/////////////////////////////////////svo /////////////////////////////////////" + svo);
+		logger.debug("//////////// "+ svo.getRaw_code());
+		logger.debug("//////////// "+ svo.getProd_code());
+		logger.debug("//////////// "+ svo.getRaw_mat().getRaw_name());
+		logger.debug("//////////// "+ svo.getProduct().getProd_name());
+		logger.debug("//////////// "+ svo.getWh_code());
+		
+		if((svo.getProd_code() != null && !svo.getProd_code().equals("")) ||
 		   (svo.getProduct().getProd_name() != null && !svo.getProduct().getProd_name().equals("")) || 
 		   (svo.getWh_code() != null && !svo.getWh_code().equals(""))) {
 					
 				logger.debug("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 
 					// 게시물 총 개수
-			        int count3 = s_service.count3(svo);
-			        logger.debug("검색 재고 개수 : " + count3);
+			        int countP3 = s_service.countP3(svo);
+			        logger.debug("검색 재고 개수 : " + countP3);
 
-			        List<StockVO> stock_List = s_service.getStock(vo, svo);
+			        List<StockVO> stock_ListP = s_service.getStockP(vo, svo);
 			        logger.debug("@@@@@@@@@@@@@@ : " + vo);
-			        logger.debug("@@@@@@@@@@@@@@ : " + stock_List);
+			        logger.debug("@@@@@@@@@@@@@@ : " + stock_ListP);
 			         
 			        BottomPaging bp = new BottomPaging();
 					bp.setPageVO(vo);
-					bp.setTotalCount(count3);
+					bp.setTotalCount(countP3);
 					logger.debug("@@@@@@@@@@@@@@ : " + bp);
 					
-					model.addAttribute("stock_List", stock_List);
-					model.addAttribute("count3", count3);
+					model.addAttribute("stock_ListP", stock_ListP);
+					model.addAttribute("countP3", countP3);
 					model.addAttribute("bp", bp);
 					model.addAttribute("svo", svo);
   
@@ -368,23 +425,25 @@ public class stockController {
     				
     					logger.debug("ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ");
     					
-    					int count3 = s_service.count3();
-    					logger.debug("재고 총 개수 : " + count3);
+    					int countP3 = s_service.countP3();
+    					logger.debug("재고 총 개수 : " + countP3);
     					
-    					List<StockVO> stock_List = s_service.getStock(vo);
+    					List<StockVO> stock_ListP = s_service.getStockP(vo);
 					
 						BottomPaging bp = new BottomPaging();
 						bp.setPageVO(vo);
-						bp.setTotalCount(count3);
+						bp.setTotalCount(countP3);
 						
-						model.addAttribute("stock_List", stock_List);
-						model.addAttribute("count3", count3);
+						model.addAttribute("stock_ListP", stock_ListP);
+						model.addAttribute("count3", countP3);
 						model.addAttribute("bp", bp);
 						request.setAttribute("svo", svo);
 				}
     		
             
     	}
+	
+	
 	
 	
 	
@@ -533,18 +592,27 @@ public class stockController {
     	//http://localhost:8080/stock/Out_material
     	//http://localhost:8088/stock/Out_material
     	@RequestMapping(value = "/Out_material", method = RequestMethod.POST)
-    	public void omRegist(OrderStatusVO vo, RedirectAttributes rttr,
-    			HttpSession session, HttpServletRequest request
-    			, Model model , String order_code) throws Exception {
+    	public String omRegist(Out_materialVO vo, RedirectAttributes rttr,
+    			HttpSession session, HttpServletRequest request,
+    			@RequestParam("out_Button") String out_Button, Model model) throws Exception {
     	    logger.debug("@@@@@@@@@@ 출고 처리 버튼 컨트롤러 @@@@@@@@@@");
+    	    
+    	    String[] values = out_Button.split(",");
+    	    String order_code = values[0];
+    	    int order_count = Integer.parseInt(values[1]);
+    	    String prod_code = values[2];
+            
+            logger.debug("!!!!!!!!!!!!!!!!!!! 1 order_code :" + order_code);
+            logger.debug("!!!!!!!!!!!!!!!!!!! 2 order_count :" + order_count);
+            logger.debug("!!!!!!!!!!!!!!!!!!! 3 prod_code :" + prod_code);
 
-    	    String emp_id = (String) session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
-    	    vo.getOut_mat().setEmp_id(emp_id); // 담당자 설정
+//    	    String emp_id = (String) session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
+//    	    vo.getOut_mat().setEmp_id(emp_id); // 담당자 설정
 
-//    	    o_service.omButton(vo, order_code); // 출고 처리 메서드 호출
-    	    rttr.addFlashAttribute("result", "omButton");
+    	    o_service.deleteStock(order_count, prod_code);
+    	    o_service.omButton(order_code); // 출고 처리 메서드 호출
 
-//    	    return "redirect:/stock/Out_material";
+    	    return "redirect:/stock/Out_material";
     	}
     	// 출고 처리 버튼
     	

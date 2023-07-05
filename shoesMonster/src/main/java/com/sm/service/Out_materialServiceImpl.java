@@ -44,10 +44,10 @@ public class Out_materialServiceImpl implements Out_materialService{
 //		return o_dao.searchOut_mat(startRow, pageSize,ovo);
 //	}
 //	
-//	@Override
-//	public void omButton(OrderStatusVO vo , String order_code) throws Exception {
-//		o_dao.omButton(vo, order_code);
-//	}
+	@Override
+	public void omButton(String order_code) throws Exception {
+		o_dao.omButton(order_code);
+	}
 
 //	@Override
 //	public int count4(Out_materialVO rvo) throws Exception {
@@ -62,7 +62,13 @@ public class Out_materialServiceImpl implements Out_materialService{
 		
 	}
 
+	@Override
+	public void deleteStock(int order_count, String prod_code) throws Exception {
+		o_dao.deleteStock(order_count, prod_code);
+		
+	}
 
+	
 
 	
 	

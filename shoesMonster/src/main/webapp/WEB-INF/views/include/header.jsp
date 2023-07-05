@@ -90,7 +90,7 @@
 								<li><a><i class="fa fa-table"></i> 자재 관리 <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="../stock/stockList">재고 관리</a></li>
+										<li><a href="../stock/stockList_raw">재고 관리</a></li>
 										<li><a href="../stock/raw_order">발주 관리</a></li>
 										<li><a href="../stock/In_material">입고 관리</a></li>
 										<li><a href="../stock/Out_material">출고 관리</a></li>

@@ -16,8 +16,6 @@
 	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input>
     <input type="button" value="미출고" class="btn btn-info" onclick="show1()"></input>
     <input type="button" value="출고완료" class="btn btn-info" onclick="show2()"></input>
-    
-
 
 <script>
     function show1() {
@@ -67,11 +65,11 @@
 		<form action="" method="get">
 		<fieldset>
        		<label>출고번호:</label>
-        	<input type="text" name="out_mat.out_num" value="">
+        	<input type="text" name="out_num" value="">
         	<label>품명:</label>
-        	<input type="text" name="prod_name" value="">
+        	<input type="text" name="prod.prod_name" value="">
         	<label>거래처명:</label>
-        	<input type="text" name="client.client_actname" value=""> 
+        	<input type="text" name="clients.client_actname" value=""> 
         	<input type="submit" class="btn btn-info" value="검색">
 		</fieldset>
 		</form>
@@ -111,6 +109,7 @@
 									<th class="column-title">제품 코드</th>
 									<th class="column-title">제품 이름</th>
 									<th class="column-title">주문 수량</th>
+									<th class="column-title">재고 수량</th>
 									<th class="column-title">납품가</th>
 									<th class="column-title">납품예정일</th>
 									<th class="column-title">출고 날짜</th>
@@ -129,12 +128,13 @@
 										<td class=" ">${out.prod.prod_code}</td>
 										<td class=" ">${out.prod.prod_name}</td>
 										<td class=" ">${out.orders.order_count}</td>
+										<td class=" ">${out.stock.stock_count}</td>
 										<td class=" ">${out.prod.prod_price}원</td>
 										<td class=" ">${out.orders.order_deliveryDate}</td>
 										<td class=" ">${out.out_date}</td>
 										<td class=" ">${out.out_YN}</td>
 										<td class=" ">${out.emp_id}</td>
-										<td class=" "><button type="submit" class="btn btn-info" >출고 처리</button></td>
+										<td class=" "><button type="submit" name="out_Button" value="${out.orders.order_code},${out.orders.order_count},${out.prod.prod_code}" class="btn btn-info" >출고 처리</button></td>
 									</tr>
 
 								</c:forEach>
@@ -169,10 +169,6 @@
     
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
-
-
-
-
 
 	
 	

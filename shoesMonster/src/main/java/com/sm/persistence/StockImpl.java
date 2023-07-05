@@ -27,55 +27,96 @@ public class StockImpl implements StockDAO{
     private static final String NAMESPACE="com.sm.mapper.stockMapper";
     
     
-	@Override
-	public int count3() throws Exception {
+    @Override
+	public int countP3() throws Exception {
 		
 		logger.debug("@@@@@@@@@@@@@@@@ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ11111111111111111");
 		
-		return sqlSession.selectOne(NAMESPACE+".count3");
+		return sqlSession.selectOne(NAMESPACE+".countP3");
+	}
+    
+	@Override
+	public int countR3() throws Exception {
+		
+		logger.debug("@@@@@@@@@@@@@@@@ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ11111111111111111");
+		
+		return sqlSession.selectOne(NAMESPACE+".countR3");
 	}
 
 	@Override
-	public List<StockVO> getStock(PageVO vo) throws Exception {
+	public List<StockVO> getStockP(PageVO vo) throws Exception {
 		
 		logger.debug("@@@@@@@@@@@@@@@@ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ22222222222222222222222");
 		
-		return sqlSession.selectList(NAMESPACE+".stockPage", vo);
+		return sqlSession.selectList(NAMESPACE+".stockPageP", vo);
 	}
-
 	
 	@Override
-	public int count3(StockVO svo) throws Exception {
+	public List<StockVO> getStockR(PageVO vo) throws Exception {
+		
+		logger.debug("@@@@@@@@@@@@@@@@ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ22222222222222222222222");
+		
+		return sqlSession.selectList(NAMESPACE+".stockPageR", vo);
+	}
+
+	@Override
+	public int countP3(StockVO svo) throws Exception {
+		
+		logger.debug("@@@@@@@@@@@@@@@@ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ!!!!!!!!!");
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("prod_code", svo.getProd_code());
+		data.put("prod_name", svo.getProduct().getProd_name());
+		data.put("wh_code", svo.getWh_code());
+		
+		return sqlSession.selectOne(NAMESPACE+".searchCountP3", data);
+	}
+	
+	@Override
+	public int countR3(StockVO svo) throws Exception {
 		
 		logger.debug("@@@@@@@@@@@@@@@@ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ!!!!!!!!!");
 		
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
 		data.put("raw_code", svo.getRaw_code());
-		data.put("prod_code", svo.getProd_code());
 		data.put("raw_name", svo.getRaw_mat().getRaw_name());
-		data.put("prod_name", svo.getProduct().getProd_name());
 		data.put("wh_code", svo.getWh_code());
 		
-		return sqlSession.selectOne(NAMESPACE+".searchCount3", data);
+		return sqlSession.selectOne(NAMESPACE+".searchCountR3", data);
 	}
 
 	@Override
-	public List<StockVO> getStock(PageVO vo, StockVO svo) throws Exception {
+	public List<StockVO> getStockP(PageVO vo, StockVO svo) throws Exception {
+		
+		logger.debug("@@@@@@@@@@@@@@@@ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ22222222222222222");
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("prod_code", svo.getProd_code());
+		data.put("prod_name", svo.getProduct().getProd_name());
+		data.put("wh_code", svo.getWh_code());
+		data.put("startPage", vo.getStartPage());
+		data.put("pageSize", vo.getPageSize());
+		
+		return sqlSession.selectList(NAMESPACE+".searchStockP", data);
+	}
+	
+	@Override
+	public List<StockVO> getStockR(PageVO vo, StockVO svo) throws Exception {
 		
 		logger.debug("@@@@@@@@@@@@@@@@ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ22222222222222222");
 		
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
 		data.put("raw_code", svo.getRaw_code());
-		data.put("prod_code", svo.getProd_code());
 		data.put("raw_name", svo.getRaw_mat().getRaw_name());
-		data.put("prod_name", svo.getProduct().getProd_name());
 		data.put("wh_code", svo.getWh_code());
 		data.put("startPage", vo.getStartPage());
 		data.put("pageSize", vo.getPageSize());
 		
-		return sqlSession.selectList(NAMESPACE+".searchStock", data);
+		return sqlSession.selectList(NAMESPACE+".searchStockR", data);
 	}
 	
 	@Override
