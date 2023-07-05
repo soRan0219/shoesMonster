@@ -333,11 +333,11 @@
         	<input type="text" name="req_code" id="searchCode">
         	<label>완제품 :</label>
         	<input type="hidden" name="prod_code" id="prod_code9999">
-        	<input type="text" name="prod_name" id="prod_name9999" readonly onclick=serchProd("prod_code9999");>
+        	<input type="text" name="prod_name" id="prod_name9999" readonly onclick="serchProd('prod_code9999')";>
         	<br>
         	<label>원자재 :</label>
         	<input type="hidden" name="raw_code" id="raw_code9999">
-        	<input type="text" name="raw_name" id="raw_name9999" readonly onclick=serchRaw("raw_code9999");>
+        	<input type="text" name="raw_name" id="raw_name9999" readonly onclick="serchRaw('raw_code9999')";>
         	<input type="submit" value="검색">
 		</fieldset>
 	</form>
@@ -349,8 +349,9 @@
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save">
-
-	
+		
+		<br>
+		소요량 목록 총 ${paging.total}건
 		<table border="1" id="reqTable">
 				<tr>
 					<th>번호</th>

@@ -422,8 +422,10 @@
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save">
+		
+		<br>
 
-	
+		완제품 목록 총 ${paging.total}건
 		<table border="1" id="productTable">
 				<tr>
 					<th>번호</th>
