@@ -15,8 +15,8 @@
 	}
 	
 	// 발주 현황 상세페이지
-	function detailPopup(rawCode) {
-		window.open("detailPopup?rawCode=" + rawCode, "거래처 상세", "width=1000, height=500, left=200, top=150");
+	function detailPopup(rawCode, raw_order_num) {
+		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=650, height=400, left=200, top=150");
 	}
 	
 	// 총액
@@ -150,6 +150,7 @@ function toggleDiv(divId) {
 						<table class="table table-striped jambo_table bulk_action">
 							<thead>
 								<tr class="headings">
+									<th></th>
 									<th class="column-title">발주 번호</th>
 									<th class="column-title">거래처명</th>
 									<th class="column-title">품번</th>
@@ -167,19 +168,17 @@ function toggleDiv(divId) {
 							<tbody>
 								<c:forEach var="vo" items="${ro_List }">
 									<tr class="even pointer">
+										<td><a onclick="detailPopup('${vo.raw_code}', '${vo.raw_order_num }')" style="font-size:15px">&#128269;</a></td>
 										<td class=" ">${vo.raw_order_num }</td>
 										<td class=" ">${vo.clients.client_actname }</td>
-										<td class=" "><input type="button" onclick="detailPopup('${vo.raw_code}')">${vo.raw_code }</td>
+										<td class=" ">${vo.raw_code }</td>
 										<td class=" ">${vo.rawMaterial.raw_name }</td>
 										<td class=" ">${vo.rawMaterial.raw_color }</td>
 										<td class=" ">${vo.raw_order_count}</td>
 										<td class=" ">${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
-										<td class=" "><fmt:formatNumber
-												value=" ${vo.rawMaterial.raw_price}" />원</td>
-										<td class=" "><fmt:formatNumber
-												value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}" />원</td>
-										<td class=" ">${vo.rawMaterial.wh_code }<i
-											class="success fa fa-long-arrow-up"></i></td>
+										<td class=" "><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}" />원</td>
+										<td class=" "><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}" />원</td>
+										<td class=" ">${vo.rawMaterial.wh_code }</td>
 										<td class=" ">${vo.raw_order_date}</td>
 										<td class=" ">${vo.emp_id }</td>
 										
@@ -292,6 +291,7 @@ function toggleDiv(divId) {
 
 								</tbody>
 							</table>
+							<input type="submit" class="btn btn-info" value="발주 신청">
 							</div>
 							
 							</form>

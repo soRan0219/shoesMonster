@@ -89,13 +89,7 @@ public class stockController {
 			model.addAttribute("bp", bp);
 
 			model.addAttribute("rvo", rvo);
-	
-			
-
-			
 		} else {
-			
-		
 			List<Raw_orderVO> ro_List = ro_service.getRaw_order(vo);
 			
 			int count1 = ro_service.count1();
@@ -136,7 +130,7 @@ public class stockController {
 
 	// 발주 등록 팝업창
     @RequestMapping(value = "/roPopup", method = RequestMethod.GET)
-    public void getClient(Model model, PageVO vo ,Raw_orderVO rvo) throws Exception {
+    public void getClient(Model model, PageVO vo, Raw_orderVO rvo) throws Exception {
         
         if((rvo.getClients().getClient_actname() != null && !rvo.getClients().getClient_actname().equals("")) ||
                    (rvo.getRawMaterial() != null && rvo.getRawMaterial().getRaw_name() != null && !rvo.getRawMaterial().getRaw_name().equals(""))) {
@@ -177,8 +171,23 @@ public class stockController {
 
 	// 발주 거래처 상세 팝업
 	@RequestMapping(value = "/detailPopup", method = RequestMethod.GET)
-	public void getDetail(Model model, HttpServletRequest request) throws Exception {
-//		request.setAttribute("rawCode", rawCode);
+	public void getDetail(@RequestParam("rawCode") String rawCode, ClientsVO cvo,
+						  @RequestParam("raw_order_num") String raw_order_num,
+						  Raw_orderVO rvo, Model model, HttpServletRequest request) throws Exception {
+		
+		logger.debug("@@@@@@@@발주 취소 rawCode : " + rawCode);
+		logger.debug("@@@@@@@@발주 취소 raw_order_num : " + raw_order_num);
+		
+		List<ClientsVO> ro_detail = ro_service.detailPopup(rawCode);
+		
+		model.addAttribute("ro_detail", ro_detail);
+		model.addAttribute("rawCode", rawCode);
+		model.addAttribute("raw_order_num", raw_order_num);
+		
+		model.addAttribute("rvo", rvo);
+		model.addAttribute("cvo", cvo);
+		
+		//		request.setAttribute("rawCode", rawCode);
 		
 	}
 
@@ -191,6 +200,19 @@ public class stockController {
 		model.addAttribute("whPopup", whPopup);
 		
 	}
+	
+	// 발주 취소 버튼
+	@RequestMapping(value = "/detailPopup", method = RequestMethod.POST)
+	public void roCancel(@RequestBody String raw_order_num, Model model) throws Exception {
+		
+		raw_order_num = raw_order_num.replaceAll("^\"|\"$", "");
+		logger.debug("@@@@@@@ detailPopup() POST 발주 번호 : "+ raw_order_num);
+		
+		ro_service.roCancel(raw_order_num);
+		
+	}
+	
+	
 	
 	// ====================================== 발주 - 끝 ====================================== //
 	
@@ -291,11 +313,6 @@ public class stockController {
         	
         }
         
-        // 재고에 입고할 항목있는지 조회(select)
-//        service.selectCheck(rawCode);
-        
-        
-
         
         rttr.addFlashAttribute("result", "inInsert");
         
