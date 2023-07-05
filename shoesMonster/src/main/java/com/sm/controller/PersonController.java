@@ -448,10 +448,9 @@ public class PersonController {
 		List<OrderStatusVO> searchOrderStatusList = new ArrayList<>();
 		
 		// 검색 있을 때
-		if((search.get("client_actname") != null && !search.get("client_actname").equals("")) 
-				|| (search.get("prod_code") != null && !search.get("prod_code").equals(""))
+		if(		   (search.get("prod_code") != null && !search.get("prod_code").equals(""))
 				|| (search.get("emp_id") != null && !search.get("emp_id").equals(""))
-				|| (search.get("order_finish") != null && !search.get("order_finish").equals(""))
+				|| (search.get("client_code") != null && !search.get("client_code").equals(""))
 				|| (search.get("order_date_fromDate") != null && !search.get("order_date_fromDate").equals(""))
 				|| (search.get("order_date_toDate") != null && !search.get("order_date_toDate").equals(""))
 				|| (search.get("order_deliveryDate_fromDate") != null && !search.get("order_deliveryDate_fromDate").equals(""))

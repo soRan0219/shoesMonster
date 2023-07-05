@@ -239,7 +239,7 @@
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
 		JOIN employees e ON e.emp_id = o.emp_id
-<!-- 		LIMIT #{startPage}, #{pageSize} -->
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
 	
@@ -285,19 +285,16 @@
 		
 		<where>
 			<if test="client_code != null and client_code != ''">
-				o.client_code Like CONCAT ('%',#{client_code},'%')
-			</if>
-			<if test="client_actname != null and client_actname != ''">
-				c.client_actname Like CONCAT ('%',#{client_actname},'%')
+				o.client_code = #{client_code}
 			</if>
 			<if test="(order_date_fromDate!=null and !order_date_fromDate.equals('')) and (order_date_toDate!=null and !order_date_toDate.equals(''))">
 				AND (order_date &gt;= #{order_date_fromDate} AND order_date &lt;= #{order_date_toDate}) 
 			</if> 
 			<if test="prod_code != null and prod_code != ''">
-				AND o.prod_code Like CONCAT ('%',#{prod_code},'%')
+				AND o.prod_code = #{prod_code}
 			</if>
-			<if test="emp_name != null and emp_name != ''">
-				AND e.emp_name Like CONCAT ('%',#{emp_name},'%')
+			<if test="emp_id != null and emp_id != ''">
+				AND o.emp_id = #{emp_id}
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
@@ -315,17 +312,17 @@
 		JOIN employees e ON e.emp_id = o.emp_id
 		
 		<where>
-			<if test="client_actname != null and client_actname != ''">
-				c.client_actname Like CONCAT ('%',#{client_actname},'%')
+			<if test="client_code != null and client_code != ''">
+				o.client_code = #{client_code}
 			</if>
 			<if test="(order_date_fromDate!=null and !order_date_fromDate.equals('')) and (order_date_toDate!=null and !order_date_toDate.equals(''))">
 				AND (order_date &gt;= #{order_date_fromDate} AND order_date &lt;= #{order_date_toDate}) 
 			</if> 
 			<if test="prod_code != null and prod_code != ''">
-				AND o.prod_code Like CONCAT ('%',#{prod_code},'%')
+				AND o.prod_code = #{prod_code}
 			</if>
-			<if test="emp_name != null and emp_name != ''">
-				AND e.emp_name Like CONCAT ('%',#{emp_name},'%')
+			<if test="emp_id != null and emp_id != ''">
+				AND o.emp_id = #{emp_id}
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 

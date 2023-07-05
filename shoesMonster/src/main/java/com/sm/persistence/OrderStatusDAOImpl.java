@@ -30,7 +30,7 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
 	@Override
 	public List<OrderStatusVO> readOrderStatusList(ClientPageVO cpvo) throws Exception {
 		logger.debug("@@@ DAO : readOrderStatusList() 호출 @@@");
-		return sqlSession.selectList(NameSpace +".orderStatusList");
+		return sqlSession.selectList(NameSpace +".orderStatusList",cpvo);
 	}
 	
 	// 수주 현황 검색
