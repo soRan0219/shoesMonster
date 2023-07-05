@@ -375,7 +375,7 @@ $(function(){
 	//---------- 삭제 ------------- //
 	$('#delete').click(function() {
 		$('#add').attr("disabled", true);
-		$('#update').attr("disabled", true);
+		$('#modify').attr("disabled", true);
 
 		if($(this).hasClass('true')) {
 			// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 수주번호 저장
