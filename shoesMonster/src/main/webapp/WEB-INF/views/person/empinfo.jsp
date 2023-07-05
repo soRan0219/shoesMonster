@@ -427,27 +427,28 @@ if (position === "인사팀") {
 
 <!-- page content -->
 <div class="right_col" role="main">
-	<div style="margin: 7% 10% 0% 10%; width: 88%;">
-		<h1>사원 관리</h1>
-		<form id="searchForm" method="get">
-       		<input type="hidden" name="input" id="input" value="${input }">
-       		<input type="hidden" name="pageSize" id="pageSize" value="${pm.clientPageVO.pageSize }">
-       		사원번호
-        	<input type="text" name="search_emp_id" id="search_emp_id">
-        	사원명
-        	<input type="text" name="search_emp_name" id="search_emp_name">
-        	부서
-       		<select name="search_emp_department">           
-				<option selected value="전체">전체</option>    
-			    <option value="영업팀">영업팀</option>    
-			    <option value="생산팀">생산팀</option>
-			    <option value="인사팀">인사팀</option>
-			</select>
-			<input type="submit" value="조회"> 
-		</form>
-	</div>
+
+	<h1 style="margin-left: 1%;">사원 관리</h1>
 	
-	<div style="margin: 5% 5% 0% 5%;">
+		<div style="margin-left: 1%;">
+			<form id="searchForm" method="get">
+	       		<input type="hidden" name="input" id="input" value="${input }">
+	       		<input type="hidden" name="pageSize" id="pageSize" value="${pm.clientPageVO.pageSize }">
+	       		사원번호
+	        	<input type="text" name="search_emp_id" id="search_emp_id">
+	        	사원명
+	        	<input type="text" name="search_emp_name" id="search_emp_name">
+	        	부서
+	       		<select name="search_emp_department">           
+					<option selected value="전체">전체</option>    
+				    <option value="영업팀">영업팀</option>    
+				    <option value="생산팀">생산팀</option>
+				    <option value="인사팀">인사팀</option>
+				</select>
+				<input type="submit" value="조회"> 
+			</form>
+		</div>
+		
 		<div class="col-md-12 col-sm-12 ">
 			<div class="x_panel">
 				<div class="x_title">
@@ -525,7 +526,6 @@ if (position === "인사팀") {
 				</div>
 			</div>
 		</div>
-	</div>
 		
 		<!-- 페이징 -->
 		<div id="pagination"

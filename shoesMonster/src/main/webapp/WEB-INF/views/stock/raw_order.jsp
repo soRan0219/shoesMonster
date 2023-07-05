@@ -99,9 +99,9 @@ function toggleDiv(divId) {
 // 		}
 	%>
 	 
-	 <h1> 발주 관리 </h1>
+	 <h1 style="margin-left: 1%;"> 발주 관리 </h1>
 
-    <div>
+    <div style="margin-left: 1%;">
     <form action="" name="ro">
 	    <input type="button" value="발주 현황" class="btn btn-info" onclick="toggleDiv('list')"></input>
 	    <input type="button" value="발주 등록" class="btn btn-info" onclick="toggleDiv('regist')"></input>
@@ -111,41 +111,27 @@ function toggleDiv(divId) {
     <hr>
 
     <div id="list">
-    <form action="" method="get">
-	    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
-	   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
-<!-- 	   		품명 <input type="text" name="raw_name" placeholder="품명을 입력하세요"> -->
-	   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
-<!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
-	   	<input type="submit" class="btn btn-info" value="검색"></input>
-
-    </form>
+	    <form action="" method="get" style="margin: 0 0 1% 1%; ">
+		    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
+		   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
+	<!-- 	   		품명 <input type="text" name="raw_name" placeholder="품명을 입력하세요"> -->
+		   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
+	<!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
+		   	<input type="submit" class="btn btn-info" value="검색"></input>
+	    </form>
     
     <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     
-    <div class="col-md-12 col-sm-12  ">
+    <div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>
-					발주 목록 <small>총 ${count1 }건</small>
-				</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"><i
-							class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a> <a
-								class="dropdown-item" href="#">Settings 2</a>
-						</div></li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
+				<h2> 발주 목록 </h2>
+				<span style="float: right; margin-top: 1%;">총 ${count1 }건</span>
 				<div class="clearfix"></div>
 			</div>
-			<div class="x_content">
+			<div class="x_content" >
 				
-				<div class="table-responsive">
+				<div>
 					<form action="" method="post">
 						<table class="table table-striped jambo_table bulk_action">
 							<thead>

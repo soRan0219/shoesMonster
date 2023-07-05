@@ -10,8 +10,6 @@
 		<div class="clearfix"></div>
 	</footer>
 	<!-- /footer content -->
-	</div>
-</div>
 
 <!-- jQuery -->
 <script src="../resources/vendors/jquery/dist/jquery.min.js"></script>
