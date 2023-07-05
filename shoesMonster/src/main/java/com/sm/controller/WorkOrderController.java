@@ -143,12 +143,15 @@ public class WorkOrderController {
 		
 	//작업지시 추가
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addWorkOrder(/*@RequestBody */WorkOrderVO vo) throws Exception {
+	public String addWorkOrder(WorkOrderVO vo, Model model) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: addWorkOrder() 호출");
 		logger.debug("@@@@@ CONTROLLER: vo = " + vo);
 		
 		//서비스 - 작업지시 등록
-		wService.regWorkOrder(vo);
+		int result = wService.regWorkOrder(vo);
+		
+//		model.addAttribute("data", "model에 넣어서 보냄");
+		model.addAttribute("woInsert", result);
 		
 		return "redirect:/workorder/workOrderList";
 	} //addWorkOrder()
@@ -181,12 +184,12 @@ public class WorkOrderController {
 	
 	//작업지시 수정 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyWorkOrder(WorkOrderVO uvo) throws Exception {
+	public String modifyWorkOrder(WorkOrderVO uvo, Model model) throws Exception {
 		logger.debug("@@@@@ CONTROLLER: modifyWorkOrder() 호출");
-		logger.debug("@@@@@ CONTROLLER: uvo = " + uvo);
 		
 		//서비스 - 작업지시 수정
-		wService.modifyWorkOrder(uvo);
+		int result = wService.modifyWorkOrder(uvo);
+		model.addAttribute("woModify", result);
 		
 		return "redirect:/workorder/workOrderList";
 	} //modifyWorkOrder()
