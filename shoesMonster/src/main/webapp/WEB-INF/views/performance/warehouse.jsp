@@ -125,7 +125,7 @@
 // 	$('table tr').each(function(index){
 // 		var num = "<c:out value='${lwpm.startPage}'/>";
 // 		var num2 = "<c:out value='${pvo.pageSize}'/>";
-// 		$(this).find('td:second').text(((num)*num2) + index);
+// 		$(this).find('td:second').text(((num-1)*num2) + index);
 // 	});
 	
 // 	var pageSize = "<c:out value='${pvo.pageSize}'/>"; // 한 페이지당 보여줄 항목 개수
@@ -192,6 +192,29 @@
                 return paddedNumber;
         } // padNumber(number, length)
         
+        	// 저장 -> 저장
+			$('#save').click(function () {
+				
+				var wh_code = $('#wh_code').val();
+				var wh_name = $('#wh_name').val();
+				var wh_addr = $('#wh_addr').val();
+				var wh_tel = $('#wh_tel').val();
+				var wh_use = $('#wh_use').val();
+				var emp_id = $('#emp_id').val();
+				var emp_name = $('#emp_name').val();
+				var wh_note = $('#wh_note').val();
+				
+				if(wh_code == "" || wh_name == "" || 
+				  emp_id == "" || wh_addr == "" || wh_tel == "" || wh_use == ""){
+					alert("항목을 모두 입력하세요");
+				}else{
+					$('#fr').attr("action", "/performance/whadd");
+					$('#fr').attr("method", "POST");
+					$('#fr').submit();
+				}
+				
+			}); // save
+        
 	});//add.click
 		
         // 추가 버튼 클릭 시 row 생성
@@ -253,28 +276,7 @@
 		
 		} // addRow()
             
-			// 저장 -> 저장
-			$('#save').click(function () {
-				
-				var wh_code = $('#wh_code').val();
-				var wh_name = $('#wh_name').val();
-				var wh_addr = $('#wh_addr').val();
-				var wh_tel = $('#wh_tel').val();
-				var wh_use = $('#wh_use').val();
-				var emp_id = $('#emp_id').val();
-				var emp_name = $('#emp_name').val();
-				var wh_note = $('#wh_note').val();
-				
-				if(wh_code == "" || wh_name == "" || 
-				  emp_id == "" || wh_addr == "" || wh_tel == "" || wh_use == ""){
-					alert("항목을 모두 입력하세요");
-				}else{
-					$('#fr').attr("action", "/performance/whadd");
-					$('#fr').attr("method", "POST");
-					$('#fr').submit();
-				}
-				
-			}); // save
+
 			
 			// 취소버튼(=리셋)
 			$('#cancle').click(function () {
@@ -530,13 +532,13 @@
 	<button onclick="location.reload()">새로고침</button>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
-<div class="col-md-12 col-sm-12">
-<div class="x_panel">
-<div class="x_content">
-<div class="row">
-<div class="col-sm-12">
-<div class="card-box table-responsive">
-<div class="table-responsive">
+<!-- <div class="col-md-12 col-sm-12"> -->
+<!-- <div class="x_panel"> -->
+<!-- <div class="x_content"> -->
+<!-- <div class="row"> -->
+<!-- <div class="col-sm-12"> -->
+<!-- <div class="card-box table-responsive"> -->
+<!-- <div class="table-responsive"> -->
 
 <form id="fr">
 	<table border="1" id="whTable" 
@@ -559,8 +561,8 @@
 	  
 		<c:forEach var="ww" items="${whList }" varStatus="i">
 				<tr>	
-<%-- 					<td>${i.count }</td> --%>
-					<td></td>
+					<td>${i.count }</td>
+<!-- 					<td></td> -->
 					<td id="whCode">${ww.wh_code}</td>
 					<td id="whName">${ww.wh_name}</td>
 					<td>${ww.wh_addr}</td>
@@ -583,7 +585,7 @@
 	</form>
 
 
-</div><!-- col-sm-12 -->
+<!-- </div>col-sm-12 -->
 
 
 
@@ -602,15 +604,15 @@
 			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}">다 음</a>
 		</c:if>
 
-	</div><!--id="pagination"  -->
+<!-- 	</div>id="pagination"  -->
 	
 
-</div><!-- card-box table-responsive -->	
+<!-- </div>card-box table-responsive	 -->
 	
-</div><!-- row -->	
-</div><!-- x_content -->
-</div> <!-- x_panel -->		
-</div><!-- class="col-md-12 col-sm-12" -->
+<!-- </div>row	 -->
+<!-- </div>x_content -->
+<!-- </div> x_panel		 -->
+<!-- </div>class="col-md-12 col-sm-12" -->
 
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
