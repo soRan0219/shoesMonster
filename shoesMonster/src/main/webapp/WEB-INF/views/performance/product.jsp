@@ -69,9 +69,11 @@
         			
        			var prodCode = $(this).find('#prodCode').text();
      			var prodName = $(this).find('#prodName').text();
+     			var prodUnit = $(this).find('#prodUnit').text();
      			
      			var number = isPop.match(/\d+/);
      			$('#'+isPop, opener.document).val(prodCode);
+     			$('#prod_unit', opener.document).val(prodUnit);
      			if(number !=null){
      			$('#prod_name'+number, opener.document).val(prodName);
      			} else {
@@ -444,7 +446,7 @@
          			    <td id="prodCode">${vo.prod_code }</td>
 						<td id="prodName">${vo.prod_name }</td>
 						<td>${vo.prod_category }</td>
-						<td>${vo.prod_unit }</td>
+						<td id="prodUnit">${vo.prod_unit }</td>
 						<td>${vo.prod_color }</td>
 						<td>${vo.prod_size }</td>
 						<td type='hidden' style='display: none;'>${vo.client_code }</td>
