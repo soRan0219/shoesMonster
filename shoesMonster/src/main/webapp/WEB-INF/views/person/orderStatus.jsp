@@ -112,11 +112,11 @@ function popUp() {
     			
    			if(isPop === "order_code") {
    				
-   				var orderCode = $(this).find('#orderCode').text();
-   				var clientCode = $(this).find('#clientCode').text();
+   				var orderCode = $(this).find('#l_orderCode').text();
+   				var clientCode = $(this).find('#l_clientCode').text();
    				var clientName = $(this).find('#clientName').text();
-   				var empName = $(this).find('#empName').text();
-   				var prodCode = $(this).find('#prodCode').text();
+   				var empName = $(this).find('#L_empName').text();
+   				var prodCode = $(this).find('#l_prodCode').text();
    				
    				$('#'+isPop, opener.document).val(orderCode);
         		$('#client_code', opener.document).val(clientCode);
@@ -125,9 +125,11 @@ function popUp() {
         		
         		
    			} else {
-    			var orderCode = $(this).find('#orderCode').text();
+    			var orderCode = $(this).find('#l_orderCode').text();
+   				var prodCode = $(this).find('#l_prodCode').text();
     		
-    			$('#'+isPop, opener.document).val(workCode);
+    			$('#'+isPop, opener.document).val(orderCode);
+    			$('#prod_code', opener.document).val(prodCode);
 			}
      			
      		window.close();

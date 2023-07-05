@@ -168,7 +168,7 @@
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='order_code' id='order_code' required readonly>";
+				tbl += "  <input type='text' name='order_code' id='order_code_work' required readonly>";
 				tbl += " </td>";
 				// 품번
 				tbl += " <td>";
@@ -202,8 +202,8 @@
 				}); //lineCode click
 
 				//수주코드 검색
-				$('#order_code').click(function() {
-					openWindow("order", "order_code");
+				$('#order_code_work').click(function() {
+					openWindow("order", "order_code_work");
 				}); //orderCode click
 
 				$(this).removeClass('true');

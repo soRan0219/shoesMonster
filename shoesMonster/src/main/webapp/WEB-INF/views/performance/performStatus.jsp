@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp"%>
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
@@ -94,7 +95,10 @@
 								title: name + '별 생산실적 현황',
 						        subtitle:'오예'
 							},
-							bars: 'horizontal'  //Required for Material Bar Charts
+							backgroundColor: '#F7F7F7',
+							colors: ['#1ABB9C', 'rgb(173, 218, 209)', 'rgb(56, 170, 145)'],
+// 							legend: {position: 'bottom'}
+// 							bars: 'horizontal'  //가로차트 옵션
 					};
 					
 					// Instantiate and draw our chart, passing in some options.
@@ -140,8 +144,8 @@
 	<div id="chart_prod" style="width: 900px; height: 500px;"></div>
 	<div id="chart_date" style="width: 900px; height: 500px;"></div>
 	
-	
 </div>
 <!-- /page content -->
 
 <%@ include file="../include/footer.jsp"%>
+<link rel="stylesheet" href="/resources/forTest/performStatus.css">
