@@ -19,7 +19,7 @@ public class EmployeesVO {
 	private String emp_file;
 	private String emp_hiredate;
 	private String emp_tel;
-	private String img;
+	private String file;
 	
 	private String hyphenPhone;
 	private String hyphenEmail;
