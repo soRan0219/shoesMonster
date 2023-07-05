@@ -6,7 +6,6 @@
 <%@ include file="../include/header.jsp"%>
 	
 	
-	
 <!-- page content -->
 <div class="right_col" role="main">
 	
@@ -16,7 +15,6 @@
     <input type="button" value="미입고" onclick="show1()"></input>
     <input type="button" value="입고완료" onclick="show2()"></input>
     
-
 
 <script>
     function show1() {
@@ -60,10 +58,7 @@
             row.style.display = "";
         }
     }
-
 </script>
-
-	
 	
 	<hr>
 	
@@ -73,19 +68,17 @@
 <!-- 	입고 날짜 <input type="date"> ~ <input type="date"> -->
 <!-- 	<button type="submit">검색</button> -->
 
-<form action="" method="get">
-        
-        <label>품명</label>
-            <input type="text" name="rawMaterial.raw_name"  placeholder="검색어를 입력해주세요">
-        <label>입고번호</label>
-        	<input type="text"  name="in_mat.in_num" placeholder="검색어를 입력해주세요">
-        <!-- 이것도 옵션으로 바꿀까 생각해보기 -->
-        <label>거래처명</label>
-       		<input type="text"  name="clients.client_actname" placeholder="검색어를 입력해주세요">
-            
-        	<input type="submit" value="검색">
-    </form>
-
+	<form action="" method="get">
+		<label>품명</label>
+		    <input type="text" name="rawMaterial.raw_name"  placeholder="검색어를 입력해주세요">
+		<label>입고번호</label>
+			<input type="text"  name="in_mat.in_num" placeholder="검색어를 입력해주세요">
+		<!-- 이것도 옵션으로 바꿀까 생각해보기 -->
+		<label>거래처명</label>
+		<input type="text"  name="clients.client_actname" placeholder="검색어를 입력해주세요">
+		   
+		<input type="submit" value="검색">
+	</form>
 
 	<hr>
 
@@ -98,7 +91,8 @@
 					입고 목록 <small>In_material</small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-expanded="false"><i
@@ -179,9 +173,11 @@
 										<td class=" ">${rvo.in_mat.in_date }</td>
 										<td class=" ">${rvo.emp_id }</td>
 										<td class="a-right a-right ">${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
-										<td class=" "><button type="submit" name="in_Button"
-												value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고
-												처리</button></td>
+										<td class=" ">
+										<c:if test="${rvo.in_mat.in_num == null}">
+											<button type="submit" name="in_Button" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+										</c:if>
+										</td>
 									</tr>
 
 								</c:forEach>

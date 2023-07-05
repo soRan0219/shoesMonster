@@ -18,7 +18,6 @@
 				code : $("#code").text(),
 				name : $("#name").text()
 			};
-			alert("code : " + obj.code + ", stock_count : " + obj.stock_count + ", name : " + obj.name);
 			
 			$.ajax({
 				url : "/stock/stockPopup",
