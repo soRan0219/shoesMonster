@@ -20,27 +20,49 @@ public class StockServiceImpl implements StockService{
 	
 	
 	@Override
-	public int count3() throws Exception {
-		
-		return sdao.count3();
-	}
+    public int countP3() throws Exception {
 
-	@Override
-	public List<StockVO> getStock(PageVO vo) throws Exception {
-		
-		return sdao.getStock(vo);
-	}
+        return sdao.countP3();
+    }
+	
+    @Override
+    public int countR3() throws Exception {
 
+        return sdao.countR3();
+    }
 
-	@Override
-	public int count3(StockVO svo) throws Exception {
-		return sdao.count3(svo);
-	}
+    @Override
+    public List<StockVO> getStockP(PageVO vo) throws Exception {
 
-	@Override
-	public List<StockVO> getStock(PageVO vo, StockVO svo) throws Exception {
-		return sdao.getStock(vo, svo);
-	}
+        return sdao.getStockP(vo);
+    }
+    
+    @Override
+    public List<StockVO> getStockR(PageVO vo) throws Exception {
+
+        return sdao.getStockR(vo);
+    }
+
+    @Override
+    public int countP3(StockVO svo) throws Exception {
+        return sdao.countP3(svo);
+    }
+    
+    @Override
+    public int countR3(StockVO svo) throws Exception {
+        return sdao.countR3(svo);
+    }
+
+    @Override
+    public List<StockVO> getStockP(PageVO vo, StockVO svo) throws Exception {
+        return sdao.getStockP(vo, svo);
+    }
+    
+    @Override
+    public List<StockVO> getStockR(PageVO vo, StockVO svo) throws Exception {
+        return sdao.getStockR(vo, svo);
+    }
+	
 	
 	@Override
     public void updateCount(String code, int newCount) throws Exception {

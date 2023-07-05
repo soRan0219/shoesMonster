@@ -9,19 +9,28 @@ import com.sm.domain.WarehouseVO;
 
 public interface StockService {
 
-		// 재고 목록 개수
-		public int count3() throws Exception;
-	
-		// 재고 목록 조회
-		public List<StockVO> getStock(PageVO vo) throws Exception;
+	// 재고 목록 개수
+    public int countP3() throws Exception;
+    // 재고 목록 개수
+    public int countR3() throws Exception;
+
+    // 재고 목록 조회
+    public List<StockVO> getStockP(PageVO vo) throws Exception;
+    // 재고 목록 조회
+    public List<StockVO> getStockR(PageVO vo) throws Exception;
+
+    // 검색 목록 개수
+    public int countP3(StockVO svo) throws Exception;
+
+    // 검색 재고 목록 조회
+    public List<StockVO> getStockP(PageVO vo, StockVO svo) throws Exception;
+    // 검색 목록 개수
+    public int countR3(StockVO svo) throws Exception;
+
+    // 검색 재고 목록 조회
+    public List<StockVO> getStockR(PageVO vo, StockVO svo) throws Exception;
 		
-		// 검색 목록 개수
-		public int count3(StockVO svo) throws Exception;
-		
-		// 검색 재고 목록 조회
-		public List<StockVO> getStock(PageVO vo, StockVO svo) throws Exception;
-		
-		// 재고 실수량 
+	// 재고 실수량 
     public void updateCount(String code, int newCount) throws Exception;
 
     // 재고 수정(팝업)

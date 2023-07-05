@@ -26,7 +26,8 @@
 				data: JSON.stringify(obj),
 				success : function(response){
 					alert(obj.name + "의 재고 수량이 " + obj.stock_count + "개로 수정되었습니다.");
-					location.reload();
+// 					location.reload();
+					window.close();
 					window.opener.location.reload();
 				},
 				error : function(){

@@ -20,11 +20,13 @@ public class Out_materialVO {
 	private OrderStatusVO orders;
 	private ClientsVO clients;
 	private ProductVO prod;
+	private StockVO stock;
 	
 	public Out_materialVO() {
 		orders = new OrderStatusVO();
 		clients = new ClientsVO();
 		prod = new ProductVO();
+		stock = new StockVO();
 	}
 	
 	
