@@ -152,10 +152,7 @@ public class WorkOrderController {
 		logger.debug("@@@@@ CONTROLLER: vo = " + vo);
 		
 		//서비스 - 작업지시 등록
-		int result = wService.regWorkOrder(vo);
-		
-//		model.addAttribute("data", "model에 넣어서 보냄");
-		model.addAttribute("woInsert", result);
+		model.addAttribute("woInsert", wService.regWorkOrder(vo));
 		
 		return "redirect:/workorder/workOrderList";
 	} //addWorkOrder()
@@ -192,8 +189,7 @@ public class WorkOrderController {
 		logger.debug("@@@@@ CONTROLLER: modifyWorkOrder() 호출");
 		
 		//서비스 - 작업지시 수정
-		int result = wService.modifyWorkOrder(uvo);
-		model.addAttribute("woModify", result);
+		model.addAttribute("woModify", wService.modifyWorkOrder(uvo));
 		
 		return "redirect:/workorder/workOrderList";
 	} //modifyWorkOrder()

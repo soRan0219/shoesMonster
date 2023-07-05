@@ -4,8 +4,10 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
-
+<!-- SheetJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 <script type="text/javascript">
 	
 	//========================= 함수, 상수 ==================================//
@@ -212,8 +214,9 @@
 			$('#add').attr("disabled", true);
 			$('#delete').attr("disabled", true);
 
-			//행 하나 클릭했을 때	
-			$('table tr:not(:first-child)').click(function() {
+			//행 하나 클릭했을 때
+			//:not(:first-child)
+			$('table tr').click(function() {
 
 				//하나씩만 선택 가능
 				if(!isExecuted) {
@@ -573,27 +576,30 @@
 		</select>
 		건씩 표시
 	</div>
-		
+	
+	<div class="table-responsive">	
 		<form id="fr">
-			<table border="1">
-				<tr>
-					<th>번호</th>
-					<th>생산실적코드</th>
-					<th>작업지시코드</th>
-					<th>라인코드</th>
-					<th>품번</th>
-					<th>실적일</th>
-					<th>실적수량</th>
-					<th>양품수</th>
-					<th>불량수</th>
-					<th>불량사유</th>
-					<th>현황</th>
-					<th>비고</th>
-				</tr>
+			<table border="1" class="table table-striped jambo_table bulk_action"  id="data-table">
+				<thead>
+					<tr class="headings">
+						<th class="column-title">번호</th>
+						<th class="column-title">생산실적코드</th>
+						<th class="column-title">작업지시코드</th>
+						<th class="column-title">라인코드</th>
+						<th class="column-title">품번</th>
+						<th class="column-title">실적일</th>
+						<th class="column-title">실적수량</th>
+						<th class="column-title">양품수</th>
+						<th class="column-title">불량수</th>
+						<th class="column-title">불량사유</th>
+						<th class="column-title">현황</th>
+						<th class="column-title">비고</th>
+					</tr>
+				</thead>
 	
 				<c:forEach var="vo" items="${perfList }">
-					<tr>
-						<td></td>
+					<tr class="even pointer">
+						<td class="a-center"></td>
 						<td id="performCode"><a href="#" onclick="return false" class="t">${vo.perform_code }</a></td>
 						<td>${vo.work_code }</td>
 						<td>${vo.workOrder.line_code }</td>
@@ -616,7 +622,62 @@
 				</c:forEach>
 			</table>
 		</form>
+	</div>
 		
+	<button id="excelDownload">엑셀다운로드</button>
+		
+	<script type="text/javascript">
+		
+		//엑셀
+		const excelDownload = document.querySelector('#excelDownload');
+		
+		document.addEventListener('DOMContentLoaded', ()=> {
+			excelDownload.addEventListener('click', exportExcel);
+		});
+		
+		function exportExcel() {
+			//1. workbook 생성
+			var wb = XLSX.utils.book_new();
+			
+			//2. 시트 만들기
+			var newWorksheet = excelHandler.getWorksheet();
+			
+			//3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+			XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+			
+			//4. 엑셀 파일 만들기
+			var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+			
+			//5. 엑셀 파일 내보내기
+			saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+			
+		} //exportExcel()
+		
+		var excelHandler = {
+			getExcelFileName : function() {
+				return 'performanceList'+getToday()+'.xlsx'; //파일명
+			},
+			getSheetName : function() {
+				return 'Performance Sheet'; //시트명
+			},
+			getExcelData : function() {
+				return document.getElementById('data-table'); //table id
+			},
+			getWorksheet : function() {
+				return XLSX.utils.table_to_sheet(this.getExcelData());
+			}
+		} //excelHandler
+		
+		function s2ab(s) {
+			var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+			var view = new Uint8Array(buf);  
+			for(var i=0; i<s.length; i++) {
+				view[i] = s.charCodeAt(i) & 0xFF;
+			}
+			return buf;
+		} //s2ab(s)
+		
+	</script>
 		
 		<br><br><br>
 		
