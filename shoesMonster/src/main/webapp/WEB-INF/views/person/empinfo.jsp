@@ -110,37 +110,7 @@ function popUp() {
 		
 } //popUp() 여기까지 혦넣
 
-
-//직급에 따라 버튼들을 제어하는 함수
-function controlButtonsByRank(rank) {
-  var addButton = document.getElementById("addEmp");
-  var modifyButton = document.getElementById("modifyEmp");
-  var deleteButton = document.getElementById("deleteEmp");
-  var cancelButton = document.getElementById("cancelEmp");
-  var saveButton = document.getElementById("saveEmp");
-
-  if (rank === "부장") {
-    // 부장인 경우 버튼들을 보여줌
-    addButton.style.display = "inline";
-    modifyButton.style.display = "inline";
-    deleteButton.style.display = "inline";
-    cancelButton.style.display = "inline";
-    saveButton.style.display = "inline";
-  } else {
-    // 사원인 경우 버튼들을 숨김
-    addButton.style.display = "none";
-    modifyButton.style.display = "none";
-    deleteButton.style.display = "none";
-    cancelButton.style.display = "none";
-    saveButton.style.display = "none";
-  }
-}
-
-// 직급에 따라 버튼들을 제어하는 예시 사용
-var rank = "사원"; // 직급을 설정해주세요
-controlButtonsByRank(rank);
-
-
+ 
 
 
 //제이쿼리
