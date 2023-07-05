@@ -217,6 +217,7 @@
 			<result column="client_code" property="client_code" />
 			<result column="prod_code" property="prod_code" />
 			<result column="order_note" property="order_note" />
+			<result column="emp_id" property="emp_id" />
 	
 		<collection property="prod" ofType="com.sm.domain.ProductVO">
 			<result column="prod_name" property="prod_name" />
@@ -233,8 +234,7 @@
   </resultMap>
 	
 	<select id="orderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList">
-		select o.order_code, o.order_date, o.client_code, c.client_actname, e.emp_name, o.prod_code, p.prod_name, 
-				p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
+		SELECT o.*, p.prod_name, p.prod_unit,c.client_actname ,e.emp_name
 		from orders o
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
@@ -254,6 +254,7 @@
     <resultMap type="com.sm.domain.OrderStatusVO" id="orderStatusList2">
 			<result column="order_code" property="order_code" />
 			<result column="order_date" property="order_date" />
+			<result column="emp_id" property="emp_id" />
 			<result column="order_deliveryDate" property="order_deliveryDate" />
 			<result column="order_count" property="order_count" />
 			<result column="client_code" property="client_code" />
@@ -276,8 +277,7 @@
 
 	
 	<select id="searchOrderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList2">
-		SELECT o.order_code, o.order_date, o.client_code, c.client_actname, e.emp_name, o.prod_code, p.prod_name, 
-				p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
+		SELECT o.*, p.prod_name, p.prod_unit,c.client_actname ,e.emp_name
 		FROM orders o
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
@@ -333,14 +333,10 @@
 	
 	<!-- 수주 등록 -->
 	<insert id="registOrder">
-		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_name,
+		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_id,
 					order_count, client_code, prod_code) 
-		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_name},
-				#{order_count}, #{client_code}, #{prod_code}),
-		INSERT INTO clients (client_actname) 
-		VALUES (#{client_actname}),
-		INSERT INTO product (prod_unit)
-		VALUES (#{prod_unit})
+		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id},
+				#{order_count}, #{client_code}, #{prod_code})
 <!-- 		orders에 있는 값만 저장하고 나머지값은,,,받아와서 저장,,,,음,, -->
 	</insert>
 	<!-- 수주 등록 -->
@@ -354,7 +350,10 @@
  	
 	<!-- 수주 수정 --> 
 	<update id="updateOrder">
-		
+		UPDATE orders
+		SET order_code=#{order_code}, order_date=#{order_date}, order_deliveryDate= #{order_deliveryDate},
+		emp_id=#{emp_id},order_count=#{order_count},client_code=#{client_code},prod_code=#{prod_code}
+		WHERE order_code=#{order_code}
 	</update>
  	<!-- 수주 수정 --> 
 <!-- ===================================================== 수주 현황 ================================================================== -->

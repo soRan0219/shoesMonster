@@ -71,14 +71,11 @@ function serchEmp(inputId){
 }
 	
 
-//팝업창 옵션
-const popupOpt = "top=60,left=140,width=600,height=600";
-
-//검색 팝업
-function openWindow(search, inputId) {
+//검색 팝업2
+function openWindow2(search, inputId) {
 	var url = "/person/search?type=" + search + "&input=" + inputId;
 	var popup = window.open(url, "", popupOpt);
-} //openWindow()
+} //openWindow2()
 
 
 function popUp() {
@@ -178,31 +175,33 @@ $(function(){
 			tbl += "</td>";
 			// 수주업체코드
 			tbl += "<td>";
-			tbl += "<input type='text' name='client_code' id='client_code' required readonly>";
+			tbl += '<input type="text" name="client_code" id="client_code" onclick=serchClient("client_code"); required readonly>';
 			tbl += "</td>";
 			// 수주업체명
 			tbl += "<td>";
-			tbl += "<input type='text' name='client_actname' id='client_actname' required>";
+			tbl += "<input type='text' name='client_actname' id='client_actname' onclick=serchClient('client_code'); required>";
 			tbl += "</td>";
 			// 수주일자
 			tbl += "<td>";
 			tbl += "<input type='text' name='order_date' id='order_date' required>";
 			tbl += "</td>";
+			// 담당자 코드 히든
+			tbl += "<input type='hidden' name='emp_id' id='emp_id' required readonly>";
 			// 담당자
 			tbl += "<td>";
-			tbl += "<input type='text' name='emp_name' id='emp_name' required readonly>";
+			tbl += "<input type='text' name='emp_name' id='emp_name' onclick=serchEmp('emp_id'); required readonly>";
 			tbl += "</td>";
 			// 품번
 			tbl += "<td>";
-			tbl += "<input type='text' name='prod_code' id='prod_code' required readonly>";
+			tbl += "<input type='text' name='prod_code' id='prod_code' onclick=serchProd('prod_code'); required readonly>";
 			tbl += "</td>";
 			// 품명
 			tbl += "<td>";
-			tbl += "<input type='text' name='prod_name' id='prod_name' required>";
+			tbl += "<input type='text' name='prod_name' id='prod_name' onclick=serchProd('prod_code'); required>";
 			tbl += "</td>";
 			// 단위
 			tbl += "<td>";
-			tbl += "<input type='text' name='prod_unit' id='prod_unit' required>";
+			tbl += "<input type='text' name='prod_unit' id='prod_unit' onclick='serchEmp('prod_code')' required>";
 			tbl += "</td>";
 			// 납품예정일
 			tbl += "<td>";
@@ -312,11 +311,12 @@ $(function(){
 				var names = [
 						"order_code",
 						"client_code",
-						"client.client_actname",
+						"client_actname",
 						"order_date",
+						"emp_id",
 						"emp_name",
-						"prod.prod_code",
-						"prod.prod_name", 
+						"prod_code",
+						"prod_name", 
 						"prod.prod_unit", 
 						"order_deliveryDate", 
 						"order_count",
@@ -328,6 +328,30 @@ $(function(){
 						inputCng($(this),"text",names[idx - 1], $(this).text());
 					} // 거래처 코드부터 다 수정 가능하게
 				}); // self.find(~~)
+				
+				// 거래처 검색
+				$('#client_code').click(function() {
+					openWindow("client","client_code");
+				}); // client_code click
+				// 거래처 검색2
+				$('#client_actname').click(function() {
+					openWindow("client","client_code");
+				}); // client_code click
+				
+				// 완제품 검색
+				$('#prod_name').click(function() {
+					openWindow("prod","prod_code");
+				}); // client_code click
+				
+				// 완제품 검색2
+				$('#prod_code').click(function() {
+					openWindow("prod","prod_code");
+				}); // client_code click
+				
+				// 담당자 검색
+				$('#emp_name').click(function() {
+					openWindow("emp","emp_id");
+				}); // client_code click
 		
 				//저장버튼 -> form 제출
 				$('#save').click(function() {
@@ -535,7 +559,7 @@ $(function(){
 	<br>
 	
 	<form id="fr">
-	총 ${pm.totalCount } 건
+	총 ${pm.totalCount } 건 
 	
 		<table border="1">
 			<tr>
@@ -544,6 +568,7 @@ $(function(){
 				<th>수주업체코드</th>
 				<th>수주업체명</th>
 				<th>수주일자</th>
+				<th type='hidden' style='display: none;'>담당자id</th>
 				<th>담당자</th>
 				<th>품번</th>
 				<th>품명</th>
@@ -555,12 +580,13 @@ $(function(){
 			<c:forEach var="vo" items="${searchOrderStatusList }">
 				<tr>
 					<td></td>
-					<td id="orderCode">${vo.order_code}</td>
-					<td id="clientCode">${vo.client_code}</td>
+					<td id="l_orderCode">${vo.order_code}</td>
+					<td id="l_clientCode">${vo.client_code}</td>
 					<td>${vo.clients.client_actname}</td>
 					<td>${vo.order_date}</td>
-					<td id="empName">${vo.employees.emp_name}</td>
-					<td id="prodCode">${vo.prod_code}</td>
+					<td type='hidden' style='display: none;'>${vo.emp_id}</td>
+					<td id="L_empName">${vo.employees.emp_name}</td>
+					<td id="l_prodCode">${vo.prod_code}</td>
 					<td>${vo.prod.prod_name}</td>
 					<td>${vo.prod.prod_unit}</td>
 					<td>${vo.order_deliveryDate}</td>
