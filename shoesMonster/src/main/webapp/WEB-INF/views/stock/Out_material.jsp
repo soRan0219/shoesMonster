@@ -64,15 +64,6 @@
 
 </script>	
 	<hr>
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		<form action="" method="get">
 		<fieldset>
        		<label>출고번호:</label>
@@ -84,8 +75,6 @@
         	<input type="submit" class="btn btn-info" value="검색">
 		</fieldset>
 		</form>
-		
-
 
   <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     
@@ -93,7 +82,7 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					출고 목록 <small>Out_material</small>
+					출고 목록 <small>총 ${count4}건</small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -110,24 +99,11 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p>
-					출고 테이블
-					<code>Shoes Monseter</code>
-					since 2023
-				</p>
 				<div class="table-responsive">
 					<form action="" method="post">
 						<table class="table table-striped jambo_table bulk_action" id="data-table">
 							<thead>
 								<tr class="headings">
-									<th>
-										<div class="icheckbox_flat-green" style="position: relative;">
-											<input type="checkbox" id="check-all" class="flat"
-												style="position: absolute; opacity: 0;">
-											<ins class="iCheck-helper"
-												style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-										</div>
-									</th>
 									<th class="column-title">출고 번호</th>
 									<th class="column-title">수주번호</th>
 									<th class="column-title">거래처명</th>
@@ -146,14 +122,6 @@
 							<tbody>
 								<c:forEach var="out" items="${out_List }">
 									<tr class="even pointer">
-										<td class="a-center ">
-											<div class="icheckbox_flat-green" style="position: relative;">
-												<input type="checkbox" class="flat" name="table_records"
-													style="position: absolute; opacity: 0;">
-												<ins class="iCheck-helper"
-													style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-											</div>
-										</td>
 										<td class=" ">${out.out_num}</td>
 										<td class=" ">${out.orders.order_code}</td>
 										<td class=" ">${out.clients.client_actname}</td>
@@ -163,8 +131,7 @@
 										<td class=" ">${out.orders.order_count}</td>
 										<td class=" ">${out.prod.prod_price}원</td>
 										<td class=" ">${out.orders.order_deliveryDate}</td>
-										<td class=" ">$${out.out_date}<i
-											class="success fa fa-long-arrow-up"></i></td>
+										<td class=" ">${out.out_date}</td>
 										<td class=" ">${out.out_YN}</td>
 										<td class=" ">${out.emp_id}</td>
 										<td class=" "><button type="submit" class="btn btn-info" >출고 처리</button></td>

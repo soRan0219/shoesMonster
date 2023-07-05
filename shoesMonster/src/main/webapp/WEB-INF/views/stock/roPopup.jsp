@@ -60,7 +60,7 @@
 </head>
 <body>
 	<h1>발주 정보</h1>
-	
+	<small>총 ${countPop}건</small>
 	<form action="" method="get">
 		품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
 		거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
@@ -72,7 +72,7 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					발주 정보 목록 <small>raw_order_Popup</small>
+					발주 정보 목록 <small>총 ${countPop}건</small>
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -89,11 +89,6 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p>
-					발주 등록 목록
-					<code>Shoes Monseter</code>
-					since 2023
-				</p>
 				<div class="table-responsive">
 					<form action="" method="post">
 						<table class="table table-striped jambo_table bulk_action"
@@ -117,8 +112,7 @@
 									<tr class="even pointer" onclick="select(this);">
 										<td class=" ">${ro.rawMaterial.client_code }</td>
 										<td class=" ">${ro.clients.client_actname }</td>
-										<td class=" ">${ro.rawMaterial.raw_code }<i
-											class="success fa fa-long-arrow-up"></i></td>
+										<td class=" ">${ro.rawMaterial.raw_code }</td>
 										<td class=" ">${ro.rawMaterial.raw_name }</td>
 										<td class=" ">${ro.rawMaterial.raw_color }</td>
 										<td class=" ">${ro.rawMaterial.wh_code }</td>
@@ -154,61 +148,7 @@
 				</c:if>
 			</c:if>
 		</div>
-
 	</div>
-	
-	
-	<hr>
-	<hr>
-	<hr>
-	<hr>
-	<hr>
-	<!-- ////////////////////////////////////////////////////////////////////////////////////// -->
-	
-	
-	
-	<table border="1">
-		<tr>
-			<th>거래처 코드</th>
-			<th>거래처명</th>
-			<th>품번</th>
-			<th>품명</th>
-			<th>색상</th>
-			<th>입고 창고</th>
-			<th>재고 수량</th>
-			<th>단가</th>
-		</tr>
-		<c:forEach var="ro" items="${roPopup }">
-			<tr onclick = "select(this);">
-				<td>${ro.rawMaterial.client_code }</td>
-				<td>${ro.clients.client_actname }</td>
-				<td>${ro.rawMaterial.raw_code }</td>
-				<td>${ro.rawMaterial.raw_name }</td>
-				<td>${ro.rawMaterial.raw_color }</td>
-				<td>${ro.rawMaterial.wh_code }</td>
-				<td style="color: ${ro.stock.stock_count <= 20 ? 'red' : 'inherit'}">${ro.stock.stock_count}</td>
-				<td><fmt:formatNumber value=" ${ro.rawMaterial.raw_price }"/>원</td>
-			</tr>
-		</c:forEach>
-	</table>
-	
-	<c:if test="${countPop > 10 }">
-        <c:if test="${bp.prev}">
-    
-            <a class="btn btn-secondary" href="/stock/roPopup?page=${bp.startPage - 1}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
-    
-        </c:if>
-        
-        <c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-            <a class="btn btn-secondary" href="/stock/roPopup?page=${idx}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-        </c:forEach>
-        
-        <c:if test="${bp.next && bp.endPage > 0}">
-    
-            <a class="btn btn-secondary" href="/stock/roPopup?page=${bp.endPage + 1}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
-    
-        </c:if>
-    </c:if>
 
 	
 </body>
