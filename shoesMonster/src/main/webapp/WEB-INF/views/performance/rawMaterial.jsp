@@ -407,7 +407,9 @@
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save" class ="btn btn-success">
+		<br>
 		<div class="col-md-12 col-sm-12">
+		원자재 목록 총 ${paging.total}건
 		<table border="1" id="rawTable" class="table table-striped jambo_table bulk_action">
 				<tr class="headings">
 					<th class="column-title">번호</th>
