@@ -331,11 +331,13 @@
 		<fieldset>
        		<label>소요코드:</label>
         	<input type="text" name="req_code" id="searchCode">
-        	<label>품번:</label>
-        	<input type="text" name="prod_code" id="searchName">
+        	<label>완제품 :</label>
+        	<input type="hidden" name="prod_code" id="prod_code9999">
+        	<input type="text" name="prod_name" id="prod_name9999" readonly onclick=serchProd("prod_code9999");>
         	<br>
-        	<label>품명:</label>
-        	<input type="text" name="prod.prod_name" id="searchCategory"> 
+        	<label>원자재 :</label>
+        	<input type="hidden" name="raw_code" id="raw_code9999">
+        	<input type="text" name="raw_name" id="raw_name9999" readonly onclick=serchRaw("raw_code9999");>
         	<input type="submit" value="검색">
 		</fieldset>
 	</form>

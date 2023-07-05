@@ -233,6 +233,8 @@ public class PerformanceImpl implements PerformanceDAO {
 
 		data.put("req_code", vo.getReq_code());
 		data.put("prod_code", vo.getProd_code());
+		data.put("raw_code", vo.getRaw_code());
+		
 		return sqlSession.selectOne(NAMESPACE + ".countSearchReq", data);
 	}
 	
@@ -245,6 +247,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		data.put("cntPerPage", pvo.getCntPerPage());
 		data.put("req_code", vo.getReq_code());
 		data.put("prod_code", vo.getProd_code());
+		data.put("raw_code", vo.getRaw_code());
 
 		return sqlSession.selectList(NAMESPACE + ".readSearchReq", data);
 	}
