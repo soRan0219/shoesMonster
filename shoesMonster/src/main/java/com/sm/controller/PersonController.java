@@ -496,33 +496,28 @@ public class PersonController {
 		} // else
 	} // orderStatusGET()
 	
-	// 팝업 검색
-//	@RequestMapping(value = "/osSearch", method = RequestMethod.GET)
-//	public String popUpGET(Model model, @RequestParam("type") String type, 
-//			@RequestParam("input") String input) throws Exception {
-//		logger.debug("@@@ cnotroller : popUpGET() 호출");
-//		logger.debug("@@@ cnotroller : type = " + type);
-//		
-//		
-//		if(type.equals("line")) {
-//			return "redirect:/performance/line?input="+input;
-//		}
-//		
-//		else if(type.equals("prod")) {
-//			return "redirect:/performance/product?input="+input;
-//
-//		}
-//		
-//		else if(type.equals("client")) {
-//			return "redirect:/person/Clients?input="+input;
-//		}
-//		
-//		else /* if(type.equals("order"))*/ {
-//			return "redirect:/person/orderStatus?input="+input;
-//		}
-//		
-//		
-//	} //popUpGET()
+	// 거래처, 사원, 품목
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String popUpGET(Model model, @RequestParam("type") String type, 
+			@RequestParam("input") String input) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: popUpGET() 호출");
+		logger.debug("@@@@@ CONTROLLER: type = " + type);
+		
+		
+		if(type.equals("client")) {
+			return "redirect:/person/Clients?input="+input;
+		}
+		
+		else if(type.equals("employee")) {
+			return "redirect:/person/empinfo?input="+input;
+
+		}
+		
+		else /* if(type.equals("prod")) */ {
+			return "redirect:/erformance/product?input="+input;
+		}
+		
+	} //popUpGET()
 	
 	// 수주 등록
 	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
@@ -559,27 +554,4 @@ public class PersonController {
 	
 	// ===================================================== 수주 현황 ==========================================================
 	
-	// ===================================================== 수주 관리 ==========================================================
-	
-	// http://localhost:8088/person/orderManage
-	// 수주 관리 목록 조회
-	@RequestMapping(value = "/orderManage", method = RequestMethod.GET)
-	public void orderManageGET(Model model) throws Exception {
-		logger.debug(" orderManageGET() 호출@@@@@ ");
-		
-		List<ClientsVO> orderManageList = osService.getOrderManageList();
-		logger.debug("orderManageList : " + orderManageList);
-
-		model.addAttribute("orderManageList", orderManageList);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// ===================================================== 수주 관리 ==========================================================
 }
