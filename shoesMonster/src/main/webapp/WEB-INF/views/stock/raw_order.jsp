@@ -292,6 +292,7 @@ function toggleDiv(divId) {
 
 								</tbody>
 							</table>
+							<input type="submit" class="btn btn-info" value="발주 신청">
 							</div>
 							
 							</form>
