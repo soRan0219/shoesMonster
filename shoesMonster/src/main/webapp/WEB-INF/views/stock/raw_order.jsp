@@ -98,12 +98,13 @@ function toggleDiv(divId) {
 // 			response.sendRedirect("/smmain/smLogin"); // 로그인페이지로 이동
 // 		}
 	%>
-	
+	 
+	 <h1> 발주 관리 </h1>
 
     <div>
     <form action="" name="ro">
-	    <input type="button" value="발주 현황" onclick="toggleDiv('list')"></input>
-	    <input type="button" value="발주 등록" onclick="toggleDiv('regist')"></input>
+	    <input type="button" value="발주 현황" class="btn btn-info" onclick="toggleDiv('list')"></input>
+	    <input type="button" value="발주 등록" class="btn btn-info" onclick="toggleDiv('regist')"></input>
     </form>
     </div>
 
@@ -116,7 +117,7 @@ function toggleDiv(divId) {
 <!-- 	   		품명 <input type="text" name="raw_name" placeholder="품명을 입력하세요"> -->
 	   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
 <!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
-	   	<input type="submit" value="검색"></input>
+	   	<input type="submit" class="btn btn-info" value="검색"></input>
 
     </form>
     
@@ -126,7 +127,7 @@ function toggleDiv(divId) {
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					발주 목록 <small>Raw_order</small>
+					발주 목록 
 				</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -143,24 +144,12 @@ function toggleDiv(divId) {
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p>
-					발주 테이블
-					<code>Shoes Monseter</code>
-					since 2023
-				</p>
+				
 				<div class="table-responsive">
 					<form action="" method="post">
 						<table class="table table-striped jambo_table bulk_action">
 							<thead>
 								<tr class="headings">
-									<th>
-										<div class="icheckbox_flat-green" style="position: relative;">
-											<input type="checkbox" id="check-all" class="flat"
-												style="position: absolute; opacity: 0;">
-											<ins class="iCheck-helper"
-												style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-										</div>
-									</th>
 									<th class="column-title">발주 번호</th>
 									<th class="column-title">거래처명</th>
 									<th class="column-title">품번</th>
@@ -178,14 +167,6 @@ function toggleDiv(divId) {
 							<tbody>
 								<c:forEach var="vo" items="${ro_List }">
 									<tr class="even pointer">
-										<td class="a-center ">
-											<div class="icheckbox_flat-green" style="position: relative;">
-												<input type="checkbox" class="flat" name="table_records"
-													style="position: absolute; opacity: 0;">
-												<ins class="iCheck-helper"
-													style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-											</div>
-										</td>
 										<td class=" ">${vo.raw_order_num }</td>
 										<td class=" ">${vo.clients.client_actname }</td>
 										<td class=" "><input type="button" onclick="detailPopup('${vo.raw_code}')">${vo.raw_code }</td>
@@ -216,17 +197,17 @@ function toggleDiv(divId) {
    		<c:if test="${count1 > 10 }">
 			<c:if test="${bp.prev}">
 
-			    <a href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+			    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
 
 			</c:if>
 			
 			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-			    <a href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+			    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
 			</c:forEach>
 			
 			<c:if test="${bp.next && bp.endPage > 0}">
 
-			    <a href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+			    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
 
 			</c:if>
 		</c:if>
@@ -234,97 +215,98 @@ function toggleDiv(divId) {
 
 	</div>
     
+	</div>
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-		<br><br>
-    bp.startPage : ${bp.startPage } <br>
-    bp.endPage : ${bp.endPage } <br>
-    param : ${param } <br>
-
-
-	
-	</div>
 	
 	<!-- ============================ 발주 현황 ============================ -->
 	
-	<!-- ============================ 발주 등록 ============================ -->
-	<div id="regist">
 	
-	<h1>발주 등록</h1>
-	<form action="" method="post" onsubmit="return check()">
-		<c:set var="today" value="<%=new Date() %>" />
-		
-		<table border="1">
+	
+	
+	
+	<!-- ============================ 발주 등록 ============================ -->
+
+	<div id="regist">
+
+		<form action="" method="post" onsubmit="return check()">
+			<c:set var="today" value="<%=new Date()%>" />
+
+			<table border="1">
 			<tr>
 				<th>입고 창고</th>
 				<td onclick="roPopup();"><input type="text" name="wh_code" id="wh_code" readonly></td>
 			</tr>
 		</table>
-		<br>
-		<table border="1" id="table">
-			<tr>
-				<th>발주일</th>
-				<th>거래처 코드</th>
-				<th>거래처명</th>
-				<th>품번</th>
-				<th>품명</th>
-				<th>색상</th>
-				<th>발주 수량</th>
-				<th>재고 수량</th>
-				<th>단가</th>
-				<th>총액</th>
-				<th>담당자</th> <!-- 발주번호처럼 '발주 신청' 버튼 눌렀을 때 저장하기 -->
-			</tr>
-			<tr>
-				<td><input type="text" name="raw_order_date" value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>" readonly></td>
-				<td onclick="roPopup();"><input type="text" name="client_code" id="client_code" readonly></td>
-				<td onclick="roPopup();"><input type="text" name="client_actname" id="client_actname" required readonly></td>
-				<td onclick="roPopup();"><input type="text" name="raw_code" id="raw_code" readonly></td>
-				<td onclick="roPopup();"><input type="text" name="raw_name" id="raw_name" readonly></td>
-				<td onclick="roPopup();"><input type="text" name="raw_color" id="raw_color" readonly></td>
-				<td><input type="number" min="1" id="raw_order_count" name="raw_order_count" oninput="totalAmount()"></td> <!-- CSS할 때 증감버튼 없애기 -->
-				<td><input type="text" name="stock_count" id="stock_count" readonly></td>
-				<td><input type="text" name="raw_price" id="raw_price" readonly></td>
-				<td id="total_amount"></td>
-				<td>${sessionScope.emp_id }</td>
-			</tr>
-		</table>
-		
-		<input type="submit" value="발주 신청">
-	</form>
+			<br>
+						<div class="table-responsive">
+							<table id="table"
+								class="table table-striped jambo_table bulk_action">
+								<thead>
+									<tr class="headings">
+										<th class="column-title">발주일</th>
+										<th class="column-title">거래처 코드</th>
+										<th class="column-title">거래처명</th>
+										<th class="column-title">품번</th>
+										<th class="column-title">품명</th>
+										<th class="column-title">색상</th>
+										<th class="column-title">발주 수량</th>
+										<th class="column-title">재고 수량</th>
+										<th class="column-title">단가</th>
+										<th class="column-title">총액</th>
+										<th class="column-title">담당자</th>
+										<!-- 발주번호처럼 '발주 신청' 버튼 눌렀을 때 저장하기 -->
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr class="even pointer">
+										<td class=" "><input type="text" name="raw_order_date"
+											value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>"
+											readonly></td>
+										<td class=" " onclick="roPopup();"><input type="text" 
+											name="client_code" id="client_code" readonly></td>
+										<td class=" " onclick="roPopup();"><input type="text" 
+											name="client_actname" id="client_actname" required readonly></td>
+										<td class=" " onclick="roPopup();"><input type="text" 
+											name="raw_code" id="raw_code" readonly></td>
+										<td class=" " onclick="roPopup();"><input type="text" 
+											name="raw_name" id="raw_name" readonly></td>
+										<td class=" " onclick="roPopup();"><input type="text" 
+											name="raw_color" id="raw_color" readonly></td>
+										<td class=" "><input type="number"  min="1"
+											id="raw_order_count" name="raw_order_count"
+											oninput="totalAmount()"></td>
+										<!-- CSS할 때 증감버튼 없애기 -->
+										<td class=" "><input type="text"  name="stock_count"
+											id="stock_count" readonly></td>
+										<td class=" "><input type="text"  name="raw_price"
+											id="raw_price" readonly></td>
+										<td id="total_amount" class=" "></td>
+										<td class=" ">${sessionScope.emp_id }</td>
+
+									</tr>
+
+
+								</tbody>
+							</table>
+							</div>
+							
+							</form>
+						</div>
+
 	
-	로그인 아이디 : ${emp_id } <!-- 로그인 확인 후 삭제하기 -->
-	</div>
+	<!-- ============================ 발주 등록 ============================ -->
+	
+	
+
+
+	<!-- ============================ 발주 등록 ============================ -->
+	
 <!-- ============================ 발주 등록 ============================ -->
-	
+	</div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
 
