@@ -477,7 +477,7 @@ $(function(){
 		품번 <input type="text" name="prod_code">
 		<input type="submit" value="조회">
 		<br>
-		담당자 <input type="text" name="emp_name" >
+		담당자 <input type="text" name="emp_name" id="emp_name">
 		납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
 				    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
 	</form>
