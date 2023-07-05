@@ -29,8 +29,9 @@
 	    </collection>
 	    
 	    <collection property="clients" ofType="com.sm.domain.ClientsVO">
-	        <result property="client_actname" column="client_actname" />
 	        <result property="client_code" column="client_code" />
+	        <result property="client_actname" column="client_actname" />
+	        <result property="client_name" column="client_name"/>
 	        <result property="client_tel" column="client_tel" />
 	        <result property="client_phone" column="client_phone" />
 	        <result property="client_fax" column="client_fax" />
@@ -145,7 +146,12 @@
 
 	<!-- 발주 등록 -->
 	
-	
+	<!-- 발주 취소 -->
+	<delete id="roCancel">
+		delete from raw_order
+		where raw_order_num = #{raw_order_num}
+	</delete>
+	<!-- 발주 취소 -->
 
 
 
@@ -217,6 +223,17 @@
         limit #{startPage}, #{pageSize}
     </select>
     <!-- 발주 검색 목록  -->
+    
+    <!-- 발주 상세 팝업 -->
+    <select id="detailPopup" resultMap="ro_List">
+    	select c.client_code, c.client_actname, c.client_name, c.client_tel, c.client_phone, c.client_fax
+    	from clients c
+    	left join raw_material rm on rm.client_code = c.client_code
+    	where rm.raw_code = #{rawCode}
+    </select>
+    <!-- 발주 상세 팝업 -->
+    
+    
 	
 	<!-- ========================= 발주 목록 조회 - 끝 ========================= -->
 

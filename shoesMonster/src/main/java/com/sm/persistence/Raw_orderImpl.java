@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sm.domain.ClientsVO;
 import com.sm.domain.In_materialVO;
 import com.sm.domain.PageVO;
 import com.sm.domain.Raw_orderVO;
@@ -142,6 +143,31 @@ public class Raw_orderImpl implements Raw_orderDAO{
     public List<Raw_orderVO> getDetail() throws Exception {
         return sqlSession.selectList(NAMESPACE + ".roDetail");
   }
+
+
+
+	@Override
+	public List<ClientsVO> detailPopup(String rawCode) throws Exception {
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+        data.put("rawCode", rawCode);
+		
+		return sqlSession.selectList(NAMESPACE + ".detailPopup", data);
+		
+	}
+
+
+
+	@Override
+	public void roCancel(String raw_order_num) throws Exception {
+		
+		int result = sqlSession.update(NAMESPACE + ".roCancel", raw_order_num);
+		
+		if(result != 0) {
+            logger.debug("발주 취소 완료");
+        }
+	}
 
     
     

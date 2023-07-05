@@ -46,7 +46,7 @@ public class Raw_orderServiceImpl implements Raw_orderService{
 	@Override
 	public void roInsert(Raw_orderVO vo) throws Exception {
 		rodao.roInsert(vo);
-  }
+    }
 	
 	
 	@Override
@@ -69,22 +69,35 @@ public class Raw_orderServiceImpl implements Raw_orderService{
 
 
 	@Override
-		public int count1(Raw_orderVO rvo) throws Exception {
-			
-			return rodao.count1(rvo);
-		}
+	public int count1(Raw_orderVO rvo) throws Exception {
+		
+		return rodao.count1(rvo);
+	}
 	
 	
-		@Override
-		public List<Raw_orderVO> getDetail() throws Exception {
-			return rodao.getDetail();
-	  }
+	@Override
+	public List<Raw_orderVO> getDetail() throws Exception {
+		return rodao.getDetail();
+    }
 	  
-	  @Override
-		public List<Raw_orderVO> getRaw_order(PageVO vo, Raw_orderVO rvo) throws Exception {
-			
-			return rodao.Raw_order(vo, rvo);
-		}
+    @Override
+	public List<Raw_orderVO> getRaw_order(PageVO vo, Raw_orderVO rvo) throws Exception {
+		
+		return rodao.Raw_order(vo, rvo);
+	}
+
+	@Override
+	public List<ClientsVO> detailPopup(String rawCode) throws Exception {
+		
+		return rodao.detailPopup(rawCode);
+	}
+
+
+	@Override
+	public void roCancel(String raw_order_num) throws Exception {
+		
+		rodao.roCancel(raw_order_num);
+	}
  
 	
 	
