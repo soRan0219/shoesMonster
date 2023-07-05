@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 <link href="../resources/build/css/custom.css" rel="stylesheet">
 
 <style type="text/css">
@@ -15,8 +16,6 @@
 }
 </style>
 
-<!-- page content -->
-<div class="right_col" role="main">
 
 <script type="text/javascript">
 
@@ -490,8 +489,12 @@
 
 
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
-<h2>창고관리</h2>
+<!-- page content -->
+<div class="right_col" role="main">
 
+<h2 style="margin-left: 1%;">창고관리</h2>
+
+<div style="margin-left: 1%;">
 	<form method="get">
 		<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
@@ -505,12 +508,6 @@
 			<br>
 			
 			<label>사용여부</label>
-<!-- 				<select name="wh_use" > -->
-<!-- 					<option selected value="3">전 체</option> -->
-<!-- 					<option value="1">Y</option> -->
-<!-- 					<option value="2">N</option> -->
-<!-- 				</select> -->
-			
 				<input type="radio" name="wh_use" value="3" checked>전 체
 				<input type="radio" name="wh_use" value="1">Y
 				<input type="radio" name="wh_use" value="2">N
@@ -522,70 +519,88 @@
 			<input type="submit" value="검색">
 		</fieldset>
 	</form>
-<!-- /////////////////////////////////////////////////////////////////////////////////// -->
-	
-	<button id="add" class="true">추가</button>
-	<button id="modify" >수정</button>
-	<button id="delete" class="true">삭제</button>
-	<button type="reset" id="cancle" >취소</button>
-	<button type="submit" id="save">저장</button>
-	<button onclick="location.reload()">새로고침</button>
+</div>
 
-<!-- //////////////////////////////////////////////////////////////////////// -->
-<!-- <div class="col-md-12 col-sm-12"> -->
-<!-- <div class="x_panel"> -->
-<!-- <div class="x_content"> -->
-<!-- <div class="row"> -->
-<!-- <div class="col-sm-12"> -->
-<!-- <div class="card-box table-responsive"> -->
-<!-- <div class="table-responsive"> -->
+<hr>
 
-<form id="fr">
-	<table border="1" id="whTable" 
-	class="table table-striped jambo_table bulk_action"
-	style="width:100%" role="grid" aria-describedby="datatable-fixed-header_info"> 
-		<a>총 ${lwpm.totalCount } 건</a>
-<!-- 		<thead> 안되면 지우삼 -->
-		<tr class="headings">
-			<td>번호</td>
-			<td>창고코드</td>
-			<td>창고명</td>
-			<td>지역</td>
-			<td>전화번호</td>
-			<td>사용여부</td>
-			<td type='hidden' style='display: none;'>담당자 코드</td>
-			<td>담당자</td>
-			<td>비고</td>
-		</tr>
-<!-- 	  	</thead> -->
-	  
-		<c:forEach var="ww" items="${whList }" varStatus="i">
-				<tr>	
-					<td>${i.count }</td>
-<!-- 					<td></td> -->
-					<td id="whCode">${ww.wh_code}</td>
-					<td id="whName">${ww.wh_name}</td>
-					<td>${ww.wh_addr}</td>
-					<td>${ww.wh_tel}</td>
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form id="fr">
+			
+			<div class="x_title">
+				<h2>창고 관리</h2>
 				
-					<c:choose>	
-						<c:when test="${ww.wh_use == 1}">
-							<td>Y</td>
-						</c:when>
-						<c:when test="${ww.wh_use == 2}">
-							<td>N</td>
-						</c:when>
-					</c:choose>
-					<td type='hidden' style='display: none;'>${ww.emp_id }</td>
-					<td id="">${ww.emp.emp_name}</td>
-					<td>${ww.wh_note}</td>
-				</tr>
+				<span style="float: right; margin-top: 1%;">총 ${lwpm.totalCount } 건</span>
+					<div class="clearfix"></div>
+				</div>
+				
+<!-- /////////////////////////////////////////////////////////////////////////////////// -->
+	<div style="margin-bottom: 1%;">
+		<button id="add" class="true">추가</button>
+		<button id="modify" >수정</button>
+		<button id="delete" class="true">삭제</button>
+		<button type="reset" id="cancle" >취소</button>
+		<button type="submit" id="save">저장</button>
+		<button onclick="location.reload()">새로고침</button>
+	</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->
+
+	<div style="overflow-x: auto;">
+	<table border="1" id="whTable" 
+	class="table table-striped jambo_table bulk_action" style="text-align:center;"> 
+		<colgroup>
+		    <col style="width: 50px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 150px">
+		</colgroup>
+		<thead>
+			<tr class="headings">
+				<td>번호</td>
+				<td>창고코드</td>
+				<td>창고명</td>
+				<td>지역</td>
+				<td>전화번호</td>
+				<td>사용여부</td>
+				<td type='hidden' style='display: none;'>담당자 코드</td>
+				<td>담당자</td>
+				<td>비고</td>
+			</tr>
+	  	</thead>
+	  	
+		<c:forEach var="ww" items="${whList }" varStatus="i">
+			<tr>	
+				<td>${i.count }</td>
+				<td id="whCode">${ww.wh_code}</td>
+				<td id="whName">${ww.wh_name}</td>
+				<td>${ww.wh_addr}</td>
+				<td>${ww.wh_tel}</td>
+			
+				<c:choose>	
+					<c:when test="${ww.wh_use == 1}">
+						<td>Y</td>
+					</c:when>
+					<c:when test="${ww.wh_use == 2}">
+						<td>N</td>
+					</c:when>
+				</c:choose>
+				<td type='hidden' style='display: none;'>${ww.emp_id }</td>
+				<td id="">${ww.emp.emp_name}</td>
+				<td>${ww.wh_note}</td>
+			</tr>
 			</c:forEach>
 		</table>
+		</div>
 	</form>
+	</div>
+</div>
+		
 
 
-<!-- </div>col-sm-12 -->
 
 
 
@@ -604,15 +619,10 @@
 			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}">다 음</a>
 		</c:if>
 
-<!-- 	</div>id="pagination"  -->
+	</div><!--id="pagination"  --> 
 	
 
-<!-- </div>card-box table-responsive	 -->
-	
-<!-- </div>row	 -->
-<!-- </div>x_content -->
-<!-- </div> x_panel		 -->
-<!-- </div>class="col-md-12 col-sm-12" -->
+
 
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
