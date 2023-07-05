@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,11 +29,11 @@ public class MainController {
 	public void smLoginGET() {
 		logger.debug(" loginGET() 호출@@@@@@ ");
 		logger.debug(" 연결된 뷰 페이지로 이동 (/smmain/loginMain.jsp)@@@@@@ ");
-		
 	}
+	
 	// 로그인 - 정보 처리
 	@RequestMapping(value = "/smLogin", method = RequestMethod.POST)
-	public String smLoginPOST(EmployeesVO empvo, String id, String pw, HttpSession session) {
+	public String smLoginPOST(EmployeesVO empvo, String id, String pw, HttpSession session, Model model) {
 		logger.debug(id+"", pw+"");
 		logger.debug(empvo+"");
 		
@@ -42,6 +43,7 @@ public class MainController {
 		
 		if(resultVO != null) {
 			session.setAttribute("id", resultVO);
+			model.addAttribute(resultVO);
 			logger.debug(" 로그인 성공! ");
 			return "redirect:/smmain/smMain";
 		}else {

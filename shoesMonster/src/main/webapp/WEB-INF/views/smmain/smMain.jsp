@@ -4,9 +4,6 @@
 
 <link href="../resources/build/css/custom.css" rel="stylesheet">
 
-class="column-title"
-
-
 <!-- page content -->
 <div class="right_col" role="main">
 	<!-- top tiles -->

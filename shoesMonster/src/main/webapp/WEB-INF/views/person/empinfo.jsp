@@ -396,6 +396,22 @@ $(function() {
 		}); //delete click
 	
 }); //jquery
+
+
+// ----- 권한 설정 ----- //
+var position = sessionScope.id.emp_department("인사팀");
+var addEmpButton = document.getElementById("addEmp");
+var deleteEmpButton = document.getElementById("deleteEmp");
+
+if (position === "인사팀") {
+  addEmp.hidden = false;      // '추가' 버튼을 보이도록 설정
+  deleteEmp.hidden = false;   // '삭제' 버튼을 보이도록 설정
+} else {
+  addEmp.hidden = true;       // '추가' 버튼을 숨기도록 설정
+  deleteEmp.hidden = true;    // '삭제' 버튼을 숨기도록 설정
+}
+
+
 </script>
 
 <style>
@@ -406,6 +422,8 @@ $(function() {
 }
 
 </style>
+
+<%-- ${sessionScope.id.emp_department } --%>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -434,16 +452,19 @@ $(function() {
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>
-						사원 관리 <small> 사원 인원 수 : ${pm.totalCount } </small>
+						사원 관리 <small> 사원 인원 : ${pm.totalCount } </small>
 					</h2>
-					<div style="text-align-last: right;" class="nav navbar-right panel_toolbox">
-						<button id="addEmp" class="true">추가</button>
-						<button id="modifyEmp">수정</button>
-						<button id="deleteEmp" class="true">삭제</button>
-						<button type="reset" id="cancelEmp">취소</button>
-						<button type="submit" id="saveEmp">저장</button>
-						<button onclick="location.href='/person/empinfo'">새로고침</button>
-					</div>
+					<c:if test="">
+						<div style="text-align-last: right;" class="nav navbar-right panel_toolbox">
+							<button id="addEmp" class="true">추가</button>
+							<!-- <button id="modifyEmp">수정</button> -->
+							<button id="deleteEmp" class="true">삭제</button>
+							<button type="reset" id="cancelEmp">취소</button>
+							<button type="submit" id="saveEmp">저장</button>
+							<button onclick="location.href='/person/empinfo'">새로고침</button>
+						</div>			
+					</c:if>
+					
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
