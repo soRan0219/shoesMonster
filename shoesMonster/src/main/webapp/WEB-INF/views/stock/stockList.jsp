@@ -105,10 +105,10 @@
 
 	<h1> 재고 관리 </h1>
 	
-	<input type="button" value="전체" onclick="toggleDiv('all')"></input>
-    <input type="button" value="원자재" onclick="toggleDiv('raw')"></input>
-    <input type="button" value="완제품" onclick="toggleDiv('prod')"></input>
-    <input type="button" value="한눈에보기" onclick="toggleDiv('graph')"></input>
+	<input type="button" value="전체" class="btn btn-info" onclick="toggleDiv('all')"></input>
+    <input type="button" value="원자재" class="btn btn-info" onclick="toggleDiv('raw')"></input>
+    <input type="button" value="완제품" class="btn btn-info" onclick="toggleDiv('prod')"></input>
+    <input type="button" value="한눈에보기" class="btn btn-info" onclick="toggleDiv('graph')"></input>
     
     
  <script type="text/javascript">
@@ -207,7 +207,7 @@ function toggleDiv(divId) {
 		   		<td>${s.wh_code}</td>
 		   		<td>${s.warehouse.emp_id}</td>
 		   		<td>
-					<button type="submit" name="modify_Button" value="${s.prod_code}">수정</button>
+					<button type="submit" name="modify_Button" class="btn btn-info" value="${s.prod_code}">수정</button>
 				</td>
 		 	</tr>
 	 	</c:if>
@@ -223,7 +223,7 @@ function toggleDiv(divId) {
 		   		<td>${s.wh_code}</td>
 		   		<td>${s.warehouse.emp_id}</td>
 				<td>
-					<button type="submit" name="modify_Button" value="${s.raw_code}">수정</button>
+					<button type="submit" name="modify_Button" class="btn btn-info" value="${s.raw_code}">수정</button>
 				</td>
 		 	</tr>
 	 	</c:if>
@@ -236,15 +236,15 @@ function toggleDiv(divId) {
 <div>
     <c:if test="${count3 > 10 }">
 		<c:if test="${bp.prev}">
-		    <span><a href="/stock/stockList?page=${bp.startPage - 1}&wh_code=${wh_code}">이전</a></span>
+		    <span><a class="btn btn-secondary" href="/stock/stockList?page=${bp.startPage - 1}&wh_code=${wh_code}">이전</a></span>
 		</c:if>
 		
 		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-		    <a href="/stock/stockList?page=${idx }&wh_code=${wh_code}">${idx }</a>
+		    <a class="btn btn-secondary" href="/stock/stockList?page=${idx }&wh_code=${wh_code}">${idx }</a>
 		</c:forEach>
 		
 		<c:if test="${bp.next && bp.endPage > 0}">
-		    <a href="/stock/stockList?page=${bp.endPage + 1}&wh_code=${wh_code}">다음</a>
+		    <a class="btn btn-secondary" href="/stock/stockList?page=${bp.endPage + 1}&wh_code=${wh_code}">다음</a>
 		</c:if>
 	</c:if>
 </div>
@@ -258,7 +258,7 @@ function toggleDiv(divId) {
 			원자재 코드 <input type="text" name="raw_code" placeholder="원자재 코드를 입력하세요"> 
 			원자재 명 <input type="text" name="raw_mat.raw_name" placeholder="원자재 명을 입력하세요"> 
 			창고 코드 <input type="text" name="wh_code" placeholder="창고코드를 입력하세요">
-			<button type="submit">검색</button>
+			<button class="btn btn-info" type="submit">검색</button>
 		</form>
 
 	<form action="" method="post">
@@ -289,7 +289,7 @@ function toggleDiv(divId) {
 		   		<td>${s.wh_code}</td>
 		   		<td>${s.warehouse.emp_id}</td>
 				<td>
-					<button type="submit" name="modify_Button" value="${s.raw_code}">수정</button>
+					<button type="submit" class="btn btn-info" name="modify_Button" value="${s.raw_code}">수정</button>
 				</td>
 		 	</tr>
 	 	</c:if>
@@ -302,15 +302,15 @@ function toggleDiv(divId) {
 <div>
     <c:if test="${count3 > 10 }">
 		<c:if test="${bp.prev}">
-		    <span><a href="/stock/stockList?page=${bp.startPage - 1}&wh_code=${wh_code}&raw_code=${raw_code}&raw_mat.raw_name=${raw_mat.raw_name}">이전</a></span>
+		    <span><a class="btn btn-secondary" href="/stock/stockList?page=${bp.startPage - 1}&wh_code=${wh_code}&raw_code=${raw_code}&raw_mat.raw_name=${raw_mat.raw_name}">이전</a></span>
 		</c:if>
 		
 		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-		    <a href="/stock/stockList?page=${idx }&wh_code=${wh_code}&raw_code=${raw_code}&raw_mat.raw_name=${raw_mat.raw_name}">${idx }</a>
+		    <a class="btn btn-secondary" href="/stock/stockList?page=${idx }&wh_code=${wh_code}&raw_code=${raw_code}&raw_mat.raw_name=${raw_mat.raw_name}">${idx }</a>
 		</c:forEach>
 		
 		<c:if test="${bp.next && bp.endPage > 0}">
-		    <a href="/stock/stockList?page=${bp.endPage + 1}&wh_code=${wh_code}&raw_code=${raw_code}&raw_mat.raw_name=${raw_mat.raw_name}">다음</a>
+		    <a class="btn btn-secondary" href="/stock/stockList?page=${bp.endPage + 1}&wh_code=${wh_code}&raw_code=${raw_code}&raw_mat.raw_name=${raw_mat.raw_name}">다음</a>
 		</c:if>
 	</c:if>
 </div>
@@ -356,7 +356,7 @@ function toggleDiv(divId) {
 		   		<td>${s.wh_code}</td>
 		   		<td>${s.warehouse.emp_id}</td>
 		   		<td>
-					<button type="submit" name="modify_Button" value="${s.prod_code}">수정</button>
+					<button type="submit" class="btn btn-info" name="modify_Button" value="${s.prod_code}">수정</button>
 				</td>
 		 	</tr>
 	 	
@@ -369,15 +369,15 @@ function toggleDiv(divId) {
 <div>
     <c:if test="${count3 > 10 }">
 		<c:if test="${bp.prev}">
-		    <span><a href="/stock/stockList?page=${bp.startPage - 1}&wh_code=${wh_code}&prod_code=${prod_code}&product.prod_name=${product.prod_name}">이전</a></span>
+		    <span><a class="btn btn-secondary" href="/stock/stockList?page=${bp.startPage - 1}&wh_code=${wh_code}&prod_code=${prod_code}&product.prod_name=${product.prod_name}">이전</a></span>
 		</c:if>
 		
 		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-		    <a href="/stock/stockList?page=${idx }&wh_code=${wh_code}&prod_code=${prod_code}&product.prod_name=${product.prod_name}">${idx }</a>
+		    <a class="btn btn-secondary" href="/stock/stockList?page=${idx }&wh_code=${wh_code}&prod_code=${prod_code}&product.prod_name=${product.prod_name}">${idx }</a>
 		</c:forEach>
 		
 		<c:if test="${bp.next && bp.endPage > 0}">
-		    <a href="/stock/stockList?page=${bp.endPage + 1}&wh_code=${wh_code}&prod_code=${prod_code}&product.prod_name=${product.prod_name}">다음</a>
+		    <a class="btn btn-secondary" href="/stock/stockList?page=${bp.endPage + 1}&wh_code=${wh_code}&prod_code=${prod_code}&product.prod_name=${product.prod_name}">다음</a>
 		</c:if>
 	</c:if>
 </div>
@@ -388,13 +388,16 @@ function toggleDiv(divId) {
  <h1> Stock Graph </h1>
   <div id="wh_dv" style="width: 50%; height: 50%;"></div>
   <div id="wh_code" style="width: 50%; height: 50%;"></div>
+  
+  
+  
+  
+  
+  
 </div>
 
 
 
-	bp.startPage : ${bp.startPage } <br>
-    bp.endPage : ${bp.endPage } <br>
-    param : ${param } <br>
 
 </div>
 <!-- /page content -->
