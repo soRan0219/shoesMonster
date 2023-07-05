@@ -13,9 +13,9 @@
 
 	<h1> 출고 관리 </h1>
 		
-	<input type="button" value="전체" onclick="showAll()"></input>
-    <input type="button" value="미출고" onclick="show1()"></input>
-    <input type="button" value="출고완료" onclick="show2()"></input>
+	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input>
+    <input type="button" value="미출고" class="btn btn-info" onclick="show1()"></input>
+    <input type="button" value="출고완료" class="btn btn-info" onclick="show2()"></input>
     
 
 
@@ -81,7 +81,7 @@
         	<input type="text" name="prod_name" value="">
         	<label>거래처명:</label>
         	<input type="text" name="client.client_actname" value=""> 
-        	<input type="submit" value="검색">
+        	<input type="submit" class="btn btn-info" value="검색">
 		</fieldset>
 		</form>
 		
@@ -167,7 +167,7 @@
 											class="success fa fa-long-arrow-up"></i></td>
 										<td class=" ">${out.out_YN}</td>
 										<td class=" ">${out.emp_id}</td>
-										<td class=" "><button type="submit">출고 처리</button></td>
+										<td class=" "><button type="submit" class="btn btn-info" >출고 처리</button></td>
 									</tr>
 
 								</c:forEach>
@@ -182,17 +182,17 @@
    		<c:if test="${count4 > 10 }">
 		<c:if test="${bp.prev}">
 
-		    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+		    <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
 
 		</c:if>
 		
 		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-		    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+		    <a class="btn btn-secondary" href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
 		</c:forEach>
 		
 		<c:if test="${bp.next && bp.endPage > 0}">
 
-		    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+		    <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
 
 		</c:if>
 		</c:if>
@@ -208,10 +208,7 @@
 
 
 	
-	<br><br>
-    bp.startPage : ${bp.startPage } <br>
-    bp.endPage : ${bp.endPage } <br>
-    param : ${param } <br>
+	
 	
 	
    

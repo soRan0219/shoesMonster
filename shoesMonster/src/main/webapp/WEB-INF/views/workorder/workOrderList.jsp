@@ -4,7 +4,10 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
+<!-- SheetJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 <style type="text/css">
 .selected {
@@ -83,7 +86,8 @@
         	$('#delete').hide();
         	$('#save').hide();
         	
-       		$('table tr:not(:first-child)').click(function(){
+        	//:not(:first-child)
+       		$('table tr').click(function(){
        			$(this).css('background', '#ccc');
         		
        			if(isPop==="work_code") {
@@ -118,6 +122,7 @@
     	} //if(팝업으로 열었을 때)
     		
 	} //popUp()
+	
 	
 
 	
@@ -238,7 +243,7 @@
 		let urlParams = new URLSearchParams(queryString);
 		var fromController = urlParams.get("woInsert");
 		
-		console.log(fromController);
+// 		console.log(fromController);
 		
 		if(fromController==0) {
 			if(confirm("재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?")) {
@@ -256,7 +261,8 @@
 			$('#delete').attr("disabled", true);
 
 			//행 하나 클릭했을 때	
-			$('table tr:not(:first-child)').click(function() {
+			//:not(:first-child)
+			$('table tr').click(function() {
 
 				//하나씩만 선택 가능
 				if(!isExecuted) {
@@ -376,7 +382,7 @@
 		urlParams = new URLSearchParams(queryString);
 		var fromController = urlParams.get("woModify");
 		
-		console.log(fromController);
+// 		console.log(fromController);
 		
 		if(fromController==0) {
 			if(confirm("재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?")) {
@@ -400,15 +406,32 @@
 					var tbl = "<input type='checkbox' name='selected' value='";
 					tbl += code;
 					tbl += "'>";
-	
+					
+// 					var thTmp = "<div class='icheckbox_flat-green' style='position: relative;'>";
+// 					thTmp += "<input type='checkbox' id='check-all' class='flat' style='position: absolute; opacity: 0;'>";
+// // 					thTmp += "<ins class='iCheck-helper' style='position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;''></ins>";
+// 					thTmp += "</div>";
+					
+// 					var tdTmp = "<div class='icheckbox_flat-green' style='position: relative;'>";
+// 					tdTmp += "<input type='checkbox' class='flat' name='table_records' style='position: absolute; opacity: 0;' value='";
+// 					tdTmp += code;
+// 					tdTmp += "'>";
+// // 					tdTmp += "<ins class='iCheck-helper' style='position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;'></ins>";
+// 					tdTmp += "</div>";
+					
 					$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
 					$(this).find('td:first').html(tbl);
+// 					$(this).find('th:first').html(thTmp);
+// 					$(this).find('td:first').html(tdTmp);
 				});
 				
 				//전체선택
 				$('#selectAll').click(function() {
+// 				$('d.icheckbox_flat-green #check-all').click(function() {
 					var checkAll = $(this).is(":checked");
-	
+					
+// 					console.log("check-all checked?? " + checkAll);
+					
 					if (checkAll) {
 						$('input:checkbox').prop('checked', true);
 					} else {
@@ -422,10 +445,12 @@
 					var checked = [];
 	
 					$('input[name=selected]:checked').each(function() {
+// 					$('input[name=table_records]:checked').each(function() {
+						console.log("check => " + $(this).val());
 						checked.push($(this).val());
 					});
 	
-					// 	alert(checked);
+// 					console.log(checked);
 	
 					if (checked.length > 0) {
 	
@@ -598,20 +623,121 @@
 <div class="right_col" role="main">
 	<h1>작업지시 관리</h1>
 
+	
+	
+	
+	
+	
+	
+	
+<!-- 	<div class="col-md-12 col-sm-12 "> -->
+<!-- 		<div class="x_panel"> -->
+<!-- 		<div class="x_title"> -->
+<!-- 			<h2>Form Design <small>different form elements</small></h2> -->
+<!-- 				<ul class="nav navbar-right panel_toolbox"> -->
+<!-- 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a> -->
+<!-- 					</li> -->
+<!-- 					<li class="dropdown"> -->
+<!-- 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a> -->
+<!-- 						<ul class="dropdown-menu" role="menu"> -->
+<!-- 							<li><a class="dropdown-item" href="#">Settings 1</a> -->
+<!-- 							</li> -->
+<!-- 							<li><a class="dropdown-item" href="#">Settings 2</a> -->
+<!-- 							</li> -->
+<!-- 						</ul> -->
+<!-- 					</li> -->
+<!-- 					<li><a class="close-link"><i class="fa fa-close"></i></a> -->
+<!-- 					</li> -->
+<!-- 				</ul> -->
+<!-- 			<div class="clearfix"></div> -->
+<!-- 		</div> -->
+<!-- 			<div class="x_content"> -->
+<!-- 			<br> -->
+<!-- 				<form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate=""> -->
+<!-- 				<div class="item form-group"> -->
+<!-- 					<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"> 라인코드 </label> -->
+<!-- 					<div class="col-md-6 col-sm-6 "> -->
+<!-- 						<input type="text" id="first-name" required="required" class="form-control "> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="item form-group"> -->
+<!-- 					<label class="col-form-label col-md-3 col-sm-3 label-align"> 지시일자 </label> -->
+<!-- 					<div class="col-md-6 col-sm-6 "> -->
+<!-- 						<input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="text" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)"> -->
+<!-- 						<script> -->
+<!-- // 							function timeFunctionLong(input) { -->
+<!-- // 								setTimeout(function() { -->
+<!-- // 									input.type = 'text'; -->
+<!-- // 								}, 60000); -->
+<!-- // 							} -->
+<!-- 						</script> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="item form-group"> -->
+<!-- 					<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"> 품번 </label> -->
+<!-- 					<div class="col-md-6 col-sm-6 "> -->
+<!-- 						<input id="middle-name" class="form-control" type="text" name="middle-name"> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="item form-group"> -->
+<!-- 					<label class="col-form-label col-md-3 col-sm-3 label-align"> 지시상태 </label> -->
+<!-- 					<div class="col-md-6 col-sm-6 "> -->
+<!-- 						<p> -->
+<!-- 							M: -->
+<!-- 							<div class="iradio_flat-green checked" style="position: relative;"> -->
+<!-- 								<input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required="" data-parsley-multiple="gender" style="position: absolute; opacity: 0;"> -->
+<!-- 								<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins> -->
+<!-- 							</div>  -->
+<!-- 							F: -->
+<!-- 							<div class="iradio_flat-green" style="position: relative;"> -->
+<!-- 								<input type="radio" class="flat" name="gender" id="genderF" value="F" data-parsley-multiple="gender" style="position: absolute; opacity: 0;"> -->
+<!-- 								<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins> -->
+<!-- 							</div> -->
+<!-- 						</p> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="ln_solid"></div> -->
+<!-- 					<div class="item form-group"> -->
+<!-- 						<div class="col-md-6 col-sm-6 offset-md-3"> -->
+<!-- 							<button class="btn btn-primary" type="button">Cancel</button> -->
+<!-- 							<button class="btn btn-primary" type="reset">Reset</button> -->
+<!-- 							<button type="submit" class="btn btn-success">Submit</button> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<div>
 		<form id="searchForm" method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				라인코드: <input type="text" name="search_line" id="search_line"> 
-				지시일자: <input type="text" name="search_fromDate" id="search_fromDate"> ~ 
-						  <input type="text" name="search_toDate" id="search_toDate"> 
+				<span>라인코드:</span> <input type="text" name="search_line" id="search_line" class="searchInputText"> 
+				<span>지시일자:</span> 
+					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText"> ~ 
+					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText"> 
 				<br>
-				지시상태: <input type="radio" name="search_state" id="search_state" value="전체" checked> 전체 
-						  <input type="radio" name="search_state" id="search_state" value="지시"> 지시 
-						  <input type="radio" name="search_state" id="search_state" value="진행"> 진행 
-						  <input type="radio" name="search_state" id="search_state" value="마감"> 마감 
-				품번: <input type="text" name="search_prod" id="search_prod">
+				<span>지시상태:</span> 
+					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="전체" checked> 전체 
+					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="지시"> 지시 
+					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="진행"> 진행 
+					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="마감"> 마감 
+				<span>품번:</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
 				<br>
 				<input type="submit" value="조회"> 
 			</fieldset>
@@ -639,21 +765,24 @@
 		건씩 표시
 	</div>
 		
+	<div class="table-responsive">
 		<form id="fr">
-			<table border="1">
-				<tr>
-					<th>번호</th>
-					<th>작업지시코드</th>
-					<th>라인코드</th>
-					<th>수주코드</th>
-					<th>품번</th>
-					<th>지시상태</th>
-					<th>지시일</th>
-					<th>지시수량</th>
-				</tr>
+			<table border="1" class="table table-striped jambo_table bulk_action"  id="data-table">
+				<thead>
+					<tr class="headings">
+						<th class="column-title">번호</th>
+						<th class="column-title">작업지시코드</th>
+						<th class="column-title">라인코드</th>
+						<th class="column-title">수주코드</th>
+						<th class="column-title">품번</th>
+						<th class="column-title">지시상태</th>
+						<th class="column-title">지시일</th>
+						<th class="column-title">지시수량</th>
+					</tr>
+				</thead>
 				<c:forEach var="w" items="${workList }">
-					<tr>
-						<td></td>
+					<tr class="even pointer">
+						<td class="a-center"></td>
 						<td id="workCode"><a href="#" onclick="return false">${w.work_code }</a></td>
 						<td id="lineCode">${w.line_code }</td>
 						<td>${w.order_code }</td>
@@ -665,7 +794,62 @@
 				</c:forEach>
 			</table>
 		</form>
+	</div>
+	
+	<button id="excelDownload">엑셀다운로드</button>
 		
+	<script type="text/javascript">
+		
+		//엑셀
+		const excelDownload = document.querySelector('#excelDownload');
+		
+		document.addEventListener('DOMContentLoaded', ()=> {
+			excelDownload.addEventListener('click', exportExcel);
+		});
+		
+		function exportExcel() {
+			//1. workbook 생성
+			var wb = XLSX.utils.book_new();
+			
+			//2. 시트 만들기
+			var newWorksheet = excelHandler.getWorksheet();
+			
+			//3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+			XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+			
+			//4. 엑셀 파일 만들기
+			var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+			
+			//5. 엑셀 파일 내보내기
+			saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+			
+		} //exportExcel()
+		
+		var excelHandler = {
+			getExcelFileName : function() {
+				return 'workOrderList'+getToday()+'.xlsx'; //파일명
+			},
+			getSheetName : function() {
+				return 'Work Order Sheet'; //시트명
+			},
+			getExcelData : function() {
+				return document.getElementById('data-table'); //table id
+			},
+			getWorksheet : function() {
+				return XLSX.utils.table_to_sheet(this.getExcelData());
+			}
+		} //excelHandler
+		
+		function s2ab(s) {
+			var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+			var view = new Uint8Array(buf);  
+			for(var i=0; i<s.length; i++) {
+				view[i] = s.charCodeAt(i) & 0xFF;
+			}
+			return buf;
+		} //s2ab(s)
+		
+	</script>
 		
 		
 		
@@ -690,4 +874,5 @@
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/forTest/workOrderList.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

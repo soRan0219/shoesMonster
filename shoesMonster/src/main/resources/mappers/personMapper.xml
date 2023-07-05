@@ -217,6 +217,7 @@
 			<result column="client_code" property="client_code" />
 			<result column="prod_code" property="prod_code" />
 			<result column="order_note" property="order_note" />
+			<result column="emp_id" property="emp_id" />
 	
 		<collection property="prod" ofType="com.sm.domain.ProductVO">
 			<result column="prod_name" property="prod_name" />
@@ -233,13 +234,12 @@
   </resultMap>
 	
 	<select id="orderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList">
-		select o.order_code, o.order_date, o.client_code, c.client_actname, e.emp_name, o.prod_code, p.prod_name, 
-				p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
+		SELECT o.*, p.prod_name, p.prod_unit,c.client_actname ,e.emp_name
 		from orders o
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
 		JOIN employees e ON e.emp_id = o.emp_id
-<!-- 		LIMIT #{startPage}, #{pageSize} -->
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
 	
@@ -254,6 +254,7 @@
     <resultMap type="com.sm.domain.OrderStatusVO" id="orderStatusList2">
 			<result column="order_code" property="order_code" />
 			<result column="order_date" property="order_date" />
+			<result column="emp_id" property="emp_id" />
 			<result column="order_deliveryDate" property="order_deliveryDate" />
 			<result column="order_count" property="order_count" />
 			<result column="client_code" property="client_code" />
@@ -276,8 +277,7 @@
 
 	
 	<select id="searchOrderStatusList" resultType="com.sm.domain.OrderStatusVO" resultMap="orderStatusList2">
-		SELECT o.order_code, o.order_date, o.client_code, c.client_actname, e.emp_name, o.prod_code, p.prod_name, 
-				p.prod_unit, o.order_deliveryDate, o.order_count, o.order_note
+		SELECT o.*, p.prod_name, p.prod_unit,c.client_actname ,e.emp_name
 		FROM orders o
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
@@ -285,19 +285,16 @@
 		
 		<where>
 			<if test="client_code != null and client_code != ''">
-				o.client_code Like CONCAT ('%',#{client_code},'%')
-			</if>
-			<if test="client_actname != null and client_actname != ''">
-				c.client_actname Like CONCAT ('%',#{client_actname},'%')
+				o.client_code = #{client_code}
 			</if>
 			<if test="(order_date_fromDate!=null and !order_date_fromDate.equals('')) and (order_date_toDate!=null and !order_date_toDate.equals(''))">
 				AND (order_date &gt;= #{order_date_fromDate} AND order_date &lt;= #{order_date_toDate}) 
 			</if> 
 			<if test="prod_code != null and prod_code != ''">
-				AND o.prod_code Like CONCAT ('%',#{prod_code},'%')
+				AND o.prod_code = #{prod_code}
 			</if>
-			<if test="emp_name != null and emp_name != ''">
-				AND e.emp_name Like CONCAT ('%',#{emp_name},'%')
+			<if test="emp_id != null and emp_id != ''">
+				AND o.emp_id = #{emp_id}
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
@@ -315,17 +312,17 @@
 		JOIN employees e ON e.emp_id = o.emp_id
 		
 		<where>
-			<if test="client_actname != null and client_actname != ''">
-				c.client_actname Like CONCAT ('%',#{client_actname},'%')
+			<if test="client_code != null and client_code != ''">
+				o.client_code = #{client_code}
 			</if>
 			<if test="(order_date_fromDate!=null and !order_date_fromDate.equals('')) and (order_date_toDate!=null and !order_date_toDate.equals(''))">
 				AND (order_date &gt;= #{order_date_fromDate} AND order_date &lt;= #{order_date_toDate}) 
 			</if> 
 			<if test="prod_code != null and prod_code != ''">
-				AND o.prod_code Like CONCAT ('%',#{prod_code},'%')
+				AND o.prod_code = #{prod_code}
 			</if>
-			<if test="emp_name != null and emp_name != ''">
-				AND e.emp_name Like CONCAT ('%',#{emp_name},'%')
+			<if test="emp_id != null and emp_id != ''">
+				AND o.emp_id = #{emp_id}
 			</if>
 			<if test="(order_deliveryDate_fromDate!=null and !order_deliveryDate_fromDate.equals('')) and (order_deliveryDate_toDate!=null and !order_deliveryDate_toDate.equals(''))">
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
@@ -336,14 +333,10 @@
 	
 	<!-- 수주 등록 -->
 	<insert id="registOrder">
-		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_name,
+		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_id,
 					order_count, client_code, prod_code) 
-		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_name},
-				#{order_count}, #{client_code}, #{prod_code}),
-		INSERT INTO clients (client_actname) 
-		VALUES (#{client_actname}),
-		INSERT INTO product (prod_unit)
-		VALUES (#{prod_unit})
+		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id},
+				#{order_count}, #{client_code}, #{prod_code})
 <!-- 		orders에 있는 값만 저장하고 나머지값은,,,받아와서 저장,,,,음,, -->
 	</insert>
 	<!-- 수주 등록 -->
@@ -357,7 +350,10 @@
  	
 	<!-- 수주 수정 --> 
 	<update id="updateOrder">
-		
+		UPDATE orders
+		SET order_code=#{order_code}, order_date=#{order_date}, order_deliveryDate= #{order_deliveryDate},
+		emp_id=#{emp_id},order_count=#{order_count},client_code=#{client_code},prod_code=#{prod_code}
+		WHERE order_code=#{order_code}
 	</update>
  	<!-- 수주 수정 --> 
 <!-- ===================================================== 수주 현황 ================================================================== -->

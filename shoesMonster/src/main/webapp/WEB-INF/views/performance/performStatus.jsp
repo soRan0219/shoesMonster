@@ -104,6 +104,27 @@
 				
 			} //drawGoogleChart()
 			
+			$('#chart_line').show();
+			$('#chart_prod').hide();
+			$('#chart_date').hide();
+			
+			$('#lineBtn').click(function() {
+				$('#chart_line').show();
+				$('#chart_prod').hide();
+				$('#chart_date').hide();
+			});
+			$('#prodBtn').click(function() {
+				$('#chart_prod').show();
+				$('#chart_line').hide();
+				$('#chart_date').hide();
+			});
+			$('#dateBtn').click(function() {
+				$('#chart_date').show();
+				$('#chart_line').hide();
+				$('#chart_prod').hide();
+			});
+			
+			
 		}); //jQuery
 	</script>
 	
@@ -111,6 +132,9 @@
 <div class="right_col" role="main">
 	<h1> 생산실적 현황</h1>
 	
+	<button id="lineBtn">라인별 생산현황</button>
+	<button id="prodBtn">품목별 생산현황</button>
+	<button id="dateBtn">일자별 생산현황</button>
 	
 	<div id="chart_line" style="width: 900px; height: 500px;"></div>
 	<div id="chart_prod" style="width: 900px; height: 500px;"></div>
