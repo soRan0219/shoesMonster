@@ -100,21 +100,24 @@ public class EmployeesDAOImpl implements EmployeesDAO{
 	} // readEmployees()
 
 	@Override
-	public void updateEmployees(EmployeesVO uvo) throws Exception {
+	public void updateEmployees(Map map) throws Exception {
 		logger.debug(" updateEmployees() 호출@@@@@ ");
-		int result = sqlSession.update(NAMESPACE2 + ".updateEmployees", uvo);
+		logger.debug("map : " + map);
+		int result = sqlSession.update(NAMESPACE2 + ".updateEmployees", map);
 		logger.debug(" result " + result);
 	} // updateEmployees
 
 	@Override
-	public void updateEmployeesImg(String img, String emp_id) throws Exception {
+	public void updateEmployeesImg(String file, String emp_id) throws Exception {
 		logger.debug("updateEmployeesImg() 호출");
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("img", img);
+		params.put("file", file);
 		params.put("emp_id", emp_id);
 		
-		sqlSession.update(NAMESPACE2+".updateEmployeesImg",params);
+		if (file !="") {
+			sqlSession.update(NAMESPACE2+".updateEmployeesImg",params);
+		}
 		
 	}
 

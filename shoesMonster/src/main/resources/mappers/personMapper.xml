@@ -92,7 +92,7 @@
  	<!-- 사원 조회 -->
 	
 	<!-- 사원 수정 -->
-	<update id="updateEmployees">
+	<update id="updateEmployees" parameterType="hashMap">
 		update employees
 		set emp_id=#{emp_id}, emp_pw=#{emp_pw}, emp_name=#{emp_name}, emp_department=#{emp_department}, 
 			emp_position=#{emp_position}, emp_email=#{emp_email}, emp_phone=#{emp_phone},
@@ -104,7 +104,7 @@
 	
 	<update id="updateEmployeesImg" parameterType="hashMap">
 		update employees
-		set img=#{img}
+		set file=#{file}
 		where emp_id=#{emp_id}
 	</update>
 	<!-- 사원 수정 -->
