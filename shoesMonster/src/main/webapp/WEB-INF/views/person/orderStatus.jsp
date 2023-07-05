@@ -8,7 +8,33 @@
 
 <script type="text/javascript">
 //========================================= 함수, 상수 ===================================================	
+//날짜 + 시간 + 분 + 초 ==> 코드
+function codeCreation() {
 
+	Date.prototype.getYearYY = function(){
+        var a = this.getYear();
+        return a >= 100 ? a-100 : a;
+      }
+
+    var date = new Date();
+    var YY_year = date.getYearYY();
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+    var time = ("0" + date.getHours()).slice(-2);
+    var minute = ("0" + date.getMinutes()).slice(-2);
+    var second = ("0" + date.getSeconds()).slice(-2);
+
+    return year + month + day + time + minute + second;
+}
+
+// input으로 바꾸기
+function inputCng(obj, type, name, value) {
+	var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
+	obj.html(inputBox);
+}// inputCng
+	
+	
 //오늘 날짜 yyyy-mm-dd
 function getToday() {
 	var date = new Date();
@@ -19,6 +45,17 @@ function getToday() {
 	return year + "-" + month + "-" + day;
 } //getToday()
 	
+
+//팝업창 옵션
+const popupOpt = "top=60,left=140,width=600,height=600";
+
+//검색 팝업
+function openWindow(search, inputId) {
+	var url = "/person/search?type=" + search + "&input=" + inputId;
+	var popup = window.open(url, "", popupOpt);
+} //openWindow()
+
+
 function popUp() {
 	var queryString = window.location.search;
 	var urlParams = new URLSearchParams(queryString);
@@ -28,7 +65,6 @@ function popUp() {
 	if(isPop==="null") {
 		isPop = null;
 	}
-	
 	
 	// vvvvvvvvvvvvvvvvvv 페이징 완료하면 주석 풀기 ~~ vvvvvvvvvvvvvvvvvvvvv
 	$('#pagination a').each(function(){
@@ -40,70 +76,63 @@ function popUp() {
 			
 	}); //페이징 요소
 
-
-			
 	$('#input').val(isPop);
 			
-		if(isPop) {
+		if(isPop!=null && isPop!="") {
     		
-//     	$('#addButton').hide();
-//     	$('#modify').hide();
-//     	$('#delete').hide();
-//     	$('#save').hide();
+    	$('#addButton').hide();
+    	$('#modify').hide();
+    	$('#delete').hide();
+    	$('#save').hide();
     		
    		$('table tr:not(:first-child)').click(function(){
    			$(this).css('background', '#ccc');
     			
-   			var orderCode = $(this).find('#orderCode').text();
-   			var prodCode = $(this).find('#prodCode').text();
-     		
    			if(isPop === "order_code") {
-   				$('#prod_code', opener.document).val(prodCode);
-   			}
- 			$('#'+isPop, opener.document).val(orderCode);
+   				
+   				var orderCode = $(this).find('#orderCode').text();
+   				var clientCode = $(this).find('#clientCode').text();
+   				var clientName = $(this).find('#clientName').text();
+   				var empName = $(this).find('#empName').text();
+   				var prodCode = $(this).find('#prodCode').text();
+   				
+   				$('#'+isPop, opener.document).val(orderCode);
+        		$('#client_code', opener.document).val(clientCode);
+        		$('#client_Name', opener.document).val(clientName);
+        		$('#emp_name', opener.document).val(empName);
+        		
+        		
+   			} else {
+    			var orderCode = $(this).find('#orderCode').text();
+    		
+    			$('#'+isPop, opener.document).val(workCode);
+			}
      			
      		window.close();
      	}); //테이블에서 누른 행 부모창에 자동입력하고 창 닫기
-    		
-	} else {
+
+	}
+
+	else {
 		console.log("팝업아님");
 	} //if(팝업으로 열었을 때)
 		
 } //popUp()
 
+
+	
+// ========================================= 등록 ===================================================	
 $(function(){
+	
+	//테이블 항목들 인덱스 부여
+	$('table tr').each(function(index) {
+		$(this).find('td:first').text(index);
+	});
 	
 	popUp();
 	
-  
-// ========================================= 등록 ===================================================	
-	//날짜 + 시간 + 분 + 초 ==> 코드
-    function codeCreation() {
-		
-    	Date.prototype.getYearYY = function(){
-            var a = this.getYear();
-            return a >= 100 ? a-100 : a;
-          }
-		
-        var date = new Date();
-        var YY_year = date.getYearYY();
-        var month = ("0" + (1 + date.getMonth())).slice(-2);
-        var day = ("0" + date.getDate()).slice(-2);
-        var time = ("0" + date.getHours()).slice(-2);
-        var minute = ("0" + date.getMinutes()).slice(-2);
-        var second = ("0" + date.getSeconds()).slice(-2);
-
-        return YY_year + month + day + time + minute + second;
-    }
-	
- 	// input으로 바꾸기
-	function inputCng(obj, type, name, value) {
-		var inputBox = "<input type='"+type+"' name='"+name+"' id='"+name+"' value='"+value+"'>";
-		obj.html(inputBox);
-	}// inputCng
-	
+	//----------- 추가 버튼 ----------
 	$('#add').click(function () {
-		
 		$('#modify').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 		
@@ -113,62 +142,47 @@ $(function(){
 		if($(this).hasClass('true')){
 
 			var tbl = "<tr>";
-			
 			// 번호
 			tbl += "<td>";
 			tbl += "</td>";
-			
 			// 수주번호
 			tbl += "<td>";
 			tbl += "<input type='text' name='order_code' id='order_code' readonly value='";
 			tbl += 'O' + date;
 			tbl += "'>";
 			tbl += "</td>";
-			
 			// 수주업체코드
 			tbl += "<td>";
-			tbl += "<input type='text' name='client_code' id='client_code' required value='";
-			tbl += 'OR';
-			tbl += "'>";
+			tbl += "<input type='text' name='client_code' id='client_code' required readonly>";
 			tbl += "</td>";
-			
-			// 업체
+			// 수주업체명
 			tbl += "<td>";
 			tbl += "<input type='text' name='client_actname' id='client_actname' required>";
 			tbl += "</td>";
-			
 			// 수주일자
 			tbl += "<td>";
-			tbl += "<input type='text' name='order_date' id='order_date' readonly value='";
-			tbl += today;
-			tbl += "'>";
+			tbl += "<input type='text' name='order_date' id='order_date' required>";
 			tbl += "</td>";
-			
 			// 담당자
 			tbl += "<td>";
-			tbl += "<input type='text' name='emp_name' id='emp_name' required>";
+			tbl += "<input type='text' name='emp_name' id='emp_name' required readonly>";
 			tbl += "</td>";
-			
 			// 품번
 			tbl += "<td>";
-			tbl += "<input type='text' name='prod_code' id='prod_code' required>";
+			tbl += "<input type='text' name='prod_code' id='prod_code' required readonly>";
 			tbl += "</td>";
-			
 			// 품명
 			tbl += "<td>";
 			tbl += "<input type='text' name='prod_name' id='prod_name' required>";
 			tbl += "</td>";
-			
 			// 단위
 			tbl += "<td>";
 			tbl += "<input type='text' name='prod_unit' id='prod_unit' required>";
 			tbl += "</td>";
-			
 			// 납품예정일
 			tbl += "<td>";
 			tbl += "<input type='text' name='order_deliveryDate' id='order_deliveryDate' required>";
 			tbl += "</td>";
-			
 			// 수주량
 			tbl += "<td>";
 			tbl += "<input type='text' name='order_count' id='order_count' required>";
@@ -177,6 +191,21 @@ $(function(){
 			
 			$('table').append(tbl);
 			
+			
+			// 수주일자
+			$('#order_date').datepicker({
+				changeMonth:'true',
+				changeYear:'true',
+				nextText:'다음달',
+				prevText:'이전달',
+				showButtonPanel:'true',
+				currentText:'오늘',
+				closeText:'닫기',
+				dateFormat:'yy-mm-dd',
+				dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+				dayNamesMin:['월','화','수','목','금','토','일'],
+				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			});
 			// 납품예정일
 			$('#order_deliveryDate').datepicker({
 				changeMonth:'true',
@@ -191,6 +220,7 @@ $(function(){
 				dayNamesMin:['월','화','수','목','금','토','일'],
 				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			});
+			
 			
 			$(this).removeClass('true');
 		}// true 클래스 있을 때
@@ -209,16 +239,15 @@ $(function(){
 			var order_deliveryDate = $('#order_deliveryDate').val();
 			var order_count = $('#order_count').val();
 			
-// 			if(order_code == "" || client_code == "" || order_date == "" ||
-// 			   emp_name == "" || prod_code == "" || prod_name == "" || prod_unit == "" 
-// 			   || order_deliveryDate== "" || order_count == "" ){
-// 				alert("항목을 모두 입력하세요");
-// 			}else{
+			if(order_code == "" || client_code == "" || order_date == "" ||
+			   emp_name == "" || prod_code == "" || prod_name == "" || prod_unit == "" 
+			   || order_deliveryDate== "" || order_count == "" ){
+				alert("항목을 모두 입력하세요");
+			}else{
 				$('#fr').attr("action", "/person/addOrder");
 				$('#fr').attr("method", "POST");
 				$('#fr').submit();
-// 			}
-			
+			}
 		});//save.click
 		
 		// 취소버튼(=리셋)
@@ -227,91 +256,13 @@ $(function(){
 				this.reset();
 			});
 		}); // cancle click		
-		
 	});//add.click
 	
-	// 삭제 //
-	$('#delete').click(function() {
-
-		$('#add').attr("disabled", true);
-		$('#update').attr("disabled", true);
-
-		if($(this).hasClass('true')) {
-			
-			// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 수주번호 저장
-			$('table tr').each(function() {
-				var code = $(this).find('td:nth-child(2)').text();
-
-				var tbl = "<input type='checkbox' name='selected' value='";
-				tbl += code;
-				tbl += "'>";
-
-				$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
-				$(this).find('td:first').html(tbl);
-			});
-			
-			//전체선택
-			$('#selectAll').click(function() {
-				var checkAll = $(this).is(":checked");
-
-				if (checkAll) {
-					$('input:checkbox').prop('checked', true);
-				} else {
-					$('input:checkbox').prop('checked', false);
-				}
-			});
-
-			// 저장 -> 삭제
-			$('#save').click(function() {
-
-				var checked = [];
-
-				$('input[name=selected]:checked').each(function() {
-					checked.push($(this).val());
-				});
-
-				// 	alert(checked);
-
-				if (checked.length > 0) {
-
-					$.ajax({
-						url : "/person/deleteOrder",
-						type : "post",
-						data : {checked : checked},
-						dataType : "text",
-						success : function() {
-							alert("삭제");
-							location.reload();
-						},
-						error : function() {
-							alert("삭제 실패");
-						}
-					}); //ajax
-
-
-				} //체크된거 있을대
-				else {
-					alert("선택된 항목이 없습니다.");
-				} //체크된거 없을때
-
-			}); //save
-			
-			$(this).removeClass('true');
-		} //if(삭제 버튼 true class 있으면)
-
-		//취소 -> 리셋
-		$('#cancelButton').click(function() {
-			$('input:checkbox').prop('checked', false);
-		});
-
-	}); //deleteButton click
 	
-	// 수정 //
-	var isExecuted = false;
-	
+	var isExecuted = false
+	//--------- 수정 버튼 ------------//
 	//수정버튼 클릭
 	$('#modify').click(function() {
-
 		$('#add').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 
@@ -348,37 +299,100 @@ $(function(){
 
 				//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
 				self.find('td').each(function(idx,item) {
-
 					if (idx > 0) {
 						inputCng($(this),"text",names[idx - 1], $(this).text());
-// 		
 					} // 거래처 코드부터 다 수정 가능하게
-
 				}); // self.find(~~)
 		
 				//저장버튼 -> form 제출
 				$('#save').click(function() {
-
+						
 					$('#fr').attr("action","/person/updateOrder");
 					$('#fr').attr("method","post");
 					$('#fr').submit();
-
 				}); //save
-
 			} //하나씩만 선택 가능
 				
-				
 			//취소버튼 -> 리셋
-			$('#cancel').click(function() {
+			$('#cancle').click(function() {
 				$('#fr').each(function() {
 					this.reset();
 				});
-			}); // cancelButton click
-
-		}); // tr click
-
+			}); //cancle click
+		}); //tr click
 	}); // updateButton click
+	
+	
+	//---------- 삭제 ------------- //
+	$('#delete').click(function() {
+		$('#add').attr("disabled", true);
+		$('#update').attr("disabled", true);
 
+		if($(this).hasClass('true')) {
+			// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 수주번호 저장
+			$('table tr').each(function() {
+				var code = $(this).find('td:nth-child(2)').text();
+				
+				var tbl = "<input type='checkbox' name='selected' value='";
+				tbl += code;
+				tbl += "'>";
+				
+				$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
+				$(this).find('td:first').html(tbl);
+			});
+			
+			//전체선택
+			$('#selectAll').click(function() {
+				var checkAll = $(this).is(":checked");
+
+				if (checkAll) {
+					$('input:checkbox').prop('checked', true);
+				} else {
+					$('input:checkbox').prop('checked', false);
+				}
+			});
+
+			// 저장 -> 삭제
+			$('#save').click(function() {
+
+				var checked = [];
+
+				$('input[name=selected]:checked').each(function() {
+					checked.push($(this).val());
+				});
+
+				if (checked.length > 0) {
+
+					$.ajax({
+						url : "/person/deleteOrder",
+						type : "post",
+						data : {checked : checked},
+						dataType : "text",
+						success : function() {
+							alert("삭제 완료");
+							location.reload();
+						},
+						error : function() {
+							alert("삭제 실패");
+						}
+					}); //ajax
+				} //체크된거 있을대
+				else {
+					alert("선택된 항목이 없습니다.");
+				} //체크된거 없을때
+
+			}); //save
+			
+			$(this).removeClass('true');
+		} //if(삭제 버튼 true class 있으면)
+
+		//취소 -> 리셋
+		$('#cancle').click(function() {
+			$('input:checkbox').prop('checked', false);
+		});
+	}); //deleteButton click
+
+	
 // ========================================= 등록 ===================================================	
 	
 // ========================================= 검색 ===================================================
@@ -466,7 +480,6 @@ $(function(){
 
 <!-- page content -->
 <div class="right_col" role="main">
-
 	<h1>수주 현황</h1>
 	
 	<form method="get">
@@ -496,38 +509,37 @@ $(function(){
 	<form id="fr">
 	총 ${pm.totalCount } 건
 	
-	<table border="1" id="">
-		<tr>
-			<th></th>
-			<th>수주번호</th>
-			<th>수주업체코드</th>
-			<th>업체</th>
-			<th>수주일자</th>
-			<th>담당자</th>
-			<th>품번</th>
-			<th>품명</th>
-			<th>단위</th>
-			<th>납품예정일</th>
-			<th>수주량</th>
-    </tr>
-		
-		<c:forEach var="vo" items="${searchOrderStatusList }" varStatus="i">
+		<table border="1">
+			<tr>
+				<th></th>
+				<th>수주번호</th>
+				<th>수주업체코드</th>
+				<th>수주업체명</th>
+				<th>수주일자</th>
+				<th>담당자</th>
+				<th>품번</th>
+				<th>품명</th>
+				<th>단위</th>
+				<th>납품예정일</th>
+				<th>수주량</th>
+	    	</tr>
+			
+			<c:forEach var="vo" items="${searchOrderStatusList }">
 				<tr>
-					<td>${i.count }</td>
+					<td></td>
 					<td id="orderCode">${vo.order_code}</td>
-					<td>${vo.client_code}</td>
+					<td id="clientCode">${vo.client_code}</td>
 					<td>${vo.clients.client_actname}</td>
 					<td>${vo.order_date}</td>
-					<td>${vo.employees.emp_name}</td>
+					<td id="empName">${vo.employees.emp_name}</td>
 					<td id="prodCode">${vo.prod_code}</td>
 					<td>${vo.prod.prod_name}</td>
 					<td>${vo.prod.prod_unit}</td>
 					<td>${vo.order_deliveryDate}</td>
 					<td>${vo.order_count}</td>
 				</tr>
-
-		</c:forEach>
-	</table>
+			</c:forEach>
+		</table>
 	</form>
 	
 	<div id="pagination">
@@ -544,11 +556,9 @@ $(function(){
 		</c:if>
 	</div>
 
-<div id="detail"></div>
-
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
-
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
