@@ -429,7 +429,6 @@
         	<input type="text" name="prod_code" id="searchCode">
         	<label>품명:</label>
         	<input type="text" name="prod_name" id="searchName">
-        	<br>
         	<label>카테고리:</label>
         	<input type="text" name="prod_category" id="searchCategory"> 
         	<label>거래처 : </label>
@@ -438,9 +437,20 @@
         	<input type="submit" value="검색">
 		</fieldset>
 	</form>
-	
+</div>	
+
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form id="fr">	
+
+			<div class="x_title">
+				<h2>완제품</h2>
+				
+				<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
+					<div class="clearfix"></div>
+			</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
 		<!-- 버튼 제어 -->
-	<form action="" method="post" id="fr">
 		<button id="addButton">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete">삭제</button>
@@ -468,30 +478,6 @@
 		    }
 		</script>
 		<!-- 버튼 제어 -->
-
-</div>	
-
-<div class="col-md-12 col-sm-12">
-	<div class="x_panel">
-		<form id="fr">	
-
-		
-			<div class="x_title">
-				<h2>완제품</h2>
-				
-				<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
-					<div class="clearfix"></div>
-			</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->	
-	<div style="margin-bottom: 1%;">			
-		<form action="" method="post" id="fr">
-			<button id="addButton">추가</button>
-			<button id="modify">수정</button>
-			<button id="delete">삭제</button>
-			<button type="reset" id="cancle">취소</button>
-			<input type="submit" value="저장" id="save">
-			<button onclick="location.reload()">새로고침</button>
-	</div>
 		<br>
 	<!-- //////////////////////////////////////////////////////////////////////// -->	
 	
