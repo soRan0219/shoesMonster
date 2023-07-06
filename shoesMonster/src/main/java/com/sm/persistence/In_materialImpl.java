@@ -56,13 +56,17 @@ public class In_materialImpl implements In_materialDAO {
 	}
 
 	@Override
-	public void inInsert(String raw_order_num) throws Exception {
+	public void inInsert(String raw_order_num, String emp_id) throws Exception {
 		
-		logger.debug("////////////// raw_order_num1 : " + raw_order_num + "//////////////");
+		HashMap<String, String> data = new HashMap<String, String>();
 		
-		int result = sqlSession.insert(NAMESPACE + ".inRegist", raw_order_num);
+		data.put("raw_order_num", raw_order_num);
+		data.put("emp_id", emp_id);
 		
-		logger.debug("////////////// raw_order_num2 : " + raw_order_num + "//////////////");
+		int result = sqlSession.insert(NAMESPACE + ".inRegist", data);
+		
+		logger.debug("////////////// 입고 등록 raw_order_num : " + raw_order_num + "//////////////");
+		logger.debug("////////////// 입고 등록 emp_id : " + emp_id + "//////////////");
     
 		if(result != 0) {
 			logger.debug("입고 등록완료********************************************");

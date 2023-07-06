@@ -145,7 +145,7 @@
 									<th class="column-title">단가</th>
 									<th class="column-title">총액</th>
 									<th class="column-title">입고일</th>
-									<th class="column-title">담당자</th>
+									<th class="column-title">입고 담당자</th>
 									<th class="column-title">입고 확인</th>
 									<th class="column-title">입고 버튼</th>
 									<th class="bulk-actions" colspan="7"><a class="antoo"
@@ -165,15 +165,12 @@
 										<td class=" ">${rvo.rawMaterial.raw_name }</td>
 										<td class=" ">${rvo.rawMaterial.raw_color }</td>
 										<td class=" ">${rvo.raw_order_count}</td>
-										<td class=" ">${rvo.stock.stock_count != null ? rvo.stock.stock_count : 0}</td>
-										<td class=" "><fmt:formatNumber
-												value=" ${rvo.rawMaterial.raw_price}" />원</td>
-										<td class=" "><fmt:formatNumber
-												value=" ${rvo.rawMaterial.raw_price*rvo.raw_order_count}" />원</td>
+										<td class=" " style="color: ${rvo.stock.stock_count <= 20 ? 'red' : 'inherit'}">${rvo.stock.stock_count != null ? rvo.stock.stock_count : 0}</td>
+										<td class=" "><fmt:formatNumber value=" ${rvo.rawMaterial.raw_price}" />원</td>
+										<td class=" "><fmt:formatNumber value=" ${rvo.rawMaterial.raw_price*rvo.raw_order_count}" />원</td>
 										<td class=" ">${rvo.in_mat.in_date }</td>
-										<td class=" ">${rvo.emp_id }</td>
+										<td class=" ">${rvo.in_mat.i_emp_id }</td>
 										<td class="a-right a-right ">${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
-
 										<td class=" ">
 										<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 											<c:if test="${rvo.in_mat.in_num == null}">
@@ -181,9 +178,7 @@
 											</c:if>
 										</c:if>
 										</td>
-
 									</tr>
-
 								</c:forEach>
 							</tbody>
 						</table>
@@ -252,7 +247,7 @@
 					<td><fmt:formatNumber
 							value=" ${rvo.rawMaterial.raw_price*rvo.raw_order_count}" />원</td>
 					<td>${rvo.in_mat.in_date }</td>
-					<td>${rvo.emp_id }</td>
+					<td>${rvo.in_mat.i_emp_id }</td>
 					<td>${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
 
 					<td>
