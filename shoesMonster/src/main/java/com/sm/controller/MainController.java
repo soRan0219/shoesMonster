@@ -1,5 +1,7 @@
 package com.sm.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -55,11 +57,29 @@ public class MainController {
 	// http://localhost:8088/smmain/smMain
 	// 메인페이지
 	@RequestMapping(value = "/smMain", method = RequestMethod.GET)
-	public void mainGET() {
+	public String mainGET(HttpSession session) {
 		logger.debug(" mainGET() 호출@@@@@ ");
-		logger.debug("/smmain/smMain.jsp 페이지 이동");
+		
+	    EmployeesVO resultVO = (EmployeesVO) session.getAttribute("id");
+	    
+	    if (resultVO == null) {
+	        logger.debug("id 정보가 없습니다. 메인 화면으로 이동하지 않습니다.");
+	        return "redirect:/smmain/smLogin";
+	    }
+	    else {
+	    	logger.debug("/smmain/smMain.jsp 페이지 이동");
+	    	return "/smmain/smMain";
+	    }
 	}
 	
-	// 
+	// 로그아웃 세션제어
+	@RequestMapping(value = "/smLogout", method = RequestMethod.GET)
+	public String smLogoutGET(HttpServletRequest request, HttpServletResponse response) {
+		logger.debug(" smLogoutGET(호출)@@@@@ ");
+		
+		 request.getSession().invalidate();
+		 
+		 return "redirect:/smmain/smLogin";
+	}
 	
 }

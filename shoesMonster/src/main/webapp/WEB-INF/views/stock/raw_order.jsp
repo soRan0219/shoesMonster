@@ -102,10 +102,28 @@ function toggleDiv(divId) {
 	 <h1 style="margin-left: 1%;"> 발주 관리 </h1>
 
     <div style="margin-left: 1%;">
+    
+    
+    <!-- 버튼 제어 -->
     <form action="" name="ro">
-	    <input type="button" value="발주 현황" class="btn btn-info" onclick="toggleDiv('list')"></input>
-	    <input type="button" value="발주 등록" class="btn btn-info" onclick="toggleDiv('regist')"></input>
+	    <input type="button" value="발주 현황" class="btn btn-info" onclick="toggleDiv('list')" id="matList"></input>
+	    <input type="button" value="발주 등록" class="btn btn-info" onclick="toggleDiv('regist')"id="matAdd"></input>
     </form>
+    
+  		<script>
+		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+		
+		    if (team === "영업팀" || team === "관리자") {
+		        document.getElementById("matList").disabled = false;
+		        document.getElementById("matAdd").disabled = false;
+		    } else {
+		        document.getElementById("matList").hidden = true;
+		        document.getElementById("matAdd").hidden = true;
+		    }
+		</script>
+	<!-- 버튼 제어 -->
+	
+	
     </div>
 
     <hr>

@@ -407,21 +407,49 @@
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
 		<form action="" method="post" id="fr">
-		
 		<div class="x_title">
 			<h2>원자재</h2>
-			
 			<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
 					<div class="clearfix"></div>
 		</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->	
 	<div style="margin-bottom: 1%;">
+
+  <!-- 버튼 제어 -->
+	<form action="" method="post" id="fr">
 		<button id="addButton">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save" class ="btn btn-success">
+		<button onclick="location.href='/performance/rawMaterial'">새로고침</button>
+		
+		<script>
+		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+		
+		    if (team === "자재팀" || team === "관리자") {
+		        document.getElementById("addButton").disabled = false;
+		        document.getElementById("modify").disabled = false;
+		        document.getElementById("delete").disabled = false;
+		        document.getElementById("cancle").disabled = false;
+		        document.getElementById("save").disabled = false;
+		        document.querySelector("[onclick^='location.href']").disabled = false;
+		    } else {
+		        document.getElementById("addButton").hidden = true;
+		        document.getElementById("modify").hidden = true;
+		        document.getElementById("delete").hidden = true;
+		        document.getElementById("cancle").hidden = true;
+		        document.getElementById("save").hidden = true;
+		        document.querySelector("[onclick^='location.href']").hidden = true;
+		    }
+		</script>
+		<!-- 버튼 제어 -->
+		
+		<br>
+		<div class="col-md-12 col-sm-12">
+		원자재 목록 총 ${paging.total}건
+		<table border="1" id="rawTable" class="table table-striped jambo_table bulk_action">
 	</div>
+      
 <!-- //////////////////////////////////////////////////////////////////////// -->
 		
 	<div style="overflow-x: auto;">

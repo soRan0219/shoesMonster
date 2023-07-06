@@ -191,9 +191,12 @@
 <!-- 										<span>Settings</span> -->
 <!-- 									</a> -->
 <!-- 									<a class="dropdown-item" href="javascript:;">Help</a> -->
-									<a class="dropdown-item" href="../smmain/smLogin">
-										<i class="fa fa-sign-out pull-right"></i> 로그아웃
-									</a>
+								<form action="/smmain/smLogout" method="get">
+<!-- 									<a class="dropdown-item" href="../smmain/smLogin"> -->
+<!-- 										<i class="fa fa-sign-out pull-right"></i> 로그아웃 -->
+<!-- 									</a> -->
+									<input type="submit" value="logout">
+								</form>
 								</div>
 							</li>
 

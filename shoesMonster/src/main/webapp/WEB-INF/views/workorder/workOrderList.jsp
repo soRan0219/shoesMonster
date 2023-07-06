@@ -645,6 +645,8 @@
 		</form>
 	</div>
 
+	<br><br>
+
 	<hr>
 
 <div class="col-md-12 col-sm-12">
@@ -659,11 +661,50 @@
 				</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 	<div style="margin-bottom: 1%;">
+
+  
+    <!-- 버튼 제어 -->
 		<button id="add" class="true">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete" class="true">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<button type="submit" id="save">저장</button>
+
+		<button onclick="location.href='/workorder/workOrderList'">새로고침</button>
+		
+		<script>
+		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+		
+		    if (team === "생산팀" || team === "관리자") {
+		        document.getElementById("add").disabled = false;
+		        document.getElementById("modify").disabled = false;
+		        document.getElementById("delete").disabled = false;
+		        document.getElementById("cancle").disabled = false;
+		        document.getElementById("save").disabled = false;
+		        document.querySelector("[onclick^='location.href']").disabled = false;
+		    } else {
+		        document.getElementById("add").hidden = true;
+		        document.getElementById("modify").hidden = true;
+		        document.getElementById("delete").hidden = true;
+		        document.getElementById("cancle").hidden = true;
+		        document.getElementById("save").hidden = true;
+		        document.querySelector("[onclick^='location.href']").hidden = true;
+		    }
+		</script>
+		<!-- 버튼 제어 -->
+		
+		
+	<div id="body">
+	
+		총 <span id="total">${pm.totalCount }</span>건
+		
+		<select id="perPage" name="perPage">
+			<option value="2">2</option>
+			<option value="5">5</option>
+			<option value="7">7</option>
+		</select>
+		건씩 표시
+
 	</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->			
 <!-- 	<div id="body"> -->
