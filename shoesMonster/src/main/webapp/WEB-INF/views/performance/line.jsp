@@ -103,7 +103,15 @@
 	// 제이쿼리
 	$(function() {
 		popUp();
-			
+	
+		//테이블 항목들 인덱스 부여
+		$('table tr').each(function(index){
+			var num = "<c:out value='${vo.page}'/>";
+			var num2 = "<c:out value='${vo.pageSize}'/>";
+			if(index > 0){
+				$(this).find('td:first').text(((num-1)*num2) + index);
+			}
+		});
 		
 	//============================ 버튼 구현 ====================================//	
 		////수정//////////////////////////////////////////////////
@@ -111,6 +119,7 @@
 	
 	$('#modify').click(function () {
 		
+		event.preventDefault();
 		$('#add').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 				
@@ -388,6 +397,8 @@
 	
 	////삭제/////////////////////////////////////////////////////////
 	$('#delete').click(function () {
+		
+		event.preventDefault();
 		
 		$('#add').attr("disabled", true);
 		$('#modify').attr("disabled", true);

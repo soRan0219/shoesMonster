@@ -121,11 +121,13 @@
 	
 	
 	//테이블 항목들 인덱스 부여
-// 	$('table tr').each(function(index){
-// 		var num = "<c:out value='${lwpm.startPage}'/>";
-// 		var num2 = "<c:out value='${pvo.pageSize}'/>";
-// 		$(this).find('td:second').text(((num-1)*num2) + index);
-// 	});
+	$('table tr').each(function(index){
+		var num = "<c:out value='${vo.page}'/>";
+		var num2 = "<c:out value='${vo.pageSize}'/>";
+		if(index > 0){
+			$(this).find('td:first').text(((num-1)*num2) + index);
+		}
+	});
 	
 // 	var pageSize = "<c:out value='${pvo.pageSize}'/>"; // 한 페이지당 보여줄 항목 개수
 // var currentPage = "<c:out value='${pvo.page}'/>"; // 현재 페이지 번호 (변경 가능)
