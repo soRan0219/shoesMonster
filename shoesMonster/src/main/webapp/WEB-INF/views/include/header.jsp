@@ -47,13 +47,14 @@
 					<div class="navbar nav_title" style="border: 0;">
 						<a href="../smmain/smMain" class="site_title">
 							<img src="/resources/images/logo1.png" width="100" height="100"> </i>
-							<span>Shoes <br> Monster!</span></a>
+							<img src="/resources/images/shoes_2.png" width="100" height="100"> </i>
+						</a>
 					</div>
 
 					<div class="clearfix"></div>
 
 					<!-- menu profile quick info -->
-					<div class="profile clearfix">
+					<div class="profile clearfix" style="margin-top: 20%;">
 						<div class="profile_pic">
 							<img src="/resources/images/churub.jpg" alt="..."
 								class="img-circle profile_img">
@@ -78,11 +79,11 @@
 										<li><a href="../performance/requirement">소요량 관리</a></li>
 										<li><a href="../performance/product">품목 관리</a></li>
 										<li><a href="../performance/rawMaterial">원자재 관리</a></li>
-										<li><a href="../performance/line">라인 관리</a></li>
 									</ul></li>
 								<li><a><i class="fa fa-desktop"></i> 생산 관리 <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
+										<li><a href="../performance/line">라인 관리</a></li>
 										<li><a href="../workorder/workOrderList">작업지시 관리</a></li>
 										<li><a href="../performance/performList">생산실적 관리</a></li>
 										<li><a href="../performance/performStatus">생산실적 현황</a></li>
@@ -91,23 +92,21 @@
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<li><a href="../stock/stockList_raw">재고 관리</a></li>
-										<li><a href="../stock/raw_order">발주 관리</a></li>
 										<li><a href="../stock/In_material">입고 관리</a></li>
 										<li><a href="../stock/Out_material">출고 관리</a></li>
+										<li><a href="../performance/warehouse">창고 관리</a></li>
 									</ul></li>
 								<li><a><i class="fa fa-bar-chart-o"></i> 인사 관리 <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<li><a href="../person/empinfo">사원 관리</a></li>
-										<li><a href="../person/management">권한 관리</a></li>
+										<li><a href="../person/Clients">거래처 관리</a></li>
 									</ul></li>
 								<li><a><i class="fa fa-edit"></i> 영업 관리 <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="../person/Clients">거래처 관리</a></li>
-										<li><a href="../person/orderStatus">수주 현황</a></li>
-										<li><a href="../person/orderManage">수주 관리</a></li>
-										<li><a href="../performance/warehouse">창고 관리</a></li>
+										<li><a href="../person/orderStatus">수주 관리</a></li>
+										<li><a href="../stock/raw_order">발주 관리</a></li>
 									</ul></li>
 							</ul>
 						</div>

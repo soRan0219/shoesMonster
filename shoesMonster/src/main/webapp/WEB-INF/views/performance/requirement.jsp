@@ -327,139 +327,138 @@
 
 	<h1 style="margin-left: 1%;">Requirements</h1>
 
-<div style="margin-left: 1%;">
-	<form action="" method="get">
-		<fieldset>
-       		<label>소요코드:</label>
-        	<input type="text" name="req_code" id="searchCode">
-        	<label>완제품 :</label>
-        	<input type="hidden" name="prod_code" id="prod_code9999">
-        	<input type="text" name="prod_name" id="prod_name9999" readonly onclick="serchProd('prod_code9999')";>
-        	<br>
-        	<label>원자재 :</label>
-        	<input type="hidden" name="raw_code" id="raw_code9999">
-        	<input type="text" name="raw_name" id="raw_name9999" readonly onclick="serchRaw('raw_code9999')";>
-        	<input type="submit" value="검색">
-		</fieldset>
-	</form>
-</div>	
+	<div style="margin-left: 1%;">
+		<form action="" method="get">
+			<fieldset>
+				<label>소요코드:</label> <input type="text" name="req_code"
+					id="searchCode"> <label>완제품 :</label> <input type="hidden"
+					name="prod_code" id="prod_code9999"> <input type="text"
+					name="prod_name" id="prod_name9999" readonly
+					onclick="serchProd('prod_code9999')"> <label>원자재 :</label>
+				<input type="hidden" name="raw_code" id="raw_code9999"> <input
+					type="text" name="raw_name" id="raw_name9999" readonly
+					onclick="serchRaw('raw_code9999')"> <input type="submit"
+					value="검색">
+			</fieldset>
+		</form>
+	</div>
 
-<hr>
+	<hr>
 
-<div class="col-md-12 col-sm-12">
-	<div class="x_panel">
-		<form id="fr">
+	<div class="col-md-12 col-sm-12">
+		<div class="x_panel">
+			<form id="fr">
+				<div class="x_title">
+					<h2>소요량 관리</h2>
 
-			<div class="x_title">
-				<h2>소요량 관리</h2>
-				
-				<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
+					<span style="float: right; margin-top: 1%;">총
+						${paging.total} 건</span>
 					<div class="clearfix"></div>
 				</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->	
-<div style="margin-bottom: 1%;">
-  
-  <!-- 버튼 제어 -->
-	<form action="" method="post" id="fr">
-		<button id="addButton">추가</button>
-		<button id="modify">수정</button>
-		<button id="delete">삭제</button>
-		<button type="reset" id="cancle">취소</button>
-		<input type="submit" value="저장" id="save">
+				<!-- //////////////////////////////////////////////////////////////////////// -->
+				
+				<div style="margin-bottom: 1%;">
+					<!-- 버튼 제어 -->
+					<button id="addButton">추가</button>
+					<button id="modify">수정</button>
+					<button id="delete">삭제</button>
+					<button type="reset" id="cancle">취소</button>
+					<input type="submit" value="저장" id="save">
+					<button onclick="location.href='/performance/requirement'">새로고침</button>
+				</div>
+					<script>
+						var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 
-		<button onclick="location.href='/performance/requirement'">새로고침</button>
-		
-		<script>
-		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
-		
-		    if (team === "자재팀" || team === "관리자") {
-		        document.getElementById("addButton").disabled = false;
-		        document.getElementById("modify").disabled = false;
-		        document.getElementById("delete").disabled = false;
-		        document.getElementById("cancle").disabled = false;
-		        document.getElementById("save").disabled = false;
-		        document.querySelector("[onclick^='location.href']").disabled = false;
-		    } else {
-		        document.getElementById("addButton").hidden = true;
-		        document.getElementById("modify").hidden = true;
-		        document.getElementById("delete").hidden = true;
-		        document.getElementById("cancle").hidden = true;
-		        document.getElementById("save").hidden = true;
-		        document.querySelector("[onclick^='location.href']").hidden = true;
-		    }
-		</script>
-		<!-- 버튼 제어 -->
-		
-		<br>
-		소요량 목록 총 ${paging.total}건
-		<table border="1" id="reqTable">
-				<tr>
-</div>
-    
-<!-- //////////////////////////////////////////////////////////////////////// -->			
-<%-- 		소요량 목록 총 ${paging.total}건 --%>
-	<div style="overflow-x: auto;">
-		<table border="1" id="reqTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
-			<colgroup>
-			    <col style="width: 50px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 150px">
-			</colgroup>
-		<thead>
-				<tr class="headings">
-					<th>번호</th>
-					<th>소요코드</th>
-					<th type='hidden' style='display: none;'>품번</th>
-					<th>완제품</th>
-					<th>원자재</th>
-					<th>소요량</th>
-					<th>총 소요량</th>
-					<th>비고</th>
-				</tr>
-		</thead>
-	
-			<c:forEach var="vo" items="${reqList}">
+						if (team === "자재팀" || team === "관리자") {
+							document.getElementById("addButton").disabled = false;
+							document.getElementById("modify").disabled = false;
+							document.getElementById("delete").disabled = false;
+							document.getElementById("cancle").disabled = false;
+							document.getElementById("save").disabled = false;
+							document
+									.querySelector("[onclick^='location.href']").disabled = false;
+						} else {
+							document.getElementById("addButton").hidden = true;
+							document.getElementById("modify").hidden = true;
+							document.getElementById("delete").hidden = true;
+							document.getElementById("cancle").hidden = true;
+							document.getElementById("save").hidden = true;
+							document
+									.querySelector("[onclick^='location.href']").hidden = true;
+						}
+					</script>
+					<!-- 버튼 제어 -->
+			</form>
+			<br> 소요량 목록 총 ${paging.total}건
+		</div>
+
+		<!-- //////////////////////////////////////////////////////////////////////// -->
+		<%-- 		소요량 목록 총 ${paging.total}건 --%>
+		<div style="overflow-x: auto;">
+			<table border="1" id="reqTable"
+				class="table table-striped jambo_table bulk_action"
+				style="text-align: center;">
+				<colgroup>
+					<col style="width: 50px">
+					<col style="width: 100px">
+					<col style="width: 100px">
+					<col style="width: 100px">
+					<col style="width: 100px">
+					<col style="width: 100px">
+					<col style="width: 150px">
+				</colgroup>
+				<thead>
+					<tr class="headings">
+						<th>번호</th>
+						<th>소요코드</th>
+						<th type='hidden' style='display: none;'>품번</th>
+						<th>완제품</th>
+						<th>원자재</th>
+						<th>소요량</th>
+						<th>총 소요량</th>
+						<th>비고</th>
+					</tr>
+				</thead>
+
+				<c:forEach var="vo" items="${reqList}">
 					<tr>
 						<td></td>
-         			    <td id="reqCode">${vo.req_code }</td>
-         			    <td type='hidden' style='display: none;'>${vo.prod_code }</td>
+						<td id="reqCode">${vo.req_code }</td>
+						<td type='hidden' style='display: none;'>${vo.prod_code }</td>
 						<td id="prodName">${vo.prod.prod_name }</td>
 						<td>${vo.raw.raw_name }</td>
 						<td>${vo.req_dan }</td>
-						<td> </td>
+						<td></td>
 						<td>${vo.req_note }</td>
 					</tr>
-			</c:forEach>
-
-		</table>
+				</c:forEach>
+			</table>
 		</div>
-	</form>
+	</div>
 </div>
-</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->		
-	<div  style="display: block; text-align: center;">		
+<!-- //////////////////////////////////////////////////////////////////////// -->
+	<div style="display: block; text-align: center;">
 		<c:if test="${paging.startPage != 1 }">
-			<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&lt;</a>
+			<a
+				href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&lt;</a>
 		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+		<c:forEach begin="${paging.startPage }" end="${paging.endPage }"
+			var="p">
 			<c:choose>
 				<c:when test="${p == paging.nowPage }">
 					<b>${p }</b>
 				</c:when>
 				<c:when test="${p != paging.nowPage }">
-					<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
+					<a
+						href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
 				</c:when>
 			</c:choose>
 		</c:forEach>
 		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&gt;</a>
+			<a
+				href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&gt;</a>
 		</c:if>
 	</div>
-	
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
