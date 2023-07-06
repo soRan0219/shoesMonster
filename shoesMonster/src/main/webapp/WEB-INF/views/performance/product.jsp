@@ -394,8 +394,9 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1>product</h1>
+	<h1 style="margin-left: 1%;">product</h1>
 	
+<div style="margin-left: 1%;">
 	<form action="" method="get">
 		<fieldset>
        		
@@ -414,20 +415,50 @@
         	<input type="submit" value="검색">
 		</fieldset>
 	</form>
-	
-	
-	<form action="" method="post" id="fr">
-		<button id="addButton">추가</button>
-		<button id="modify">수정</button>
-		<button id="delete">삭제</button>
-		<button type="reset" id="cancle">취소</button>
-		<input type="submit" value="저장" id="save">
-		
-		<br>
+</div>	
 
-		완제품 목록 총 ${paging.total}건
-		<table border="1" id="productTable">
-				<tr>
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form id="fr">	
+		
+			<div class="x_title">
+				<h2>완제품</h2>
+				
+				<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
+					<div class="clearfix"></div>
+			</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+	<div style="margin-bottom: 1%;">			
+		<form action="" method="post" id="fr">
+			<button id="addButton">추가</button>
+			<button id="modify">수정</button>
+			<button id="delete">삭제</button>
+			<button type="reset" id="cancle">취소</button>
+			<input type="submit" value="저장" id="save">
+			<button onclick="location.reload()">새로고침</button>
+	</div>
+		<br>
+	<!-- //////////////////////////////////////////////////////////////////////// -->	
+	
+	<div style="overflow-x: auto;">
+<%-- 		완제품 목록 총 ${paging.total}건 --%>
+		<table border="1" id="productTable"
+		class="table table-striped jambo_table bulk_action" style="text-align:center;">
+		<colgroup>
+		    <col style="width: 55px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 150px">
+		</colgroup>
+			<thead>
+				<tr class="headings">
 					<th>번호</th>
 					<th>품번</th>
 					<th>품명</th>
@@ -442,6 +473,8 @@
 					<th>매출단가</th>
 					<th>비고</th>
 				</tr>
+			</thead>
+			
 			<c:forEach var="vo" items="${prodList}">
 					<tr>
 						<td></td>
@@ -459,11 +492,13 @@
 						<td>${vo.prod_note }</td>
 					</tr>
 			</c:forEach>
-
 		</table>
-		
+		</div>
 	</form>
-	
+</div>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////// -->	
 	<div id="pagination" style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
 			<a href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&lt;</a>
@@ -482,7 +517,8 @@
 			<a href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&gt;</a>
 		</c:if>
 	</div>
-	
+
+<!-- //////////////////////////////////////////////////////////////////////// -->	
 </div>
 <!-- /page content -->
 

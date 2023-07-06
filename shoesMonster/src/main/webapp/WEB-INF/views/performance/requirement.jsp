@@ -325,8 +325,9 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1>Requirements</h1>
-	
+	<h1 style="margin-left: 1%;">Requirements</h1>
+
+<div style="margin-left: 1%;">
 	<form action="" method="get">
 		<fieldset>
        		<label>소요코드:</label>
@@ -341,19 +342,44 @@
         	<input type="submit" value="검색">
 		</fieldset>
 	</form>
-	
-	
+</div>	
+
+<hr>
+
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form id="fr">
+
+			<div class="x_title">
+				<h2>소요량 관리</h2>
+				
+				<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
+					<div class="clearfix"></div>
+				</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+<div style="margin-bottom: 1%;">
 	<form action="" method="post" id="fr">
 		<button id="addButton">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save">
-		
-		<br>
-		소요량 목록 총 ${paging.total}건
-		<table border="1" id="reqTable">
-				<tr>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->			
+<%-- 		소요량 목록 총 ${paging.total}건 --%>
+	<div style="overflow-x: auto;">
+		<table border="1" id="reqTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+			<colgroup>
+			    <col style="width: 50px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 150px">
+			</colgroup>
+		<thead>
+				<tr class="headings">
 					<th>번호</th>
 					<th>소요코드</th>
 					<th type='hidden' style='display: none;'>품번</th>
@@ -363,6 +389,8 @@
 					<th>총 소요량</th>
 					<th>비고</th>
 				</tr>
+		</thead>
+	
 			<c:forEach var="vo" items="${reqList}">
 					<tr>
 						<td></td>
@@ -377,9 +405,11 @@
 			</c:forEach>
 
 		</table>
-		
+		</div>
 	</form>
-	
+</div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->		
 	<div  style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
 			<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">&lt;</a>
