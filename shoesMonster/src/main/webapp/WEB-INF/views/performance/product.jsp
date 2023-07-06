@@ -5,6 +5,8 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
     
@@ -226,7 +228,7 @@
 				
 				//저장 -> 삭제
 				$('#save').click(function() {
-					
+					event.preventDefault();
 					var checked = [];
 					
 					$('input[name=selected]:checked').each(function(){
@@ -238,25 +240,46 @@
 
 					
 					if(checked.length > 0) {
-						if(confirm("선택한 항목을 삭제하시겠습니까?")){
-							$.ajax({
-								url: "/performance/prodDelete",
-								type: "post",
-								data: {checked:checked},
-								dataType: "text",
-								success: function() {
-									alert("삭제 성공");
-									location.reload();
-								},
-								error: function() {
-									alert("삭제 실패");
-								}
-							}); //ajax
-					    }// 컨펌
+						
+						 
+						Swal.fire({
+						  title: "<div style='color:#3085d6;font-size:20px'>" + "정말 삭제하시겠습니까?" + "</div>",
+								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
+						  icon: 'warning', // 아이콘! 느낌표 색? 표시?
+						  showDenyButton: true,
+						  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+						  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+						  confirmButtonText: '예', // confirm 버튼 텍스트 지정
+						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+						  width : '300px' // alert창 크기 조절
+						   
+						}).then((result) => {
+						 /* confirm => 예 눌렀을 때  */
+						  if (result.isConfirmed) {
+							  
+							  $.ajax({
+									url: "/performance/prodDelete",
+									type: "post",
+									data: {checked:checked},
+									dataType: "text",
+									success: function() {
+										Swal.fire('삭제되었습니다.', '', 'error')
+										location.reload();
+									},
+									error: function() {
+										Swal.fire('삭제 실패!.', '', 'success')
+									}
+								}); //ajax
+							  
+						  } else if (result.isDenied) {
+						    Swal.fire('삭제가 취소되었습니다.', '', 'info')
+						  }
+						});
+						
 						
 					} //체크된거 있을대
 					else {
-						alert("선택된 글이 없습니다.");
+						 Swal.fire('선택된 데이터가 없습니다.', '', 'info')
 					} //체크된거 없을때
 					
 				}); //save
