@@ -815,9 +815,9 @@
 	<!-- 생산실적 등록 -->
 	<insert id="insertPerform">
 		INSERT INTO performance
-		(perform_code,work_code,prod_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_status,perform_note) 
+		(perform_code,work_code,prod_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_status,perform_note, emp_id) 
 		VALUES 
-		(#{perform_code},#{work_code},#{prod_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},'진행',#{perform_note});
+		(#{perform_code},#{work_code},#{prod_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},'진행',#{perform_note},#{emp_id});
 	</insert>
 	<!-- 생산실적 등록 -->
 	
@@ -911,7 +911,8 @@
 	<!-- 생산실적 수정 -->
 	<update id="updatePerform">
 		UPDATE performance 
-		SET work_code=#{work_code}, prod_code=#{prod_code}, perform_qt=#{perform_qt}, change_date=now(),
+		SET work_code=#{work_code}, prod_code=#{prod_code}, perform_qt=#{perform_qt},
+		change_id=#{emp_id}, change_date=now(),
 		perform_fair=#{perform_fair}, perform_defect=#{perform_defect},
 		defect_note=#{defect_note}, perform_status=#{perform_status},  
 		perform_note=#{perform_note} 

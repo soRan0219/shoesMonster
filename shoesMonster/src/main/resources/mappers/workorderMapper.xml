@@ -67,8 +67,8 @@
 	
 	<!-- 작업지시 등록 -->
 	<insert id="insertWorkOrder">
-		INSERT INTO work_order (work_code,prod_code,order_code,work_date,line_code,work_qt,work_state)
-		VALUES (#{work_code},#{prod_code},#{order_code},now(),#{line_code},#{work_qt},#{work_state}) 
+		INSERT INTO work_order (work_code,prod_code,order_code,work_date,line_code,work_qt,work_state,emp_id)
+		VALUES (#{work_code},#{prod_code},#{order_code},now(),#{line_code},#{work_qt},#{work_state},#{emp_id}) 
 	</insert>
 	<!-- 작업지시 등록 -->
 	
@@ -93,7 +93,7 @@
 	<update id="updateWorkOrder">
 		UPDATE work_order 
 		SET line_code=#{line_code}, prod_code=#{prod_code}, order_code=#{order_code}, 
-			work_state=#{work_state}, change_date=now(), work_qt=#{work_qt} 
+			work_state=#{work_state}, change_id=#{emp_id}, change_date=now(), work_qt=#{work_qt} 
 		WHERE work_code=#{work_code}
 	</update>
 	<!-- 작업지시 수정 -->
