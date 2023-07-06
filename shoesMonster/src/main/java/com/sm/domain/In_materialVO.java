@@ -9,7 +9,7 @@ public class In_materialVO {
 
 	private String in_num;
 	private String raw_order_num;
-	private String emp_id;
+	private String i_emp_id;
 	private String client_code;
 	private String in_text;
 	private Date in_date;
@@ -20,7 +20,7 @@ public class In_materialVO {
 	private ClientsVO clients;
 	private RawMaterialVO raw_mat;
 	private StockVO stock;
-//	
+
 //	public In_materialVO() {
 //		rawOrder = new Raw_orderVO();
 //		clients = new ClientsVO();

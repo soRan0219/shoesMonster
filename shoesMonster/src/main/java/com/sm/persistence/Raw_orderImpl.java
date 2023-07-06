@@ -98,7 +98,10 @@ public class Raw_orderImpl implements Raw_orderDAO{
 
 
 	@Override
-    public void roInsert(Raw_orderVO vo) throws Exception {
+    public void roInsert(Raw_orderVO vo, String emp_id) throws Exception {
+		
+		vo.setEmp_id(emp_id);
+		
         int result = sqlSession.insert(NAMESPACE + ".roRegist", vo);
         
         if(result != 0) {

@@ -1,13 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     
 <%@ include file="../include/header.jsp"%>
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-	
+	function checkStock(orderCount, stockCount) {
+	    if (orderCount > stockCount) {
+	        alert("재고 수량이 부족합니다. 물량을 확인해 주세요.");
+	        return false;
+	    } 
+	}
 </script>
-
+	
 <!-- page content -->
 <div class="right_col" role="main">
 
@@ -145,15 +151,17 @@
 										<td class=" ">${out.prod.prod_code}</td>
 										<td class=" ">${out.prod.prod_name}</td>
 										<td class=" ">${out.orders.order_count}</td>
-										<td class=" ">${out.stock.stock_count}</td>
-										<td class=" ">${out.prod.prod_price}원</td>
+										<td class=" " style="color: ${out.stock.stock_count <= 20 ? 'red' : 'inherit'}">${out.stock.stock_count}</td>
+										<td class=" "><fmt:formatNumber value=" ${out.prod.prod_price}" />원</td>
 										<td class=" ">${out.orders.order_deliveryDate}</td>
 										<td class=" ">${out.out_date}</td>
 										<td class=" ">${out.out_YN}</td>
 										<td class=" ">${out.emp_id}</td>
 										<td class=" ">
 											<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
-												<button type="submit" name="out_Button" value="${out.orders.order_code},${out.orders.order_count},${out.prod.prod_code}" class="btn btn-info" id="matYN">출고 처리</button>
+												<c:if test="${out.out_num == null}">
+													<button type="submit" name="out_Button" value="${out.orders.order_code},${out.orders.order_count},${out.prod.prod_code}" class="btn btn-info" id="matYN" onclick="return checkStock(${out.orders.order_count}, ${out.stock.stock_count})">출고 처리</button>
+												</c:if>
 											</c:if>
 										</td>
 									</tr>

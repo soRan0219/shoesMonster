@@ -51,6 +51,7 @@
 			return false;
 		}
 	}
+	
 		
 </script>
 
@@ -89,17 +90,14 @@ function toggleDiv(divId) {
 	};
 
 </script>
-
-	<%
-// 		String emp_id = (String)session.getAttribute("emp_id");
 	
-		// 나중에 주석 풀기
-// 		if(emp_id == null) {
-// 			response.sendRedirect("/smmain/smLogin"); // 로그인페이지로 이동
-// 		}
-	%>
+<%-- 	<c:if test="${empty emp_id }"> --%>
+<%-- 		<c:redirect url="/smmain/smLogin" /> --%>
+<%-- 	</c:if> --%>
+	
+	아이디 확인용 : ${id.emp_id } <br>
 	 
-	 <h1 style="margin-left: 1%;"> 발주 관리 </h1>
+	<h1 style="margin-left: 1%;"> 발주 관리 </h1>
 
     <div style="margin-left: 1%;">
     
@@ -179,7 +177,7 @@ function toggleDiv(divId) {
 										<td class=" ">${vo.rawMaterial.raw_name }</td>
 										<td class=" ">${vo.rawMaterial.raw_color }</td>
 										<td class=" ">${vo.raw_order_count}</td>
-										<td class=" ">${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
+										<td class=" " style="color: ${vo.stock.stock_count <= 20 ? 'red' : 'inherit'}">${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
 										<td class=" "><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}" />원</td>
 										<td class=" "><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}" />원</td>
 										<td class=" ">${vo.rawMaterial.wh_code }</td>
@@ -283,12 +281,13 @@ function toggleDiv(divId) {
 											id="raw_order_count" name="raw_order_count"
 											oninput="totalAmount()"></td>
 										<!-- CSS할 때 증감버튼 없애기 -->
-										<td class=" "><input type="text"  name="stock_count"
-											id="stock_count" readonly></td>
+										<td class=" ">
+											<input type="text" style="color: ${rvo.stock.stock_count <= 20 ? 'red' : 'inherit'}" name="stock_count" id="stock_count" readonly>
+										</td>
 										<td class=" "><input type="text"  name="raw_price"
 											id="raw_price" readonly></td>
 										<td id="total_amount" class=" "></td>
-										<td class=" ">${sessionScope.emp_id }</td>
+										<td class=" ">${sessionScope.id.emp_id }</td>
 
 									</tr>
 
@@ -304,8 +303,6 @@ function toggleDiv(divId) {
 	
 	<!-- ============================ 발주 등록 ============================ -->
 	
-	
-
 
 	<!-- ============================ 발주 등록 ============================ -->
 	

@@ -27,7 +27,6 @@ public interface Out_materialService {
 	
 	// 출고 검색 목록 조회
 	public List<Out_materialVO> getSearch_Out(PageVO vo, Out_materialVO rvo) throws Exception;
-//	public List<Out_materialVO> searchOut_mat(int startRow, int pageSize , OrderStatusVO ovo) throws Exception;
 
 	// 출고 재고빠짐
 	public void deleteStock(int order_count, String prod_code) throws Exception;

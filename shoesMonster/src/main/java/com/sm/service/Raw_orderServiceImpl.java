@@ -44,8 +44,8 @@ public class Raw_orderServiceImpl implements Raw_orderService{
 
 
 	@Override
-	public void roInsert(Raw_orderVO vo) throws Exception {
-		rodao.roInsert(vo);
+	public void roInsert(Raw_orderVO vo, String emp_id) throws Exception {
+		rodao.roInsert(vo, emp_id);
     }
 	
 	
