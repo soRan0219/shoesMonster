@@ -91,10 +91,15 @@
 					
 					// Set chart options
 					var options = {
-							width: 700,
+							width: 800,
 							height: 500,
+							padding: {
+								top: 10,
+								bottom: 10,
+							},
 							//차트 제목
 							title: name + '별 생산실적 현황',
+							titlePosition: 'out',
 							titleTextStyle: {
 								fontSize: 25,
 								bold: true
@@ -104,9 +109,10 @@
 							//차트옵션
 							chartArea: {
 								backgroundColor: '#F7F7F7',
-								width: 500,
-								height: 300
-// 								left: 500,
+// 								top: '50%',
+// 								left: 100,
+								width: '90%',
+								height: '80%'
 							},
 							//배경색
 							backgroundColor: '#F7F7F7',
@@ -176,6 +182,8 @@
 // 							}
 // 							bars: 'horizontal'  //가로차트 옵션
 					};
+					
+					console.log(options);
 					
 					// Instantiate and draw our chart, passing in some options.
 					var chart = new google.charts.Bar(document.getElementById(id));

@@ -29,14 +29,6 @@ public class WorkOrderController {
 	@Autowired
 	private WorkOrderService wService;
 	
-	//품목, 라인 service
-//	@Autowired
-//	private PerformanceService pService;
-	
-	//수주 service
-//	@Autowired
-//	private OrderStatusService osService;
-	
 	//작업지시 목록
 	//http://localhost:8088/workorder/workOrderList
 	@RequestMapping(value = "/workOrderList", method = RequestMethod.GET)
