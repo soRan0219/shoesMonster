@@ -801,8 +801,8 @@
 .glyphicon-menu-up:before {
   content: "\e260"; }
 
-.left_col {
-  background: #222831; }
+/* .left_col { */
+/*   background: #222831; } */
 
 .container {
   width: 100%;
@@ -1414,9 +1414,9 @@ a:hover, a:focus {
   width: 100%;
   color: #ECF0F1 !important;
   margin-left: 0 !important;
-  line-height: 59px;
+  line-height: 119px;
   display: block;
-  height: 55px;
+  height: 115px;
   margin: 0;
   padding-left: 10px; }
 
