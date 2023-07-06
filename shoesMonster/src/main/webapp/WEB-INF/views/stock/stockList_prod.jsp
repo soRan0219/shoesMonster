@@ -143,7 +143,9 @@
 		   		<td>${s.stock_count}</td>
 		   		<td>${s.wh_code}</td>
 		   		<td>${s.warehouse.emp_id}</td>
-		   		<td><input type="button" onclick="stockPopup('${s.prod_code}')" value="수정"></td>
+		   		<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
+		   			<td><input type="button" onclick="stockPopup('${s.prod_code}')" value="수정"></td>
+	   			</c:if>
 		 	</tr>
 	 	
 	 	

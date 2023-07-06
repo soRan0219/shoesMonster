@@ -541,8 +541,30 @@
 		<button id="delete" class="true">삭제</button>
 		<button type="reset" id="cancle" >취소</button>
 		<button type="submit" id="save">저장</button>
-		<button onclick="location.reload()">새로고침</button>
+		<button onclick="location.href='/performance/warehouse'">새로고침</button>
 	</div>
+	
+	<!-- 버튼 제어 -->
+	<script>
+	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+	
+	    if (team === "물류팀" || team === "관리자") {
+	        document.getElementById("add").disabled = false;
+	        document.getElementById("modify").disabled = false;
+	        document.getElementById("delete").disabled = false;
+	        document.getElementById("cancle").disabled = false;
+	        document.getElementById("save").disabled = false;
+	        document.querySelector("[onclick^='location.href']").disabled = false;
+	    } else {
+	        document.getElementById("add").hidden = true;
+	        document.getElementById("modify").hidden = true;
+	        document.getElementById("delete").hidden = true;
+	        document.getElementById("cancle").hidden = true;
+	        document.getElementById("save").hidden = true;
+	        document.querySelector("[onclick^='location.href']").hidden = true;
+	    }
+	</script>
+	<!-- 버튼 제어 -->
 <!-- //////////////////////////////////////////////////////////////////////// -->
 
 	<div style="overflow-x: auto;">

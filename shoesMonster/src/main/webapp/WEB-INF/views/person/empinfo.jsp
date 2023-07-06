@@ -390,30 +390,13 @@ $(function() {
 			} //if(삭제 버튼 true class 있으면)
 
 			//취소 -> 리셋
-			$('#cancelEmp').click(function() {
+			$('#cancleEmp').click(function() {
 				$('input:checkbox').prop('checked', false);
 			});
 		}); //delete click
 	
 }); //jquery
-
-
-// ----- 권한 설정 ----- //
-var position = sessionScope.id.emp_department("인사팀");
-var addEmpButton = document.getElementById("addEmp");
-var deleteEmpButton = document.getElementById("deleteEmp");
-
-if (position === "인사팀") {
-  addEmp.hidden = false;      // '추가' 버튼을 보이도록 설정
-  deleteEmp.hidden = false;   // '삭제' 버튼을 보이도록 설정
-} else {
-  addEmp.hidden = true;       // '추가' 버튼을 숨기도록 설정
-  deleteEmp.hidden = true;    // '삭제' 버튼을 숨기도록 설정
-}
-
-
 </script>
-
 <style>
 
 #titlebg {
@@ -453,23 +436,45 @@ if (position === "인사팀") {
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>
-						사원 관리 <small> 사원 인원 : ${pm.totalCount } </small>
+						사원 관리 <small> 사원 인원 : ${pm.totalCount } ${sessionScope.id.emp_department } </small>
 					</h2>
-					<c:if test="">
-						<div style="text-align-last: right;" class="nav navbar-right panel_toolbox">
-							<button id="addEmp" class="true">추가</button>
-							<!-- <button id="modifyEmp">수정</button> -->
-							<button id="deleteEmp" class="true">삭제</button>
-							<button type="reset" id="cancelEmp">취소</button>
-							<button type="submit" id="saveEmp">저장</button>
-							<button onclick="location.href='/person/empinfo'">새로고침</button>
-						</div>			
-					</c:if>
+					
+					<div style="text-align-last: right;" class="nav navbar-right panel_toolbox">
+						<button id="addEmp" class="true">추가</button>
+						<!-- <button id="modifyEmp">수정</button> -->
+						<button id="deleteEmp" class="true">삭제</button>
+						<button type="reset" id="cancleEmp">취소</button>
+						<button type="submit" id="saveEmp">저장</button>
+						<button onclick="location.href='/person/empinfo'">새로고침</button>
+					</div>
+					
+					<!-- 버튼 제어 -->
+					<script>
+						//권한 설정
+						var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+						
+						if (team === "인사팀" || team === "관리자") {
+						    document.getElementById("addEmp").disabled = false;
+						    // document.getElementById("modifyEmp").disabled = false;
+						    document.getElementById("deleteEmp").disabled = false;
+						    document.getElementById("cancleEmp").disabled = false;
+						    document.getElementById("saveEmp").disabled = false;
+						    document.querySelector("[onclick^='location.href']").disabled = false;
+						} else {
+						    document.getElementById("addEmp").hidden = true;
+						    // document.getElementById("modifyEmp").hidden = true;
+						    document.getElementById("deleteEmp").hidden = true;
+						    document.getElementById("cancleEmp").hidden = true;
+						    document.getElementById("saveEmp").hidden = true;
+						    document.querySelector("[onclick^='location.href']").hidden = true;
+						}
+					</script>
+					<!-- 버튼 제어 -->
 					
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-				<p>&nbsp;&nbsp;발주 테이블 <code>Shoes Monseter</code> since 2023 </p>
+<%-- 				<p>&nbsp;&nbsp;발주 테이블 <code>Shoes Monseter</code> since 2023 </p> --%>
 					<div class="table-responsive">
 						<div>
 						<form id = "fr">

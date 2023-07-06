@@ -446,14 +446,42 @@
 					<span style="float: right; margin-top: 1%;"> 거래처 총 ${pm.totalCount } 건 </span>
 					<div class="clearfix"></div>
 				</div>
-
+				
+				
+				<!-- 버튼 제어 -->
 				<div style="margin-bottom: 1%;">
 					<input type="button" value="추가" id="addButton" class="true">
 					<input type="button" value="수정" id="updateButton"> 
 					<input type="button" value="삭제" id="deleteButton" class="true"> 
 					<input type="button" value="취소" id="cancelButton"> 
 					<input type="button" value="저장" id="saveButton">
+					<button onclick="location.href='/person/Clients'">새로고침</button>
 				</div>
+				
+				<script>
+				    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+				
+				    if (team === "인사팀" || team === "관리자") {
+				        document.getElementById("addButton").disabled = false;
+				        document.getElementById("updateButton").disabled = false;
+				        document.getElementById("deleteButton").disabled = false;
+				        document.getElementById("cancelButton").disabled = false;
+				        document.getElementById("saveButton").disabled = false;
+				        document.querySelector("[onclick^='location.href']").disabled = false;
+				    } else {
+				        document.getElementById("addButton").hidden = true;
+				        document.getElementById("updateButton").hidden = true;
+				        document.getElementById("deleteButton").hidden = true;
+				        document.getElementById("cancelButton").hidden = true;
+				        document.getElementById("saveButton").hidden = true;
+				        document.querySelector("[onclick^='location.href']").hidden = true;
+				    }
+				</script>
+		<!-- 버튼 제어 -->
+				
+				
+				
+				
 
 <!--  overflow-x: auto; -->
 

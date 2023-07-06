@@ -12,11 +12,28 @@
 <div class="right_col" role="main">
 
 	<h1> 출고 관리 </h1>
-		
+	
+	
+	<!-- 버튼 제어 -->	
 	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input>
-    <input type="button" value="미출고" class="btn btn-info" onclick="show1()"></input>
-    <input type="button" value="출고완료" class="btn btn-info" onclick="show2()"></input>
-
+    <input type="button" value="미출고" class="btn btn-info" onclick="show1()" id="noMat"></input>
+    <input type="button" value="출고완료" class="btn btn-info" onclick="show2()" id="yesMat"></input>
+	
+	<script>
+	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+	
+	    if (team === "물류팀" || team === "관리자") {
+	        document.getElementById("noMat").disabled = false;
+	        document.getElementById("yesMat").disabled = false;
+	    } else {
+	        document.getElementById("noMat").hidden = true;
+	        document.getElementById("yesMat").hidden = true;
+	    }
+	</script>
+	<!-- 버튼 제어 -->
+	
+	
+	
 <script>
     function show1() {
         var table = document.getElementById("data-table");
@@ -134,14 +151,16 @@
 										<td class=" ">${out.out_date}</td>
 										<td class=" ">${out.out_YN}</td>
 										<td class=" ">${out.emp_id}</td>
-										<td class=" "><button type="submit" name="out_Button" value="${out.orders.order_code},${out.orders.order_count},${out.prod.prod_code}" class="btn btn-info" >출고 처리</button></td>
+										<td class=" ">
+											<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
+												<button type="submit" name="out_Button" value="${out.orders.order_code},${out.orders.order_count},${out.prod.prod_code}" class="btn btn-info" id="matYN">출고 처리</button>
+											</c:if>
+										</td>
 									</tr>
-
 								</c:forEach>
 							</tbody>
 						</table>
 					</form>
-
 				</div>
 			</div>
 		</div>
@@ -164,16 +183,12 @@
 		</c:if>
 		</c:if>
 		</div>
-
+	
 	</div>
     
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
 
-	
-	
-	
-	
    
     
 <!-- <div> -->

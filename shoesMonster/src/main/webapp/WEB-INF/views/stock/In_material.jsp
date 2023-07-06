@@ -10,12 +10,23 @@
 
 	<h1>입고 관리</h1>
 
-
-	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input> <input
-		type="button" value="미입고" class="btn btn-info" onclick="show1()"></input> 
-		
-		<input type="button"
-		value="입고완료" class="btn btn-info" onclick="show2()" ></input>
+	<!-- 버튼 제어 -->
+	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input>
+	<input type="button" value="미입고" class="btn btn-info" onclick="show1()" id="inMatN"></input> 
+	<input type="button" value="입고완료" class="btn btn-info" onclick="show2()" id="inMatY"></input>
+	
+	<script>
+	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+	
+	    if (team === "물류팀" || team === "관리자") {
+	        document.getElementById("inMatN").disabled = false;
+	        document.getElementById("inMatY").disabled = false;
+	    } else {
+	        document.getElementById("inMatN").hidden = true;
+	        document.getElementById("inMatY").hidden = true;
+	    }
+	</script>
+	<!-- 버튼 제어 -->
 
 	<script>
 		function show1() {
@@ -155,8 +166,10 @@
 										<td class="a-right a-right ">${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
 
 										<td class=" ">
-										<c:if test="${rvo.in_mat.in_num == null}">
-											<button type="submit" name="in_Button" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+										<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
+											<c:if test="${rvo.in_mat.in_num == null}">
+												<button type="submit" name="in_Button" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+											</c:if>
 										</c:if>
 										</td>
 
