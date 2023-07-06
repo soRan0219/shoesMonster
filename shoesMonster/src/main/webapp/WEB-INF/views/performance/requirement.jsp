@@ -412,7 +412,7 @@
 <!-- //////////////////////////////////////////////////////////////////////// -->		
 	<div  style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
-			<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">&lt;</a>
+			<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&lt;</a>
 		</c:if>
 		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
 			<c:choose>
@@ -420,12 +420,12 @@
 					<b>${p }</b>
 				</c:when>
 				<c:when test="${p != paging.nowPage }">
-					<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">${p }</a>
+					<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
 				</c:when>
 			</c:choose>
 		</c:forEach>
 		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">&gt;</a>
+			<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&gt;</a>
 		</c:if>
 	</div>
 	
