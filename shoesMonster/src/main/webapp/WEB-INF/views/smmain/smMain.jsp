@@ -4,6 +4,90 @@
 
 <link href="../resources/build/css/custom.css" rel="stylesheet">
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+     
+    
+    $(function(){
+        
+        let wh_dvArr = [ ['유형', '재고 갯수'] ];
+        let wh_codeArr = [ ['창고종류', '재고갯수'] ];
+        
+      $.ajax({
+         url: "/stock/stockGraph",
+         type: "post",
+          success: function(data){
+              
+              var wh_dv = data.wh_dv;
+              var wh_code = data.wh_code;
+             
+              
+              for(var i=0; i<wh_dv.length; i++) {
+                  
+            	  console.log(wh_dv[i].warehouse.wh_dv);
+            	  
+                var arr = [
+                    wh_dv[i].warehouse.wh_dv,
+                    wh_dv[i].stock_count,
+                    
+                ];
+                wh_dvArr.push(arr);
+            }
+              console.log(wh_dvArr);
+              for(var i=0; i<wh_code.length; i++) {
+                  
+            	  console.log(wh_code[i].wh_code);
+            	  
+                  var arr = [
+                      wh_code[i].wh_code,
+                      wh_code[i].stock_count,
+                      
+                  ];
+                  wh_codeArr.push(arr);
+              } 
+              
+              
+              console.log("유형별: " + wh_dvArr);
+              console.log("창고 코드별: " + wh_codeArr);
+              
+              drawGoogleChart("유형", wh_dvArr , 'wh_dv');
+              drawGoogleChart("창고코드", wh_codeArr , 'wh_code');
+              
+          },error: function() {
+            alert("실패실패실패");
+        } //
+      }); // ajax
+        
+      
+      
+      
+   
+      function drawGoogleChart(name, array, id) {
+    
+    
+    
+    google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(array);
+
+        var options = {
+          title: '재고 갯수 현황',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById(id));
+        chart.draw(data, options);
+      } //drawChart
+      
+      } //drawGoogleChart
+    }); // JQuery
+    </script>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 	<!-- top tiles -->
@@ -253,7 +337,7 @@
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320 overflow_hidden">
 				<div class="x_title">
-					<h2>판 매 왕</h2>
+					<h2>창고별 재고 갯수 현황</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -268,72 +352,8 @@
 					</ul>
 					<div class="clearfix"></div>
 				</div>
-				<div class="x_content">
-					<table class="" style="width: 100%">
-						<tr>
-							<th style="width: 37%;">
-								<p>Top 5</p>
-							</th>
-							<th>
-								<div class="col-lg-7 col-md-7 col-sm-7 ">
-									<p class="">Device</p>
-								</div>
-								<div class="col-lg-5 col-md-5 col-sm-5 ">
-									<p class="">Progress</p>
-								</div>
-							</th>
-						</tr>
-						<tr>
-							<td>
-								<canvas class="canvasDoughnut" height="140" width="140"
-									style="margin: 15px 10px 10px 0"></canvas>
-							</td>
-							<td>
-								<table class="tile_info">
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square blue"></i>정창원
-											</p>
-										</td>
-										<td>30회</td>
-									</tr>
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square green"></i>류혜림
-											</p>
-										</td>
-										<td>10회</td>
-									</tr>
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square purple"></i>정애령
-											</p>
-										</td>
-										<td>20회</td>
-									</tr>
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square aero"></i>윤선길
-											</p>
-										</td>
-										<td>	회</td>
-									</tr>
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square red"></i>윤소란
-											</p>
-										</td>
-										<td>28회</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
+				<div id="graph">
+					<span id="wh_code" style="width: 50px; height: 50px;"></span>
 				</div>
 			</div>
 		</div>
@@ -342,7 +362,7 @@
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320">
 				<div class="x_title">
-					<h2>Quick Settings</h2>
+					<h2>유형별 재고 갯수 현황</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -358,33 +378,13 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<div class="dashboard-widget-content">
-						<ul class="quick-list">
-							<li><i class="fa fa-calendar-o"></i><a href="#">Settings</a>
-							</li>
-							<li><i class="fa fa-bars"></i><a href="#">Subscription</a></li>
-							<li><i class="fa fa-bar-chart"></i><a href="#">Auto
-									Renewal</a></li>
-							<li><i class="fa fa-line-chart"></i><a href="#">Achievements</a>
-							</li>
-							<li><i class="fa fa-bar-chart"></i><a href="#">Auto
-									Renewal</a></li>
-							<li><i class="fa fa-line-chart"></i><a href="#">Achievements</a>
-							</li>
-							<li><i class="fa fa-area-chart"></i><a href="#">Logout</a></li>
-						</ul>
 
-						<div class="sidebar-widget">
-							<h4>Profile Completion</h4>
-							<canvas width="150" height="80" id="chart_gauge_01" class=""
-								style="width: 160px; height: 100px;"></canvas>
-							<div class="goal-wrapper">
-								<span id="gauge-text" class="gauge-value pull-left">0</span> <span
-									class="gauge-value pull-left">%</span> <span id="goal-text"
-									class="goal-value pull-right">100%</span>
-							</div>
-						</div>
+
+					<div id="graph">
+						<span id="wh_dv" style="width: 50px; height: 50px;"></span>
 					</div>
+
+
 				</div>
 			</div>
 		</div>
