@@ -186,8 +186,8 @@
 
 <div id="graph">
 	<h1>Stock Graph</h1>
-	<div id="wh_dv" style="width: 50%; height: 50%;"></div>
-	<div id="wh_code" style="width: 50%; height: 50%;"></div>
+	<span id="wh_code" style="width: 10%; height: 10%;"></span>
+<!-- 	<span id="wh_dv" style="width: 10%; height: 10%;"></span> -->
 </div>
 
 
