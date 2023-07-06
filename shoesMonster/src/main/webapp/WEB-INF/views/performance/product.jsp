@@ -102,7 +102,7 @@
     		$('table tr').each(function(index){
     			var num = "<c:out value='${paging.nowPage}'/>";
     			var num2 = "<c:out value='${paging.cntPerPage}'/>";
-    			$(this).find('td:first').text(((num-1)*num2) + index);
+    			$(this).find('td:first').text(((num-1)*num2) + index-1);
     		});
         	
       	 // 추가 시 필요한 변수들
@@ -497,6 +497,8 @@
 					<th>비고</th>
 				</tr>
 			</thead>
+			<tr type='hidden' style='display: none;'></tr>
+			
 			
 			<c:forEach var="vo" items="${prodList}">
 					<tr>

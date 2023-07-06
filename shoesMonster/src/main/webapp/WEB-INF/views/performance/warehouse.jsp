@@ -119,6 +119,16 @@
 		
 	popUp();
 	
+	$('table tr').each(function(index){
+		
+		var num = "<c:out value='${vo.page}'/>";
+		var num2 = "<c:out value='${vo.pageSize}'/>";
+		
+		if(index>0){
+		$(this).find('td:first').text( ((num-1)*num2) + index );
+		}
+	});
+	
 	
 	//테이블 항목들 인덱스 부여
 	$('table tr').each(function(index){
@@ -293,7 +303,7 @@
 	var isExecuted = false;
 	
 	$('#modify').click(function () {
-		
+		event.preventDefault();
 		$('#add').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 		
