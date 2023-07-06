@@ -2,8 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp"%>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
 		
@@ -91,13 +91,89 @@
 					
 					// Set chart options
 					var options = {
-							chart: {
-								title: name + '별 생산실적 현황',
-						        subtitle:'오예'
+							width: 700,
+							height: 500,
+							//차트 제목
+							title: name + '별 생산실적 현황',
+							titleTextStyle: {
+								fontSize: 25,
+								bold: true
 							},
+							//부제목
+// 						    subtitle:'오예',
+							//차트옵션
+							chartArea: {
+								backgroundColor: '#F7F7F7',
+								width: 500,
+								height: 300
+// 								left: 500,
+							},
+							//배경색
 							backgroundColor: '#F7F7F7',
+							//차트 막대 색
 							colors: ['#1ABB9C', 'rgb(173, 218, 209)', 'rgb(56, 170, 145)'],
-// 							legend: {position: 'bottom'}
+							//줌인 뭐 이런 기능인데 적용 안되는듯
+							explorer: {
+// 								axis: 'horizontal',
+								actions: ['dragToZoom', 'rightClickToReset']
+							},
+							//폰트
+							fontSize: 20,
+							fontName: 'NexonLv2Gothic',
+// 							forcelFrame: true
+							//가로축
+							hAxis: {
+								title: 'Hello',
+								titleTextStyle: {
+									color: '#000ccc',
+									fontName: 'NexonLv2Gothic',
+									fontSize: 23
+								},
+								textStyle: {
+									color: '#0cc',
+									fontName: 'NexonLv2Gothic',
+									fontSize: 13
+								},
+								format: '#,###'
+// 								viewWindowMode: 'maximized'
+							},
+							//세로축
+							vAxis: {
+								title: 'World',
+								titleTextStyle: {
+									color: '#ccc000',
+									fontName: 'NexonLv2Gothic',
+									fontSize: 23
+								},
+								//세로축 선(=> 가로선)
+								gridlines: {
+// 									color: 'red',
+// 									minSpacing: 2
+								},
+								textStyle: {
+									color: '#c0c',
+									fontName: 'NexonLv2Gothic',
+									fontSize: 13
+								},
+								format: '#,###'
+// 								viewWindowMode: 'maximized'
+							},
+							//차트 범례 설정
+							legend: {
+								position: 'top',
+								textStyle: {
+									color: '#840F83',
+									fontSize: 16,
+									fontName: 'NexonLv2Gothic',
+									bold: true,
+									italic: true
+								},
+								alignment: 'center'
+							},
+							//차트에 표시되는 항목별 설정
+// 							series: {
+// 								0: { color: 'orange'}
+// 							}
 // 							bars: 'horizontal'  //가로차트 옵션
 					};
 					
@@ -108,26 +184,36 @@
 				
 			} //drawGoogleChart()
 			
-			$('#chart_line').show();
-			$('#chart_prod').hide();
-			$('#chart_date').hide();
+// 			$('#chart_line').show();
+// 			$('#chart_prod').hide();
+// 			$('#chart_date').hide();
 			
-			$('#lineBtn').click(function() {
-				$('#chart_line').show();
-				$('#chart_prod').hide();
-				$('#chart_date').hide();
-			});
-			$('#prodBtn').click(function() {
-				$('#chart_prod').show();
-				$('#chart_line').hide();
-				$('#chart_date').hide();
-			});
-			$('#dateBtn').click(function() {
-				$('#chart_date').show();
-				$('#chart_line').hide();
-				$('#chart_prod').hide();
-			});
+// 			$('#lineBtn').click(function() {
+// 				$('#chart_line').show();
+// 				$('#chart_prod').hide();
+// 				$('#chart_date').hide();
+// 			});
+// 			$('#prodBtn').click(function() {
+// 				$('#chart_prod').show();
+// 				$('#chart_line').hide();
+// 				$('#chart_date').hide();
+// 			});
+// 			$('#dateBtn').click(function() {
+// 				$('#chart_date').show();
+// 				$('#chart_line').hide();
+// 				$('#chart_prod').hide();
+// 			});
 			
+			
+			$('ul.tabs li').click(function() {
+				var tab_id = $(this).attr('data-tab');
+				
+				$('ul.tabs li').removeClass('current');
+				$('.tab-content').removeClass('current');
+				
+				$(this).addClass('current');
+				$('#'+tab_id).addClass('current');
+			});
 			
 		}); //jQuery
 	</script>
@@ -136,16 +222,27 @@
 <div class="right_col" role="main">
 	<h1> 생산실적 현황</h1>
 	
-	<button id="lineBtn">라인별 생산현황</button>
-	<button id="prodBtn">품목별 생산현황</button>
-	<button id="dateBtn">일자별 생산현황</button>
+<!-- 	<button id="lineBtn">라인별 생산현황</button> -->
+<!-- 	<button id="prodBtn">품목별 생산현황</button> -->
+<!-- 	<button id="dateBtn">일자별 생산현황</button> -->
 	
-	<div id="chart_line" style="width: 900px; height: 500px;"></div>
-	<div id="chart_prod" style="width: 900px; height: 500px;"></div>
-	<div id="chart_date" style="width: 900px; height: 500px;"></div>
+	<div class="tabContainer">
+		
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="chart_line">라인별 생산현황</li>
+			<li class="tab-link" data-tab="chart_prod">품목별 생산현황</li>
+			<li class="tab-link" data-tab="chart_date">일자별 생산현황</li>
+		</ul>
+		
+		<div id="chart_line" class="tab-content current"></div>
+		<div id="chart_prod"  class="tab-content"></div>
+		<div id="chart_date"  class="tab-content"></div>
+	</div>
 	
 </div>
 <!-- /page content -->
 
 <%@ include file="../include/footer.jsp"%>
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
 <link rel="stylesheet" href="/resources/forTest/performStatus.css">
