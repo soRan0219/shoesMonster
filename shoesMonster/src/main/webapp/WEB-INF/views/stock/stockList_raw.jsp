@@ -16,32 +16,56 @@
 
 <div class="right_col" role="main">
 
-	<h1> 재고 관리 </h1>
+	<h1 style="margin-left: 1%;"> 재고 관리 </h1>
 
   <a href="/stock/stockList_raw"><input type="button" value="원자재" class="btn btn-info" ></input></a>
     <a href="/stock/stockList_prod"><input type="button" value="완제품" class="btn btn-info" ></input></a>
-    
+
+<div style="margin-left: 1%;">    
     <form action="" method="get">
  		원자재 코드 <input type="text" name="raw_code" placeholder="원자재 코드를 입력하세요">
 	   	원자재 품명<input type="text" name="raw_mat.raw_name" placeholder="원자재 품명을 입력하세요">
 	   	창고 코드 <input type="text" name="wh_code" placeholder="창고 코드 입력하세요"> 
 	   	<input type="submit" class="btn btn-info" value="검색"></input>
   </form>
+</div>
 
-	
-	<table id="data-table" border="1">
-	
-    <tr>
- 		<th>유형</th>
- 		<th>제품 코드</th>
- 		<th>제품명</th>
- 		<th>색상</th>
- 		
- 		<th>재고 수량</th>
- 		<th>창고 코드</th>
- 		<th>담당자</th>
- 		<th>수정 버튼</th>
- 	</tr>
+<hr>
+
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form id="fr">
+
+			<div class="x_title">
+				<h2>재고 관리</h2>
+				
+				<span style="float: right; margin-top: 1%;">총 ${bp.totalCount } 건</span>
+					<div class="clearfix"></div>
+				</div>
+	<div style="overflow-x: auto;">
+	<table id="data-table" border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+		<colgroup>
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		</colgroup>
+		<thead>    
+	    <tr class="headings">
+	 		<th>유형</th>
+	 		<th>제품 코드</th>
+	 		<th>제품명</th>
+	 		<th>색상</th>
+	 		<th>재고 수량</th>
+	 		<th>창고 코드</th>
+	 		<th>담당자</th>
+	 		<th>수정 버튼</th>
+	 	</tr>
+ 	</thead>
  	
  	<c:forEach var="s" items="${stock_ListR}">
              <tr>
@@ -57,10 +81,12 @@
                  </c:if>
              </tr>
 	 </c:forEach>
-
    </table>
-  
-       
+  </div>
+ </form>
+</div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	      
            		
 <div>
     <c:if test="${countR3 > 10 }">

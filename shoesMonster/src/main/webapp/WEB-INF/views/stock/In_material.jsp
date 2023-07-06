@@ -82,6 +82,14 @@
 	<!-- 	입고 날짜 <input type="date"> ~ <input type="date"> -->
 	<!-- 	<button type="submit">검색</button> -->
 
+
+<!-- //////////////////////////////////////////////////////////////////////// -->
+<!-- page content -->
+	
+	<h2 style="margin-left: 1%;">재고관리</h2>
+
+<div style="margin-left: 1%;">
+
 	<form action="" method="get">
 
 		<label>품명</label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요">
@@ -90,6 +98,7 @@
 		<input type="submit" class="btn btn-info" value="검색">
 
 	</form>
+</div>
 
 	<hr>
 
@@ -180,10 +189,86 @@
 						</table>
 					</form>
 
+				<h2>입고 목록</h2>
+					<span style="float: right; margin-top: 1%;">총 ${count1} 건</span>
+					<div class="clearfix"></div>
+
 				</div>
-			</div>
-		</div>
-		<div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+	<div style="overflow-x: auto;">		
+		<form action="" method="post">
+			<table class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
+			<colgroup>
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 130px">
+			    <col style="width: 100px">
+			    <col style="width: 130px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 130px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 130px">
+			</colgroup>			
+						
+			<thead>
+				<tr class="headings">
+					<th>입고 번호</th>
+					<th>발주 번호</th>
+					<th>입고 창고</th>
+					<th>거래처명</th>
+					<th>품번</th>
+					<th>품명</th>
+					<th>색상</th>
+					<th>발주 수량</th>
+					<th>재고 수량</th>
+					<th>단가</th>
+					<th>총액</th>
+					<th>입고일</th>
+					<th>담당자</th>
+					<th>입고 확인</th>
+					<th>입고 버튼</th>
+				</tr>
+			</thead>
+			
+			<c:forEach var="rvo" items="${ro_List }">
+				<tr>
+					<td>${rvo.in_mat.in_num }</td>
+					<td>${rvo.raw_order_num }</td>
+					<td>${rvo.rawMaterial.wh_code }</td>
+					<td>${rvo.clients.client_actname }</td>
+					<td>${rvo.raw_code }</td>
+					<td>${rvo.rawMaterial.raw_name }</td>
+					<td>${rvo.rawMaterial.raw_color }</td>
+					<td>${rvo.raw_order_count}</td>
+					<td>${rvo.stock.stock_count != null ? rvo.stock.stock_count : 0}</td>
+					<td ><fmt:formatNumber
+							value=" ${rvo.rawMaterial.raw_price}" />원</td>
+					<td><fmt:formatNumber
+							value=" ${rvo.rawMaterial.raw_price*rvo.raw_order_count}" />원</td>
+					<td>${rvo.in_mat.in_date }</td>
+					<td>${rvo.emp_id }</td>
+					<td>${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
+
+					<td>
+					<c:if test="${rvo.in_mat.in_num == null}">
+						<button type="submit" name="in_Button" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+					</c:if>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	</form>
+</div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+<div>
 			<c:if test="${count1 > 10 }">
 				<c:if test="${bp.prev}">
 					<span><a class="btn btn-secondary"

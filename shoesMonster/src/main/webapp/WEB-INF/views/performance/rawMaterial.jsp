@@ -383,8 +383,9 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1>rawMaterial</h1>
-	
+	<h1 style="margin-left: 1%;">rawMaterial</h1>
+
+<div style="margin-left: 1%;">	
 	<form action="" method="get">
 		<fieldset>
 		<input type="hidden" name="input" id="input" value="${input }">
@@ -399,8 +400,21 @@
         	<input type="submit" value="검색">
 		</fieldset>
 	</form>
-	
-		<!-- 버튼 제어 -->
+</div>	
+
+<hr>
+
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form action="" method="post" id="fr">
+		<div class="x_title">
+			<h2>원자재</h2>
+			<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
+					<div class="clearfix"></div>
+		</div>
+	<div style="margin-bottom: 1%;">
+
+  <!-- 버튼 제어 -->
 	<form action="" method="post" id="fr">
 		<button id="addButton">추가</button>
 		<button id="modify">수정</button>
@@ -430,12 +444,31 @@
 		</script>
 		<!-- 버튼 제어 -->
 		
-		
-		
 		<br>
 		<div class="col-md-12 col-sm-12">
 		원자재 목록 총 ${paging.total}건
 		<table border="1" id="rawTable" class="table table-striped jambo_table bulk_action">
+	</div>
+      
+<!-- //////////////////////////////////////////////////////////////////////// -->
+		
+	<div style="overflow-x: auto;">
+<%-- 		원자재 목록 총 ${paging.total}건 --%>
+
+		<table border="1" id="rawTable"
+		class="table table-striped jambo_table bulk_action" style="text-align:center;">
+		<colgroup>
+		    <col style="width: 55px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 150px">
+		    <col style="width: 100px">
+		    <col style="width: 150px">
+		</colgroup>
+		<thead>
 				<tr class="headings">
 					<th class="column-title">번호</th>
 					<th>품번</th>
@@ -450,6 +483,8 @@
 					<th>매입단가</th>
 					<th>비고</th>
 				</tr>
+			</thead>
+			
 			<c:forEach var="vo" items="${rawList}">
 					<tr>
 						<td></td>
@@ -470,6 +505,9 @@
 		</table>
 		</div>
 	</form>
+</div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->
 	
 	<div id="pagination" style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">

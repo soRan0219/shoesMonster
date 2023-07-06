@@ -621,108 +621,9 @@
 
 <!-- page content -->
 <div class="right_col" role="main">
-	<h1>작업지시 관리</h1>
-
+	<h1 style="margin-left: 1%;">작업지시 관리</h1>
 	
-	
-	
-	
-	
-	
-	
-<!-- 	<div class="col-md-12 col-sm-12 "> -->
-<!-- 		<div class="x_panel"> -->
-<!-- 		<div class="x_title"> -->
-<!-- 			<h2>Form Design <small>different form elements</small></h2> -->
-<!-- 				<ul class="nav navbar-right panel_toolbox"> -->
-<!-- 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a> -->
-<!-- 					</li> -->
-<!-- 					<li class="dropdown"> -->
-<!-- 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a> -->
-<!-- 						<ul class="dropdown-menu" role="menu"> -->
-<!-- 							<li><a class="dropdown-item" href="#">Settings 1</a> -->
-<!-- 							</li> -->
-<!-- 							<li><a class="dropdown-item" href="#">Settings 2</a> -->
-<!-- 							</li> -->
-<!-- 						</ul> -->
-<!-- 					</li> -->
-<!-- 					<li><a class="close-link"><i class="fa fa-close"></i></a> -->
-<!-- 					</li> -->
-<!-- 				</ul> -->
-<!-- 			<div class="clearfix"></div> -->
-<!-- 		</div> -->
-<!-- 			<div class="x_content"> -->
-<!-- 			<br> -->
-<!-- 				<form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate=""> -->
-<!-- 				<div class="item form-group"> -->
-<!-- 					<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"> 라인코드 </label> -->
-<!-- 					<div class="col-md-6 col-sm-6 "> -->
-<!-- 						<input type="text" id="first-name" required="required" class="form-control "> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="item form-group"> -->
-<!-- 					<label class="col-form-label col-md-3 col-sm-3 label-align"> 지시일자 </label> -->
-<!-- 					<div class="col-md-6 col-sm-6 "> -->
-<!-- 						<input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="text" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)"> -->
-<!-- 						<script> -->
-<!-- // 							function timeFunctionLong(input) { -->
-<!-- // 								setTimeout(function() { -->
-<!-- // 									input.type = 'text'; -->
-<!-- // 								}, 60000); -->
-<!-- // 							} -->
-<!-- 						</script> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="item form-group"> -->
-<!-- 					<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"> 품번 </label> -->
-<!-- 					<div class="col-md-6 col-sm-6 "> -->
-<!-- 						<input id="middle-name" class="form-control" type="text" name="middle-name"> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="item form-group"> -->
-<!-- 					<label class="col-form-label col-md-3 col-sm-3 label-align"> 지시상태 </label> -->
-<!-- 					<div class="col-md-6 col-sm-6 "> -->
-<!-- 						<p> -->
-<!-- 							M: -->
-<!-- 							<div class="iradio_flat-green checked" style="position: relative;"> -->
-<!-- 								<input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required="" data-parsley-multiple="gender" style="position: absolute; opacity: 0;"> -->
-<!-- 								<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins> -->
-<!-- 							</div>  -->
-<!-- 							F: -->
-<!-- 							<div class="iradio_flat-green" style="position: relative;"> -->
-<!-- 								<input type="radio" class="flat" name="gender" id="genderF" value="F" data-parsley-multiple="gender" style="position: absolute; opacity: 0;"> -->
-<!-- 								<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins> -->
-<!-- 							</div> -->
-<!-- 						</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="ln_solid"></div> -->
-<!-- 					<div class="item form-group"> -->
-<!-- 						<div class="col-md-6 col-sm-6 offset-md-3"> -->
-<!-- 							<button class="btn btn-primary" type="button">Cancel</button> -->
-<!-- 							<button class="btn btn-primary" type="reset">Reset</button> -->
-<!-- 							<button type="submit" class="btn btn-success">Submit</button> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</form> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div>
+	<div style="margin-left: 1%;">
 		<form id="searchForm" method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
@@ -745,13 +646,30 @@
 	</div>
 
 	<br><br>
-	
-		<!-- 버튼 제어 -->
+
+	<hr>
+
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form id="fr">
+
+			<div class="x_title">
+				<h2>소요량 관리</h2>
+				
+				<span style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span>
+					<div class="clearfix"></div>
+				</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+	<div style="margin-bottom: 1%;">
+
+  
+    <!-- 버튼 제어 -->
 		<button id="add" class="true">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete" class="true">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<button type="submit" id="save">저장</button>
+
 		<button onclick="location.href='/workorder/workOrderList'">새로고침</button>
 		
 		<script>
@@ -786,23 +704,48 @@
 			<option value="7">7</option>
 		</select>
 		건씩 표시
+
 	</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->			
+<!-- 	<div id="body"> -->
+	<div style="overflow-x: auto;">
+	
+<%-- 		총 <span id="total">${pm.totalCount }</span>건 --%>
 		
-	<div class="table-responsive">
+<!-- 		<select id="perPage" name="perPage"> -->
+<!-- 			<option value="2">2</option> -->
+<!-- 			<option value="5">5</option> -->
+<!-- 			<option value="7">7</option> -->
+<!-- 		</select> -->
+<!-- 		건씩 표시 -->
+<!-- 	</div> -->
+		
+<!-- 	<div class="table-responsive"> -->
 		<form id="fr">
-			<table border="1" class="table table-striped jambo_table bulk_action"  id="data-table">
+			<table border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
+				<colgroup>
+				    <col style="width: 50px">
+				    <col style="width: 100px">
+				    <col style="width: 100px">
+				    <col style="width: 100px">
+				    <col style="width: 100px">
+				    <col style="width: 100px">
+				    <col style="width: 100px">
+				    <col style="width: 100px">
+				</colgroup>
 				<thead>
 					<tr class="headings">
-						<th class="column-title">번호</th>
-						<th class="column-title">작업지시코드</th>
-						<th class="column-title">라인코드</th>
-						<th class="column-title">수주코드</th>
-						<th class="column-title">품번</th>
-						<th class="column-title">지시상태</th>
-						<th class="column-title">지시일</th>
-						<th class="column-title">지시수량</th>
+						<th>번호</th>
+						<th>작업지시코드</th>
+						<th>라인코드</th>
+						<th>수주코드</th>
+						<th>품번</th>
+						<th>지시상태</th>
+						<th>지시일</th>
+						<th>지시수량</th>
 					</tr>
 				</thead>
+				
 				<c:forEach var="w" items="${workList }">
 					<tr class="even pointer">
 						<td class="a-center"></td>
@@ -816,8 +759,11 @@
 					</tr>
 				</c:forEach>
 			</table>
+			</div>
 		</form>
-	</div>
+<!-- 	</div> -->
+</div>
+</div>
 	
 	<button id="excelDownload">엑셀다운로드</button>
 		

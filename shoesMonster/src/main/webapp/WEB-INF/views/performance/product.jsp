@@ -5,6 +5,8 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
     
@@ -100,7 +102,7 @@
     		$('table tr').each(function(index){
     			var num = "<c:out value='${paging.nowPage}'/>";
     			var num2 = "<c:out value='${paging.cntPerPage}'/>";
-    			$(this).find('td:first').text(((num-1)*num2) + index);
+    			$(this).find('td:first').text(((num-1)*num2) + index-1);
     		});
         	
       	 // 추가 시 필요한 변수들
@@ -226,7 +228,7 @@
 				
 				//저장 -> 삭제
 				$('#save').click(function() {
-					
+					event.preventDefault();
 					var checked = [];
 					
 					$('input[name=selected]:checked').each(function(){
@@ -238,25 +240,46 @@
 
 					
 					if(checked.length > 0) {
-						if(confirm("선택한 항목을 삭제하시겠습니까?")){
-							$.ajax({
-								url: "/performance/prodDelete",
-								type: "post",
-								data: {checked:checked},
-								dataType: "text",
-								success: function() {
-									alert("삭제 성공");
-									location.reload();
-								},
-								error: function() {
-									alert("삭제 실패");
-								}
-							}); //ajax
-					    }// 컨펌
+						
+						 
+						Swal.fire({
+						  title: "<div style='color:#3085d6;font-size:20px'>" + "정말 삭제하시겠습니까?" + "</div>",
+								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
+						  icon: 'warning', // 아이콘! 느낌표 색? 표시?
+						  showDenyButton: true,
+						  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+						  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+						  confirmButtonText: '예', // confirm 버튼 텍스트 지정
+						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+						  width : '300px' // alert창 크기 조절
+						   
+						}).then((result) => {
+						 /* confirm => 예 눌렀을 때  */
+						  if (result.isConfirmed) {
+							  
+							  $.ajax({
+									url: "/performance/prodDelete",
+									type: "post",
+									data: {checked:checked},
+									dataType: "text",
+									success: function() {
+										Swal.fire('삭제되었습니다.', '', 'error')
+										location.reload();
+									},
+									error: function() {
+										Swal.fire('삭제 실패!.', '', 'success')
+									}
+								}); //ajax
+							  
+						  } else if (result.isDenied) {
+						    Swal.fire('삭제가 취소되었습니다.', '', 'info')
+						  }
+						});
+						
 						
 					} //체크된거 있을대
 					else {
-						alert("선택된 글이 없습니다.");
+						 Swal.fire('선택된 데이터가 없습니다.', '', 'info')
 					} //체크된거 없을때
 					
 				}); //save
@@ -394,8 +417,9 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1>product</h1>
+	<h1 style="margin-left: 1%;">product</h1>
 	
+<div style="margin-left: 1%;">
 	<form action="" method="get">
 		<fieldset>
        		
@@ -444,14 +468,52 @@
 		    }
 		</script>
 		<!-- 버튼 제어 -->
-		
-		
-		
-		<br>
 
-		완제품 목록 총 ${paging.total}건
-		<table border="1" id="productTable">
-				<tr>
+</div>	
+
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form id="fr">	
+
+		
+			<div class="x_title">
+				<h2>완제품</h2>
+				
+				<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
+					<div class="clearfix"></div>
+			</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+	<div style="margin-bottom: 1%;">			
+		<form action="" method="post" id="fr">
+			<button id="addButton">추가</button>
+			<button id="modify">수정</button>
+			<button id="delete">삭제</button>
+			<button type="reset" id="cancle">취소</button>
+			<input type="submit" value="저장" id="save">
+			<button onclick="location.reload()">새로고침</button>
+	</div>
+		<br>
+	<!-- //////////////////////////////////////////////////////////////////////// -->	
+	
+	<div style="overflow-x: auto;">
+<%-- 		완제품 목록 총 ${paging.total}건 --%>
+		<table border="1" id="productTable"
+		class="table table-striped jambo_table bulk_action" style="text-align:center;">
+		<colgroup>
+		    <col style="width: 55px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 100px">
+		    <col style="width: 150px">
+		</colgroup>
+			<thead>
+				<tr class="headings">
 					<th>번호</th>
 					<th>품번</th>
 					<th>품명</th>
@@ -466,6 +528,10 @@
 					<th>매출단가</th>
 					<th>비고</th>
 				</tr>
+			</thead>
+			<tr type='hidden' style='display: none;'></tr>
+			
+			
 			<c:forEach var="vo" items="${prodList}">
 					<tr>
 						<td></td>
@@ -483,11 +549,13 @@
 						<td>${vo.prod_note }</td>
 					</tr>
 			</c:forEach>
-
 		</table>
-		
+		</div>
 	</form>
-	
+</div>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////// -->	
 	<div id="pagination" style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
 			<a href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&lt;</a>
@@ -506,7 +574,8 @@
 			<a href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&gt;</a>
 		</c:if>
 	</div>
-	
+
+<!-- //////////////////////////////////////////////////////////////////////// -->	
 </div>
 <!-- /page content -->
 

@@ -325,8 +325,9 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1>Requirements</h1>
-	
+	<h1 style="margin-left: 1%;">Requirements</h1>
+
+<div style="margin-left: 1%;">
 	<form action="" method="get">
 		<fieldset>
        		<label>소요코드:</label>
@@ -341,15 +342,31 @@
         	<input type="submit" value="검색">
 		</fieldset>
 	</form>
-	
-		
-		<!-- 버튼 제어 -->
+</div>	
+
+<hr>
+
+<div class="col-md-12 col-sm-12">
+	<div class="x_panel">
+		<form id="fr">
+
+			<div class="x_title">
+				<h2>소요량 관리</h2>
+				
+				<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
+					<div class="clearfix"></div>
+				</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+<div style="margin-bottom: 1%;">
+  
+  <!-- 버튼 제어 -->
 	<form action="" method="post" id="fr">
 		<button id="addButton">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save">
+
 		<button onclick="location.href='/performance/requirement'">새로고침</button>
 		
 		<script>
@@ -373,11 +390,27 @@
 		</script>
 		<!-- 버튼 제어 -->
 		
-		
 		<br>
 		소요량 목록 총 ${paging.total}건
 		<table border="1" id="reqTable">
 				<tr>
+</div>
+    
+<!-- //////////////////////////////////////////////////////////////////////// -->			
+<%-- 		소요량 목록 총 ${paging.total}건 --%>
+	<div style="overflow-x: auto;">
+		<table border="1" id="reqTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+			<colgroup>
+			    <col style="width: 50px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 150px">
+			</colgroup>
+		<thead>
+				<tr class="headings">
 					<th>번호</th>
 					<th>소요코드</th>
 					<th type='hidden' style='display: none;'>품번</th>
@@ -387,6 +420,8 @@
 					<th>총 소요량</th>
 					<th>비고</th>
 				</tr>
+		</thead>
+	
 			<c:forEach var="vo" items="${reqList}">
 					<tr>
 						<td></td>
@@ -401,12 +436,14 @@
 			</c:forEach>
 
 		</table>
-		
+		</div>
 	</form>
-	
+</div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->		
 	<div  style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
-			<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">&lt;</a>
+			<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&lt;</a>
 		</c:if>
 		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
 			<c:choose>
@@ -414,12 +451,12 @@
 					<b>${p }</b>
 				</c:when>
 				<c:when test="${p != paging.nowPage }">
-					<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">${p }</a>
+					<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
 				</c:when>
 			</c:choose>
 		</c:forEach>
 		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }">&gt;</a>
+			<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&gt;</a>
 		</c:if>
 	</div>
 	
