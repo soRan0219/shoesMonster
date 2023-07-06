@@ -531,96 +531,113 @@ $(function(){
 
 <!-- page content -->
 <div class="right_col" role="main">
-	<h1>수주 관리</h1>
 	
-	<form method="get">
-		<input type="hidden" name="input" id="input" value="${input }">
-		<input type="hidden" name="client_code" id="client_code9999" >
-		업체 <input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-		수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
-				  <input type="text" name="order_date_toDate" id="order_date_toDate">
-		<input type="hidden" name="prod_code" id="prod_code9999">
-		품명 <input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')">
-		<input type="submit" value="조회">
-		<br>
-		<input type="hidden" name="emp_id" id="s_emp_id"> 
-		담당자 <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')">
-		납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
-				    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
-	</form>
+	<h1 style="margin-left: 1%;">수주 관리</h1>
 	
-	<br>
+	<div style="margin-left: 1%;">
+		<form method="get">
+			<input type="hidden" name="input" id="input" value="${input }">
+			<input type="hidden" name="client_code" id="client_code9999" >
+			업체 <input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
+			수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
+					  <input type="text" name="order_date_toDate" id="order_date_toDate">
+			<input type="hidden" name="prod_code" id="prod_code9999">
+			품명 <input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')">
+			<input type="submit" value="조회">
+			<br>
+			<input type="hidden" name="emp_id" id="s_emp_id"> 
+			담당자 <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')">
+			납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
+					    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
+		</form>
+	</div>
 	
-	<!-- 버튼 제어 -->
-	<button id="add" class="true">추가</button>
-	<button id="modify" >수정</button>
-	<button id="delete" class="true">삭제</button>
-	<button type="reset" id="cancle" >취소</button>
-	<button type="submit" id="save">저장</button>
-	<button onclick="location.href='/person/orderStatus'">새로고침</button>
+	<hr>
 	
-	<script>
-	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
-	
-	    if (team === "영업팀" || team === "관리자") {
-	        document.getElementById("add").disabled = false;
-	        document.getElementById("modify").disabled = false;
-	        document.getElementById("delete").disabled = false;
-	        document.getElementById("cancle").disabled = false;
-	        document.getElementById("save").disabled = false;
-	        document.querySelector("[onclick^='location.href']").disabled = false;
-	    } else {
-	        document.getElementById("add").hidden = true;
-	        document.getElementById("modify").hidden = true;
-	        document.getElementById("delete").hidden = true;
-	        document.getElementById("cancle").hidden = true;
-	        document.getElementById("save").hidden = true;
-	        document.querySelector("[onclick^='location.href']").hidden = true;
-	    }
-	</script>
-	<!-- 버튼 제어 -->
-	
-	
-	
-	<br>
-	
-	<form id="fr">
-	총 ${pm.totalCount } 건 
-	
-		<table border="1">
-			<tr>
-				<th></th>
-				<th>수주번호</th>
-				<th>수주업체코드</th>
-				<th>수주업체명</th>
-				<th>수주일자</th>
-				<th type='hidden' style='display: none;'>담당자id</th>
-				<th>담당자</th>
-				<th>품번</th>
-				<th>품명</th>
-				<th>단위</th>
-				<th>납품예정일</th>
-				<th>수주량</th>
-	    	</tr>
+	<div class="col-md-12 col-sm-12">
+		<div class="x_panel">
+			<form id="fr">
 			
-			<c:forEach var="vo" items="${searchOrderStatusList }">
-				<tr>
-					<td></td>
-					<td id="l_orderCode">${vo.order_code}</td>
-					<td id="l_clientCode">${vo.client_code}</td>
-					<td>${vo.clients.client_actname}</td>
-					<td>${vo.order_date}</td>
-					<td type='hidden' style='display: none;'>${vo.emp_id}</td>
-					<td id="L_empName">${vo.employees.emp_name}</td>
-					<td id="l_prodCode">${vo.prod_code}</td>
-					<td>${vo.prod.prod_name}</td>
-					<td>${vo.prod.prod_unit}</td>
-					<td>${vo.order_deliveryDate}</td>
-					<td>${vo.order_count}</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</form>
+				<div class="x_title">
+					<h2> 수주 목록 </h2>
+					
+					<span style="float: right; margin-top: 1%;"> 총 ${pm.totalCount } 건 </span>
+					<div class="clearfix"></div>
+				</div>
+			
+			<!-- 버튼 제어 -->
+			<div style="margin-bottom: 1%;">
+				<button id="add" class="true">추가</button>
+				<button id="modify" >수정</button>
+				<button id="delete" class="true">삭제</button>
+				<button type="reset" id="cancle" >취소</button>
+				<button type="submit" id="save">저장</button>
+				<button onclick="location.href='/person/orderStatus'">새로고침</button>
+			</div>
+			
+			<script>
+			    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+			
+			    if (team === "영업팀" || team === "관리자") {
+			        document.getElementById("add").disabled = false;
+			        document.getElementById("modify").disabled = false;
+			        document.getElementById("delete").disabled = false;
+			        document.getElementById("cancle").disabled = false;
+			        document.getElementById("save").disabled = false;
+			        document.querySelector("[onclick^='location.href']").disabled = false;
+			    } else {
+			        document.getElementById("add").hidden = true;
+			        document.getElementById("modify").hidden = true;
+			        document.getElementById("delete").hidden = true;
+			        document.getElementById("cancle").hidden = true;
+			        document.getElementById("save").hidden = true;
+			        document.querySelector("[onclick^='location.href']").hidden = true;
+			    }
+			</script>
+			<!-- 버튼 제어 -->
+			
+			<br>
+			
+			<div style="overflow-x: auto;">
+				<table border="1" class="table table-striped jambo_table bulk_action">
+				<thead>
+					<tr class="headings">
+						<th></th>
+						<th>수주번호</th>
+						<th>수주업체코드</th>
+						<th>수주업체명</th>
+						<th>수주일자</th>
+						<th type='hidden' style='display: none;'>담당자id</th>
+						<th>담당자</th>
+						<th>품번</th>
+						<th>품명</th>
+						<th>단위</th>
+						<th>납품예정일</th>
+						<th>수주량</th>
+			    	</tr>
+			    </thead>
+					
+					<c:forEach var="vo" items="${searchOrderStatusList }">
+						<tr>
+							<td></td>
+							<td id="l_orderCode">${vo.order_code}</td>
+							<td id="l_clientCode">${vo.client_code}</td>
+							<td>${vo.clients.client_actname}</td>
+							<td>${vo.order_date}</td>
+							<td type='hidden' style='display: none;'>${vo.emp_id}</td>
+							<td id="L_empName">${vo.employees.emp_name}</td>
+							<td id="l_prodCode">${vo.prod_code}</td>
+							<td>${vo.prod.prod_name}</td>
+							<td>${vo.prod.prod_unit}</td>
+							<td>${vo.order_deliveryDate}</td>
+							<td>${vo.order_count}</td>
+						</tr>
+					</c:forEach>
+				</table>
+				</div>
+			</form>
+		</div>
+	</div>
 	
 	<div id="pagination">
 		<c:if test="${pm.prev }">
