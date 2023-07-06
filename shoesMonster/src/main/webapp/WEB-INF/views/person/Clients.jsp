@@ -6,6 +6,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<!-- 폰트 -->
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<style type="text/css">
+
+body{
+
+font-family: 'NexonLv2Gothic';
+
+}
+
+</style>
+
+
 <script type="text/javascript">
 	//팝업으로 열었을 때
 	function popUp() {
