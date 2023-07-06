@@ -47,7 +47,7 @@
 					<div class="navbar nav_title" style="border: 0;">
 						<a href="../smmain/smMain" class="site_title">
 							<img src="/resources/images/logo1.png" width="100" height="100"> </i>
-							<img src="/resources/images/shoes_1.png" width="100" height="100"> </i>
+							<img src="/resources/images/shoes_2.png" width="100" height="100"> </i>
 						</a>
 					</div>
 
