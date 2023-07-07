@@ -5,6 +5,18 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+
+<!-- 폰트 -->
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<style type="text/css">
+
+body {
+	font-family: 'NexonLv2Gothic';
+}
+</style>
+<!-- 폰트 -->
+
 <script type="text/javascript">
 	
 	function stockPopup(code) {
@@ -15,8 +27,8 @@
 
 <!-- page content -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
      
     
     $(function(){
@@ -100,79 +112,97 @@
 
 <div class="right_col" role="main">
 
-	<h1> 재고 관리 </h1>
+	<h1 style="margin-left: 1%;"> 재고 관리 </h1>
 	
-    <a href="/stock/stockList_raw"><input type="button" value="원자재" class="btn btn-info" ></input></a>
-    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="btn btn-info" ></input></a>
+	<div style="margin-left: 1%;">
+	    <a href="/stock/stockList_raw" ><input type="button" value="원자재" class="btn btn-info" ></input></a>
+	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="btn btn-info" ></input></a>
+    </div>
     
-    
-    <form action="" method="get">
- 		완제품 코드 <input type="text" name="prod_code" placeholder="완제품 코드를 입력하세요">
-	   	완제품 품명<input type="text" name="product.prod_name" placeholder="품명을 입력하세요">
-	   	창고 코드 <input type="text" name="wh_code" placeholder="창고 코드를 입력하세요"> 
-	   	<input type="submit" class="btn btn-info" value="검색"></input>
-  </form>
+    <div style="margin-left: 1%;">  
+	    <form action="" method="get">
+	 		완제품 코드 <input type="text" name="prod_code" placeholder="완제품 코드를 입력하세요">
+		   	완제품 품명<input type="text" name="product.prod_name" placeholder="품명을 입력하세요">
+		   	창고 코드 <input type="text" name="wh_code" placeholder="창고 코드를 입력하세요"> 
+		   	<input type="submit" class="btn btn-info" value="검색"></input>
+	  	</form>
+  	</div>
 	
+	<hr>
 
-
-
-	<form action="" method="post">
-	<table id="data-table" border="1">
-	
-    <tr>
- 		<th>유형</th>
- 		<th>제품 코드</th>
- 		<th>제품명</th>
- 		<th>색상</th>
- 		<th>사이즈</th>
- 		<th>재고 수량</th>
- 		<th>창고 코드</th>
- 		<th>담당자</th>
- 		<th>수정 버튼</th>
- 	</tr>
- 	
- 	<c:forEach var="s" items="${stock_ListP}">
- 	
-	 	
-		 	<tr>
-		 		<th>${s.warehouse.wh_dv}</th>
-		 		<th>${s.prod_code}</th>
-		 		<td>${s.product.prod_name}</td>
-		 		<td>${s.product.prod_color}</td>
-		 		<td>${s.product.prod_size}</td>
-		   		<td style="color: ${s.stock_count <= 20 ? 'red' : 'inherit'}">${s.stock_count}</td>
-		   		<td>${s.wh_code}</td>
-		   		<td>${s.warehouse.emp_id}</td>
-		   		<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
-		   			<td><input type="button" onclick="stockPopup('${s.prod_code}')" value="수정"></td>
-	   			</c:if>
-		 	</tr>
-	 	
-	 	
-	 </c:forEach>
-
-   </table>
-   </form>
-       
+	<div class="col-md-12 col-sm-12">
+		<div class="x_panel">
+			<form id="fr" method="post">
+			
+				<div class="x_title">
+					<h2>완제품 목록</h2>
+					<span style="float: right; margin-top: 1%;">총 ${bp.totalCount } 건</span>
+						<div class="clearfix"></div>
+				</div>	
+					
+				<div style="overflow-x: auto;">
+				<table id="data-table" border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+					<thead> 
+					    <tr>
+					 		<th>유형</th>
+					 		<th>제품 코드</th>
+					 		<th>제품명</th>
+					 		<th>색상</th>
+					 		<th>사이즈</th>
+					 		<th>재고 수량</th>
+					 		<th>창고 코드</th>
+					 		<th>담당자</th>
+					 		<th>수정 버튼</th>
+					 	</tr>
+				 	</thead>
+					<c:forEach var="s" items="${stock_ListP}">
+					 	<tr>
+					 		<th>${s.warehouse.wh_dv}</th>
+					 		<th>${s.prod_code}</th>
+					 		<td>${s.product.prod_name}</td>
+					 		<td>${s.product.prod_color}</td>
+					 		<td>${s.product.prod_size}</td>
+					   		<td style="color: ${s.stock_count <= 20 ? 'red' : 'inherit'}">${s.stock_count}</td>
+					   		<td>${s.wh_code}</td>
+					   		<td>${s.warehouse.emp_id}</td>
+					   		<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
+					   			<td><input type="button" onclick="stockPopup('${s.prod_code}')" value="수정"></td>
+				   			</c:if>
+					 	</tr>
+					</c:forEach>
+				</table>
+			</div>
+		</form>
+	</div>
+</div>     
            		
-<div>
-    <c:if test="${countP3 > 10 }">
-		<c:if test="${bp.prev}">
-		    <span><a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
+	<div>
+	    <c:if test="${countP3 > 10 }">
+			<c:if test="${bp.prev}">
+			    <span><a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
+			</c:if>
+			
+			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+			    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${idx }&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">${idx }</a>
+			</c:forEach>
+			
+			<c:if test="${bp.next && bp.endPage > 0}">
+			    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
+			</c:if>
 		</c:if>
-		
-		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-		    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${idx }&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">${idx }</a>
-		</c:forEach>
-		
-		<c:if test="${bp.next && bp.endPage > 0}">
-		    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
-		</c:if>
-	</c:if>
+	</div>
+	
+	<div id="graph">
+		<h1>Stock Graph</h1>
+		<span id="wh_code" style="width: 10%; height: 10%;"></span>
+	<!-- 	<span id="wh_dv" style="width: 10%; height: 10%;"></span> -->
+	</div>
+	
+	<br>
+	
 </div>
 
 
-</div>
 
 
 
@@ -182,13 +212,6 @@
 
 
 
-
-
-<div id="graph">
-	<h1>Stock Graph</h1>
-	<span id="wh_code" style="width: 10%; height: 10%;"></span>
-<!-- 	<span id="wh_dv" style="width: 10%; height: 10%;"></span> -->
-</div>
 
 
 

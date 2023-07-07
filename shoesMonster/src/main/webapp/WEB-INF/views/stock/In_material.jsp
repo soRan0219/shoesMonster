@@ -5,6 +5,17 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<!-- 폰트 -->
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<style type="text/css">
+
+body {
+	font-family: 'NexonLv2Gothic';
+}
+</style>
+<!-- 폰트 -->
+
 <!-- page content -->
 <div class="right_col" role="main">
 
