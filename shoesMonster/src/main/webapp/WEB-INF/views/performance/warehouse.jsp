@@ -208,6 +208,7 @@
 				
 				var wh_code = $('#wh_code').val();
 				var wh_name = $('#wh_name').val();
+				var wh_dv = $('#wh_dv').val();
 				var wh_addr = $('#wh_addr').val();
 				var wh_tel = $('#wh_tel').val();
 				var wh_use = $('#wh_use').val();
@@ -215,7 +216,7 @@
 				var emp_name = $('#emp_name').val();
 				var wh_note = $('#wh_note').val();
 				
-				if(wh_code == "" || wh_name == "" || 
+				if(wh_code == "" || wh_name == "" || wh_dv == "" ||
 				  emp_id == "" || wh_addr == "" || wh_tel == "" || wh_use == ""){
 					alert("항목을 모두 입력하세요");
 				}else{
@@ -245,6 +246,14 @@
 			// 창고명
 			row += "<td>";
 			row += "<input type='text' name='wh_name' id='wh_name' required>";
+			row += "</td>";
+			
+			// 창고유형
+			row += "<td>";
+			row += "<select name='wh_dv' id='wh_dv'>";
+			row += "<option value='원자재'>원자재</option>";
+			row += "<option value='완제품'>완제품</option>";
+			row += "</select>";
 			row += "</td>";
 			
 			// 지역
@@ -303,7 +312,9 @@
 	var isExecuted = false;
 	
 	$('#modify').click(function () {
+		
 		event.preventDefault();
+		
 		$('#add').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 		
@@ -329,6 +340,7 @@
 				var names = [
 						"wh_code",
 						"wh_name",
+						"wh_dv",
 						"wh_addr",
 						"wh_tel",
 						"wh_use",
@@ -343,7 +355,7 @@
 					if(idx > 0){
 						inputCng($(this), "text", names[idx - 1], $(this).text());
 						
-						if(idx == 5){
+						if(idx == 6){
 							
 							var origin = $(this).find("input").val();
 						
@@ -361,12 +373,32 @@
 					
 							});// this.find('option')	
 							
-						}//idx==5
-						if(idx == 6){
-							inputCng($(this), "hidden", names[idx - 1], $(this).text());
-						}
-					}// if
+						}//idx==6
+						
+						if(idx == 3){
+							
+							var origin = $(this).find("input").val();
+						
+							var dropDown = "<select id='wh_dv' name='wh_dv'>";
+							 	dropDown += "<option value='원자재'>원자재</option>";
+							 	dropDown += "<option value='완제품'>완제품</option>";
+							 	dropDown += "</select>";
+						 	
+								$(this).html(dropDown);
+								
+								$(this).find('option').each(function () {
+									if(origin == $(this).text()){
+										$(this).attr("selected", true);
+									}
 					
+							});// this.find('option')	
+						
+					}// if==3
+						
+					if(idx == 7){
+						inputCng($(this), "hidden", names[idx - 1], $(this).text());
+					}//==7
+					}
 				});//self.find
 
 				// 등록자(사원) 검색
@@ -403,6 +435,8 @@
 	////삭제/////////////////////////////////////////////////////////
 	$('#delete').click(function () {
 
+		event.preventDefault();
+		
 		$('#add').attr("disabled", true);
 		$('#modify').attr("disabled", true);
 		
@@ -527,7 +561,17 @@
 			<label>담당자</label>
 				<input type="hidden" id="s_emp_id" name="emp_id">
 				<input type="text" id="s_emp_name" name="emp_name" placeholder="검색어를 입력해주세요">
+			
+<!-- 			<br> -->
 				
+			<label>창고유형</label>	
+				<select name="wh_dv">
+				  <option value="전체">전체</option>
+				  <option value="원자재">원자재</option>
+				  <option value="완제품">완제품</option>
+				</select>
+					
+								
 			<input type="submit" value="검색">
 		</fieldset>
 	</form>
@@ -590,6 +634,7 @@
 		    <col style="width: 100px">
 		    <col style="width: 100px">
 		    <col style="width: 100px">
+		    <col style="width: 100px">
 		    <col style="width: 150px">
 		</colgroup>
 		<thead>
@@ -597,6 +642,7 @@
 				<td>번호</td>
 				<td>창고코드</td>
 				<td>창고명</td>
+				<td>구분</td>
 				<td>지역</td>
 				<td>전화번호</td>
 				<td>사용여부</td>
@@ -611,6 +657,7 @@
 				<td>${i.count }</td>
 				<td id="whCode">${ww.wh_code}</td>
 				<td id="whName">${ww.wh_name}</td>
+				<td>${ww.wh_dv }</td>
 				<td>${ww.wh_addr}</td>
 				<td>${ww.wh_tel}</td>
 			
@@ -642,15 +689,15 @@
 	
 	<div id="pagination">
 		<c:if test="${lwpm.prev  }"> 
-			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}">이 전</a>
+			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}">이 전</a>
 		</c:if>
 		
 		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
-			<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}">${page }</a>
+			<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}"">${page }</a>
 		</c:forEach>
 		
 		<c:if test="${lwpm.next }">
-			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}">다 음</a>
+			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}"">다 음</a>
 		</c:if>
 
 	</div><!--id="pagination"  --> 

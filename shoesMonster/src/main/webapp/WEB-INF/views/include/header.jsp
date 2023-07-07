@@ -56,12 +56,12 @@
 					<!-- menu profile quick info -->
 					<div class="profile clearfix" style="margin-top: 20%;">
 						<div class="profile_pic">
-							<img src="/resources/images/churub.jpg" alt="..."
+							<img src="/imgDown?fileName=${id.file }" alt="..."
 								class="img-circle profile_img">
 						</div>
 						<div class="profile_info">
-							<span>사원</span>
-							<h2>홍길동</h2>
+							<span>${id.emp_position }</span>
+							<h2>${id.emp_name }</h2>
 						</div>
 					</div>
 					<!-- /menu profile quick info -->

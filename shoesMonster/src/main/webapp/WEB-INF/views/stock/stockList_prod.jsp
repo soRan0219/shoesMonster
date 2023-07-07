@@ -140,7 +140,7 @@
 		 		<td>${s.product.prod_name}</td>
 		 		<td>${s.product.prod_color}</td>
 		 		<td>${s.product.prod_size}</td>
-		   		<td>${s.stock_count}</td>
+		   		<td style="color: ${s.stock_count <= 20 ? 'red' : 'inherit'}">${s.stock_count}</td>
 		   		<td>${s.wh_code}</td>
 		   		<td>${s.warehouse.emp_id}</td>
 		   		<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
@@ -186,8 +186,8 @@
 
 <div id="graph">
 	<h1>Stock Graph</h1>
-	<div id="wh_dv" style="width: 50%; height: 50%;"></div>
-	<div id="wh_code" style="width: 50%; height: 50%;"></div>
+	<span id="wh_code" style="width: 10%; height: 10%;"></span>
+<!-- 	<span id="wh_dv" style="width: 10%; height: 10%;"></span> -->
 </div>
 
 

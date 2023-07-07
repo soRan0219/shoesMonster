@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sm.domain.BottomPaging;
 import com.sm.domain.ClientsVO;
+import com.sm.domain.EmployeesVO;
 import com.sm.domain.In_materialVO;
 import com.sm.domain.OrderStatusVO;
 import com.sm.domain.Out_materialVO;
@@ -63,8 +65,7 @@ public class stockController {
     // http://localhost:8080/stock/raw_order
 	// http://localhost:8088/stock/raw_order
 	@RequestMapping(value="/raw_order", method = RequestMethod.GET)
-    public void getListPage(PageVO vo, HttpServletRequest request, Model model ,Raw_orderVO rvo) throws Exception {
-        
+    public void getListPage(HttpSession session, PageVO vo, HttpServletRequest request, Model model ,Raw_orderVO rvo) throws Exception {
 		
 		if((rvo.getClients().getClient_actname() != null && !rvo.getClients().getClient_actname().equals("")) ||
 		   (rvo.getRaw_order_num() != null && !rvo.getRaw_order_num().equals("")) || 
@@ -110,18 +111,16 @@ public class stockController {
 	// 발주 등록
 	@RequestMapping(value="/raw_order", method = RequestMethod.POST)
 	public String roRegist(@RequestParam("wh_code") String wh_code,
-//						   @RequestParam("emp_id") String emp_id,
 						   Raw_orderVO vo, RedirectAttributes rttr,
 						   HttpSession session, HttpServletRequest request,
 						   Model model) throws Exception {
 		
 		// 로그인 정보
-//		String emp_id = (String)session.getAttribute("emp_id");
-//		request.setAttribute("emp_id", emp_id);
-		logger.debug("///////////////// wh_code : " + wh_code + "////////////////");
-//		logger.debug("///////////////// emp_id : " + emp_id + "////////////////");
+		EmployeesVO evo = (EmployeesVO) session.getAttribute("id");
+	    String emp_id = evo.getEmp_id();
+	    logger.debug("///////////////// emp_id : " + emp_id + "////////////////");
 		
-		ro_service.roInsert(vo);
+		ro_service.roInsert(vo, emp_id);
 	
 		rttr.addFlashAttribute("result", "roInsert");
 		
@@ -282,17 +281,17 @@ public class stockController {
         logger.debug("@@@@@@@@@@@@@@@ 발주 개수 확인용 : " + raw_order_count);
         logger.debug("@@@@@@@@@@@@@@@ 입고 창고 확인용 : " + wh_code);
         
-        service.inInsert(raw_order_num);
+        // 로그인
+        EmployeesVO evo = (EmployeesVO) session.getAttribute("id");
+	    String emp_id = evo.getEmp_id();
+	    logger.debug("///////////////// emp_id : " + emp_id + "////////////////");
+        
+        service.inInsert(raw_order_num, emp_id);
 //        service.updateIn(raw_order_num);
         
-        // 로그인 정보
-//        String emp_id = (String)session.getAttribute("emp_id");
-//        request.setAttribute("emp_id", emp_id);
         logger.debug("_______________^__________^^_________^^^^^^^^____^^^^^^^^^^__^^^^^_");
-//        service.inInsert(rvo, raw_order_num);
-//        
 //        service.updateIn(raw_order_num);
-//        
+
         rttr.addFlashAttribute("result", "inInsert");
         
         logger.debug("@@@@@@@@@@@@ 리턴 확인용 : " + raw_order_num);
@@ -304,13 +303,9 @@ public class stockController {
         if(result) {
         	logger.debug("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         	service.updateStock(rawCode, raw_order_count);
-        	  
-        	
         } else {
         	logger.debug("XXXXXXXXXXXXXXXXX ");
         	service.insertStock(rawCode, raw_order_count, wh_code);
-        	
-        	
         }
         
         
@@ -601,11 +596,11 @@ public class stockController {
     	    String order_code = values[0];
     	    int order_count = Integer.parseInt(values[1]);
     	    String prod_code = values[2];
-            
-            logger.debug("!!!!!!!!!!!!!!!!!!! 1 order_code :" + order_code);
+
+    	    logger.debug("!!!!!!!!!!!!!!!!!!! 1 order_code :" + order_code);
             logger.debug("!!!!!!!!!!!!!!!!!!! 2 order_count :" + order_count);
             logger.debug("!!!!!!!!!!!!!!!!!!! 3 prod_code :" + prod_code);
-
+            
 //    	    String emp_id = (String) session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
 //    	    vo.getOut_mat().setEmp_id(emp_id); // 담당자 설정
 

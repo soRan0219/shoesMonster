@@ -273,6 +273,15 @@
 								}); //option 하나씩 탐색
 							} //생산현황
 							
+							// readonly 속성 부여
+							$(this).find("input").each(function(){
+								if($(this).attr("name")=="perform_code" || $(this).attr("name")=="work_code" ||
+										$(this).attr("name")=="line_code" ||$(this).attr("name")=="prod_code"||
+										$(this).attr("name")=="work_date") {
+									$(this).attr("readonly", true);
+								}
+							}); //readonly
+							
 						} //작업지시코드부터 다 수정 가능하게
 
 					}); // self.find(~~)
@@ -604,6 +613,7 @@
 	
 	<div class="table-responsive">	
 		<form id="fr">
+			<input type="hidden" name="emp_id" value="${sessionScope.id.emp_id }">
 			<table border="1" class="table table-striped jambo_table bulk_action"  id="data-table">
 				<thead>
 					<tr class="headings">

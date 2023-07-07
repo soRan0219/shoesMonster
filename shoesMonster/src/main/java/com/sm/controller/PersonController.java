@@ -205,7 +205,7 @@ public class PersonController {
 			
 			
 			// 2) 파일업로드
-			File file = new File("C:\\spring\\upload"+"\\"+fileName);
+			File file = new File("/home/ec2-user/apache-tomcat-9.0.73/webapps/img"+"/"+fileName);
 			
 			if (mFile.getSize() != 0) {
 				// 폼태그에서 업로드한 파일의 정보가 있을 때
@@ -219,7 +219,7 @@ public class PersonController {
 				} //!file.exists()
 
 				// 업로드에 필요한 임시 파일정보를 실제 업로드 위치로 이동
-				mFile.transferTo(new File("C:\\spring\\upload"+"\\"+oFileName));
+				mFile.transferTo(new File("/home/ec2-user/apache-tomcat-9.0.73/webapps/img"+"/"+oFileName));
 				
 			} // mFile.getSize() != 0
 			

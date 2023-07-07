@@ -33,5 +33,6 @@ public interface Out_materialDAO {
 	
 	// 출고 재고빠짐
 	public void deleteStock(int order_count, String prod_code) throws Exception;
+	
 			
  }

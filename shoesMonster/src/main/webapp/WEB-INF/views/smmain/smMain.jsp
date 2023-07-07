@@ -4,6 +4,285 @@
 
 <link href="../resources/build/css/custom.css" rel="stylesheet">
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+     
+    
+  //unix시간 -> 날짜형식 변환
+	function getDate(unixTime) {
+		var date = new Date(unixTime);
+		
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		
+		return year + "-" + month + "-" + day;
+	} //getDate()
+
+	$(function(){
+		
+		let perLineArr = [ ['라인명', '생산수량', '양품', '불량'] ];
+		let perProdArr = [ ['품목명', '생산수량', '양품', '불량'] ];
+		let perDateArr = [ ['생산일자', '생산수량', '양품', '불량'] ];
+		
+		$.ajax({
+			url: "/performance/status",
+			type: "post",
+			success: function(data) {
+				var line = data.perLine;
+				var prod = data.perProd;
+				var date = data.perDate;
+				
+				for(var i=0; i<line.length; i++) {
+					var arr = [
+						line[i].workOrder.line_code,
+						line[i].perform_qt,
+						line[i].perform_fair,
+						line[i].perform_defect
+					];
+					perLineArr.push(arr);
+				}
+				for(var i=0; i<prod.length; i++) {
+					var arr = [
+						prod[i].prod_code,
+						prod[i].perform_qt,
+						prod[i].perform_fair,
+						prod[i].perform_defect
+					];
+					perProdArr.push(arr);
+				}
+				for(var i=0; i<date.length; i++) {
+					var arr = [
+						getDate(date[i].perform_date),
+						date[i].perform_qt,
+						date[i].perform_fair,
+						date[i].perform_defect
+					];
+					perDateArr.push(arr);
+				}
+				
+				console.log("라인별: " + perLineArr);
+				console.log("품목별: " + perProdArr);
+				console.log("일자별: " + perDateArr);
+				
+				drawGoogleChart("라인", perLineArr, 'chart_line');
+				drawGoogleChart("품목", perProdArr, 'chart_prod');
+				drawGoogleChart("생산일자", perDateArr, 'chart_date');
+				
+			},
+			error: function() {
+				alert("실패실패실패");
+			}
+		}); //ajax
+		
+		function drawGoogleChart(name, array, id) {
+			
+			// Load the Vis ualization API and the piechart package.
+			google.charts.load('current', {'packages':['bar']});
+			
+			// Set a callback to run when the Google Visualization API is loaded.
+			google.charts.setOnLoadCallback(drawChart);
+			
+			// Callback that creates and populates a data table, 
+			// instantiates the pie chart, passes in the data and draws it.
+			function drawChart() {
+				
+				// Create the data table.
+				var data = new google.visualization.arrayToDataTable(array);
+				
+				// Set chart options
+				var options = {
+						width: 300,
+						height: 400,
+						padding: {
+							top: 10,
+							bottom: 10,
+						},
+						//차트 제목
+						title: name + '별 생산실적 현황',
+						titlePosition: 'out',
+						titleTextStyle: {
+							fontSize: 25,
+							bold: true
+						},
+						//부제목
+//						    subtitle:'오예',
+						//차트옵션
+						chartArea: {
+							backgroundColor: '#F7F7F7',
+//								top: '50%',
+//								left: 100,
+							width: '90%',
+							height: '80%'
+						},
+						//배경색
+						backgroundColor: '#F7F7F7',
+						//차트 막대 색
+						colors: ['#1ABB9C', 'rgb(173, 218, 209)', 'rgb(56, 170, 145)'],
+						//줌인 뭐 이런 기능인데 적용 안되는듯
+						explorer: {
+//								axis: 'horizontal',
+							actions: ['dragToZoom', 'rightClickToReset']
+						},
+						//폰트
+						fontSize: 20,
+						fontName: 'NexonLv2Gothic',
+//							forcelFrame: true
+						//가로축
+						hAxis: {
+							title: 'Hello',
+							titleTextStyle: {
+								color: '#000ccc',
+								fontName: 'NexonLv2Gothic',
+								fontSize: 23
+							},
+							textStyle: {
+								color: '#0cc',
+								fontName: 'NexonLv2Gothic',
+								fontSize: 13
+							},
+							format: '#,###'
+//								viewWindowMode: 'maximized'
+						},
+						//세로축
+						vAxis: {
+							title: 'World',
+							titleTextStyle: {
+								color: '#ccc000',
+								fontName: 'NexonLv2Gothic',
+								fontSize: 23
+							},
+							//세로축 선(=> 가로선)
+							gridlines: {
+//									color: 'red',
+//									minSpacing: 2
+							},
+							textStyle: {
+								color: '#c0c',
+								fontName: 'NexonLv2Gothic',
+								fontSize: 13
+							},
+							format: '#,###'
+//								viewWindowMode: 'maximized'
+						},
+						//차트 범례 설정
+						legend: {
+							position: 'top',
+							textStyle: {
+								color: '#840F83',
+								fontSize: 16,
+								fontName: 'NexonLv2Gothic',
+								bold: true,
+								italic: true
+							},
+							alignment: 'center'
+						},
+						//차트에 표시되는 항목별 설정
+//							series: {
+//								0: { color: 'orange'}
+//							}
+//							bars: 'horizontal'  //가로차트 옵션
+				};
+				
+				console.log(options);
+				
+				// Instantiate and draw our chart, passing in some options.
+				var chart = new google.charts.Bar(document.getElementById(id));
+				chart.draw(data, google.charts.Bar.convertOptions(options));
+			} //drawChart()
+			
+		} //drawGoogleChart()
+		
+
+		
+	}); //jQuery
+    
+    
+    
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    $(function(){
+        
+        let wh_dvArr = [ ['유형', '재고 갯수'] ];
+        let wh_codeArr = [ ['창고종류', '재고갯수'] ];
+        
+      $.ajax({
+         url: "/stock/stockGraph",
+         type: "post",
+          success: function(data){
+              
+              var wh_dv = data.wh_dv;
+              var wh_code = data.wh_code;
+             
+              
+              for(var i=0; i<wh_dv.length; i++) {
+                  
+            	  console.log(wh_dv[i].warehouse.wh_dv);
+            	  
+                var arr = [
+                    wh_dv[i].warehouse.wh_dv,
+                    wh_dv[i].stock_count,
+                    
+                ];
+                wh_dvArr.push(arr);
+            }
+              console.log(wh_dvArr);
+              for(var i=0; i<wh_code.length; i++) {
+                  
+            	  console.log(wh_code[i].wh_code);
+            	  
+                  var arr = [
+                      wh_code[i].wh_code,
+                      wh_code[i].stock_count,
+                      
+                  ];
+                  wh_codeArr.push(arr);
+              } 
+              
+              
+              console.log("유형별: " + wh_dvArr);
+              console.log("창고 코드별: " + wh_codeArr);
+              
+              drawGoogleChart("유형", wh_dvArr , 'wh_dv');
+              drawGoogleChart("창고코드", wh_codeArr , 'wh_code');
+              
+          },error: function() {
+            alert("실패실패실패");
+        } //
+      }); // ajax
+        
+      
+      
+      
+   
+      function drawGoogleChart(name, array, id) {
+    
+    
+    
+    google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(array);
+
+        var options = {
+          title: '재고 갯수 현황',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById(id));
+        chart.draw(data, options);
+      } //drawChart
+      
+      } //drawGoogleChart
+    }); // JQuery
+    </script>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 	<!-- top tiles -->
@@ -75,7 +354,9 @@
 				</div>
 
 				<div class="col-md-9 col-sm-9 ">
-					<div id="chart_plot_01" class="demo-placeholder"></div>
+						<span id="chart_prod"  class="tab-content"></span>
+						<span id="chart_date"  class="tab-content"></span>
+						<span id="chart_line" class="tab-content current"></span>
 				</div>
 				<div class="col-md-3 col-sm-3  bg-white">
 					<div class="x_title">
@@ -152,108 +433,17 @@
 					</ul>
 					<div class="clearfix"></div>
 				</div>
-				<div class="x_content">
-					<h4> 지각(휴가) 횟수 </h4>
-					<div class="widget_summary">
-						<div class="w_left w_25">
-							<span>이도희</span>
-						</div>
-						<div class="w_center w_55">
-							<div class="progress">
-								<div class="progress-bar bg-green" role="progressbar"
-									aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-									style="width: 66%;">
-									<span class="sr-only">60% Complete</span>
-								</div>
-							</div>
-						</div>
-						<div class="w_right w_20">
-							<span>28회</span>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-
-					<div class="widget_summary">
-						<div class="w_left w_25">
-							<span>박언효</span>
-						</div>
-						<div class="w_center w_55">
-							<div class="progress">
-								<div class="progress-bar bg-green" role="progressbar"
-									aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-									style="width: 45%;">
-									<span class="sr-only">60% Complete</span>
-								</div>
-							</div>
-						</div>
-						<div class="w_right w_20">
-							<span>14회</span>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="widget_summary">
-						<div class="w_left w_25">
-							<span>윤선길</span>
-						</div>
-						<div class="w_center w_55">
-							<div class="progress">
-								<div class="progress-bar bg-green" role="progressbar"
-									aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-									style="width: 25%;">
-									<span class="sr-only">60% Complete</span>
-								</div>
-							</div>
-						</div>
-						<div class="w_right w_20">
-							<span>8회</span>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="widget_summary">
-						<div class="w_left w_25">
-							<span>류혜림</span>
-						</div>
-						<div class="w_center w_55">
-							<div class="progress">
-								<div class="progress-bar bg-green" role="progressbar"
-									aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-									style="width: 5%;">
-									<span class="sr-only">60% Complete</span>
-								</div>
-							</div>
-						</div>
-						<div class="w_right w_20">
-							<span>3회</span>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="widget_summary">
-						<div class="w_left w_25">
-							<span>정애령</span>
-						</div>
-						<div class="w_center w_55">
-							<div class="progress">
-								<div class="progress-bar bg-green" role="progressbar"
-									aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-									style="width: 2%;">
-									<span class="sr-only">60% Complete</span>
-								</div>
-							</div>
-						</div>
-						<div class="w_right w_20">
-							<span>1회</span>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-
-				</div>
+			<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->	
+				<div id="chart_line" class="tab-content current"></div>
+<!-- 				<div id="chart_prod"  class="tab-content"></div> -->
+<!-- 				<div id="chart_date"  class="tab-content"></div> -->
 			</div>
 		</div>
 
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320 overflow_hidden">
 				<div class="x_title">
-					<h2>판 매 왕</h2>
+					<h2>창고별 재고 갯수 현황</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -268,72 +458,8 @@
 					</ul>
 					<div class="clearfix"></div>
 				</div>
-				<div class="x_content">
-					<table class="" style="width: 100%">
-						<tr>
-							<th style="width: 37%;">
-								<p>Top 5</p>
-							</th>
-							<th>
-								<div class="col-lg-7 col-md-7 col-sm-7 ">
-									<p class="">Device</p>
-								</div>
-								<div class="col-lg-5 col-md-5 col-sm-5 ">
-									<p class="">Progress</p>
-								</div>
-							</th>
-						</tr>
-						<tr>
-							<td>
-								<canvas class="canvasDoughnut" height="140" width="140"
-									style="margin: 15px 10px 10px 0"></canvas>
-							</td>
-							<td>
-								<table class="tile_info">
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square blue"></i>정창원
-											</p>
-										</td>
-										<td>30회</td>
-									</tr>
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square green"></i>류혜림
-											</p>
-										</td>
-										<td>10회</td>
-									</tr>
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square purple"></i>정애령
-											</p>
-										</td>
-										<td>20회</td>
-									</tr>
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square aero"></i>윤선길
-											</p>
-										</td>
-										<td>	회</td>
-									</tr>
-									<tr>
-										<td>
-											<p>
-												<i class="fa fa-square red"></i>윤소란
-											</p>
-										</td>
-										<td>28회</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
+				<div id="graph">
+					<span id="wh_code" style="width: 50px; height: 50px;"></span>
 				</div>
 			</div>
 		</div>
@@ -342,7 +468,7 @@
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320">
 				<div class="x_title">
-					<h2>Quick Settings</h2>
+					<h2>유형별 재고 갯수 현황</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -358,33 +484,13 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<div class="dashboard-widget-content">
-						<ul class="quick-list">
-							<li><i class="fa fa-calendar-o"></i><a href="#">Settings</a>
-							</li>
-							<li><i class="fa fa-bars"></i><a href="#">Subscription</a></li>
-							<li><i class="fa fa-bar-chart"></i><a href="#">Auto
-									Renewal</a></li>
-							<li><i class="fa fa-line-chart"></i><a href="#">Achievements</a>
-							</li>
-							<li><i class="fa fa-bar-chart"></i><a href="#">Auto
-									Renewal</a></li>
-							<li><i class="fa fa-line-chart"></i><a href="#">Achievements</a>
-							</li>
-							<li><i class="fa fa-area-chart"></i><a href="#">Logout</a></li>
-						</ul>
 
-						<div class="sidebar-widget">
-							<h4>Profile Completion</h4>
-							<canvas width="150" height="80" id="chart_gauge_01" class=""
-								style="width: 160px; height: 100px;"></canvas>
-							<div class="goal-wrapper">
-								<span id="gauge-text" class="gauge-value pull-left">0</span> <span
-									class="gauge-value pull-left">%</span> <span id="goal-text"
-									class="goal-value pull-right">100%</span>
-							</div>
-						</div>
+
+					<div id="graph">
+						<span id="wh_dv" style="width: 50px; height: 50px;"></span>
 					</div>
+
+
 				</div>
 			</div>
 		</div>

@@ -407,30 +407,13 @@
 					tbl += code;
 					tbl += "'>";
 					
-// 					var thTmp = "<div class='icheckbox_flat-green' style='position: relative;'>";
-// 					thTmp += "<input type='checkbox' id='check-all' class='flat' style='position: absolute; opacity: 0;'>";
-// // 					thTmp += "<ins class='iCheck-helper' style='position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;''></ins>";
-// 					thTmp += "</div>";
-					
-// 					var tdTmp = "<div class='icheckbox_flat-green' style='position: relative;'>";
-// 					tdTmp += "<input type='checkbox' class='flat' name='table_records' style='position: absolute; opacity: 0;' value='";
-// 					tdTmp += code;
-// 					tdTmp += "'>";
-// // 					tdTmp += "<ins class='iCheck-helper' style='position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;'></ins>";
-// 					tdTmp += "</div>";
-					
 					$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
 					$(this).find('td:first').html(tbl);
-// 					$(this).find('th:first').html(thTmp);
-// 					$(this).find('td:first').html(tdTmp);
 				});
 				
 				//전체선택
 				$('#selectAll').click(function() {
-// 				$('d.icheckbox_flat-green #check-all').click(function() {
 					var checkAll = $(this).is(":checked");
-					
-// 					console.log("check-all checked?? " + checkAll);
 					
 					if (checkAll) {
 						$('input:checkbox').prop('checked', true);
@@ -441,37 +424,37 @@
 	
 				//저장 -> 삭제
 				$('#save').click(function() {
-	
+					
 					var checked = [];
 	
 					$('input[name=selected]:checked').each(function() {
-// 					$('input[name=table_records]:checked').each(function() {
 						console.log("check => " + $(this).val());
 						checked.push($(this).val());
 					});
-	
-// 					console.log(checked);
-	
-					if (checked.length > 0) {
-	
-						$.ajax({
-							url : "/workorder/delete",
-							type : "post",
-							data : {checked : checked},
-							dataType : "text",
-							success : function() {
-								alert("*** 아작스 성공 ***");
-								location.reload();
-							},
-							error : function() {
-								alert("아작스실패~~");
-							}
-						}); //ajax
-	
-					} //체크된거 있을대
-					else {
-						alert("선택된 항목이 없습니다.");
-					} //체크된거 없을때
+					
+					if(confirm("총 " + checked.length + "행 선택\n정말 삭제하시겠습니까?")) {
+						
+						if (checked.length > 0) {
+		
+							$.ajax({
+								url : "/workorder/delete",
+								type : "post",
+								data : {checked : checked},
+								dataType : "text",
+								success : function() {
+	// 								alert("*** 아작스 성공 ***");
+									location.reload();
+								},
+								error : function() {
+									console.log("아작스실패~~");
+								}
+							}); //ajax
+		
+						} //체크된거 있을대
+						else {
+							alert("선택된 항목이 없습니다.");
+						} //체크된거 없을때
+					} //if(삭제확인)
 	
 				}); //save
 				
@@ -646,19 +629,18 @@
 	</div>
 
 	<br><br>
-
+	
+	
 	<hr>
 
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
-		<form id="fr">
-
 			<div class="x_title">
-				<h2>소요량 관리</h2>
+				<h2>작업지시 관리</h2>
 				
 				<span style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span>
-					<div class="clearfix"></div>
-				</div>
+				<div class="clearfix"></div>
+			</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 	<div style="margin-bottom: 1%;">
 
@@ -722,6 +704,7 @@
 		
 <!-- 	<div class="table-responsive"> -->
 		<form id="fr">
+			<input type="hidden" name="emp_id" value="${sessionScope.id.emp_id }">
 			<table border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
 				<colgroup>
 				    <col style="width: 50px">
@@ -759,8 +742,8 @@
 					</tr>
 				</c:forEach>
 			</table>
-			</div>
 		</form>
+		</div>
 <!-- 	</div> -->
 </div>
 </div>

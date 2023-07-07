@@ -27,7 +27,7 @@ public interface Raw_orderDAO {
 	public List<WarehouseVO> whPopup() throws Exception;
 	
 	// 발주 등록
- 	public void roInsert(Raw_orderVO vo) throws Exception;
+ 	public void roInsert(Raw_orderVO vo, String emp_id) throws Exception;
  	
  	// 거래처 상세(팝업)
  	public List<Raw_orderVO> getDetail() throws Exception;

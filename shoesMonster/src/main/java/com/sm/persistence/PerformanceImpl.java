@@ -437,6 +437,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		Map<String, Object> params = new HashMap<>();
 
 		params.put("wh_code", wvo.getWh_code());
+		params.put("wh_dv", wvo.getWh_dv());
 //		params.put("prod_code", wvo.getProd_code());
 //		params.put("raw_code", wvo.getRaw_code());
 		params.put("emp_id", wvo.getEmp_id());
@@ -464,7 +465,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		
 		params.put("wh_code", wvo.getWh_code());
-
+		params.put("wh_dv", wvo.getWh_dv());
 //		if(wvo.getProd_code() != null) {
 //			params.put("prod_code", wvo.getProd_code());
 //		}else if(wvo.getRaw_code() != null) {

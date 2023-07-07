@@ -553,7 +553,7 @@
 
 	<select id="whlistPage" resultMap="whm_listPage">
 
-		SELECT w.wh_code, w.wh_name, w.wh_addr, w.wh_tel, w.wh_use, 
+		SELECT w.wh_code, w.wh_name, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
 			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
 		FROM warehouse w
 		LEFT JOIN employees e on
@@ -590,7 +590,7 @@
 	<select id="searchWareHouse" resultType="WarehouseVO" 
 					resultMap="whm_SearchPage"  >
 		
-		SELECT w.wh_code, w.wh_name, w.wh_addr, w.wh_tel, w.wh_use, 
+		SELECT w.wh_code, w.wh_name, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
 			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
 		FROM warehouse w
 		LEFT JOIN employees e on
@@ -608,6 +608,9 @@
 			</if>
 			<if test="emp_id != null and emp_id != ''">
 				AND w.emp_id LIKE concat('%', #{emp_id}, '%')
+			</if>
+			<if test="wh_dv != '전체' and !wh_dv.isEmpty()">
+				AND w.wh_dv=#{wh_dv}
 			</if>
 		</where>
 		limit #{startPage}, #{pageSize}
@@ -635,14 +638,17 @@
 			<if test="emp_id != null and emp_id != ''">
 				AND emp_id LIKE concat('%', #{emp_id}, '%')
 			</if>
+			<if test="wh_dv != '전체' and !wh_dv.isEmpty()">
+				AND wh_dv=#{wh_dv}
+			</if>
 		</where>
 	</select>
 	<!-- 창고 검색시 총 글 개수 -->
 		
 	<!-- 창고 등록(추가) -->
 	<insert id="registWh">
-		INSERT INTO warehouse (wh_code, wh_name, wh_use, wh_addr, wh_tel, wh_note, emp_id)
-		VALUES (#{wh_code}, #{wh_name}, #{wh_use}, #{wh_addr}, #{wh_tel}, 
+		INSERT INTO warehouse (wh_code, wh_name, wh_dv, wh_use, wh_addr, wh_tel, wh_note, emp_id)
+		VALUES (#{wh_code}, #{wh_name}, #{wh_dv}, #{wh_use}, #{wh_addr}, #{wh_tel}, 
 				#{wh_note}, #{emp_id})
 	</insert>
 
@@ -658,7 +664,7 @@
 	<!-- 창고 수정 -->
 	<update id="updateWh">
 		UPDATE warehouse
-		SET  wh_name = #{wh_name}, wh_use = #{wh_use}, 
+		SET  wh_name = #{wh_name}, wh_use = #{wh_use}, wh_dv = #{wh_dv},
 			wh_addr = #{wh_addr}, wh_tel = #{wh_tel}, wh_note = #{wh_note}, 
 			emp_id = #{emp_id}
 		where wh_code = #{wh_code}
@@ -668,7 +674,7 @@
 	<!-- 창고 조회(String wh_code) -->
 	<select id="readWhList">
 		
-		SELECT w.wh_code, w.wh_name, w.wh_addr, w.wh_tel, w.wh_use, 
+		SELECT w.wh_code, w.wh_name, w.wh_dv, w.wh_addr, w.wh_tel, w.wh_use, 
 			   w.emp_id, e.emp_id, e.emp_name, w.wh_note
 		FROM warehouse w
 		LEFT JOIN employees e on
@@ -815,9 +821,9 @@
 	<!-- 생산실적 등록 -->
 	<insert id="insertPerform">
 		INSERT INTO performance
-		(perform_code,work_code,prod_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_status,perform_note) 
+		(perform_code,work_code,prod_code,perform_date,perform_qt,perform_fair,perform_defect,defect_note,perform_status,perform_note, emp_id) 
 		VALUES 
-		(#{perform_code},#{work_code},#{prod_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},'진행',#{perform_note});
+		(#{perform_code},#{work_code},#{prod_code},#{perform_date},#{perform_qt},#{perform_fair},#{perform_defect},#{defect_note},'진행',#{perform_note},#{emp_id});
 	</insert>
 	<!-- 생산실적 등록 -->
 	
@@ -911,7 +917,8 @@
 	<!-- 생산실적 수정 -->
 	<update id="updatePerform">
 		UPDATE performance 
-		SET work_code=#{work_code}, prod_code=#{prod_code}, perform_qt=#{perform_qt}, change_date=now(),
+		SET work_code=#{work_code}, prod_code=#{prod_code}, perform_qt=#{perform_qt},
+		change_id=#{emp_id}, change_date=now(),
 		perform_fair=#{perform_fair}, perform_defect=#{perform_defect},
 		defect_note=#{defect_note}, perform_status=#{perform_status},  
 		perform_note=#{perform_note} 
