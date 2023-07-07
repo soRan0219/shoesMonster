@@ -601,11 +601,16 @@ public class stockController {
             logger.debug("!!!!!!!!!!!!!!!!!!! 2 order_count :" + order_count);
             logger.debug("!!!!!!!!!!!!!!!!!!! 3 prod_code :" + prod_code);
             
+            // 로그인
+            EmployeesVO evo = (EmployeesVO) session.getAttribute("id");
+    	    String emp_id = evo.getEmp_id();
+    	    logger.debug("/////////////////출고 버튼 emp_id : " + emp_id + "////////////////");
+            
 //    	    String emp_id = (String) session.getAttribute("emp_id"); // 로그인 정보 세션에 담아오기
 //    	    vo.getOut_mat().setEmp_id(emp_id); // 담당자 설정
 
-    	    o_service.deleteStock(order_count, prod_code);
-    	    o_service.omButton(order_code); // 출고 처리 메서드 호출
+    	    o_service.deleteStock(order_count, prod_code); // 재고 빠짐
+    	    o_service.omButton(order_code, emp_id); // 출고 처리 메서드 호출
 
     	    return "redirect:/stock/Out_material";
     	}
