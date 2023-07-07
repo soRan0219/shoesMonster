@@ -100,7 +100,7 @@ $(document).ready(function() {
 			<button id="modifyEmp">수정</button>
 			<button type="reset" id="cancelEmp">취소</button>
 			<button type="submit" id="saveEmp">저장</button>
-			<button onclick="location.href='/person/empform?emp_id=${emp_id}'">새로고침</button>
+			<button onclick="location.href='/person/empform?emp_id=${vo.emp_id}'">새로고침</button>
 		</div>
 		<div>
 			<h1>상세보기</h1>

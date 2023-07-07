@@ -7,21 +7,16 @@
 <title>Insert title here</title>
 <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 <link href="../resources/build/css/smmain.css" rel="stylesheet">
+
 </head>
 <body>
-    <h1>http://localhost:8088/smmain/smLogin</h1>
-	<h1>smLogin.jsp</h1>
-    
 
 <div class="page">
   <div class="container">
-    <div class="left">
-    <img src="/resources/images/shoeslogo.png" height="300" width="300">
+    <div class="left" style="text-align: center;">
+   	 <img src="/resources/images/shoes.png" height="300" width="300">
     <div class="img"></div>
-<!--       <div class="login">Shoes Monster</div> -->
-     	 
-<!--       <div class="eula">By logging in you agree to the ridiculously long terms that you didn't bother to read</div> -->
-      <div class="eula">Shoes Monster</div>
+<!--       <div class="eula">Shoes Monster</div> -->
     </div>
     <div class="right">
       <svg viewBox="0 0 320 300">
