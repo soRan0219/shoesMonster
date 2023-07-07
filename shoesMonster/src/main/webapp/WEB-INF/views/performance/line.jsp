@@ -116,7 +116,7 @@ body {
 			var num = "<c:out value='${vo.page}'/>";
 			var num2 = "<c:out value='${vo.pageSize}'/>";
 			if(index > 0){
-				$(this).find('td:first').text(((num-1)*num2) + index);
+				$(this).find('td:first').text(((num-1)*num2) + index-1);
 			}
 		});
 		
@@ -161,9 +161,9 @@ body {
 							// alert("*** 아작스 성공 ***");
 		
 						var preVOs = [
+							data.line_place,
 							data.line_code,
 							data.line_name,
-							data.line_place,
 							data.line_use,
 							data.emp_id,
 							data.emp.emp_name,
@@ -172,9 +172,9 @@ body {
 							];
 		
 						var names = [
+							"line_place",
 							"line_code",
 							"line_name",
-							"line_place",
 							"line_use",
 							"emp_id",
 							"emp_name",
@@ -192,6 +192,9 @@ body {
 											dropDown += "<option value = '1'>Y</option>";
 											dropDown += "<option value = '2'>N</option>";
 											dropDown += "</select>";
+											
+											$(this).html(dropDown);
+											
 											$(this).html(dropDown);
 											$(this).find('option').each(function () {
 												if(this.value == preVOs[idx - 1]){
@@ -202,6 +205,23 @@ body {
 									
 									}// if(idx==4)
 							
+									if(idx == 1 ){
+										var dropDown = " <select name='line_place' id='line_place'>";
+											dropDown += " <option value='1차공정'>1차공정</option>";
+											dropDown += " <option value='2차공정'>2차공정</option>";
+											dropDown += " <option value='3차공정'>3차공정</option>";
+											dropDown += "</select>";
+											
+											$(this).html(dropDown);
+											$(this).find('option').each(function () {
+												if(this.value == preVOs[idx - 1]){
+													$(this).attr("selected", true);
+												}
+										
+											});// this.find('option')
+									
+									}// if(idx==4)		
+										
 							}//if(idx>0)
 		
 						}); // self.find(~~)
@@ -261,10 +281,9 @@ body {
        	$('#add').click(function () {
 			
         	event.preventDefault();
+        	
         	$('#modify').attr("disabled", true);
 			$('#delete').attr("disabled", true);       		
-       		
-
 			
 			$.ajax({
 				url: "/performance/lineCode",
@@ -307,6 +326,28 @@ body {
                 return paddedNumber;
         } // padNumber(number, length)
         
+                    
+			// 저장 -> 저장
+			$('#save').click(function () {
+				
+				var line_place = $('#line_place').val();
+	 			var line_code = $('#line_code').val();
+	 			var line_name = $('#line_name').val();
+	 			var line_use = $('#line_use').val();
+	 			var emp_id = $('#emp_id').val();
+	 			var emp_name = $('#emp_name').val();//
+	 			var line_note = $('#line_note').val();
+				
+	 			if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
+					|| emp_id == ""){
+				alert("항목을 모두 입력하세요");
+					}else{
+						$('#fr').attr("action", "/performance/lineadd"); 
+						$('#fr').attr("method", "POST");
+						$('#fr').submit();
+					}
+			}); // save
+        
 	});//add.click
 		
         // 추가 버튼 클릭 시 row 생성
@@ -318,6 +359,15 @@ body {
 			row += "<td>";
 			row += "</td>";
 			
+			// 공정
+			row += " <td>";
+			row += " <select name='line_place' id='line_place'>";
+			row += " <option value='1차공정'>1차공정</option>";
+			row += " <option value='2차공정'>2차공정</option>";
+			row += " <option value='3차공정'>3차공정</option>";
+			row += " </select>";
+			row += " </td>";
+			
 			// 라인코드 
 			row += "<td>";
 			row += "<input type='text' name='line_code' id='line_code' required value='"+lineCode+"'>";
@@ -328,10 +378,10 @@ body {
 			row += "<input type='text' name='line_name' id='line_name' required>";
 			row += "</td>";
 			
-			// 작업장
-			row += "<td>";
-			row += "<input type='text' name='line_place' id='line_place' required>";
-			row += "</td>";
+// 			// 작업장
+// 			row += "<td>";
+// 			row += "<input type='text' name='line_place' id='line_place' required>";
+// 			row += "</td>";
 			
 			// 사용여부
 			row += " <td>";
@@ -369,27 +419,7 @@ body {
     		}); // #emp_id click
 		
 		} // addRow()
-            
-			// 저장 -> 저장
-			$('#save').click(function () {
-				
-	 			var line_code = $('#line_code').val();
-	 			var line_name = $('#line_name').val();
-	 			var line_place = $('#line_place').val();
-	 			var line_use = $('#line_use').val();
-	 			var emp_id = $('#emp_id').val();
-	 			var emp_name = $('#emp_name').val();//
-	 			var line_note = $('#line_note').val();
-				
-	 			if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
-					|| emp_id == ""){
-				alert("항목을 모두 입력하세요");
-					}else{
-						$('#fr').attr("action", "/performance/lineadd"); 
-						$('#fr').attr("method", "POST");
-						$('#fr').submit();
-					}
-			}); // save
+
 			
 			// 취소버튼(=리셋)
 			$('#cancle').click(function () {
@@ -414,7 +444,7 @@ body {
 			
 			// 열: 체크박스 행: 라인코드
 			$('table tr').each(function () {
-				var code = $(this).find('td:nth-child(2)').text();
+				var code = $(this).find('td:nth-child(3)').text();
 				
 				var tbl = "<input type='checkbox' name='selected' value='";
 					tbl += code;
@@ -518,34 +548,34 @@ body {
 		<label>라인명</label>
 			<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
 		
-		<br>
-
 		<label>사용여부</label>
 			<input type="radio" name="line_use" value="3" checked>전 체
 			<input type="radio" name="line_use" value="1">Y
 			<input type="radio" name="line_use" value="2">N
 			
-		<label>작업장</label>
-			<input type="text" name="line_place" placeholder="검색어를 입력해주세요">
+<!-- 		<label>공정</label> -->
+<!-- 			<input type="text" name="line_place" placeholder="검색어를 입력해주세요"> -->
 				
+		<br>
+		
 		 <input type="submit" value="검색">
 		</fieldset>
 	</form>
 </div>
-
+<!-- //////////////////////////////////////////////////////////////////////// -->
 <hr>
 
+
+<!-- //////////////////////////////////////////////////////////////////////// -->
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
-		<form id="fr">
-
-			<div class="x_title">
+				<div class="x_title">
 				<h2>라인 관리</h2>
 				
 				<span style="float: right; margin-top: 1%;">총 ${lwpm.totalCount } 건</span>
 					<div class="clearfix"></div>
 				</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->	
+	<!-- //////////////////////////////////////////////////////////////////////// -->	
 	<div style="margin-bottom: 1%;">
 		<button id="add" class="true">추가</button>
 		<button id="modify" >수정</button>
@@ -554,6 +584,10 @@ body {
 		<button type="submit" id="save">저장</button>
 		<button onclick="location.href='/performance/line'">새로고침</button>
 	</div>
+		<form id="fr">
+
+
+
 	
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -593,9 +627,9 @@ body {
 		<thead>
 			<tr class="headings">	
 				<th>번호</th>
+				<th>공정</th>
 				<th>라인코드</th>
 				<th>라인명</th>
-				<th>작업장</th>
 				<th>사용여부</th>
 				<th type='hidden' style='display: none;'>등록자 코드</th>
 				<th>등록자</th>
@@ -603,13 +637,14 @@ body {
 				<th>비고</th>
 			</tr>
 		</thead>
+		<tr type='hidden' style='display: none;'></tr>
 		
 		<c:forEach var="vo" items="${boardList }" varStatus="i">
 				<tr>
 					<td>${i.count}</td>
+					<td>${vo.line_place}</td>
 					<td id="lineCode">${vo.line_code}</td>
 					<td>${vo.line_name}</td>
-					<td>${vo.line_place}</td>
 					
 					<c:choose>
 						<c:when test="${vo.line_use == 1 }">
