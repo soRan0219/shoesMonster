@@ -111,7 +111,7 @@ $(document).ready(function() {
 			
 				<table border="1" style="width: 100%" id="empTable">
 					<tr>
-						<th>사원번호</th>
+						<th>사원번호</th> 
 						<th>비밀번호</th>
 						<th>이름</th>
 						<th>부서</th>
