@@ -12,6 +12,9 @@
 
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
+
 <style type="text/css">
 
 body {
@@ -558,28 +561,29 @@ body {
 			<label>지역</label>
 				<input type="text" name="wh_addr"  placeholder="검색어를 입력해주세요">
 			
-			<br>
-			
-			<label>사용여부</label>
-				<input type="radio" name="wh_use" value="3" checked>전 체
-				<input type="radio" name="wh_use" value="1">Y
-				<input type="radio" name="wh_use" value="2">N
-				
 			<label>담당자</label>
 				<input type="hidden" id="s_emp_id" name="emp_id">
 				<input type="text" id="s_emp_name" name="emp_name" placeholder="검색어를 입력해주세요">
-			
-<!-- 			<br> -->
 				
-			<label>창고유형</label>	
-				<select name="wh_dv">
-				  <option value="전체">전체</option>
-				  <option value="원자재">원자재</option>
-				  <option value="완제품">완제품</option>
-				</select>
+			<input type="submit" class="B B-info" value="검색">
+				
+			<br>
+			
+			<div style="margin-top: 0.5%;">
+				<label>창고유형</label>	
+					<select name="wh_dv">
+					  <option value="전체">전체</option>
+					  <option value="원자재">원자재</option>
+					  <option value="완제품">완제품</option>
+					</select>
 					
+				<label>사용여부</label>
+					<input type="radio" name="wh_use" value="3" checked>전 체
+					<input type="radio" name="wh_use" value="1">Y
+					<input type="radio" name="wh_use" value="2">N
+			</div>
+<!-- 			<br> -->
 								
-			<input type="submit" value="검색">
 		</fieldset>
 	</form>
 </div>
@@ -591,22 +595,21 @@ body {
 		<form id="fr">
 			
 			<div class="x_title">
-				<h2>창고 관리</h2>
+				<h2>창고 관리<small>총 ${lwpm.totalCount } 건</small></h2>
 				
-				<span style="float: right; margin-top: 1%;">총 ${lwpm.totalCount } 건</span>
-					<div class="clearfix"></div>
+				<div style="float: right;">
+					<button id="add" class="true B B-info">추가</button>
+					<button id="modify" class="B B-info">수정</button>
+					<button id="delete" class="true B B-info">삭제</button>
+					<button type="reset" id="cancle" class="B B-info">취소</button>
+					<button type="submit" id="save" class="B B-info">저장</button>
+					<button onclick="location.href='/performance/warehouse'" class="B B-info">새로고침</button>
 				</div>
 				
+				<div class="clearfix"></div>
+			</div>
+				
 	<!-- 버튼 제어 -->
-	<div style="margin-bottom: 1%;">
-		<button id="add" class="true">추가</button>
-		<button id="modify" >수정</button>
-		<button id="delete" class="true">삭제</button>
-		<button type="reset" id="cancle" >취소</button>
-		<button type="submit" id="save">저장</button>
-		<button onclick="location.href='/performance/warehouse'">새로고침</button>
-	</div>
-	
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	
@@ -695,15 +698,18 @@ body {
 	
 	<div id="pagination" style="display: block; text-align: center;">
 		<c:if test="${lwpm.prev  }"> 
-			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}">이 전</a>
+			<a class="btn btn-secondary"
+			href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}">이 전</a>
 		</c:if>
 		
 		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
-			<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}"">${page }</a>
+			<a class="btn btn-secondary"
+			href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}"">${page }</a>
 		</c:forEach>
 		
 		<c:if test="${lwpm.next }">
-			<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}"">다 음</a>
+			<a class="btn btn-secondary"
+			href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}"">다 음</a>
 		</c:if>
 
 	</div><!--id="pagination"  --> 

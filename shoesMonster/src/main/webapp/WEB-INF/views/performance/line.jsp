@@ -10,6 +10,8 @@
 
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <style type="text/css">
 
 body {
@@ -545,6 +547,10 @@ body {
 			
 		<label>라인명</label>
 			<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
+			
+		<input type="submit" class="B B-info" value="검색">
+		
+		<br>
 		
 		<label>사용여부</label>
 			<input type="radio" name="line_use" value="3" checked>전 체
@@ -553,10 +559,6 @@ body {
 			
 <!-- 		<label>공정</label> -->
 <!-- 			<input type="text" name="line_place" placeholder="검색어를 입력해주세요"> -->
-				
-		<br>
-		
-		 <input type="submit" value="검색">
 		</fieldset>
 	</form>
 </div>
@@ -567,21 +569,21 @@ body {
 <!-- //////////////////////////////////////////////////////////////////////// -->
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
-				<div class="x_title">
-				<h2>라인 관리</h2>
+		<div class="x_title">
+		<h2>라인 관리<small>총 ${lwpm.totalCount } 건</small></h2>
 				
-				<span style="float: right; margin-top: 1%;">총 ${lwpm.totalCount } 건</span>
-					<div class="clearfix"></div>
-				</div>
+			<div style="float: right;">
+				<button id="add" class="true B B-info">추가</button>
+				<button id="modify" class="B B-info" >수정</button>
+				<button id="delete" class="true B B-info">삭제</button>
+				<button type="reset" id="cancle" class="B B-info" >취소</button>
+				<button type="submit" id="save" class="B B-info" >저장</button>
+				<button onclick="location.href='/performance/line'" class="B B-info">새로고침</button>
+			</div>
+			
+			<div class="clearfix"></div>
+			</div>
 	<!-- //////////////////////////////////////////////////////////////////////// -->	
-	<div style="margin-bottom: 1%;">
-		<button id="add" class="true">추가</button>
-		<button id="modify" >수정</button>
-		<button id="delete" class="true">삭제</button>
-		<button type="reset" id="cancle" >취소</button>
-		<button type="submit" id="save">저장</button>
-		<button onclick="location.href='/performance/line'">새로고침</button>
-	</div>
 	
 		<form id="fr">
 
@@ -656,25 +658,28 @@ body {
 					<td>${vo.insert_date}</td>
 					<td>${vo.line_note}</td>
 				</tr>
-		</c:forEach>
-	</table>
+			</c:forEach>
+		</table>
 	</div>
 </form>
 </div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 	
-	<div id="pagination">
+	<div id="pagination" style="text-align: center;">
 		<c:if test="${lwpm.prev }">
-			<a href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">이 전</a>
+			<a class="btn btn-secondary"
+			href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">이 전</a>
 		</c:if>
 		
 		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
-			<a href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
+			<a class="btn btn-secondary"
+			href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
 		</c:forEach>
 
 		<c:if test="${lwpm.next }">
-			<a href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">다 음</a>
+			<a class="btn btn-secondary"
+			href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">다 음</a>
 		</c:if>
 	</div>
 

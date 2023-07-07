@@ -1,1 +1,24 @@
 @charset "UTF-8";
+
+.B {
+    border-radius: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    border: none;
+    
+    width: 70px;
+    height: 30px;
+}
+
+.B-info:hover {
+    color: #fff;
+    background-color: #04B486;
+    border-color: #04B486;
+}
+
+.B-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
