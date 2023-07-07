@@ -25,6 +25,7 @@ body {
 $(document).ready(function() {
 	  // 수정 버튼 클릭 시
 	  $('#modifyEmp').click(function() {
+		$(this).prop('disabled', true);
 	    // 첫 번째 테이블 처리
 	    $('#empImg').append("<input type='file' name = 'file' accept='image/*'>");
 	    $('#empTable tr').each(function(rowIndex) {
@@ -95,10 +96,14 @@ $(document).ready(function() {
 	    });
 	  });
 	  
+	  $('#cancelEmp').click(function() {
+		 $('#fr')[0].reset();
+	  });
+	  
 	  $('#saveEmp').click(function() {
-			$('#fr').submit();
+		$('#fr').submit();
 
-	  }); //save
+	  });//save
 	  
 	});
 
