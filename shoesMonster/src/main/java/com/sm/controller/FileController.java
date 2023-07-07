@@ -178,7 +178,7 @@ public class FileController {
 		logger.debug("fileName : " + fileName);
 		
 		// 업로드 폴더에서 다운로드 파일의 정보를 가져오기
-		File downFile = new File("C:\\spring\\upload"+"\\"+fileName);
+		File downFile = new File("/home/ec2-user/apache-tomcat-9.0.73/webapps/img"+"/"+fileName);
 		
 		// 응답정보를 통한 출력스트림객체 준비
 		OutputStream out = response.getOutputStream();
@@ -187,7 +187,7 @@ public class FileController {
 		// => 썸네일 구현
 		
 		String imgName = fileName.substring(0, fileName.lastIndexOf("."));
-		File thumbnail = new File("C:\\spring\\upload"+"\\"+imgName+".png");
+		File thumbnail = new File("/home/ec2-user/apache-tomcat-9.0.73/webapps/img"+"/"+imgName+".png");
 		
 		if (downFile.exists()) {
 			thumbnail.getParentFile().mkdirs();
