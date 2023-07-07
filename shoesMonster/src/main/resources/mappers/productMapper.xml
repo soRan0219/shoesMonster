@@ -429,6 +429,7 @@
 		select l.* , e.emp_name
 		from line l
 		Left join employees e on l.emp_id = e.emp_id 
+		ORDER BY line_code desc
 	</select>
 	<!-- 라인 목록 조회 -->
 
@@ -439,6 +440,7 @@
 			from line l
 			Left join employees e on l.emp_id = e.emp_id 
 			limit #{startPage}, #{pageSize}
+			ORDER BY line_code desc
 		]]>
 	</select>
 	<!-- 라인 목록 조회 (페이징처리) -->
@@ -488,6 +490,7 @@
 				AND line_use = #{line_use}
 			</if>
 		</where>
+		ORDER BY line_code desc
 		limit #{startPage}, #{pageSize}
 	</select>
 
@@ -558,7 +561,7 @@
 		FROM warehouse w
 		LEFT JOIN employees e on
 				  e.emp_id = w.emp_id
-
+		ORDER BY wh_code desc
 		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 창고 조회 + 페이징처리 -->
@@ -650,6 +653,7 @@
 		INSERT INTO warehouse (wh_code, wh_name, wh_dv, wh_use, wh_addr, wh_tel, wh_note, emp_id)
 		VALUES (#{wh_code}, #{wh_name}, #{wh_dv}, #{wh_use}, #{wh_addr}, #{wh_tel}, 
 				#{wh_note}, #{emp_id})
+		
 	</insert>
 
 	<!-- 창고 등록(추가) -->
@@ -680,6 +684,7 @@
 		LEFT JOIN employees e on
 				  e.emp_id = w.emp_id
 		WHERE wh_code = #{wh_code}
+<!-- 		ORDER BY wh_code desc -->
 	</select>
 	<!-- 창고 조회(String wh_code) -->
 	
