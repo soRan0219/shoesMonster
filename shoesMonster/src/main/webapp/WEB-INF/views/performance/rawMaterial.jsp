@@ -8,6 +8,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -395,7 +397,7 @@ body {
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1 style="margin-left: 1%;">소요량 관리</h1>
+	<h1 style="margin-left: 1%;">원자재 관리</h1>
 
 	<div style="margin-left: 1%;">	
 		<form action="" method="get">
@@ -406,10 +408,9 @@ body {
 	        	<label>거래처명:</label>
 	        	<input type="hidden" name="client_code" id="client_code9999">
 	        	<input type="text" name="clients.client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-	        	<br>
 	        	<label>품명:</label>
 	        	<input type="text" name="raw_name" id="searchCategory"> 
-	        	<input type="submit" value="검색">
+	        	<input type="submit" class="B B-info" value="검색">
 			</fieldset>
 		</form>
 	</div>	
@@ -421,22 +422,20 @@ body {
 			<form method="post" id="fr">
 			
 			<div class="x_title">
-				<h2>원자재</h2>
+				<h2>원자재<small>총 ${paging.total} 건</small></h2>
 				
-				<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
+				<div style="float: right;">
+					<button id="addButton" class="B B-info">추가</button>
+					<button id="modify" class="B B-info">수정</button>
+					<button id="delete" class="B B-info">삭제</button>
+					<button type="reset" id="cancle" class="B B-info">취소</button>
+					<input type="submit" class="B B-info" value="저장" id="save" class ="btn btn-success">
+					<button onclick="location.href='/performance/rawMaterial'" class="B B-info">새로고침</button>
+				</div>
 				<div class="clearfix"></div>
-		</div>
+			</div>
 
  	<!-- 버튼 제어 -->
-	<div style="margin-bottom: 1%;">
-		<button id="addButton">추가</button>
-		<button id="modify">수정</button>
-		<button id="delete">삭제</button>
-		<button type="reset" id="cancle">취소</button>
-		<input type="submit" value="저장" id="save" class ="btn btn-success">
-		<button onclick="location.href='/performance/rawMaterial'">새로고침</button>
-	</div>
-		
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	
@@ -514,7 +513,8 @@ body {
 	
 	<div id="pagination" style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
-			<a href="/performance/rawMaterial?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&lt;</a>
+			<a class="btn btn-secondary" 
+			href="/performance/rawMaterial?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&lt;</a>
 		</c:if>
 		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
 			<c:choose>
@@ -522,12 +522,14 @@ body {
 					<b>${p }</b>
 				</c:when>
 				<c:when test="${p != paging.nowPage }">
-					<a href="/performance/rawMaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">${p }</a>
+					<a class="btn btn-secondary"
+					href="/performance/rawMaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">${p }</a>
 				</c:when>
 			</c:choose>
 		</c:forEach>
 		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/performance/rawMaterial?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&gt;</a>
+			<a class="btn btn-secondary"
+			href="/performance/rawMaterial?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&gt;</a>
 		</c:if>
 	</div>
 </div>

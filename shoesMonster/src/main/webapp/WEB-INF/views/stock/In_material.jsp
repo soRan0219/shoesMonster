@@ -5,6 +5,8 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -19,12 +21,14 @@ body {
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1>입고 관리</h1>
+	<h1 style="margin-left: 1%;">입고 관리</h1>
 
 	<!-- 버튼 제어 -->
-	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input>
-	<input type="button" value="미입고" class="btn btn-info" onclick="show1()" ></input> 
-	<input type="button" value="입고완료" class="btn btn-info" onclick="show2()" ></input>
+	<div style="margin-left: 1%;">
+		<input type="button" value="전체" class="B B-info" onclick="showAll()"></input>
+		<input type="button" value="미입고" class="B B-info" onclick="show1()" ></input> 
+		<input type="button" value="입고완료" class="B B-info" onclick="show2()" ></input>
+	</div>
 	
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -97,21 +101,21 @@ body {
 <!-- //////////////////////////////////////////////////////////////////////// -->
 <!-- page content -->
 	
-	<h2 style="margin-left: 1%;">재고관리</h2>
+<!-- 	<h2 style="margin-left: 1%;">재고관리</h2> -->
 
-<div style="margin-left: 1%;">
+<div style="margin: 1% 0 1% 1%;">
 
 	<form action="" method="get">
 
 		<label>품명</label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요">
 		<label>입고 번호</label> <input type="text" name="in_mat.in_num" placeholder="입고 번호를 입력해주세요">
 		<label>거래처명</label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요">
-		<input type="submit" class="btn btn-info" value="검색">
+		<input type="submit" class="B B-info" value="검색">
 
 	</form>
 </div>
 
-	<hr>
+<!-- 	<hr> -->
 
 	<!--//////////////////////////////////////////// 테이블 템플릿 ////////////////////////////////////////////////////// -->
 
@@ -121,19 +125,7 @@ body {
 				<h2>
 					입고 목록 <small>총 ${count1}건</small>
 				</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li>
-						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"><i
-							class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a> <a
-								class="dropdown-item" href="#">Settings 2</a>
-						</div></li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
+			
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
@@ -185,7 +177,7 @@ body {
 										<td class=" ">
 										<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 											<c:if test="${rvo.in_mat.in_num == null}">
-												<button type="submit" name="in_Button" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+												<button type="submit" name="in_Button" class="B B-info" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
 											</c:if>
 										</c:if>
 										</td>
@@ -204,7 +196,7 @@ body {
 </div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
-<div>
+	<div style="text-align: center;">
 			<c:if test="${count1 > 10 }">
 				<c:if test="${bp.prev}">
 					<span><a class="btn btn-secondary"

@@ -9,6 +9,8 @@
 <!--FileSaver [savaAs 함수 이용] -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -558,70 +560,84 @@ body {
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1> 생산실적 관리 </h1>
+	<h1 style="margin-left: 1%;"> 생산실적 관리 </h1>
 	
-	<div>
+	<div style="margin-left: 1%;">
 		<form id="searchForm" method="get">
 			<fieldset>
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 				작업지시코드: <input type="text" id="search_work_code" name="search_work_code">
 				실적일: 
 				<input type="text" id="search_fromDate" name="search_fromDate"> ~ 
-				<input type="text" id="search_toDate" name="search_toDate"> <br>
+				<input type="text" id="search_toDate" name="search_toDate">
+				<input type="submit" class="B B-info" value="조회">
+				<br>
 				라인코드: <input type="text" id="search_line_code" name="search_line_code">
 				품번: <input type="text" id="search_prod_code" name="search_prod_code">
-				현황: <input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
-					  <input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
-					  <input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
-				
-				<input type="submit" value="조회">
+				<br>
+				<div style="margin-top: 0.5%;">
+					현황: <input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
+						  <input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
+						  <input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
+				</div>
 			</fieldset>
 		</form>
 	</div>
 		
-	<br><br><br>
+	<hr>
+		
+	<div class="col-md-12 col-sm-12">
+		<div class="x_panel">
+			<div class="x_title">
+			
+<!-- 			<div id="body"> -->
+			<div>
+				<h2>생산 실적<small>총 ${pm.totalCount } 건</small></h2>
+<%-- 				총 <span id="total">${pm.totalCount }</span>건 --%>
+						
+<!-- 				<select id="perPage" name="perPage"> -->
+<!-- 					<option value="2">2</option> -->
+<!-- 					<option value="5">5</option> -->
+<!-- 					<option value="7">7</option> -->
+<!-- 				</select> -->
+<!-- 				건씩 표시 -->
+			</div>
+			
+			<!-- 버튼 제어 -->
+			<div style="float: right;">
+				<button id="add" class="true B B-info">추가</button>
+				<button id="modify" class="B B-info">수정</button>
+				<button id="delete" class="true B B-info">삭제</button>
+				<button type="reset" id="cancle" class="B B-info">취소</button>
+				<button type="submit" id="save" class="B B-info">저장</button>
+				<button onclick="location.href='/performance/performList'" class="B B-info">새로고침</button>
+			</div>
+			
+			<div class="clearfix"></div>
+			</div>
+			
+			<script>
+			    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+			
+			    if (team === "생산팀" || team === "관리자") {
+			        document.getElementById("add").disabled = false;
+			        document.getElementById("modify").disabled = false;
+			        document.getElementById("delete").disabled = false;
+			        document.getElementById("cancle").disabled = false;
+			        document.getElementById("save").disabled = false;
+			        document.querySelector("[onclick^='location.href']").disabled = false;
+			    } else {
+			        document.getElementById("add").hidden = true;
+			        document.getElementById("modify").hidden = true;
+			        document.getElementById("delete").hidden = true;
+			        document.getElementById("cancle").hidden = true;
+			        document.getElementById("save").hidden = true;
+			        document.querySelector("[onclick^='location.href']").hidden = true;
+			    }
+			</script>
+			<!-- 버튼 제어 -->
 		
 		
-		<!-- 버튼 제어 -->
-		<button id="add" class="true">추가</button>
-		<button id="modify">수정</button>
-		<button id="delete" class="true">삭제</button>
-		<button type="reset" id="cancle">취소</button>
-		<button type="submit" id="save">저장</button>
-		<button onclick="location.href='/performance/performList'">새로고침</button>
-		
-		<script>
-		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
-		
-		    if (team === "생산팀" || team === "관리자") {
-		        document.getElementById("add").disabled = false;
-		        document.getElementById("modify").disabled = false;
-		        document.getElementById("delete").disabled = false;
-		        document.getElementById("cancle").disabled = false;
-		        document.getElementById("save").disabled = false;
-		        document.querySelector("[onclick^='location.href']").disabled = false;
-		    } else {
-		        document.getElementById("add").hidden = true;
-		        document.getElementById("modify").hidden = true;
-		        document.getElementById("delete").hidden = true;
-		        document.getElementById("cancle").hidden = true;
-		        document.getElementById("save").hidden = true;
-		        document.querySelector("[onclick^='location.href']").hidden = true;
-		    }
-		</script>
-		<!-- 버튼 제어 -->
-		
-		
-	<div id="body">
-		총 <span id="total">${pm.totalCount }</span>건
-				
-		<select id="perPage" name="perPage">
-			<option value="2">2</option>
-			<option value="5">5</option>
-			<option value="7">7</option>
-		</select>
-		건씩 표시
-	</div>
 	
 	<div class="table-responsive">	
 		<form id="fr">
@@ -669,9 +685,8 @@ body {
 				</c:forEach>
 			</table>
 		</form>
-	</div>
-		
-	<button id="excelDownload">엑셀다운로드</button>
+		</div>	
+	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 		
 	<script type="text/javascript">
 		
@@ -725,21 +740,23 @@ body {
 		} //s2ab(s)
 		
 	</script>
+	</div>
+</div>
 		
-		<br><br><br>
-		
-		
-		<div id="pagination">
+		<div id="pagination" style="text-align: center;">
 			<c:if test="${pm.prev }">
-				<a href="/performance/performList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏪ </a>
+				<a class="btn btn-secondary"
+				 href="/performance/performList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏪ </a>
 			</c:if>
 			
 			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-				<a href="/performance/performList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}">${page }</a>
+				<a class="btn btn-secondary"
+				href="/performance/performList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}">${page }</a>
 			</c:forEach>
 		
 			<c:if test="${pm.next }">
-				<a href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏩ </a>
+				<a class="btn btn-secondary"
+				href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏩ </a>
 			</c:if>
 		</div>
 	
