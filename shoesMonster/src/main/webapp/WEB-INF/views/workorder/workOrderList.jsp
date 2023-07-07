@@ -9,11 +9,20 @@
 <!--FileSaver [savaAs 함수 이용] -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
+<!-- 폰트 -->
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
 <style type="text/css">
+
+body {
+	font-family: 'NexonLv2Gothic';
+}
+
 .selected {
 	background-color: #ccc;
 }
 </style>
+<!-- 폰트 -->
 
 <script type="text/javascript">
 	//========================= 함수, 상수 ==================================//
@@ -604,6 +613,7 @@
 
 <!-- page content -->
 <div class="right_col" role="main">
+
 	<h1 style="margin-left: 1%;">작업지시 관리</h1>
 	
 	<div style="margin-left: 1%;">
@@ -615,45 +625,41 @@
 				<span>지시일자:</span> 
 					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText"> ~ 
 					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText"> 
-				<br>
+				<span>품번:</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
+				<input type="submit" value="조회"> 
+				<br><br>
 				<span>지시상태:</span> 
 					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="전체" checked> 전체 
 					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="지시"> 지시 
 					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="진행"> 진행 
 					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="마감"> 마감 
-				<span>품번:</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
-				<br>
-				<input type="submit" value="조회"> 
 			</fieldset>
 		</form>
 	</div>
 
-	<br><br>
-	
-	
 	<hr>
 
-<div class="col-md-12 col-sm-12">
-	<div class="x_panel">
-			<div class="x_title">
-				<h2>작업지시 관리</h2>
-				
-				<span style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span>
-				<div class="clearfix"></div>
-			</div>
+	<div class="col-md-12 col-sm-12">
+		<div class="x_panel">
+		
+				<div class="x_title">
+					<h2>작업지시 관리</h2>
+					
+					<span style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span>
+					<div class="clearfix"></div>
+				</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
-	<div style="margin-bottom: 1%;">
 
   
     <!-- 버튼 제어 -->
+	<div style="margin-bottom: 1%;">
 		<button id="add" class="true">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete" class="true">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<button type="submit" id="save">저장</button>
-
 		<button onclick="location.href='/workorder/workOrderList'">새로고침</button>
-		
+	</div>	
 		<script>
 		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 		
@@ -745,8 +751,6 @@
 		</form>
 		</div>
 <!-- 	</div> -->
-</div>
-</div>
 	
 	<button id="excelDownload">엑셀다운로드</button>
 		
@@ -803,6 +807,8 @@
 		
 	</script>
 		
+</div>
+</div>
 		
 		
 		<div id="pagination">
