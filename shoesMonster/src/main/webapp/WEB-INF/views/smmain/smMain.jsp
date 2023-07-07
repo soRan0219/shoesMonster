@@ -3,7 +3,7 @@
 <%@ include file="../include/header.jsp"%>
 
 <link href="../resources/build/css/custom.css" rel="stylesheet">
-
+<link href="smMain.css" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -353,59 +353,13 @@
 					</div>
 				</div>
 
-				<div class="col-md-9 col-sm-9 ">
-						<span id="chart_prod"  class="tab-content"></span>
-						<span id="chart_date"  class="tab-content"></span>
-						<span id="chart_line" class="tab-content current"></span>
+				<div> <!--  class="col-md-9 col-sm-9 " -->
+						<span id="chart_prod" style="width:300px;display:inline-block; margin-right: 2em;"></span>
+						<span id="chart_date" style="width:300px;display:inline-block;"></span>
+						<span id="chart_line" style="width:300px;display:inline-block;"></span> <!--  class="tab-content current" -->
+						
 				</div>
-				<div class="col-md-3 col-sm-3  bg-white">
-					<div class="x_title">
-						<h2>수주 현황</h2>
-						<div class="clearfix"></div>
-					</div>
-
-					<div class="col-md-12 col-sm-12 ">
-						<div>
-							<p>NIKE X SUPREME</p>
-							<div class="">
-								<div class="progress progress_sm" style="width: 76%;">
-									<div class="progress-bar bg-green" role="progressbar"
-										data-transitiongoal="80"></div>
-								</div>
-							</div>
-						</div>
-						<div>
-							<p>NIKE</p>
-							<div class="">
-								<div class="progress progress_sm" style="width: 76%;">
-									<div class="progress-bar bg-green" role="progressbar"
-										data-transitiongoal="60"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 col-sm-12 ">
-						<div>
-							<p>PRADA X SUPREME</p>
-							<div class="">
-								<div class="progress progress_sm" style="width: 76%;">
-									<div class="progress-bar bg-green" role="progressbar"
-										data-transitiongoal="40"></div>
-								</div>
-							</div>
-						</div>
-						<div>
-							<p>SALOMON</p>
-							<div class="">
-								<div class="progress progress_sm" style="width: 76%;">
-									<div class="progress-bar bg-green" role="progressbar"
-										data-transitiongoal="50"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
+				
 
 				<div class="clearfix"></div>
 			</div>
@@ -434,7 +388,7 @@
 					<div class="clearfix"></div>
 				</div>
 			<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->	
-				<div id="chart_line" class="tab-content current"></div>
+<!-- 				<div id="chart_line" class="tab-content current"></div> -->
 <!-- 				<div id="chart_prod"  class="tab-content"></div> -->
 <!-- 				<div id="chart_date"  class="tab-content"></div> -->
 			</div>

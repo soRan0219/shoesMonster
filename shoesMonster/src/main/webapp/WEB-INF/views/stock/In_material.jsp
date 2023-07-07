@@ -12,8 +12,8 @@
 
 	<!-- 버튼 제어 -->
 	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input>
-	<input type="button" value="미입고" class="btn btn-info" onclick="show1()" id="inMatN"></input> 
-	<input type="button" value="입고완료" class="btn btn-info" onclick="show2()" id="inMatY"></input>
+	<input type="button" value="미입고" class="btn btn-info" onclick="show1()" ></input> 
+	<input type="button" value="입고완료" class="btn btn-info" onclick="show2()" ></input>
 	
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -184,82 +184,12 @@
 						</table>
 					</form>
 
-				<h2>입고 목록</h2>
-					<span style="float: right; margin-top: 1%;">총 ${count1} 건</span>
-					<div class="clearfix"></div>
+				
 
 				</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
-	<div style="overflow-x: auto;">		
-		<form action="" method="post">
-			<table class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
-			<colgroup>
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 130px">
-			    <col style="width: 100px">
-			    <col style="width: 130px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 130px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 130px">
-			</colgroup>			
-						
-			<thead>
-				<tr class="headings">
-					<th>입고 번호</th>
-					<th>발주 번호</th>
-					<th>입고 창고</th>
-					<th>거래처명</th>
-					<th>품번</th>
-					<th>품명</th>
-					<th>색상</th>
-					<th>발주 수량</th>
-					<th>재고 수량</th>
-					<th>단가</th>
-					<th>총액</th>
-					<th>입고일</th>
-					<th>담당자</th>
-					<th>입고 확인</th>
-					<th>입고 버튼</th>
-				</tr>
-			</thead>
-			
-			<c:forEach var="rvo" items="${ro_List }">
-				<tr>
-					<td>${rvo.in_mat.in_num }</td>
-					<td>${rvo.raw_order_num }</td>
-					<td>${rvo.rawMaterial.wh_code }</td>
-					<td>${rvo.clients.client_actname }</td>
-					<td>${rvo.raw_code }</td>
-					<td>${rvo.rawMaterial.raw_name }</td>
-					<td>${rvo.rawMaterial.raw_color }</td>
-					<td>${rvo.raw_order_count}</td>
-					<td>${rvo.stock.stock_count != null ? rvo.stock.stock_count : 0}</td>
-					<td ><fmt:formatNumber
-							value=" ${rvo.rawMaterial.raw_price}" />원</td>
-					<td><fmt:formatNumber
-							value=" ${rvo.rawMaterial.raw_price*rvo.raw_order_count}" />원</td>
-					<td>${rvo.in_mat.in_date }</td>
-					<td>${rvo.in_mat.i_emp_id }</td>
-					<td>${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
-
-					<td>
-					<c:if test="${rvo.in_mat.in_num == null}">
-						<button type="submit" name="in_Button" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
-					</c:if>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
-	</form>
+	
+	
 </div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
