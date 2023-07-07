@@ -11,13 +11,11 @@
 
 <style type="text/css">
 
-body{
-
-font-family: 'NexonLv2Gothic';
-
+body {
+	font-family: 'NexonLv2Gothic';
 }
-
 </style>
+<!-- 폰트 -->
 
 
 <script type="text/javascript">
@@ -492,12 +490,6 @@ font-family: 'NexonLv2Gothic';
 				    }
 				</script>
 		<!-- 버튼 제어 -->
-				
-				
-				
-				
-
-<!--  overflow-x: auto; -->
 
 				<div style="overflow-x: auto;">
 <!-- 				<div> 화면 벗어나서 일단 스크롤 넣어둠-->

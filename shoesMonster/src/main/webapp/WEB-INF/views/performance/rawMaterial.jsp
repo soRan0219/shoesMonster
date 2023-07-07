@@ -7,6 +7,18 @@
 <link href="./resources/build/css/custom.css" rel="stylesheet" type="text/css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- 폰트 -->
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<style type="text/css">
+
+body {
+	font-family: 'NexonLv2Gothic';
+}
+</style>
+<!-- 폰트 -->
+
     <script>
     
 	//input으로 바꾸기 
@@ -383,80 +395,72 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1 style="margin-left: 1%;">rawMaterial</h1>
+	<h1 style="margin-left: 1%;">소요량 관리</h1>
 
-<div style="margin-left: 1%;">	
-	<form action="" method="get">
-		<fieldset>
-		<input type="hidden" name="input" id="input" value="${input }">
-       		<label>품번:</label>
-        	<input type="text" name="raw_code" id="searchCode">
-        	<label>거래처명:</label>
-        	<input type="hidden" name="client_code" id="client_code9999">
-        	<input type="text" name="clients.client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-        	<br>
-        	<label>품명:</label>
-        	<input type="text" name="raw_name" id="searchCategory"> 
-        	<input type="submit" value="검색">
-		</fieldset>
-	</form>
-</div>	
+	<div style="margin-left: 1%;">	
+		<form action="" method="get">
+			<fieldset>
+			<input type="hidden" name="input" id="input" value="${input }">
+	       		<label>품번:</label>
+	        	<input type="text" name="raw_code" id="searchCode">
+	        	<label>거래처명:</label>
+	        	<input type="hidden" name="client_code" id="client_code9999">
+	        	<input type="text" name="clients.client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
+	        	<br>
+	        	<label>품명:</label>
+	        	<input type="text" name="raw_name" id="searchCategory"> 
+	        	<input type="submit" value="검색">
+			</fieldset>
+		</form>
+	</div>	
 
 <hr>
 
-<div class="col-md-12 col-sm-12">
-	<div class="x_panel">
-		<form action="" method="post" id="fr">
-		<div class="x_title">
-			<h2>원자재</h2>
-			<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
-					<div class="clearfix"></div>
+	<div class="col-md-12 col-sm-12">
+		<div class="x_panel">
+			<form method="post" id="fr">
+			
+			<div class="x_title">
+				<h2>원자재</h2>
+				
+				<span style="float: right; margin-top: 1%;">총 ${paging.total} 건</span>
+				<div class="clearfix"></div>
 		</div>
-	<div style="margin-bottom: 1%;">
 
-  <!-- 버튼 제어 -->
-	<form action="" method="post" id="fr">
+ 	<!-- 버튼 제어 -->
+	<div style="margin-bottom: 1%;">
 		<button id="addButton">추가</button>
 		<button id="modify">수정</button>
 		<button id="delete">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<input type="submit" value="저장" id="save" class ="btn btn-success">
 		<button onclick="location.href='/performance/rawMaterial'">새로고침</button>
-		
-		<script>
-		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
-		
-		    if (team === "자재팀" || team === "관리자") {
-		        document.getElementById("addButton").disabled = false;
-		        document.getElementById("modify").disabled = false;
-		        document.getElementById("delete").disabled = false;
-		        document.getElementById("cancle").disabled = false;
-		        document.getElementById("save").disabled = false;
-		        document.querySelector("[onclick^='location.href']").disabled = false;
-		    } else {
-		        document.getElementById("addButton").hidden = true;
-		        document.getElementById("modify").hidden = true;
-		        document.getElementById("delete").hidden = true;
-		        document.getElementById("cancle").hidden = true;
-		        document.getElementById("save").hidden = true;
-		        document.querySelector("[onclick^='location.href']").hidden = true;
-		    }
-		</script>
-		<!-- 버튼 제어 -->
-		
-		<br>
-		<div class="col-md-12 col-sm-12">
-		원자재 목록 총 ${paging.total}건
-		<table border="1" id="rawTable" class="table table-striped jambo_table bulk_action">
 	</div>
-      
-<!-- //////////////////////////////////////////////////////////////////////// -->
 		
+	<script>
+	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+	
+	    if (team === "자재팀" || team === "관리자") {
+	        document.getElementById("addButton").disabled = false;
+	        document.getElementById("modify").disabled = false;
+	        document.getElementById("delete").disabled = false;
+	        document.getElementById("cancle").disabled = false;
+	        document.getElementById("save").disabled = false;
+	        document.querySelector("[onclick^='location.href']").disabled = false;
+	    } else {
+	        document.getElementById("addButton").hidden = true;
+	        document.getElementById("modify").hidden = true;
+	        document.getElementById("delete").hidden = true;
+	        document.getElementById("cancle").hidden = true;
+	        document.getElementById("save").hidden = true;
+	        document.querySelector("[onclick^='location.href']").hidden = true;
+	    }
+	</script>
+	<!-- 버튼 제어 -->
+		
+	<br>
 	<div style="overflow-x: auto;">
-<%-- 		원자재 목록 총 ${paging.total}건 --%>
-
-		<table border="1" id="rawTable"
-		class="table table-striped jambo_table bulk_action" style="text-align:center;">
+		<table border="1" id="rawTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 		<colgroup>
 		    <col style="width: 55px">
 		    <col style="width: 100px">
@@ -502,13 +506,11 @@
 						<td>${vo.raw_note }</td>
 					</tr>
 			</c:forEach>
-
 		</table>
 		</div>
 	</form>
+	</div>
 </div>
-</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->
 	
 	<div id="pagination" style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
@@ -528,7 +530,7 @@
 			<a href="/performance/rawMaterial?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&gt;</a>
 		</c:if>
 	</div>
-	
 </div>
+	
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
