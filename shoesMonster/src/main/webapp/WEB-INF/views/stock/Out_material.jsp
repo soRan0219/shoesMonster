@@ -16,7 +16,8 @@
 	
 <!-- page content -->
 <div class="right_col" role="main">
-
+	
+	아이디 확인용 : ${id.emp_id } <br>
 	<h1> 출고 관리 </h1>
 	
 	
@@ -87,12 +88,12 @@
 	<hr>
 		<form action="" method="get">
 		<fieldset>
-       		<label>출고번호:</label>
-        	<input type="text" name="out_num" value="">
+       		<label>출고 번호:</label>
+        	<input type="text" name="out_num" value="" placeholder="출고 번호를 입력하세요.">
         	<label>품명:</label>
-        	<input type="text" name="prod.prod_name" value="">
+        	<input type="text" name="prod.prod_name" value="" placeholder="품명을 입력하세요.">
         	<label>거래처명:</label>
-        	<input type="text" name="clients.client_actname" value=""> 
+        	<input type="text" name="clients.client_actname" value="" placeholder="거래처명을 입력하세요."> 
         	<input type="submit" class="btn btn-info" value="검색">
 		</fieldset>
 		</form>
@@ -156,7 +157,7 @@
 										<td class=" ">${out.orders.order_deliveryDate}</td>
 										<td class=" ">${out.out_date}</td>
 										<td class=" ">${out.out_YN}</td>
-										<td class=" ">${out.emp_id}</td>
+										<td class=" ">${out.o_emp_id}</td>
 										<td class=" ">
 											<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 												<c:if test="${out.out_num == null}">

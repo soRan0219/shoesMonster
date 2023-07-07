@@ -20,7 +20,7 @@ public interface Out_materialService {
 //	public int count4(OrderStatusVO ovo) throws Exception;
 	
 	// 출고 버튼
-	public void omButton(String order_code) throws Exception;
+	public void omButton(String order_code, String emp_id) throws Exception;
 	
 	// 출고 검색 목록 개수
 	public int count4(Out_materialVO rvo) throws Exception;
