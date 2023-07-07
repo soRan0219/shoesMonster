@@ -913,7 +913,7 @@
   text-shadow: 1px 1px #000; }
 
 .menu_section > ul {
-  margin-top: 10px;
+  margin-top: 35px;
   display: block; }
 
 .profile_pic {
@@ -1154,7 +1154,7 @@ body {
   color: #73879C;
   background: #222831;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.471; }
 
@@ -1379,7 +1379,7 @@ a:hover, a:focus {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 13px 15px 12px; }
+  padding: 21px 15px 20px; }
 
 .nav.side-menu > li.current-page, .nav.side-menu > li.active {
   border-right: 5px solid #1ABB9C; }
@@ -1465,7 +1465,8 @@ a:hover, a:focus {
 .toggle {
   float: left;
   margin: 0;
-  width: 70px; }
+  width: 70px;
+  height: 55px; }
 
 .toggle a {
   padding: 15px 15px 0;
@@ -1477,8 +1478,8 @@ a:hover, a:focus {
 
 .nav.child_menu > li > a {
   color: rgba(255, 255, 255, 0.75);
-  font-size: 12px;
-  padding: 9px; }
+  font-size: 14px;
+  padding: 11px; }
 
 .panel_toolbox {
   float: right;
@@ -2420,7 +2421,7 @@ h4.graph_title {
   font-family: FontAwesome;
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 19px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 

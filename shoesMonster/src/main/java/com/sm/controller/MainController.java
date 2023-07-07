@@ -64,7 +64,7 @@ public class MainController {
 	    
 	    if (resultVO == null) {
 	        logger.debug("id 정보가 없습니다. 메인 화면으로 이동하지 않습니다.");
-	        return "redirect:/smmain/smLogin";
+	        return "redirect:/smmain/smLogin#signin";
 	    }
 	    else {
 	    	logger.debug("/smmain/smMain.jsp 페이지 이동");
@@ -79,7 +79,7 @@ public class MainController {
 		
 		 request.getSession().invalidate();
 		 
-		 return "redirect:/smmain/smLogin";
+		 return "redirect:/smmain/smLogin#signin";
 	}
 	
 }

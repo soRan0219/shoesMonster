@@ -1,58 +1,119 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-<link href="../resources/build/css/smmain.css" rel="stylesheet">
+<html lang="en">
+<!-- 폰트 -->
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
-</head>
-<body>
+<style type="text/css">
 
-<div class="page">
-  <div class="container">
-    <div class="left" style="text-align: center;">
-   	 <img src="/resources/images/shoes.png" height="300" width="300">
-    <div class="img"></div>
-<!--       <div class="eula">Shoes Monster</div> -->
-    </div>
-    <div class="right">
-      <svg viewBox="0 0 320 300">
-        <defs>
-          <linearGradient
-                          inkscape:collect="always"
-                          id="linearGradient"
-                          x1="13"
-                          y1="193.49992"
-                          x2="307"
-                          y2="193.49992"
-                          gradientUnits="userSpaceOnUse">
-            <stop
-                  style="stop-color:#ff00ff;"
-                  offset="0"
-                  id="stop876" />
-            <stop
-                  style="stop-color:#ff0000;"
-                  offset="1"
-                  id="stop878" />
-          </linearGradient>
-        </defs>
-        <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
-      </svg>
-      
-      <div class="form">
-      	<form action="" method="post">
-        <label for="ID">ID</label>
-        <input type="text" id="ID" name="emp_id">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="emp_pw">
-        <input type="submit" id="submit" value="Login">
-        </form>
+body {
+    font-family: 'NexonLv2Gothic';
+}
+</style>
+<!-- 폰트 -->
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> Shoes Monster! | </title>
+
+    <!-- Bootstrap -->
+    <link href="../resources/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../resources/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="../resources/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../resources/build/css/custom.min.css" rel="stylesheet">
+  </head>
+  
+  
+  
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            <form action="" method="post">
+              <h1> Eployee Login </h1>
+              <div>
+                <input type="text" id="ID" name="emp_id" class="form-control" placeholder="Username" required="" />
+              </div>
+              <div>
+                <input type="password" id="password" name="emp_pw" class="form-control" placeholder="Password" required="" />
+              </div>
+              <div>
+                <input type="submit" id="submit" class="btn btn-default submit" value="Log in"
+                	style="color: #73879C;">
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link"> Switch Account ?
+                  <a href="#signup" class="to_register"> Admin Login </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-paw"></i> Shoes Monster!!</h1>
+                  <p>Shoes Monster Co., Ltd. CEO: Park Eon-hyo Address: Samhan Golden Gate 7th floor, 109 Dongcheon-ro, Bujeon-dong, Busanjin-gu, Busan</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div id="register" class="animate form registration_form">
+          <section class="login_content">
+            <form action="" method="post">
+              <h1> Admin Login </h1>
+              <div>
+                <input type="text" id="ID" name="emp_id" class="form-control" placeholder="Username" />
+              </div>
+              <div>
+                <input type="password" id="password" name="emp_pw" class="form-control" placeholder="Password" />
+              </div>
+              <div>
+                <input type="submit" id="submit" class="btn btn-default submit" value="Log in"
+               		style="color: #73879C;">
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link"> Switch Account ?
+                  <a href="#signin" class="to_register"> Eployee Login </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-paw"></i> Shoes Monster!!</h1>
+                  <p>Shoes Monster Co., Ltd. CEO: Park Eon-hyo Address: Samhan Golden Gate 7th floor, 109 Dongcheon-ro, Bujeon-dong, Busanjin-gu, Busan</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-</body>
+  </body>
 </html>
