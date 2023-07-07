@@ -8,6 +8,18 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- 폰트 -->
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<style type="text/css">
+
+body {
+	font-family: 'NexonLv2Gothic';
+}
+</style>
+<!-- 폰트 -->
+
 <script>
     
   //input으로 바꾸기 
@@ -417,7 +429,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1 style="margin-left: 1%;">product</h1>
+	<h1 style="margin-left: 1%;">품목 관리</h1>
 	
 <div style="margin-left: 1%;">
 	<form action="" method="get">

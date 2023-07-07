@@ -6,6 +6,19 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- 폰트 -->
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<style type="text/css">
+
+body {
+	font-family: 'NexonLv2Gothic';
+}
+</style>
+<!-- 폰트 -->
+
+
 <script>		
 	 	//input으로 바꾸기 
 		function inputCng(obj, type, name, value) {
@@ -325,10 +338,10 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1 style="margin-left: 1%;">Requirements</h1>
+	<h1 style="margin-left: 1%;">소요량 관리</h1>
 
 	<div style="margin-left: 1%;">
-		<form action="" method="get">
+		<form method="get">
 			<fieldset>
 				<label>소요코드:</label> <input type="text" name="req_code"
 					id="searchCode"> <label>완제품 :</label> <input type="hidden"
@@ -348,6 +361,7 @@
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 			<form id="fr">
+			
 				<div class="x_title">
 					<h2>소요량 관리</h2>
 
@@ -355,10 +369,9 @@
 						${paging.total} 건</span>
 					<div class="clearfix"></div>
 				</div>
-				<!-- //////////////////////////////////////////////////////////////////////// -->
 				
+				<!-- 버튼 제어 -->
 				<div style="margin-bottom: 1%;">
-					<!-- 버튼 제어 -->
 					<button id="addButton">추가</button>
 					<button id="modify">수정</button>
 					<button id="delete">삭제</button>
@@ -366,31 +379,29 @@
 					<input type="submit" value="저장" id="save">
 					<button onclick="location.href='/performance/requirement'">새로고침</button>
 				</div>
-					<script>
-						var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+				
+				<script>
+					var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 
-						if (team === "자재팀" || team === "관리자") {
-							document.getElementById("addButton").disabled = false;
-							document.getElementById("modify").disabled = false;
-							document.getElementById("delete").disabled = false;
-							document.getElementById("cancle").disabled = false;
-							document.getElementById("save").disabled = false;
-							document
-									.querySelector("[onclick^='location.href']").disabled = false;
-						} else {
-							document.getElementById("addButton").hidden = true;
-							document.getElementById("modify").hidden = true;
-							document.getElementById("delete").hidden = true;
-							document.getElementById("cancle").hidden = true;
-							document.getElementById("save").hidden = true;
-							document
-									.querySelector("[onclick^='location.href']").hidden = true;
-						}
-					</script>
-					<!-- 버튼 제어 -->
-			</form>
-			<br> 소요량 목록 총 ${paging.total}건
-		</div>
+					if (team === "자재팀" || team === "관리자") {
+						document.getElementById("addButton").disabled = false;
+						document.getElementById("modify").disabled = false;
+						document.getElementById("delete").disabled = false;
+						document.getElementById("cancle").disabled = false;
+						document.getElementById("save").disabled = false;
+						document
+								.querySelector("[onclick^='location.href']").disabled = false;
+					} else {
+						document.getElementById("addButton").hidden = true;
+						document.getElementById("modify").hidden = true;
+						document.getElementById("delete").hidden = true;
+						document.getElementById("cancle").hidden = true;
+						document.getElementById("save").hidden = true;
+						document
+								.querySelector("[onclick^='location.href']").hidden = true;
+					}
+				</script>
+				<!-- 버튼 제어 -->
 
 		<!-- //////////////////////////////////////////////////////////////////////// -->
 		<%-- 		소요량 목록 총 ${paging.total}건 --%>
@@ -434,9 +445,10 @@
 				</c:forEach>
 			</table>
 		</div>
+		</form>
 	</div>
 </div>
-<!-- //////////////////////////////////////////////////////////////////////// -->
+
 	<div style="display: block; text-align: center;">
 		<c:if test="${paging.startPage != 1 }">
 			<a

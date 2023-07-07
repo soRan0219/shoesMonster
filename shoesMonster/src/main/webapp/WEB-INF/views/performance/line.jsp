@@ -8,7 +8,14 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
 <style type="text/css">
+
+body {
+	font-family: 'NexonLv2Gothic';
+}
+
 .selected {
 	background-color: #ccc;
 }
@@ -498,7 +505,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h2 style="margin-left: 1%;">라인관리</h2>
+	<h1 style="margin-left: 1%;">라인관리</h1>
 
 <div style="margin-left: 1%;">
 	<form action="" method="get">

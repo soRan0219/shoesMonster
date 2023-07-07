@@ -10,7 +10,14 @@
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 <link href="../resources/build/css/custom.css" rel="stylesheet">
 
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
 <style type="text/css">
+
+body {
+	font-family: 'NexonLv2Gothic';
+}
+
 .selected {
 	background-color: #ccc;
 }
@@ -538,7 +545,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-<h2 style="margin-left: 1%;">창고관리</h2>
+<h1 style="margin-left: 1%;">창고관리</h1>
 
 <div style="margin-left: 1%;">
 	<form method="get">
@@ -590,7 +597,7 @@
 					<div class="clearfix"></div>
 				</div>
 				
-<!-- /////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- 버튼 제어 -->
 	<div style="margin-bottom: 1%;">
 		<button id="add" class="true">추가</button>
 		<button id="modify" >수정</button>
@@ -600,7 +607,6 @@
 		<button onclick="location.href='/performance/warehouse'">새로고침</button>
 	</div>
 	
-	<!-- 버튼 제어 -->
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	
@@ -621,60 +627,59 @@
 	    }
 	</script>
 	<!-- 버튼 제어 -->
-<!-- //////////////////////////////////////////////////////////////////////// -->
 
 	<div style="overflow-x: auto;">
-	<table border="1" id="whTable" 
-	class="table table-striped jambo_table bulk_action" style="text-align:center;"> 
-		<colgroup>
-		    <col style="width: 50px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 150px">
-		</colgroup>
-		<thead>
-			<tr class="headings">
-				<td>번호</td>
-				<td>창고코드</td>
-				<td>창고명</td>
-				<td>구분</td>
-				<td>지역</td>
-				<td>전화번호</td>
-				<td>사용여부</td>
-				<td type='hidden' style='display: none;'>담당자 코드</td>
-				<td>담당자</td>
-				<td>비고</td>
-			</tr>
-	  	</thead>
-	  	
-		<c:forEach var="ww" items="${whList }" varStatus="i">
-			<tr>	
-				<td>${i.count }</td>
-				<td id="whCode">${ww.wh_code}</td>
-				<td id="whName">${ww.wh_name}</td>
-				<td>${ww.wh_dv }</td>
-				<td>${ww.wh_addr}</td>
-				<td>${ww.wh_tel}</td>
-			
-				<c:choose>	
-					<c:when test="${ww.wh_use == 1}">
-						<td>Y</td>
-					</c:when>
-					<c:when test="${ww.wh_use == 2}">
-						<td>N</td>
-					</c:when>
-				</c:choose>
-				<td type='hidden' style='display: none;'>${ww.emp_id }</td>
-				<td id="">${ww.emp.emp_name}</td>
-				<td>${ww.wh_note}</td>
-			</tr>
-			</c:forEach>
-		</table>
+		<table border="1" id="whTable" 
+		class="table table-striped jambo_table bulk_action" style="text-align:center;"> 
+			<colgroup>
+			    <col style="width: 50px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 100px">
+			    <col style="width: 150px">
+			</colgroup>
+			<thead>
+				<tr class="headings">
+					<td>번호</td>
+					<td>창고코드</td>
+					<td>창고명</td>
+					<td>구분</td>
+					<td>지역</td>
+					<td>전화번호</td>
+					<td>사용여부</td>
+					<td type='hidden' style='display: none;'>담당자 코드</td>
+					<td>담당자</td>
+					<td>비고</td>
+				</tr>
+		  	</thead>
+		  	
+			<c:forEach var="ww" items="${whList }" varStatus="i">
+				<tr>	
+					<td>${i.count }</td>
+					<td id="whCode">${ww.wh_code}</td>
+					<td id="whName">${ww.wh_name}</td>
+					<td>${ww.wh_dv }</td>
+					<td>${ww.wh_addr}</td>
+					<td>${ww.wh_tel}</td>
+				
+					<c:choose>	
+						<c:when test="${ww.wh_use == 1}">
+							<td>Y</td>
+						</c:when>
+						<c:when test="${ww.wh_use == 2}">
+							<td>N</td>
+						</c:when>
+					</c:choose>
+					<td type='hidden' style='display: none;'>${ww.emp_id }</td>
+					<td id="">${ww.emp.emp_name}</td>
+					<td>${ww.wh_note}</td>
+				</tr>
+				</c:forEach>
+			</table>
 		</div>
 	</form>
 	</div>
@@ -687,7 +692,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 	
-	<div id="pagination">
+	<div id="pagination" style="display: block; text-align: center;">
 		<c:if test="${lwpm.prev  }"> 
 			<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}">이 전</a>
 		</c:if>
@@ -701,10 +706,7 @@
 		</c:if>
 
 	</div><!--id="pagination"  --> 
-	
-
-
-
+</div>
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
 <!-- /page content -->
