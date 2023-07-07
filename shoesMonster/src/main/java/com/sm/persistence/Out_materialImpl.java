@@ -77,8 +77,14 @@ public class Out_materialImpl implements Out_materialDAO {
 //	}
 
 	@Override
-	public void omButton(String order_code) throws Exception {
-		int result = sqlSession.insert(NAMESPACE + ".omButton", order_code);
+	public void omButton(String order_code, String emp_id) throws Exception {
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("order_code", order_code);
+		data.put("emp_id", emp_id);
+		
+		int result = sqlSession.insert(NAMESPACE + ".omButton", data);
         logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result : " + result);
         
         if(result != 0) {

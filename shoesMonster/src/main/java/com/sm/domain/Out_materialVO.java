@@ -9,7 +9,7 @@ public class Out_materialVO {
 
 	private String out_num;
 	private String prod_code;
-	private String emp_id;
+	private String o_emp_id;
 	private String out_text;
 	private String out_YN;
 	private int out_count;

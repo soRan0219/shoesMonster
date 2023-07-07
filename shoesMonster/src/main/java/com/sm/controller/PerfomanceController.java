@@ -57,15 +57,6 @@ public class PerfomanceController {
 		logger.debug("vo : " + vo);
 		logger.debug(" @@@@@@@@@@ input: " + input + "@@@@@@@@@@@@@@@");
 
-		if (nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "5";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) {
-			cntPerPage = "5";
-		}
-
 		if (vo.getProd_code() != null || vo.getProd_name() != null || vo.getProd_category() != null
 				|| vo.getProd_unit() != null) {
 			int total = service.countProd(vo);
@@ -86,7 +77,7 @@ public class PerfomanceController {
 
 		} else {
 			int total = service.countProd();
-			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			pvo = new PagingVO(total);
 			logger.debug("pvo : " + pvo);
 			List<ProductVO> list = service.getProdList(pvo);
 			model.addAttribute("prodList", list);
@@ -169,14 +160,6 @@ public class PerfomanceController {
 		logger.debug("rawMaterialGET() 호출");
 		List<RawMaterialVO> raws = new ArrayList<RawMaterialVO>();
 		model.addAttribute("raws", raws);
-		if (nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "5";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) {
-			cntPerPage = "5";
-		}
 		logger.debug("vo : " + vo);
 
 		if (vo.getRaw_code() != null || vo.getClients().getClient_actname() != null || vo.getRaw_name() != null) {
@@ -202,7 +185,7 @@ public class PerfomanceController {
 		} else {
 			logger.debug("else문 호출");
 			int total = service.countRaw();
-			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			pvo = new PagingVO(total);
 			logger.debug("pvo : " + pvo);
 			List<RawMaterialVO> list = service.getRawList(pvo);
 			model.addAttribute("rawList", list);
@@ -283,14 +266,6 @@ public class PerfomanceController {
 		logger.debug("requirementGET() 호출");
 		List<RequirementsVO> reqs = new ArrayList<RequirementsVO>();
 		model.addAttribute("reqs", reqs);
-		if (nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "5";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) {
-			cntPerPage = "5";
-		}
 		logger.debug("vo : " + vo);
 
 		if (vo.getReq_code() != null || vo.getProd_code() != null||vo.getRaw_code() != null) {
@@ -311,7 +286,7 @@ public class PerfomanceController {
 		} else {
 			logger.debug("else문 호출");
 			int total = service.countReq();
-			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			pvo = new PagingVO(total);
 			logger.debug("pvo : " + pvo);
 			List<RequirementsVO> list = service.getReqList(pvo);
 			model.addAttribute("reqList", list);

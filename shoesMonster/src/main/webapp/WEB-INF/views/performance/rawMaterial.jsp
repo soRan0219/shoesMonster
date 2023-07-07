@@ -110,7 +110,7 @@ body {
     		$('table tr').each(function(index){
     			var num = "<c:out value='${paging.nowPage}'/>";
     			var num2 = "<c:out value='${paging.cntPerPage}'/>";
-    			$(this).find('td:first').text(((num-1)*num2) + index);
+    			$(this).find('td:first').text(((num-1)*num2) + index-1);
     		});
 
         	popUp();
@@ -473,21 +473,22 @@ body {
 		    <col style="width: 150px">
 		</colgroup>
 		<thead>
-			<tr class="headings">
-				<th class="column-title">번호</th>
-				<th>품번</th>
-				<th>품명</th>
-				<th>색상</th>
-				<th>재고 단위</th>
-				<th>규격</th>
-				<th type="hidden" style='display: none;'>거래처코드</th>
-				<th>거래처명</th>
-				<th type='hidden' style='display: none;'>창고코드</th>
-				<th>창고명</th>
-				<th>매입단가</th>
-				<th>비고</th>
-			</tr>
-		</thead>
+				<tr class="headings">
+					<th class="column-title">번호</th>
+					<th>품번</th>
+					<th>품명</th>
+					<th>색상</th>
+					<th>재고 단위</th>
+					<th>규격</th>
+					<th type='hidden' style='display: none;'>거래처코드</th>
+					<th>거래처명</th>
+					<th type='hidden' style='display: none;'>창고코드</th>
+					<th>창고명</th>
+					<th>매입단가</th>
+					<th>비고</th>
+				</tr>
+			</thead>
+			<tr type='hidden' style='display: none;'></tr>
 			
 			<c:forEach var="vo" items="${rawList}">
 					<tr>

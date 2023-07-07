@@ -50,7 +50,7 @@
 							<img src="/resources/images/shoes_2.png" width="100" height="100"> </i>
 						</a>
 					</div>
-
+					
 					<div class="clearfix"></div>
 
 					<!-- menu profile quick info -->

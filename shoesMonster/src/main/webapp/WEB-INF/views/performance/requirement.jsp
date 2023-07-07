@@ -54,13 +54,11 @@ body {
 	  	
         $(document).ready(function() {
         	
-        	
-
         	//테이블 항목들 인덱스 부여
     		$('table tr').each(function(index){
     			var num = "<c:out value='${paging.nowPage}'/>";
     			var num2 = "<c:out value='${paging.cntPerPage}'/>";
-    			$(this).find('td:first').text(((num-1)*num2) + index);
+    			$(this).find('td:first').text(((num-1)*num2) + index-1);
     		});
         	
     		// 추가 시 필요한 변수들
@@ -361,6 +359,13 @@ body {
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 			<form id="fr">
+				<div class="x_title">
+					<h2>소요량 관리</h2>
+
+					<span style="float: right; margin-top: 1%;">총
+						${paging.total} 건</span>
+					<div class="clearfix"></div>
+				</div>
 			
 				<div class="x_title">
 					<h2>소요량 관리</h2>
@@ -403,8 +408,6 @@ body {
 				</script>
 				<!-- 버튼 제어 -->
 
-		<!-- //////////////////////////////////////////////////////////////////////// -->
-		<%-- 		소요량 목록 총 ${paging.total}건 --%>
 		<div style="overflow-x: auto;">
 			<table border="1" id="reqTable"
 				class="table table-striped jambo_table bulk_action"
@@ -430,7 +433,7 @@ body {
 						<th>비고</th>
 					</tr>
 				</thead>
-
+					<tr type='hidden' style='display: none;'></tr>
 				<c:forEach var="vo" items="${reqList}">
 					<tr>
 						<td></td>

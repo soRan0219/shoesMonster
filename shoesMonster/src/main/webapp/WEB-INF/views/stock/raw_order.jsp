@@ -95,8 +95,6 @@ function toggleDiv(divId) {
 <%-- 		<c:redirect url="/smmain/smLogin" /> --%>
 <%-- 	</c:if> --%>
 	
-	아이디 확인용 : ${id.emp_id } <br>
-	 
 	<h1 style="margin-left: 1%;"> 발주 관리 </h1>
 
     <div style="margin-left: 1%;">
