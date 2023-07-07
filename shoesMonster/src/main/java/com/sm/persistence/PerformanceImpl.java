@@ -334,7 +334,7 @@ public class PerformanceImpl implements PerformanceDAO {
 			params.put("line_use", lvo.getLine_use());
 		}
 
-		params.put("line_place", lvo.getLine_place());
+//		params.put("line_place", lvo.getLine_place());
 		params.put("startPage", vo.getStartPage());
 		params.put("pageSize", vo.getPageSize());
 
