@@ -98,7 +98,7 @@
     		$('table tr').each(function(index){
     			var num = "<c:out value='${paging.nowPage}'/>";
     			var num2 = "<c:out value='${paging.cntPerPage}'/>";
-    			$(this).find('td:first').text(((num-1)*num2) + index);
+    			$(this).find('td:first').text(((num-1)*num2) + index-1);
     		});
 
         	popUp();
@@ -484,6 +484,7 @@
 					<th>비고</th>
 				</tr>
 			</thead>
+			<tr type='hidden' style='display: none;'></tr>
 			
 			<c:forEach var="vo" items="${rawList}">
 					<tr>

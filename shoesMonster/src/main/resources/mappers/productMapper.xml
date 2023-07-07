@@ -42,8 +42,9 @@
 	<select id="readProd" resultType="ProductVO" resultMap="prod">
 		SELECT p.*, c.client_actname,w.wh_name  from product p
 		join warehouse w ON p.wh_code =w.wh_code
-		JOIN clients c on p.client_code =c.client_code limit
-		#{start}, #{cntPerPage}
+		JOIN clients c on p.client_code =c.client_code
+		order by 1 desc
+		limit #{start}, #{cntPerPage}
 	</select>
 	<!-- 품목관리 목록 불러오기 -->
 
@@ -95,6 +96,7 @@
 				and p.client_code like #{client_code}
 			</if>
 		</where>
+		order by 1 desc
 		limit #{start},#{cntPerPage}
 
 	</select>
@@ -184,6 +186,7 @@
 		join clients c
 		on r.client_code = c.client_code
 		join warehouse w ON r.wh_code =w.wh_code
+		order by 1 desc
 		limit #{start}, #{cntPerPage}
 	</select>
 	<!-- 원자재관리 목록 불러오기 -->
@@ -229,6 +232,7 @@
 				'%')
 			</if>
 		</where>
+		order by 1 desc
 		limit #{start},#{cntPerPage}
 
 	</select>
@@ -314,8 +318,9 @@
 		join
 		product p on p.prod_code = r.prod_code
 		JOIN raw_material rm on
-		r.raw_code = rm.raw_code limit
-		#{start}, #{cntPerPage}
+		r.raw_code = rm.raw_code
+		order by 1 desc 
+		limit #{start}, #{cntPerPage}
 	</select>
 	<!-- 소요량관리 목록 불러오기 -->
 
@@ -360,6 +365,7 @@
 				and r.raw_code = #{raw_code}
 			</if>
 		</where>
+		order by 1 desc
 		limit #{start},#{cntPerPage}
 	</select>
 	<!-- 소요량관리 검색리스트 불러오기 -->

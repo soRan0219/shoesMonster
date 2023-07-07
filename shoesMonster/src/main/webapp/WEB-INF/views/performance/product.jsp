@@ -155,8 +155,8 @@
                     '<td><input type="text" name="products[' + counter + '].prod_color"></td>' +
                     '<input type="hidden" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required>' +
                     '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); required></td>' +
-                    '<input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required>' +
-                    '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_name'+counter+'"); readonly required></td>' +
+                    '<td type="hidden" style="display: none;"><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_code'+counter+'"); readonly required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_price"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_note"></td>' +
                     '</tr>';
@@ -441,7 +441,7 @@
 
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
-		<form id="fr">	
+		<form id="fr" method="post">	
 
 			<div class="x_title">
 				<h2>완제품</h2>
@@ -516,7 +516,6 @@
 				</tr>
 			</thead>
 			<tr type='hidden' style='display: none;'></tr>
-			
 			
 			<c:forEach var="vo" items="${prodList}">
 					<tr>
