@@ -127,6 +127,7 @@ body {
 	$('#modify').click(function () {
 		
 		event.preventDefault();
+		
 		$('#add').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 				
@@ -428,9 +429,6 @@ body {
 				});
 			}); // cancle click	
 
-			
-
-	
 	
 	////삭제/////////////////////////////////////////////////////////
 	$('#delete').click(function () {
@@ -584,11 +582,9 @@ body {
 		<button type="submit" id="save">저장</button>
 		<button onclick="location.href='/performance/line'">새로고침</button>
 	</div>
+	
 		<form id="fr">
 
-
-
-	
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	
