@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-h1 { color: red; }
-
 .searchInputText {
 	display: inline-block;
 	height: calc(1.5em + 0.75rem + 2px);
