@@ -656,6 +656,7 @@ body {
 					<td>비고</td>
 				</tr>
 		  	</thead>
+		  	<tr type='hidden' style='display: none;'></tr>
 		  	
 			<c:forEach var="ww" items="${whList }" varStatus="i">
 				<tr>	
