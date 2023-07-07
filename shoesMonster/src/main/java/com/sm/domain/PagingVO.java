@@ -15,6 +15,8 @@ public class PagingVO {
 		}
 		
 		public PagingVO(int total) {
+			setNowPage(nowPage);
+			setCntPerPage(cntPerPage);
 			setTotal(total);
 			calcLastPage(getTotal(), getCntPerPage());
 			calcStartEndPage(getNowPage(), cntPage);

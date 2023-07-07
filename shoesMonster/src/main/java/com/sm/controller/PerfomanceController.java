@@ -60,7 +60,7 @@ public class PerfomanceController {
 		if (vo.getProd_code() != null || vo.getProd_name() != null || vo.getProd_category() != null
 				|| vo.getProd_unit() != null) {
 			int total = service.countProd(vo);
-			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			pvo = new PagingVO(total, pvo.getNowPage(), pvo.getCntPerPage());
 			List<ProductVO> list = service.getProdList(vo, pvo);
 			model.addAttribute("prodList", list);
 			model.addAttribute("paging", pvo);
@@ -166,7 +166,7 @@ public class PerfomanceController {
 
 			logger.debug("if문 호출");
 			int total = service.countRaw(vo);
-			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			pvo = new PagingVO(total, pvo.getNowPage(), pvo.getCntPerPage());
 			List<RawMaterialVO> list = service.getRawList(vo, pvo);
 			model.addAttribute("rawList", list);
 			model.addAttribute("paging", pvo);
@@ -272,8 +272,11 @@ public class PerfomanceController {
 			
 			logger.debug("if문 호출");
 			logger.debug("vo : " + vo);
+			logger.debug("vo : " + pvo);
 			int total = service.countReq(vo);
-			pvo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			logger.debug("vo : " + pvo);
+			
+			pvo = new PagingVO(total, pvo.getNowPage(), pvo.getCntPerPage());
 			List<RequirementsVO> list = service.getReqList(vo, pvo);
 			model.addAttribute("reqList", list);
 			model.addAttribute("paging", pvo);

@@ -359,17 +359,9 @@ body {
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 			<form id="fr">
-				<div class="x_title">
-					<h2>소요량 관리</h2>
-
-					<span style="float: right; margin-top: 1%;">총
-						${paging.total} 건</span>
-					<div class="clearfix"></div>
-				</div>
 			
 				<div class="x_title">
 					<h2>소요량 관리</h2>
-
 					<span style="float: right; margin-top: 1%;">총
 						${paging.total} 건</span>
 					<div class="clearfix"></div>
