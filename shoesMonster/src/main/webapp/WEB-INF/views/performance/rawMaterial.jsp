@@ -46,12 +46,12 @@ body {
 	
 	// 추가 시 거래처 검색 
     function serchClient(inputId){
-    	openWindow("client",inputId);
+    	openWindow("client_r",inputId);
     }
     
     // 추가 시 창고 검색
     function serchWh(inputId){
-    	openWindow("wh",inputId);
+    	openWindow("wh_r",inputId);
     }
     
     
@@ -276,12 +276,12 @@ body {
 								
 								//거래처 검색 
 								$('#client_actname').click(function() {
-									openWindow("client","client_code");
+									openWindow("client_r","client_code");
 								}); //client_code click
 								
 								// 창고 검색
 								$('#wh_name').click(function() {
-									openWindow("wh","wh_code");
+									openWindow("wh_r","wh_code");
 								}); // wh_code click
 								
 							},
@@ -457,10 +457,10 @@ body {
 				
 				<div style="float: left;  margin-top: 1.5px;">
 					<c:if test="${empty param.input }">
-						<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+						<button onclick="location.href='/performance/rawMaterial'" class="B2 B2-info">↻</button>
 					</c:if>
 					<c:if test="${!empty param.input }">
-						<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+						<button onclick="location.href='/performance/rawMaterial?input=${param.input }'" class="B2 B-info">↻</button>
 					</c:if>
 				</div>
 				
