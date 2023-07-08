@@ -465,8 +465,11 @@ body {
 			<c:if test="${empty param.input }">
 			<button onclick="location.href='/person/Clients'" class="B B-info">새로고침</button>
 			</c:if>
-			<c:if test="${!empty param.input }">
+			<c:if test="${!empty param.input && empty param.search_client_type}">
 			<button onclick="location.href='/person/Clients?input=${param.input }'" class="B B-info">새로고침</button>
+			</c:if>
+			<c:if test="${!empty param.input && !empty param.search_client_type }">
+			<button onclick="location.href='/person/Clients?input=${param.input }&search_client_type=${param.search_client_type }'" class="B B-info">새로고침</button>
 			</c:if>
 
 				<div class="x_title">
@@ -478,7 +481,6 @@ body {
 						<input type="button" value="삭제" id="deleteButton" class="true B B-info"> 
 						<input type="button" value="취소" id="cancelButton" class="B B-info"> 
 						<input type="button" value="저장" id="saveButton" class="B B-info">
-						<button onclick="location.href='/person/Clients'" class="B B-info">새로고침</button>
 					</div>
 					
 					<div class="clearfix"></div>

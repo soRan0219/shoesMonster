@@ -522,7 +522,8 @@ public class PerfomanceController {
 	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
 	public void warehouseGET(Model model, LineWhPageVO vo, EmployeesVO emp,
 							 LineWhPageMaker lwpm, Wh_prodVO wvo
-							 ,@RequestParam HashMap<String, Object> params) throws Exception {
+							 ,@RequestParam HashMap<String, Object> params,
+							 @RequestParam(value = "input", required = false) String input) throws Exception {
 
 		logger.debug("@@ warehouseGET() 호출 @@");
 
@@ -535,7 +536,7 @@ public class PerfomanceController {
 
 
 		// 검색(+페이징)
-		if(wvo.getWh_code() != null  || wvo.getWh_name() != null ||
+		if(wvo.getWh_code() != null  || wvo.getWh_name() != null || wvo.getWh_dv() !=null ||
 		   wvo.getEmp_id() != null || wvo.getWh_use() != 0) {
 		
 			if(wvo.getWh_use() == 0) {
@@ -559,6 +560,11 @@ public class PerfomanceController {
 			model.addAttribute("lwpm", lwpm);
 			
 			logger.debug("검색"+whList);
+			
+			if (input != null && !input.equals("")) {
+				model.addAttribute("input", input);
+				logger.debug("@@@@@@@@@@@@@@@@ input 정보 전달 @@@@@@@@@@@@@@@@");
+			}
 			
 
 			
