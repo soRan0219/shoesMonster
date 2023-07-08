@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -53,9 +54,17 @@ public class PerfomanceController {
 	// http://localhost:8088/performance/product
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public void productGET(Model model, ProductVO vo, PagingVO pvo,
+//						HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage,
 			@RequestParam(value = "input", required = false) String input) throws Exception {
+		
+//			HttpSession session = request.getSession(false);
+//	        if (session == null) {
+//	        	 response.sendRedirect("/smmain/smMain");
+//	             return;
+//	        }
+		
 		logger.debug("productGET() 호출");
 		List<ProductVO> products = new ArrayList<ProductVO>();
 		model.addAttribute("products", products);
