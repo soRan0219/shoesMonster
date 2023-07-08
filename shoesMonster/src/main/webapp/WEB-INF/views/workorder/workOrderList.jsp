@@ -94,6 +94,7 @@ body {
         	$('#modify').hide();
         	$('#delete').hide();
         	$('#save').hide();
+        	$('#cancle').hide();
         	
         	//:not(:first-child)
        		$('table tr').click(function(){
@@ -673,7 +674,12 @@ body {
 		<button id="delete" class="true">삭제</button>
 		<button type="reset" id="cancle">취소</button>
 		<button type="submit" id="save">저장</button>
-		<button onclick="location.href='/workorder/workOrderList'">새로고침</button>
+		<c:if test="${empty param.input }">
+			<button onclick="location.href='/workorder/workOrderList'" class="B B-info">새로고침</button>
+			</c:if>
+			<c:if test="${!empty param.input }">
+			<button onclick="location.href='/workorder/workOrderList?input=${param.input }'" class="B B-info">새로고침</button>
+			</c:if>
 	</div>	
 		<script>
 		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정

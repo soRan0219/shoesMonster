@@ -72,6 +72,7 @@ body {
     	$('#modify').hide();
     	$('#delete').hide();
     	$('#save').hide();
+    	$('#cancle').hide();
     	
    		$('table tr:not(:first-child)').click(function(){
    			
@@ -597,6 +598,13 @@ body {
 
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
+		<c:if test="${empty param.input }">
+			<button onclick="location.href='/performance/warehouse'" class="B B-info">새로고침</button>
+		</c:if>
+		<c:if test="${!empty param.input }">
+			<button onclick="location.href='/performance/warehouse?input=${param.input }'" class="B B-info">새로고침</button>
+		</c:if>
+	
 		<form id="fr">
 			
 			<div class="x_title">
@@ -608,7 +616,6 @@ body {
 					<button id="delete" class="true B B-info">삭제</button>
 					<button type="reset" id="cancle" class="B B-info">취소</button>
 					<button type="submit" id="save" class="B B-info">저장</button>
-					<button onclick="location.href='/performance/warehouse'" class="B B-info">새로고침</button>
 				</div>
 				
 				<div class="clearfix"></div>
