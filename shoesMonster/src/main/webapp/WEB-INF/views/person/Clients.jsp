@@ -56,7 +56,7 @@ body {
 	    	$('#cancelButton').hide();
 	    	$('#saveButton').hide();
 	    	
-	    	$('table tr:not(:first-child)').click(function(){
+	    	$('table tr').click(function(){
 	   			$(this).css('background', '#ccc');
 	    		
 	        		var client_code = $(this).find('#client_code').text();
@@ -464,7 +464,6 @@ body {
 			<c:if test="${!empty param.input }">
 			<button onclick="location.href='/person/Clients?input=${param.input }'" class="B B-info">새로고침</button>
 			</c:if>
-			<form id="fr">
 
 				<div class="x_title">
 					<h2>거래처 목록<small>총 ${pm.totalCount } 건</small></h2>
@@ -483,6 +482,7 @@ body {
 				
 				
 	<!-- 버튼 제어 -->
+			<form id="fr">
 				<script>
 				    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 				

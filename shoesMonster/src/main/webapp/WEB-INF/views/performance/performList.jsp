@@ -362,7 +362,7 @@ body {
 				
 				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
 				$('table tr').each(function(){
-					var code = $(this).find('td:nth-child(2)').text();
+					var code = $(this).find('td:nth-child(2)').text().substring(0,16).trim();
 					
 					var tbl = "<input type='checkbox' name='selected' value='";
 					tbl += code;
@@ -392,26 +392,29 @@ body {
 						checked.push($(this).val());
 					});
 					
-					if(checked.length > 0) {
+					if(confirm("총 " + checked.length + "행 선택\n정말 삭제하시겠습니까?")) {
 						
-						$.ajax({
-							url: "/performance/deletePerform",
-							type: "post",
-							data: {checked:checked},
-							dataType: "text",
-							success: function() {
-								alert("*** 아작스 성공 ***");
-								location.reload();
-							},
-							error: function() {
-								alert("아작스실패~~");
-							}
-						}); //ajax
-						
-					} //체크된거 있을대
-					else {
-						alert("선택된 항목이 없습니다.");
-					} //체크된거 없을때
+						if(checked.length > 0) {
+							
+							$.ajax({
+								url: "/performance/deletePerform",
+								type: "post",
+								data: {checked:checked},
+								dataType: "text",
+								success: function() {
+									alert("총 " + checked.length + "건 삭제 완료");
+									location.reload();
+								},
+								error: function() {
+									alert("아작스실패~~");
+								}
+							}); //ajax  
+							
+						} //체크된거 있을대
+						else {
+							alert("선택된 항목이 없습니다.");
+						} //체크된거 없을때
+					} //삭제확인
 					
 				}); //save
 			
@@ -477,32 +480,16 @@ body {
 		
 		//검색 결과 없을 때 표, 버튼 다 숨기기
 		if(Number($('#total').text())==0) {
-			$('#body').html("검색 결과가 없습니다.");
+			$('#searchCnt').html("검색 결과가 없습니다.");
 		}
 		
 		//======================= 검색 ===============================//
 		
 		
 		
-		//n건씩 표시
-		$('#perPage').on('change', function() {
-			var pageSize = $(this).val();
-			
-			$('#pageSize').val(pageSize);
-			$('#searchForm').submit();
-		});
-		
-		$('#perPage').find('option').each(function(){
-			if($(this).val()===$('#pageSize').val()) {
-				$(this).prop("selected", true);
-			}
-		});
-		//n건씩 표시
-		
-		
 		//생산실적코드 클릭시 상세조회
 		$('#performCode a').click(function() {
-			var obj = { perform_code:$(this).text().trim() };
+			var obj = { perform_code:$('#performCode').text().substring(0,16).trim() };
 				
 			$.ajax({
 				url: "/performance/detail",
@@ -513,36 +500,47 @@ body {
 				success: function(data) {
 					console.log(data);
 					
-					var tmp = "생산실적코드: ";
-					tmp += data.perform_code;
-					tmp += " 작업지시코드: ";
-					tmp += data.work_code;
-					tmp += " 라인코드: ";
-					tmp += data.workOrder.line_code;
-					tmp += " 품번: ";
-					tmp += ((data.prod_code===""||data.prod_code==null) ? "없음" : data.prod_code);
-					tmp += "<br>실적일: ";
-					tmp += getDate(data.perform_date);
-					tmp += " 실적수량: ";
-					tmp += data.perform_qt;
-					tmp += " 양품수: ";
-					tmp += data.perform_fair;
-					tmp += " 불량수: ";
-					tmp += data.perform_defect;
-					tmp += "<br>불량사유: ";
-					tmp += ((data.defect_note===""||data.defect_note==null) ? "없음" : data.defect_note);
-					tmp += " 현황: ";
-					tmp += data.perform_status;
-					tmp += " 등록자: ";
-					tmp += ((data.emp_id===""||data.emp_id==null) ? "없음" : data.emp_id);
-					tmp += " 변경자: ";
-					tmp += ((data.change_id===""||data.change_id==null) ? "없음" : data.change_id);
-					tmp += " 변경일: ";
-					tmp += ((data.change_date===""||data.change_date==null) ? "없음" : getDate(data.change_date));
-					tmp += " 비고: ";
-					tmp += ((data.perform_note===""||data.perform_note==null) ? "없음" : data.perform_note);
+					var tmp = "<table border='1' class='table table-striped jambo_table bulk_action' style='text-align:center;'>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th>생산실적코드</th>";
+					tmp += "  <td>" + data.perform_code + "</td>";
+					tmp += " <th>작업지시코드</th>";
+					tmp += "  <td>" + data.work_code + "</td>";
+					tmp += " <th>라인코드</th>";
+					tmp += "  <td>" + data.workOrder.line_code + "</td>";
+					tmp += " <th>품번</th>";
+					tmp += ((data.prod_code===""||data.prod_code==null) ? "<td>없음</td>" : "<td>" + data.prod_code + "</td>");
+					tmp += "</tr>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th>실적일</th>";
+					tmp += "  <td>" + getDate(data.perform_date) + "</td>";
+					tmp += " <th>실적수량</th>";
+					tmp += "  <td>" + data.perform_qt + "</td>";
+					tmp += " <th>양품수</th>";
+					tmp += "  <td>" + data.perform_fair + "</td>";
+					tmp += " <th>불량수</th>";
+					tmp += "  <td>" + data.perform_defect + "</td>";
+					tmp += "</tr>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th>불량사유</th>";
+					tmp += ((data.defect_note===""||data.defect_note==null) ? "<td>없음</td>" : "<td>" + data.defect_note + "</td>");
+					tmp += " <th>현황</th>";
+					tmp += "  <td>" + data.perform_status + "</td>";
+					tmp += " <th>등록자</th>";
+					tmp += ((data.emp_id===""||data.emp_id==null) ? "<td>없음</td>" : "<td>" + data.emp_id + "</td>");
+					tmp += " <th>변경자</th>";
+					tmp += ((data.change_id===""||data.change_id==null) ? "<td>없음</td>" : "<td>" + data.change_id + "</td>");
+					tmp += "</tr>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th>변경일</th>";
+					tmp += ((data.change_date===""||data.change_date==null) ? "<td>없음</td>" : "<td>" + getDate(data.change_date) + "</td>");
+					tmp += " <th>비고</th>";
+					tmp += ((data.perform_note===""||data.perform_note==null) ? "<td>없음</td>" : "<td>" + data.perform_note + "</td>");
+					tmp += "</tr>";
+					tmp += "</table>";
 					
-					$('#detail').html(tmp);
+					$('.modal-body').html(tmp);
+					$('.modal').modal("show");
 				},
 				error: function() {
 					alert("아작스 실패");
@@ -587,34 +585,34 @@ body {
 		
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
+		
 			<div class="x_title">
-			
-<!-- 			<div id="body"> -->
-			<div>
-				<h2>생산 실적 목록<small>총 ${pm.totalCount } 건</small></h2>
-<%-- 				총 <span id="total">${pm.totalCount }</span>건 --%>
-						
-<!-- 				<select id="perPage" name="perPage"> -->
-<!-- 					<option value="2">2</option> -->
-<!-- 					<option value="5">5</option> -->
-<!-- 					<option value="7">7</option> -->
-<!-- 				</select> -->
-<!-- 				건씩 표시 -->
+				<div id="searchCnt">
+					<h2>생산 실적 목록<small id="total">총 ${pm.totalCount }건</small></h2>
+				</div>
+				
+			<div style="float: left;  margin-top: 1.5px;">
+				<c:if test="${empty param.input }">
+					<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+				</c:if>
+				<c:if test="${!empty param.input }">
+					<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+				</c:if>
 			</div>
-			
-			<!-- 버튼 제어 -->
+				
 			<div style="float: right;">
 				<button id="add" class="true B B-info">추가</button>
 				<button id="modify" class="B B-info">수정</button>
 				<button id="delete" class="true B B-info">삭제</button>
 				<button type="reset" id="cancle" class="B B-info">취소</button>
 				<button type="submit" id="save" class="B B-info">저장</button>
-				<button onclick="location.href='/performance/performList'" class="B B-info">새로고침</button>
 			</div>
 			
 			<div class="clearfix"></div>
 			</div>
 			
+			<!-- 버튼 제어 -->
+		<form id="fr">
 			<script>
 			    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 			
@@ -639,7 +637,6 @@ body {
 		
 	
 	<div class="table-responsive">	
-		<form id="fr">
 			<input type="hidden" name="emp_id" value="${sessionScope.id.emp_id }">
 			<table border="1" class="table table-striped jambo_table bulk_action"  id="data-table">
 				<thead>
@@ -662,7 +659,7 @@ body {
 				<c:forEach var="vo" items="${perfList }">
 					<tr class="even pointer">
 						<td class="a-center"></td>
-						<td id="performCode"><a href="#" onclick="return false" class="t">${vo.perform_code }</a></td>
+						<td id="performCode">${vo.perform_code }<a href="#" onclick="return false" class="t">&#128269;</a></td>
 						<td>${vo.work_code }</td>
 						<td>${vo.workOrder.line_code }</td>
 						<td>${vo.prod_code }</td>
@@ -683,8 +680,8 @@ body {
 					</tr>
 				</c:forEach>
 			</table>
-		</form>
-		</div>	
+		</div>
+	</form>
 	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 		
 	<script type="text/javascript">
@@ -761,11 +758,30 @@ body {
 		</li>
 	</ul>
 </div>
-		
-	<div id="detail"></div>
+	
+	<!-- 상세보기 모달창 -->
+	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">생산실적 상세</h4>
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 상세보기 모달창 -->
+
 	
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/forTest/sm.css"> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

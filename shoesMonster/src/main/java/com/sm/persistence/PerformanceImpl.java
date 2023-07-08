@@ -334,7 +334,7 @@ public class PerformanceImpl implements PerformanceDAO {
 			params.put("line_use", lvo.getLine_use());
 		}
 
-//		params.put("line_place", lvo.getLine_place());
+		params.put("line_place", lvo.getLine_place());
 		params.put("startPage", vo.getStartPage());
 		params.put("pageSize", vo.getPageSize());
 
@@ -406,14 +406,14 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	// 라인 추가 시 code값 가져가기
 	@Override
-	public String getLiCode() {
+	public String getLiCode(String line_place) throws Exception {
 		
 		String code = "L000";
 		
-		if(sqlSession.selectOne(NAMESPACE+".getLiCode") == null) {
+		if(sqlSession.selectOne(NAMESPACE+".getLiCode", line_place) == null) {
 			return code;
 		}else {
-			return sqlSession.selectOne(NAMESPACE+".getLiCode");
+			return sqlSession.selectOne(NAMESPACE+".getLiCode", line_place);
 		}
 	}
 

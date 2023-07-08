@@ -451,17 +451,18 @@ body {
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<c:if test="${empty param.input }">
-			<button onclick="location.href='/performance/rawMaterial'" class="B B-info">새로고침</button>
-			</c:if>
-			<c:if test="${!empty param.input }">
-			<button onclick="location.href='/performance/rawMaterial?input=${param.input }'" class="B B-info">새로고침</button>
-			</c:if>
-		
-			<form method="post" id="fr">
 			
 			<div class="x_title">
 				<h2>원자재 목록<small>총 ${paging.total} 건</small></h2>
+				
+				<div style="float: left;  margin-top: 1.5px;">
+					<c:if test="${empty param.input }">
+						<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+					</c:if>
+					<c:if test="${!empty param.input }">
+						<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+					</c:if>
+				</div>
 				
 				<div style="float: right;">
 					<button id="addButton" class="B B-info">추가</button>
@@ -474,6 +475,7 @@ body {
 			</div>
 
  	<!-- 버튼 제어 -->
+<form method="post" id="fr">
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	

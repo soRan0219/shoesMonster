@@ -452,10 +452,13 @@ public class PerfomanceController {
 	
 	// 라인 추가 시 code값 가져가기
 	@ResponseBody
-	@RequestMapping(value = "/lineCode", method = RequestMethod.GET)
-	public String getLiCode() { 
+	@RequestMapping(value = "/lineCode", method = RequestMethod.POST)
+	public String getLiCode(@RequestBody LineVO lvo) throws Exception{ 
+		logger.debug("line_place@@@@@@@ :   "+lvo.getLine_place());
 		
-		return service.getLiCode();
+		logger.debug("#$@(#(@((#)@$(#"+service.getLiCode(lvo.getLine_place()));
+		
+		return service.getLiCode(lvo.getLine_place());
 	}
 	
 	// 라인 추가
@@ -674,17 +677,12 @@ public class PerfomanceController {
 		logger.debug("@@@@@ CONTROLLER: performanceList() 호출");
 		
 		//페이지 정보
-		if(search.get("pageSize")!=null) {
-			int pageSize = Integer.parseInt(search.get("pageSize").toString());
-			pvo.setPageSize(pageSize);
-		} else {
-			pvo.setPageSize(2);
-		}
+		pvo.setPageSize(8);
 		
 		//페이징 하단부 정보
 		LineWhPageMaker pm = new LineWhPageMaker();
 		pm.setLwPageVO(pvo);
-		pm.setPageBlock(2);
+		pm.setPageBlock(5);
 		
 		List<PerformanceVO> perfList = new ArrayList<>();
 		
@@ -744,7 +742,7 @@ public class PerfomanceController {
 
 		if(type.equals("work")) {
 			String state = URLEncoder.encode("마감", "UTF-8");
-			return "redirect:/workorder/workOrderList?input=" + input + "&search_state=" + state;
+			return "redirect:/workorder/workOrderList?input=" + input + "&search_place=" + state;
 		}
 		if(type.equals("line")) {
 			return "redirect:/performance/line?input=" + input;
