@@ -137,17 +137,17 @@
 	<!-- 거래처 전체 개수 -->
 	
 	<!-- 거래처 검색 -->
-	<select id="searchClientsList" resultType="com.sm.domain.ClientsVO">
-		<bind name="client_code" value="'%' + search_client_code + '%'"/>
-		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
+	<select id="searchClientsList" parameterType="hashMap" resultType="com.sm.domain.ClientsVO">
+<!-- 		<bind name="client_code" value="'%' + search_client_code + '%'"/> -->
+<!-- 		<bind name="client_actname" value="'%' + search_client_actname + '%'"/> -->
 		
 		select * from clients
 		<where>
 			<if test="client_code != null and !client_code.isEmpty()">
-				client_code Like #{client_code}
+				client_code Like concat ('%', #{search_client_code}, '%')
 			</if>
 			<if test="client_actname != null and !client_actname.isEmpty()">
-				AND client_actname Like #{client_actname}
+				AND client_actname Like concat ('%', #{search_client_actname}, '%')
 			</if>
 			<if test="search_client_type != '전체' and !search_client_type.isEmpty()">
 				AND client_type=#{search_client_type}
@@ -159,18 +159,18 @@
 	
 	<!-- 거래처 검색 개수 -->
 	<select id="searchClientCnt" parameterType="hashMap" resultType="int">
-		<bind name="client_code" value="'%' + search_client_code + '%'"/>
-		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
+<!-- 		<bind name="client_code" value="'%' + search_client_code + '%'"/> -->
+<!-- 		<bind name="client_actname" value="'%' + search_client_actname + '%'"/> -->
 	
 		select count(*) from clients
 		<where>
 			<if test="client_code != null and !client_code.isEmpty()">
-				client_code Like #{client_code}
+				client_code Like concat ('%', #{search_client_code}, '%')
 			</if>
 			<if test="client_actname != null and !client_actname.isEmpty()">
-				AND client_actname Like #{client_actname}
+				AND client_actname Like concat ('%', #{search_client_actname}, '%')
 			</if>
-			<if test="search_client_type != null and search_client_type != '전체'">
+			<if test="search_client_type != '전체' and !search_client_type.isEmpty()">
 				AND client_type=#{search_client_type}
 			</if>
 		</where>

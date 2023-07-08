@@ -32,16 +32,20 @@ body {
 		var queryString = window.location.search;
 		var urlParams = new URLSearchParams(queryString);
 		var isPop = urlParams.get("input");
-		
+		var serch = urlParams.get("search_client_type");
 		if(isPop==="null") {
 			isPop = null;
 		}
 		$('#pagination a').each(function(){
-			
-	   		var prHref = $(this).attr("href");
-	   			
+			if(serch==="null") {
+				var prHref = $(this).attr("href");
 				var newHref = prHref + "&input=" + isPop;
 				$(this).attr("href", newHref);
+			}
+			
+			var prHref = $(this).attr("href");
+			var newHref = prHref + "&input=" + isPop +"&search_client_type"+serch;
+			$(this).attr("href", newHref);
 				
 		}); //페이징 요소	
 		

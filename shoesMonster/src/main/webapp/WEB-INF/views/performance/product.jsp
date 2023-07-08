@@ -46,7 +46,7 @@ body {
 	
 	// 추가 시 거래처 검색 
     function serchClient(inputId){
-    	openWindow("client",inputId);
+    	openWindow("client_p",inputId);
     }
     
     // 추가 시 창고 검색

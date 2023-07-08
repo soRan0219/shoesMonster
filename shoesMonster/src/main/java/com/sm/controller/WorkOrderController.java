@@ -1,5 +1,6 @@
 package com.sm.controller;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -115,6 +116,11 @@ public class WorkOrderController {
 		
 		else if(type.equals("client")) {
 			return "redirect:/person/Clients?input="+input;
+		}
+		
+		else if(type.equals("client_p")) {
+			String state = URLEncoder.encode("수주처", "UTF-8");
+			return "redirect:/person/Clients?input="+input+"&search_client_type="+state;
 		}
 		
 		else if(type.equals("wh")) {
