@@ -443,12 +443,13 @@ body {
 								data : {checked : checked},
 								dataType : "text",
 								success : function() {
+									alert("총 " + checked.length + "건 삭제 완료");
 									location.reload();
 								},
 								error : function() {
 									console.log("아작스실패~~");
 								}
-							}); //ajax
+							}); //ajax  
 		
 						} //체크된거 있을대
 						else {
