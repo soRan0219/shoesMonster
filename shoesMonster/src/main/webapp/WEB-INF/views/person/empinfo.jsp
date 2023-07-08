@@ -54,10 +54,20 @@ function codeCreation() {
     var day = ("0" + date.getDate()).slice(-2);
     var second = ("0" + date.getSeconds()).slice(-2);
     
-    var code = YY_year + month + day + second + count.toString().padStart(1,'0');
+    var code = YY_year + month + day;
     
 	count++;
     return code;
+}
+
+function codeSecond() {
+	
+	var date = new Date();
+	var second = ("0" + date.getSeconds()).slice(-2);
+	
+	var scode = second
+	
+	return scode;
 }
 
 //input으로 바꾸기 
@@ -166,6 +176,8 @@ $(function() {
 			tbl += "   <option value='영업팀'>영업팀</option>";
 			tbl += "   <option value='생산팀'>생산팀</option>";
 			tbl += "   <option value='인사팀'>인사팀</option>";
+			tbl += "   <option value='자재팀'>자재팀</option>";
+			tbl += "   <option value='물류팀'>물류팀</option>";
 			tbl += "  </select>"
 			tbl += " </td>";
 			// 직책
@@ -194,13 +206,19 @@ $(function() {
 
 			$("#emp_department").on("change", function(){
 	            if($("#emp_department option:selected").val() === '영업팀' ){
-	                $('input[name="emp_id"]').val(codeCreation());
+	                $('input[name="emp_id"]').val(codeCreation()+1+codeSecond());
 	                $('input[name="emp_work"]').val('재직'); // 추가함
 	            } else if($("#emp_department option:selected").val() === '생산팀' ){
-	                $('input[name="emp_id"]').val(codeCreation());
+	                $('input[name="emp_id"]').val(codeCreation()+2+codeSecond());
 	                $('input[name="emp_work"]').val('재직'); // 추가함
 	            } else if($("#emp_department option:selected").val() === '인사팀' ){
-	                $('input[name="emp_id"]').val(codeCreation());
+	                $('input[name="emp_id"]').val(codeCreation()+3+codeSecond());
+	                $('input[name="emp_work"]').val('재직'); // 추가함
+	            } else if($("#emp_department option:selected").val() === '자재팀' ){
+	                $('input[name="emp_id"]').val(codeCreation()+4+codeSecond());
+	                $('input[name="emp_work"]').val('재직'); // 추가함
+	            } else if($("#emp_department option:selected").val() === '물류팀' ){
+	                $('input[name="emp_id"]').val(codeCreation()+5+codeSecond());
 	                $('input[name="emp_work"]').val('재직'); // 추가함
 	            }
 	        });
@@ -342,14 +360,14 @@ $(function() {
 
 			if($(this).hasClass('true')) {
 			
-				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 거래처코드 저장
+				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 사원 코드 저장
 				$('table tr').each(function() {
 					var code = $(this).find('td:nth-child(2)').text();
-		
+	
 					var tbl = "<input type='checkbox' name='selected' value='";
 					tbl += code;
 					tbl += "'>";
-		
+					
 					$(this).find('th:first').html("<input type='checkbox' id='selectAll'>");
 					$(this).find('td:first').html(tbl);
 				});
@@ -367,32 +385,36 @@ $(function() {
 
 				// 저장 -> 삭제
 				$('#saveEmp').click(function() {
-		
 					var checked = [];
 		
 					$('input[name=selected]:checked').each(function() {
+						console.log("check => " + $(this).val());
 						checked.push($(this).val());
 					});
+					
+					if(confirm("총 " + checked.length + "행 선택\n정말 삭제하시겠습니까?")) {
 		
-					if (checked.length > 0) {
-		
-						$.ajax({
-							url : "/person/deleteEmp",
-							type : "post",
-							data : {checked : checked},
-							dataType : "text",
-							success : function() {
-								alert("삭제 완료");
-								location.reload();
-							},
-							error : function() {
-								alert("삭제 실패");
-							}
-						}); //ajax
-					} //체크된거 있을대
-					else {
-						alert("선택된 항목이 없습니다.");
-					} //체크된거 없을때
+						if (checked.length > 0) {
+			
+							$.ajax({
+								url : "/person/deleteEmp",
+								type : "post",
+								data : {checked : checked},
+								dataType : "text",
+								success : function() {
+									alert("삭제 완료");
+									location.reload();
+								},
+								error : function() {
+									alert("삭제 실패");
+								}
+							}); //ajax
+						} //체크된거 있을대
+						else {
+							alert("선택된 항목이 없습니다.");
+						} //체크된거 없을때
+					}
+					
 				}); //save
 				
 				$(this).removeClass('true');
@@ -445,7 +467,7 @@ $(function() {
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>
-						사원 관리 <small> 사원 인원 : ${pm.totalCount } ${sessionScope.id.emp_department } </small>
+						사원 관리 <small> 총 : ${pm.totalCount } 명 </small>
 					</h2>
 					
 					<div style="text-align-last: right;" class="nav navbar-right panel_toolbox">
@@ -512,7 +534,7 @@ $(function() {
 									<th>전화번호</th>
 									<th>입사일자</th>
 									<th>재직구분</th>
-									<th></th>
+									<th>상세보기</th>
 								</tr>
 								<c:forEach var="vo" items="${empList }">
 									<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀'}">
@@ -527,9 +549,9 @@ $(function() {
 											<td>${vo.emp_phone}</td>
 											<td>${vo.emp_hiredate}</td>
 											<td>${vo.emp_work}</td>
-											<th>
+											<td>
 												<input type="button" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
-											</th>
+											</td>
 										</tr>
 									</c:if>
 								</c:forEach>

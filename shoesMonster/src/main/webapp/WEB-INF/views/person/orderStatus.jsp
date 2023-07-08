@@ -202,7 +202,7 @@ $(function(){
 			tbl += "<input type='hidden' name='emp_id' id='emp_id' required readonly>";
 			// 담당자
 			tbl += "<td>";
-			tbl += "<input type='text' name='emp_name' id='emp_name' onclick=serchEmp('emp_id'); required readonly>";
+			tbl += "<input type='text' name='emp_name' id='emp_name' value=<c:out value='${sessionScope.id.emp_name}'/> required readonly>";
 			tbl += "</td>";
 			// 품번
 			tbl += "<td>";
@@ -242,6 +242,9 @@ $(function(){
 				dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 				dayNamesMin:['월','화','수','목','금','토','일'],
 				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+				onSelect: function(date, inst) {
+					$('#order_deliveryDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
+				}
 			});
 			// 납품예정일
 			$('#order_deliveryDate').datepicker({
@@ -300,11 +303,12 @@ $(function(){
 	//--------- 수정 버튼 ------------//
 	//수정버튼 클릭
 	$('#modify').click(function() {
+		
 		$('#add').attr("disabled", true);
 		$('#delete').attr("disabled", true);
 
 		// 행 하나 클릭했을 때	
-		$('table tr:not(:first-child)').click(function() {
+		$('table tr').click(function() {
 
 			// 하나씩만 선택 가능
 			if(!isExecuted) {
@@ -314,10 +318,6 @@ $(function(){
 				// 수주번호 저장
 				let updateCode = $(this).find('#orderCode').text().trim();
 				console.log(updateCode);
-
-				var jsonData = {
-					orderCode : updateCode
-				};
 
 				var self = $(this);
 
@@ -330,7 +330,7 @@ $(function(){
 						"emp_name",
 						"prod_code",
 						"prod_name", 
-						"prod.prod_unit", 
+						"prod_unit", 
 						"order_deliveryDate", 
 						"order_count",
 						];
@@ -342,29 +342,39 @@ $(function(){
 					} // 거래처 코드부터 다 수정 가능하게
 				}); // self.find(~~)
 				
-				// 거래처 검색
-				$('#client_code').click(function() {
-					openWindow("client","client_code");
-				}); // client_code click
-				// 거래처 검색2
-				$('#client_actname').click(function() {
-					openWindow("client","client_code");
-				}); // client_code click
+				// readonly 속성 부여
+				$(this).find("input").each(function(){
+					if($(this).attr("name")=="order_code" || $(this).attr("name")=="client_code" || $(this).attr("name")=="client_actname" ||
+							$(this).attr("name")=="order_date" || $(this).attr("name")=="prod_name" ||$(this).attr("name")=="prod_code"||
+							$(this).attr("name")=="prod_unit" || $(this).attr("name")=="emp_name") {
+						$(this).attr("readonly", true);
+					}
+				}); //readonly
 				
-				// 완제품 검색
-				$('#prod_name').click(function() {
-					openWindow("prod","prod_code");
-				}); // client_code click
 				
-				// 완제품 검색2
-				$('#prod_code').click(function() {
-					openWindow("prod","prod_code");
-				}); // client_code click
+// 				// 거래처 검색
+// 				$('#client_code').click(function() {
+// 					openWindow("client","client_code");
+// 				}); // client_code click
+// 				// 거래처 검색2
+// 				$('#client_actname').click(function() {
+// 					openWindow("client","client_code");
+// 				}); // client_code click
 				
-				// 담당자 검색
-				$('#emp_name').click(function() {
-					openWindow("emp","emp_id");
-				}); // client_code click
+// 				// 완제품 검색
+// 				$('#prod_name').click(function() {
+// 					openWindow("prod","prod_code");
+// 				}); // client_code click
+				
+// 				// 완제품 검색2
+// 				$('#prod_code').click(function() {
+// 					openWindow("prod","prod_code");
+// 				}); // client_code click
+				
+// 				// 담당자 검색
+// 				$('#emp_name').click(function() {
+// 					openWindow("emp","emp_id");
+// 				}); // client_code click
 		
 				//저장버튼 -> form 제출
 				$('#save').click(function() {
@@ -420,29 +430,32 @@ $(function(){
 				var checked = [];
 
 				$('input[name=selected]:checked').each(function() {
+					console.log("check => " + $(this).val());
 					checked.push($(this).val());
 				});
+				
+				if(confirm("총 " + checked.length + "행 선택\n정말 삭제하시겠습니까?")) {
 
-				if (checked.length > 0) {
-
-					$.ajax({
-						url : "/person/deleteOrder",
-						type : "post",
-						data : {checked : checked},
-						dataType : "text",
-						success : function() {
-							alert("삭제 완료");
-							location.reload();
-						},
-						error : function() {
-							alert("삭제 실패");
-						}
-					}); //ajax
-				} //체크된거 있을대
-				else {
-					alert("선택된 항목이 없습니다.");
-				} //체크된거 없을때
-
+					if (checked.length > 0) {
+	
+						$.ajax({
+							url : "/person/deleteOrder",
+							type : "post",
+							data : {checked : checked},
+							dataType : "text",
+							success : function() {
+								alert("삭제 완료했습니다");
+								location.reload();
+							},
+							error : function() {
+								alert("삭제 실패했습니다");
+							}
+						}); //ajax
+					} //체크된거 있을대
+					else {
+						alert("선택된 항목이 없습니다.");
+					} //체크된거 없을때
+				}
 			}); //save
 			
 			$(this).removeClass('true');
@@ -475,7 +488,7 @@ $(function(){
 		dayNamesMin:['월','화','수','목','금','토','일'],
 		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 		onSelect: function(date, inst) {
-			$('#order_deliveryDate_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
+			$('#order_date_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
 		}
 	});
 	
@@ -486,7 +499,7 @@ $(function(){
 		buttonImageOnly:'true',
 		changeMonth:'true',
 		changeYear:'true',
-		nextText:'다음달',
+		nextText:'다음달',	
 		prevText:'이전달',
 		showButtonPanel:'true',
 		currentText:'오늘',
@@ -547,19 +560,21 @@ $(function(){
 	
 	<div style="margin-left: 1%;">
 		<form method="get">
-			<input type="hidden" name="input" id="input" value="${input }">
-			<input type="hidden" name="client_code" id="client_code9999" >
-			업체 <input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-			수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
-					  <input type="text" name="order_date_toDate" id="order_date_toDate">
-			<input type="hidden" name="prod_code" id="prod_code9999">
-			품명 <input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')">
-			<input type="submit" value="조회">
-			<br>
-			<input type="hidden" name="emp_id" id="s_emp_id"> 
-			담당자 <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')">
-			납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
-					    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
+			<fieldset>
+				<input type="hidden" name="input" id="input" value="${input }">
+				<input type="hidden" name="client_code" id="client_code9999" >
+				업체 <input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
+				수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
+						  <input type="text" name="order_date_toDate" id="order_date_toDate">
+				<input type="hidden" name="prod_code" id="prod_code9999">
+				품명 <input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')">
+				<input type="submit" value="조회">
+				<br>
+				<input type="hidden" name="emp_id" id="s_emp_id"> 
+				담당자 <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')">
+				납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
+						    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
+			</fieldset>
 		</form>
 	</div>
 	
@@ -567,7 +582,6 @@ $(function(){
 	
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<form id="fr">
 			
 				<div class="x_title">
 					<h2> 수주 목록 </h2>
@@ -610,6 +624,7 @@ $(function(){
 			<br>
 			
 			<div style="overflow-x: auto;">
+				<form id="fr">
 				<table border="1" class="table table-striped jambo_table bulk_action">
 				<thead>
 					<tr class="headings">
@@ -645,8 +660,8 @@ $(function(){
 						</tr>
 					</c:forEach>
 				</table>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 	

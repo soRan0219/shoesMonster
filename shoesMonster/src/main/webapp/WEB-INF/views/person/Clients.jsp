@@ -48,7 +48,7 @@ body {
 	    	$('#cancelButton').hide();
 	    	$('#saveButton').hide();
 	    	
-	    	$('table tr:not(:first-child)').click(function(){
+	    	$('table tr').click(function(){
 	   			$(this).css('background', '#ccc');
 	    		
 	        		var client_code = $(this).find('#client_code').text();
