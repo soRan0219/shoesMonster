@@ -162,7 +162,7 @@ body {
 					 		<td>${s.product.prod_name}</td>
 					 		<td>${s.product.prod_color}</td>
 					 		<td>${s.product.prod_size}</td>
-					   		<td style="color: ${s.stock_count <= 20 ? 'red' : 'inherit'}">${s.stock_count}</td>
+					   		<td style="color: ${s.stock_count <= 50 ? 'red' : 'inherit'}">${s.stock_count}</td>
 					   		<td>${s.wh_code}</td>
 					   		<td>${s.warehouse.emp_id}</td>
 					   		<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
