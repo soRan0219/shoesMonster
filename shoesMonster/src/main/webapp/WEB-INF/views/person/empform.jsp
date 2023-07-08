@@ -111,6 +111,9 @@ $(document).ready(function() {
 
 	  });//save
 	  
+	  //==================모달==================================
+		  
+	  
 	});
 
 </script>
@@ -171,6 +174,8 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
+
 	
 	
 </body>

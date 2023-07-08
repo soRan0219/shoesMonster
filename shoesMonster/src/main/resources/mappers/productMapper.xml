@@ -619,8 +619,8 @@
 			<if test="emp_id != null and emp_id != ''">
 				AND w.emp_id LIKE concat('%', #{emp_id}, '%')
 			</if>
-			<if test="wh_dv != '전체' and !wh_dv.isEmpty()">
-				AND w.wh_dv=#{wh_dv}
+			<if test="wh_dv != null and wh_dv != ''">
+				AND w.wh_dv LIKE concat('%', #{wh_dv}, '%')
 			</if>
 		</where>
 		limit #{startPage}, #{pageSize}
@@ -648,8 +648,8 @@
 			<if test="emp_id != null and emp_id != ''">
 				AND emp_id LIKE concat('%', #{emp_id}, '%')
 			</if>
-			<if test="wh_dv != '전체' and !wh_dv.isEmpty()">
-				AND wh_dv=#{wh_dv}
+			<if test="wh_dv != null and wh_dv != ''">
+				AND wh_dv LIKE concat('%', #{wh_dv}, '%')
 			</if>
 		</where>
 	</select>

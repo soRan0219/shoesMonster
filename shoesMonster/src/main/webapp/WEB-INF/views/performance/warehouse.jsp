@@ -5,6 +5,7 @@
 
 <%@ include file="../include/header.jsp"%>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweetalert -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -554,7 +555,11 @@ body {
 						
 				}// 체크OOO
 				else{
-					Swal.fire('선택된 항목이 없습니다.', '', 'warning')
+					Swal.fire({
+						title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+						icon : 'warning',
+						width: '300px',
+						});
 				}// 체크 XXX
 	
 			}); // save
