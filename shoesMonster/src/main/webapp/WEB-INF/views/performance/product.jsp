@@ -261,14 +261,14 @@ body {
 						
 						 
 						Swal.fire({
-						  title: "<div style='color:#3085d6;font-size:20px'>" + "총" +checked.length+"행\n정말 삭제하시겠습니까?"+ "</div>",
+						  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
 								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
-						  icon: 'warning', // 아이콘! 느낌표 색? 표시?
+						  icon: 'info', // 아이콘! 느낌표 색? 표시?
 						  showDenyButton: true,
 						  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
 						  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
-						  confirmButtonText: '예', // confirm 버튼 텍스트 지정
-						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+						  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
+// 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
 						  width : '300px' // alert창 크기 조절
 						   
 						}).then((result) => {
@@ -282,8 +282,8 @@ body {
 									dataType: "text",
 									success: function() {
 										Swal.fire({
-											  title:  "총" +checked.length+"건 삭제 완료",
-											  icon: 'error',
+											  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
+											  icon: 'success',
 											}).then((result) => {
 											  if (result.isConfirmed) {
 											    location.reload();
@@ -291,12 +291,22 @@ body {
 											});
 									},
 									error: function() {
-										Swal.fire('삭제 실패!.', '', 'success')
+										Swal.fire({
+											title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
+											icon : 'question',
+											width: '300px',
+											});
+// 										Swal.fire('삭제 실패!.', '', 'success')
 									}
 								}); //ajax
 							  
 						  } else if (result.isDenied) {
-						    Swal.fire('삭제가 취소되었습니다.', '', 'info')
+								Swal.fire({
+									title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+									icon : 'error',
+									width: '300px',
+									});
+// 						    Swal.fire('삭제가 취소되었습니다.', '', 'info')
 						  }
 						});
 						

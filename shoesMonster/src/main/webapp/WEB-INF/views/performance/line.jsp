@@ -4,6 +4,7 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -455,11 +456,6 @@ body {
 			row += "<input type='text' name='line_name' id='line_name' required>";
 			row += "</td>";
 			
-// 			// 작업장
-// 			row += "<td>";
-// 			row += "<input type='text' name='line_place' id='line_place' required>";
-// 			row += "</td>";
-			
 			// 사용여부
 			row += " <td>";
 			row += " <select name='line_use' id='line_use'>";
@@ -551,43 +547,61 @@ body {
 				
 				if(checked.length > 0){
 					
-					if(confirm("선택한 항목을 삭제하시겠습니까?")){
 					
+					Swal.fire({
+						  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
+						  icon: 'info', // 아이콘! 느낌표 색? 표시?
+						  showDenyButton: true,
+						  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+						  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+						  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
+// 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+						  width : '300px', // alert창 크기 조절
+						  
+						}).then((result) => {
+					
+					 /* confirm => 예 눌렀을 때  */
+					  if (result.isConfirmed) {
+						  
+					  
 						$.ajax({
 	 						url: "/performance/linedelete",
 	 						type: "POST",
 	 						data: {checked : checked},
 	 						dataType: "text",	
 	 						success: function () {
-								alert("삭제가 완료되었습니다");
-								location.reload();
+	 							Swal.fire({
+									  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
+									  icon: 'success',
+									  width : '300px',
+									}).then((result) => {
+									  if (result.isConfirmed) {
+									    location.reload();
+									  }
+									});
 							},
 							error: function () {
-								alert("삭제 중 오류가 발생했습니다");
+								Swal.fire({
+									title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
+									icon : 'question',
+									width: '300px',
+									});
+								
 							}
 						});//ajax
-					}else{
-						alert("삭제가 취소되었습니다");
+						  } else if (result.isDenied) {
+								Swal.fire({
+								title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+								icon : 'error',
+								width: '300px',
+								});
 					}// if(confirm)
+				});		
 						
-				
-// 					$.ajax({
-// 						url: "/performance/linedelete",
-// 						type: "POST",
-// 						data: {checked : checked},
-// 						dataType: "text",
-// 						success: function () {
-// 							alert("에이잭스 예에~!~!");
-// 							location.reload();
-// 						},
-// 						error: function () {
-// 							alert("에이잭스 우우~!~!");
-// 						}
-// 					}); // ajax
-					
 				}// 체크OOO
 				else{
-					alert("선택된 항목이 없음");
+					Swal.fire('선택된 항목이 없습니다.', '', 'warning')
 				}// 체크 XXX
 	
 			}); // save
@@ -655,10 +669,10 @@ body {
 		
 		<div style="float: left;  margin-top: 1.5px;">
 			<c:if test="${empty param.input }">
-				<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+				<button onclick="location.href='/performance/line'" class="B2 B2-info">↻</button>
 			</c:if>
 			<c:if test="${!empty param.input }">
-				<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+				<button onclick="location.href='/performance/line?input=${param.input }'" class="B2 B-info">↻</button>
 			</c:if>
 		</div>
 				
