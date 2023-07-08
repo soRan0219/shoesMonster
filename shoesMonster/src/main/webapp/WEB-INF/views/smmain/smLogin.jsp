@@ -49,7 +49,7 @@ body {
         <div class="animate form login_form">
           <section class="login_content">
             <form action="" method="post">
-              <h1> Eployee Login </h1>
+              <h1> Employee Login </h1>
               <div>
                 <input type="text" id="ID" name="emp_id" class="form-control" placeholder="Username" required="" />
               </div>

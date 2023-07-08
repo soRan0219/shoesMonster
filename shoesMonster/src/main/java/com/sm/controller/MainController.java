@@ -56,6 +56,7 @@ public class MainController {
 	}
 	
 	// http://localhost:8088/smmain/smMain
+	// http://localhost:8080/smmain/smMain
 	// 메인페이지
 	@RequestMapping(value = "/smMain", method = RequestMethod.GET)
 	public String mainGET(HttpSession session) {
