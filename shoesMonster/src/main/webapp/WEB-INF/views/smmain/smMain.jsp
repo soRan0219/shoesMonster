@@ -11,6 +11,7 @@
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
+
 <style type="text/css">
 
 body {
@@ -19,6 +20,11 @@ body {
 </style>
 <!-- 폰트 -->
  
+<!-- 달력 -->
+
+ <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js"></script>
+<!-- 달력 -->
     <script type="text/javascript">
      
     
@@ -297,78 +303,109 @@ body {
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
   
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          headerToolbar: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+			  },
+			  googleCalendarApiKey: 'AIzaSyBPa51EObVoBELfBVUs0dD0fIeVMi9mWiU',
+			  events: {
+			  googleCalendarId: '51b8bc2598553b3389ff4300005fbc3afa52f0fa582543ef2fcca04dc2dcf799@group.calendar.google.com',
+			  className: 'gcal-event' // an option!
+			  },
+        });
+        calendar.render();
+      });
   
     </script>
 
 
 <!-- page content -->
 <div class="right_col" role="main">
-	<!-- top tiles -->
-	<div class="row" style="display: inline-block;">
-		<div class="tile_count">
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-				<span class="count_top"><i class="fa fa-user"></i> Total
-					Users</span>
-				<div class="count">2400</div>
-				<span class="count_bottom"><i class="green">4% </i> From last
-					Week</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-				<span class="count_top"><i class="fa fa-clock-o"></i> Average
-					Time</span>
-				<div class="count">123.50</div>
-				<span class="count_bottom"><i class="green"><i
-						class="fa fa-sort-asc"></i>3% </i> From last Week</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-				<span class="count_top"><i class="fa fa-user"></i> Total
-					Males</span>
-				<div class="count green">2,500</div>
-				<span class="count_bottom"><i class="green"><i
-						class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-				<span class="count_top"><i class="fa fa-user"></i> Total
-					Females</span>
-				<div class="count">4,567</div>
-				<span class="count_bottom"><i class="red"><i
-						class="fa fa-sort-desc"></i>12% </i> From last Week</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-				<span class="count_top"><i class="fa fa-user"></i> Total
-					Collections</span>
-				<div class="count">2,315</div>
-				<span class="count_bottom"><i class="green"><i
-						class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-			</div>
-			<div class="col-md-2 col-sm-4  tile_stats_count">
-				<span class="count_top"><i class="fa fa-user"></i> Total
-					Connections</span>
-				<div class="count">7,325</div>
-				<span class="count_bottom"><i class="green"><i
-						class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-			</div>
-		</div>
+
+
+	<!-- 애령 날씨 테스트중 ~ ~ -->
+	<script defer src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" integrity="sha384-vuFJ2JiSdUpXLKGK+tDteQZBqNlMwAjhZ3TvPaDfN9QmbPb7Q8qUpbSNapQev3YF" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		
+	var weatherIcon = {
+	    '01' : 'fas fa-sun',
+	    '02' : 'fas fa-cloud-sun',
+	    '03' : 'fas fa-cloud',
+	    '04' : 'fas fa-cloud-meatball',
+	    '09' : 'fas fa-cloud-sun-rain',
+	    '10' : 'fas fa-cloud-showers-heavy',
+	    '11' : 'fas fa-poo-storm',
+	    '13' : 'far fa-snowflake',
+	    '50' : 'fas fa-smog'
+	};
+
+	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+'busan'+"&appid="+"aa7d2badb9c5e8ad659a0b018df246c1";
+	$.ajax({
+	    url: apiURI,
+	    dataType: "json",
+	    type: "GET",
+	    async: "false",
+	    success: function(resp) {
+
+	        var $Icon = (resp.weather[0].icon).substr(0,2);
+	        var $weather_description = resp.weather[0].main;
+	        var $Temp = Math.floor(resp.main.temp- 273.15) + 'º';
+	        var $humidity = '습도&nbsp;&nbsp;&nbsp;&nbsp;' + resp.main.humidity+ ' %';
+	        var $wind = '바람&nbsp;&nbsp;&nbsp;&nbsp;' +resp.wind.speed + ' m/s';
+	        var $city = '부산';
+	        var $cloud = '구름&nbsp;&nbsp;&nbsp;&nbsp;' + resp.clouds.all +"%";
+	        var $temp_min = '최저 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_min- 273.15) + 'º';
+	        var $temp_max = '최고 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_max- 273.15) + 'º';
+	        
+
+	        $('.weather_icon').append('<i class="' + weatherIcon[$Icon] +' fa-5x" style="height : 70px; width : 70px; top : 60px;"></i>');
+	        $('.weather_description').prepend($weather_description);
+	        $('.current_temp').prepend($Temp);
+	        $('.humidity').prepend($humidity);
+	        $('.wind').prepend($wind);
+	        $('.city').append($city);
+	        $('.cloud').append($cloud);
+	        $('.temp_min').append($temp_min);
+	        $('.temp_max').append($temp_max);               
+	    }
+	})
+
+	</script>
+	
+	
+	<div style="background-color : rgb(255, 255, 255); padding : 40px; color : #66b3ff; width : 400px; height : 200px; top: 40px;">
+    <div style="float : left; margin : 30px auto;">
+        <div class="weather_icon"></div>
+    </div><br>
+
+    <div style="float : right; margin : 10px 5px; font-size : 11pt">
+            <div class="temp_min"></div>
+            <div class="temp_max"></div>
+            <div class="humidity"></div>
+            <div class="wind"></div>
+            <div class="cloud"></div>
+    </div>
+    <div style="float : right; margin : -10px 5px; padding: 15px;">
+        <div class="current_temp" style="font-size : 25pt"></div>
+        <div class="weather_description" style="font-size : 20pt"></div>
+        <div class="city" style="font-size : 13pt"></div>
+    </div>
 	</div>
-	<!-- /top tiles -->
+	
+	
+	<!-- 날씨 테스트 -->
+
 
 	<div class="row">
 		<div class="col-md-12 col-sm-12 ">
 			<div class="dashboard_graph">
 
 				<div class="row x_title">
-					<div class="col-md-6">
-						<h3>
-							Shoes Monster! <small>판매 실적 현황</small>
-						</h3>
-					</div>
-					<div class="col-md-6">
-						<div id="reportrange" class="pull-right"
-							style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-							<i class="glyphicon glyphicon-calendar fa fa-calendar"></i> <span>December
-								30, 2014 - January 28, 2015</span> <b class="caret"></b>
-						</div>
-					</div>
 				</div>
 
 				<div> <!--  class="col-md-9 col-sm-9 " -->
@@ -471,7 +508,9 @@ body {
 
 	
 	<!-- /page content -->
-
+<!-- 달력  -->
+<div id='calendar' style="width: 70%  ; height: 70%;"></div>
+<!-- 달력  -->
 
 
 </div>

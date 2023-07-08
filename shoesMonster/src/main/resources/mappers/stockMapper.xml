@@ -473,9 +473,7 @@
 			<if test="wh_code != null and wh_code != ''">
 			    and s.wh_code like concat( '%', #{wh_code},'%' )
 			</if>
-			<if test="wh_dv != null and wh_dv != ''">
-          	  and w.wh_dv = '원자재'
-        	</if>
+          	  and w.wh_dv = '완제품'
    		</where>
 	</select> 
 
@@ -496,9 +494,7 @@
 			<if test="wh_code != null and wh_code != ''">
 			    and s.wh_code like concat( '%', #{wh_code},'%' )
 			</if>
-			<if test="wh_dv != null and wh_dv != ''">
           	  and w.wh_dv = '완제품'
-        	</if>
    		</where>
 		limit #{startPage}, #{pageSize}
 	</select>
@@ -520,9 +516,7 @@
 			<if test="wh_code != null and wh_code != ''">
 			    and s.wh_code like concat( '%', #{wh_code},'%' )
 			</if>
-			<if test="wh_dv != null and wh_dv != ''">
           	  and w.wh_dv = '원자재'
-        	</if>
    		</where>
 	</select> 
 
@@ -543,9 +537,7 @@
 			<if test="wh_code != null and wh_code != ''">
 			    and s.wh_code like concat( '%', #{wh_code},'%' )
 			</if>
-			<if test="wh_dv != null and wh_dv != ''">
           	  and w.wh_dv = '원자재'
-        	</if>
    		</where>
 		limit #{startPage}, #{pageSize}
 	</select>

@@ -83,7 +83,7 @@ body {
 			 	<c:forEach var="s" items="${stock_ListR}">
 			             <tr>
 			                 <th>${s.warehouse.wh_dv}</th>
-			                 <th>${s.raw_code}</th>
+			                 <td>${s.raw_code}</td>
 			                 <td>${s.raw_mat.raw_name}</td>
 			                 <td>${s.raw_mat.raw_color}</td>
 			                 <td style="color: ${s.stock_count <= 20 ? 'red' : 'inherit'}">${s.stock_count}</td>
