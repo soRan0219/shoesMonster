@@ -6,6 +6,8 @@
 
 
 <%@ include file="../include/header.jsp"%>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweetalert -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -190,55 +192,116 @@ body {
 //	 				alert(checked);
 					
 					if(checked.length > 0) {
-						
-						 
 						Swal.fire({
-						  title: "<div style='color:#3085d6;font-size:20px'>" + "총" +checked.length+"행\n정말 삭제하시겠습니까?"+ "</div>",
-								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
-						  icon: 'warning', // 아이콘! 느낌표 색? 표시?
-						  showDenyButton: true,
-						  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
-						  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
-						  confirmButtonText: '예', // confirm 버튼 텍스트 지정
-						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
-						  width : '300px' // alert창 크기 조절
-						   
-						}).then((result) => {
+							  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+									  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
+							  icon: 'info', // 아이콘! 느낌표 색? 표시?
+							  showDenyButton: true,
+							  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+							  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+							  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
+//	 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+							  width : '300px', // alert창 크기 조절
+							  
+							}).then((result) => {
+						
 						 /* confirm => 예 눌렀을 때  */
 						  if (result.isConfirmed) {
 							  
-							  $.ajax({
-									url: "/performance/rawMaterialDelete",
-									type: "post",
-									data: {checked:checked},
-									dataType: "text",
-									success: function() {
-										Swal.fire({
-											  title:  "총" +checked.length+"건 삭제 완료",
-											  icon: 'error',
-											}).then((result) => {
-											  if (result.isConfirmed) {
-											    location.reload();
-											  }
-											});
-									},
-									error: function() {
-										Swal.fire('삭제 실패!.', '', 'success')
-									}
-								}); //ajax
+						  
+							$.ajax({
+		 						url: "/performance/rawMaterialDelete",
+		 						type: "POST",
+		 						data: {checked : checked},
+		 						dataType: "text",	
+		 						success: function () {
+		 							Swal.fire({
+										  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
+										  icon: 'success',
+										  width : '300px',
+										}).then((result) => {
+										  if (result.isConfirmed) {
+										    location.reload();
+										  }
+										});
+								},
+								error: function () {
+									Swal.fire({
+										title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
+										icon : 'question',
+										width: '300px',
+										});
+									
+								}
+							});//ajax
+							  } else if (result.isDenied) {
+									Swal.fire({
+									title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+									icon : 'error',
+									width: '300px',
+									});
+						}// if(confirm)
+					});		
+							
+					}// 체크OOO
+					else{
+						Swal.fire({
+							title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+							icon : 'warning',
+							width: '300px',
+							});
+					}// 체크 XXX
+		
+				}); // save
+				
+						 
+// 						Swal.fire({
+// 						  title: "<div style='color:#3085d6;font-size:20px'>" + "총" +checked.length+"행\n정말 삭제하시겠습니까?"+ "</div>",
+// 								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
+// 						  icon: 'warning', // 아이콘! 느낌표 색? 표시?
+// 						  showDenyButton: true,
+// 						  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+// 						  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+// 						  confirmButtonText: '예', // confirm 버튼 텍스트 지정
+// 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+// 						  width : '300px' // alert창 크기 조절
+						   
+// 						}).then((result) => {
+// 						 /* confirm => 예 눌렀을 때  */
+// 						  if (result.isConfirmed) {
 							  
-						  } else if (result.isDenied) {
-						    Swal.fire('삭제가 취소되었습니다.', '', 'info')
-						  }
-						});
+// 							  $.ajax({
+// 									url: "/performance/rawMaterialDelete",
+// 									type: "post",
+// 									data: {checked:checked},
+// 									dataType: "text",
+// 									success: function() {
+// 										Swal.fire({
+// 											  title:  "총" +checked.length+"건 삭제 완료",
+// 											  icon: 'error',
+// 											}).then((result) => {
+// 											  if (result.isConfirmed) {
+// 											    location.reload();
+// 											  }
+// 											});
+// 									},
+// 									error: function() {
+// 										Swal.fire('삭제 실패!.', '', 'success')
+// 									}
+// 								}); //ajax
+							  
+// 						  } else if (result.isDenied) {
+// 						    Swal.fire('삭제가 취소되었습니다.', '', 'info')
+// 						  }
+// 						});
 						
 						
-					} //체크된거 있을대
-					else {
-						 Swal.fire('선택된 항목이 없습니다.', '', 'info')
-					} //체크된거 없을때
+// 					} //체크된거 있을대
+// 					else {
+// 						 Swal.fire('선택된 항목이 없습니다.', '', 'info')
+// 					} //체크된거 없을때
 					
-				}); //save
+// 				}); //save
 				
 				//취소 -> 리셋
 				$('#cancle').click(function(){

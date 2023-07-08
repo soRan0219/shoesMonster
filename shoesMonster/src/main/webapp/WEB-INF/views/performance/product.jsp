@@ -313,7 +313,11 @@ body {
 						
 					} //체크된거 있을대
 					else {
-						 Swal.fire('선택된 항목이 없습니다.', '', 'info')
+						Swal.fire({
+							title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+							icon : 'warning',
+							width: '300px',
+							});
 					} //체크된거 없을때
 					
 				}); //save

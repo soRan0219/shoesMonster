@@ -5,6 +5,7 @@
 
 <%@ include file="../include/header.jsp"%>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweetalert -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -243,7 +244,7 @@ body {
 						},
 						
 						error : function(data) {
-							alert("아작스 실패 ~~");
+// 							alert("아작스 실패 ~~");
 						}
 					}); //ajax
 				
@@ -363,7 +364,7 @@ body {
 // 			       if(selectedOption == null || selectedOption === ''){
 // 			    	   selectedOption = '1차공정';
 // 			       }
-			        alert(selectedOption); // 선택된 옵션 값으로 someFunction 호출
+// 			        alert(selectedOption); // 선택된 옵션 값으로 someFunction 호출
 					getLineCode();
 			    });
 			    
@@ -601,7 +602,11 @@ body {
 						
 				}// 체크OOO
 				else{
-					Swal.fire('선택된 항목이 없습니다.', '', 'warning')
+					Swal.fire({
+						title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+						icon : 'warning',
+						width: '300px',
+						});
 				}// 체크 XXX
 	
 			}); // save
@@ -631,9 +636,9 @@ body {
 		<input type="hidden" name="input" id="input" value="${input}">
 		
 
-		<input type="submit" name="line_place" value="1차공정" class="btn btn-info" ></input>
-		<input type="submit" name="line_place" value="2차공정" class="btn btn-info" ></input>
-	    <input type="submit" name="line_place" value="3차공정" class="btn btn-info" ></input>
+		<input type="submit" name="line_place" value="1차공정" class="B B-info" ></input>
+		<input type="submit" name="line_place" value="2차공정" class="B B-info" ></input>
+	    <input type="submit" name="line_place" value="3차공정" class="B B-info" ></input>
 		 
 		<br>
 		
