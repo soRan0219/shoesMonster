@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+
 
 <%@ include file="../include/header.jsp"%>
 
@@ -11,6 +13,10 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -343,41 +349,50 @@ body {
 	<div style="margin-left: 1%;">
 		<form method="get">
 			<fieldset>
-				<label>소요코드:</label> 
+				<label>소요코드 : </label> 
 				<input type="text" name="req_code" id="searchCode"> 
-				<label>완제품 :</label> 
+				<label>완제품 : </label> 
 				<input type="hidden"name="prod_code" id="prod_code9999"> 
 				<input type="text"name="prod_name" id="prod_name9999" readonly onclick="serchProd('prod_code9999')"> 
-				<label>원자재 :</label>
+				<label>원자재 : </label>
 				<input type="hidden" name="raw_code" id="raw_code9999"> 
 				<input type="text" name="raw_name" id="raw_name9999" readonly onclick="serchRaw('raw_code9999')"> 
 				<input type="submit" class="B B-info" value="검색">
 			</fieldset>
 		</form>
+		
 	</div>
 
 	<hr>
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<form id="fr" method="post">
 			
 				<div class="x_title">
 					<h2>소요량 관리<small>총 ${paging.total} 건</small></h2>
 					
+					<div style="float: left;  margin-top: 1.5px;">
+						<c:if test="${empty param.input }">
+							<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+						</c:if>
+						<c:if test="${!empty param.input }">
+							<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+						</c:if>
+					</div>
+										
 					<div style="float: right;">
 						<button id="addButton" class="B B-info">추가</button>
 						<button id="modify" class="B B-info">수정</button>
 						<button id="delete" class="B B-info">삭제</button>
 						<button type="reset" id="cancle" class="B B-info">취소</button>
 						<input type="submit" class="B B-info" value="저장" id="save">
-						<button onclick="location.href='/performance/requirement'" class="B B-info">새로고침</button>
 					</div>
 					
 					<div class="clearfix"></div>
 				</div>
 				
 				<!-- 버튼 제어 -->
+			<form id="fr" method="post">
 				<script>
 					var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 
@@ -401,71 +416,76 @@ body {
 				</script>
 				<!-- 버튼 제어 -->
 
-		<div style="overflow-x: auto;">
-			<table border="1" id="reqTable"
-				class="table table-striped jambo_table bulk_action"
-				style="text-align: center;">
-				<colgroup>
-					<col style="width: 50px">
-					<col style="width: 100px">
-					<col style="width: 100px">
-					<col style="width: 100px">
-					<col style="width: 100px">
-					<col style="width: 100px">
-					<col style="width: 150px">
-				</colgroup>
-				<thead>
-					<tr class="headings">
-						<th>번호</th>
-						<th>소요코드</th>
-						<th type='hidden' style='display: none;'>품번</th>
-						<th>완제품</th>
-						<th>원자재</th>
-						<th>소요량</th>
-						<th>총 소요량</th>
-						<th>비고</th>
-					</tr>
-				</thead>
-					<tr type='hidden' style='display: none;'></tr>
-				<c:forEach var="vo" items="${reqList}">
-					<tr>
-						<td></td>
-						<td id="reqCode">${vo.req_code }</td>
-						<td type='hidden' style='display: none;'>${vo.prod_code }</td>
-						<td id="prodName">${vo.prod.prod_name }</td>
-						<td>${vo.raw.raw_name }</td>
-						<td>${vo.req_dan }</td>
-						<td></td>
-						<td>${vo.req_note }</td>
-					</tr>
-				</c:forEach>
-			</table>
+				<div style="overflow-x: auto;">
+					<table border="1" id="reqTable"
+						class="table table-striped jambo_table bulk_action"
+						style="text-align: center;">
+						<colgroup>
+							<col style="width: 50px">
+							<col style="width: 100px">
+							<col style="width: 100px">
+							<col style="width: 100px">
+							<col style="width: 100px">
+							<col style="width: 100px">
+							<col style="width: 150px">
+						</colgroup>
+						<thead>
+							<tr class="headings">
+								<th>번호</th>
+								<th>소요코드</th>
+								<th type='hidden' style='display: none;'>품번</th>
+								<th>완제품</th>
+								<th>원자재</th>
+								<th>소요량</th>
+								<th>총 소요량</th>
+								<th>비고</th>
+							</tr>
+						</thead>
+							<tr type='hidden' style='display: none;'></tr>
+						<c:forEach var="vo" items="${reqList}">
+							<tr>
+								<td></td>
+								<td id="reqCode">${vo.req_code }</td>
+								<td type='hidden' style='display: none;'>${vo.prod_code }</td>
+								<td id="prodName">${vo.prod.prod_name }</td>
+								<td>${vo.raw.raw_name }</td>
+								<td>${vo.req_dan }</td>
+								<td></td>
+								<td>${vo.req_note }</td>
+							</tr>
+						</c:forEach>
+					</table>
+					</div>
+				</form>
 		</div>
-		</form>
 	</div>
-</div>
 
-	<div style="display: block; text-align: center;">
-		<c:if test="${paging.startPage != 1 }">
-			<a class="btn btn-secondary"
-				href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&lt;</a>
-		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }"
-			var="p">
-			<c:choose>
-				<c:when test="${p == paging.nowPage }">
-					<b>${p }</b>
-				</c:when>
-				<c:when test="${p != paging.nowPage }">
-					<a class="btn btn-secondary"
-						href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
-				</c:when>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.endPage != paging.lastPage}">
-			<a class="btn btn-secondary"
-				href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&gt;</a>
-		</c:if>
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">
+				<c:if test="${paging.startPage != 1 }">
+					<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Previous</a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:forEach begin="${paging.startPage }" end="${paging.endPage }"
+					var="p">
+					<c:choose>
+						<c:when test="${p == paging.nowPage }">
+							<b>${p }</b>
+						</c:when>
+						<c:when test="${p != paging.nowPage }">
+							<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Next</a>
+				</c:if>
+			</li>
+		</ul>
 	</div>
 </div>
 <!-- /page content -->

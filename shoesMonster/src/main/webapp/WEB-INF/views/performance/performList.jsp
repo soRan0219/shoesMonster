@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -13,6 +14,10 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -440,9 +445,6 @@ body {
 
 		//지시일자 이날부터
 		$('#search_fromDate').datepicker({
-			showOn:'both',
-			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-			buttonImageOnly:'true',
 			changeMonth:'true',
 			changeYear:'true',
 			nextText:'다음달',
@@ -460,9 +462,6 @@ body {
 		});
 		//이날까지
 		$('#search_toDate').datepicker({
-			showOn:'both',
-			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-			buttonImageOnly:'true',
 			changeMonth:'true',
 			changeYear:'true',
 			nextText:'다음달',
@@ -478,32 +477,16 @@ body {
 		
 		//검색 결과 없을 때 표, 버튼 다 숨기기
 		if(Number($('#total').text())==0) {
-			$('#body').html("검색 결과가 없습니다.");
+			$('#searchCnt').html("검색 결과가 없습니다.");
 		}
 		
 		//======================= 검색 ===============================//
 		
 		
 		
-		//n건씩 표시
-		$('#perPage').on('change', function() {
-			var pageSize = $(this).val();
-			
-			$('#pageSize').val(pageSize);
-			$('#searchForm').submit();
-		});
-		
-		$('#perPage').find('option').each(function(){
-			if($(this).val()===$('#pageSize').val()) {
-				$(this).prop("selected", true);
-			}
-		});
-		//n건씩 표시
-		
-		
 		//생산실적코드 클릭시 상세조회
 		$('#performCode a').click(function() {
-			var obj = { perform_code:$(this).text().trim() };
+			var obj = { perform_code:$('#performCode').text().substring(0,16).trim() };
 				
 			$.ajax({
 				url: "/performance/detail",
@@ -514,36 +497,47 @@ body {
 				success: function(data) {
 					console.log(data);
 					
-					var tmp = "생산실적코드: ";
-					tmp += data.perform_code;
-					tmp += " 작업지시코드: ";
-					tmp += data.work_code;
-					tmp += " 라인코드: ";
-					tmp += data.workOrder.line_code;
-					tmp += " 품번: ";
-					tmp += ((data.prod_code===""||data.prod_code==null) ? "없음" : data.prod_code);
-					tmp += "<br>실적일: ";
-					tmp += getDate(data.perform_date);
-					tmp += " 실적수량: ";
-					tmp += data.perform_qt;
-					tmp += " 양품수: ";
-					tmp += data.perform_fair;
-					tmp += " 불량수: ";
-					tmp += data.perform_defect;
-					tmp += "<br>불량사유: ";
-					tmp += ((data.defect_note===""||data.defect_note==null) ? "없음" : data.defect_note);
-					tmp += " 현황: ";
-					tmp += data.perform_status;
-					tmp += " 등록자: ";
-					tmp += ((data.emp_id===""||data.emp_id==null) ? "없음" : data.emp_id);
-					tmp += " 변경자: ";
-					tmp += ((data.change_id===""||data.change_id==null) ? "없음" : data.change_id);
-					tmp += " 변경일: ";
-					tmp += ((data.change_date===""||data.change_date==null) ? "없음" : getDate(data.change_date));
-					tmp += " 비고: ";
-					tmp += ((data.perform_note===""||data.perform_note==null) ? "없음" : data.perform_note);
+					var tmp = "<table border='1' class='table table-striped jambo_table bulk_action' style='text-align:center;'>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th>생산실적코드</th>";
+					tmp += "  <td>" + data.perform_code + "</td>";
+					tmp += " <th>작업지시코드</th>";
+					tmp += "  <td>" + data.work_code + "</td>";
+					tmp += " <th>라인코드</th>";
+					tmp += "  <td>" + data.workOrder.line_code + "</td>";
+					tmp += " <th>품번</th>";
+					tmp += ((data.prod_code===""||data.prod_code==null) ? "<td>없음</td>" : "<td>" + data.prod_code + "</td>");
+					tmp += "</tr>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th>실적일</th>";
+					tmp += "  <td>" + getDate(data.perform_date) + "</td>";
+					tmp += " <th>실적수량</th>";
+					tmp += "  <td>" + data.perform_qt + "</td>";
+					tmp += " <th>양품수</th>";
+					tmp += "  <td>" + data.perform_fair + "</td>";
+					tmp += " <th>불량수</th>";
+					tmp += "  <td>" + data.perform_defect + "</td>";
+					tmp += "</tr>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th>불량사유</th>";
+					tmp += ((data.defect_note===""||data.defect_note==null) ? "<td>없음</td>" : "<td>" + data.defect_note + "</td>");
+					tmp += " <th>현황</th>";
+					tmp += "  <td>" + data.perform_status + "</td>";
+					tmp += " <th>등록자</th>";
+					tmp += ((data.emp_id===""||data.emp_id==null) ? "<td>없음</td>" : "<td>" + data.emp_id + "</td>");
+					tmp += " <th>변경자</th>";
+					tmp += ((data.change_id===""||data.change_id==null) ? "<td>없음</td>" : "<td>" + data.change_id + "</td>");
+					tmp += "</tr>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th>변경일</th>";
+					tmp += ((data.change_date===""||data.change_date==null) ? "<td>없음</td>" : "<td>" + getDate(data.change_date) + "</td>");
+					tmp += " <th>비고</th>";
+					tmp += ((data.perform_note===""||data.perform_note==null) ? "<td>없음</td>" : "<td>" + data.perform_note + "</td>");
+					tmp += "</tr>";
+					tmp += "</table>";
 					
-					$('#detail').html(tmp);
+					$('.modal-body').html(tmp);
+					$('.modal').modal("show");
 				},
 				error: function() {
 					alert("아작스 실패");
@@ -566,17 +560,17 @@ body {
 		<form id="searchForm" method="get">
 			<fieldset>
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				작업지시코드: <input type="text" id="search_work_code" name="search_work_code">
-				실적일: 
+				작업지시코드 : <input type="text" id="search_work_code" name="search_work_code">
+				실적일 : 
 				<input type="text" id="search_fromDate" name="search_fromDate"> ~ 
 				<input type="text" id="search_toDate" name="search_toDate">
 				<input type="submit" class="B B-info" value="조회">
 				<br>
-				라인코드: <input type="text" id="search_line_code" name="search_line_code">
-				품번: <input type="text" id="search_prod_code" name="search_prod_code">
+				라인코드 : <input type="text" id="search_line_code" name="search_line_code">
+				품번 : <input type="text" id="search_prod_code" name="search_prod_code">
 				<br>
 				<div style="margin-top: 0.5%;">
-					현황: <input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
+					현황 : <input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
 						  <input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
 						  <input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
 				</div>
@@ -590,17 +584,9 @@ body {
 		<div class="x_panel">
 			<div class="x_title">
 			
-<!-- 			<div id="body"> -->
-			<div>
-				<h2>생산 실적<small>총 ${pm.totalCount } 건</small></h2>
-<%-- 				총 <span id="total">${pm.totalCount }</span>건 --%>
-						
-<!-- 				<select id="perPage" name="perPage"> -->
-<!-- 					<option value="2">2</option> -->
-<!-- 					<option value="5">5</option> -->
-<!-- 					<option value="7">7</option> -->
-<!-- 				</select> -->
-<!-- 				건씩 표시 -->
+
+			<div id="searchCnt">
+				<h2>생산 실적</h2> 총 <small id="total">${pm.totalCount }</small> 건
 			</div>
 			
 			<!-- 버튼 제어 -->
@@ -610,7 +596,6 @@ body {
 				<button id="delete" class="true B B-info">삭제</button>
 				<button type="reset" id="cancle" class="B B-info">취소</button>
 				<button type="submit" id="save" class="B B-info">저장</button>
-				<button onclick="location.href='/performance/performList'" class="B B-info">새로고침</button>
 			</div>
 			
 			<div class="clearfix"></div>
@@ -663,7 +648,7 @@ body {
 				<c:forEach var="vo" items="${perfList }">
 					<tr class="even pointer">
 						<td class="a-center"></td>
-						<td id="performCode"><a href="#" onclick="return false" class="t">${vo.perform_code }</a></td>
+						<td id="performCode">${vo.perform_code }<a href="#" onclick="return false" class="t">&#128269;</a></td>
 						<td>${vo.work_code }</td>
 						<td>${vo.workOrder.line_code }</td>
 						<td>${vo.prod_code }</td>
@@ -743,27 +728,48 @@ body {
 	</div>
 </div>
 		
-		<div id="pagination" style="text-align: center;">
+<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	<ul class="pagination">
+		<li class="paginate_button previous disabled">
 			<c:if test="${pm.prev }">
-				<a class="btn btn-secondary"
-				 href="/performance/performList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏪ </a>
+				<a href="/performance/performList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> Previous </a>
 			</c:if>
-			
-			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-				<a class="btn btn-secondary"
-				href="/performance/performList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}">${page }</a>
-			</c:forEach>
-		
+		</li>
+		<li class="paginate_button previous disabled">
+		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+			<a href="/performance/performList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}">${page }</a>
+		</c:forEach>
+		</li>
+		<li class="paginate_button previous disabled">
 			<c:if test="${pm.next }">
-				<a class="btn btn-secondary"
-				href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏩ </a>
+				<a href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> Next </a>
 			</c:if>
+
 		</div>
 	
-	<div id="detail"></div>
+	<!-- 상세보기 모달창 -->
+	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">생산실적 상세</h4>
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 상세보기 모달창 -->
+
 	
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/forTest/sm.css"> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

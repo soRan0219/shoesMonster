@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ page import="javax.servlet.http.HttpSession" %>
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -13,6 +13,10 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -162,16 +166,16 @@ body {
                 var row = '<tr>' +
                 	'<td></td>'+
                     '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" readonly required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_name"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_category"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_unit"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_size"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_color"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_name" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_category" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_unit" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_size" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_color" required></td>' +
                     '<input type="hidden" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required>' +
                     '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); required></td>' +
                     '<td type="hidden" style="display: none;"><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
                     '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_code'+counter+'"); readonly required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_price"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_price" required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_note"></td>' +
                     '</tr>';
 
@@ -461,8 +465,14 @@ body {
 
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
+			<c:if test="${empty param.input }">
+			<button onclick="location.href='/performance/product'" class="B B-info">새로고침</button>
+			</c:if>
+			<c:if test="${!empty param.input }">
+			<button onclick="location.href='/performance/product?input=${param.input }'" class="B B-info">새로고침</button>
+			</c:if>
+	
 		<form id="fr" method="post">	
-
 			<div class="x_title">
 				<h2>완제품<small>총 ${paging.total} 건</small></h2>
 				
@@ -472,7 +482,6 @@ body {
 					<button id="delete" class="B B-info">삭제</button>
 					<button type="reset" id="cancle" class="B B-info">취소</button>
 					<input type="submit" class="B B-info" value="저장" id="save">
-					<button onclick="location.href='/performance/product'" class="B B-info">새로고침</button>
 				</div>
 				
 				<div class="clearfix"></div>
@@ -561,27 +570,32 @@ body {
 </div>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->	
-	<div id="pagination" style="display: block; text-align: center;">		
-		<c:if test="${paging.startPage != 1 }">
-			<a class="btn btn-secondary"
-			href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&lt;</a>
-		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-			<c:choose>
-				<c:when test="${p == paging.nowPage }">
-					<b>${p }</b>
-				</c:when>
-				<c:when test="${p != paging.nowPage }">
-					<a class="btn btn-secondary"
-					href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
-				</c:when>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.endPage != paging.lastPage}">
-			<a class="btn btn-secondary" 
-			href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&gt;</a>
-		</c:if>
-	</div>
+<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	<ul class="pagination">
+		<li class="paginate_button previous disabled">	
+			<c:if test="${paging.startPage != 1 }">
+				<a href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">Previous</a>
+			</c:if>
+		</li>
+		<li class="paginate_button previous disabled">	
+			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+				<c:choose>
+					<c:when test="${p == paging.nowPage }">
+						<b>${p }</b>
+					</c:when>
+					<c:when test="${p != paging.nowPage }">
+						<a href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
+					</c:when>
+				</c:choose>
+			</c:forEach>
+		</li>
+		<li class="paginate_button previous disabled">	
+			<c:if test="${paging.endPage != paging.lastPage}">
+				<a href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">Next</a>
+			</c:if>
+		</li>
+	</ul>
+</div>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 </div>

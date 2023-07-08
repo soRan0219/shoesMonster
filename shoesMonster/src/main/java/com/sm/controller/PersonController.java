@@ -64,7 +64,7 @@ public class PersonController {
 		logger.debug(" empinfoGET() 호출@@@@@ ");
 		
 		// 페이지 정보
-		cpvo.setPageSize(10);
+		cpvo.setPageSize(8);
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
@@ -254,7 +254,7 @@ public class PersonController {
 		logger.debug(" empManageGET() 호출@@@@@ ");
 		
 		//페이지 정보
-		cpvo.setPageSize(10);
+		cpvo.setPageSize(8);
 		
 		//페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
@@ -330,12 +330,12 @@ public class PersonController {
 		logger.debug("search ################"+search);
 		
 		// 페이지 정보
-		cpvo.setPageSize(2);
+		cpvo.setPageSize(8);
 
 		// 페이징 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
 		pm.setClientPageVO(cpvo);
-		pm.setPageBlock(2);
+		pm.setPageBlock(5);
 		
 		List<ClientsVO> searchClientsList = new ArrayList<>();
 		
@@ -437,13 +437,13 @@ public class PersonController {
 			int pageSize = Integer.parseInt(search.get("pageSize").toString());
 			cpvo.setPageSize(pageSize);
 		} else {
-			cpvo.setPageSize(2);
+			cpvo.setPageSize(8);
 		}
 		
 		// 페이지 하단부 정보
 		ClientPageMaker pm = new ClientPageMaker();
 		pm.setClientPageVO(cpvo);
-		pm.setPageBlock(2);
+		pm.setPageBlock(5);
 		
 		List<OrderStatusVO> searchOrderStatusList = new ArrayList<>();
 		
