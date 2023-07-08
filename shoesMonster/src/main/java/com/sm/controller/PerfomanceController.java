@@ -452,10 +452,13 @@ public class PerfomanceController {
 	
 	// 라인 추가 시 code값 가져가기
 	@ResponseBody
-	@RequestMapping(value = "/lineCode", method = RequestMethod.GET)
-	public String getLiCode() { 
+	@RequestMapping(value = "/lineCode", method = RequestMethod.POST)
+	public String getLiCode(@RequestBody LineVO lvo) throws Exception{ 
+		logger.debug("line_place@@@@@@@ :   "+lvo.getLine_place());
 		
-		return service.getLiCode();
+		logger.debug("#$@(#(@((#)@$(#"+service.getLiCode(lvo.getLine_place()));
+		
+		return service.getLiCode(lvo.getLine_place());
 	}
 	
 	// 라인 추가

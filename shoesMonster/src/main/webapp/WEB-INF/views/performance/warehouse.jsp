@@ -151,7 +151,7 @@ body {
 		var num = "<c:out value='${vo.page}'/>";
 		var num2 = "<c:out value='${vo.pageSize}'/>";
 		if(index > 0){
-			$(this).find('td:first').text(((num-1)*num2) + index);
+			$(this).find('td:first').text(((num-1)*num2) + index-1);
 		}
 	});
 	
@@ -412,15 +412,18 @@ body {
 					}// if==3
 						
 					if(idx == 7){
-						inputCng($(this), "hidden", names[idx - 1], $(this).text());
+							inputCng($(this), "hidden", names[idx - 1], "<c:out value='${id.emp_id}'/>");
+						}//==7
+					if(idx == 8){
+						inputCng($(this), "text", names[idx - 1], "<c:out value='${id.emp_name}'/>");
 					}//==7
 					}
 				});//self.find
 
-				// 등록자(사원) 검색
-				$('#emp_name').click(function () {
-					openWindow("emp", "emp_name");
-				}); // #emp_id click
+// 				// 등록자(사원) 검색
+// 				$('#emp_name').click(function () {
+// 					openWindow("emp", "emp_name");
+// 				}); // #emp_id click
 				
 				////////////////////////////////////////////////////
 				
@@ -559,10 +562,6 @@ body {
 <div style="margin-left: 1%;">
 	<form method="get">
 		
-		<input type="submit" name="line_place" value="1차공정" class="btn btn-info" ></input>
-		<input type="submit" name="line_place" value="2차공정" class="btn btn-info" ></input>
-	    <input type="submit" name="line_place" value="3차공정" class="btn btn-info" ></input>
-		 
 		<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
 			
