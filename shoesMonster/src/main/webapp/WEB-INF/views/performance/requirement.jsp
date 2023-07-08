@@ -360,7 +360,14 @@ body {
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<form id="fr">
+			<c:if test="${empty param.input }">
+			<button onclick="location.href='/performance/requirement'" class="B B-info">새로고침</button>
+			</c:if>
+			<c:if test="${!empty param.input }">
+			<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B B-info">새로고침</button>
+			</c:if>
+			
+			<form id="fr" method="post">
 			
 				<div class="x_title">
 					<h2>소요량 관리<small>총 ${paging.total} 건</small></h2>

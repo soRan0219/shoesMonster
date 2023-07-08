@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mysql.cj.Session;
 import com.sm.domain.EmployeesVO;
 import com.sm.domain.LineVO;
 import com.sm.domain.LineWhPageMaker;
@@ -446,12 +451,18 @@ public class PerfomanceController {
 	
 	// 라인 추가
 	@RequestMapping(value = "/lineadd", method = RequestMethod.POST)
-	public String addLine(LineVO lvo) throws Exception{
+	public String addLine(LineVO lvo, HttpSession session,
+			RedirectAttributes rttr) throws Exception{
 		logger.debug("@#@#@# C : addLine(LineVO lvo) 호출 ");
 		logger.debug("@#@#@# C : lvo = "+lvo);
 		
+		EmployeesVO evo = (EmployeesVO) session.getAttribute("id");
+		String emp_id = evo.getEmp_id();
+		
 		// 라인 등록
-		service.registLine(lvo);
+		service.registLine(lvo, emp_id);
+		
+		rttr.addFlashAttribute("result", "registLine");
 		
 		return "redirect:/performance/line";
 	}
@@ -586,15 +597,23 @@ public class PerfomanceController {
 	}
 	
 	// 창고 추가
-	@RequestMapping(value = "/whadd", method = RequestMethod.POST)
-	public String addWh(Wh_prodVO wvo) throws Exception{
-		logger.debug("@#@#@# C : addWh(Wh_prodVO wvo) 호출 ");
-		logger.debug("@#@#@# C : wvo = "+wvo);
-		
-		service.registWh(wvo);
-		
-		return "redirect:/performance/warehouse";
-	}
+		@RequestMapping(value = "/whadd", method = RequestMethod.POST)
+		public String addWh(Wh_prodVO wvo, HttpSession session,
+				RedirectAttributes rttr) throws Exception{
+			
+			logger.debug("@#@#@# C : addWh(Wh_prodVO wvo) 호출 ");
+			
+			EmployeesVO evo = (EmployeesVO) session.getAttribute("id");
+			String emp_id = evo.getEmp_id();
+			
+			logger.debug("@#@@#@#@#@ emp_id : "+emp_id );
+			
+			service.registWh(wvo, emp_id);
+			
+			rttr.addFlashAttribute("result", "registWh");
+			
+			return "redirect:/performance/warehouse";
+		}
 	
 	// 창고 삭제
 	@RequestMapping(value = "/whdelete", method = RequestMethod.POST)

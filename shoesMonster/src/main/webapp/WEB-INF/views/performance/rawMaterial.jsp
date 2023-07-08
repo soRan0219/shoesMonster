@@ -419,6 +419,13 @@ body {
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
+			<c:if test="${empty param.input }">
+			<button onclick="location.href='/performance/rawMaterial'" class="B B-info">새로고침</button>
+			</c:if>
+			<c:if test="${!empty param.input }">
+			<button onclick="location.href='/performance/rawMaterial?input=${param.input }'" class="B B-info">새로고침</button>
+			</c:if>
+		
 			<form method="post" id="fr">
 			
 			<div class="x_title">
@@ -430,7 +437,6 @@ body {
 					<button id="delete" class="B B-info">삭제</button>
 					<button type="reset" id="cancle" class="B B-info">취소</button>
 					<input type="submit" class="B B-info" value="저장" id="save" class ="btn btn-success">
-					<button onclick="location.href='/performance/rawMaterial'" class="B B-info">새로고침</button>
 				</div>
 				<div class="clearfix"></div>
 			</div>

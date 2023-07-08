@@ -162,16 +162,16 @@ body {
                 var row = '<tr>' +
                 	'<td></td>'+
                     '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" readonly required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_name"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_category"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_unit"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_size"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_color"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_name" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_category" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_unit" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_size" required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_color" required></td>' +
                     '<input type="hidden" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required>' +
                     '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); required></td>' +
                     '<td type="hidden" style="display: none;"><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
                     '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_code'+counter+'"); readonly required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_price"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_price" required></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_note"></td>' +
                     '</tr>';
 
@@ -277,8 +277,14 @@ body {
 									data: {checked:checked},
 									dataType: "text",
 									success: function() {
-										Swal.fire('삭제되었습니다.', '', 'error')
-										location.reload();
+										Swal.fire({
+											  title: '삭제되었습니다.',
+											  icon: 'error',
+											}).then((result) => {
+											  if (result.isConfirmed) {
+											    location.reload();
+											  }
+											});
 									},
 									error: function() {
 										Swal.fire('삭제 실패!.', '', 'success')
@@ -455,8 +461,14 @@ body {
 
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
+			<c:if test="${empty param.input }">
+			<button onclick="location.href='/performance/product'" class="B B-info">새로고침</button>
+			</c:if>
+			<c:if test="${!empty param.input }">
+			<button onclick="location.href='/performance/product?input=${param.input }'" class="B B-info">새로고침</button>
+			</c:if>
+	
 		<form id="fr" method="post">	
-
 			<div class="x_title">
 				<h2>완제품<small>총 ${paging.total} 건</small></h2>
 				
@@ -466,7 +478,6 @@ body {
 					<button id="delete" class="B B-info">삭제</button>
 					<button type="reset" id="cancle" class="B B-info">취소</button>
 					<input type="submit" class="B B-info" value="저장" id="save">
-					<button onclick="location.href='/performance/product'" class="B B-info">새로고침</button>
 				</div>
 				
 				<div class="clearfix"></div>

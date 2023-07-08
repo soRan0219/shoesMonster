@@ -396,8 +396,8 @@ body {
 			
 			// 등록자	
 			row += "<td>";
-			row += " <input type='hidden' name='emp_id' id='emp_id' required>";
-			row += " <input type='text' name='emp_name' id='emp_name' required>";
+			row += " <input type='hidden' name='emp_id' id='emp_id' value = '<c:out value='${id.emp_id}'/>' required>";
+			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required>";
 			row += "</td>";
 			
 			// 등록일
@@ -415,11 +415,11 @@ body {
 			
             $('#lineTable').append(row);
 
-    		// 등록자(사원) 검색
-    		$('#emp_name').click(function () {
-//     			alert("등록자검색");
-    			openWindow("emp", "emp_name");
-    		}); // #emp_id click
+//     		// 등록자(사원) 검색
+//     		$('#emp_name').click(function () {
+// //     			alert("등록자검색");
+//     			openWindow("emp", "emp_name");
+//     		}); // #emp_id click
 		
 		} // addRow()
 
@@ -653,7 +653,7 @@ body {
 						</c:when>
 					</c:choose>
 					
-					<td type='hidden' style='display: none;'>${vo.emp_id}</td>
+					<td type='hidden' style='display: none;'><c:out value='${id.emp_id}'/></td>
 					<td>${vo.emp.emp_name}</td>
 					<td>${vo.insert_date}</td>
 					<td>${vo.line_note}</td>
@@ -665,6 +665,7 @@ body {
 </div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
+
 	
 <div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 	<ul class="pagination">

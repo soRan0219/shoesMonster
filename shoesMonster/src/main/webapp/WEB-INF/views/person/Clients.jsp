@@ -453,6 +453,12 @@ body {
 	
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
+			<c:if test="${empty param.input }">
+			<button onclick="location.href='/person/Clients'" class="B B-info">새로고침</button>
+			</c:if>
+			<c:if test="${!empty param.input }">
+			<button onclick="location.href='/person/Clients?input=${param.input }'" class="B B-info">새로고침</button>
+			</c:if>
 			<form id="fr">
 
 				<div class="x_title">
@@ -471,8 +477,7 @@ body {
 				</div>
 				
 				
-				<!-- 버튼 제어 -->
-				
+	<!-- 버튼 제어 -->
 				<script>
 				    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 				
@@ -532,6 +537,7 @@ body {
 								<th>비고</th>
 							</tr>
 						</thead>
+						<tr type='hidden' style='display: none;'></tr>
 						<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
 							<c:if test="${vo.client_type == '전체' }">
 								<tr>

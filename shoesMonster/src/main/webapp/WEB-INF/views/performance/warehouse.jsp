@@ -72,6 +72,7 @@ body {
     	$('#modify').hide();
     	$('#delete').hide();
     	$('#save').hide();
+    	$('#cancle').hide();
     	
    		$('table tr:not(:first-child)').click(function(){
    			
@@ -286,8 +287,8 @@ body {
 			
 			// 담당자
 			row += "<td>";
-			row += "<input type='hidden' name='emp_id' id='emp_id' required>";
-			row += "<input type='text' name='emp_name' id='emp_name' required>";
+			row += " <input type='hidden' name='emp_id' id='emp_id' value = '<c:out value='${id.emp_id}'/>' required>";
+			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required>";
 			row += "</td>";
 			
 			// 비고
@@ -299,10 +300,10 @@ body {
             $('#whTable').append(row);
 
     		// 등록자(사원) 검색
-    		$('#emp_name').click(function () {
-//     			alert("등록자검색");
-    			openWindow("emp", "emp_name");
-    		}); // #emp_id click
+//     		$('#emp_name').click(function () {
+// //     			alert("등록자검색");
+//     			openWindow("emp", "emp_name");
+//     		}); // #emp_id click
 		
 		} // addRow()
             
@@ -552,6 +553,11 @@ body {
 
 <div style="margin-left: 1%;">
 	<form method="get">
+		
+		<input type="submit" name="line_place" value="1차공정" class="btn btn-info" ></input>
+		<input type="submit" name="line_place" value="2차공정" class="btn btn-info" ></input>
+	    <input type="submit" name="line_place" value="3차공정" class="btn btn-info" ></input>
+		 
 		<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
 			
@@ -592,6 +598,13 @@ body {
 
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
+		<c:if test="${empty param.input }">
+			<button onclick="location.href='/performance/warehouse'" class="B B-info">새로고침</button>
+		</c:if>
+		<c:if test="${!empty param.input }">
+			<button onclick="location.href='/performance/warehouse?input=${param.input }'" class="B B-info">새로고침</button>
+		</c:if>
+	
 		<form id="fr">
 			
 			<div class="x_title">
@@ -603,7 +616,6 @@ body {
 					<button id="delete" class="true B B-info">삭제</button>
 					<button type="reset" id="cancle" class="B B-info">취소</button>
 					<button type="submit" id="save" class="B B-info">저장</button>
-					<button onclick="location.href='/performance/warehouse'" class="B B-info">새로고침</button>
 				</div>
 				
 				<div class="clearfix"></div>
