@@ -45,6 +45,12 @@ public class In_materialImpl implements In_materialDAO {
 
 
 	@Override
+	public void inInsert1(String raw_order_num) throws Exception {
+		sqlSession.update(NAMESPACE + ".inRegist1", raw_order_num);
+		
+	}
+
+	@Override
 	public List<In_materialVO> In_matPage(int displayPost, int postNum) throws Exception {
 		
 		HashMap<String, Integer> data = new HashMap<String, Integer>();

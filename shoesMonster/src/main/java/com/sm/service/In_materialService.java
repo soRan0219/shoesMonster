@@ -23,6 +23,7 @@ public interface In_materialService {
 		
 		// 입고 등록
 		public void inInsert(String raw_order_num, String emp_id) throws Exception;
+		public void inInsert1(String raw_order_num) throws Exception;
 		
 		// 미입고 ,입고완료
         public void updateIn(String raw_order_num) throws Exception;

@@ -225,6 +225,7 @@ public class stockController {
             
 		if((rvo.getClients().getClient_actname() != null && !rvo.getClients().getClient_actname().equals("")) ||
                 (rvo.getIn_mat().getIn_num() != null && !rvo.getIn_mat().getIn_num().equals("")) || 
+                (rvo.getIn_YN() != null && !rvo.getIn_YN().equals("")) || 
                 (rvo.getRawMaterial().getRaw_name() != null && !rvo.getRawMaterial().getRaw_name().equals(""))) {
                  
                  // 게시물 총 개수
@@ -267,19 +268,31 @@ public class stockController {
 	//http://localhost:8080/stock/In_material
 	//http://localhost:8088/stock/In_material
     @RequestMapping(value = "/In_material" , method = RequestMethod.POST)
-    public String inRegist(@RequestParam("in_Button") String in_Button, PageVO vo,
+    public String inRegist(
+//    						@RequestBody Map<String, String> requestData, PageVO vo,
+    						@RequestParam("in_Button") String in_Button, 
+    						PageVO vo,
     					   Raw_orderVO rvo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception{
         
     	String[] values = in_Button.split(",");
-        String raw_order_num = values[0];
-        String rawCode = values[1];
-        int raw_order_count = Integer.parseInt(values[2]);
-        String wh_code = values[3];
+    	String raw_order_num = values[0];
+    	String rawCode = values[1];
+    	int raw_order_count = Integer.parseInt(values[2]);
+    	String wh_code = values[3];
 
+//    	String raw_order_num = requestData.get("raw_order_num");
+//    	String rawCode = requestData.get("raw_code");
+//    	String wh_code = requestData.get("wh_code");
+//    	String ro_count = requestData.get("raw_order_count");
+
+    	logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@ 123");
         logger.debug("@@@@@@@@@@@@@@@ 버튼 발주 번호 확인용 : " + raw_order_num);
         logger.debug("@@@@@@@@@@@@@@@ 원자재 코드 확인용 : " + rawCode);
-        logger.debug("@@@@@@@@@@@@@@@ 발주 개수 확인용 : " + raw_order_count);
+//        logger.debug("@@@@@@@@@@@@@@@ 1 발주 개수 확인용 : " + ro_count);
         logger.debug("@@@@@@@@@@@@@@@ 입고 창고 확인용 : " + wh_code);
+        
+//        int raw_order_count = Integer.parseInt(ro_count);
+//        logger.debug("@@@@@@@@@@@@@@@ 2 발주 개수 확인용 : " + raw_order_count);
         
         // 로그인
         EmployeesVO evo = (EmployeesVO) session.getAttribute("id");
@@ -287,6 +300,7 @@ public class stockController {
 	    logger.debug("///////////////// emp_id : " + emp_id + "////////////////");
         
         service.inInsert(raw_order_num, emp_id);
+        service.inInsert1(raw_order_num);
 //        service.updateIn(raw_order_num);
         
         logger.debug("_______________^__________^^_________^^^^^^^^____^^^^^^^^^^__^^^^^_");

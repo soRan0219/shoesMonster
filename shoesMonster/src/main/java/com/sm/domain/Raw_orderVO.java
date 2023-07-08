@@ -11,6 +11,7 @@ public class Raw_orderVO {
 	private String raw_code;
 	private String client_code;
 	private String emp_id;
+	private String in_YN;
 	private int raw_order_count;
 	private Date raw_order_date;
 	

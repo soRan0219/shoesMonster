@@ -71,7 +71,7 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		data.put("raw_name", rvo.getRawMaterial().getRaw_name());
 		data.put("in_num", rvo.getIn_mat().getIn_num());
 		data.put("client_actname", rvo.getClients().getClient_actname());
-		
+		data.put("in_YN", rvo.getIn_YN());
 		
 		
 		return sqlSession.selectOne(NAMESPACE+".searchCount1", data);
@@ -88,6 +88,7 @@ public class Raw_orderImpl implements Raw_orderDAO{
 		data.put("raw_name", rvo.getRawMaterial().getRaw_name());
 		data.put("client_actname", rvo.getClients().getClient_actname());
 		data.put("in_num", rvo.getIn_mat().getIn_num());
+		data.put("in_YN", rvo.getIn_YN());
 		data.put("startPage", vo.getStartPage());
 		data.put("pageSize", vo.getPageSize());
 		
