@@ -378,7 +378,7 @@ body {
 			 			success: function (data) {
 // 							alert(data);
 							
-							
+							 
 			 				 var num = parseInt(data.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
 // 			 				 alert("num : "+num);
 			  				 var paddedNum = padNumber(num, data.length - 1); // 숫자를 패딩하여 길이 유지
