@@ -28,12 +28,12 @@ body {
 	
 	// 발주 팝업
 	function roPopup() {
-		window.open("roPopup","거래처 목록","width=800, height=700, left=300, top=150, location=no");
+		window.open("roPopup","거래처 목록","width=800, height=700, left=500, top=150, location=no");
 	}
 	
 	// 발주 현황 상세페이지
 	function detailPopup(rawCode, raw_order_num) {
-		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=680, height=400, left=200, top=150");
+		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=680, height=420, left=200, top=150");
 	}
 	
 	// 총액
@@ -119,7 +119,7 @@ function toggleDiv(divId) {
     
     <!-- 버튼 제어 -->
     <form action="" name="ro">
-	    <input type="button" value="발주 현황" class="btn btn-info" onclick="toggleDiv('list')" id="matList"></input>
+	    <input type="button" value="발주 현황" class="btn btn-info"  nclick="toggleDiv('list')" id="matList"></input>
 	    <input type="button" value="발주 등록" class="btn btn-info" onclick="toggleDiv('regist')"id="matAdd"></input>
     </form>
     

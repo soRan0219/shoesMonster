@@ -120,25 +120,26 @@ body {
 			</tbody>
 			</table>
 		</form>
+		<div>
+            <c:if test="${countPop > 10 }">
+                <c:if test="${bp.prev}">
+                    <span><a class="btn btn-secondary"
+                        href="/stock/roPopup?page=${bp.startPage -1}&rawMaterial.raw_name=${ro.rawMaterial.raw_name}}&clients.client_actname=${ro.clients.client_actname}">이전</a></span>
+                </c:if>
+
+                <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
+                    step="1">
+                    <a class="btn btn-secondary"
+                        href="/stock/roPopup?page=${i }&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
+                </c:forEach>
+
+                <c:if test="${bp.next && bp.endPage > 0}">
+                    <a class="btn btn-secondary"
+                        href="/stock/roPopup?page=${bp.endPage + 1}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+                </c:if>
+            </c:if>
+        </div>
+		
 	</div>
 </div>
-			
-		<div>
-			<c:if test="${count1 > 10 }">
-				<c:if test="${bp.prev}">
-					<span><a class="btn btn-secondary"
-						href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a></span>
-				</c:if>
-
-				<c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
-					step="1">
-					<a class="btn btn-secondary"
-						href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
-				</c:forEach>
-
-				<c:if test="${bp.next && bp.endPage > 0}">
-					<a class="btn btn-secondary"
-						href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
-				</c:if>
-			</c:if>
-		</div>
+		
