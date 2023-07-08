@@ -457,10 +457,10 @@ body {
 				
 				<div style="float: left;  margin-top: 1.5px;">
 					<c:if test="${empty param.input }">
-						<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+						<button onclick="location.href='/performance/rawMaterial'" class="B2 B2-info">↻</button>
 					</c:if>
 					<c:if test="${!empty param.input }">
-						<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+						<button onclick="location.href='/performance/rawMaterial?input=${param.input }'" class="B2 B-info">↻</button>
 					</c:if>
 				</div>
 				
