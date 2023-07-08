@@ -55,18 +55,21 @@ body {
 		var queryString = window.location.search;
 		var urlParams = new URLSearchParams(queryString);
 		var isPop = urlParams.get("input");
+		var serch = urlParams.get("wh_dv");
 		
 		if(isPop==="null") {
 			isPop = null;
 		}
 		
 		$('#pagination a').each(function(){
-			
-	   		var prHref = $(this).attr("href");
-	   			
+				var prHref = $(this).attr("href");
+			if(serch==="null") {
 				var newHref = prHref + "&input=" + isPop;
 				$(this).attr("href", newHref);
-				
+			}
+			var newHref = prHref + "&input=" + isPop +"&wh_dv"+serch;
+			$(this).attr("href", newHref);
+			
 		}); //페이징 요소	
 	
 	
@@ -641,10 +644,12 @@ body {
 		<c:if test="${empty param.input }">
 			<button onclick="location.href='/performance/warehouse'" class="B2 B2-info">↻</button>
 		</c:if>
+
 		<c:if test="${!empty param.input }">
 			<button onclick="location.href='/performance/warehouse?input=${param.input }'" class="B2 B-info">↻</button>
 		</c:if>
 	</div>
+
 				
 
 				<div style="float: right;">
