@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
     
 <%@ include file="../include/header.jsp"%>
 
@@ -8,6 +9,10 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -158,11 +163,11 @@ body {
 					<c:forEach var="s" items="${stock_ListP}">
 					 	<tr>
 					 		<th>${s.warehouse.wh_dv}</th>
-					 		<th>${s.prod_code}</th>
+					 		<td>${s.prod_code}</td>
 					 		<td>${s.product.prod_name}</td>
 					 		<td>${s.product.prod_color}</td>
 					 		<td>${s.product.prod_size}</td>
-					   		<td style="color: ${s.stock_count <= 20 ? 'red' : 'inherit'}">${s.stock_count}</td>
+					   		<td style="color: ${s.stock_count <= 50 ? 'red' : 'inherit'}">${s.stock_count}</td>
 					   		<td>${s.wh_code}</td>
 					   		<td>${s.warehouse.emp_id}</td>
 					   		<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">

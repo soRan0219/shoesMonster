@@ -237,9 +237,9 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 	// 라인 추가
 	@Override
-	public void registLine(LineVO lvo) throws Exception {
+	public void registLine(LineVO lvo, String emp_id) throws Exception {
 
-		pdao.registLine(lvo);
+		pdao.registLine(lvo, emp_id);
 	}
 
 	// 라인 삭제
@@ -304,9 +304,9 @@ public class PerformanceServiceImpl implements PerformanceService {
 
 	// 창고 추가
 	@Override
-	public void registWh(Wh_prodVO wvo) throws Exception {
+	public void registWh(Wh_prodVO wvo, String emp_id) throws Exception {
 
-		pdao.registWh(wvo);
+		pdao.registWh(wvo, emp_id);
 	}
 
 	// 창고 삭제

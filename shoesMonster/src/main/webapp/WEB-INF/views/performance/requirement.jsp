@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+
 
 <%@ include file="../include/header.jsp"%>
 
@@ -11,6 +13,10 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -343,12 +349,12 @@ body {
 	<div style="margin-left: 1%;">
 		<form method="get">
 			<fieldset>
-				<label>소요코드:</label> 
+				<label>소요코드 : </label> 
 				<input type="text" name="req_code" id="searchCode"> 
-				<label>완제품 :</label> 
+				<label>완제품 : </label> 
 				<input type="hidden"name="prod_code" id="prod_code9999"> 
 				<input type="text"name="prod_name" id="prod_name9999" readonly onclick="serchProd('prod_code9999')"> 
-				<label>원자재 :</label>
+				<label>원자재 : </label>
 				<input type="hidden" name="raw_code" id="raw_code9999"> 
 				<input type="text" name="raw_name" id="raw_name9999" readonly onclick="serchRaw('raw_code9999')"> 
 				<input type="submit" class="B B-info" value="검색">
@@ -360,7 +366,14 @@ body {
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<form id="fr">
+			<c:if test="${empty param.input }">
+			<button onclick="location.href='/performance/requirement'" class="B B-info">새로고침</button>
+			</c:if>
+			<c:if test="${!empty param.input }">
+			<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B B-info">새로고침</button>
+			</c:if>
+			
+			<form id="fr" method="post">
 			
 				<div class="x_title">
 					<h2>소요량 관리<small>총 ${paging.total} 건</small></h2>
@@ -445,27 +458,33 @@ body {
 	</div>
 </div>
 
-	<div style="display: block; text-align: center;">
-		<c:if test="${paging.startPage != 1 }">
-			<a class="btn btn-secondary"
-				href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&lt;</a>
-		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }"
-			var="p">
-			<c:choose>
-				<c:when test="${p == paging.nowPage }">
-					<b>${p }</b>
-				</c:when>
-				<c:when test="${p != paging.nowPage }">
-					<a class="btn btn-secondary"
-						href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
-				</c:when>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.endPage != paging.lastPage}">
-			<a class="btn btn-secondary"
-				href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">&gt;</a>
-		</c:if>
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">
+				<c:if test="${paging.startPage != 1 }">
+					<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Previous</a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:forEach begin="${paging.startPage }" end="${paging.endPage }"
+					var="p">
+					<c:choose>
+						<c:when test="${p == paging.nowPage }">
+							<b>${p }</b>
+						</c:when>
+						<c:when test="${p != paging.nowPage }">
+							<a class="btn btn-secondary"
+								href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Next</a>
+				</c:if>
+			</li>
+		</ul>
 	</div>
 </div>
 <!-- /page content -->

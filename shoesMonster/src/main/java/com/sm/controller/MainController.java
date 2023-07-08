@@ -45,6 +45,7 @@ public class MainController {
 		
 		if(resultVO != null) {
 			session.setAttribute("id", resultVO);
+			session.setMaxInactiveInterval(3600*24);
 			model.addAttribute(resultVO);
 			logger.debug(" 로그인 성공! ");
 			return "redirect:/smmain/smMain";

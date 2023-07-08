@@ -62,6 +62,7 @@ body {
       	opener.document.getElementById("raw_color").value = rawColor;
       	opener.document.getElementById("wh_code").value = whCode;
       	opener.document.getElementById("stock_count").value = stockCount;
+      	opener.document.getElementById("stock_count").style.color = parseInt(stockCount) <= 50 ? 'red' : 'inherit';
       	opener.document.getElementById("raw_price").value = rawPrice;
         
 		window.close();
@@ -112,7 +113,7 @@ body {
 						<td class=" ">${ro.rawMaterial.raw_name }</td>
 						<td class=" ">${ro.rawMaterial.raw_color }</td>
 						<td class=" ">${ro.rawMaterial.wh_code }</td>
-						<td class=" " style="color: ${ro.stock.stock_count <= 20 ? 'red' : 'inherit'}" >${ro.stock.stock_count}</td>
+						<td class=" " style="color: ${ro.stock.stock_count <= 50 ? 'red' : 'inherit'}" >${ro.stock.stock_count}</td>
 						<td class=" " ><fmt:formatNumber value=" ${ro.rawMaterial.raw_price }"/>원</td>
 					</tr>
 				</c:forEach>
