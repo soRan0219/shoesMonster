@@ -646,17 +646,12 @@ public class PerfomanceController {
 		logger.debug("@@@@@ CONTROLLER: performanceList() 호출");
 		
 		//페이지 정보
-		if(search.get("pageSize")!=null) {
-			int pageSize = Integer.parseInt(search.get("pageSize").toString());
-			pvo.setPageSize(pageSize);
-		} else {
-			pvo.setPageSize(2);
-		}
+		pvo.setPageSize(8);
 		
 		//페이징 하단부 정보
 		LineWhPageMaker pm = new LineWhPageMaker();
 		pm.setLwPageVO(pvo);
-		pm.setPageBlock(2);
+		pm.setPageBlock(5);
 		
 		List<PerformanceVO> perfList = new ArrayList<>();
 		
@@ -716,7 +711,7 @@ public class PerfomanceController {
 
 		if(type.equals("work")) {
 			String state = URLEncoder.encode("마감", "UTF-8");
-			return "redirect:/workorder/workOrderList?input=" + input + "&search_state=" + state;
+			return "redirect:/workorder/workOrderList?input=" + input + "&search_place=" + state;
 		}
 		if(type.equals("line")) {
 			return "redirect:/performance/line?input=" + input;
