@@ -596,7 +596,6 @@ body {
 				<button id="delete" class="true B B-info">삭제</button>
 				<button type="reset" id="cancle" class="B B-info">취소</button>
 				<button type="submit" id="save" class="B B-info">저장</button>
-				<button onclick="location.href='/performance/performList'" class="B B-info">새로고침</button>
 			</div>
 			
 			<div class="clearfix"></div>

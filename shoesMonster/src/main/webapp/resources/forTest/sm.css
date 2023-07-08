@@ -10,6 +10,16 @@
     height: 30px;
 }
 
+.B2 {
+    border-radius: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    border: none;
+    
+    width: 30px;
+    height: 30px;
+}
+
 .B-info:hover {
     color: #fff;
     background-color: #04B486;
@@ -20,5 +30,10 @@
     color: #fff;
     background-color: #17a2b8;
     border-color: #17a2b8;
+}
+
+.B2-info {
+    color: #73879C;
+    background-color: #fff;
 }
 
