@@ -158,7 +158,7 @@ body {
 					<c:forEach var="s" items="${stock_ListP}">
 					 	<tr>
 					 		<th>${s.warehouse.wh_dv}</th>
-					 		<th>${s.prod_code}</th>
+					 		<td>${s.prod_code}</td>
 					 		<td>${s.product.prod_name}</td>
 					 		<td>${s.product.prod_color}</td>
 					 		<td>${s.product.prod_size}</td>
