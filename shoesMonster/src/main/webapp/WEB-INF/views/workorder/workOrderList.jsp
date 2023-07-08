@@ -449,7 +449,7 @@ body {
 								error : function() {
 									console.log("아작스실패~~");
 								}
-							}); //ajax
+							}); //ajax  
 		
 						} //체크된거 있을대
 						else {
