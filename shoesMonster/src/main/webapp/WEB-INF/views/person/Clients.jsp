@@ -6,6 +6,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -442,7 +445,7 @@ body {
 				<option value= "발주처">발주처</option>
 				<option value= "수주처">수주처</option>
 			</select> 
-			<input type="submit" value="조회">
+			<input type="submit" class="B B-info" value="조회">
 		</form>
 	</div>
 
@@ -459,22 +462,22 @@ body {
 			<form id="fr">
 
 				<div class="x_title">
-					<h2>거래처 목록</h2>
+					<h2>거래처 목록<small>총 ${pm.totalCount } 건</small></h2>
 
-					<span style="float: right; margin-top: 1%;"> 거래처 총 ${pm.totalCount } 건 </span>
+					<div style="float: right;">
+						<input type="button" value="추가" id="addButton" class="true B B-info">
+						<input type="button" value="수정" id="updateButton" class="B B-info"> 
+						<input type="button" value="삭제" id="deleteButton" class="true B B-info"> 
+						<input type="button" value="취소" id="cancelButton" class="B B-info"> 
+						<input type="button" value="저장" id="saveButton" class="B B-info">
+						<button onclick="location.href='/person/Clients'" class="B B-info">새로고침</button>
+					</div>
+					
 					<div class="clearfix"></div>
 				</div>
 				
 				
-				<!-- 버튼 제어 -->
-				<div style="margin-bottom: 1%;">
-					<input type="button" value="추가" id="addButton" class="true">
-					<input type="button" value="수정" id="updateButton"> 
-					<input type="button" value="삭제" id="deleteButton" class="true"> 
-					<input type="button" value="취소" id="cancelButton"> 
-					<input type="button" value="저장" id="saveButton">
-				</div>
-				
+	<!-- 버튼 제어 -->
 				<script>
 				    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 				
@@ -601,20 +604,26 @@ body {
 			</form>
 		</div>
 	</div>
-		
-		<div id="pagination" style="margin-left: 1%;">
-			<c:if test="${pm.prev }">
-				<a href="/person/Clients?page=${pm.startPage - 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> ⏪ </a>
-			</c:if>
-			
-			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-				<a href="/person/Clients?page=${page }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}">${page }</a>
-			</c:forEach>
 	
-			<c:if test="${pm.next }">
-				<a href="/person/Clients?page=${pm.endPage + 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> ⏩ </a>
-			</c:if>
-		</div>
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.prev }">
+					<a href="/person/Clients?page=${pm.startPage - 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> Previous </a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+					<a href="/person/Clients?page=${page }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}">${page }</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.next }">
+					<a href="/person/Clients?page=${pm.endPage + 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> Next </a>
+				</c:if>
+			</li>
+		</ul>
+	</div>
 
 	<div id="details"></div>
 		
