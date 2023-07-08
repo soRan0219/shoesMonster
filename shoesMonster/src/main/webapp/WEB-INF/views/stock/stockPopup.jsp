@@ -43,7 +43,7 @@ body {
 					window.opener.location.reload();
 				},
 				error : function(){
-					alert("에러남");
+					alert("올바른 수량을 입력해주세요.");
 				}
 			});
 		});

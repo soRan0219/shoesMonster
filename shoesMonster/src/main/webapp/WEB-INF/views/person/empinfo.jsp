@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -8,6 +9,10 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -96,6 +101,7 @@ function popUp() {
     	$('#modifyEmp').hide();
     	$('#deleteEmp').hide();
     	$('#saveEmp').hide();
+    	$('#cancleEmp').hide();
     	
    		$('table tr:not(:first-child)').click(function(){
    			
@@ -454,7 +460,12 @@ $(function() {
 						<button id="deleteEmp" class="true">삭제</button>
 						<button type="reset" id="cancleEmp">취소</button>
 						<button type="submit" id="saveEmp">저장</button>
-						<button onclick="location.href='/person/empinfo'">새로고침</button>
+						<c:if test="${empty param.input }">
+						<button onclick="location.href='/person/empinfo'" class="B B-info">새로고침</button>
+						</c:if>
+						<c:if test="${!empty param.input }">
+						<button onclick="location.href='/person/empinfo?input=${param.input }'" class="B B-info">새로고침</button>
+						</c:if>
 					</div>
 					
 					<!-- 버튼 제어 -->

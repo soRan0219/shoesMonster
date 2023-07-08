@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -11,6 +12,10 @@
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -396,8 +401,8 @@ body {
 			
 			// 등록자	
 			row += "<td>";
-			row += " <input type='hidden' name='emp_id' id='emp_id' required>";
-			row += " <input type='text' name='emp_name' id='emp_name' required>";
+			row += " <input type='hidden' name='emp_id' id='emp_id' value = '<c:out value='${id.emp_id}'/>' required>";
+			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required>";
 			row += "</td>";
 			
 			// 등록일
@@ -415,11 +420,11 @@ body {
 			
             $('#lineTable').append(row);
 
-    		// 등록자(사원) 검색
-    		$('#emp_name').click(function () {
-//     			alert("등록자검색");
-    			openWindow("emp", "emp_name");
-    		}); // #emp_id click
+//     		// 등록자(사원) 검색
+//     		$('#emp_name').click(function () {
+// //     			alert("등록자검색");
+//     			openWindow("emp", "emp_name");
+//     		}); // #emp_id click
 		
 		} // addRow()
 
@@ -542,20 +547,20 @@ body {
 	<fieldset>
 		<input type="hidden" name="input" id="input" value="${input}">
 		
-		<label>라인코드</label>
+		<label>라인코드 : </label>
 			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요" >
 			
-		<label>라인명</label>
+		<label>라인명 : </label>
 			<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
 			
 		<input type="submit" class="B B-info" value="검색">
 		
 		<br>
 		
-		<label>사용여부</label>
-			<input type="radio" name="line_use" value="3" checked>전 체
-			<input type="radio" name="line_use" value="1">Y
-			<input type="radio" name="line_use" value="2">N
+		<label>사용여부 : </label>
+			<input type="radio" name="line_use" value="3" checked> 전체
+			<input type="radio" name="line_use" value="1"> Y
+			<input type="radio" name="line_use" value="2"> N
 			
 <!-- 		<label>공정</label> -->
 <!-- 			<input type="text" name="line_place" placeholder="검색어를 입력해주세요"> -->
@@ -653,7 +658,7 @@ body {
 						</c:when>
 					</c:choose>
 					
-					<td type='hidden' style='display: none;'>${vo.emp_id}</td>
+					<td type='hidden' style='display: none;'><c:out value='${id.emp_id}'/></td>
 					<td>${vo.emp.emp_name}</td>
 					<td>${vo.insert_date}</td>
 					<td>${vo.line_note}</td>
@@ -665,23 +670,27 @@ body {
 </div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
-	
-	<div id="pagination" style="text-align: center;">
-		<c:if test="${lwpm.prev }">
-			<a class="btn btn-secondary"
-			href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">이 전</a>
-		</c:if>
-		
-		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
-			<a class="btn btn-secondary"
-			href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
-		</c:forEach>
 
-		<c:if test="${lwpm.next }">
-			<a class="btn btn-secondary"
-			href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">다 음</a>
+	
+<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	<ul class="pagination">
+		<li class="paginate_button previous disabled">
+		<c:if test="${lwpm.prev }">
+			<a href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">Previous</a>
 		</c:if>
-	</div>
+		</li>
+		<li class="paginate_button previous disabled">
+		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
+			<a href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
+		</c:forEach>
+		</li>
+		<li class="paginate_button previous disabled">
+		<c:if test="${lwpm.next }">
+			<a href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">Next</a>
+		</c:if>
+		</li>
+	</ul>
+</div>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
 

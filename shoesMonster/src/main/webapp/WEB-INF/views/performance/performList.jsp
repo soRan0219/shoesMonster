@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -13,6 +14,10 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -443,9 +448,6 @@ body {
 
 		//지시일자 이날부터
 		$('#search_fromDate').datepicker({
-			showOn:'both',
-			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-			buttonImageOnly:'true',
 			changeMonth:'true',
 			changeYear:'true',
 			nextText:'다음달',
@@ -463,9 +465,6 @@ body {
 		});
 		//이날까지
 		$('#search_toDate').datepicker({
-			showOn:'both',
-			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-			buttonImageOnly:'true',
 			changeMonth:'true',
 			changeYear:'true',
 			nextText:'다음달',
@@ -564,17 +563,17 @@ body {
 		<form id="searchForm" method="get">
 			<fieldset>
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				작업지시코드: <input type="text" id="search_work_code" name="search_work_code">
-				실적일: 
+				작업지시코드 : <input type="text" id="search_work_code" name="search_work_code">
+				실적일 : 
 				<input type="text" id="search_fromDate" name="search_fromDate"> ~ 
 				<input type="text" id="search_toDate" name="search_toDate">
 				<input type="submit" class="B B-info" value="조회">
 				<br>
-				라인코드: <input type="text" id="search_line_code" name="search_line_code">
-				품번: <input type="text" id="search_prod_code" name="search_prod_code">
+				라인코드 : <input type="text" id="search_line_code" name="search_line_code">
+				품번 : <input type="text" id="search_prod_code" name="search_prod_code">
 				<br>
 				<div style="margin-top: 0.5%;">
-					현황: <input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
+					현황 : <input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
 						  <input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
 						  <input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
 				</div>
@@ -588,6 +587,7 @@ body {
 		<div class="x_panel">
 			<div class="x_title">
 			
+
 			<div id="searchCnt">
 				<h2>생산 실적</h2> 총 <small id="total">${pm.totalCount }</small> 건
 			</div>
@@ -732,21 +732,23 @@ body {
 	</div>
 </div>
 		
-		<div id="pagination" style="text-align: center;">
+<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	<ul class="pagination">
+		<li class="paginate_button previous disabled">
 			<c:if test="${pm.prev }">
-				<a class="btn btn-secondary"
-				 href="/performance/performList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏪ </a>
+				<a href="/performance/performList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> Previous </a>
 			</c:if>
-			
-			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-				<a class="btn btn-secondary"
-				href="/performance/performList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}">${page }</a>
-			</c:forEach>
-		
+		</li>
+		<li class="paginate_button previous disabled">
+		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+			<a href="/performance/performList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}">${page }</a>
+		</c:forEach>
+		</li>
+		<li class="paginate_button previous disabled">
 			<c:if test="${pm.next }">
-				<a class="btn btn-secondary"
-				href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> ⏩ </a>
+				<a href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> Next </a>
 			</c:if>
+
 		</div>
 	
 	<!-- 상세보기 모달창 -->
@@ -767,6 +769,7 @@ body {
 		</div>
 	</div>
 	<!-- 상세보기 모달창 -->
+
 	
 </div>
 <!-- /page content -->
