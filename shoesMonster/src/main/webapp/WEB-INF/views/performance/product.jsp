@@ -465,16 +465,18 @@ body {
 
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
-			<c:if test="${empty param.input }">
-			<button onclick="location.href='/performance/product'" class="B B-info">새로고침</button>
-			</c:if>
-			<c:if test="${!empty param.input }">
-			<button onclick="location.href='/performance/product?input=${param.input }'" class="B B-info">새로고침</button>
-			</c:if>
 	
-		<form id="fr" method="post">	
 			<div class="x_title">
-				<h2>완제품<small>총 ${paging.total} 건</small></h2>
+				<h2>완제품<small> 총 ${paging.total} 건</small></h2>
+				
+				<div style="float: left;  margin-top: 1.5px;">
+					<c:if test="${empty param.input }">
+						<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+					</c:if>
+					<c:if test="${!empty param.input }">
+						<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+					</c:if>
+				</div>
 				
 				<div style="float: right;">
 					<button id="addButton" class="B B-info">추가</button>
@@ -487,6 +489,7 @@ body {
 				<div class="clearfix"></div>
 			</div>
 			
+		<form id="fr" method="post">
 		<!-- 버튼 제어 -->
 		<script>
 		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -584,7 +587,7 @@ body {
 						<b>${p }</b>
 					</c:when>
 					<c:when test="${p != paging.nowPage }">
-						<a href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
+						<a href="/performance/product?nowPNext${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
 					</c:when>
 				</c:choose>
 			</c:forEach>

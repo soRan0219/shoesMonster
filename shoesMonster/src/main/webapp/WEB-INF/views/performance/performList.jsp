@@ -582,14 +582,21 @@ body {
 		
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
+		
 			<div class="x_title">
-			
-
-			<div id="searchCnt">
-				<h2>생산 실적</h2> 총 <small id="total">${pm.totalCount }</small> 건
+				<div id="searchCnt">
+					<h2>생산 실적 목록<small id="total">총 ${pm.totalCount }건</small></h2>
+				</div>
+				
+			<div style="float: left;  margin-top: 1.5px;">
+				<c:if test="${empty param.input }">
+					<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+				</c:if>
+				<c:if test="${!empty param.input }">
+					<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+				</c:if>
 			</div>
-			
-			<!-- 버튼 제어 -->
+				
 			<div style="float: right;">
 				<button id="add" class="true B B-info">추가</button>
 				<button id="modify" class="B B-info">수정</button>
@@ -601,6 +608,8 @@ body {
 			<div class="clearfix"></div>
 			</div>
 			
+			<!-- 버튼 제어 -->
+		<form id="fr">
 			<script>
 			    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 			
@@ -625,7 +634,6 @@ body {
 		
 	
 	<div class="table-responsive">	
-		<form id="fr">
 			<input type="hidden" name="emp_id" value="${sessionScope.id.emp_id }">
 			<table border="1" class="table table-striped jambo_table bulk_action"  id="data-table">
 				<thead>
@@ -669,8 +677,8 @@ body {
 					</tr>
 				</c:forEach>
 			</table>
-		</form>
-		</div>	
+		</div>
+	</form>
 	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 		
 	<script type="text/javascript">
@@ -744,8 +752,9 @@ body {
 			<c:if test="${pm.next }">
 				<a href="/performance/performList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_work_code=${search.search_work_code}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_line_code=${search.search_line_code}&search_prod_code=${search.search_prod_code}&search_perform_status=${search.search_perform_status}"> Next </a>
 			</c:if>
-
-		</div>
+		</li>
+	</ul>
+</div>
 	
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
