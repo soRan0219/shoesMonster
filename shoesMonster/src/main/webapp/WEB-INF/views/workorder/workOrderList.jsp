@@ -107,7 +107,7 @@ body {
         		
        			if(isPop==="work_code") {
        				//생산실적(performList)에서 열었을 때
-	        		var workCode = $(this).find('#workCode').text();
+	        		var workCode = $(this).find('#workCode').text().substring(0,16).trim();
 	        		var lineCode = $(this).find('#lineCode').text();
 	        		var prodCode = $(this).find('#prodCode').text();
 	        		var workQt = $(this).find('#workQt').text(); 
@@ -121,7 +121,7 @@ body {
 	        		$("input[type='number']", opener.document).attr("placeholder", workQt);
 	        		
        			} else {
-	        		var workCode = $(this).find('#workCode').text();
+	        		var workCode = $(this).find('#workCode').text().substring(0,16).trim();
 	        		
 	        		$('#'+isPop, opener.document).val(workCode);
        			}
@@ -203,18 +203,13 @@ body {
 				tbl += " <td>";
 				tbl += "  <input type='text' value='1차공정' readonly>";
 				tbl += " </td>";
-// 				// 지시상태
+ 				// 지시상태
 				tbl += " <td>";
 				tbl += "  <input type='text' value='1공정지시' readonly>";
 				tbl += " </td>";
 				tbl += "</tr>";
 
 				$('table').append(tbl);
-
-				//라인코드 검색
-// 				$('#line_code').click(function() {
-// 					openWindow("line", "line_code");
-// 				}); //lineCode click
 
 				//수주코드 검색
 				$('#order_code_work').click(function() {
@@ -227,10 +222,8 @@ body {
 			// 저장 -> form 제출하고 저장함
 			$('#save').click(function() {
 
-				var line_code = $('#line_code').val();
 				var prod_code = $('#prod_code').val();
 				var order_code = $('#order_code').val();
-// 				var work_state = $('#work_state').val();
 				var work_qt = $('#work_qt').val();
 
 				if (prod_code == "" || order_code == "" || work_qt == "") {
@@ -315,9 +308,10 @@ body {
 									data.line_code,
 									data.order_code,
 									data.prod_code,
-									data.work_state,
 									data.work_date,
-									data.work_qt
+									data.work_qt,
+									data.line_place,
+									data.work_state
 								];
 	
 							var names = [
@@ -325,9 +319,10 @@ body {
 									"line_code",
 									"order_code",
 									"prod_code",
-									"work_state",
 									"work_date",
-									"work_qt" 
+									"work_qt",
+									"line_place",
+									"work_state"
 								];
 	
 							//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
@@ -335,19 +330,6 @@ body {
 	
 								if (idx > 0) {
 									inputCng($(this),"text",names[idx - 1],preVOs[idx - 1]);
-									if (idx == 5) {
-										var dropDown = "<select id='work_state' name='work_state'>";
-										dropDown += "<option value='지시'>지시</option>";
-										dropDown += "<option value='진행'>진행</option>";
-										dropDown += "<option value='마감'>마감</option>";
-										dropDown += "</select>";
-										$(this).html(dropDown);
-										$(this).find('option').each(function() {
-											if (this.value == preVOs[idx - 1]) {
-												$(this).attr("selected",true);
-											}
-										}); //option이 work_state와 일치하면 선택된 상태로
-									} //지시상태 - select
 									
 									//지시수량 제외하고 readonly 속성 부여
 									$(this).find("input").each(function(){
@@ -357,18 +339,7 @@ body {
 									}); //readonly
 									
 								} //라인코드부터 다 수정 가능하게
-								
 							}); // self.find(~~)
-	
-							//라인코드 검색
-							$('#line_code').click(function() {
-								openWindow("line","line_code");
-							}); //lineCode click
-	
-							//수주코드 검색
-							$('#order_code').click(function() {
-								openWindow("order","order_code");
-							}); //orderCode click
 	
 						},
 						error : function(data) {
@@ -472,7 +443,6 @@ body {
 								data : {checked : checked},
 								dataType : "text",
 								success : function() {
-	// 								alert("*** 아작스 성공 ***");
 									location.reload();
 								},
 								error : function() {
@@ -554,7 +524,7 @@ body {
 		
 		//검색 결과 없을 때 표, 버튼 다 숨기기
 		if(Number($('#total').text())==0) {
-			$('#body').html("검색 결과가 없습니다.");
+			$('#searchCnt').html("검색 결과가 없습니다.");
 		}
 		
 		//============================ 검색 =========================================//
@@ -584,7 +554,7 @@ body {
 		
 		//작업지시코드 클릭시 상세조회
 		$('#workCode a').click(function() {
-			var obj = { work_code:$(this).text().trim() };
+			var obj = { work_code:$('#workCode').text().substring(0,16).trim() };
 				
 			$.ajax({
 				url : "/workorder/detail",
@@ -593,36 +563,45 @@ body {
 				dataType : "json",
 				data : JSON.stringify(obj),
 				success : function(data) {
-					console.log(data);
 					
-					var tmp = "작업지시코드: ";
-					tmp += data.work_code;
-					tmp += " 라인코드: ";
-					tmp += data.line_code;
-					tmp += " 수주코드: ";
-					tmp += data.order_code;
-					tmp += " 품번: ";
-					tmp += data.prod_code;
-					tmp += "<br>지시상태: ";
-					tmp += data.work_state;
-					tmp += " 지시일: ";
-					tmp += data.work_date;
-					tmp += " 지시수량: ";
-					tmp += data.work_qt;
-					tmp += "<br>등록자: ";
-					tmp += ((data.emp_id===""||data.emp_id==null) ? "없음" : data.emp_id);
-					tmp += " 변경자: ";
-					tmp += ((data.change_id===""||data.change_id==null) ? "없음" : data.change_id);
-					tmp += " 변경일: ";
-					tmp += ((data.change_date===""||data.change_date==null) ? "없음" : data.change_date);
-					tmp += " 비고: ";
-					tmp += ((data.work_note===""||data.work_note==null) ? "없음" : data.work_note);
+					var tmp = "<table border='1' class='table table-striped jambo_table bulk_action' style='text-align:center;'>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th>작업지시코드 </th>";
+					tmp += "  <td>" + data.work_code + "</td>";
+					tmp += " <th> 라인코드 </th>";
+					tmp += "  <td>" + data.line_code + "</td>";
+					tmp += " <th> 수주코드 </th>";
+					tmp += "  <td>" + data.order_code + "</td>";
+					tmp += " <th> 품번 </th>";
+					tmp += "  <td>" + data.prod_code + "</td>";
+					tmp += "</tr>";
+					tmp += "<tr class='headings'>"; 
+					tmp += " <th> 지시상태 </th>";
+					tmp += "  <td>" + data.work_state + "</td>";
+					tmp += " <th> 지시일 </th>";
+					tmp += "  <td>" + data.work_date + "</td>";
+					tmp += " <th> 공정 </th>";
+					tmp += "  <td>" + data.line_place + "</td>";
+					tmp += " <th>지시수량 </th>";
+					tmp += "  <td>" + data.work_qt + "</td>";
+					tmp += "</tr>";
+					tmp += "<tr class='headings'>";
+					tmp += " <th> 등록자 </th>";
+					tmp += ((data.emp_id===""||data.emp_id==null) ? "<td>없음</td>" : "<td>"+data.emp_id+"</td>");
+					tmp += " <th> 변경자 </th>";
+					tmp += ((data.change_id===""||data.change_id==null) ? "<td>없음</td>" : "<td>"+data.change_id+"</td>");
+					tmp += " <th> 변경일 </th>";
+					tmp += ((data.change_date===""||data.change_date==null) ? "<td>없음</td>" : "<td>"+data.change_date+"</td>");
+					tmp += "</tr>";
+					tmp += "</table>";
 					
-					$('#detail').html(tmp);
+					
+					$('.modal-body').html(tmp);
+					$('.modal').modal("show");
 				},
 				error: function() {
 					console.log("아작스 실패");
-				}
+				}  
 			}); //ajax
 				
 		}); //작업지시코드 클릭
@@ -647,18 +626,21 @@ body {
 					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText"> ~ 
 					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText"> 
 				<span>품번:</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
-				<input type="submit" value="조회"> 
 				<br><br>
 				<span>지시상태:</span> 
-					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="전체" checked> 전체 
-					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="지시"> 지시 
-					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="진행"> 진행 
-					<input type="radio" name="search_state" id="search_state" class="searchRadio" value="마감"> 마감 
+					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="전체" checked> 전체 
+					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="1차공정"> 1차공정 
+					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="2차공정"> 2차공정 
+					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="3차공정"> 3차공정 
+					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="마감"> 마감 
+				<input type="submit" value="조회" class="B B-info"> 
 			</fieldset>
 		</form>
 	</div>
 
 	<hr>
+	
+
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
@@ -666,7 +648,7 @@ body {
 				<div class="x_title">
 					<h2>작업지시 관리</h2>
 					
-					<span style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span>
+					<span id="searchCnt" style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span>
 					<div class="clearfix"></div>
 				</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
@@ -674,17 +656,12 @@ body {
   
     <!-- 버튼 제어 -->
 	<div style="margin-bottom: 1%;">
-		<button id="add" class="true">추가</button>
-		<button id="modify">수정</button>
-		<button id="delete" class="true">삭제</button>
-		<button type="reset" id="cancle">취소</button>
-		<button type="submit" id="save">저장</button>
-		<c:if test="${empty param.input }">
-			<button onclick="location.href='/workorder/workOrderList'" class="B B-info">새로고침</button>
-			</c:if>
-			<c:if test="${!empty param.input }">
-			<button onclick="location.href='/workorder/workOrderList?input=${param.input }'" class="B B-info">새로고침</button>
-			</c:if>
+		<button id="add" class="true B B-info">추가</button>
+		<button id="modify"class="B B-info">수정</button>
+		<button id="delete" class="true B B-info">삭제</button>
+		<button type="reset" id="cancle" class="B B-info">취소</button>
+		<button type="submit" id="save" class="B B-info">저장</button>
+		<button onclick="location.href='/workorder/workOrderList'" class="B B-info">새로고침</button>
 	</div>	
 		<script>
 		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -712,29 +689,10 @@ body {
 	
 		총 <span id="total">${pm.totalCount }</span>건
 		
-		<select id="perPage" name="perPage">
-			<option value="8">8</option>
-			<option value="10">10</option>
-			<option value="15">15</option>
-		</select>
-		건씩 표시
-
 	</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->			
-<!-- 	<div id="body"> -->
 	<div style="overflow-x: auto;">
 	
-<%-- 		총 <span id="total">${pm.totalCount }</span>건 --%>
-		
-<!-- 		<select id="perPage" name="perPage"> -->
-<!-- 			<option value="2">2</option> -->
-<!-- 			<option value="5">5</option> -->
-<!-- 			<option value="7">7</option> -->
-<!-- 		</select> -->
-<!-- 		건씩 표시 -->
-<!-- 	</div> -->
-		
-<!-- 	<div class="table-responsive"> -->
 		<form id="fr">
 			<input type="hidden" name="emp_id" value="${sessionScope.id.emp_id }">
 			<table border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
@@ -765,7 +723,7 @@ body {
 				<c:forEach var="w" items="${workList }">
 					<tr class="even pointer">
 						<td class="a-center"></td>
-						<td id="workCode"><a href="#" onclick="return false">${w.work_code }</a></td>
+						<td id="workCode">${w.work_code }<a href="#" onclick="return false">&#128269;</a></td>
 						<td id="lineCode">${w.line_code }</td>
 						<td>${w.order_code }</td>
 						<td id="prodCode">${w.prod_code }</td>
@@ -780,7 +738,7 @@ body {
 		</div>
 <!-- 	</div> -->
 	
-	<button id="excelDownload">엑셀다운로드</button>
+	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 		
 	<script type="text/javascript">
 		
@@ -841,24 +799,42 @@ body {
 		
 		<div id="pagination">
 			<c:if test="${pm.prev }">
-				<a href="/workorder/workOrderList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏪ </a>
+				<a href="/workorder/workOrderList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> ⏪ </a>
 			</c:if>
 			
 			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-				<a href="/workorder/workOrderList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}">${page }</a>
+				<a href="/workorder/workOrderList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${page }</a>
 			</c:forEach>
 	
 			<c:if test="${pm.next }">
-				<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_state=${search.search_state}&search_prod=${search.search_prod}"> ⏩ </a>
+				<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> ⏩ </a>
 			</c:if>
 		</div>
 
-	<div id="detail"></div>
+	<!-- 상세보기 모달창 -->
+	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">작업지시 상세</h4>
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 상세보기 모달창 -->
 	
 	
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/forTest/workOrderList.css">
+<link rel="stylesheet" href="/resources/forTest/sm.css"> 
+<!-- <link rel="stylesheet" href="/resources/forTest/workOrderList.css"> -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
