@@ -437,6 +437,7 @@ body {
 								data : {checked : checked},
 								dataType : "text",
 								success : function() {
+									alert("총 " + checked.length + "건 삭제 완료");
 									location.reload();
 								},
 								error : function() {

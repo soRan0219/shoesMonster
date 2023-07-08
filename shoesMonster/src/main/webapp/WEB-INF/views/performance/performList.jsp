@@ -357,7 +357,7 @@ body {
 				
 				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
 				$('table tr').each(function(){
-					var code = $(this).find('td:nth-child(2)').text();
+					var code = $(this).find('td:nth-child(2)').text().substring(0,16).trim();
 					
 					var tbl = "<input type='checkbox' name='selected' value='";
 					tbl += code;
@@ -387,26 +387,29 @@ body {
 						checked.push($(this).val());
 					});
 					
-					if(checked.length > 0) {
+					if(confirm("총 " + checked.length + "행 선택\n정말 삭제하시겠습니까?")) {
 						
-						$.ajax({
-							url: "/performance/deletePerform",
-							type: "post",
-							data: {checked:checked},
-							dataType: "text",
-							success: function() {
-								alert("*** 아작스 성공 ***");
-								location.reload();
-							},
-							error: function() {
-								alert("아작스실패~~");
-							}
-						}); //ajax
-						
-					} //체크된거 있을대
-					else {
-						alert("선택된 항목이 없습니다.");
-					} //체크된거 없을때
+						if(checked.length > 0) {
+							
+							$.ajax({
+								url: "/performance/deletePerform",
+								type: "post",
+								data: {checked:checked},
+								dataType: "text",
+								success: function() {
+									alert("총 " + checked.length + "건 삭제 완료");
+									location.reload();
+								},
+								error: function() {
+									alert("아작스실패~~");
+								}
+							}); //ajax
+							
+						} //체크된거 있을대
+						else {
+							alert("선택된 항목이 없습니다.");
+						} //체크된거 없을때
+					} //삭제확인
 					
 				}); //save
 			
