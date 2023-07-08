@@ -23,8 +23,9 @@ public interface In_materialDAO {
 //		public List<In_materialVO> In_matPage(int displayPost,int postNum ,In_materialVO ivo) throws Exception;
 //		
 	// 입고등록
-
 	public void inInsert(String raw_order_num, String emp_id) throws Exception;
+	
+	public void inInsert1(String raw_order_num) throws Exception;
   
 	// 미입고 ,입고완료
     public void updateIn(String raw_order_num ) throws Exception;

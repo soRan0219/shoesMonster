@@ -14,6 +14,7 @@
 	    <result property="raw_order_date" column="raw_order_date" />
 	    <result property="raw_code" column="raw_code" />
 	    <result property="emp_id" column="emp_id" />
+	    <result property="in_YN" column="in_YN" />
 	
 	    <collection property="rawMaterial" ofType="com.sm.domain.RawMaterialVO">
 	        <result property="raw_name" column="raw_name" />
@@ -40,13 +41,12 @@
 	    
 	    <collection property="in_mat" ofType="com.sm.domain.In_materialVO">
             <result property="in_num" column="in_num" />
-            <result property="in_YN" column="in_YN" />
+<!--             <result property="in_YN" column="in_YN" /> -->
             <result property="in_date" column="in_date" />
             <result property="i_emp_id" column="i_emp_id" />
         </collection>
         
         <collection property="warehouse" ofType="com.sm.domain.WarehouseVO">
-        	<result property="wh_code" column="wh_code"/>
         	<result property="wh_dv" column="wh_dv"/>
         </collection>
 	</resultMap>
@@ -54,7 +54,7 @@
 	<!-- 발주 목록 조회 -->
     <select id="getRaw_Order" resultMap="ro_List" resultType="com.sm.domain.Raw_orderVO">
         select i.in_num, ro.raw_order_num, c.client_actname, ro.raw_code, rm.raw_name, rm.raw_color,
-		       ro.raw_order_count, s.stock_count, rm.raw_price, ro.raw_order_date, i.in_date, ro.emp_id, i.i_emp_id, i.in_YN,
+		       ro.raw_order_count, s.stock_count, rm.raw_price, ro.raw_order_date, i.in_date, ro.emp_id, i.i_emp_id, ro.in_YN,
 		       rm.wh_code
 		from raw_order ro
 		JOIN raw_material rm ON ro.raw_code = rm.raw_code
@@ -141,8 +141,8 @@
 
 	<!-- 발주 등록 -->	
 	<insert id="roRegist">
-		insert into raw_order(raw_order_num, raw_order_date, raw_code, client_code, raw_order_count, emp_id)
-		values(CONCAT('R', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_code}, #{client_code}, #{raw_order_count}, #{emp_id}) 
+		insert into raw_order(raw_order_num, raw_order_date, raw_code, client_code, raw_order_count, emp_id, in_YN)
+		values(CONCAT('R', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_code}, #{client_code}, #{raw_order_count}, #{emp_id}, "미입고") 
 	</insert>
 
 	<!-- 발주 등록 -->
@@ -192,6 +192,9 @@
         <if test="in_num != null and in_num != ''">
             and i.in_num like concat ( '%' ,#{in_num},'%' )
         </if>
+        <if test="in_YN != null and in_YN != ''">
+            and ro.in_YN like concat ( '%' ,#{in_YN},'%' )
+        </if>
            </where>
     </select>
     <!-- 발주 검색 총 갯수 -->
@@ -199,8 +202,8 @@
 	
 	<!-- 발주 검색 목록  -->
     <select id="getRaw_OrderSearch" resultMap="ro_List" parameterType="hashMap" resultType="com.sm.domain.Raw_orderVO">
-       select i.in_num, ro.raw_order_num, c.client_actname, ro.raw_code, rm.raw_name, rm.raw_color, i.i_emp_id
-               ro.raw_order_count, s.stock_count, rm.raw_price, ro.raw_order_date,i.in_date, ro.emp_id,i.in_YN 
+       select i.in_num, ro.raw_order_num, c.client_actname, ro.raw_code, rm.raw_name, rm.raw_color, i.i_emp_id, rm.wh_code,
+               ro.raw_order_count, s.stock_count, rm.raw_price, ro.raw_order_date,i.in_date, ro.emp_id, ro.in_YN 
         from raw_order ro
         LEFT JOIN raw_material rm ON ro.raw_code = rm.raw_code
         LEFT JOIN clients c ON c.client_code = rm.client_code
@@ -219,8 +222,11 @@
         <if test="in_num != null and in_num != ''">
             and i.in_num like concat ( '%' ,#{in_num},'%' )
         </if>
+        <if test="in_YN != null and in_YN != ''">
+            and ro.in_YN like concat ( '%' ,#{in_YN},'%' )
+        </if>
            </where>
-        order by i.in_YN  asc ,ro.raw_order_num desc , i.in_num desc
+        order by ro.in_YN  asc ,ro.raw_order_num desc , i.in_num desc
         limit #{startPage}, #{pageSize}
     </select>
     <!-- 발주 검색 목록  -->
@@ -360,10 +366,16 @@
 
 	<!-- 입고 등록 -->
 	<insert id="inRegist" parameterType="com.sm.domain.In_materialVO">
-	    insert into in_material(in_num, in_date, raw_order_num, i_emp_id, in_YN) 
-	    values(CONCAT('I', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_order_num}, #{emp_id}, "입고완료") 
+	    insert into in_material(in_num, in_date, raw_order_num, i_emp_id) 
+	    values(CONCAT('I', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')), CURDATE(), #{raw_order_num}, #{emp_id}) 
 	</insert>
+	<update id="inRegist1">
+	    update raw_order
+	    set in_YN = "입고완료"
+	    where raw_order_num = #{raw_order_num} 
+	</update>
 	<!-- 입고 등록 -->
+	
 
 	<!-- 입고 시 재고에 있는지 확인 -->
 	<select id="selectCheck" parameterType="com.sm.domain.In_materialVO" resultType="java.lang.Boolean">

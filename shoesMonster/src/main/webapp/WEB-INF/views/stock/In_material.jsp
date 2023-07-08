@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -10,10 +9,7 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
-
-<c:if test="${empty sessionScope.id}">
-    <c:redirect url="/smmain/smMain" />
-</c:if>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style type="text/css">
 
@@ -29,11 +25,11 @@ body {
 	<h1 style="margin-left: 1%;">입고 관리</h1>
 
 	<!-- 버튼 제어 -->
-	<div style="margin-left: 1%;">
-		<input type="button" value="전체" class="B B-info" onclick="showAll()"></input>
-		<input type="button" value="미입고" class="B B-info" onclick="show1()" ></input> 
-		<input type="button" value="입고완료" class="B B-info" onclick="show2()" ></input>
-	</div>
+<!-- 	<div style="margin-left: 1%;"> -->
+<!-- 		<input type="button" value="전체" class="B B-info" onclick="showAll()"></input> -->
+<!-- 		<input type="button" value="미입고" class="B B-info" onclick="show1()" ></input>  -->
+<!-- 		<input type="button" value="입고완료" class="B B-info" onclick="show2()" ></input> -->
+<!-- 	</div> -->
 	
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -90,11 +86,37 @@ body {
 				row.style.display = "";
 			}
 		}
+		
+		function go() {
+			alert("입고 처리가 완료되었습니다.");
+		}
+		
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+// 		 function confirm() {
+			
+			
+			
+			
+			
+			
+			
+			
+// 			        event.preventDefault();
+// 			        Swal.fire({
+// 			              title: '입고 완료되었습니다.',
+// 			              icon: 'success',
+// 			            }).then((result) => {
+// 			              if (result.isConfirmed) {
+// 			                 document.querySelector('fr').submit();
+// 			              }
+// 			            });
+			        	
+//     }
 	</script>
 
 
 
-	<hr>
 
 	<!-- 	입고 번호 <input type="text" valeu="in_num" placeholder="입고 번호를 입력하세요."> -->
 	<!-- 	거래처명 <input type="text"  valeu="clien_name" placeholder="거래처명을 입력하세요."> -->
@@ -111,12 +133,15 @@ body {
 <div style="margin: 1% 0 1% 1%;">
 
 	<form action="" method="get">
-
+		<button type="submit" value="" class="B B-info" name="in_YN">전체</button>
+		<input type="submit" value="미입고" class="B B-info" name="in_YN" ></input> 
+        <input type="submit" value="입고완료" class="B B-info" name="in_YN" ></input> 
+		<hr>
 		<label>품명</label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요">
 		<label>입고 번호</label> <input type="text" name="in_mat.in_num" placeholder="입고 번호를 입력해주세요">
 		<label>거래처명</label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요">
 		<input type="submit" class="B B-info" value="검색">
-
+		
 	</form>
 </div>
 
@@ -135,7 +160,7 @@ body {
 			</div>
 			<div class="x_content">
 				<div class="table-responsive">
-					<form action="" method="post">
+					<form action="" method="post" id="fr">
 						<table class="table table-striped jambo_table bulk_action"
 							id="data-table">
 							<thead>
@@ -178,11 +203,12 @@ body {
 										<td class=" "><fmt:formatNumber value=" ${rvo.rawMaterial.raw_price*rvo.raw_order_count}" />원</td>
 										<td class=" ">${rvo.in_mat.in_date }</td>
 										<td class=" ">${rvo.in_mat.i_emp_id }</td>
-										<td class="a-right a-right ">${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td>
+<%-- 										<td class="a-right a-right ">${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td> --%>
+										<td class="a-right a-right ">${rvo.in_YN}</td>
 										<td class=" ">
 										<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 											<c:if test="${rvo.in_mat.in_num == null}">
-												<button type="submit" name="in_Button" class="B B-info" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+												<button type="submit" name="in_Button" onclick="go()" class="B B-info" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
 											</c:if>
 										</c:if>
 										</td>
@@ -201,25 +227,31 @@ body {
 </div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
+	
 	<div style="text-align: center;">
-			<c:if test="${count1 > 10 }">
-				<c:if test="${bp.prev}">
-					<span><a class="btn btn-secondary"
-						href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a></span>
-				</c:if>
+            <c:if test="${count1 > 10 }">
+                <c:if test="${bp.prev}">
+                    <span><a class="btn btn-secondary"
+                        href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a></span>
+                </c:if>
 
-				<c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
-					step="1">
-					<a class="btn btn-secondary"
-						href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
-				</c:forEach>
+                <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
+                    step="1">
+                    <a class="btn btn-secondary"
+                        href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
+                </c:forEach>
 
-				<c:if test="${bp.next && bp.endPage > 0}">
-					<a class="btn btn-secondary"
-						href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
-				</c:if>
-			</c:if>
-		</div>
+                <c:if test="${bp.next && bp.endPage > 0}">
+                    <a class="btn btn-secondary"
+                        href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+                </c:if>
+            </c:if>
+        </div>
+
+    </div>
+	
+
+    </div>
 
 	</div>
 
