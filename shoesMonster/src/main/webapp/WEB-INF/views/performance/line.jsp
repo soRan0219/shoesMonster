@@ -376,14 +376,14 @@ body {
 						contentType : "application/json; charset=UTF-8",
 			 			data: JSON.stringify(liplace),
 			 			success: function (data) {
-							alert(data);
+// 							alert(data);
 							
-							
+							 
 			 				 var num = parseInt(data.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
-			 				 alert("num : "+num);
+// 			 				 alert("num : "+num);
 			  				 var paddedNum = padNumber(num, data.length - 1); // 숫자를 패딩하여 길이 유지
 			  				 lineCode = data.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
-						 	         
+						   	         
 							
 							$('#line_code').val(lineCode);
 							

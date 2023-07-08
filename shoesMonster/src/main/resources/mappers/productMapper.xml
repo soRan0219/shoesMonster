@@ -435,7 +435,7 @@
 		select l.* , e.emp_name
 		from line l
 		Left join employees e on l.emp_id = e.emp_id 
-		ORDER BY l.line_place 
+		ORDER BY l.line_place, l.line_code 
 	</select>
 	<!-- 라인 목록 조회 -->
 
@@ -445,7 +445,7 @@
 			select l.* , e.emp_name
 			from line l
 			Left join employees e on l.emp_id = e.emp_id 
-			ORDER BY l.line_place 
+ 			ORDER BY l.line_place, l.line_code 
 			limit #{startPage}, #{pageSize}
 		]]>
 	</select>
@@ -496,7 +496,7 @@
 				AND line_use = #{line_use}
 			</if>
 		</where>
-		ORDER BY line_place 
+		ORDER BY line_place, line_code
 		limit #{startPage}, #{pageSize}
 	</select>
 
@@ -541,7 +541,7 @@
 		WHERE line_place = #{line_place} 
 		ORDER BY line_code desc limit 1
 	</select>
-	<!-- 라인 추가 시 코드값 가져가기 -->
+	<!-- 라인 추가 시 코드값 가져가기 2-->
 	
 
 	<!-- ///////////////////////////////////////////////////////// -->
