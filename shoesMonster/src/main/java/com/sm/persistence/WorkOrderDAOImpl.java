@@ -268,4 +268,11 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 		return sqlSession.selectOne(NAMESPACE + ".searchWorkOrderCnt", search);
 	} //getSearchWorkOrder()
 
+	//작업지시 현재 작업 공정 변경
+	@Override
+	public void updateStatus(WorkOrderVO vo) throws Exception {
+		logger.debug("##### DAO: updateStatus() 호출");
+		sqlSession.update(NAMESPACE + ".updateStatus", vo);
+	} //updateStatus()
+
 } //WorkOrderDAOImpl

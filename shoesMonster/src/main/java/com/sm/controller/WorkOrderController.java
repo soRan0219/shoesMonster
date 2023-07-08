@@ -44,7 +44,7 @@ public class WorkOrderController {
 			int pageSize = Integer.parseInt(search.get("pageSize").toString());
 			pvo.setPageSize(pageSize);
 		} else {
-			pvo.setPageSize(2);
+			pvo.setPageSize(8);
 		}
 		
 		//페이징 하단부 정보
@@ -186,6 +186,17 @@ public class WorkOrderController {
 		return "redirect:/workorder/workOrderList";
 	} //modifyWorkOrder()
 	
+	//작업지시 현재 작업 공정 변경
+//	@RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
+	public String updateStatus(WorkOrderVO vo) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: updateStatus() 호출");
+		logger.debug("@@@@@ CONTROLLER: vo  = = = = = = > > > " + vo);
+		
+		wService.modifyStatus(vo);
+		
+		return "redirect:/workorder/workOrderList";
+	} //updateStatus()
 	
 	
 } //WorkOrderController

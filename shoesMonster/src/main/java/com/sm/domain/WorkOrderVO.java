@@ -20,6 +20,7 @@ public class WorkOrderVO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date change_date;
 	private String work_state;
+	private String line_place;
 	
 //	private ProductVO product;
 	

@@ -32,4 +32,7 @@ public interface WorkOrderDAO {
 	//작업지시 검색 개수
 	public int getSearchWOrkOrder(HashMap<String, Object> search) throws Exception;
 	
+	//작업지시 현재 작업 공정 변경
+	public void updateStatus(WorkOrderVO vo) throws Exception;
+	
 } //WorkOrderDAO
