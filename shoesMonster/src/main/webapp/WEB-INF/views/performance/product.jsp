@@ -555,27 +555,32 @@ body {
 </div>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->	
-	<div id="pagination" style="display: block; text-align: center;">		
-		<c:if test="${paging.startPage != 1 }">
-			<a class="btn btn-secondary"
-			href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&lt;</a>
-		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-			<c:choose>
-				<c:when test="${p == paging.nowPage }">
-					<b>${p }</b>
-				</c:when>
-				<c:when test="${p != paging.nowPage }">
-					<a class="btn btn-secondary"
-					href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
-				</c:when>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.endPage != paging.lastPage}">
-			<a class="btn btn-secondary" 
-			href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">&gt;</a>
-		</c:if>
-	</div>
+<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	<ul class="pagination">
+		<li class="paginate_button previous disabled">	
+			<c:if test="${paging.startPage != 1 }">
+				<a href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">Previous</a>
+			</c:if>
+		</li>
+		<li class="paginate_button previous disabled">	
+			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+				<c:choose>
+					<c:when test="${p == paging.nowPage }">
+						<b>${p }</b>
+					</c:when>
+					<c:when test="${p != paging.nowPage }">
+						<a href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
+					</c:when>
+				</c:choose>
+			</c:forEach>
+		</li>
+		<li class="paginate_button previous disabled">	
+			<c:if test="${paging.endPage != paging.lastPage}">
+				<a href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">Next</a>
+			</c:if>
+		</li>
+	</ul>
+</div>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 </div>

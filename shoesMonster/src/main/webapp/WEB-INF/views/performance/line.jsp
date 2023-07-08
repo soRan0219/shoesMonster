@@ -542,20 +542,20 @@ body {
 	<fieldset>
 		<input type="hidden" name="input" id="input" value="${input}">
 		
-		<label>라인코드</label>
+		<label>라인코드 : </label>
 			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요" >
 			
-		<label>라인명</label>
+		<label>라인명 : </label>
 			<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
 			
 		<input type="submit" class="B B-info" value="검색">
 		
 		<br>
 		
-		<label>사용여부</label>
-			<input type="radio" name="line_use" value="3" checked>전 체
-			<input type="radio" name="line_use" value="1">Y
-			<input type="radio" name="line_use" value="2">N
+		<label>사용여부 : </label>
+			<input type="radio" name="line_use" value="3" checked> 전체
+			<input type="radio" name="line_use" value="1"> Y
+			<input type="radio" name="line_use" value="2"> N
 			
 <!-- 		<label>공정</label> -->
 <!-- 			<input type="text" name="line_place" placeholder="검색어를 입력해주세요"> -->
@@ -666,22 +666,25 @@ body {
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 	
-	<div id="pagination" style="text-align: center;">
+<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	<ul class="pagination">
+		<li class="paginate_button previous disabled">
 		<c:if test="${lwpm.prev }">
-			<a class="btn btn-secondary"
-			href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">이 전</a>
+			<a href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">Previous</a>
 		</c:if>
-		
+		</li>
+		<li class="paginate_button previous disabled">
 		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
-			<a class="btn btn-secondary"
-			href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
+			<a href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
 		</c:forEach>
-
+		</li>
+		<li class="paginate_button previous disabled">
 		<c:if test="${lwpm.next }">
-			<a class="btn btn-secondary"
-			href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">다 음</a>
+			<a href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">Next</a>
 		</c:if>
-	</div>
+		</li>
+	</ul>
+</div>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
 
