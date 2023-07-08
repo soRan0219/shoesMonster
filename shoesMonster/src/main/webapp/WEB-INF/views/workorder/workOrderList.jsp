@@ -183,14 +183,6 @@ body {
 				tbl += " <td>";
 				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly>";
 				tbl += " </td>";
-				// 지시상태
-				tbl += " <td>";
-				tbl += "  <select name='work_state' id='work_state'>";
-				tbl += "   <option>지시</option>";
-				tbl += "   <option>진행</option>";
-				tbl += "   <option>마감</option>";
-				tbl += "  </select>"
-				tbl += " </td>";
 				// 지시일
 				tbl += " <td>";
 				tbl += "  <input type='text' name='work_date' id='work_date' readonly value='";
@@ -201,14 +193,22 @@ body {
 				tbl += " <td>";
 				tbl += "  <input type='text' name='work_qt' id='work_qt' required>";
 				tbl += " </td>";
+				//공정
+				tbl += " <td>";
+				tbl += "  <input type='text' value='1차공정' readonly>";
+				tbl += " </td>";
+// 				// 지시상태
+				tbl += " <td>";
+				tbl += "  <input type='text' value='1공정지시' readonly>";
+				tbl += " </td>";
 				tbl += "</tr>";
 
 				$('table').append(tbl);
 
 				//라인코드 검색
-				$('#line_code').click(function() {
-					openWindow("line", "line_code");
-				}); //lineCode click
+// 				$('#line_code').click(function() {
+// 					openWindow("line", "line_code");
+// 				}); //lineCode click
 
 				//수주코드 검색
 				$('#order_code_work').click(function() {
@@ -224,10 +224,10 @@ body {
 				var line_code = $('#line_code').val();
 				var prod_code = $('#prod_code').val();
 				var order_code = $('#order_code').val();
-				var work_state = $('#work_state').val();
+// 				var work_state = $('#work_state').val();
 				var work_qt = $('#work_qt').val();
 
-				if (line_code == "" || prod_code == "" || order_code == "" || work_state == "" || work_qt == "") {
+				if (prod_code == "" || order_code == "" || work_qt == "") {
 					alert("항목을 모두 입력하세요");
 				} else {
 					$('#fr').attr("action", "/workorder/add");
@@ -246,8 +246,7 @@ body {
 
 		}); //add click
 
-		
-		
+		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		let queryString = window.location.search;
 		let urlParams = new URLSearchParams(queryString);
 		var fromController = urlParams.get("woInsert");
@@ -257,8 +256,16 @@ body {
 		if(fromController==0) {
 			if(confirm("재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?")) {
 				location.href = "/stock/raw_order";
+			} else {
+				var url = new URL(window.location.href);
+				var searchParams = new URLSearchParams(url.search);
+				searchParams.delete("woInsert");
+				var newUrl = url.origin + url.pathname;
+				
+				window.location.href = newUrl;
 			}
 		}
+		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		
 		
 		var isExecuted = false;
@@ -386,7 +393,7 @@ body {
 
 		}); //modify click
 
-		
+		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		queryString = window.location.search;
 		urlParams = new URLSearchParams(queryString);
 		var fromController = urlParams.get("woModify");
@@ -396,8 +403,16 @@ body {
 		if(fromController==0) {
 			if(confirm("재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?")) {
 				location.href = "/stock/raw_order";
+			} else {
+				var url = new URL(window.location.href);
+				var searchParams = new URLSearchParams(url.search);
+				searchParams.delete("woInsert");
+				var newUrl = url.origin + url.pathname;
+				
+				window.location.href = newUrl;
 			}
 		}
+		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		
 		
 		/////////////// 삭제 //////////////////////////////
@@ -687,9 +702,9 @@ body {
 		총 <span id="total">${pm.totalCount }</span>건
 		
 		<select id="perPage" name="perPage">
-			<option value="2">2</option>
-			<option value="5">5</option>
-			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="10">10</option>
+			<option value="15">15</option>
 		</select>
 		건씩 표시
 
@@ -729,9 +744,10 @@ body {
 						<th>라인코드</th>
 						<th>수주코드</th>
 						<th>품번</th>
-						<th>지시상태</th>
 						<th>지시일</th>
 						<th>지시수량</th>
+						<th>공정</th>
+						<th>마감</th>
 					</tr>
 				</thead>
 				
@@ -742,9 +758,10 @@ body {
 						<td id="lineCode">${w.line_code }</td>
 						<td>${w.order_code }</td>
 						<td id="prodCode">${w.prod_code }</td>
-						<td>${w.work_state }</td>
 						<td>${w.work_date }</td>
 						<td id="workQt">${w.work_qt }</td>
+						<td id="linePlace">${w.line_place }</td>
+						<td><a href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a></td>
 					</tr>
 				</c:forEach>
 			</table>

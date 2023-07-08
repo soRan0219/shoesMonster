@@ -65,4 +65,10 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 		return wdao.getSearchWOrkOrder(search);
 	} //getSearchWorkOrder()
 
+	@Override
+	public void modifyStatus(WorkOrderVO vo) throws Exception {
+		// DAO - 작업지시 현재 작업 공정 변경
+		wdao.updateStatus(vo);
+	} //modifyStatus()
+
 } //WorkOrderServiceImpl

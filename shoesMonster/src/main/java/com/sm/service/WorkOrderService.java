@@ -32,4 +32,7 @@ public interface WorkOrderService {
 	//작업지시 검색 개수
 	public int getSearchWorkOrder(HashMap<String, Object> search) throws Exception;
 	
+	//작업지시 현재 작업공정 변경
+	public void modifyStatus(WorkOrderVO vo) throws Exception;
+	
 } //WorkOrderService
