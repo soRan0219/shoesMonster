@@ -360,7 +360,7 @@ body {
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<form id="fr">
+			<form id="fr" method="post">
 			
 				<div class="x_title">
 					<h2>소요량 관리<small>총 ${paging.total} 건</small></h2>

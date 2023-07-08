@@ -277,8 +277,14 @@ body {
 									data: {checked:checked},
 									dataType: "text",
 									success: function() {
-										Swal.fire('삭제되었습니다.', '', 'error')
-										location.reload();
+										Swal.fire({
+											  title: '삭제되었습니다.',
+											  icon: 'error',
+											}).then((result) => {
+											  if (result.isConfirmed) {
+											    location.reload();
+											  }
+											});
 									},
 									error: function() {
 										Swal.fire('삭제 실패!.', '', 'success')
