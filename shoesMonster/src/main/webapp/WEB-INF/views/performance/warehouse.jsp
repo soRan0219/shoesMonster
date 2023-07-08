@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -13,6 +14,10 @@
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 
 <style type="text/css">
@@ -72,6 +77,7 @@ body {
     	$('#modify').hide();
     	$('#delete').hide();
     	$('#save').hide();
+    	$('#cancle').hide();
     	
    		$('table tr:not(:first-child)').click(function(){
    			
@@ -145,7 +151,7 @@ body {
 		var num = "<c:out value='${vo.page}'/>";
 		var num2 = "<c:out value='${vo.pageSize}'/>";
 		if(index > 0){
-			$(this).find('td:first').text(((num-1)*num2) + index);
+			$(this).find('td:first').text(((num-1)*num2) + index-1);
 		}
 	});
 	
@@ -406,15 +412,18 @@ body {
 					}// if==3
 						
 					if(idx == 7){
-						inputCng($(this), "hidden", names[idx - 1], $(this).text());
+							inputCng($(this), "hidden", names[idx - 1], "<c:out value='${id.emp_id}'/>");
+						}//==7
+					if(idx == 8){
+						inputCng($(this), "text", names[idx - 1], "<c:out value='${id.emp_name}'/>");
 					}//==7
 					}
 				});//self.find
 
-				// 등록자(사원) 검색
-				$('#emp_name').click(function () {
-					openWindow("emp", "emp_name");
-				}); // #emp_id click
+// 				// 등록자(사원) 검색
+// 				$('#emp_name').click(function () {
+// 					openWindow("emp", "emp_name");
+// 				}); // #emp_id click
 				
 				////////////////////////////////////////////////////
 				
@@ -553,20 +562,16 @@ body {
 <div style="margin-left: 1%;">
 	<form method="get">
 		
-		<input type="submit" name="line_place" value="1차공정" class="btn btn-info" ></input>
-		<input type="submit" name="line_place" value="2차공정" class="btn btn-info" ></input>
-	    <input type="submit" name="line_place" value="3차공정" class="btn btn-info" ></input>
-		 
 		<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
 			
-			<label>창고코드</label>
+			<label>창고코드 : </label>
 				<input type="text" name="wh_code"  placeholder="검색어를 입력해주세요">
 			
-			<label>지역</label>
+			<label>지역 : </label>
 				<input type="text" name="wh_addr"  placeholder="검색어를 입력해주세요">
 			
-			<label>담당자</label>
+			<label>담당자 : </label>
 				<input type="hidden" id="s_emp_id" name="emp_id">
 				<input type="text" id="s_emp_name" name="emp_name" placeholder="검색어를 입력해주세요">
 				
@@ -575,14 +580,14 @@ body {
 			<br>
 			
 			<div style="margin-top: 0.5%;">
-				<label>창고유형</label>	
+				<label>창고유형 : </label>	
 					<select name="wh_dv">
 					  <option value="전체">전체</option>
 					  <option value="원자재">원자재</option>
 					  <option value="완제품">완제품</option>
 					</select>
 					
-				<label>사용여부</label>
+				<label>사용여부 : </label>
 					<input type="radio" name="wh_use" value="3" checked>전 체
 					<input type="radio" name="wh_use" value="1">Y
 					<input type="radio" name="wh_use" value="2">N
@@ -597,6 +602,13 @@ body {
 
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
+		<c:if test="${empty param.input }">
+			<button onclick="location.href='/performance/warehouse'" class="B B-info">새로고침</button>
+		</c:if>
+		<c:if test="${!empty param.input }">
+			<button onclick="location.href='/performance/warehouse?input=${param.input }'" class="B B-info">새로고침</button>
+		</c:if>
+	
 		<form id="fr">
 			
 			<div class="x_title">
@@ -608,7 +620,6 @@ body {
 					<button id="delete" class="true B B-info">삭제</button>
 					<button type="reset" id="cancle" class="B B-info">취소</button>
 					<button type="submit" id="save" class="B B-info">저장</button>
-					<button onclick="location.href='/performance/warehouse'" class="B B-info">새로고침</button>
 				</div>
 				
 				<div class="clearfix"></div>
@@ -701,22 +712,24 @@ body {
 
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 	
-	<div id="pagination" style="display: block; text-align: center;">
-		<c:if test="${lwpm.prev  }"> 
-			<a class="btn btn-secondary"
-			href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}">이 전</a>
-		</c:if>
-		
-		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
-			<a class="btn btn-secondary"
-			href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}"">${page }</a>
-		</c:forEach>
-		
-		<c:if test="${lwpm.next }">
-			<a class="btn btn-secondary"
-			href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}"">다 음</a>
-		</c:if>
-
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">
+				<c:if test="${lwpm.prev  }"> 
+					<a href="/performance/warehouse?page=${lwpm.startPage-1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}">Previous</a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
+					<a href="/performance/warehouse?page=${page }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}">${page }</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${lwpm.next }">
+					<a href="/performance/warehouse?page=${lwpm.endPage+1 }&wh_code=${wvo.wh_code}&wh_addr=${wvo.wh_addr }&wh_use=${wvo.wh_use}&emp_id=${wvo.emp_id}&wh_dv=${wvo.wh_dv}">Next</a>
+				</c:if>
+			</li>
+		</ul>
 	</div><!--id="pagination"  --> 
 </div>
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->

@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -10,6 +11,10 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -28,7 +33,7 @@ body {
 	
 	// 발주 현황 상세페이지
 	function detailPopup(rawCode, raw_order_num) {
-		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=650, height=400, left=200, top=150");
+		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=680, height=400, left=200, top=150");
 	}
 	
 	// 총액
@@ -187,7 +192,7 @@ function toggleDiv(divId) {
 										<td class=" ">${vo.rawMaterial.raw_name }</td>
 										<td class=" ">${vo.rawMaterial.raw_color }</td>
 										<td class=" ">${vo.raw_order_count}</td>
-										<td class=" " style="color: ${vo.stock.stock_count <= 20 ? 'red' : 'inherit'}">${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
+										<td class=" " style="color: ${vo.stock.stock_count <= 50 ? 'red' : 'inherit'}">${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
 										<td class=" "><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}" />원</td>
 										<td class=" "><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}" />원</td>
 										<td class=" ">${vo.rawMaterial.wh_code }</td>
@@ -292,7 +297,7 @@ function toggleDiv(divId) {
 											oninput="totalAmount()"></td>
 										<!-- CSS할 때 증감버튼 없애기 -->
 										<td class=" ">
-											<input type="text" style="color: ${rvo.stock.stock_count <= 20 ? 'red' : 'inherit'}" name="stock_count" id="stock_count" readonly>
+											<input type="text" style="color: ${inputValue <= 50 ? 'red' : 'inherit'}" name="stock_count" id="stock_count" readonly>
 										</td>
 										<td class=" "><input type="text"  name="raw_price"
 											id="raw_price" readonly></td>

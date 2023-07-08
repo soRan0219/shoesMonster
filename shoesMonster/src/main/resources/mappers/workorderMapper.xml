@@ -74,8 +74,6 @@
 		LIMIT 1) 
 	</sql>
 	
-	
-	
 	<!-- 작업지시 등록 -->
 	<insert id="insertWorkOrder">
 		INSERT INTO work_order (work_code,prod_code,order_code,work_date,line_code,work_qt,work_state,emp_id,line_place)
@@ -120,8 +118,8 @@
 			<if test="(search_fromDate!=null and !search_fromDate.equals('')) and (search_toDate!=null and !search_toDate.equals(''))">
 				AND (work_date &gt;= #{search_fromDate} AND work_date &lt;= #{search_toDate}) 
 			</if> 
-			<if test="search_state!=null and !search_state.isEmpty() and !search_state.equals('전체')">
-				AND work_state=#{search_state} 
+			<if test="search_place!=null and !search_place.isEmpty() and !search_place.equals('전체')">
+				AND line_place=#{search_place} 
 			</if> 
 			<if test="search_prod!=null and !search_prod.isEmpty()">
 				AND prod_code=#{search_prod} 
@@ -152,14 +150,33 @@
 	</select>
 	<!-- 작업지시 검색 개수 -->
 	
+	
+	<sql id="selectLine2">
+		(SELECT line_code 
+		FROM line 
+		WHERE line_use=1 
+		AND line_place='2차공정' 
+		ORDER BY line_code DESC 
+		LIMIT 1) 
+	</sql>
+	<sql id="selectLine3">
+		(SELECT line_code 
+		FROM line 
+		WHERE line_use=1 
+		AND line_place='3차공정' 
+		ORDER BY line_code DESC 
+		LIMIT 1) 
+	</sql>
+	
+	
 	<!-- 작업지시 현재 작업공정 변경 -->
 	<update id="updateStatus" parameterType="WorkOrderVO">
 		UPDATE work_order 
 		<if test="line_place.equals('1차공정')">
-			SET line_place='2차공정', work_state='2공정지시' 
+			SET line_place='2차공정', work_state='2공정지시', line_code=<include refid="selectLine2"/> 
 		</if>
 		<if test="line_place.equals('2차공정')">
-			SET line_place='3차공정', work_state='3공정지시' 
+			SET line_place='3차공정', work_state='3공정지시', line_code=<include refid="selectLine3"/>  
 		</if>
 		<if test="line_place.equals('3차공정')">
 			SET line_place='마감', work_state='3공정마감' 

@@ -266,9 +266,9 @@ public class PerformanceServiceImpl implements PerformanceService {
 	 
 	// 라인 추가 시 코드값 가져가기
 	@Override
-	public String getLiCode() {
+	public String getLiCode(String line_place) throws Exception {
 		
-		return pdao.getLiCode();
+		return pdao.getLiCode(line_place);
 	}
 	
 

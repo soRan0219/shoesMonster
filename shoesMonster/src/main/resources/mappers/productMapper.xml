@@ -467,9 +467,9 @@
 			<if test="line_name != ''">
 				AND line_name LIKE concat('%', #{line_name},'%')
 			</if>
-<!-- 			<if test="line_place != ''"> -->
-<!-- 				AND line_place LIKE concat('%', #{line_place},'%') -->
-<!-- 			</if> -->
+			<if test="line_place != ''">
+				AND line_place LIKE concat('%', #{line_place},'%')
+			</if>
 			<if test="line_use != 3">
 				AND line_use= #{line_use}
 			</if>
@@ -489,9 +489,9 @@
 			<if test="line_name != ''">
 				AND line_name LIKE CONCAT('%', #{line_name}, '%')
 			</if>
-<!-- 			<if test="line_place != ''"> -->
-<!-- 				AND line_place LIKE CONCAT('%', #{line_place}, '%') -->
-<!-- 			</if> -->
+			<if test="line_place != ''">
+				AND line_place LIKE CONCAT('%', #{line_place}, '%')
+			</if>
 			<if test="line_use != 3"> <!-- 개중요했음!!! -->
 				AND line_use = #{line_use}
 			</if>
@@ -538,6 +538,7 @@
 	<select id="getLiCode" resultType="String">
 		SELECT line_code 
 		FROM line 
+		WHERE line_place = #{line_place} 
 		ORDER BY line_code desc limit 1
 	</select>
 	<!-- 라인 추가 시 코드값 가져가기 -->
@@ -675,8 +676,8 @@
 	<update id="updateWh">
 		UPDATE warehouse
 		SET  wh_name = #{wh_name}, wh_use = #{wh_use}, wh_dv = #{wh_dv},
-			wh_addr = #{wh_addr}, wh_tel = #{wh_tel}, wh_note = #{wh_note}, 
-			emp_id = #{emp_id}
+			 wh_addr = #{wh_addr}, wh_tel = #{wh_tel}, wh_note = #{wh_note}, 
+			 emp_id = #{emp_id}
 		where wh_code = #{wh_code}
 	</update>
 	<!-- 창고 수정 -->

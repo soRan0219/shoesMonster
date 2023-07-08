@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -53,9 +54,17 @@ public class PerfomanceController {
 	// http://localhost:8088/performance/product
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public void productGET(Model model, ProductVO vo, PagingVO pvo,
+//						HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage,
 			@RequestParam(value = "input", required = false) String input) throws Exception {
+		
+//			HttpSession session = request.getSession(false);
+//	        if (session == null) {
+//	        	 response.sendRedirect("/smmain/smMain");
+//	             return;
+//	        }
+		
 		logger.debug("productGET() 호출");
 		List<ProductVO> products = new ArrayList<ProductVO>();
 		model.addAttribute("products", products);
@@ -443,10 +452,13 @@ public class PerfomanceController {
 	
 	// 라인 추가 시 code값 가져가기
 	@ResponseBody
-	@RequestMapping(value = "/lineCode", method = RequestMethod.GET)
-	public String getLiCode() { 
+	@RequestMapping(value = "/lineCode", method = RequestMethod.POST)
+	public String getLiCode(@RequestBody LineVO lvo) throws Exception{ 
+		logger.debug("line_place@@@@@@@ :   "+lvo.getLine_place());
 		
-		return service.getLiCode();
+		logger.debug("#$@(#(@((#)@$(#"+service.getLiCode(lvo.getLine_place()));
+		
+		return service.getLiCode(lvo.getLine_place());
 	}
 	
 	// 라인 추가
@@ -665,17 +677,12 @@ public class PerfomanceController {
 		logger.debug("@@@@@ CONTROLLER: performanceList() 호출");
 		
 		//페이지 정보
-		if(search.get("pageSize")!=null) {
-			int pageSize = Integer.parseInt(search.get("pageSize").toString());
-			pvo.setPageSize(pageSize);
-		} else {
-			pvo.setPageSize(2);
-		}
+		pvo.setPageSize(8);
 		
 		//페이징 하단부 정보
 		LineWhPageMaker pm = new LineWhPageMaker();
 		pm.setLwPageVO(pvo);
-		pm.setPageBlock(2);
+		pm.setPageBlock(5);
 		
 		List<PerformanceVO> perfList = new ArrayList<>();
 		
@@ -735,7 +742,7 @@ public class PerfomanceController {
 
 		if(type.equals("work")) {
 			String state = URLEncoder.encode("마감", "UTF-8");
-			return "redirect:/workorder/workOrderList?input=" + input + "&search_state=" + state;
+			return "redirect:/workorder/workOrderList?input=" + input + "&search_place=" + state;
 		}
 		if(type.equals("line")) {
 			return "redirect:/performance/line?input=" + input;

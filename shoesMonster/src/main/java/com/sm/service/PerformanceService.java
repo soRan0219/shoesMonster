@@ -131,7 +131,7 @@ public interface PerformanceService {
 	public LineVO getLine(String line_code) throws Exception;
 	
 	// 라인 추가 시 code값 가져가기
-	public String getLiCode();
+	public String getLiCode(String line_place) throws Exception;
 
 	// ===============창고======================================
 

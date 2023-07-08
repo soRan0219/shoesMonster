@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
 <link href="./resources/build/css/custom.css" rel="stylesheet" type="text/css">
@@ -12,6 +13,10 @@
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -403,12 +408,12 @@ body {
 		<form action="" method="get">
 			<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
-	       		<label>품번:</label>
+	       		<label>품번 : </label>
 	        	<input type="text" name="raw_code" id="searchCode">
-	        	<label>거래처명:</label>
+	        	<label>거래처명 : </label>
 	        	<input type="hidden" name="client_code" id="client_code9999">
 	        	<input type="text" name="clients.client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-	        	<label>품명:</label>
+	        	<label>품명 : </label>
 	        	<input type="text" name="raw_name" id="searchCategory"> 
 	        	<input type="submit" class="B B-info" value="검색">
 			</fieldset>
@@ -419,10 +424,18 @@ body {
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<form method="post" id="fr">
 			
 			<div class="x_title">
-				<h2>원자재<small>총 ${paging.total} 건</small></h2>
+				<h2>원자재 목록<small>총 ${paging.total} 건</small></h2>
+				
+				<div style="float: left;  margin-top: 1.5px;">
+					<c:if test="${empty param.input }">
+						<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+					</c:if>
+					<c:if test="${!empty param.input }">
+						<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+					</c:if>
+				</div>
 				
 				<div style="float: right;">
 					<button id="addButton" class="B B-info">추가</button>
@@ -430,12 +443,12 @@ body {
 					<button id="delete" class="B B-info">삭제</button>
 					<button type="reset" id="cancle" class="B B-info">취소</button>
 					<input type="submit" class="B B-info" value="저장" id="save" class ="btn btn-success">
-					<button onclick="location.href='/performance/rawMaterial'" class="B B-info">새로고침</button>
 				</div>
 				<div class="clearfix"></div>
 			</div>
 
  	<!-- 버튼 제어 -->
+<form method="post" id="fr">
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	
@@ -511,26 +524,31 @@ body {
 	</div>
 </div>
 	
-	<div id="pagination" style="display: block; text-align: center;">		
-		<c:if test="${paging.startPage != 1 }">
-			<a class="btn btn-secondary" 
-			href="/performance/rawMaterial?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&lt;</a>
-		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-			<c:choose>
-				<c:when test="${p == paging.nowPage }">
-					<b>${p }</b>
-				</c:when>
-				<c:when test="${p != paging.nowPage }">
-					<a class="btn btn-secondary"
-					href="/performance/rawMaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">${p }</a>
-				</c:when>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.endPage != paging.lastPage}">
-			<a class="btn btn-secondary"
-			href="/performance/rawMaterial?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">&gt;</a>
-		</c:if>
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">	
+				<c:if test="${paging.startPage != 1 }">
+					<a href="/performance/rawMaterial?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">Previous</a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+					<c:choose>
+						<c:when test="${p == paging.nowPage }">
+							<b>${p }</b>
+						</c:when>
+						<c:when test="${p != paging.nowPage }">
+							<a href="/performance/rawMaterial?nowPage=${p }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">${p }</a>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<a href="/performance/rawMaterial?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&raw_code=${vo.raw_code }&raw_name=${vo.raw_name }&clients.client_actname=${vo.clients.client_actname }">Next</a>
+				</c:if>
+			</li>
+		</ul>
 	</div>
 </div>
 	

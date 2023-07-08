@@ -40,23 +40,18 @@ public class WorkOrderController {
 		logger.debug("@@@@@ CONTROLLER: search정보!!!!!!!!!!!!!!!" + search);
 		
 		//페이지 정보
-		if(search.get("pageSize")!=null) {
-			int pageSize = Integer.parseInt(search.get("pageSize").toString());
-			pvo.setPageSize(pageSize);
-		} else {
-			pvo.setPageSize(8);
-		}
+		pvo.setPageSize(8);
 		
 		//페이징 하단부 정보
 		LineWhPageMaker pm = new LineWhPageMaker();
 		pm.setLwPageVO(pvo);
-		pm.setPageBlock(2);
+		pm.setPageBlock(5);
 		
 		List<WorkOrderVO> workList = new ArrayList<>();
 		
 		//검색 있을 때
 		if((search.get("search_line")!=null && !search.get("search_line").equals("")) || (search.get("search_fromDate")!=null && !search.get("search_fromDate").equals("")) || (search.get("search_toDate")!=null && !search.get("search_toDate").equals("")) 
-				|| (search.get("search_state")!=null && !search.get("search_state").equals("")) || (search.get("search_prod")!=null && !search.get("search_prod").equals(""))) {
+				|| (search.get("search_place")!=null && !search.get("search_place").equals("")) || (search.get("search_prod")!=null && !search.get("search_prod").equals(""))) {
 			
 			logger.debug("@@@@@ CONTROLLER: 검색 service 호출");
 			

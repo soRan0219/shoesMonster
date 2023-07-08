@@ -1,13 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
+<%@ page import="javax.servlet.http.HttpSession" %>
+
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -83,10 +88,10 @@ body {
 			 	<c:forEach var="s" items="${stock_ListR}">
 			             <tr>
 			                 <th>${s.warehouse.wh_dv}</th>
-			                 <th>${s.raw_code}</th>
+			                 <td>${s.raw_code}</td>
 			                 <td>${s.raw_mat.raw_name}</td>
 			                 <td>${s.raw_mat.raw_color}</td>
-			                 <td style="color: ${s.stock_count <= 20 ? 'red' : 'inherit'}">${s.stock_count}</td>
+			                 <td style="color: ${s.stock_count <= 50 ? 'red' : 'inherit'}">${s.stock_count}</td>
 			                 <td>${s.wh_code}</td>
 			                 <td>${s.warehouse.emp_id}</td>
 			                 <c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">

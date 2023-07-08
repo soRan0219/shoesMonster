@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -11,6 +12,10 @@
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/smmain/smMain" />
+</c:if>
 
 <style type="text/css">
 
@@ -288,37 +293,106 @@ body {
         	$('#modify').attr("disabled", true);
 			$('#delete').attr("disabled", true);       		
 			
-			$.ajax({
-				url: "/performance/lineCode",
-				method: "GET",
-	 			dataType: "text",
-	 			success: function (data) {
-	 				 // Ajax 요청 안에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행	 				
-	 				codeNum = data;
-	 				 console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
+// 			$.ajax({
+// 				url: "/performance/lineCode",
+// 				method: "GET",
+// 	 			dataType: "text",
+// 	 			success: function (data) {
+// 	 				 // Ajax 요청 안에서 데이터를 받아와서 변수에 할당 및 후속 작업 수행	 				
+// // 	 				codeNum = data;
+// // 	 				 console.log("Ajax 내부에서의 codeNum:", codeNum); // Ajax 내부에서의 codeNum: [받아온 데이터]
 			
-					// 변수에 할당된 데이터를 기반으로 추가 작업 수행
- 				    someFunction(codeNum);
+// 					// 변수에 할당된 데이터를 기반으로 추가 작업 수행
+// //  				    someFunction(codeNum);
 	 			
-	 			}//success
+// 	 			}//success
 			
-			})//ajax
+// 			})//ajax
 			
-			function someFunction(data) {
+// 			function someFunction(data) {
 // 				alert("someFunction");
-				 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
-// 				 alert("codeNum"+codeNum);
-				 var num = parseInt(codeNum.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
-// 				 alert("num : "+num);
-				 var paddedNum = padNumber(num, codeNum.length - 1); // 숫자를 패딩하여 길이 유지
-				 lineCode = codeNum.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+// 				 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
+// // 				 alert("codeNum"+codeNum);
+// 				 var num = parseInt(codeNum.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+// // 				 alert("num : "+num);
+// 				 var paddedNum = padNumber(num, codeNum.length - 1); // 숫자를 패딩하여 길이 유지
+// 				 lineCode = codeNum.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
 	             
-				 if ($('#add').hasClass('true')) {
-	             addRow();
-	          	$('#add').removeClass('true');
-	             }
-	             counter++;
-			} // someFunction(data)
+// 				 if ($('#add').hasClass('true')) {
+// 	             addRow();
+// 	          	$('#add').removeClass('true');
+// 	             }
+// 	             counter++;
+
+// 				codeNum = data;
+				
+// 				alert("codeNum"+codeNum);
+				
+// 				var prefix = "";
+				
+// 			    if (codeNum === "1차공정") {
+// 			        prefix = "L1";
+// 			    } else if (codeNum === "2차공정") {
+// 			        prefix = "L2";
+// 			    } else if (codeNum === "3차공정") {
+// 			        prefix = "L3";
+// 			    }
+			    
+// 				 var num = parseInt(codeNum.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+// 				 alert("num : "+num);
+//  				 var paddedNum = padNumber(num, codeNum.length - 1); // 숫자를 패딩하여 길이 유지
+//  				 lineCode = prefix+codeNum.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+			 	             
+			    
+// 			    var num = counter + 1; // 1 증가
+// 			    var paddedNum = padNumber(num, 2); // 숫자를 패딩하여 길이 유지 (총 2자리)
+// 			    var lineCode = prefix + paddedNum; // 접두사와 패딩된 숫자를 결합하여 완전한 코드 생성
+			    
+			    if ($('#add').hasClass('true')) {
+			        addRow();
+			        $('#add').removeClass('true');
+			    }
+			    // 라인코드 부여 0708
+			   
+			    var selectedOption = '1차공정';
+			    getLineCode();
+			    
+			    $('#line_place').on('change', function() {
+			        selectedOption = $(this).val(); // 선택된 옵션의 값 가져오기
+// 			       if(selectedOption == null || selectedOption === ''){
+// 			    	   selectedOption = '1차공정';
+// 			       }
+			        alert(selectedOption); // 선택된 옵션 값으로 someFunction 호출
+					getLineCode();
+			    });
+			    
+			    
+			   
+			    function getLineCode (){
+			    	var liplace = {line_place : selectedOption};
+				    $.ajax({
+						url: "/performance/lineCode",
+						method: "POST",
+						contentType : "application/json; charset=UTF-8",
+			 			data: JSON.stringify(liplace),
+			 			success: function (data) {
+							alert(data);
+							
+							
+			 				 var num = parseInt(data.substring(1)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+			 				 alert("num : "+num);
+			  				 var paddedNum = padNumber(num, data.length - 1); // 숫자를 패딩하여 길이 유지
+			  				 lineCode = data.charAt(0) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+						 	         
+							
+							$('#line_code').val(lineCode);
+							
+						}//success
+			        });//ajax
+				}
+
+// 			    counter++;
+// 			} // someFunction(data)
 			
 			function padNumber(number, length) {
 // 				alert("padNum");
@@ -365,7 +439,7 @@ body {
 			// 공정
 			row += " <td>";
 			row += " <select name='line_place' id='line_place'>";
-			row += " <option value='1차공정'>1차공정</option>";
+			row += " <option value='1차공정' selected>1차공정</option>";
 			row += " <option value='2차공정'>2차공정</option>";
 			row += " <option value='3차공정'>3차공정</option>";
 			row += " </select>";
@@ -542,20 +616,27 @@ body {
 	<fieldset>
 		<input type="hidden" name="input" id="input" value="${input}">
 		
+
+		<input type="submit" name="line_place" value="1차공정" class="btn btn-info" ></input>
+		<input type="submit" name="line_place" value="2차공정" class="btn btn-info" ></input>
+	    <input type="submit" name="line_place" value="3차공정" class="btn btn-info" ></input>
+		 
+		<br>
+		
 		<label>라인코드</label>
 			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요" >
 			
-		<label>라인명</label>
+		<label>라인명 : </label>
 			<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
 			
 		<input type="submit" class="B B-info" value="검색">
 		
 		<br>
 		
-		<label>사용여부</label>
-			<input type="radio" name="line_use" value="3" checked>전 체
-			<input type="radio" name="line_use" value="1">Y
-			<input type="radio" name="line_use" value="2">N
+		<label>사용여부 : </label>
+			<input type="radio" name="line_use" value="3" checked> 전체
+			<input type="radio" name="line_use" value="1"> Y
+			<input type="radio" name="line_use" value="2"> N
 			
 <!-- 		<label>공정</label> -->
 <!-- 			<input type="text" name="line_place" placeholder="검색어를 입력해주세요"> -->
@@ -571,6 +652,15 @@ body {
 	<div class="x_panel">
 		<div class="x_title">
 		<h2>라인 관리<small>총 ${lwpm.totalCount } 건</small></h2>
+		
+		<div style="float: left;  margin-top: 1.5px;">
+			<c:if test="${empty param.input }">
+				<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+			</c:if>
+			<c:if test="${!empty param.input }">
+				<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+			</c:if>
+		</div>
 				
 			<div style="float: right;">
 				<button id="add" class="true B B-info">추가</button>
@@ -578,7 +668,6 @@ body {
 				<button id="delete" class="true B B-info">삭제</button>
 				<button type="reset" id="cancle" class="B B-info" >취소</button>
 				<button type="submit" id="save" class="B B-info" >저장</button>
-				<button onclick="location.href='/performance/line'" class="B B-info">새로고침</button>
 			</div>
 			
 			<div class="clearfix"></div>
@@ -665,23 +754,27 @@ body {
 </div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
-<%-- 	${id.emp_id} --%> 
-	<div id="pagination" style="text-align: center;">
-		<c:if test="${lwpm.prev }">
-			<a class="btn btn-secondary"
-			href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">이 전</a>
-		</c:if>
-		
-		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
-			<a class="btn btn-secondary"
-			href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
-		</c:forEach>
 
-		<c:if test="${lwpm.next }">
-			<a class="btn btn-secondary"
-			href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">다 음</a>
+	
+<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	<ul class="pagination">
+		<li class="paginate_button previous disabled">
+		<c:if test="${lwpm.prev }">
+			<a href="/performance/line?page=${lwpm.startPage-1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">Previous</a>
 		</c:if>
-	</div>
+		</li>
+		<li class="paginate_button previous disabled">
+		<c:forEach var="page" begin="${lwpm.startPage }" end="${lwpm.endPage }" step="1">
+			<a href="/performance/line?page=${page }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">${page }</a>
+		</c:forEach>
+		</li>
+		<li class="paginate_button previous disabled">
+		<c:if test="${lwpm.next }">
+			<a href="/performance/line?page=${lwpm.endPage+1 }&line_code=${lvo.line_code }&line_name=${lvo.line_name }&line_use=${lvo.line_use }&line_place=${lvo.line_place}">Next</a>
+		</c:if>
+		</li>
+	</ul>
+</div>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
 
