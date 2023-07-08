@@ -607,10 +607,10 @@
 				  e.emp_id = w.emp_id
 		
 		<where>
-			<if test="wh_code != ''">
+			<if test="wh_code != '' and wh_code != null">
 				w.wh_code LIKE concat('%', #{wh_code}, '%')
 			</if>
-			<if test="wh_addr != ''">
+			<if test="wh_addr != '' and wh_addr != nuull">
 				AND w.wh_addr LIKE concat('%', #{wh_addr}, '%')
 			</if>
 			<if test="wh_use != 3">

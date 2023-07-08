@@ -119,12 +119,17 @@ public class WorkOrderController {
 		}
 		
 		else if(type.equals("client_p")) {
-			String state = URLEncoder.encode("수주처", "UTF-8");
-			return "redirect:/person/Clients?input="+input+"&search_client_type="+state;
+			String client_prod = URLEncoder.encode("수주처", "UTF-8");
+			return "redirect:/person/Clients?input="+input+"&search_client_type="+client_prod;
 		}
 		
 		else if(type.equals("wh")) {
 			return "redirect:/performance/warehouse?input="+input;
+		}
+		
+		else if(type.equals("wh_p")) {
+			String wh_prod = URLEncoder.encode("완제품", "UTF-8");
+			return "redirect:/performance/warehouse?input="+input+"&wh_dv="+wh_prod;
 		}
 		
 		else if(type.equals("emp")) {

@@ -51,7 +51,7 @@ body {
     
     // 추가 시 창고 검색
     function serchWh(inputId){
-    	openWindow("wh",inputId);
+    	openWindow("wh_p",inputId);
     }
 	
     	
@@ -395,14 +395,14 @@ body {
 		
 								// 거래처 검색 
 								$('#client_actname').click(function() {
-									openWindow("client","client_code");
+									openWindow("client_p","client_code");
 								}); //client_code click
 								
 								// 창고 검색
 								$('#wh_name').click(function() {
-									openWindow("wh","wh_code");
+									openWindow("wh_p","wh_code");
 								}); // wh_code click
-		
+								
 							
 							},
 							error : function(data) {
