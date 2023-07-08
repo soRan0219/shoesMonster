@@ -122,7 +122,7 @@ public interface PerformanceDAO {
 	public int getSearchTotalCount(LineVO lvo) throws Exception;
 	
 	// 라인 추가
-	public void registLine(LineVO lvo) throws Exception;
+	public void registLine(LineVO lvo, String emp_id) throws Exception;
 	
 	// 라인 삭제
 	public void deleteLine(List<String> checked) throws Exception;
@@ -151,7 +151,7 @@ public interface PerformanceDAO {
 	public int searchWh_TotalCount(Wh_prodVO wvo) throws Exception;
 	
 	// 창고 추가
-	public void registWh(Wh_prodVO wvo) throws Exception;
+	public void registWh(Wh_prodVO wvo, String emp_id) throws Exception;
 
 	// 창고 삭제
 	public void deleteWh(List<String> checked) throws Exception;

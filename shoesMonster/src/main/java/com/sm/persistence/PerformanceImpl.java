@@ -360,10 +360,16 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	// 라인 추가
 	@Override
-	public void registLine(LineVO lvo) throws Exception {
+	public void registLine(LineVO lvo, String emp_id) throws Exception {
 		logger.debug("@@ D : registLine(LineVO lvo) 호출 @@");
 		
-		sqlSession.insert(NAMESPACE+".registLine", lvo);
+		lvo.setEmp_id(emp_id);
+		
+		int result = sqlSession.insert(NAMESPACE+".registLine", lvo);
+		
+		if(result != 0) {
+			logger.debug("emp_id 포함 등록 완료");
+		}
 	}
 	
 	// 라인 삭제
@@ -487,10 +493,16 @@ public class PerformanceImpl implements PerformanceDAO {
 	
 	// 창고 추가
 	@Override
-	public void registWh(Wh_prodVO wvo) throws Exception {
+	public void registWh(Wh_prodVO wvo, String emp_id) throws Exception {
 		logger.debug("@@ D : registWh(Wh_prodVO wvo) 호출 @@");
 		
-		sqlSession.insert(NAMESPACE+".registWh", wvo);
+		wvo.setEmp_id(emp_id);
+		
+		int result = sqlSession.insert(NAMESPACE+".registWh", wvo);
+	
+		if(result != 0) {
+			logger.debug("emp_id 포함 등록 완료");
+		}
 	}
 	
 	// 창고 삭제

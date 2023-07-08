@@ -286,8 +286,8 @@ body {
 			
 			// 담당자
 			row += "<td>";
-			row += "<input type='hidden' name='emp_id' id='emp_id' required>";
-			row += "<input type='text' name='emp_name' id='emp_name' required>";
+			row += " <input type='hidden' name='emp_id' id='emp_id' value = '<c:out value='${id.emp_id}'/>' required>";
+			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required>";
 			row += "</td>";
 			
 			// 비고
@@ -299,10 +299,10 @@ body {
             $('#whTable').append(row);
 
     		// 등록자(사원) 검색
-    		$('#emp_name').click(function () {
-//     			alert("등록자검색");
-    			openWindow("emp", "emp_name");
-    		}); // #emp_id click
+//     		$('#emp_name').click(function () {
+// //     			alert("등록자검색");
+//     			openWindow("emp", "emp_name");
+//     		}); // #emp_id click
 		
 		} // addRow()
             
@@ -552,6 +552,11 @@ body {
 
 <div style="margin-left: 1%;">
 	<form method="get">
+		
+		<input type="submit" name="line_place" value="1차공정" class="btn btn-info" ></input>
+		<input type="submit" name="line_place" value="2차공정" class="btn btn-info" ></input>
+	    <input type="submit" name="line_place" value="3차공정" class="btn btn-info" ></input>
+		 
 		<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
 			
