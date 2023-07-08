@@ -571,6 +571,15 @@ body {
 	<div class="x_panel">
 		<div class="x_title">
 		<h2>라인 관리<small>총 ${lwpm.totalCount } 건</small></h2>
+		
+		<div style="float: left;  margin-top: 1.5px;">
+			<c:if test="${empty param.input }">
+				<button onclick="location.href='/performance/requirement'" class="B2 B2-info">↻</button>
+			</c:if>
+			<c:if test="${!empty param.input }">
+				<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+			</c:if>
+		</div>
 				
 			<div style="float: right;">
 				<button id="add" class="true B B-info">추가</button>
@@ -578,7 +587,6 @@ body {
 				<button id="delete" class="true B B-info">삭제</button>
 				<button type="reset" id="cancle" class="B B-info" >취소</button>
 				<button type="submit" id="save" class="B B-info" >저장</button>
-				<button onclick="location.href='/performance/line'" class="B B-info">새로고침</button>
 			</div>
 			
 			<div class="clearfix"></div>
