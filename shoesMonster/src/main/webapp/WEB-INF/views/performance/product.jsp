@@ -261,7 +261,7 @@ body {
 						
 						 
 						Swal.fire({
-						  title: "<div style='color:#3085d6;font-size:20px'>" + "정말 삭제하시겠습니까?" + "</div>",
+						  title: "<div style='color:#3085d6;font-size:20px'>" + "총" +checked.length+"행\n정말 삭제하시겠습니까?"+ "</div>",
 								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 						  icon: 'warning', // 아이콘! 느낌표 색? 표시?
 						  showDenyButton: true,
@@ -276,13 +276,13 @@ body {
 						  if (result.isConfirmed) {
 							  
 							  $.ajax({
-									url: "/performance/prodDelete",
+									url: "/performance/requirementDelete",
 									type: "post",
 									data: {checked:checked},
 									dataType: "text",
 									success: function() {
 										Swal.fire({
-											  title: '삭제되었습니다.',
+											  title:  "총" +checked.length+"건 삭제 완료",
 											  icon: 'error',
 											}).then((result) => {
 											  if (result.isConfirmed) {
@@ -303,7 +303,7 @@ body {
 						
 					} //체크된거 있을대
 					else {
-						 Swal.fire('선택된 데이터가 없습니다.', '', 'info')
+						 Swal.fire('선택된 항목이 없습니다.', '', 'info')
 					} //체크된거 없을때
 					
 				}); //save
@@ -582,14 +582,7 @@ body {
 		</li>
 		<li class="paginate_button previous disabled">	
 			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-				<c:choose>
-					<c:when test="${p == paging.nowPage }">
-						<b>${p }</b>
-					</c:when>
-					<c:when test="${p != paging.nowPage }">
-						<a href="/performance/product?nowPNext${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
-					</c:when>
-				</c:choose>
+						<a href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
 			</c:forEach>
 		</li>
 		<li class="paginate_button previous disabled">	
