@@ -449,7 +449,7 @@ $(function(){
 							data : {checked : checked},
 							dataType : "text",
 							success : function() {
-								alert("삭제 완료했습니다");
+								alert("총 " + checked.length + "건 삭제 완료");
 								location.reload();
 							},
 							error : function() {
