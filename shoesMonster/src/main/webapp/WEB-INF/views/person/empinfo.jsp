@@ -489,6 +489,8 @@ $(function() {
 	color: white;
 }
 
+
+
 </style>
 
 <%-- ${sessionScope.id.emp_department } --%>
@@ -569,26 +571,25 @@ $(function() {
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-<%-- 				<p>&nbsp;&nbsp;발주 테이블 <code>Shoes Monseter</code> since 2023 </p> --%>
+					<%-- <p>&nbsp;&nbsp;발주 테이블 <code>Shoes Monseter</code> since 2023 </p> --%>
 					<div class="table-responsive">
-						<div>
 						<form id = "fr">
 							<table class="table table-striped jambo_table bulk_action" style="text-align:center">
-								<colgroup>
-								    <col style="width: 50px">
-								    <col style="width: 100px">
-								    <col style="width: 100px"> 
-								    <col style="width: 75px">
-								    <col style="width: 75px">
-								    <col style="width: 75px">
-								    <col style="width: 150px">
-								    <col style="width: 150px">
-								    <col style="width: 100px">
-								    <col style="width: 75px">
-								    <col style="width: 75px">
-								</colgroup>
+//								<colgroup>
+//								    <col style="width: 50px">
+//								    <col style="width: 100px">
+//								    <col style="width: 100px"> 
+//								    <col style="width: 75px">
+//								    <col style="width: 75px">
+//								    <col style="width: 75px">
+//								    <col style="width: 150px">
+//								    <col style="width: 150px">
+//								    <col style="width: 100px">
+//								    <col style="width: 75px">
+//								    <col style="width: 75px">
+//								</colgroup>
 								<tr id=titlebg>
-									<th>번호</th>
+									<th>번</th>
 									<th>사원번호</th>
 									<th>비밀번호</th>
 									<th>사원명</th>
@@ -621,7 +622,6 @@ $(function() {
 								</c:forEach>
 							</table>
 						</form>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -651,7 +651,6 @@ $(function() {
 		
 		<!-- 페이징 -->
 		
-	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
