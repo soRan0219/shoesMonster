@@ -27,7 +27,7 @@ body {
 <script type="text/javascript">
 	
 	function stockPopup(code) {
-		window.open("stockPopup?code=" + code, "재고 상세", "width=600, height=300, left=200, top=150, location=no");
+		window.open("stockPopup?code=" + code, "재고 상세", "width=700, height=300, left=200, top=150, location=no");
 	}
 	
 </script>
@@ -161,12 +161,12 @@ body {
 					 		<th>재고 수량</th>
 					 		<th>창고 코드</th>
 					 		<th>담당자</th>
-					 		<th>수정 버튼</th>
+					 		<th>실수량</th>
 					 	</tr>
 				 	</thead>
 					<c:forEach var="s" items="${stock_ListP}">
 					 	<tr>
-					 		<th>${s.warehouse.wh_dv}</th>
+					 		<td>${s.warehouse.wh_dv}</td>
 					 		<td>${s.prod_code}</td>
 					 		<td>${s.product.prod_name}</td>
 					 		<td>${s.product.prod_color}</td>
