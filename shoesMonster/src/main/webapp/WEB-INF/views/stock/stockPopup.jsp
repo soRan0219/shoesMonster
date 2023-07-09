@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweetalert -->
+
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -25,32 +28,59 @@ body {
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+
+		
 		$("#modify").click(function() {
 			
 			var obj = {
-				stock_count : $("#newCount").val(),
-				code : $("#code").text(),
-				name : $("#name").text()
-			};
+					stock_count : $("#newCount").val(),
+					code : $("#code").text(),
+					name : $("#name").text()
+				};
 			
 			$.ajax({
 				url : "/stock/stockPopup",
 				type: "POST",
 				contentType : "application/json",
 				data: JSON.stringify(obj),
-				success : function(response){
-					alert(obj.name + "의 재고 수량이 " + obj.stock_count + "개로 수정되었습니다.");
+				success : function(){
+// 					alert(obj.name + "의 재고 수량이 " + obj.stock_count + "개로 수정되었습니다.");
 // 					location.reload();
-					window.close();
-					window.opener.location.reload();
-				},
+// 					window.close();
+// 					window.opener.location.reload();
+					
+					Swal.fire({
+						title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+obj.name + "의 재고 수량이 \n " 
+																						+ obj.stock_count +" 개로 수정되었습니다",
+						icon : 'success',
+						width: '300px',
+
+						}).then((result) => {
+							if (result.isConfirmed) {
+								location.reload();
+								window.close();
+								window.opener.location.reload();
+							}
+						});
+
+					},
 				error : function(){
-					alert("올바른 수량을 입력해주세요.");
-				}
-			});
-		});
+// 					alert("올바른 수량을 입력해주세요.");
+					Swal.fire({
+						title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "올바른 수량을 입력해주세요",
+						icon : 'question',
+						width: '300px',
+						});
+				}//error
+				
+			});//ajax
+			
+		});// #modify.click
 		
-	});
+	});// document.ready
+	
+	
+	
 	
 </script>
 </head>

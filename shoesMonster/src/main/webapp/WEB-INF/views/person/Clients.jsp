@@ -21,43 +21,48 @@
 
 <style type="text/css">
 
-body {
-	font-family: 'NexonLv2Gothic';
-}
 
-/* 셀렉트 옵션을 가로로 나열하여 버튼으로 꾸미기 위한 스타일 */
-  .custom-select {
-    display: flex;
-  }
+	body {
+		font-family: 'NexonLv2Gothic';
+	}
 
-  .custom-select select {
-    display: none;
-  }
+	.selected {
+		background-color: #ccc;
+	}
 
-  .custom-select button {
-    flex: 1;
-    background-color: #f1f1f1;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    color: #000;
-    transition: background-color 0.3s;
-  }
+	/* 셀렉트 옵션을 가로로 나열하여 버튼으로 꾸미기 위한 스타일 */
+	.custom-select1 {
+ 		display: flex; 
+		width: 25%;
+		height: 25%;
+		font-size: 13px; 
+		line-height: 20px;
+		background-color: transparent;
+		border-style: none;
+		padding: -1px;
+	}
 
-  .custom-select button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .custom-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: transparent;
-    background-image: none;
-  }
+	.custom-select1 select {
+		display: none;
+	}
+
+	.custom-select1 button {
+		flex: 1;
+		border-radius: 4px;
+		padding: 5px 15px;
+		font-size: 15px;
+		font-weight: 500;
+		border: none;
+		border-style: none;
+		cursor: pointer;
+		outline: none;
+		color: #73879C;
+		transition: background-color 0.3s;
+	}
+	
+ 	.custom-select1 button:hover { 
+ 		background-color: #e0e0e0; 
+ 	} 
 
 
 
@@ -170,6 +175,8 @@ body {
 	$(document).ready(function(){
 		
 	$('#addButton').click(function() {
+		
+		
 // 			alert("제발");
 			$('#updateButton').attr("disabled", true);
 			$('#deleteButton').attr("disabled", true);
@@ -275,14 +282,9 @@ body {
 				var client_email = $('#client_email').val();
 				var client_note = $('#client_note').val();
 
-				if (client_code == "" 
-						
-						|| client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
+				if (client_code == "" || client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
 						|| client_ceo == "" || client_name == "" || client_addr == "" || client_addr2 == "" || client_tel == "" 
-						|| client_phone == "" || client_fax == "" || client_email == "" || client_note == ""
-// 나중에 최종 수정 다끝나면 주석 풀기
-						
-				) {
+						|| client_phone == "" || client_fax == "" || client_email == "") {
 // 					alert("client_code"+client_code);
 					Swal.fire({
 						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
@@ -559,28 +561,6 @@ body {
 
 	<div style="margin-left: 1%;">
 		<form method="get" >
-			
-			
-			<div class="custom-select">
-				<select name="search_client_type">
-					<option value="전체" ${search.search_client_type == null ? 'selected' : ''}>전체</option>
-					<option value="수주처" ${search.search_client_type == '수주처' ? 'selected' : ''}>수주처</option>
-					<option value="발주처" ${search.search_client_type == '발주처' ? 'selected' : ''}>"발주처"</option>
-				</select>
-					
-				<button onclick="selectOption(0)">전체</button>
-				<button onclick="selectOption(1)">수주처</button>
-				<button onclick="selectOption(2)">"발주처"</button>
-			</div>
-
-			<script>
-			  function selectOption(index) {
-			    var select = document.querySelector('.custom-select select');
-			    select.selectedIndex = index;
-			    select.dispatchEvent(new Event('change'));
-			  }
-			</script>
-		
 		
 			<input type="hidden" name="input" id="input" value="${input }">
 			거래처코드 : 
@@ -594,10 +574,33 @@ body {
 <!-- 				<option value= "수주처">수주처</option> -->
 <!-- 			</select>  -->
 			<input type="submit" class="B B-info" value="조회">
+			
+				<hr>
+			
+			<div class="custom-select1">
+				<select name="search_client_type">
+					<option value="전체" ${search.search_client_type == null ? 'selected' : ''}>전체</option>
+					<option value="수주처" ${search.search_client_type == '수주처' ? 'selected' : ''}>수주처</option>
+					<option value="발주처" ${search.search_client_type == '발주처' ? 'selected' : ''}>"발주처"</option>
+				</select>
+					
+				<button onclick="selectOption(0)">전 체</button>
+				<button onclick="selectOption(1)">수주처</button>
+				<button onclick="selectOption(2)">발주처</button>
+			</div>
+
+			<script>
+			  function selectOption(index) {
+			    var select = document.querySelector('.custom-select1 select');
+			    select.selectedIndex = index;
+			    select.dispatchEvent(new Event('change'));
+			  }
+			</script>
+		
 		</form>
 	</div>
 
-	<hr>
+
 	
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
