@@ -640,7 +640,7 @@ body {
 		<input type="submit" name="line_place" value="2차공정" class="B B-info" ></input>
 	    <input type="submit" name="line_place" value="3차공정" class="B B-info" ></input>
 		 
-		<br>
+		<hr>
 		
 		<label>라인코드</label>
 			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요" >

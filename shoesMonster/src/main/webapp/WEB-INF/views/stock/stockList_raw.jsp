@@ -7,6 +7,8 @@
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -35,16 +37,16 @@ body {
 	<h1 style="margin-left: 1%;"> 재고 관리 </h1>
 
 	<div style="margin-left: 1%;">
-		<a href="/stock/stockList_raw"><input type="button" value="원자재" class="btn btn-info" ></input></a>
-	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="btn btn-info" ></input></a>
+		<a href="/stock/stockList_raw"><input type="button" value="원자재" class="B B-info" ></input></a>
+	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" ></input></a>
 	</div>
 	
 	<div style="margin-left: 1%;">    
 		<form action="" method="get">
-	 		원자재 코드 <input type="text" name="raw_code" placeholder="원자재 코드를 입력하세요">
-		   	원자재 품명<input type="text" name="raw_mat.raw_name" placeholder="원자재 품명을 입력하세요">
-		   	창고 코드 <input type="text" name="wh_code" placeholder="창고 코드 입력하세요"> 
-		   	<input type="submit" class="btn btn-info" value="검색"></input>
+	 		원자재 코드 : <input type="text" name="raw_code" placeholder="원자재 코드를 입력하세요">
+		   	원자재 품명 : <input type="text" name="raw_mat.raw_name" placeholder="원자재 품명을 입력하세요">
+		   	창고 코드 : <input type="text" name="wh_code" placeholder="창고 코드 입력하세요"> 
+		   	<input type="submit" class="B B-info" value="검색"></input>
 		</form>
 	</div>
 
@@ -55,9 +57,8 @@ body {
 			<form id="fr">
 	
 				<div class="x_title">
-					<h2>원자재 목록</h2>
+					<h2>원자재 목록<small>총 ${bp.totalCount } 건</small></h2>
 					
-					<span style="float: right; margin-top: 1%;">총 ${bp.totalCount } 건</span>
 					<div class="clearfix"></div>
 				</div>
 				<div style="overflow-x: auto;">
@@ -95,7 +96,7 @@ body {
 			                 <td>${s.wh_code}</td>
 			                 <td>${s.warehouse.emp_id}</td>
 			                 <c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
-			                 	<td><input type="button" onclick="stockPopup('${s.raw_code}')" value="수정"></td>
+			                 	<td><input type="button" onclick="stockPopup('${s.raw_code}')" class="B B-info" value="수정"></td>
 			                 </c:if>
 			             </tr>
 				 </c:forEach>
@@ -106,6 +107,7 @@ body {
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	      
            		
+// ============  
 	<div>
 	    <c:if test="${countR3 > 0 }">
 			<c:if test="${bp.prev}">
@@ -118,9 +120,30 @@ body {
 			
 			<c:if test="${bp.next && bp.endPage > 0}">
 			    <a class="btn btn-secondary" href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">다음</a>
+// ============  
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+		    <c:if test="${countR3 > 10 }">
+				<li class="paginate_button previous disabled"> 
+					<c:if test="${bp.prev}">S
+					    <span><a href="/stock/stockList_raw?page=${bp.startPage - 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">Previous</a></span>
+					</c:if>
+				</li>
+				<li class="paginate_button previous disabled">
+					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+					    <a chref="/stock/stockList_raw?page=${idx }&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">${idx }</a>
+					</c:forEach>
+				</li>
+				<li class="paginate_button previous disabled">
+					<c:if test="${bp.next && bp.endPage > 0}">
+					    <a href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">Next</a>
+					</c:if>
+				</li>
+// ============  
 			</c:if>
-		</c:if>
+		</ul>
 	</div>
+	
 </div>
 
 <%@ include file="../include/footer.jsp"%>

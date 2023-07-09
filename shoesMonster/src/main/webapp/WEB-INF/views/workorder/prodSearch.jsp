@@ -78,23 +78,31 @@ body {
 		</c:forEach>
 	</table>
 	
-	<div style="display: block; text-align: center;">		
-		<c:if test="${paging.startPage != 1 }">
-			<a href="/workorder/search?type=prod&nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
-		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-			<c:choose>
-				<c:when test="${p == paging.nowPage }">
-					<b>${p }</b>
-				</c:when>
-				<c:when test="${p != paging.nowPage }">
-					<a href="/workorder/search?type=prod&nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a>
-				</c:when>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/workorder/search?type=prod&nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&">&gt;</a>
-		</c:if>
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">	
+				<c:if test="${paging.startPage != 1 }">
+					<a href="/workorder/search?type=prod&nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">Previous</a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+					<c:choose>
+						<c:when test="${p == paging.nowPage }">
+							<b>${p }</b>
+						</c:when>
+						<c:when test="${p != paging.nowPage }">
+							<a href="/workorder/search?type=prod&nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<a href="/workorder/search?type=prod&nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&">Next</a>
+				</c:if>
+			</li>
+		</ul>
 	</div>
 	
 	

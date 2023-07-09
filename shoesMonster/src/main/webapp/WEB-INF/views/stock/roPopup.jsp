@@ -34,6 +34,8 @@
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <style type="text/css">
 
 body {
@@ -78,7 +80,7 @@ body {
 		<form action="" method="get">
 			품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
 			거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
-			<input type="submit" value="검색"></input>
+			<input type="submit" class="B B-info" value="검색"></input>
 	    </form>
 	</div>   
 	 
@@ -120,25 +122,29 @@ body {
 			</tbody>
 			</table>
 		</form>
-		<div>
+		
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
             <c:if test="${countPop > 10 }">
+			<li class="paginate_button previous disabled">
                 <c:if test="${bp.prev}">
-                    <span><a class="btn btn-secondary"
-                        href="/stock/roPopup?page=${bp.startPage -1}&rawMaterial.raw_name=${ro.rawMaterial.raw_name}}&clients.client_actname=${ro.clients.client_actname}">이전</a></span>
+                    <span><a href="/stock/roPopup?page=${bp.startPage -1}&rawMaterial.raw_name=${ro.rawMaterial.raw_name}}&clients.client_actname=${ro.clients.client_actname}">이전</a></span>
                 </c:if>
-
+            </li>
+			<li class="paginate_button previous disabled">
                 <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
                     step="1">
-                    <a class="btn btn-secondary"
-                        href="/stock/roPopup?page=${i }&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
+                    <a href="/stock/roPopup?page=${i }&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
                 </c:forEach>
-
+           </li>
+           <li class="paginate_button previous disabled">
                 <c:if test="${bp.next && bp.endPage > 0}">
-                    <a class="btn btn-secondary"
-                        href="/stock/roPopup?page=${bp.endPage + 1}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+                    <a href="/stock/roPopup?page=${bp.endPage + 1}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
                 </c:if>
+            </li>
             </c:if>
-        </div>
+        </ul>
+    </div>
 		
 	</div>
 </div>

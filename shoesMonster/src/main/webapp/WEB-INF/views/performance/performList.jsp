@@ -245,7 +245,7 @@ body {
 					
 					$(this).addClass('selected');
 					//작업지시 코드 저장
-					let updateCode = $(this).find('#performCode').text().trim();
+					let updateCode = $(this).find('#performCode').text().substring(0,16).trim();
 					console.log(updateCode);
 	
 					var self = $(this);
@@ -269,6 +269,10 @@ body {
 
 						if (idx > 0) {
 							inputCng($(this),"text",names[idx - 1], $(this).text());
+							
+							if(idx==1) {
+								inputCng($(this),"text",names[idx - 1], updateCode);
+							}
 							
 							//생산수량, 양품수, 불량수 타입 number
 							if(idx>=6 && idx<=8) {
@@ -675,7 +679,7 @@ body {
 					<button onclick="location.href='/performance/performList'" class="B2 B2-info">↻</button>
 				</c:if>
 				<c:if test="${!empty param.input }">
-					<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+					<button onclick="location.href='/performance/performList?input=${param.input }'" class="B2 B-info">↻</button>
 				</c:if>
 			</div>
 				

@@ -7,6 +7,8 @@
 <%@ include file="../include/header.jsp"%>
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -34,13 +36,15 @@ body {
 <!-- page content -->
 <div class="right_col" role="main">
 	
-	<h1> 출고 관리 </h1>
+	<h1 style="margin-left: 1%;"> 출고 관리 </h1>
 	
 	
 	<!-- 버튼 제어 -->	
-<!-- 	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input> -->
-<!--     <input type="button" value="미출고" class="btn btn-info" onclick="show1()" id="noMat"></input> -->
-<!--     <input type="button" value="출고완료" class="btn btn-info" onclick="show2()" id="yesMat"></input> -->
+	<div style="margin-left: 1%;">
+<!--		<input type="button" value="전체" class="B B-info" onclick="showAll()"></input> -->
+<!--	    <input type="button" value="미출고" class="B B-info" onclick="show1()" id="noMat"></input> -->
+<!--	    <input type="button" value="출고완료" class="B B-info" onclick="show2()" id="yesMat"></input> -->
+	</div>
 	
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -102,7 +106,8 @@ body {
 
 </script>	
 	<hr>
-		<form action="" method="get">
+
+		<form method="get" style="margin-left: 1%;">
 		<fieldset>
 			<button type="submit" value="" class="B B-info" name="orders.out_YN">전체</button>
 	        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" ></input> 
@@ -126,18 +131,7 @@ body {
 				<h2>
 					출고 목록 <small>총 ${count4}건</small>
 				</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"><i
-							class="fa fa-wrench"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Settings 1</a> <a
-								class="dropdown-item" href="#">Settings 2</a>
-						</div></li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-				</ul>
+				
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
@@ -181,7 +175,7 @@ body {
 										<td class=" ">
 											<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 												<c:if test="${out.out_num == null}">
-													<button type="submit" name="out_Button" value="${out.orders.order_code},${out.orders.order_count},${out.prod.prod_code}" class="btn btn-info" id="matYN" onclick="return checkStock(${out.orders.order_count}, ${out.stock.stock_count})">출고 처리</button>
+													<button type="submit" name="out_Button" value="${out.orders.order_code},${out.orders.order_count},${out.prod.prod_code}" class="B B-info" id="matYN" onclick="return checkStock(${out.orders.order_count}, ${out.stock.stock_count})">출고 처리</button>
 												</c:if>
 											</c:if>
 										</td>
@@ -193,27 +187,56 @@ body {
 				</div>
 			</div>
 		</div>
-		<div>
-   		<c:if test="${count4 > 0 }">
-		<c:if test="${bp.prev}">
+      
+// ============    
+      
+ <div>
+           <c:if test="${count4 > 10 }">
+        <c:if test="${bp.prev}">
 
-		    <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+            <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">이전</a>
 
-		</c:if>
+        </c:if>
+        
+        <c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+            <a class="btn btn-secondary" href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">${idx}</a>
+        </c:forEach>
+        
+        <c:if test="${bp.next && bp.endPage > 0}">
+
+            <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">다음</a>
+
+        </c:if>
+        </c:if>
+        </div>     
+      
+      
+// ============  
 		
-		<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-		    <a class="btn btn-secondary" href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-		</c:forEach>
-		
-		<c:if test="${bp.next && bp.endPage > 0}">
-
-		    <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
-
-		</c:if>
-		</c:if>
-		</div>
-	
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+      
+		   	<c:if test="${count4 > 10 }">
+			<li class="paginate_button previous disabled">
+				<c:if test="${bp.prev}">
+				    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+				    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${bp.next && bp.endPage > 0}">
+				    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
+				</c:if>
+			</li>
+			</c:if>
+		</ul>
 	</div>
+	
+</div>
     
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
@@ -225,7 +248,6 @@ body {
 <!-- </div> -->
 
 
-</div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
 

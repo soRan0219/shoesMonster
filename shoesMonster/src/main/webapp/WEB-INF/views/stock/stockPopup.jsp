@@ -9,6 +9,8 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -110,7 +112,7 @@ body {
 	<hr>
 <!-- 	실제 수량 <input type="number" id="newCount" name="newCount" min="0"> -->
 <%-- 	<button type="submit" id="modify" name="code" value="${s.raw_code}">수정</button> --%>
-	<input type="button" value="수정" id="modify">
+	<input type="button" class="B B-info" value="수정" id="modify">
 <!-- 	</form> -->
 	
 	

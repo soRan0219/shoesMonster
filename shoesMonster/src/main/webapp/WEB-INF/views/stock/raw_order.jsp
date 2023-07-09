@@ -12,6 +12,8 @@
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <c:if test="${empty sessionScope.id}">
     <c:redirect url="/smmain/smMain" />
 </c:if>
@@ -119,8 +121,8 @@ function toggleDiv(divId) {
     
     <!-- 버튼 제어 -->
     <form action="" name="ro">
-	    <input type="button" value="발주 현황" class="btn btn-info"  nclick="toggleDiv('list')" id="matList"></input>
-	    <input type="button" value="발주 등록" class="btn btn-info" onclick="toggleDiv('regist')"id="matAdd"></input>
+	    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList"></input>
+	    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd"></input>
     </form>
     
   		<script>
@@ -148,7 +150,7 @@ function toggleDiv(divId) {
 	<!-- 	   		품명 <input type="text" name="raw_name" placeholder="품명을 입력하세요"> -->
 		   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
 	<!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
-		   	<input type="submit" class="btn btn-info" value="검색"></input>
+		   	<input type="submit" class="B B-info" value="검색"></input>
 	    </form>
     
     <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
@@ -156,8 +158,8 @@ function toggleDiv(divId) {
     <div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2> 발주 목록 </h2>
-				<span style="float: right; margin-top: 1%;">총 ${count1 }건</span>
+				<h2> 발주 목록 <small>총 ${count1 }건</small></h2>
+				
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content" >

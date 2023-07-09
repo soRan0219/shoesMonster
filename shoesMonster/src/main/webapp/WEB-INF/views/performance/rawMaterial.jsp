@@ -160,6 +160,12 @@ body {
    			             addRow();
    			             counter++;
     				} // someFunction(data)
+    				
+    				$('#save').click(function() {
+            		
+						$('#fr').submit();
+
+					}); //save
             	
             }); //  $('#addButton').click(function()
             
@@ -168,15 +174,15 @@ body {
                 var row = '<tr>' +
                 	'<td></td>'+
                     '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" readonly required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_name"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_color"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_unit"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_size"></td>' +
-                    '<input type="hidden" name="raws[' + counter + '].client_code" id="client_code'+counter+'" required>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_name" required></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_color" required></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_unit" required></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_size" required></td>' +
+                    '<input type="hidden" name="raws[' + counter + '].client_code" id="client_code'+counter+'" required required>' +
                     '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'");></td>' +
                     '<input type="hidden" name="raws[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required>' +
                     '<td><input type="text" name="raws[' + counter + '].wh.wh_name" id="wh_name'+counter+'" readonly onclick=serchWh("wh_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_price"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_price" required></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_note"></td>' +
                     '</tr>';
 
@@ -185,6 +191,8 @@ body {
             	 // 테이블이 많이 생성되면 스크롤바 생성
                 var table = document.getElementById('rawTable');
                 table.scrollTop = table.scrollHeight;
+                
+                
             }
             
             function padNumber(number, length) {
