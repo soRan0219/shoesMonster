@@ -529,18 +529,21 @@ body {
 	
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<c:if test="${empty param.input }">
-			<button onclick="location.href='/person/Clients'" class="B B-info">새로고침</button>
-			</c:if>
-			<c:if test="${!empty param.input && empty param.search_client_type}">
-			<button onclick="location.href='/person/Clients?input=${param.input }'" class="B B-info">새로고침</button>
-			</c:if>
-			<c:if test="${!empty param.input && !empty param.search_client_type }">
-			<button onclick="location.href='/person/Clients?input=${param.input }&search_client_type=${param.search_client_type }'" class="B B-info">새로고침</button>
-			</c:if>
 
 				<div class="x_title">
 					<h2>거래처 목록<small>총 ${pm.totalCount } 건</small></h2>
+					
+					<div style="float: left;  margin-top: 1.5px;">
+						<c:if test="${empty param.input }">
+							<button onclick="location.href='/person/Clients'" class="B2 B2-info">↻</button>
+						</c:if>
+						<c:if test="${!empty param.input && empty param.search_client_type}">
+							<button onclick="location.href='/person/Clients?input=${param.input }'" class="B2 B2-info">↻</button>
+						</c:if>
+						<c:if test="${!empty param.input && !empty param.search_client_type }">
+							<button onclick="location.href='/person/Clients?input=${param.input }&search_client_type=${param.search_client_type }'" class="B2 B2-info">↻</button>
+						</c:if>
+					</div>
 
 					<div style="float: right;">
 						<input type="button" value="추가" id="addButton" class="true B B-info">

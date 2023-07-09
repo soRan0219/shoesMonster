@@ -11,6 +11,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -121,11 +123,11 @@ $(document).ready(function() {
 <body>
 	<div class="right_col" role="main">
 	<div style="margin: 5% 12% 0% 12%;">
-		<div style="text-align-last: right;">
-			<button id="modifyEmp">수정</button>
-			<button type="reset" id="cancelEmp">취소</button>
-			<button type="submit" id="saveEmp">저장</button>
-			<button onclick="location.href='/person/empform?emp_id=${vo.emp_id}'">새로고침</button>
+		<div style="float: right;">
+			<button id="modifyEmp" class="B B-info">수정</button>
+			<button type="reset" id="cancelEmp" class="B B-info">취소</button>
+			<button type="submit" id="saveEmp" class="B B-info">저장</button>
+			<button onclick="location.href='/person/empform?emp_id=${vo.emp_id}'" class="B B-info">↻</button>
 		</div>
 		<div>
 			<h1>상세보기</h1>

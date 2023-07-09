@@ -9,6 +9,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -507,7 +509,7 @@ $(function() {
 				    <option value="생산팀">생산팀</option>
 				    <option value="인사팀">인사팀</option>
 				</select>
-				<input type="submit" value="조회"> 
+				<input type="submit" class="B B-info" value="조회"> 
 			</form>
 		</div>
 		
@@ -515,21 +517,24 @@ $(function() {
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>
-						사원 관리 <small> 총 : ${pm.totalCount } 명 </small>
+						사원 관리 <small> 총 ${pm.totalCount } 명 </small>
 					</h2>
 					
-					<div style="text-align-last: right;" class="nav navbar-right panel_toolbox">
-						<button id="addEmp" class="true">추가</button>
-						<!-- <button id="modifyEmp">수정</button> -->
-						<button id="deleteEmp" class="true">삭제</button>
-						<button type="reset" id="cancleEmp">취소</button>
-						<button type="submit" id="saveEmp">저장</button>
+					<div style="float: left;  margin-top: 1.5px;">
 						<c:if test="${empty param.input }">
-						<button onclick="location.href='/person/empinfo'" class="B B-info">새로고침</button>
+							<button onclick="location.href='/person/empinfo'" class="B2 B2-info">↻</button>
 						</c:if>
 						<c:if test="${!empty param.input }">
-						<button onclick="location.href='/person/empinfo?input=${param.input }'" class="B B-info">새로고침</button>
+							<button onclick="location.href='/person/empinfo?input=${param.input }'" class="B2 B2-info">↻</button>
 						</c:if>
+					</div>
+					
+					<div  class="nav navbar-right panel_toolbox">
+						<button id="addEmp" class="true B B-info">추가</button>
+						<!-- <button id="modifyEmp">수정</button> -->
+						<button id="deleteEmp" class="true B B-info">삭제</button>
+						<button type="reset" id="cancleEmp" class="B B-info">취소</button>
+						<button type="submit" id="saveEmp" class="B B-info">저장</button>
 					</div>
 					
 					<!-- 버튼 제어 -->
@@ -603,7 +608,7 @@ $(function() {
 											<td>${vo.emp_hiredate}</td>
 											<td>${vo.emp_work}</td>
 											<td>
-												<input type="button" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
+												<input type="button" class="B B-info" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
 											</td>
 										</tr>
 									</c:if>
@@ -617,20 +622,27 @@ $(function() {
 		</div>
 		
 		<!-- 페이징 -->
-		<div id="pagination"
-			style="display: block; text-align: center; width: 50%; margin: 0% 25% 0% 25%">
-			<c:if test="${pm.prev }">
-				<a href="/person/empinfo?page=${pm.startPage - 1 }&search_emp_id=${search.search_emp_id}&search_emp_name=${search.search_emp_name}&search_emp_department=${search.search_emp_department}"> 이전 </a>
-			</c:if>
-
-			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }"	step="1">
-				<a href="/person/empinfo?page=${page }&search_emp_id=${search.search_emp_id}&search_emp_name=${search.search_emp_name}&search_emp_department=${search.search_emp_department}">${page }</a>
-			</c:forEach>
-
-			<c:if test="${pm.next }">
-				<a href="/person/empinfo?page=${pm.endPage + 1 }&search_emp_id=${search.search_emp_id}&search_emp_name=${search.search_emp_name}&search_emp_department=${search.search_emp_department}"> 다음 </a>
-			</c:if>
+		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+			<ul class="pagination">
+				<li class="paginate_button previous disabled">
+					<c:if test="${pm.prev }">
+						<a href="/person/empinfo?page=${pm.startPage - 1 }&search_emp_id=${search.search_emp_id}&search_emp_name=${search.search_emp_name}&search_emp_department=${search.search_emp_department}"> Previous </a>
+					</c:if>
+				</li>
+				<li>
+					<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }"	step="1">
+						<a href="/person/empinfo?page=${page }&search_emp_id=${search.search_emp_id}&search_emp_name=${search.search_emp_name}&search_emp_department=${search.search_emp_department}">${page }</a>
+					</c:forEach>
+				</li>
+				<li>
+					<c:if test="${pm.next }">
+						<a href="/person/empinfo?page=${pm.endPage + 1 }&search_emp_id=${search.search_emp_id}&search_emp_name=${search.search_emp_name}&search_emp_department=${search.search_emp_department}"> Next </a>
+					</c:if>
+				</li>
+			</ul>
 		</div>
+		
+		
 		<!-- 페이징 -->
 		
 	<!-- ////////////////////////////////////////////////////////////// -->

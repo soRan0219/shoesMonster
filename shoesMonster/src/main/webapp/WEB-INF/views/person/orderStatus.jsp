@@ -9,6 +9,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -545,9 +547,6 @@ $(function(){
 // ========================================= 검색 ===================================================
 	// 수주 일자 이날부터
 	$('#order_date_fromDate').datepicker({
-		showOn:'both',
-		buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-		buttonImageOnly:'true',
 		changeMonth:'true',
 		changeYear:'true',
 		nextText:'다음달',
@@ -566,9 +565,6 @@ $(function(){
 	
 	// 이날까지
 	$('#order_date_toDate').datepicker({
-		showOn:'both',
-		buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-		buttonImageOnly:'true',
 		changeMonth:'true',
 		changeYear:'true',
 		nextText:'다음달',	
@@ -584,9 +580,6 @@ $(function(){
 	
 	// 납품 예정일 이날부터
 	$('#order_deliveryDate_fromDate').datepicker({
-		showOn:'both',
-		buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-		buttonImageOnly:'true',
 		changeMonth:'true',
 		changeYear:'true',
 		nextText:'다음달',
@@ -605,9 +598,6 @@ $(function(){
 	
 	// 이날까지
 	$('#order_deliveryDate_toDate').datepicker({
-		showOn:'both',
-		buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-		buttonImageOnly:'true',
 		changeMonth:'true',
 		changeYear:'true',
 		nextText:'다음달',
@@ -635,16 +625,16 @@ $(function(){
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="client_code" id="client_code9999" >
-				업체 <input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-				수주 일자 <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
+				업체 : <input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
+				수주 일자 : <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
 						  <input type="text" name="order_date_toDate" id="order_date_toDate">
 				<input type="hidden" name="prod_code" id="prod_code9999">
-				품명 <input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')">
-				<input type="submit" value="조회">
+				품명 : <input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')">
+				<input type="submit" class="B B-info" value="조회">
 				<br>
 				<input type="hidden" name="emp_id" id="s_emp_id"> 
-				담당자 <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')">
-				납품 예정일 <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
+				담당자 : <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')">
+				납품 예정일 : <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
 						    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
 			</fieldset>
 		</form>
@@ -655,30 +645,30 @@ $(function(){
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 
-			<c:if test="${empty param.input }">
-			<button onclick="location.href='/person/orderStatus'" class="B B-info">새로고침</button>
-			</c:if>
-			<c:if test="${!empty param.input }">
-			<button onclick="location.href='/person/orderStatus?input=${param.input }'" class="B B-info">새로고침</button>
-			</c:if>
 		
-			<form id="fr">
 				<div class="x_title">
-					<h2> 수주 목록 </h2>
+					<h2> 수주 목록<small>총 ${pm.totalCount } 건</small></h2>
 					
-					<span style="float: right; margin-top: 1%;"> 총 ${pm.totalCount } 건 </span>
+					<div style="float: left;  margin-top: 1.5px;">
+						<c:if test="${empty param.input }">
+							<button onclick="location.href='/person/orderStatus'" class="B2 B2-info">↻</button>
+						</c:if>
+						<c:if test="${!empty param.input }">
+							<button onclick="location.href='/person/orderStatus?input=${param.input }'" class="B2 B2-info">↻</button>
+						</c:if>
+					</div>
+					
+					<div style="float: right;">
+						<button id="add" class="true B B-info">추가</button>
+						<button id="modify" class="B B-info">수정</button>
+						<button id="delete" class="true B B-info">삭제</button>
+						<button type="reset" id="cancle" class="B B-info">취소</button>
+						<button type="submit" id="save" class="B B-info">저장</button>
+					</div>
+					
 					<div class="clearfix"></div>
 				</div>
-			
 			<!-- 버튼 제어 -->
-			<div style="margin-bottom: 1%;">
-				<button id="add" class="true">추가</button>
-				<button id="modify" >수정</button>
-				<button id="delete" class="true">삭제</button>
-				<button type="reset" id="cancle" >취소</button>
-				<button type="submit" id="save">저장</button>
-			</div>
-			
 			<script>
 			    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 			
@@ -744,18 +734,24 @@ $(function(){
 		</div>
 	</div>
 	
-	<div id="pagination">
-		<c:if test="${pm.prev }">
-			<a href="/person/orderStatus?page=${pm.startPage - 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
-		</c:if>
-		
-		<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-			<a href="/person/orderStatus?page=${page }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
-		</c:forEach>
-
-		<c:if test="${pm.next }">
-			<a href="/person/orderStatus?page=${pm.endPage + 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
-		</c:if>
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.prev }">
+					<a href="/person/orderStatus?page=${pm.startPage - 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+					<a href="/person/orderStatus?page=${page }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.next }">
+					<a href="/person/orderStatus?page=${pm.endPage + 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
+				</c:if>
+			</li>
+		</ul>
 	</div>
 
 </div>
