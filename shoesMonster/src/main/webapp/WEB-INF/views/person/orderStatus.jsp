@@ -169,8 +169,10 @@ function popUp() {
 $(function(){
 	
 	//테이블 항목들 인덱스 부여
-	$('table tr').each(function(index) {
-		$(this).find('td:first').text(index);
+	$('table tr').each(function(index){
+			var num = "<c:out value='${pvo.page}'/>";
+			var num2 = "<c:out value='${pvo.pageSize}'/>";
+			$(this).find('td:first').text(((num-1)*num2) + index);
 	});
 	
 	popUp();

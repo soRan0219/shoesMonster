@@ -703,14 +703,15 @@ body {
 
 				<div class="custom-select">
 					<select name="line_place">
+						<option value="전체" ${lvo.line_place == null ? 'selected' : ''}>1차공정</option>
 						<option value="1차공정" ${lvo.line_place == '1차공정' ? 'selected' : ''}>1차공정</option>
 						<option value="2차공정" ${lvo.line_place == '2차공정' ? 'selected' : ''}>2차공정</option>
 						<option value="3차공정" ${lvo.line_place == '3차공정' ? 'selected' : ''}>3차공정</option>
 					</select>
 					
-					<button onclick="selectOption(0)">1차공정 </button>
-					<button onclick="selectOption(1)">2차공정 </button>
-					<button onclick="selectOption(2)">3차공정</button>
+					<button onclick="selectOption(1)">1차공정 </button>
+					<button onclick="selectOption(2)">2차공정 </button>
+					<button onclick="selectOption(3)">3차공정</button>
 				</div>
 
 				<script>
