@@ -140,8 +140,8 @@
 	
 	<!-- 거래처 검색 -->
 	<select id="searchClientsList" parameterType="hashMap" resultType="com.sm.domain.ClientsVO">
-		<bind name="client_code" value="'%' + search_client_code + '%'"/>
-		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
+<!-- 		<bind name="client_code" value="'%' + search_client_code + '%'"/> -->
+<!-- 		<bind name="client_actname" value="'%' + search_client_actname + '%'"/> -->
 		
 		select * from clients
 		<where>
@@ -161,8 +161,8 @@
 	
 	<!-- 거래처 검색 개수 -->
 	<select id="searchClientCnt" parameterType="hashMap" resultType="int">
-		<bind name="client_code" value="'%' + search_client_code + '%'"/>
-		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
+<!-- 		<bind name="client_code" value="'%' + search_client_code + '%'"/> -->
+<!-- 		<bind name="client_actname" value="'%' + search_client_actname + '%'"/> -->
 	
 		select count(*) from clients
 		<where>
