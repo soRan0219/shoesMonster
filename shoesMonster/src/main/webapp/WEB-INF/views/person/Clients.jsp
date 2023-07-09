@@ -141,24 +141,11 @@ body {
 	
 	// ==================================== 버튼 =================================================
 		
-	// 추가 //
-	//날짜 + 시간 + 분 + 초 ==> 코드
+	
+	
     function codeCreation() {
-		
-    	Date.prototype.getYearYY = function(){
-            var a = this.getYear();
-            return a >= 100 ? a-100 : a;
-          }
-		
-        var date = new Date();
-        var YY_year = date.getYearYY();
-        var month = ("0" + (1 + date.getMonth())).slice(-2);
-        var day = ("0" + date.getDate()).slice(-2);
-        var time = ("0" + date.getHours()).slice(-2);
-        var minute = ("0" + date.getMinutes()).slice(-2);
-        var second = ("0" + date.getSeconds()).slice(-2);
-
-        return YY_year + month + minute + second;
+    	
+		return prodCode;
     }
 	
 	// input으로 바꾸기
@@ -173,7 +160,11 @@ body {
 // 			alert("제발");
 			$('#updateButton').attr("disabled", true);
 			$('#deleteButton').attr("disabled", true);
-
+			
+			var counter = 0;
+		    var codeNum = 0;
+		   	var clientCode = 0;
+			
 			if ($(this).hasClass('true')) {
 
 				var tbl = "<tr>";
@@ -182,15 +173,15 @@ body {
 				tbl += " </td>";
 				// 거래처 코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_code'' id='client_code2' readonly>";
+				tbl += "  <input type='text' name='client_code'' id='client_code2' readonly class='input-fieldb'>";
 				tbl += " </td>";
 				// 거래처명
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_actname' id='client_actname' required>";
+				tbl += "  <input type='text' name='client_actname' id='client_actname' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 거래처 구분
 				tbl += " <td>";
-				tbl += "  <select name='client_type' id='client_type'>";
+				tbl += "  <select name='client_type' id='client_type' class='input-fieldb'>";
 				tbl += "   <option>선택</option>";
 				tbl += "   <option>수주처</option>";
 				tbl += "   <option>발주처</option>";
@@ -198,61 +189,103 @@ body {
 				tbl += " </td>";
 				// 사업자 번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_number' id='client_number' required>";
+				tbl += "  <input type='text' name='client_number' id='client_number' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 업태
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_sort' id='client_sort' required>";
+				tbl += "  <input type='text' name='client_sort' id='client_sort' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 대표자
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_ceo' id='client_ceo' required>";
+				tbl += "  <input type='text' name='client_ceo' id='client_ceo' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 담당자
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_name' id='client_name' required>";
+				tbl += "  <input type='text' name='client_name' id='client_name' value=<c:out value='${sessionScope.id.emp_name}'/> required class='input-fieldb'>";
 				tbl += " </td>";
 				// 주소
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_addr' id='client_addr' required>";
+				tbl += "  <input type='text' name='client_addr' id='client_addr' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 상세주소
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_addr2' id='client_addr2' required>";
+				tbl += "  <input type='text' name='client_addr2' id='client_addr2' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 전화번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_tel' id='client_tel' required>";
+				tbl += "  <input type='text' name='client_tel' id='client_tel' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 휴대폰번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_phone' id='client_phone' required>";
+				tbl += "  <input type='text' name='client_phone' id='client_phone' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 팩스번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_fax' id='client_fax' required>";
+				tbl += "  <input type='text' name='client_fax' id='client_fax' required class='input-fieldb'>";
 				tbl += " </td>";
 				// email
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_email' id='client_email' required>";
+				tbl += "  <input type='text' name='client_email' id='client_email' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 비고
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_note' id='client_note' required>";
+				tbl += "  <input type='text' name='client_note' id='client_note' required class='input-fieldb'>";
 				tbl += " </td>";
 				tbl += "</tr>";
 
 				$('table').append(tbl);
 				
 				
-				$("#client_type").on("change", function(){
-				if($("#client_type option:selected").val() === '수주처' ){
-					$('input[name="client_code"]').val('OR'+codeCreation());
-				} else if($("#client_type option:selected").val() === '발주처' ){
-					$('input[name="client_code"]').val('CL'+codeCreation());
-				}
+// 				$("#client_type").on("change", function(){
+// 				if($("#client_type option:selected").val() === '수주처' ){
+// 					$('input[name="client_code"]').val('OR'+clientCode);
+// 				} else if($("#client_type option:selected").val() === '발주처' ){
+// 					$('input[name="client_code"]').val('CL'+clientCode);
+// 				}
+					
+					var selectedOption = "";
+				    $('#client_type').on('change', function() {
+				    	selectedOption = $(this).val(); // 선택된 옵션의 값 가져오기
+						getClientCode();
+				    });
+				    
+				    function getClientCode (){
+				    	var jsonObj = {client_type : selectedOption};
+					    $.ajax({
+							url: "/person/clientCode",
+							type: "POST",
+							contentType : "application/json; charset=UTF-8",
+				 			data: JSON.stringify(jsonObj),
+				 			success: function (data) {
+// 	 							alert(data);
+								
+								 
+				 				 var num = parseInt(data.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+//	 			 				 alert("num : "+num);
+				  				 var paddedNum = padNumber(num, data.length - 1); // 숫자를 패딩하여 길이 유지
+				  				 clientCode = data.substring(0,2) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+							   	        
+// 				  				alert(clientCode);
+				  				 
+								$('#client_code2').val(clientCode);
+								
+							}//success
+				        });//ajax
+					}
+
+//	 			    counter++;
+//	 			} // someFunction(data)
 				
-				});
+				function padNumber(number, length) {
+//	 				alert("padNum");
+	                var paddedNumber = number.toString();
+	                while (paddedNumber.length < length-1) {
+	                    paddedNumber = "0" + paddedNumber;
+	                }
+	                return paddedNumber;
+	        } // padNumber(number, length)
+				
+// 				});
 				
 				$(this).removeClass('true');
 			} // true 클래스 있을 때
@@ -552,6 +585,29 @@ body {
 	}); // JQuery
 </script>
 
+<style>
+
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+
+</style>
+
 <!-- page content -->
 <div class="right_col" role="main">
 	
@@ -587,7 +643,7 @@ body {
 			<input type="text" name="search_client_code" id="search_client_code"> 
 			거래처명 : 
 			<input type="text" name="search_client_actname" id="search_client_actname">
-			거래처구분 : 
+<!-- 			거래처구분 :  -->
 <!-- 			<select name="search_client_type"> -->
 <!-- 				<option selected value= "전체">전체</option> -->
 <!-- 				<option value= "발주처">발주처</option> -->
@@ -597,11 +653,9 @@ body {
 		</form>
 	</div>
 
-	<hr>
-	
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-
+			<div class="table-wrapper">
 				<div class="x_title">
 					<h2>거래처 목록<small>총 ${pm.totalCount } 건</small></h2>
 					
@@ -624,13 +678,8 @@ body {
 						<input type="button" value="취소" id="cancelButton" class="B B-info"> 
 						<input type="button" value="저장" id="saveButton" class="B B-info">
 					</div>
-					
-					<div class="clearfix"></div>
-				</div>
 				
-				
-	<!-- 버튼 제어 -->
-			<form id="fr">
+				<!-- 버튼 제어 -->
 				<script>
 				    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 				
@@ -650,10 +699,13 @@ body {
 				        document.querySelector("[onclick^='location.href']").hidden = true;
 				    }
 				</script>
-		<!-- 버튼 제어 -->
-
+				<!-- 버튼 제어 -->
+				
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<form id="fr">
 				<div class="table-responsive">
-<!-- 				<div> 화면 벗어나서 일단 스크롤 넣어둠-->
 					<table border="1" id="clientsTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 						<colgroup>
 						    <col style="width: 50px">
@@ -690,9 +742,9 @@ body {
 								<th>비고</th>
 							</tr>
 						</thead>
-						<tr type='hidden' style='display: none;'></tr>
+						<tr type="hidden" style="display: none;"></tr>
 						<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
-							<c:if test="${vo.client_type == '전체' }">
+							<c:if test="${vo.client_type == '전체' || vo.client_type == '발주처' || vo.client_type == '수주처' }">
 								<tr>
 									<td></td>
 									<td id="client_code">${vo.client_code}</td>
@@ -712,52 +764,55 @@ body {
 								</tr>
 							</c:if>
 
-							<c:if test="${vo.client_type == '발주처' }">
-								<tr>
-									<td></td>
-									<td id="client_code">${vo.client_code}</td>
-									<td id="client_actname">${vo.client_actname}</td>
-									<td>${vo.client_type}</td>
-									<td>${vo.client_number}</td>
-									<td>${vo.client_sort}</td>
-									<td>${vo.client_ceo}</td>
-									<td>${vo.client_name}</td>
-									<td>${vo.client_addr}</td>
-									<td>${vo.client_addr2}</td>
-									<td>${vo.client_tel}</td>
-									<td>${vo.client_phone}</td>
-									<td>${vo.client_fax}</td>
-									<td>${vo.client_email}</td>
-									<td>${vo.client_note}</td>
-								</tr>
-							</c:if>
+<%-- 							<c:if test="${vo.client_type == '발주처' }"> --%>
+<!-- 								<tr> -->
+<!-- 									<td></td> -->
+<%-- 									<td id="client_code">${vo.client_code}</td> --%>
+<%-- 									<td id="client_actname">${vo.client_actname}</td> --%>
+<%-- 									<td>${vo.client_type}</td> --%>
+<%-- 									<td>${vo.client_number}</td> --%>
+<%-- 									<td>${vo.client_sort}</td> --%>
+<%-- 									<td>${vo.client_ceo}</td> --%>
+<%-- 									<td>${vo.client_name}</td> --%>
+<%-- 									<td>${vo.client_addr}</td> --%>
+<%-- 									<td>${vo.client_addr2}</td> --%>
+<%-- 									<td>${vo.client_tel}</td> --%>
+<%-- 									<td>${vo.client_phone}</td> --%>
+<%-- 									<td>${vo.client_fax}</td> --%>
+<%-- 									<td>${vo.client_email}</td> --%>
+<%-- 									<td>${vo.client_note}</td> --%>
+<!-- 								</tr> -->
+<%-- 							</c:if> --%>
 
-							<c:if test="${vo.client_type == '수주처' }">
-								<tr>
-									<td></td>
-									<td id="client_code">${vo.client_code}</td>
-									<td id="client_actname">${vo.client_actname}</td>
-									<td>${vo.client_type}</td>
-									<td>${vo.client_number}</td>
-									<td>${vo.client_sort}</td>
-									<td>${vo.client_ceo}</td>
-									<td>${vo.client_name}</td>
-									<td>${vo.client_addr}</td>
-									<td>${vo.client_addr2}</td>
-									<td>${vo.client_tel}</td>
-									<td>${vo.client_phone}</td>
-									<td>${vo.client_fax}</td>
-									<td>${vo.client_email}</td>
-									<td>${vo.client_note}</td>
-								</tr>
-							</c:if>
-						</c:forEach>
-					</table>
+<%-- 							<c:if test="${vo.client_type == '수주처' }"> --%>
+<!-- 								<tr> -->
+<!-- 									<td></td> -->
+<%-- 									<td id="client_code">${vo.client_code}</td> --%>
+<%-- 									<td id="client_actname">${vo.client_actname}</td> --%>
+<%-- 									<td>${vo.client_type}</td> --%>
+<%-- 									<td>${vo.client_number}</td> --%>
+<%-- 									<td>${vo.client_sort}</td> --%>
+<%-- 									<td>${vo.client_ceo}</td> --%>
+<%-- 									<td>${vo.client_name}</td> --%>
+<%-- 									<td>${vo.client_addr}</td> --%>
+<%-- 									<td>${vo.client_addr2}</td> --%>
+<%-- 									<td>${vo.client_tel}</td> --%>
+<%-- 									<td>${vo.client_phone}</td> --%>
+<%-- 									<td>${vo.client_fax}</td> --%>
+<%-- 									<td>${vo.client_email}</td> --%>
+<%-- 									<td>${vo.client_note}</td> --%>
+<!-- 								</tr> -->
+<%-- 							</c:if> --%>
+							</c:forEach>
+						</table>
+					</div>
+				</form>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 	
+	<!-- 페이징 -->
 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
 			<li class="paginate_button previous disabled">
@@ -777,11 +832,12 @@ body {
 			</li>
 		</ul>
 	</div>
+	<!-- 페이징 -->
 
-	<div id="details"></div>
-		
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 

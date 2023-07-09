@@ -116,7 +116,9 @@ body {
     }
 
 </script>	
+
 		<form method="get" style="margin-left: 1%;">
+
 			<button type="submit" value="" class="B B-info" name="orders.out_YN">전체</button>
 	        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" ></input> 
 	        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" ></input> 
@@ -130,7 +132,7 @@ body {
 
   <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     
-    <div class="col-md-12 col-sm-12  ">
+    <div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
@@ -223,6 +225,7 @@ body {
 					
 					
 					<!-- 엑셀 - 시작 -->
+
 	<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
 	</div>
 	<script type="text/javascript">
@@ -291,17 +294,12 @@ body {
 				</div>
 			</div>
 		</div>
-	
+
 </div>
     
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
 
-   
-    
-<!-- <div> -->
-
-<!-- </div> -->
 
 
 <!-- /page content -->

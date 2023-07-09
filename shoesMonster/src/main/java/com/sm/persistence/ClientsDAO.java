@@ -24,6 +24,9 @@ public interface ClientsDAO {
 	// 거래처 추가
 	public void insertClient(ClientsVO cvo) throws Exception;
 	
+	// 추가 시 code값 가져가기
+	public String getClientCode(String client_type) throws Exception; 
+	
 	// 거래처 삭제
 	public void deleteClient(List<String> checked) throws Exception;
 	

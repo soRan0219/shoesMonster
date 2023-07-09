@@ -168,6 +168,7 @@ function toggleDiv(divId) {
 		    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요."> &nbsp;
 		   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요."> &nbsp;
 		   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요."> &nbsp; &nbsp;
+
 		   	<input type="submit" class="B B-info" value="검색"></input>
 		 <hr>
 	    </form>
@@ -226,26 +227,29 @@ function toggleDiv(divId) {
 							</tbody>
 						</table>
 					</form>
+
 			<div style="display: inline;">
-			<div style="text-align: right;">
-				<c:if test="${count1 > 0 }">
+			<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+   		<c:if test="${count1 > 0 }">
+			<li class="paginate_button previous disabled">
 				<c:if test="${bp.prev}">
-	
-				    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
-	
+				    <a href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
 				</c:if>
-				
+			</li>
+			<li class="paginate_button previous disabled">
 				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-				    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+				    <a href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
 				</c:forEach>
-				
+			</li>
+			<li class="paginate_button previous disabled">
 				<c:if test="${bp.next && bp.endPage > 0}">
-	
-				    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
-	
+				    <a href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
 				</c:if>
-			</c:if>
-			</div>
+			</li>
+		</c:if>
+		</ul>
+	</div>
 		
 					
 					<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
@@ -313,17 +317,15 @@ function toggleDiv(divId) {
     </script>
     <!-- 엑셀 - 끝 -->
 			
-			
-					
+
 				</div>
 			</div>
 		</div>
 		<div>
    		
+
 		
-		
-		
-		</div>
+	
 		
 		
 
@@ -354,6 +356,7 @@ function toggleDiv(divId) {
 				<td onclick="roPopup();"><input type="text" name="wh_code" id="wh_code" readonly></td>
 			</tr>
 		</table>
+
 		<hr>
 			<br>
 						<div class="table-responsive">
