@@ -575,7 +575,7 @@ $(function() {
 								<colgroup>
 								    <col style="width: 50px">
 								    <col style="width: 100px">
-								    <col style="width: 100px">
+								    <col style="width: 100px"> 
 								    <col style="width: 75px">
 								    <col style="width: 75px">
 								    <col style="width: 75px">
