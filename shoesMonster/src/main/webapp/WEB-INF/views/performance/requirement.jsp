@@ -126,7 +126,6 @@ body {
                     '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'");></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'");></td>' +
                     '<td><input type="number" name="reqs[' + counter + '].req_dan" required></td>' +
-                    '<td></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_note"></td>' +
                     '</tr>';
                     
@@ -359,7 +358,6 @@ body {
 										data.prod.prod_name,
 										data.raw.raw_name,
 										data.req_dan,
-										data.req_dan,
 										data.req_note,
 										data.raw_code
 										];
@@ -372,7 +370,6 @@ body {
 										"prod_name",
 										"raw_name",
 										"req_dan",
-										"req_sum",
 										"req_note",
 										"raw_code"
 										];
@@ -523,7 +520,6 @@ body {
 							<col style="width: 100px">
 							<col style="width: 100px">
 							<col style="width: 100px">
-							<col style="width: 100px">
 							<col style="width: 150px">
 						</colgroup>
 						<thead>
@@ -534,7 +530,6 @@ body {
 								<th>완제품</th>
 								<th>원자재</th>
 								<th>소요량</th>
-								<th>총 소요량</th>
 								<th>비고</th>
 							</tr>
 						</thead>
@@ -547,7 +542,6 @@ body {
 								<td id="prodName">${vo.prod.prod_name }</td>
 								<td>${vo.raw.raw_name }</td>
 								<td>${vo.req_dan }</td>
-								<td></td>
 								<td>${vo.req_note }</td>
 							</tr>
 						</c:forEach>

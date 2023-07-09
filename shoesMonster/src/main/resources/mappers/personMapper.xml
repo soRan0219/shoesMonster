@@ -127,7 +127,7 @@
 	<!-- 거래처 목록 불러오기 -->
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
 		select * from clients
-		order by client_code ASC
+		order by 1 desc
 		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 거래처 목록 불러오기 -->
@@ -145,16 +145,17 @@
 		
 		select * from clients
 		<where>
-			<if test="client_code != null and !client_code.isEmpty()">
+			<if test="search_client_code != null and !search_client_code.isEmpty()">
 				client_code Like concat ('%', #{search_client_code}, '%')
 			</if>
-			<if test="client_actname != null and !client_actname.isEmpty()">
+			<if test="search_client_actname != null and !search_client_actname.isEmpty()">
 				AND client_actname Like concat ('%', #{search_client_actname}, '%')
 			</if>
 			<if test="search_client_type != '전체' and !search_client_type.isEmpty()">
 				AND client_type=#{search_client_type}
 			</if>
 		</where>
+		order by 1 desc
 		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 거래처 검색 -->
@@ -166,10 +167,10 @@
 	
 		select count(*) from clients
 		<where>
-			<if test="client_code != null and !client_code.isEmpty()">
+			<if test="search_client_code != null and !search_client_code.isEmpty()">
 				client_code Like concat ('%', #{search_client_code}, '%')
 			</if>
-			<if test="client_actname != null and !client_actname.isEmpty()">
+			<if test="search_client_actname != null and !search_client_actname.isEmpty()">
 				AND client_actname Like concat ('%', #{search_client_actname}, '%')
 			</if>
 			<if test="search_client_type != '전체' and !search_client_type.isEmpty()">
