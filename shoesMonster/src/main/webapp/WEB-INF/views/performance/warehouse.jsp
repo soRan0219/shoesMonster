@@ -31,6 +31,43 @@ body {
 .selected {
 	background-color: #ccc;
 }
+
+/* 셀렉트 옵션을 가로로 나열하여 버튼으로 꾸미기 위한 스타일 */
+  .custom-select {
+    display: flex;
+  }
+
+  .custom-select select {
+    display: none;
+  }
+
+  .custom-select button {
+    flex: 1;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #000;
+    transition: background-color 0.3s;
+  }
+
+  .custom-select button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    background-image: none;
+  }
+
+
+
 </style>
 
 
@@ -632,6 +669,29 @@ body {
 <div style="margin-left: 1%;">
 	<form method="get">
 		
+		
+		<div class="custom-select">
+					<select name="wh_dv">
+						<option value="전체" ${wvo.wh_dv == null ? 'selected' : ''}>전체</option>
+						<option value="원자재" ${wvo.wh_dv == '원자재' ? 'selected' : ''}>원자재</option>
+						<option value="완제품" ${wvo.wh_dv == '완제품' ? 'selected' : ''}>완제품</option>
+					</select>
+					
+					<button onclick="selectOption(0)">전체</button>
+					<button onclick="selectOption(1)">원자재</button>
+					<button onclick="selectOption(2)">완제품</button>
+				</div>
+
+				<script>
+				  function selectOption(index) {
+				    var select = document.querySelector('.custom-select select');
+				    select.selectedIndex = index;
+				    select.dispatchEvent(new Event('change'));
+				  }
+				</script>
+	
+	
+		
 		<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
 			
@@ -650,12 +710,12 @@ body {
 			<br>
 			
 			<div style="margin-top: 0.5%;">
-				<label>창고유형 : </label>	
-					<select name="wh_dv">
-					  <option value="전체">전체</option>
-					  <option value="원자재">원자재</option>
-					  <option value="완제품">완제품</option>
-					</select>
+<!-- 				<label>창고유형 : </label>	 -->
+<!-- 					<select name="wh_dv"> -->
+<!-- 					  <option value="전체">전체</option> -->
+<!-- 					  <option value="원자재">원자재</option> -->
+<!-- 					  <option value="완제품">완제품</option> -->
+<!-- 					</select> -->
 					
 				<label>사용여부 : </label>
 					<input type="radio" name="wh_use" value="3" checked>전 체
