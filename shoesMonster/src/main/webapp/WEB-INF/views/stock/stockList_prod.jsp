@@ -126,18 +126,18 @@ body {
 	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" ></input></a>
     </div>
     
-    <hr>
     
-    <div style="margin-left: 1%;">  
+    <div style="margin-left: 2%;">  
+    <hr>
 	    <form action="" method="get">
-	 		완제품 코드 : <input type="text" name="prod_code" placeholder="완제품 코드를 입력하세요">
-		   	완제품 품명 : <input type="text" name="product.prod_name" placeholder="품명을 입력하세요">
-		   	창고 코드 : <input type="text" name="wh_code" placeholder="창고 코드를 입력하세요"> 
+	 		완제품 코드 <input type="text" name="prod_code" placeholder="완제품 코드를 입력하세요."> &nbsp;
+		   	완제품 품명 <input type="text" name="product.prod_name" placeholder="완제품 품명을 입력하세요."> &nbsp;
+		   	창고 코드 <input type="text" name="wh_code" placeholder="창고 코드를 입력하세요."> &nbsp; &nbsp;
 		   	<input type="submit" class="B B-info" value="검색"></input>
 	  	</form>
+	<hr>
   	</div>
 	
-	<hr>
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
@@ -182,32 +182,32 @@ body {
 				</table>
 			</div>
 		</form>
-	</div>
-</div>     
-           		
-<!-- ㅇㅇㅇㅇㅇ -->
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-		<ul class="pagination">
-		    <c:if test="${countP3 > 0 }">
-			    <li class="paginate_button previous disabled">
+		
+		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+			<ul class="pagination">
+			    <c:if test="${countP3 > 0 }">
+				<li class="paginate_button previous disabled">
 					<c:if test="${bp.prev}">
 					    <span><a href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
 					</c:if>
 				</li>
-				<li class="paginate_button previous disabled">
+				<li class="paginate_button previous disabled">	
 					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
 					    <a href="/stock/stockList_prod?page=${idx }&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">${idx }</a>
 					</c:forEach>
 				</li>
-				<li class="paginate_button previous disabled">
+				<li class="paginate_button previous disabled">	
 					<c:if test="${bp.next && bp.endPage > 0}">
 					    <a href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
 					</c:if>
 				</li>
-			</c:if>
-		</ul>
-  <!-- ㅇㅇㅇㅇㅇ -->  
+				</c:if>
+			</ul>
+		</div>
+		
 	</div>
+</div>     
+           		
 </div>
 
 <!-- /page content -->

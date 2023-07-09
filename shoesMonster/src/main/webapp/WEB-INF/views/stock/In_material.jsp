@@ -111,7 +111,6 @@ body {
 <!-- //////////////////////////////////////////////////////////////////////// -->
 <!-- page content -->
 	
-<!-- 	<h2 style="margin-left: 1%;">재고관리</h2> -->
 
 <div style="margin: 1% 0 1% 1%;">
 
@@ -120,15 +119,16 @@ body {
 		<input type="submit" value="미입고" class="B B-info" name="in_YN" ></input> 
         <input type="submit" value="입고완료" class="B B-info" name="in_YN" ></input> 
 		<hr>
-		<label>품명 : </label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요">
-		<label>입고 번호 : </label> <input type="text" name="in_mat.in_num" placeholder="입고 번호를 입력해주세요">
-		<label>거래처명 : </label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요">
+
+		<label>입고 번호</label> <input type="text" name="in_mat.in_num" placeholder="입고 번호를 입력해주세요."> &nbsp;
+		<label>품명</label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요."> &nbsp;
+		<label>거래처명</label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요."> &nbsp; &nbsp;
+
 		<input type="submit" class="B B-info" value="검색">
-		
+	<hr>
 	</form>
 </div>
 
-<!-- 	<hr> -->
 
 	<!--//////////////////////////////////////////// 테이블 템플릿 ////////////////////////////////////////////////////// -->
 
@@ -209,10 +209,34 @@ body {
 						</div>
 						
 					</form>
-
+					
+					<div style="display: inline;">
+					<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+					<ul class="pagination">
+			            <c:if test="${count1 > 0 }">
+						<li class="paginate_button previous disabled">
+			                <c:if test="${bp.prev}">
+			                    <span><a href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a></span>
+			                </c:if>
+			            </li>
+						<li class="paginate_button previous disabled">
+			                <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
+			                    step="1">
+			                    <a href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
+			                </c:forEach>
+						</li>
+						<li class="paginate_button previous disabled">
+			                <c:if test="${bp.next && bp.endPage > 0}">
+			                    <a href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
+			                </c:if>
+			            </li>
+			            </c:if>
+			         </ul>
+      </div>
 	<!-- 엑셀 - 시작 -->
-	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
-	
+	<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
+	</div>
+
 	<script type="text/javascript">
 	function getToday() {
 		var date = new Date();
@@ -282,31 +306,12 @@ body {
 	
 	
 </div>
+
+
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 	
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-		<ul class="pagination">
-            <c:if test="${count1 > 0 }">
-			<li class="paginate_button previous disabled">
-                <c:if test="${bp.prev}">
-                    <span><a href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a></span>
-                </c:if>
-            </li>
-			<li class="paginate_button previous disabled">
-                <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
-                    step="1">
-                    <a href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
-                </c:forEach>
-			</li>
-			<li class="paginate_button previous disabled">
-                <c:if test="${bp.next && bp.endPage > 0}">
-                    <a href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
-                </c:if>
-            </li>
-            </c:if>
-         </ul>
-      </div>
+	
       
       
       

@@ -117,9 +117,6 @@
 					
 					<!-- /menu footer buttons -->
 					<div class="sidebar-footer hidden-small">
-						<a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-							<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-						</a>
 						<form action="/smmain/smLogout" method="get">
 							<button type="submit" value="logout" class="dropdown-item">
 								<i class="fa fa-sign-out pull-right"></i> 로그아웃

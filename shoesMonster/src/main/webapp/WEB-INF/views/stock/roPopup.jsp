@@ -40,6 +40,7 @@
 
 body {
 	font-family: 'NexonLv2Gothic';
+	background-color: #fff;
 }
 </style>
 <!-- 폰트 -->
@@ -78,9 +79,9 @@ body {
 	
 	<div style="margin-left: 1%;">
 		<form action="" method="get">
-			품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
-			거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
-			<input type="submit" class="B B-info" value="검색"></input>
+			품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요."> &nbsp;
+			거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요."> &nbsp;
+			<input type="submit" class="B B-info" value="검색"></input> &nbsp; &nbsp;
 	    </form>
 	</div>   
 	 
@@ -125,7 +126,7 @@ body {
 		
 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
-            <c:if test="${countPop > 10 }">
+            <c:if test="${countPop > 0 }">
 			<li class="paginate_button previous disabled">
                 <c:if test="${bp.prev}">
                     <span><a href="/stock/roPopup?page=${bp.startPage -1}&rawMaterial.raw_name=${ro.rawMaterial.raw_name}}&clients.client_actname=${ro.clients.client_actname}">이전</a></span>
