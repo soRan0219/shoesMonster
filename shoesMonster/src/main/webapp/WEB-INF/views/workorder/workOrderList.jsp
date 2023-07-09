@@ -231,7 +231,12 @@ body {
 				var work_qt = $('#work_qt').val();
 
 				if (prod_code == "" || order_code == "" || work_qt == "") {
-					alert("항목을 모두 입력하세요");
+// 					alert("항목을 모두 입력하세요");
+					Swal.fire({
+						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						icon: 'info',
+						width: '300px',
+					})
 				} else {
 					$('#fr').attr("action", "/workorder/add");
 					$('#fr').attr("method", "post");

@@ -91,8 +91,15 @@ body {
 			}
 		}
 		
+
 		function go(raw_name,raw_order_count) {
-			alert("품명("+raw_name+")이 "+raw_order_count+"개 입고 처리가 되었습니다.");
+// 			alert("입고 처리가 완료되었습니다.");
+			Swal.fire({
+				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 입고 처리가 되었습니다."+ "</div>",
+				icon: 'success',
+				width: '300px',
+			})
+
 		}
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

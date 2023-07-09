@@ -181,7 +181,13 @@ body {
 					var maxVal = Number($(this).attr("max"));
 					
 					if(inserted > maxVal) {
-						alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+// 						alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+						Swal.fire({
+							title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "작업지시 수량보다 더 큰 수를 입력할 수 없습니다"+ "</div>",
+							icon: 'info',
+							width: '300px',
+						})
+						
 						$(this).val("");
 					}
 					
@@ -207,7 +213,13 @@ body {
 				if(perform_code=="" || work_code=="" || line_code=="" || prod_code=="" || 
 						perform_date=="" || perform_qt=="" || perform_qt=="" || 
 						perform_fair=="" || perform_defect=="") {
-					alert("항목을 모두 입력하세요");
+// 					alert("항목을 모두 입력하세요");
+					Swal.fire({
+						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						icon: 'info',
+						width: '300px',
+					})
+					
 				} else {
 					$('#fr').attr("action", "/performance/add");
 					$('#fr').attr("method", "post");
@@ -325,7 +337,12 @@ body {
 						var maxVal = Number($(this).attr("max"));
 						
 						if(inserted > maxVal) {
-							alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+// 							alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+							Swal.fire({
+								title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "작업지시 수량보다 더 큰 수를 입력할 수 없습니다"+ "</div>",
+								icon: 'info',
+								width: '300px',
+							})
 							$(this).val("");
 						}
 						
@@ -444,6 +461,7 @@ body {
 						
 						Swal.fire({
 							  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+						
 									  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 							  icon: 'info', // 아이콘! 느낌표 색? 표시?
 							  showDenyButton: true,
