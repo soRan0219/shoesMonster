@@ -635,6 +635,7 @@
 				AND w.wh_dv LIKE concat('%', #{wh_dv}, '%')
 			</if>
 		</where>
+		ORDER BY wh_code desc
 		limit #{startPage}, #{pageSize}
 	</select>
 
