@@ -34,14 +34,13 @@ body {
 <!-- page content -->
 <div class="right_col" role="main">
 	
-	아이디 확인용 : ${id.emp_id } <br>
 	<h1> 출고 관리 </h1>
 	
 	
 	<!-- 버튼 제어 -->	
-	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input>
-    <input type="button" value="미출고" class="btn btn-info" onclick="show1()" id="noMat"></input>
-    <input type="button" value="출고완료" class="btn btn-info" onclick="show2()" id="yesMat"></input>
+<!-- 	<input type="button" value="전체" class="btn btn-info" onclick="showAll()"></input> -->
+<!--     <input type="button" value="미출고" class="btn btn-info" onclick="show1()" id="noMat"></input> -->
+<!--     <input type="button" value="출고완료" class="btn btn-info" onclick="show2()" id="yesMat"></input> -->
 	
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -105,6 +104,10 @@ body {
 	<hr>
 		<form action="" method="get">
 		<fieldset>
+			<button type="submit" value="" class="B B-info" name="orders.out_YN">전체</button>
+	        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" ></input> 
+	        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" ></input> 
+		
        		<label>출고 번호:</label>
         	<input type="text" name="out_num" value="" placeholder="출고 번호를 입력하세요.">
         	<label>품명:</label>
@@ -173,7 +176,7 @@ body {
 										<td class=" "><fmt:formatNumber value=" ${out.prod.prod_price}" />원</td>
 										<td class=" ">${out.orders.order_deliveryDate}</td>
 										<td class=" ">${out.out_date}</td>
-										<td class=" ">${out.out_YN}</td>
+										<td class=" ">${out.orders.out_YN}</td>
 										<td class=" ">${out.o_emp_id}</td>
 										<td class=" ">
 											<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
@@ -191,7 +194,7 @@ body {
 			</div>
 		</div>
 		<div>
-   		<c:if test="${count4 > 10 }">
+   		<c:if test="${count4 > 0 }">
 		<c:if test="${bp.prev}">
 
 		    <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>

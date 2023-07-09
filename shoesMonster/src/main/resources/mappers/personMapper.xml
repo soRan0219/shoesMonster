@@ -260,6 +260,7 @@
 			<result column="client_code" property="client_code" />
 			<result column="order_note" property="order_note" />
 			<result column="prod_code" property="prod_code" />
+			<result column="out_YN" property="out_YN" />
 	
 		<collection property="prod" ofType="com.sm.domain.ProductVO">
 			<result column="prod_name" property="prod_name" />
@@ -334,9 +335,9 @@
 	<!-- 수주 등록 -->
 	<insert id="registOrder">
 		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_id,
-					order_count, client_code, prod_code) 
+					order_count, client_code, prod_code, out_YN) 
 		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id},
-				#{order_count}, #{client_code}, #{prod_code})
+				#{order_count}, #{client_code}, #{prod_code}, "미출고")
 <!-- 		orders에 있는 값만 저장하고 나머지값은,,,받아와서 저장,,,,음,, -->
 	</insert>
 	<!-- 수주 등록 -->

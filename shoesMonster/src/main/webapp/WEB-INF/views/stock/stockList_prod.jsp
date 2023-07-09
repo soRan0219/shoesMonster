@@ -182,7 +182,7 @@ body {
 </div>     
            		
 	<div>
-	    <c:if test="${countP3 > 10 }">
+	    <c:if test="${countP3 > 0 }">
 			<c:if test="${bp.prev}">
 			    <span><a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
 			</c:if>
@@ -196,28 +196,7 @@ body {
 			</c:if>
 		</c:if>
 	</div>
-	
-	<div id="graph">
-		<h1>Stock Graph</h1>
-		<span id="wh_code" style="width: 10%; height: 10%;"></span>
-	<!-- 	<span id="wh_dv" style="width: 10%; height: 10%;"></span> -->
-	</div>
-	
-	<br>
-	
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
