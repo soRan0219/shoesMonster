@@ -126,6 +126,8 @@ body {
 	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" ></input></a>
     </div>
     
+    <hr>
+    
     <div style="margin-left: 1%;">  
 	    <form action="" method="get">
 	 		완제품 코드 : <input type="text" name="prod_code" placeholder="완제품 코드를 입력하세요">

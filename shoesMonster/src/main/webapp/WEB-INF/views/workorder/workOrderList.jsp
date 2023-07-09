@@ -691,9 +691,44 @@ body {
 		
 				<div class="x_title">
 					<h2>작업지시 관리<small>총 ${pm.totalCount } 건</small></h2>
+				
+					<div style="float: left;  margin-top: 1.5px;">
+						<c:if test="${empty param.input }">
+							<button onclick="location.href='/workorder/workOrderList'" class="B2 B2-info">↻</button>
+						</c:if>
+						<c:if test="${!empty param.input }">
+							<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B2-info">↻</button>
+						</c:if>
+					</div>
 					
-
-<%-- 					<span id="searchCnt" style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span> --%>
+				    <!-- 버튼 제어 -->
+					<div style="float: right;">
+						<button id="add" class="true B B-info">추가</button>
+						<button id="modify"class="B B-info">수정</button>
+						<button id="delete" class="true B B-info">삭제</button>
+						<button type="reset" id="cancle" class="B B-info">취소</button>
+						<button type="submit" id="save" class="B B-info">저장</button>
+					</div>	
+					<script>
+					    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+					
+					    if (team === "생산팀" || team === "관리자") {
+					        document.getElementById("add").disabled = false;
+					        document.getElementById("modify").disabled = false;
+					        document.getElementById("delete").disabled = false;
+					        document.getElementById("cancle").disabled = false;
+					        document.getElementById("save").disabled = false;
+					        document.querySelector("[onclick^='location.href']").disabled = false;
+					    } else {
+					        document.getElementById("add").hidden = true;
+					        document.getElementById("modify").hidden = true;
+					        document.getElementById("delete").hidden = true;
+					        document.getElementById("cancle").hidden = true;
+					        document.getElementById("save").hidden = true;
+					        document.querySelector("[onclick^='location.href']").hidden = true;
+					    }
+					</script>
+					<!-- 버튼 제어 -->
 
 					<div class="clearfix"></div>
 				</div>
