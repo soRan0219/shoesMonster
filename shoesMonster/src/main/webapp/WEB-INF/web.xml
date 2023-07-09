@@ -48,7 +48,7 @@
 	
 	<!-- web.xml, 단위=분 -->
     <session-config>
-        <session-timeout>10</session-timeout>
+        <session-timeout>1440</session-timeout>
     </session-config>
 
 </web-app>

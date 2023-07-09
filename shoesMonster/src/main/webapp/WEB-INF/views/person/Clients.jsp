@@ -511,11 +511,11 @@ body {
 	<div style="margin-left: 1%;">
 		<form method="get" >
 			<input type="hidden" name="input" id="input" value="${input }">
-			거래처코드
+			거래처코드 : 
 			<input type="text" name="search_client_code" id="search_client_code"> 
-			거래처명
+			거래처명 : 
 			<input type="text" name="search_client_actname" id="search_client_actname">
-			거래처구분
+			거래처구분 : 
 			<select name="search_client_type">
 				<option selected value= "전체">전체</option>
 				<option value= "발주처">발주처</option>
