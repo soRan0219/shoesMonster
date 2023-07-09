@@ -258,7 +258,7 @@ $(function() {
 		
 		// 저장 -> form 제출하고 저장함
 		$('#saveEmp').click(function() {
-			alert('저장버튼 누름');
+// 			alert('저장버튼 누름');
 			
 			var emp_id = $('#emp_id').val();
 			var emp_pw = $('#emp_pw').val();
@@ -271,7 +271,11 @@ $(function() {
 			var emp_work = $('#emp_work').val();
 			
 			if (emp_pw == "" || emp_name == "" || emp_department == "" || emp_position == "" || emp_email == "" || emp_phone == "" || emp_hiredate == "" || emp_work == "") {
-				alert("항목을 모두 입력하세요");
+			Swal.fire({
+					title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+					icon: 'info',
+					width: '300px',
+				})
 			} else {
 				$('#fr').attr("action", "/person/addEmp");
 				$('#fr').attr("method", "post");

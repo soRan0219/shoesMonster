@@ -85,9 +85,9 @@ body {
 				console.log("품목별: " + perProdArr);
 				console.log("일자별: " + perDateArr);
 				
-				drawGoogleChart("라인", perLineArr, 'chart_line');
-				drawGoogleChart("품목", perProdArr, 'chart_prod');
-				drawGoogleChart("생산일자", perDateArr, 'chart_date');
+				drawGoogleChart("라인별", perLineArr, 'chart_line');
+				drawGoogleChart("품목별", perProdArr, 'chart_prod');
+				drawGoogleChart("금일", perDateArr, 'chart_date');
 				
 			},
 			error: function() {
@@ -119,58 +119,52 @@ body {
 							bottom: 10,
 						},
 						//차트 제목
-						title: name + '별 생산실적 현황',
+						title: name + ' 생산실적 현황',
 						titlePosition: 'out',
 						titleTextStyle: {
 							fontSize: 25,
 							bold: true
 						},
-						//부제목
-//						    subtitle:'오예',
 						//차트옵션
 						chartArea: {
-							backgroundColor: '#F7F7F7',
-//								top: '50%',
-//								left: 100,
+// 							backgroundColor: '#F7F7F7',
+							backgroundColor: '#fff',
+
 							width: '90%',
 							height: '80%'
 						},
 						//배경색
-						backgroundColor: '#F7F7F7',
+// 						backgroundColor: '#F7F7F7',
+						backgroundColor: '#fff',
 						//차트 막대 색
 						colors: ['#1ABB9C', 'rgb(173, 218, 209)', 'rgb(56, 170, 145)'],
 						//줌인 뭐 이런 기능인데 적용 안되는듯
-						explorer: {
+//							explorer: {
 //								axis: 'horizontal',
-							actions: ['dragToZoom', 'rightClickToReset']
-						},
+//								actions: ['dragToZoom', 'rightClickToReset']
+//							},
 						//폰트
 						fontSize: 20,
 						fontName: 'NexonLv2Gothic',
-//							forcelFrame: true
 						//가로축
 						hAxis: {
-							title: 'Hello',
+							title: name,
 							titleTextStyle: {
-								color: '#000ccc',
+								color: 'gray',
 								fontName: 'NexonLv2Gothic',
-								fontSize: 23
+								fontSize: 15
 							},
 							textStyle: {
-								color: '#0cc',
+								color: '#000',
 								fontName: 'NexonLv2Gothic',
-								fontSize: 13
+								fontSize: 17
 							},
 							format: '#,###'
-//								viewWindowMode: 'maximized'
 						},
 						//세로축
 						vAxis: {
-							title: 'World',
 							titleTextStyle: {
-								color: '#ccc000',
-								fontName: 'NexonLv2Gothic',
-								fontSize: 23
+								fontSize: 20
 							},
 							//세로축 선(=> 가로선)
 							gridlines: {
@@ -178,30 +172,25 @@ body {
 //									minSpacing: 2
 							},
 							textStyle: {
-								color: '#c0c',
+								color: '#000',
 								fontName: 'NexonLv2Gothic',
 								fontSize: 13
 							},
 							format: '#,###'
-//								viewWindowMode: 'maximized'
 						},
 						//차트 범례 설정
 						legend: {
 							position: 'top',
 							textStyle: {
-								color: '#840F83',
-								fontSize: 16,
+								color: 'gray',
+								fontSize: 13,
 								fontName: 'NexonLv2Gothic',
 								bold: true,
 								italic: true
 							},
 							alignment: 'center'
 						},
-						//차트에 표시되는 항목별 설정
-//							series: {
-//								0: { color: 'orange'}
-//							}
-//							bars: 'horizontal'  //가로차트 옵션
+//						bars: 'horizontal'  //가로차트 옵션
 				};
 				
 				console.log(options);
@@ -213,7 +202,16 @@ body {
 			
 		} //drawGoogleChart()
 		
-
+		
+		$('ul.tabs li').click(function() {
+			var tab_id = $(this).attr('data-tab');
+			
+			$('ul.tabs li').removeClass('current');
+			$('.tab-content').removeClass('current');
+			
+			$(this).addClass('current');
+			$('#'+tab_id).addClass('current');
+		});
 		
 	}); //jQuery
     
@@ -329,7 +327,7 @@ body {
 
 
 	<!-- 애령 날씨 테스트중 ~ ~ -->
-	<script defer src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" integrity="sha384-vuFJ2JiSdUpXLKGK+tDteQZBqNlMwAjhZ3TvPaDfN9QmbPb7Q8qUpbSNapQev3YF" crossorigin="anonymous"></script>
+<!-- 	<script defer src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" integrity="sha384-vuFJ2JiSdUpXLKGK+tDteQZBqNlMwAjhZ3TvPaDfN9QmbPb7Q8qUpbSNapQev3YF" crossorigin="anonymous"></script> -->
 	<script type="text/javascript">
 		
 	var weatherIcon = {
@@ -452,7 +450,7 @@ body {
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320 overflow_hidden">
 				<div class="x_title">
-					<h2>창고별 재고 갯수 현황</h2>
+					<h2>창고별 재고 현황</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -477,7 +475,7 @@ body {
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320">
 				<div class="x_title">
-					<h2>유형별 재고 갯수 현황</h2>
+					<h2>유형별 재고 개수 현황</h2>
 					<ul class="nav navbar-right panel_toolbox">
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>

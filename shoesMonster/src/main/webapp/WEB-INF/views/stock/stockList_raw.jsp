@@ -27,7 +27,7 @@ body {
 <script type="text/javascript">
 	
 	function stockPopup(code) {
-		window.open("stockPopup?code=" + code, "재고 상세", "width=600, height=300, left=200, top=150, location=no");
+		window.open("stockPopup?code=" + code, "재고 상세", "width=700, height=300, left=200, top=150, location=no");
 	}
 	
 </script>
@@ -82,13 +82,13 @@ body {
 					 		<th>재고 수량</th>
 					 		<th>창고 코드</th>
 					 		<th>담당자</th>
-					 		<th>수정 버튼</th>
+					 		<th>실수량</th>
 					 	</tr>
 			 		</thead>
 			 	
 			 	<c:forEach var="s" items="${stock_ListR}">
 			             <tr>
-			                 <th>${s.warehouse.wh_dv}</th>
+			                 <td>${s.warehouse.wh_dv}</td>
 			                 <td>${s.raw_code}</td>
 			                 <td>${s.raw_mat.raw_name}</td>
 			                 <td>${s.raw_mat.raw_color}</td>
@@ -107,42 +107,24 @@ body {
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	      
            		
-<!-- ㅇㅇㅇㅇㅇ -->
-	<div>
-	    <c:if test="${countR3 > 0 }">
-			<c:if test="${bp.prev}">
-			    <span><a class="btn btn-secondary" href="/stock/stockList_raw?page=${bp.startPage - 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">이전</a></span>
-			</c:if>
-			
-			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-			    <a class="btn btn-secondary" href="/stock/stockList_raw?page=${idx }&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">${idx }</a>
-			</c:forEach>
-			
-			<c:if test="${bp.next && bp.endPage > 0}">
-			    <a class="btn btn-secondary" href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">다음</a>
-
-		</c:if>
-		</c:if>
-<!-- ㅇㅇㅇㅇㅇ -->
 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
-		    <c:if test="${countR3 > 10 }">
+		    <c:if test="${countR3 > 0 }">
 				<li class="paginate_button previous disabled"> 
-					<c:if test="${bp.prev}">S
-					    <span><a href="/stock/stockList_raw?page=${bp.startPage - 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">Previous</a></span>
+					<c:if test="${bp.prev}">
+					    <span><a href="/stock/stockList_raw?page=${bp.startPage - 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">이전</a></span>
 					</c:if>
 				</li>
-				<li class="paginate_button previous disabled">
+				<li class="paginate_button previous disabled"> 	
 					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-					    <a chref="/stock/stockList_raw?page=${idx }&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">${idx }</a>
+					    <a href="/stock/stockList_raw?page=${idx }&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">${idx }</a>
 					</c:forEach>
 				</li>
-				<li class="paginate_button previous disabled">
+				<li class="paginate_button previous disabled"> 
 					<c:if test="${bp.next && bp.endPage > 0}">
-					    <a href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">Next</a>
+					    <a href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">다음</a>
 					</c:if>
 				</li>
-<!-- ㅇㅇㅇㅇㅇ -->
 			</c:if>
 		</ul>
 	</div>
