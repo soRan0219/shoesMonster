@@ -34,7 +34,7 @@ body {
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	
-	    if (team === "물류팀" || team === "관리자") {
+	    if (team === "자재팀" || team === "관리자") {
 	        document.getElementById("inMatN").disabled = false;
 	        document.getElementById("inMatY").disabled = false;
 	    } else {
