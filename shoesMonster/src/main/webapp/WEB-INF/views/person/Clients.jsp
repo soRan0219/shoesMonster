@@ -18,7 +18,7 @@
 <c:if test="${empty sessionScope.id}">
     <c:redirect url="/smmain/smMain" />
 </c:if>
-
+ 
 <style type="text/css">
 
 

@@ -22,7 +22,7 @@
 body {
 	font-family: 'NexonLv2Gothic';
 }
-</style>
+</style> 
 <!-- 폰트 -->
 
 <script type="text/javascript">

@@ -16,7 +16,7 @@
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
-
+ 
 <c:if test="${empty sessionScope.id}">
     <c:redirect url="/smmain/smMain" />
 </c:if>

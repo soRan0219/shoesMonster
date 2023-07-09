@@ -28,8 +28,6 @@ body {
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-
-		
 		$("#modify").click(function() {
 			
 			var obj = {
