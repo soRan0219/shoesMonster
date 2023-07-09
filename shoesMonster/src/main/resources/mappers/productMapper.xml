@@ -435,7 +435,11 @@
 		select l.* , e.emp_name
 		from line l
 		Left join employees e on l.emp_id = e.emp_id 
-		ORDER BY l.line_place, l.line_code 
+		ORDER BY CASE
+			WHEN line_place = '1차공정' THEN 1
+			WHEN line_place = '2차공정' THEN 2
+			WHEN line_place = '3차공정' THEN 3
+			END, 1 desc
 	</select>
 	<!-- 라인 목록 조회 -->
 
@@ -445,7 +449,11 @@
 			select l.* , e.emp_name
 			from line l
 			Left join employees e on l.emp_id = e.emp_id 
- 			ORDER BY l.line_place, l.line_code 
+ 			ORDER BY CASE
+			WHEN line_place = '1차공정' THEN 1
+			WHEN line_place = '2차공정' THEN 2
+			WHEN line_place = '3차공정' THEN 3
+			END, 1 desc
 			limit #{startPage}, #{pageSize}
 		]]>
 	</select>
@@ -467,7 +475,7 @@
 			<if test="line_name != ''">
 				AND line_name LIKE concat('%', #{line_name},'%')
 			</if>
-			<if test="line_place != ''">
+			<if test="line_place != '' and line_place !='전체'">
 				AND line_place LIKE concat('%', #{line_place},'%')
 			</if>
 			<if test="line_use != 3">
@@ -489,14 +497,18 @@
 			<if test="line_name != ''">
 				AND line_name LIKE CONCAT('%', #{line_name}, '%')
 			</if>
-			<if test="line_place != ''">
+			<if test="line_place != '' and line_place !='전체'">
 				AND line_place LIKE CONCAT('%', #{line_place}, '%')
 			</if>
 			<if test="line_use != 3"> <!-- 개중요했음!!! -->
 				AND line_use = #{line_use}
 			</if>
 		</where>
-		ORDER BY line_place, line_code
+		ORDER BY CASE
+			WHEN line_place = '1차공정' THEN 1
+			WHEN line_place = '2차공정' THEN 2
+			WHEN line_place = '3차공정' THEN 3
+			END, 1 desc
 		limit #{startPage}, #{pageSize}
 	</select>
 
@@ -619,10 +631,11 @@
 			<if test="emp_id != null and emp_id != ''">
 				AND w.emp_id LIKE concat('%', #{emp_id}, '%')
 			</if>
-			<if test="wh_dv != null and wh_dv != ''">
+			<if test="wh_dv != null and wh_dv != '' and wh_dv !='전체'">
 				AND w.wh_dv LIKE concat('%', #{wh_dv}, '%')
 			</if>
 		</where>
+		ORDER BY wh_code desc
 		limit #{startPage}, #{pageSize}
 	</select>
 
@@ -648,7 +661,7 @@
 			<if test="emp_id != null and emp_id != ''">
 				AND emp_id LIKE concat('%', #{emp_id}, '%')
 			</if>
-			<if test="wh_dv != null and wh_dv != ''">
+			<if test="wh_dv != null and wh_dv != '' and wh_dv !='전체'">
 				AND wh_dv LIKE concat('%', #{wh_dv}, '%')
 			</if>
 		</where>

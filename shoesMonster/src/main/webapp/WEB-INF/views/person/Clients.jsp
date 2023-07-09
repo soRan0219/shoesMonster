@@ -24,6 +24,43 @@
 body {
 	font-family: 'NexonLv2Gothic';
 }
+
+/* 셀렉트 옵션을 가로로 나열하여 버튼으로 꾸미기 위한 스타일 */
+  .custom-select {
+    display: flex;
+  }
+
+  .custom-select select {
+    display: none;
+  }
+
+  .custom-select button {
+    flex: 1;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #000;
+    transition: background-color 0.3s;
+  }
+
+  .custom-select button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    background-image: none;
+  }
+
+
+
 </style>
 <!-- 폰트 -->
 
@@ -518,17 +555,40 @@ body {
 
 	<div style="margin-left: 1%;">
 		<form method="get" >
+			
+			
+			<div class="custom-select">
+				<select name="search_client_type">
+					<option value="전체" ${search.search_client_type == null ? 'selected' : ''}>전체</option>
+					<option value="수주처" ${search.search_client_type == '수주처' ? 'selected' : ''}>수주처</option>
+					<option value="발주처" ${search.search_client_type == '발주처' ? 'selected' : ''}>"발주처"</option>
+				</select>
+					
+				<button onclick="selectOption(0)">전체</button>
+				<button onclick="selectOption(1)">수주처</button>
+				<button onclick="selectOption(2)">"발주처"</button>
+			</div>
+
+			<script>
+			  function selectOption(index) {
+			    var select = document.querySelector('.custom-select select');
+			    select.selectedIndex = index;
+			    select.dispatchEvent(new Event('change'));
+			  }
+			</script>
+		
+		
 			<input type="hidden" name="input" id="input" value="${input }">
 			거래처코드 : 
 			<input type="text" name="search_client_code" id="search_client_code"> 
 			거래처명 : 
 			<input type="text" name="search_client_actname" id="search_client_actname">
 			거래처구분 : 
-			<select name="search_client_type">
-				<option selected value= "전체">전체</option>
-				<option value= "발주처">발주처</option>
-				<option value= "수주처">수주처</option>
-			</select> 
+<!-- 			<select name="search_client_type"> -->
+<!-- 				<option selected value= "전체">전체</option> -->
+<!-- 				<option value= "발주처">발주처</option> -->
+<!-- 				<option value= "수주처">수주처</option> -->
+<!-- 			</select>  -->
 			<input type="submit" class="B B-info" value="조회">
 		</form>
 	</div>
