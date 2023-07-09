@@ -120,9 +120,9 @@ body {
 		<input type="submit" value="미입고" class="B B-info" name="in_YN" ></input> 
         <input type="submit" value="입고완료" class="B B-info" name="in_YN" ></input> 
 		<hr>
-		<label>품명</label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요">
-		<label>입고 번호</label> <input type="text" name="in_mat.in_num" placeholder="입고 번호를 입력해주세요">
-		<label>거래처명</label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요">
+		<label>품명 : </label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요">
+		<label>입고 번호 : </label> <input type="text" name="in_mat.in_num" placeholder="입고 번호를 입력해주세요">
+		<label>거래처명 : </label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요">
 		<input type="submit" class="B B-info" value="검색">
 		
 	</form>
@@ -209,10 +209,9 @@ body {
 						</div>
 						
 					</form>
-					<br>
 
 	<!-- 엑셀 - 시작 -->
-	<button id="excelDownload">엑셀 다운로드</button>
+	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 	
 	<script type="text/javascript">
 	function getToday() {

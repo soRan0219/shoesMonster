@@ -116,21 +116,20 @@ body {
     }
 
 </script>	
-	<hr>
 
 	<form method="get" style="margin-left: 1%;">
 		<fieldset>
 			<button type="submit" value="" class="B B-info" name="orders.out_YN">전체</button>
 	        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" ></input> 
 	        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" ></input> 
-		
+			<hr>
        		<label>출고 번호:</label>
         	<input type="text" name="out_num" value="" placeholder="출고 번호를 입력하세요.">
         	<label>품명:</label>
         	<input type="text" name="prod.prod_name" value="" placeholder="품명을 입력하세요.">
         	<label>거래처명:</label>
         	<input type="text" name="clients.client_actname" value="" placeholder="거래처명을 입력하세요."> 
-        	<input type="submit" class="btn btn-info" value="검색">
+        	<input type="submit" class="B B-info" value="검색">
 		</fieldset>
 	</form>
 
@@ -204,70 +203,70 @@ body {
 					</form>
 					
 					<!-- 엑셀 - 시작 -->
-	<button id="excelDownload">엑셀 다운로드</button>
-	
-	<script type="text/javascript">
-	function getToday() {
-		var date = new Date();
-		
-		var year = date.getFullYear();
-		var month = ("0" + (1 + date.getMonth())).slice(-2);
-		var day = ("0" + date.getDate()).slice(-2);
-		
-		return year + "-" + month + "-" + day;
-	} //getToday()
-	
-	
-        //엑셀
-        const excelDownload = document.querySelector('#excelDownload');
-        
-        document.addEventListener('DOMContentLoaded', ()=> {
-            excelDownload.addEventListener('click', exportExcel);
-        });
-        
-        function exportExcel() {
-            //1. workbook 생성
-            var wb = XLSX.utils.book_new();
-            
-            //2. 시트 만들기
-            var newWorksheet = excelHandler.getWorksheet();
-            
-            //3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
-            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-            
-            //4. 엑셀 파일 만들기
-            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
-            
-            //5. 엑셀 파일 내보내기
-            saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
-            
-        } //exportExcel()
-        
-        var excelHandler = {
-            getExcelFileName : function() {
-                return 'performanceList'+getToday()+'.xlsx'; //파일명
-            },
-            getSheetName : function() {
-                return 'Performance Sheet'; //시트명
-            },
-            getExcelData : function() {
-                return document.getElementById('data-table'); //table id
-            },
-            getWorksheet : function() {
-                return XLSX.utils.table_to_sheet(this.getExcelData());
-            }
-        } //excelHandler
-        
-        function s2ab(s) {
-            var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-            var view = new Uint8Array(buf);  
-            for(var i=0; i<s.length; i++) {
-                view[i] = s.charCodeAt(i) & 0xFF;
-            }
-            return buf;
-        } //s2ab(s)
-    </script>
-    <!-- 엑셀 - 끝 -->
+					<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
+					
+					<script type="text/javascript">
+					function getToday() {
+						var date = new Date();
+						
+						var year = date.getFullYear();
+						var month = ("0" + (1 + date.getMonth())).slice(-2);
+						var day = ("0" + date.getDate()).slice(-2);
+						
+						return year + "-" + month + "-" + day;
+					} //getToday()
+					
+					
+				        //엑셀
+				        const excelDownload = document.querySelector('#excelDownload');
+				        
+				        document.addEventListener('DOMContentLoaded', ()=> {
+				            excelDownload.addEventListener('click', exportExcel);
+				        });
+				        
+				        function exportExcel() {
+				            //1. workbook 생성
+				            var wb = XLSX.utils.book_new();
+				            
+				            //2. 시트 만들기
+				            var newWorksheet = excelHandler.getWorksheet();
+				            
+				            //3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+				            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+				            
+				            //4. 엑셀 파일 만들기
+				            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+				            
+				            //5. 엑셀 파일 내보내기
+				            saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+				            
+				        } //exportExcel()
+				        
+				        var excelHandler = {
+				            getExcelFileName : function() {
+				                return 'performanceList'+getToday()+'.xlsx'; //파일명
+				            },
+				            getSheetName : function() {
+				                return 'Performance Sheet'; //시트명
+				            },
+				            getExcelData : function() {
+				                return document.getElementById('data-table'); //table id
+				            },
+				            getWorksheet : function() {
+				                return XLSX.utils.table_to_sheet(this.getExcelData());
+				            }
+				        } //excelHandler
+				        
+				        function s2ab(s) {
+				            var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+				            var view = new Uint8Array(buf);  
+				            for(var i=0; i<s.length; i++) {
+				                view[i] = s.charCodeAt(i) & 0xFF;
+				            }
+				            return buf;
+				        } //s2ab(s)
+				    </script>
+				    <!-- 엑셀 - 끝 -->
 					
 				</div>
 			</div>
