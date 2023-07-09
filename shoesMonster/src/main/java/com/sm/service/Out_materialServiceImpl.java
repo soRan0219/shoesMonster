@@ -68,6 +68,12 @@ public class Out_materialServiceImpl implements Out_materialService{
 		
 	}
 
+	@Override
+	public void updateYN(String order_code) throws Exception {
+		o_dao.updateYN(order_code);
+		
+	}
+
 	
 	
 }

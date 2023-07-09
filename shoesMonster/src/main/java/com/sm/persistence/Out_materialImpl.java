@@ -102,7 +102,7 @@ public class Out_materialImpl implements Out_materialDAO {
 		data.put("out_num", rvo.getOut_num());
 		data.put("prod_name", rvo.getProd().getProd_name());
 		data.put("client_actname", rvo.getClients().getClient_actname());
-		
+		data.put("out_YN", rvo.getOrders().getOut_YN());
 		
 		return sqlSession.selectOne(NAMESPACE+".searchCount4", data);
 	}
@@ -115,6 +115,7 @@ public class Out_materialImpl implements Out_materialDAO {
 		data.put("out_num", rvo.getOut_num());
 		data.put("prod_name", rvo.getProd().getProd_name());
 		data.put("client_actname", rvo.getClients().getClient_actname());
+		data.put("out_YN", rvo.getOrders().getOut_YN());
 		data.put("startPage", vo.getStartPage());
 		data.put("pageSize", vo.getPageSize());
 		
@@ -133,6 +134,14 @@ public class Out_materialImpl implements Out_materialDAO {
 
     }
 
+	@Override
+	public void updateYN(String order_code) throws Exception {
+		
+		sqlSession.update(NAMESPACE + ".update_out_YN", order_code);
+		
+	}
+
+	
 	
 	
 	
