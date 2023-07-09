@@ -11,6 +11,10 @@
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+
 <style type="text/css">
 
 body {
@@ -34,7 +38,7 @@ body {
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	
-	    if (team === "물류팀" || team === "관리자") {
+	    if (team === "자재팀" || team === "관리자") {
 	        document.getElementById("inMatN").disabled = false;
 	        document.getElementById("inMatY").disabled = false;
 	    } else {
@@ -87,34 +91,21 @@ body {
 			}
 		}
 		
-		function go() {
-			alert("입고 처리가 완료되었습니다.");
+
+		function go(raw_name,raw_order_count) {
+// 			alert("입고 처리가 완료되었습니다.");
+			Swal.fire({
+				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 입고 처리가 되었습니다."+ "</div>",
+				icon: 'success',
+				width: '300px',
+			})
+
 		}
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-// 		 function confirm() {
-// 			        event.preventDefault();
-// 			        Swal.fire({
-// 			              title: '입고 완료되었습니다.',
-// 			              icon: 'success',
-// 			            }).then((result) => {
-// 			              if (result.isConfirmed) {
-// 			                 document.querySelector('fr').submit();
-// 			              }
-// 			            });
-			        	
-//     }
 	</script>
 
-
-
-
-	<!-- 	입고 번호 <input type="text" valeu="in_num" placeholder="입고 번호를 입력하세요."> -->
-	<!-- 	거래처명 <input type="text"  valeu="clien_name" placeholder="거래처명을 입력하세요."> -->
-	<!-- 	품명 <input type="text" valeu="raw_name" placeholder="품명을 입력하세요."> -->
-	<!-- 	입고 날짜 <input type="date"> ~ <input type="date"> -->
-	<!-- 	<button type="submit">검색</button> -->
 
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -180,6 +171,7 @@ body {
 								</tr>
 							</thead>
 							<tbody>
+							<c:if test="${count1 > 0}">
 								<c:forEach var="rvo" items="${ro_List }">
 									<tr class="even pointer">
 										<td class=" ">${rvo.in_mat.in_num }</td>
@@ -200,17 +192,91 @@ body {
 										<td class=" ">
 										<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 											<c:if test="${rvo.in_mat.in_num == null}">
-												<button type="submit" name="in_Button" onclick="go()" class="B B-info" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+												<button type="submit" name="in_Button" onclick="go('${rvo.rawMaterial.raw_name }','${rvo.raw_order_count}')" class="B B-info" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
 											</c:if>
 										</c:if>
 										</td>
 									</tr>
+									
 								</c:forEach>
+								</c:if>
 							</tbody>
 						</table>
+						<div style="text-align: center;">
+							<c:if test="${count1 == 0}">
+								해당되는 항목이 없습니다.
+							</c:if>
+						</div>
+						
 					</form>
+					<br>
 
-				
+	<!-- 엑셀 - 시작 -->
+	<button id="excelDownload">엑셀 다운로드</button>
+	
+	<script type="text/javascript">
+	function getToday() {
+		var date = new Date();
+		
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		
+		return year + "-" + month + "-" + day;
+	} //getToday()
+	
+	
+        //엑셀
+        const excelDownload = document.querySelector('#excelDownload');
+        
+        document.addEventListener('DOMContentLoaded', ()=> {
+            excelDownload.addEventListener('click', exportExcel);
+        });
+        
+        function exportExcel() {
+            //1. workbook 생성
+            var wb = XLSX.utils.book_new();
+            
+            //2. 시트 만들기
+            var newWorksheet = excelHandler.getWorksheet();
+            
+            //3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+            
+            //4. 엑셀 파일 만들기
+            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+            
+            //5. 엑셀 파일 내보내기
+            saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+            
+        } //exportExcel()
+        
+        var excelHandler = {
+            getExcelFileName : function() {
+                return 'performanceList'+getToday()+'.xlsx'; //파일명
+            },
+            getSheetName : function() {
+                return 'Performance Sheet'; //시트명
+            },
+            getExcelData : function() {
+                return document.getElementById('data-table'); //table id
+            },
+            getWorksheet : function() {
+                return XLSX.utils.table_to_sheet(this.getExcelData());
+            }
+        } //excelHandler
+        
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+            var view = new Uint8Array(buf);  
+            for(var i=0; i<s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xFF;
+            }
+            return buf;
+        } //s2ab(s)
+    </script>
+    <!-- 엑셀 - 끝 -->
+	
 
 				</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
@@ -242,7 +308,14 @@ body {
             </c:if>
          </ul>
       </div>
+      
+      
+      
   </div>
+	
+	
+	
+	
 	
 </div>
 

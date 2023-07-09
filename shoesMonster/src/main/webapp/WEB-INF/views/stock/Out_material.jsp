@@ -6,6 +6,12 @@
     
 <%@ include file="../include/header.jsp"%>
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweetalert -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
 
@@ -27,8 +33,13 @@ body {
 <script type="text/javascript">
 	function checkStock(orderCount, stockCount) {
 	    if (orderCount > stockCount) {
-	        alert("재고 수량이 부족합니다. 물량을 확인해 주세요.");
-	        return false;
+// 	        alert("재고 수량이 부족합니다. 물량을 확인해 주세요.");
+     	Swal.fire({
+			title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "재고 수량이 부족합니다 \n 물량을 확인해 주세요"+ "</div>",
+			icon: 'warning',
+			width: '300px',
+		})
+			return false;
 	    } 
 	}
 </script>
@@ -49,7 +60,7 @@ body {
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	
-	    if (team === "물류팀" || team === "관리자") {
+	    if (team === "자재팀" || team === "관리자") {
 	        document.getElementById("noMat").disabled = false;
 	        document.getElementById("yesMat").disabled = false;
 	    } else {
@@ -151,12 +162,13 @@ body {
 									<th class="column-title">납품가</th>
 									<th class="column-title">납품예정일</th>
 									<th class="column-title">출고 날짜</th>
-									<th class="column-title">출고 여부</th>
 									<th class="column-title">담당자</th>
+									<th class="column-title">출고 여부</th>
 									<th class="column-title">출고 처리</th>
 								</tr>
 							</thead>
 							<tbody>
+							<c:if test="${count4 > 0}">
 								<c:forEach var="out" items="${out_List }">
 									<tr class="even pointer">
 										<td class=" ">${out.out_num}</td>
@@ -170,8 +182,8 @@ body {
 										<td class=" "><fmt:formatNumber value=" ${out.prod.prod_price}" />원</td>
 										<td class=" ">${out.orders.order_deliveryDate}</td>
 										<td class=" ">${out.out_date}</td>
-										<td class=" ">${out.orders.out_YN}</td>
 										<td class=" ">${out.o_emp_id}</td>
+										<td class=" ">${out.orders.out_YN}</td>
 										<td class=" ">
 											<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 												<c:if test="${out.out_num == null}">
@@ -181,9 +193,82 @@ body {
 										</td>
 									</tr>
 								</c:forEach>
+								</c:if>
 							</tbody>
 						</table>
+						<div style="text-align: center;">
+							<c:if test="${count4 == 0}">
+								해당되는 항목이 없습니다.
+							</c:if>
+						</div>
 					</form>
+					
+					<!-- 엑셀 - 시작 -->
+	<button id="excelDownload">엑셀 다운로드</button>
+	
+	<script type="text/javascript">
+	function getToday() {
+		var date = new Date();
+		
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		
+		return year + "-" + month + "-" + day;
+	} //getToday()
+	
+	
+        //엑셀
+        const excelDownload = document.querySelector('#excelDownload');
+        
+        document.addEventListener('DOMContentLoaded', ()=> {
+            excelDownload.addEventListener('click', exportExcel);
+        });
+        
+        function exportExcel() {
+            //1. workbook 생성
+            var wb = XLSX.utils.book_new();
+            
+            //2. 시트 만들기
+            var newWorksheet = excelHandler.getWorksheet();
+            
+            //3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+            
+            //4. 엑셀 파일 만들기
+            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+            
+            //5. 엑셀 파일 내보내기
+            saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+            
+        } //exportExcel()
+        
+        var excelHandler = {
+            getExcelFileName : function() {
+                return 'performanceList'+getToday()+'.xlsx'; //파일명
+            },
+            getSheetName : function() {
+                return 'Performance Sheet'; //시트명
+            },
+            getExcelData : function() {
+                return document.getElementById('data-table'); //table id
+            },
+            getWorksheet : function() {
+                return XLSX.utils.table_to_sheet(this.getExcelData());
+            }
+        } //excelHandler
+        
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+            var view = new Uint8Array(buf);  
+            for(var i=0; i<s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xFF;
+            }
+            return buf;
+        } //s2ab(s)
+    </script>
+    <!-- 엑셀 - 끝 -->
+					
 				</div>
 			</div>
 		</div>

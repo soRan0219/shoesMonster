@@ -169,8 +169,10 @@ function popUp() {
 $(function(){
 	
 	//테이블 항목들 인덱스 부여
-	$('table tr').each(function(index) {
-		$(this).find('td:first').text(index);
+	$('table tr').each(function(index){
+			var num = "<c:out value='${pvo.page}'/>";
+			var num2 = "<c:out value='${pvo.pageSize}'/>";
+			$(this).find('td:first').text(((num-1)*num2) + index);
 	});
 	
 	popUp();
@@ -291,7 +293,13 @@ $(function(){
 			if(order_code == "" || client_code == "" || order_date == "" ||
 			   emp_name == "" || prod_code == "" || prod_name == "" || prod_unit == "" 
 			   || order_deliveryDate== "" || order_count == "" ){
-				alert("항목을 모두 입력하세요");
+			
+				Swal.fire({
+					title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+					icon: 'info',
+					width: '300px',
+				})
+			
 			}else{
 				$('#fr').attr("action", "/person/addOrder");
 				$('#fr').attr("method", "POST");

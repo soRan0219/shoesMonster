@@ -722,6 +722,7 @@ public class PerfomanceController {
 			model.addAttribute("search", search);
 			model.addAttribute("perfList", perfList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo",pvo);
 			
 		} 
 		//검색 없을 때
@@ -738,6 +739,7 @@ public class PerfomanceController {
 			
 			model.addAttribute("perfList", perfList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo",pvo);
 		}
 		
 		logger.debug("@@@@@ CONTROLLER: perfList = " + perfList);

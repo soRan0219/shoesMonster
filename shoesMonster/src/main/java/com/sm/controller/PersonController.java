@@ -92,6 +92,7 @@ public class PersonController {
 			model.addAttribute("search", search);
 			model.addAttribute("empList", empList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo", cpvo);
 			
 			// 혜림 추가(등록시 팝업)
 			if (input != null && !input.equals("")) {
@@ -110,6 +111,7 @@ public class PersonController {
 			
 			model.addAttribute("empList", empList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo", cpvo);
 		}// else(모두)
 	}// empInfoGET()
 	
@@ -360,6 +362,7 @@ public class PersonController {
 			model.addAttribute("search", search);
 			model.addAttribute("searchClientsList", searchClientsList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo", cpvo);
 			
 
 			if(input != null && !input.equals("")) {
@@ -379,6 +382,7 @@ public class PersonController {
 			
 			model.addAttribute("searchClientsList", searchClientsList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo", cpvo);
 			
 
 			if(input != null && !input.equals("")) {
@@ -482,6 +486,7 @@ public class PersonController {
 			model.addAttribute("searchOrderStatusList", searchOrderStatusList);
 			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@orderStatusList : "+searchOrderStatusList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo", cpvo);
 			
 			
 			if(input != null && !input.equals("")) {
@@ -499,6 +504,7 @@ public class PersonController {
 			
 			model.addAttribute("searchOrderStatusList", searchOrderStatusList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo", cpvo);
 			
 			if(input != null && !input.equals("")) {
 				model.addAttribute("input", input);

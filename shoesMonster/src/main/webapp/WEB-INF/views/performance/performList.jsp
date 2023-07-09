@@ -95,7 +95,9 @@ body {
 		
 		//테이블 항목들 인덱스 부여
 		$('table tr').each(function(index){
-			$(this).find('td:first').text(index);
+			var num = "<c:out value='${pvo.page}'/>";
+			var num2 = "<c:out value='${pvo.pageSize}'/>";
+			$(this).find('td:first').text(((num-1)*num2) + index);
 		});
 		
 		
@@ -179,7 +181,13 @@ body {
 					var maxVal = Number($(this).attr("max"));
 					
 					if(inserted > maxVal) {
-						alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+// 						alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+						Swal.fire({
+							title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "작업지시 수량보다 더 큰 수를 입력할 수 없습니다"+ "</div>",
+							icon: 'info',
+							width: '300px',
+						})
+						
 						$(this).val("");
 					}
 					
@@ -205,7 +213,13 @@ body {
 				if(perform_code=="" || work_code=="" || line_code=="" || prod_code=="" || 
 						perform_date=="" || perform_qt=="" || perform_qt=="" || 
 						perform_fair=="" || perform_defect=="") {
-					alert("항목을 모두 입력하세요");
+// 					alert("항목을 모두 입력하세요");
+					Swal.fire({
+						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						icon: 'info',
+						width: '300px',
+					})
+					
 				} else {
 					$('#fr').attr("action", "/performance/add");
 					$('#fr').attr("method", "post");
@@ -323,7 +337,12 @@ body {
 						var maxVal = Number($(this).attr("max"));
 						
 						if(inserted > maxVal) {
-							alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+// 							alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
+							Swal.fire({
+								title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "작업지시 수량보다 더 큰 수를 입력할 수 없습니다"+ "</div>",
+								icon: 'info',
+								width: '300px',
+							})
 							$(this).val("");
 						}
 						
@@ -442,6 +461,7 @@ body {
 						
 						Swal.fire({
 							  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+						
 									  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 							  icon: 'info', // 아이콘! 느낌표 색? 표시?
 							  showDenyButton: true,
@@ -531,16 +551,19 @@ body {
 
 		//지시일자 이날부터
 		$('#search_fromDate').datepicker({
-			changeMonth:'true',
-			changeYear:'true',
+			showOn: 'focus',
+			changeMonth:false,
+			changeYear:false,
 			nextText:'다음달',
 			prevText:'이전달',
 			showButtonPanel:'true',
 			currentText:'오늘',
 			closeText:'닫기',
 			dateFormat:'yy-mm-dd',
+			yearSuffix: '년',
 			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			onSelect: function(date, inst) {
 				$('#search_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
@@ -548,16 +571,19 @@ body {
 		});
 		//이날까지
 		$('#search_toDate').datepicker({
-			changeMonth:'true',
-			changeYear:'true',
+			showOn: 'focus',
+			changeMonth:false,
+			changeYear:false,
 			nextText:'다음달',
 			prevText:'이전달',
 			showButtonPanel:'true',
 			currentText:'오늘',
 			closeText:'닫기',
 			dateFormat:'yy-mm-dd',
+			yearSuffix: '년',
 			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 		});
 		
@@ -648,18 +674,18 @@ body {
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 				작업지시코드 : <input type="text" id="search_work_code" name="search_work_code">
 				실적일 : 
-				<input type="text" id="search_fromDate" name="search_fromDate"> ~ 
-				<input type="text" id="search_toDate" name="search_toDate">
+				<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off"> ~ 
+				<input type="text" id="search_toDate" name="search_toDate" autocomplete="off">
 				<br><br>
 				라인코드 : <input type="text" id="search_line_code" name="search_line_code">
 				품번 : <input type="text" id="search_prod_code" name="search_prod_code">
+				<input type="submit" class="B B-info" value="조회">
 				<br>
 				<div style="margin-top: 0.5%;">
 					현황 : <input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
 						  <input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
 						  <input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
 				</div>
-				<input type="submit" class="B B-info" value="조회">
 			</fieldset>
 		</form>
 	</div>
@@ -842,6 +868,9 @@ body {
 	</ul>
 </div>
 	
+	<br><br><br><br><br><br><br><br><br>
+	
+	
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -861,7 +890,6 @@ body {
 	</div>
 	<!-- 상세보기 모달창 -->
 	
-	<br><br><br><br><br><br><br><br><br>
 	
 	<script type="text/javascript">
 	
@@ -938,15 +966,17 @@ body {
 					
 					// Set chart options
 					var options = {
-							width: 800,
+							width: 1000,
 							height: 500,
+// 							width: '80%',
+// 							height: '100%',
 							padding: {
-								top: 10,
+								top: 20,
 								bottom: 10,
 							},
 							//차트 제목
 							title: name + '별 생산실적 현황',
-							titlePosition: 'out',
+							titlePosition: 'in',
 							titleTextStyle: {
 								fontSize: 25,
 								bold: true
@@ -1062,5 +1092,6 @@ body {
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="stylesheet" href="/resources/forTest/sm.css">
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/forTest/performStatus.css"> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/forTest/datepicker.css"> 

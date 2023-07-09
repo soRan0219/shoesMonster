@@ -149,9 +149,11 @@ body {
 	$(function() {
 		
 		//테이블 항목들 인덱스 부여
-		$('table tr').each(function(index) {
-			$(this).find('td:first').text(index);
-		});
+		$('table tr').each(function(index){
+			var num = "<c:out value='${pvo.page}'/>";
+			var num2 = "<c:out value='${pvo.pageSize}'/>";
+			$(this).find('td:first').text(((num-1)*num2) + index);
+	});
 		
 		
 		popUp();			
@@ -229,7 +231,12 @@ body {
 				var work_qt = $('#work_qt').val();
 
 				if (prod_code == "" || order_code == "" || work_qt == "") {
-					alert("항목을 모두 입력하세요");
+// 					alert("항목을 모두 입력하세요");
+					Swal.fire({
+						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						icon: 'info',
+						width: '300px',
+					})
 				} else {
 					$('#fr').attr("action", "/workorder/add");
 					$('#fr').attr("method", "post");
@@ -556,16 +563,19 @@ body {
 
 		//지시일자 이날부터
 		$('#search_fromDate').datepicker({
-			changeMonth:'true',
-			changeYear:'true',
+			showOn: 'focus',
+			changeMonth:false,
+			changeYear:false,
 			nextText:'다음달',
 			prevText:'이전달',
 			showButtonPanel:'true',
 			currentText:'오늘',
 			closeText:'닫기',
 			dateFormat:'yy-mm-dd',
+			yearSuffix: '년',
 			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			onSelect: function(date, inst) {
 				$('#search_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
@@ -574,16 +584,19 @@ body {
 		
 		//이날까지
 		$('#search_toDate').datepicker({
-			changeMonth:'true',
-			changeYear:'true',
+			showOn: 'focus',
+			changeMonth:false,
+			changeYear:false,
 			nextText:'다음달',
 			prevText:'이전달',
 			showButtonPanel:'true',
 			currentText:'오늘',
 			closeText:'닫기',
 			dateFormat:'yy-mm-dd',
+			yearSuffix: '년',
 			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 		});
 		
@@ -667,8 +680,8 @@ body {
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 				<span>라인코드 : </span> <input type="text" name="search_line" id="search_line" class="searchInputText"> 
 				<span>지시일자 : </span> 
-					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText"> ~ 
-					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText"> 
+					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off"> ~ 
+					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off"> 
 				<span>품번 : </span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
 				<input type="submit" value="조회" class="B B-info"> 
 				<br><br>
@@ -895,3 +908,4 @@ body {
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/forTest/sm.css"> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/forTest/datepicker.css"> 

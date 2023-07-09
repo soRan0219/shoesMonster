@@ -148,8 +148,10 @@ $(function() {
 	// ============== 버튼 ==============
 	
 	//테이블 항목들 인덱스 부여
-	$('table tr').each(function(index) {
-		$(this).find('td:first').text(index);
+	$('table tr').each(function(index){
+			var num = "<c:out value='${pvo.page}'/>";
+			var num2 = "<c:out value='${pvo.pageSize}'/>";
+			$(this).find('td:first').text(((num-1)*num2) + index);
 	});
 	
 	// 혦넣
@@ -256,7 +258,7 @@ $(function() {
 		
 		// 저장 -> form 제출하고 저장함
 		$('#saveEmp').click(function() {
-			alert('저장버튼 누름');
+// 			alert('저장버튼 누름');
 			
 			var emp_id = $('#emp_id').val();
 			var emp_pw = $('#emp_pw').val();
@@ -269,7 +271,11 @@ $(function() {
 			var emp_work = $('#emp_work').val();
 			
 			if (emp_pw == "" || emp_name == "" || emp_department == "" || emp_position == "" || emp_email == "" || emp_phone == "" || emp_hiredate == "" || emp_work == "") {
-				alert("항목을 모두 입력하세요");
+			Swal.fire({
+					title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+					icon: 'info',
+					width: '300px',
+				})
 			} else {
 				$('#fr').attr("action", "/person/addEmp");
 				$('#fr').attr("method", "post");
@@ -487,6 +493,8 @@ $(function() {
 	color: white;
 }
 
+
+
 </style>
 
 <%-- ${sessionScope.id.emp_department } --%>
@@ -567,26 +575,25 @@ $(function() {
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-<%-- 				<p>&nbsp;&nbsp;발주 테이블 <code>Shoes Monseter</code> since 2023 </p> --%>
+					<%-- <p>&nbsp;&nbsp;발주 테이블 <code>Shoes Monseter</code> since 2023 </p> --%>
 					<div class="table-responsive">
-						<div>
 						<form id = "fr">
 							<table class="table table-striped jambo_table bulk_action" style="text-align:center">
-								<colgroup>
-								    <col style="width: 50px">
-								    <col style="width: 100px">
-								    <col style="width: 100px"> 
-								    <col style="width: 75px">
-								    <col style="width: 75px">
-								    <col style="width: 75px">
-								    <col style="width: 150px">
-								    <col style="width: 150px">
-								    <col style="width: 100px">
-								    <col style="width: 75px">
-								    <col style="width: 75px">
-								</colgroup>
+//								<colgroup>
+//								    <col style="width: 50px">
+//								    <col style="width: 100px">
+//								    <col style="width: 100px"> 
+//								    <col style="width: 75px">
+//								    <col style="width: 75px">
+//								    <col style="width: 75px">
+//								    <col style="width: 150px">
+//								    <col style="width: 150px">
+//								    <col style="width: 100px">
+//								    <col style="width: 75px">
+//								    <col style="width: 75px">
+//								</colgroup>
 								<tr id=titlebg>
-									<th>번호</th>
+									<th>번</th>
 									<th>사원번호</th>
 									<th>비밀번호</th>
 									<th>사원명</th>
@@ -619,7 +626,6 @@ $(function() {
 								</c:forEach>
 							</table>
 						</form>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -649,7 +655,6 @@ $(function() {
 		
 		<!-- 페이징 -->
 		
-	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
 		<div class="modal-dialog modal-lg">

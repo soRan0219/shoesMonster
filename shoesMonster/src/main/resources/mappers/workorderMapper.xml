@@ -68,7 +68,7 @@
 	<sql id="selectLine">
 		(SELECT line_code 
 		FROM line 
-		WHERE line_use=1 
+		WHERE line_use=2 
 		AND line_place='1차공정' 
 		ORDER BY line_code DESC 
 		LIMIT 1) 
@@ -154,7 +154,7 @@
 	<sql id="selectLine2">
 		(SELECT line_code 
 		FROM line 
-		WHERE line_use=1 
+		WHERE line_use=2 
 		AND line_place='2차공정' 
 		ORDER BY line_code DESC 
 		LIMIT 1) 
@@ -162,7 +162,7 @@
 	<sql id="selectLine3">
 		(SELECT line_code 
 		FROM line 
-		WHERE line_use=1 
+		WHERE line_use=2 
 		AND line_place='3차공정' 
 		ORDER BY line_code DESC 
 		LIMIT 1) 
