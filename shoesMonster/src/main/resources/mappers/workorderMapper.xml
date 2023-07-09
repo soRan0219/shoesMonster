@@ -140,8 +140,8 @@
 			<if test="(search_fromDate!=null and !search_fromDate.equals('')) and (search_toDate!=null and !search_toDate.equals(''))">
 				AND (work_date &gt;= #{search_fromDate} AND work_date &lt;= #{search_toDate}) 
 			</if> 
-			<if test="search_state!=null and !search_state.isEmpty() and !search_state.equals('전체')">
-				AND work_state=#{search_state} 
+			<if test="search_place!=null and !search_place.isEmpty() and !search_place.equals('전체')">
+				AND line_place=#{search_place} 
 			</if> 
 			<if test="search_prod!=null and !search_prod.isEmpty()">
 				AND prod_code=#{search_prod} 

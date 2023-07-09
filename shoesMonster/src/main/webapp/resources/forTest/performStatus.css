@@ -34,8 +34,6 @@ ul.tabs li.current {
 
 .tab-content {
 	background: #F7F7F7;
-/* 	padding: 15px; */
-	padding: 5px;
 	height: 1px;
 	overflow: hidden;
 	display: block;
