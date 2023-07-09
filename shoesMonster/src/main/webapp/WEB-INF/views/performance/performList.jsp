@@ -868,8 +868,6 @@ body {
 	</ul>
 </div>
 	
-	<br><br><br><br><br><br><br><br><br>
-	
 	
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
@@ -1070,8 +1068,11 @@ body {
 		}); //jQuery
 	</script>
 	
+	<div class="tabContainer" style="margin-top: 20%;">
 	
-	<div class="tabContainer">
+		<h2><b>생산실적 현황</b></h2>
+		
+		<br>
 		
 		<ul class="tabs">
 			<li class="tab-link current" data-tab="chart_line">라인별 생산현황</li>

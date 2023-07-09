@@ -85,9 +85,9 @@ body {
 	</div>   
 	 
 	<div class="x_title">
-		<h2> 발주 정보 목록 </h2>
+		<h2 style="width: 110px;"> 발주 정보 목록 </h2>
 		
-		<span style="float:right;margin-top: 1%;">총 ${countPop}건</span>
+		<span style="float:left; margin-top: 0.5%;">총 ${countPop}건</span>
 		<div class="clearfix"></div>
 	</div>
 			

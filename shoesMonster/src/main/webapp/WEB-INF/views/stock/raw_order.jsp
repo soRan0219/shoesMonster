@@ -165,10 +165,10 @@ function toggleDiv(divId) {
 
     <div id="list">
 	    <form action="" method="get" style="margin: 0 0 1% 1%; ">
-		    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
-		   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
+		    발주 번호 : <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
+		   	품명 : <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
 	<!-- 	   		품명 <input type="text" name="raw_name" placeholder="품명을 입력하세요"> -->
-		   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
+		   	거래처명 : <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
 	<!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
 		   	<input type="submit" class="B B-info" value="검색"></input>
 	    </form>
@@ -228,96 +228,97 @@ function toggleDiv(divId) {
 						</table>
 					</form>
 					
-					<button id="excelDownload">엑셀 다운로드</button>
+					<!-- 엑셀 시작 -->
+					<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 	
-	<script type="text/javascript">
-	function getToday() {
-		var date = new Date();
-		
-		var year = date.getFullYear();
-		var month = ("0" + (1 + date.getMonth())).slice(-2);
-		var day = ("0" + date.getDate()).slice(-2);
-		
-		return year + "-" + month + "-" + day;
-	} //getToday()
-	
-	
-        //엑셀
-        const excelDownload = document.querySelector('#excelDownload');
-        
-        document.addEventListener('DOMContentLoaded', ()=> {
-            excelDownload.addEventListener('click', exportExcel);
-        });
-        
-        function exportExcel() {
-            //1. workbook 생성
-            var wb = XLSX.utils.book_new();
-            
-            //2. 시트 만들기
-            var newWorksheet = excelHandler.getWorksheet();
-            
-            //3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
-            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-            
-            //4. 엑셀 파일 만들기
-            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
-            
-            //5. 엑셀 파일 내보내기
-            saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
-            
-        } //exportExcel()
-        
-        var excelHandler = {
-            getExcelFileName : function() {
-                return 'performanceList'+getToday()+'.xlsx'; //파일명
-            },
-            getSheetName : function() {
-                return 'Performance Sheet'; //시트명
-            },
-            getExcelData : function() {
-                return document.getElementById('data-table'); //table id
-            },
-            getWorksheet : function() {
-                return XLSX.utils.table_to_sheet(this.getExcelData());
-            }
-        } //excelHandler
-        
-        function s2ab(s) {
-            var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
-            var view = new Uint8Array(buf);  
-            for(var i=0; i<s.length; i++) {
-                view[i] = s.charCodeAt(i) & 0xFF;
-            }
-            return buf;
-        } //s2ab(s)
-    </script>
-    <!-- 엑셀 - 끝 -->
+					<script type="text/javascript">
+					function getToday() {
+						var date = new Date();
+						
+						var year = date.getFullYear();
+						var month = ("0" + (1 + date.getMonth())).slice(-2);
+						var day = ("0" + date.getDate()).slice(-2);
+						
+						return year + "-" + month + "-" + day;
+					} //getToday()
+					
+					
+				        //엑셀
+				        const excelDownload = document.querySelector('#excelDownload');
+				        
+				        document.addEventListener('DOMContentLoaded', ()=> {
+				            excelDownload.addEventListener('click', exportExcel);
+				        });
+				        
+				        function exportExcel() {
+				            //1. workbook 생성
+				            var wb = XLSX.utils.book_new();
+				            
+				            //2. 시트 만들기
+				            var newWorksheet = excelHandler.getWorksheet();
+				            
+				            //3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+				            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+				            
+				            //4. 엑셀 파일 만들기
+				            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+				            
+				            //5. 엑셀 파일 내보내기
+				            saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+				            
+				        } //exportExcel()
+				        
+				        var excelHandler = {
+				            getExcelFileName : function() {
+				                return 'performanceList'+getToday()+'.xlsx'; //파일명
+				            },
+				            getSheetName : function() {
+				                return 'Performance Sheet'; //시트명
+				            },
+				            getExcelData : function() {
+				                return document.getElementById('data-table'); //table id
+				            },
+				            getWorksheet : function() {
+				                return XLSX.utils.table_to_sheet(this.getExcelData());
+				            }
+				        } //excelHandler
+				        
+				        function s2ab(s) {
+				            var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+				            var view = new Uint8Array(buf);  
+				            for(var i=0; i<s.length; i++) {
+				                view[i] = s.charCodeAt(i) & 0xFF;
+				            }
+				            return buf;
+				        } //s2ab(s)
+				    </script>
+				    <!-- 엑셀 - 끝 -->
 					
 				</div>
 			</div>
 		</div>
-		<div>
-   		<c:if test="${count1 > 10 }">
-			<c:if test="${bp.prev}">
-
-			    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
-
-			</c:if>
-			
-			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-			    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-			</c:forEach>
-			
-			<c:if test="${bp.next && bp.endPage > 0}">
-
-			    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
-
-			</c:if>
+		
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+   		<c:if test="${count1 > 0 }">
+			<li class="paginate_button previous disabled">
+				<c:if test="${bp.prev}">
+				    <a href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+				    <a href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${bp.next && bp.endPage > 0}">
+				    <a href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+				</c:if>
+			</li>
 		</c:if>
-		
-		
-		
-		</div>
+		</ul>
+	</div>
 		
 		
 
@@ -348,65 +349,63 @@ function toggleDiv(divId) {
 				<td onclick="roPopup();"><input type="text" name="wh_code" id="wh_code" readonly></td>
 			</tr>
 		</table>
-			<br>
-						<div class="table-responsive">
-							<table id="table"
-								class="table table-striped jambo_table bulk_action">
-								<thead>
-									<tr class="headings">
-										<th class="column-title">발주일</th>
-										<th class="column-title">거래처 코드</th>
-										<th class="column-title">거래처명</th>
-										<th class="column-title">품번</th>
-										<th class="column-title">품명</th>
-										<th class="column-title">색상</th>
-										<th class="column-title">발주 수량</th>
-										<th class="column-title">재고 수량</th>
-										<th class="column-title">단가</th>
-										<th class="column-title">총액</th>
-										<th class="column-title">담당자</th>
-										<!-- 발주번호처럼 '발주 신청' 버튼 눌렀을 때 저장하기 -->
-									</tr>
-								</thead>
-								<tbody>
+		
+		<br>
+		
+		<input type="submit" class="B B-info" value="발주 신청" style="float: right;">
+		
+		<div class="table-responsive">
+			<table id="table" class="table table-striped jambo_table bulk_action">
+				<thead>
+					<tr class="headings" style="text-align: center;">
+						<th class="column-title">발주일</th>
+						<th class="column-title">거래처 코드</th>
+						<th class="column-title">거래처명</th>
+						<th class="column-title">품번</th>
+						<th class="column-title">품명</th>
+						<th class="column-title">색상</th>
+						<th class="column-title">발주 수량</th>
+						<th class="column-title">재고 수량</th>
+						<th class="column-title">단가</th>
+						<th class="column-title">총액</th>
+						<th class="column-title">담당자</th>
+						<!-- 발주번호처럼 '발주 신청' 버튼 눌렀을 때 저장하기 -->
+					</tr>
+				</thead>
+				<tbody>
 
-									<tr class="even pointer">
-										<td class=" "><input type="text" name="raw_order_date"
-											value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>"
-											readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
-											name="client_code" id="client_code" readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
-											name="client_actname" id="client_actname" required readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
-											name="raw_code" id="raw_code" readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
-											name="raw_name" id="raw_name" readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
-											name="raw_color" id="raw_color" readonly></td>
-										<td class=" "><input type="number"  min="1"
-											id="raw_order_count" name="raw_order_count"
-											oninput="totalAmount()"></td>
-										<!-- CSS할 때 증감버튼 없애기 -->
-										<td class=" ">
-											<input type="text" style="color: ${inputValue <= 50 ? 'red' : 'inherit'}" name="stock_count" id="stock_count" readonly>
-										</td>
-										<td class=" "><input type="text"  name="raw_price"
-											id="raw_price" readonly></td>
-										<td id="total_amount" class=" "></td>
-										<td class=" ">${sessionScope.id.emp_id }</td>
+					<tr class="even pointer">
+						<td class=" "><input type="text" name="raw_order_date"
+							value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>"
+							readonly></td>
+						<td class=" " onclick="roPopup();"><input type="text" 
+							name="client_code" id="client_code" readonly></td>
+						<td class=" " onclick="roPopup();"><input type="text" 
+							name="client_actname" id="client_actname" required readonly></td>
+						<td class=" " onclick="roPopup();"><input type="text" 
+							name="raw_code" id="raw_code" readonly></td>
+						<td class=" " onclick="roPopup();"><input type="text" 
+							name="raw_name" id="raw_name" readonly></td>
+						<td class=" " onclick="roPopup();"><input type="text" 
+							name="raw_color" id="raw_color" readonly></td>
+						<td class=" "><input type="number"  min="1"
+							id="raw_order_count" name="raw_order_count"
+							oninput="totalAmount()"></td>
+						<!-- CSS할 때 증감버튼 없애기 -->
+						<td class=" ">
+							<input type="text" style="color: ${inputValue <= 50 ? 'red' : 'inherit'}" name="stock_count" id="stock_count" readonly>
+						</td>
+						<td class=" "><input type="text"  name="raw_price"
+							id="raw_price" readonly></td>
+						<td id="total_amount" class=" "></td>
+						<td class=" ">${sessionScope.id.emp_id }</td>
+					</tr>
 
-									</tr>
-
-
-								</tbody>
-							</table>
-							<input type="submit" class="btn btn-info" value="발주 신청">
-							
-							</div>
-							
-							</form>
-						</div>
+				</tbody>
+			</table>
+		</div>
+		</form>
+	</div>
 
 	
 	<!-- ============================ 발주 등록 ============================ -->

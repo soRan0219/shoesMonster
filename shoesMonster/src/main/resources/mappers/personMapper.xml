@@ -11,7 +11,7 @@
 	<select id="empList" resultType="EmployeesVO"> 
 		select * from employees
 		where emp_name != '관리자'
-		order by emp_department ASC
+		order by emp_hiredate desc
 		limit #{startPage}, #{pageSize}
 	</select>	
 	<!-- 사원 목록 조회 -->
@@ -46,7 +46,7 @@
 				and emp_department=#{search_emp_department}
 			</if>
 		</where>
-		order by emp_department ASC
+		order by emp_hiredate desc
 		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 사원 검색 -->
