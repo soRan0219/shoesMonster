@@ -157,6 +157,14 @@ body {
    			             addRow();
    			             counter++;
     				} // someFunction(data)
+    				
+    				$('#save').click(function() {
+		
+							$('#fr').submit();
+		
+					}); //save
+    				
+    				
             	
             }); //  $('#addButton').click(function()
             
@@ -276,7 +284,7 @@ body {
 						  if (result.isConfirmed) {
 							  
 							  $.ajax({
-									url: "/performance/requirementDelete",
+									url: "/performance/prodDelete",
 									type: "post",
 									data: {checked:checked},
 									dataType: "text",
