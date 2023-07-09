@@ -90,6 +90,14 @@ body {
 	
 	$(document).ready(function() {
 		popUp();
+		
+		//테이블 항목들 인덱스 부여
+		$('table tr').each(function(index){
+			var num = "<c:out value='${pvo.page}'/>";
+			var num2 = "<c:out value='${pvo.pageSize}'/>";
+			$(this).find('td:first').text(((num-1)*num2) + index-1);
+		});
+		
 	});
 
 
@@ -622,7 +630,7 @@ body {
 						<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
 							<c:if test="${vo.client_type == '전체' }">
 								<tr>
-									<td>${i.count }</td>
+									<td></td>
 									<td id="client_code">${vo.client_code}</td>
 									<td id="client_actname">${vo.client_actname}</td>
 									<td>${vo.client_type}</td>
@@ -642,7 +650,7 @@ body {
 
 							<c:if test="${vo.client_type == '발주처' }">
 								<tr>
-									<td>${i.count }</td>
+									<td></td>
 									<td id="client_code">${vo.client_code}</td>
 									<td id="client_actname">${vo.client_actname}</td>
 									<td>${vo.client_type}</td>
@@ -662,7 +670,7 @@ body {
 
 							<c:if test="${vo.client_type == '수주처' }">
 								<tr>
-									<td>${i.count }</td>
+									<td></td>
 									<td id="client_code">${vo.client_code}</td>
 									<td id="client_actname">${vo.client_actname}</td>
 									<td>${vo.client_type}</td>

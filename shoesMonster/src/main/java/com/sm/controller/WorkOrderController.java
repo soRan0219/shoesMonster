@@ -69,6 +69,7 @@ public class WorkOrderController {
 			model.addAttribute("search", search);
 			model.addAttribute("workList", workList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo",pvo);
 			
 			if(input != null && !input.equals("")) {
 				model.addAttribute("input", input);
@@ -87,6 +88,7 @@ public class WorkOrderController {
 			
 			model.addAttribute("workList", workList);
 			model.addAttribute("pm", pm);
+			model.addAttribute("pvo",pvo);
 			
 			if(input != null && !input.equals("")) {
 				model.addAttribute("input", input);
