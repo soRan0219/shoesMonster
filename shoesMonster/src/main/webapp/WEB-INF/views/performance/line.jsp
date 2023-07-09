@@ -18,52 +18,51 @@
 <c:if test="${empty sessionScope.id}">
     <c:redirect url="/smmain/smMain" />
 </c:if>
-
+ 
 <style type="text/css">
 
-body {
-	font-family: 'NexonLv2Gothic';
-}
 
-.selected {
-	background-color: #ccc;
-}
+	body {
+		font-family: 'NexonLv2Gothic';
+	}
 
-/* 셀렉트 옵션을 가로로 나열하여 버튼으로 꾸미기 위한 스타일 */
-  .custom-select {
-    display: flex;
-  }
+	.selected {
+		background-color: #ccc;
+	}
 
-  .custom-select select {
-    display: none;
-  }
+	/* 셀렉트 옵션을 가로로 나열하여 버튼으로 꾸미기 위한 스타일 */
+	.custom-select1 {
+ 		display: flex; 
+		width: 25%;
+		height: 25%;
+		font-size: 13px; 
+		line-height: 20px;
+		background-color: transparent;
+		border-style: none;
+		padding: -1px;
+	}
 
-  .custom-select button {
-    flex: 1;
-    background-color: #f1f1f1;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    color: #000;
-    transition: background-color 0.3s;
-  }
+	.custom-select1 select {
+		display: none;
+	}
 
-  .custom-select button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .custom-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: transparent;
-    background-image: none;
-  }
-
-
+	.custom-select1 button {
+		flex: 1;
+		border-radius: 4px;
+		padding: 5px 15px;
+		font-size: 15px;
+		font-weight: 500;
+		border: none;
+		border-style: none;
+		cursor: pointer;
+		outline: none;
+		color: #73879C;
+		transition: background-color 0.3s;
+	}
+	
+ 	.custom-select1 button:hover { 
+ 		background-color: #e0e0e0; 
+ 	} 
 
 </style>
 
@@ -692,16 +691,25 @@ body {
 	<form action="" method="get">
 	<fieldset>
 		<input type="hidden" name="input" id="input" value="${input}">
+				
+		<label>라인코드 : </label>
+			<input type="text" name="line_code" >
+			
+		<label>라인명 : </label>
+			<input type="text" name="line_name">
+			
+		<input type="submit" class="B B-info" value="조회">
 		
-
-<!-- 		<input type="hidden" name="line_place" value="전체" class="B B-info" ></input> -->
-<!-- 		<input type="submit" name="line_place" value="1차공정" class="B B-info" ></input> -->
-<!-- 		<input type="submit" name="line_place" value="2차공정" class="B B-info" ></input> -->
-<!-- 	    <input type="submit" name="line_place" value="3차공정" class="B B-info" ></input> -->
-
-
-
-				<div class="custom-select">
+		<br>
+		
+		<label>사용여부 : </label>
+			<input type="radio" name="line_use" value="3" checked> 전체
+			<input type="radio" name="line_use" value="1"> Y
+			<input type="radio" name="line_use" value="2"> N
+			
+			<hr>
+				
+				<div class="custom-select1">
 					<select name="line_place">
 						<option value="전체" ${lvo.line_place == null ? 'selected' : ''}>1차공정</option>
 						<option value="1차공정" ${lvo.line_place == '1차공정' ? 'selected' : ''}>1차공정</option>
@@ -716,36 +724,16 @@ body {
 
 				<script>
 				  function selectOption(index) {
-				    var select = document.querySelector('.custom-select select');
+				    var select = document.querySelector('.custom-select1 select');
 				    select.selectedIndex = index;
 				    select.dispatchEvent(new Event('change'));
 				  }
 				</script>
-
-				<br>
-		
-		<label>라인코드 : </label>
-			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요" >
-			
-		<label>라인명 : </label>
-			<input type="text" name="line_name" placeholder="검색어를 입력해주세요">
-			
-		<input type="submit" class="B B-info" value="검색">
-		
-		<br>
-		
-		<label>사용여부 : </label>
-			<input type="radio" name="line_use" value="3" checked> 전체
-			<input type="radio" name="line_use" value="1"> Y
-			<input type="radio" name="line_use" value="2"> N
-			
-<!-- 		<label>공정</label> -->
-<!-- 			<input type="text" name="line_place" placeholder="검색어를 입력해주세요"> -->
 		</fieldset>
 	</form>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->
-<hr>
+
 
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
