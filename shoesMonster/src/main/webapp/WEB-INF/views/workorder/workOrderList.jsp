@@ -719,7 +719,7 @@ body {
 							<button onclick="location.href='/workorder/workOrderList'" class="B2 B2-info">↻</button>
 						</c:if>
 						<c:if test="${!empty param.input }">
-							<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B-info">↻</button>
+							<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B2-info">↻</button>
 						</c:if>
 					</div>
 					

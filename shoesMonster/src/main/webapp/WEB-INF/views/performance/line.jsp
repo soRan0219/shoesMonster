@@ -642,7 +642,7 @@ body {
 		 
 		<hr>
 		
-		<label>라인코드</label>
+		<label>라인코드 : </label>
 			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요" >
 			
 		<label>라인명 : </label>
@@ -677,7 +677,7 @@ body {
 				<button onclick="location.href='/performance/line'" class="B2 B2-info">↻</button>
 			</c:if>
 			<c:if test="${!empty param.input }">
-				<button onclick="location.href='/performance/line?input=${param.input }'" class="B2 B-info">↻</button>
+				<button onclick="location.href='/performance/line?input=${param.input }'" class="B2 B2-info">↻</button>
 			</c:if>
 		</div>
 				

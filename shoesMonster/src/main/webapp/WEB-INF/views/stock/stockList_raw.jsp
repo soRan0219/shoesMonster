@@ -41,7 +41,9 @@ body {
 	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" ></input></a>
 	</div>
 	
-	<div style="margin-left: 1%;">    
+	<hr>
+	
+	<div style="margin-left: 2%;">    
 		<form action="" method="get">
 	 		원자재 코드 : <input type="text" name="raw_code" placeholder="원자재 코드를 입력하세요">
 		   	원자재 품명 : <input type="text" name="raw_mat.raw_name" placeholder="원자재 품명을 입력하세요">
@@ -49,8 +51,6 @@ body {
 		   	<input type="submit" class="B B-info" value="검색"></input>
 		</form>
 	</div>
-
-	<hr>
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">

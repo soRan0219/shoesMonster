@@ -566,7 +566,7 @@ body {
 			</li>
 			<li class="paginate_button previous disabled">
 				<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-					<a class="btn btn-secondary" href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
+					<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
 				</c:forEach>
 			</li>
 			<li class="paginate_button previous disabled">
