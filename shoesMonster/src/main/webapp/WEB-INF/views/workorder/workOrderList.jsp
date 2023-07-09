@@ -556,9 +556,6 @@ body {
 
 		//지시일자 이날부터
 		$('#search_fromDate').datepicker({
-			showOn:'both',
-			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-			buttonImageOnly:'true',
 			changeMonth:'true',
 			changeYear:'true',
 			nextText:'다음달',
@@ -577,9 +574,6 @@ body {
 		
 		//이날까지
 		$('#search_toDate').datepicker({
-			showOn:'both',
-			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-			buttonImageOnly:'true',
 			changeMonth:'true',
 			changeYear:'true',
 			nextText:'다음달',
@@ -671,19 +665,19 @@ body {
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				<span>라인코드:</span> <input type="text" name="search_line" id="search_line" class="searchInputText"> 
-				<span>지시일자:</span> 
+				<span>라인코드 : </span> <input type="text" name="search_line" id="search_line" class="searchInputText"> 
+				<span>지시일자 : </span> 
 					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText"> ~ 
 					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText"> 
-				<span>품번:</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
+				<span>품번 : </span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
+				<input type="submit" value="조회" class="B B-info"> 
 				<br><br>
-				<span>지시상태:</span> 
+				<span>지시상태 : </span> 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="전체" checked> 전체 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="1차공정"> 1차공정 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="2차공정"> 2차공정 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="3차공정"> 3차공정 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="마감"> 마감 
-				<input type="submit" value="조회" class="B B-info"> 
 			</fieldset>
 		</form>
 	</div>
@@ -696,14 +690,17 @@ body {
 		<div class="x_panel">
 		
 				<div class="x_title">
-					<h2>작업지시 관리</h2>
+					<h2>작업지시 관리<small>총 ${pm.totalCount } 건</small></h2>
 					
+
 <%-- 					<span id="searchCnt" style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span> --%>
+
 					<div class="clearfix"></div>
 				</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 
   
+
     <!-- 버튼 제어 -->
 	<div style="margin-bottom: 1%;">
 		<button id="add" class="true B B-info">추가</button>
@@ -738,6 +735,7 @@ body {
 	<div id="searchCnt">
 		총 <span id="total">${pm.totalCount }</span>건
 	</div>
+
 <!-- //////////////////////////////////////////////////////////////////////// -->			
 	<div style="overflow-x: auto;">
 	
@@ -746,6 +744,7 @@ body {
 			<table border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
 				<colgroup>
 				    <col style="width: 50px">
+				    <col style="width: 110px">
 				    <col style="width: 100px">
 				    <col style="width: 100px">
 				    <col style="width: 100px">
@@ -849,19 +848,25 @@ body {
 </div>
 		
 		
-		<div id="pagination">
-			<c:if test="${pm.prev }">
-				<a href="/workorder/workOrderList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> ⏪ </a>
-			</c:if>
-			
-			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-				<a href="/workorder/workOrderList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${page }</a>
-			</c:forEach>
-	
-			<c:if test="${pm.next }">
-				<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> ⏩ </a>
-			</c:if>
-		</div>
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.prev }">
+					<a href="/workorder/workOrderList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> Previous </a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+					<a href="/workorder/workOrderList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${page }</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.next }">
+					<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> Next </a>
+				</c:if>
+			</li>
+		</ul>
+	</div>
 
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">

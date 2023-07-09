@@ -108,18 +108,24 @@ body {
  			             addRow();
  			             counter++;
   				} // someFunction(data)
+  				
+  				$('#save').click(function() {
+            		
+						$('#fr').submit();
+
+				}); //save
 				
             });
             
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" >' +
+                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" required>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" readonly required></td>' +
                     '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" >' +
                     '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'");></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'");></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_dan"></td>' +
+                    '<td><input type="number" name="reqs[' + counter + '].req_dan" required></td>' +
                     '<td></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_note"></td>' +
                     '</tr>';
@@ -210,7 +216,7 @@ body {
 							  
 						  
 							$.ajax({
-		 						url: "/performance/rawMaterialDelete",
+		 						url: "/performance/requirementDelete",
 		 						type: "POST",
 		 						data: {checked : checked},
 		 						dataType: "text",	
