@@ -9,7 +9,7 @@ public class PagingVO {
 		private int nowPage=1;
 		private int cntPerPage = 8;
 		// 페이지 블럭
-		private int cntPage = 5;
+		private int cntPage = 2;
 		
 		public PagingVO() {
 		}

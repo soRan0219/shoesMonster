@@ -28,6 +28,43 @@ body {
 .selected {
 	background-color: #ccc;
 }
+
+/* 셀렉트 옵션을 가로로 나열하여 버튼으로 꾸미기 위한 스타일 */
+  .custom-select {
+    display: flex;
+  }
+
+  .custom-select select {
+    display: none;
+  }
+
+  .custom-select button {
+    flex: 1;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #000;
+    transition: background-color 0.3s;
+  }
+
+  .custom-select button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    background-image: none;
+  }
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -622,7 +659,10 @@ body {
 	});//delete.click
 	
 	});// 제이쿼리
+	
 </script>
+
+
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
 <!-- page content -->
@@ -636,11 +676,34 @@ body {
 		<input type="hidden" name="input" id="input" value="${input}">
 		
 
-		<input type="submit" name="line_place" value="1차공정" class="B B-info" ></input>
-		<input type="submit" name="line_place" value="2차공정" class="B B-info" ></input>
-	    <input type="submit" name="line_place" value="3차공정" class="B B-info" ></input>
-		 
-		<br>
+<!-- 		<input type="hidden" name="line_place" value="전체" class="B B-info" ></input> -->
+<!-- 		<input type="submit" name="line_place" value="1차공정" class="B B-info" ></input> -->
+<!-- 		<input type="submit" name="line_place" value="2차공정" class="B B-info" ></input> -->
+<!-- 	    <input type="submit" name="line_place" value="3차공정" class="B B-info" ></input> -->
+
+
+
+				<div class="custom-select">
+					<select name="line_place">
+						<option value="1차공정" ${lvo.line_place == '1차공정' ? 'selected' : ''}>1차공정</option>
+						<option value="2차공정" ${lvo.line_place == '2차공정' ? 'selected' : ''}>2차공정</option>
+						<option value="3차공정" ${lvo.line_place == '3차공정' ? 'selected' : ''}>3차공정</option>
+					</select>
+					
+					<button onclick="selectOption(0)">1차공정 </button>
+					<button onclick="selectOption(1)">2차공정 </button>
+					<button onclick="selectOption(2)">3차공정</button>
+				</div>
+
+				<script>
+				  function selectOption(index) {
+				    var select = document.querySelector('.custom-select select');
+				    select.selectedIndex = index;
+				    select.dispatchEvent(new Event('change'));
+				  }
+				</script>
+
+				<br>
 		
 		<label>라인코드</label>
 			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요" >

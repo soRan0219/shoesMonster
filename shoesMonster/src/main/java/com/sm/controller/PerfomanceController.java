@@ -50,7 +50,13 @@ public class PerfomanceController {
 	private static final Logger logger = LoggerFactory.getLogger(PerfomanceController.class);
 
 	// ======================================================================================
-
+	
+	@RequestMapping(value = "NewFile")
+	public void name() {
+		
+	}
+	
+	
 	// http://localhost:8088/performance/product
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public void productGET(Model model, ProductVO vo, PagingVO pvo,
