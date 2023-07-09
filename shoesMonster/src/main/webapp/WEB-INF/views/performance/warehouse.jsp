@@ -201,11 +201,8 @@ body {
 			})//ajax
 			
 			function someFunction(data) {
-// 				alert("someFunction");
 				 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
-// 				 alert("codeNum"+codeNum);
 				 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
-// 				 alert("num : "+num);
 				 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
 	             whCode = codeNum.charAt(0)+ codeNum.charAt(1) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
 	             if ($('#add').hasClass('true')) {
@@ -216,7 +213,6 @@ body {
 			} // someFunction(data)
 			 
 			function padNumber(number, length) {
-// 				alert("padNum");
                 var paddedNumber = number.toString();
                 while (paddedNumber.length < length) {
                     paddedNumber = "0" + paddedNumber;
@@ -246,7 +242,6 @@ body {
 						width: '300px',
 					})
 					
-// 					alert("항목을 모두 입력하세요");
 					
 				}else{
 					$('#fr').attr("action", "/performance/whadd");

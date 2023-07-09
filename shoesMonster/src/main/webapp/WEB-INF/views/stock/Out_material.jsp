@@ -6,6 +6,8 @@
     
 <%@ include file="../include/header.jsp"%>
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweetalert -->
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
 
@@ -27,8 +29,13 @@ body {
 <script type="text/javascript">
 	function checkStock(orderCount, stockCount) {
 	    if (orderCount > stockCount) {
-	        alert("재고 수량이 부족합니다. 물량을 확인해 주세요.");
-	        return false;
+// 	        alert("재고 수량이 부족합니다. 물량을 확인해 주세요.");
+     	Swal.fire({
+			title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "재고 수량이 부족합니다 \n 물량을 확인해 주세요"+ "</div>",
+			icon: 'warning',
+			width: '300px',
+		})
+			return false;
 	    } 
 	}
 </script>

@@ -232,14 +232,18 @@ body {
 
 				if (client_code == "" 
 						
-// 						|| client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
-// 						|| client_ceo == "" || client_name == "" || client_addr == "" || client_addr2 == "" || client_tel == "" 
-// 						|| client_phone == "" || client_fax == "" || client_email == "" || client_note == ""
+						|| client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
+						|| client_ceo == "" || client_name == "" || client_addr == "" || client_addr2 == "" || client_tel == "" 
+						|| client_phone == "" || client_fax == "" || client_email == "" || client_note == ""
 // 나중에 최종 수정 다끝나면 주석 풀기
 						
 				) {
-					alert("client_code"+client_code);
-					alert("항목을 모두 입력하세요");
+// 					alert("client_code"+client_code);
+					Swal.fire({
+						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						icon: 'info',
+						width: '300px',
+					})
 				} else {
 					$('#fr').attr("action", "/person/addClient");
 					$('#fr').attr("method", "post");

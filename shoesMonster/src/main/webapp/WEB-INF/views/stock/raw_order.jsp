@@ -6,6 +6,8 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweetalert -->
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 
@@ -60,13 +62,28 @@ body {
 	// 체크
 	function check() {
 		if(document.getElementById("client_actname").value === "") {
-			alert("발주 항목을 선택해주세요.");
+// 			alert("발주 항목을 선택해주세요.");
+			Swal.fire({
+				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "발주 항목을 선택해주세요"+ "</div>",
+				icon: 'warning',
+				width: '300px',
+			})
 			return false;
 		} else if(document.getElementById("raw_order_count").value === "") {
-			alert("발주 수량을 입력해주세요.");
+// 			alert("발주 수량을 입력해주세요.");
+			Swal.fire({
+				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "발주 수량을 입력해주세요"+ "</div>",
+				icon: 'warning',
+				width: '300px',
+			})
 			return false;
 		} else if(document.getElementById("wh_code").value === "") {
-			alert("입고 창고를 선택해주세요.");
+// 			alert("입고 창고를 선택해주세요.");
+			Swal.fire({
+				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "입고 창고를 선택해주세요"+ "</div>",
+				icon: 'warning',
+				width: '300px',
+			})
 			return false;
 		}
 	}
