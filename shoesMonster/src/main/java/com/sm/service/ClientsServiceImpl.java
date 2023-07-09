@@ -46,6 +46,13 @@ public class ClientsServiceImpl implements ClientsService {
 	public void regClient(ClientsVO cvo) throws Exception {
 		cldao.insertClient(cvo);
 	}
+	
+	// 
+	@Override
+	public String getClientCode(String client_type) throws Exception {
+		return cldao.getClientCode(client_type);
+	}
+	
 
 	// 거래처 삭제
 	@Override
@@ -58,7 +65,7 @@ public class ClientsServiceImpl implements ClientsService {
 	public void updateClient(ClientsVO cvo) throws Exception {
 		cldao.updateClient(cvo);
 	}
-	
+
 	
 	
 	

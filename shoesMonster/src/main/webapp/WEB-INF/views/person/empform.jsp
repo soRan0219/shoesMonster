@@ -127,7 +127,6 @@ $(document).ready(function() {
 			<button id="modifyEmp" class="B B-info">수정</button>
 			<button type="reset" id="cancelEmp" class="B B-info">취소</button>
 			<button type="submit" id="saveEmp" class="B B-info">저장</button>
-			<button onclick="location.href='/person/empform?emp_id=${vo.emp_id}'" class="B B-info">↻</button>
 		</div>
 		<div>
 			<h1>상세보기</h1>

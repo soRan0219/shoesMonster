@@ -24,6 +24,9 @@ public interface ClientsService {
 	// 거래처 추가
 	public void regClient(ClientsVO cvo) throws Exception;
 	
+	// 거래처 추가 코드
+	public String getClientCode(String client_type) throws Exception;
+	
 	// 거래처 삭제
 	public void deleteClient(List<String> checked) throws Exception;
 	

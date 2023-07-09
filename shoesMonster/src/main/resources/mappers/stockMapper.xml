@@ -91,6 +91,7 @@
 		from raw_material rm
 		LEFT join stock s on s.raw_code = rm.raw_code
 		join clients c on c.client_code = rm.client_code
+		order by c.client_code
 		limit #{startPage}, #{pageSize};
 	</select>
 	<!-- 발주 등록 팝업 -->
