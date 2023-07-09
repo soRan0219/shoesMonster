@@ -64,6 +64,18 @@ public class ClientsDAOImpl implements ClientsDAO {
 		int result = sqlSession.insert(NameSpace+".insertClient", cvo);
 		logger.debug("@@@ DAO insert 결과 : "+result);
 	}
+	
+	//
+	@Override
+	public String getClientCode(String client_type) throws Exception {
+//		String code = "L000";
+		
+//		if(sqlSession.selectOne(NameSpace+".getClientCode", client_type) == null) {
+//			return code;
+//		}else {
+			return sqlSession.selectOne(NameSpace+".getClientCode", client_type);
+//		}
+	}
 
 	// 거래처 삭제
 	@Override
@@ -88,6 +100,7 @@ public class ClientsDAOImpl implements ClientsDAO {
 		int result = sqlSession.update(NameSpace+".updateClient", cvo);
 		logger.debug("@@@ DAO update 결과 : "+result);
 	}
+
 	
 	
 	

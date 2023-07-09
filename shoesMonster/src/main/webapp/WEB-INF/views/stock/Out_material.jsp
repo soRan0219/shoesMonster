@@ -118,7 +118,7 @@ body {
 </script>	
 	<hr>
 
-		<form method="get" style="margin-left: 1%;">
+	<form method="get" style="margin-left: 1%;">
 		<fieldset>
 			<button type="submit" value="" class="B B-info" name="orders.out_YN">전체</button>
 	        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" ></input> 
@@ -132,11 +132,11 @@ body {
         	<input type="text" name="clients.client_actname" value="" placeholder="거래처명을 입력하세요."> 
         	<input type="submit" class="btn btn-info" value="검색">
 		</fieldset>
-		</form>
+	</form>
 
   <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     
-    <div class="col-md-12 col-sm-12  ">
+    <div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
@@ -273,64 +273,34 @@ body {
 			</div>
 		</div>
       
-<!-- ㅇㅇㅇㅇㅇ -->    
-      
- <div>
-           <c:if test="${count4 > 10 }">
-        <c:if test="${bp.prev}">
-
-            <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">이전</a>
-
-        </c:if>
-        
-        <c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-            <a class="btn btn-secondary" href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">${idx}</a>
-        </c:forEach>
-        
-        <c:if test="${bp.next && bp.endPage > 0}">
-
-            <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">다음</a>
-
-        </c:if>
-        </c:if>
-        </div>     
-      
-      
-<!-- ㅇㅇㅇㅇㅇ --> 
-		
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+ 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
-      
-		   	<c:if test="${count4 > 10 }">
-			<li class="paginate_button previous disabled">
-				<c:if test="${bp.prev}">
-				    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a>
-				</c:if>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-				    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-				</c:forEach>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:if test="${bp.next && bp.endPage > 0}">
-				    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
-				</c:if>
-			</li>
+           <c:if test="${count4 > 0 }">
+	           <li class="paginate_button previous disabled">
+			        <c:if test="${bp.prev}">
+			            <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">이전</a>
+			        </c:if>
+			   </li>
+	           <li class="paginate_button previous disabled">
+					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+					   <a chref="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">${idx}</a>
+					</c:forEach>
+			   </li>
+	           <li class="paginate_button previous disabled">
+		       		<c:if test="${bp.next && bp.endPage > 0}">
+		            	<a class="btn btn-secondary" href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">다음</a>
+		       		</c:if>
+		       	</li>
 			</c:if>
 		</ul>
-	</div>
-	
+	</div>  
+</div>   
+      
 </div>
     
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
 
-   
-    
-<!-- <div> -->
-
-<!-- </div> -->
 
 
 <!-- /page content -->

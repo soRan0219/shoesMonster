@@ -186,43 +186,27 @@ body {
 </div>     
            		
 <!-- ㅇㅇㅇㅇㅇ -->
-	<div>
-	    <c:if test="${countP3 > 0 }">
-			<c:if test="${bp.prev}">
-			    <span><a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
-			</c:if>
-			
-			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-			    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${idx }&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">${idx }</a>
-			</c:forEach>
-			
-			<c:if test="${bp.next && bp.endPage > 0}">
-			    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
-			</c:if>
-		</c:if>
-  <!-- ㅇㅇㅇㅇㅇ -->  
-        
 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
-		    <c:if test="${countP3 > 10 }">
-			<li class="paginate_button previous disabled">
-				<c:if test="${bp.prev}">
-				    <span><a href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
-				</c:if>
-			</li>
-			<li class="paginate_button previous disabled">	
-				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-				    <a href="/stock/stockList_prod?page=${idx }&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">${idx }</a>
-				</c:forEach>
-			</li>
-			<li class="paginate_button previous disabled">	
-				<c:if test="${bp.next && bp.endPage > 0}">
-				    <a href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
-				</c:if>
-			</li>
-<!-- ㅇㅇㅇㅇㅇ -->  
+		    <c:if test="${countP3 > 0 }">
+			    <li class="paginate_button previous disabled">
+					<c:if test="${bp.prev}">
+					    <span><a href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
+					</c:if>
+				</li>
+				<li class="paginate_button previous disabled">
+					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+					    <a href="/stock/stockList_prod?page=${idx }&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">${idx }</a>
+					</c:forEach>
+				</li>
+				<li class="paginate_button previous disabled">
+					<c:if test="${bp.next && bp.endPage > 0}">
+					    <a href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
+					</c:if>
+				</li>
 			</c:if>
 		</ul>
+  <!-- ㅇㅇㅇㅇㅇ -->  
 	</div>
 </div>
 
