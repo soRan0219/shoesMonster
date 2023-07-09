@@ -288,12 +288,24 @@ body {
 				// 저장 -> 수정완료
 				$('#save').click(function () {
 					
-					if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
-						|| emp_id == ""){
-						
-						alert("항목을 모두 입력하세요");
+					var line_place = $('#line_place').val();
+		 			var line_code = $('#line_code').val();
+		 			var line_name = $('#line_name').val();
+		 			var line_use = $('#line_use').val();
+		 			var emp_id = $('#emp_id').val();
+		 			var emp_name = $('#emp_name').val();//
+		 			var line_note = $('#line_note').val();
 					
-					}else{
+		 			if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
+						|| emp_id == ""){
+//	 				alert("항목을 모두 입력하세요");
+					Swal.fire({
+							title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+							icon: 'info',
+							width: '300px',
+						})	
+		 			
+		 			}else{
 						$('#fr').attr("action", "/performance/linemodify"); 
 						$('#fr').attr("method", "POST");
 						$('#fr').submit();
@@ -456,8 +468,14 @@ body {
 				
 	 			if(line_code == "" || line_name == "" || line_place == "" || line_use == ""
 					|| emp_id == ""){
-				alert("항목을 모두 입력하세요");
-					}else{
+// 				alert("항목을 모두 입력하세요");
+				Swal.fire({
+						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						icon: 'info',
+						width: '300px',
+					})	
+	 			
+	 			}else{
 						$('#fr').attr("action", "/performance/lineadd"); 
 						$('#fr').attr("method", "POST");
 						$('#fr').submit();
@@ -705,7 +723,7 @@ body {
 
 				<br>
 		
-		<label>라인코드</label>
+		<label>라인코드 : </label>
 			<input type="text" name="line_code"  placeholder="검색어를 입력해주세요" >
 			
 		<label>라인명 : </label>
@@ -740,7 +758,7 @@ body {
 				<button onclick="location.href='/performance/line'" class="B2 B2-info">↻</button>
 			</c:if>
 			<c:if test="${!empty param.input }">
-				<button onclick="location.href='/performance/line?input=${param.input }'" class="B2 B-info">↻</button>
+				<button onclick="location.href='/performance/line?input=${param.input }'" class="B2 B2-info">↻</button>
 			</c:if>
 		</div>
 				

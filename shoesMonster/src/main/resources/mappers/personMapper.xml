@@ -10,6 +10,7 @@
 	<!-- 사원 목록 조회 -->
 	<select id="empList" resultType="EmployeesVO"> 
 		select * from employees
+		where emp_name != '관리자'
 		order by emp_department ASC
 		limit #{startPage}, #{pageSize}
 	</select>	
@@ -24,6 +25,7 @@
 	<!-- 사원 전체 수 -->
 	<select id="employeesAllCnt" resultType="int">
 		select count(*) from employees
+		where emp_name != '관리자'
 	</select>
 	<!-- 사원 전체 수 -->
 	
@@ -89,7 +91,7 @@
 		where emp_id=#{emp_id}
 		order by emp_department ASC
 	</select>
- 	<!-- 사원 조회 -->
+ 	<!-- 사원 상세 조회 -->
 	
 	<!-- 사원 수정 -->
 	<update id="updateEmployees" parameterType="hashMap">
@@ -138,8 +140,8 @@
 	
 	<!-- 거래처 검색 -->
 	<select id="searchClientsList" parameterType="hashMap" resultType="com.sm.domain.ClientsVO">
-<!-- 		<bind name="client_code" value="'%' + search_client_code + '%'"/> -->
-<!-- 		<bind name="client_actname" value="'%' + search_client_actname + '%'"/> -->
+		<bind name="client_code" value="'%' + search_client_code + '%'"/>
+		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
 		
 		select * from clients
 		<where>
@@ -159,8 +161,8 @@
 	
 	<!-- 거래처 검색 개수 -->
 	<select id="searchClientCnt" parameterType="hashMap" resultType="int">
-<!-- 		<bind name="client_code" value="'%' + search_client_code + '%'"/> -->
-<!-- 		<bind name="client_actname" value="'%' + search_client_actname + '%'"/> -->
+		<bind name="client_code" value="'%' + search_client_code + '%'"/>
+		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
 	
 		select count(*) from clients
 		<where>
@@ -239,14 +241,14 @@
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
 		JOIN employees e ON e.emp_id = o.emp_id
+		order by order_code ASC
 		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
 	
 	<!-- 수주 현황 전체 개수 -->
 	<select id="orderStatusALLcnt" resultType="int">
-		select count(*) 
-		from orders 
+		select count(*) from orders 
 	</select>
 	<!-- 수주 현황 전체 개수 -->
 	
@@ -260,6 +262,7 @@
 			<result column="client_code" property="client_code" />
 			<result column="order_note" property="order_note" />
 			<result column="prod_code" property="prod_code" />
+			<result column="out_YN" property="out_YN" />
 	
 		<collection property="prod" ofType="com.sm.domain.ProductVO">
 			<result column="prod_name" property="prod_name" />
@@ -300,6 +303,7 @@
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
 			</if> 
 		</where>
+		order by order_code ASC
 		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 수주현황 검색 -->
@@ -334,9 +338,9 @@
 	<!-- 수주 등록 -->
 	<insert id="registOrder">
 		INSERT INTO orders (order_code, order_date, order_deliveryDate, emp_id,
-					order_count, client_code, prod_code) 
+					order_count, client_code, prod_code, out_YN) 
 		VALUES (#{order_code}, #{order_date}, #{order_deliveryDate}, #{emp_id},
-				#{order_count}, #{client_code}, #{prod_code})
+				#{order_count}, #{client_code}, #{prod_code}, "미출고")
 <!-- 		orders에 있는 값만 저장하고 나머지값은,,,받아와서 저장,,,,음,, -->
 	</insert>
 	<!-- 수주 등록 -->

@@ -14,6 +14,7 @@ public class OrderStatusVO {
 	private String client_code;
 	private String oreder_note;
 	private String prod_code;
+	private String out_YN;
 	
 	private ClientsVO clients;
 	private ProductVO prod;

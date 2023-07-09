@@ -1,9 +1,7 @@
 @charset "UTF-8";
 
 body {
-/* 	margin-top: 100px; */
 	font-family: 'NexonLv2Gothic';
-/* 	line-height: 1.6 */
 }
 
 .tabContainer {
@@ -16,6 +14,7 @@ ul.tabs {
 	margin: 0px;
 	padding: 0px;
 	list-style: none;
+	border-bottom: 1px solid #ccc;
 }
 ul.tabs li {
 	background: none;
@@ -23,16 +22,25 @@ ul.tabs li {
 	display: inline-block;
 	padding: 10px 15px;
 	cursor: pointer;
+	margin-bottom: -1px;
+	border: 1px solid #ccc;
+	border-radius: 4px 4px 0 0;
+	border-bottom-color: transparent;
 }
 ul.tabs li.current {
-	background: #ededed;
+	background: #F7F7F7;
 	color: #222;
 }
+
 .tab-content {
-	display: none;
-	background: #ededed;
-	padding: 15px;
+	background: #F7F7F7;
+	height: 1px;
+	overflow: hidden;
+	display: block;
+	visibility: hidden;
 }
 .tab-content.current {
-	display: inherit;
+	height: auto;
+	overflow: auto;
+	visibility: visible;
 }

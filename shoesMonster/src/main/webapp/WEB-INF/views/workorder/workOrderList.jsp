@@ -287,7 +287,7 @@ body {
 					
 					$(this).addClass('selected');
 					//작업지시 코드 저장
-					let updateCode = $(this).find('#workCode').text().trim();
+					let updateCode = $(this).find('#workCode').text().substring(0,16).trim();
 					console.log(updateCode);
 	
 					var jsonData = {
@@ -404,7 +404,7 @@ body {
 				
 				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
 				$('table tr').each(function() {
-					var code = $(this).find('td:nth-child(2)').text();
+					var code = $(this).find('td:nth-child(2)').text().substring(0,16).trim();
 	
 					var tbl = "<input type='checkbox' name='selected' value='";
 					tbl += code;
@@ -556,9 +556,6 @@ body {
 
 		//지시일자 이날부터
 		$('#search_fromDate').datepicker({
-			showOn:'both',
-			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-			buttonImageOnly:'true',
 			changeMonth:'true',
 			changeYear:'true',
 			nextText:'다음달',
@@ -577,9 +574,6 @@ body {
 		
 		//이날까지
 		$('#search_toDate').datepicker({
-			showOn:'both',
-			buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-			buttonImageOnly:'true',
 			changeMonth:'true',
 			changeYear:'true',
 			nextText:'다음달',
@@ -594,34 +588,12 @@ body {
 		});
 		
 		
-		//검색 결과 없을 때 표, 버튼 다 숨기기
+		//검색 결과 없을 때
 		if(Number($('#total').text())==0) {
 			$('#searchCnt').html("검색 결과가 없습니다.");
 		}
 		
 		//============================ 검색 =========================================//
-		
-		
-		
-		//n건씩 표시
-		$('#perPage').on('change', function() {
-			var pageSize = $(this).val();
-			$('#pageSize').val(pageSize);
-			
-			var queryString = window.location.search;
-			var urlParams = new URLSearchParams(queryString);
-			var isPop = urlParams.get("search_state");
-			$('#search_state').val(isPop);
-			
-			$('#searchForm').submit();
-		});
-		
-		$('#perPage').find('option').each(function(){
-			if($(this).val()===$('#pageSize').val()) {
-				$(this).prop("selected", true);
-			}
-		});
-		//n건씩 표시
 		
 		
 		//작업지시코드 클릭시 상세조회
@@ -693,19 +665,19 @@ body {
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				<span>라인코드:</span> <input type="text" name="search_line" id="search_line" class="searchInputText"> 
-				<span>지시일자:</span> 
+				<span>라인코드 : </span> <input type="text" name="search_line" id="search_line" class="searchInputText"> 
+				<span>지시일자 : </span> 
 					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText"> ~ 
 					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText"> 
-				<span>품번:</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
+				<span>품번 : </span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
+				<input type="submit" value="조회" class="B B-info"> 
 				<br><br>
-				<span>지시상태:</span> 
+				<span>지시상태 : </span> 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="전체" checked> 전체 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="1차공정"> 1차공정 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="2차공정"> 2차공정 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="3차공정"> 3차공정 
 					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="마감"> 마감 
-				<input type="submit" value="조회" class="B B-info"> 
 			</fieldset>
 		</form>
 	</div>
@@ -718,14 +690,52 @@ body {
 		<div class="x_panel">
 		
 				<div class="x_title">
-					<h2>작업지시 관리</h2>
+					<h2>작업지시 관리<small>총 ${pm.totalCount } 건</small></h2>
+				
+					<div style="float: left;  margin-top: 1.5px;">
+						<c:if test="${empty param.input }">
+							<button onclick="location.href='/workorder/workOrderList'" class="B2 B2-info">↻</button>
+						</c:if>
+						<c:if test="${!empty param.input }">
+							<button onclick="location.href='/performance/requirement?input=${param.input }'" class="B2 B2-info">↻</button>
+						</c:if>
+					</div>
 					
-					<span id="searchCnt" style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span>
+				    <!-- 버튼 제어 -->
+					<div style="float: right;">
+						<button id="add" class="true B B-info">추가</button>
+						<button id="modify"class="B B-info">수정</button>
+						<button id="delete" class="true B B-info">삭제</button>
+						<button type="reset" id="cancle" class="B B-info">취소</button>
+						<button type="submit" id="save" class="B B-info">저장</button>
+					</div>	
+					<script>
+					    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+					
+					    if (team === "생산팀" || team === "관리자") {
+					        document.getElementById("add").disabled = false;
+					        document.getElementById("modify").disabled = false;
+					        document.getElementById("delete").disabled = false;
+					        document.getElementById("cancle").disabled = false;
+					        document.getElementById("save").disabled = false;
+					        document.querySelector("[onclick^='location.href']").disabled = false;
+					    } else {
+					        document.getElementById("add").hidden = true;
+					        document.getElementById("modify").hidden = true;
+					        document.getElementById("delete").hidden = true;
+					        document.getElementById("cancle").hidden = true;
+					        document.getElementById("save").hidden = true;
+					        document.querySelector("[onclick^='location.href']").hidden = true;
+					    }
+					</script>
+					<!-- 버튼 제어 -->
+
 					<div class="clearfix"></div>
 				</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 
   
+
     <!-- 버튼 제어 -->
 	<div style="margin-bottom: 1%;">
 		<button id="add" class="true B B-info">추가</button>
@@ -733,7 +743,7 @@ body {
 		<button id="delete" class="true B B-info">삭제</button>
 		<button type="reset" id="cancle" class="B B-info">취소</button>
 		<button type="submit" id="save" class="B B-info">저장</button>
-		<button onclick="location.href='/workorder/workOrderList'" class="B B-info">새로고침</button>
+		<button onclick="location.href='/workorder/workOrderList?input=${param.input }'" class="B B-info">새로고침</button>
 	</div>	
 		<script>
 		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -757,11 +767,10 @@ body {
 		<!-- 버튼 제어 -->
 		
 		
-	<div id="body">
-	
+	<div id="searchCnt">
 		총 <span id="total">${pm.totalCount }</span>건
-		
 	</div>
+
 <!-- //////////////////////////////////////////////////////////////////////// -->			
 	<div style="overflow-x: auto;">
 	
@@ -770,6 +779,7 @@ body {
 			<table border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
 				<colgroup>
 				    <col style="width: 50px">
+				    <col style="width: 110px">
 				    <col style="width: 100px">
 				    <col style="width: 100px">
 				    <col style="width: 100px">
@@ -788,7 +798,9 @@ body {
 						<th>지시일</th>
 						<th>지시수량</th>
 						<th>공정</th>
-						<th>마감</th>
+						<c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}">
+							<th>마감</th>
+						</c:if>
 					</tr>
 				</thead>
 				
@@ -802,7 +814,9 @@ body {
 						<td>${w.work_date }</td>
 						<td id="workQt">${w.work_qt }</td>
 						<td id="linePlace">${w.line_place }</td>
-						<td><a href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a></td>
+						<c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}">
+							<td><a href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a></td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</table>
@@ -869,19 +883,25 @@ body {
 </div>
 		
 		
-		<div id="pagination">
-			<c:if test="${pm.prev }">
-				<a href="/workorder/workOrderList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> ⏪ </a>
-			</c:if>
-			
-			<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-				<a href="/workorder/workOrderList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${page }</a>
-			</c:forEach>
-	
-			<c:if test="${pm.next }">
-				<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> ⏩ </a>
-			</c:if>
-		</div>
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.prev }">
+					<a href="/workorder/workOrderList?page=${pm.startPage - 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> Previous </a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+					<a href="/workorder/workOrderList?page=${page }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}">${page }</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.next }">
+					<a href="/workorder/workOrderList?page=${pm.endPage + 1 }&pageSize=${pm.lwPageVO.pageSize }&search_line=${search.search_line}&search_fromDate=${search.search_fromDate}&search_toDate=${search.search_toDate}&search_place=${search.search_place}&search_prod=${search.search_prod}"> Next </a>
+				</c:if>
+			</li>
+		</ul>
+	</div>
 
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
@@ -908,5 +928,4 @@ body {
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/forTest/sm.css"> 
-<!-- <link rel="stylesheet" href="/resources/forTest/workOrderList.css"> -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

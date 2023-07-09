@@ -157,6 +157,14 @@ body {
    			             addRow();
    			             counter++;
     				} // someFunction(data)
+    				
+    				$('#save').click(function() {
+		
+							$('#fr').submit();
+		
+					}); //save
+    				
+    				
             	
             }); //  $('#addButton').click(function()
             
@@ -276,7 +284,7 @@ body {
 						  if (result.isConfirmed) {
 							  
 							  $.ajax({
-									url: "/performance/requirementDelete",
+									url: "/performance/prodDelete",
 									type: "post",
 									data: {checked:checked},
 									dataType: "text",
@@ -477,6 +485,8 @@ body {
 	</form>
 </div>	
 
+<hr>
+
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
 	
@@ -488,7 +498,7 @@ body {
 						<button onclick="location.href='/performance/product'" class="B2 B2-info">↻</button>
 					</c:if>
 					<c:if test="${!empty param.input }">
-						<button onclick="location.href='/performance/product?input=${param.input }'" class="B2 B-info">↻</button>
+						<button onclick="location.href='/performance/product?input=${param.input }'" class="B2 B2-info">↻</button>
 					</c:if>
 				</div>
 				

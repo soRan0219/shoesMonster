@@ -126,8 +126,7 @@ body {
 							//차트옵션
 							chartArea: {
 								backgroundColor: '#F7F7F7',
-// 								top: '50%',
-// 								left: 100,
+								left: '10%',
 								width: '90%',
 								height: '80%'
 							},
@@ -136,37 +135,34 @@ body {
 							//차트 막대 색
 							colors: ['#1ABB9C', 'rgb(173, 218, 209)', 'rgb(56, 170, 145)'],
 							//줌인 뭐 이런 기능인데 적용 안되는듯
-							explorer: {
+// 							explorer: {
 // 								axis: 'horizontal',
-								actions: ['dragToZoom', 'rightClickToReset']
-							},
+// 								actions: ['dragToZoom', 'rightClickToReset']
+// 							},
 							//폰트
 							fontSize: 20,
 							fontName: 'NexonLv2Gothic',
 // 							forcelFrame: true
 							//가로축
 							hAxis: {
-								title: 'Hello',
+								title: name,
 								titleTextStyle: {
-									color: '#000ccc',
+									color: 'gray',
 									fontName: 'NexonLv2Gothic',
-									fontSize: 23
+									fontSize: 20
 								},
 								textStyle: {
-									color: '#0cc',
+									color: '#000',
 									fontName: 'NexonLv2Gothic',
-									fontSize: 13
+									fontSize: 17
 								},
 								format: '#,###'
 // 								viewWindowMode: 'maximized'
 							},
 							//세로축
 							vAxis: {
-								title: 'World',
 								titleTextStyle: {
-									color: '#ccc000',
-									fontName: 'NexonLv2Gothic',
-									fontSize: 23
+									fontSize: 20
 								},
 								//세로축 선(=> 가로선)
 								gridlines: {
@@ -174,7 +170,7 @@ body {
 // 									minSpacing: 2
 								},
 								textStyle: {
-									color: '#c0c',
+									color: '#000',
 									fontName: 'NexonLv2Gothic',
 									fontSize: 13
 								},
@@ -185,7 +181,7 @@ body {
 							legend: {
 								position: 'top',
 								textStyle: {
-									color: '#840F83',
+									color: 'gray',
 									fontSize: 16,
 									fontName: 'NexonLv2Gothic',
 									bold: true,
@@ -193,10 +189,6 @@ body {
 								},
 								alignment: 'center'
 							},
-							//차트에 표시되는 항목별 설정
-// 							series: {
-// 								0: { color: 'orange'}
-// 							}
 // 							bars: 'horizontal'  //가로차트 옵션
 					};
 					
@@ -208,26 +200,6 @@ body {
 				} //drawChart()
 				
 			} //drawGoogleChart()
-			
-// 			$('#chart_line').show();
-// 			$('#chart_prod').hide();
-// 			$('#chart_date').hide();
-			
-// 			$('#lineBtn').click(function() {
-// 				$('#chart_line').show();
-// 				$('#chart_prod').hide();
-// 				$('#chart_date').hide();
-// 			});
-// 			$('#prodBtn').click(function() {
-// 				$('#chart_prod').show();
-// 				$('#chart_line').hide();
-// 				$('#chart_date').hide();
-// 			});
-// 			$('#dateBtn').click(function() {
-// 				$('#chart_date').show();
-// 				$('#chart_line').hide();
-// 				$('#chart_prod').hide();
-// 			});
 			
 			
 			$('ul.tabs li').click(function() {
@@ -247,10 +219,6 @@ body {
 <div class="right_col" role="main">
 	<h1> 생산실적 현황</h1>
 	
-<!-- 	<button id="lineBtn">라인별 생산현황</button> -->
-<!-- 	<button id="prodBtn">품목별 생산현황</button> -->
-<!-- 	<button id="dateBtn">일자별 생산현황</button> -->
-	
 	<div class="tabContainer">
 		
 		<ul class="tabs">
@@ -269,5 +237,4 @@ body {
 
 <%@ include file="../include/footer.jsp"%>
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
-
 <link rel="stylesheet" href="/resources/forTest/performStatus.css">

@@ -10,6 +10,8 @@
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
+<link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
 <c:if test="${empty sessionScope.id}">
     <c:redirect url="/smmain/smMain" />
 </c:if>
@@ -120,16 +122,18 @@ body {
 	<h1 style="margin-left: 1%;"> 재고 관리 </h1>
 	
 	<div style="margin-left: 1%;">
-	    <a href="/stock/stockList_raw" ><input type="button" value="원자재" class="btn btn-info" ></input></a>
-	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="btn btn-info" ></input></a>
+	    <a href="/stock/stockList_raw" ><input type="button" value="원자재" class="B B-info" ></input></a>
+	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" ></input></a>
     </div>
+    
+    <hr>
     
     <div style="margin-left: 1%;">  
 	    <form action="" method="get">
-	 		완제품 코드 <input type="text" name="prod_code" placeholder="완제품 코드를 입력하세요">
-		   	완제품 품명<input type="text" name="product.prod_name" placeholder="품명을 입력하세요">
-		   	창고 코드 <input type="text" name="wh_code" placeholder="창고 코드를 입력하세요"> 
-		   	<input type="submit" class="btn btn-info" value="검색"></input>
+	 		완제품 코드 : <input type="text" name="prod_code" placeholder="완제품 코드를 입력하세요">
+		   	완제품 품명 : <input type="text" name="product.prod_name" placeholder="품명을 입력하세요">
+		   	창고 코드 : <input type="text" name="wh_code" placeholder="창고 코드를 입력하세요"> 
+		   	<input type="submit" class="B B-info" value="검색"></input>
 	  	</form>
   	</div>
 	
@@ -140,8 +144,8 @@ body {
 			<form id="fr" method="post">
 			
 				<div class="x_title">
-					<h2>완제품 목록</h2>
-					<span style="float: right; margin-top: 1%;">총 ${bp.totalCount } 건</span>
+					<h2>완제품 목록<small>총 ${bp.totalCount } 건</small></h2>
+					
 						<div class="clearfix"></div>
 				</div>	
 					
@@ -171,7 +175,7 @@ body {
 					   		<td>${s.wh_code}</td>
 					   		<td>${s.warehouse.emp_id}</td>
 					   		<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
-					   			<td><input type="button" onclick="stockPopup('${s.prod_code}')" value="수정"></td>
+					   			<td><input type="button" class="B B-info" onclick="stockPopup('${s.prod_code}')" value="수정"></td>
 				   			</c:if>
 					 	</tr>
 					</c:forEach>
@@ -181,8 +185,9 @@ body {
 	</div>
 </div>     
            		
+// ============  애령
 	<div>
-	    <c:if test="${countP3 > 10 }">
+	    <c:if test="${countP3 > 0 }">
 			<c:if test="${bp.prev}">
 			    <span><a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
 			</c:if>
@@ -193,38 +198,32 @@ body {
 			
 			<c:if test="${bp.next && bp.endPage > 0}">
 			    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
+
+  // ============  
+        
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+		    <c:if test="${countP3 > 10 }">
+			<li class="paginate_button previous disabled">
+				<c:if test="${bp.prev}">
+				    <span><a href="/stock/stockList_prod?page=${bp.startPage - 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">이전</a></span>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+				    <a href="/stock/stockList_prod?page=${idx }&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">${idx }</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:if test="${bp.next && bp.endPage > 0}">
+				    <a href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
+				</c:if>
+			</li>
+// ============  
 			</c:if>
-		</c:if>
+		</ul>
 	</div>
-	
-	<div id="graph">
-		<h1>Stock Graph</h1>
-		<span id="wh_code" style="width: 10%; height: 10%;"></span>
-	<!-- 	<span id="wh_dv" style="width: 10%; height: 10%;"></span> -->
-	</div>
-	
-	<br>
-	
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
