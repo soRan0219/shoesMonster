@@ -96,24 +96,11 @@ body {
 	
 	// ==================================== 버튼 =================================================
 		
-	// 추가 //
-	//날짜 + 시간 + 분 + 초 ==> 코드
+	
+	
     function codeCreation() {
-		
-    	Date.prototype.getYearYY = function(){
-            var a = this.getYear();
-            return a >= 100 ? a-100 : a;
-          }
-		
-        var date = new Date();
-        var YY_year = date.getYearYY();
-        var month = ("0" + (1 + date.getMonth())).slice(-2);
-        var day = ("0" + date.getDate()).slice(-2);
-        var time = ("0" + date.getHours()).slice(-2);
-        var minute = ("0" + date.getMinutes()).slice(-2);
-        var second = ("0" + date.getSeconds()).slice(-2);
-
-        return YY_year + month + minute + second;
+    	
+		return prodCode;
     }
 	
 	// input으로 바꾸기
@@ -128,7 +115,11 @@ body {
 // 			alert("제발");
 			$('#updateButton').attr("disabled", true);
 			$('#deleteButton').attr("disabled", true);
-
+			
+			var counter = 0;
+		    var codeNum = 0;
+		   	var clientCode = 0;
+			
 			if ($(this).hasClass('true')) {
 
 				var tbl = "<tr>";
@@ -165,7 +156,7 @@ body {
 				tbl += " </td>";
 				// 담당자
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_name' id='client_name' required>";
+				tbl += "  <input type='text' name='client_name' id='client_name' value=<c:out value='${sessionScope.id.emp_name}'/> required>";
 				tbl += " </td>";
 				// 주소
 				tbl += " <td>";
@@ -200,14 +191,56 @@ body {
 				$('table').append(tbl);
 				
 				
-				$("#client_type").on("change", function(){
-				if($("#client_type option:selected").val() === '수주처' ){
-					$('input[name="client_code"]').val('OR'+codeCreation());
-				} else if($("#client_type option:selected").val() === '발주처' ){
-					$('input[name="client_code"]').val('CL'+codeCreation());
-				}
+// 				$("#client_type").on("change", function(){
+// 				if($("#client_type option:selected").val() === '수주처' ){
+// 					$('input[name="client_code"]').val('OR'+clientCode);
+// 				} else if($("#client_type option:selected").val() === '발주처' ){
+// 					$('input[name="client_code"]').val('CL'+clientCode);
+// 				}
+					
+					var selectedOption = "";
+				    $('#client_type').on('change', function() {
+				    	selectedOption = $(this).val(); // 선택된 옵션의 값 가져오기
+						getClientCode();
+				    });
+				    
+				    function getClientCode (){
+				    	var jsonObj = {client_type : selectedOption};
+					    $.ajax({
+							url: "/person/clientCode",
+							type: "POST",
+							contentType : "application/json; charset=UTF-8",
+				 			data: JSON.stringify(jsonObj),
+				 			success: function (data) {
+// 	 							alert(data);
+								
+								 
+				 				 var num = parseInt(data.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
+//	 			 				 alert("num : "+num);
+				  				 var paddedNum = padNumber(num, data.length - 1); // 숫자를 패딩하여 길이 유지
+				  				 clientCode = data.substring(0,2) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
+							   	        
+// 				  				alert(clientCode);
+				  				 
+								$('#client_code2').val(clientCode);
+								
+							}//success
+				        });//ajax
+					}
+
+//	 			    counter++;
+//	 			} // someFunction(data)
 				
-				});
+				function padNumber(number, length) {
+//	 				alert("padNum");
+	                var paddedNumber = number.toString();
+	                while (paddedNumber.length < length-1) {
+	                    paddedNumber = "0" + paddedNumber;
+	                }
+	                return paddedNumber;
+	        } // padNumber(number, length)
+				
+// 				});
 				
 				$(this).removeClass('true');
 			} // true 클래스 있을 때

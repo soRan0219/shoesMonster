@@ -127,7 +127,7 @@
 	<!-- 거래처 목록 불러오기 -->
 	<select id="listAll" resultType="com.sm.domain.ClientsVO">
 		select * from clients
-		order by client_code ASC
+		order by client_code desc
 		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 거래처 목록 불러오기 -->
@@ -155,6 +155,7 @@
 				AND client_type=#{search_client_type}
 			</if>
 		</where>
+		order by client_code desc
 		limit #{startPage}, #{pageSize}
 	</select>
 	<!-- 거래처 검색 -->
@@ -187,6 +188,16 @@
 			   #{client_addr2}, #{client_tel}, #{client_phone}, #{client_fax}, #{client_email}, #{client_note})
 	</insert>
 	<!-- 거래처 추가 -->
+	
+	<!-- 거래처 추가 코드  -->
+	<select id="getClientCode" resultType="String">
+		select client_code
+		from clients
+		where client_type = #{client_type}
+		order by client_code desc
+		limit 1
+	</select>
+	<!-- 거래처 추가 코드  -->
 	
 	<!-- 거래처 삭제 -->
 	<delete id="deleteClient">

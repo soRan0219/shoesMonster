@@ -28,6 +28,7 @@ import com.sm.domain.ClientPageMaker;
 import com.sm.domain.ClientPageVO;
 import com.sm.domain.ClientsVO;
 import com.sm.domain.EmployeesVO;
+import com.sm.domain.LineVO;
 import com.sm.domain.ManagementVO;
 import com.sm.domain.OrderStatusVO;
 import com.sm.domain.ProductVO;
@@ -397,6 +398,17 @@ public class PersonController {
 		
 		return "redirect:/person/Clients";
 	} 
+	
+		// 거래처 추가 시 code값 가져가기
+		@ResponseBody
+		@RequestMapping(value = "/clientCode", method = RequestMethod.POST)
+		public String getClientCode(@RequestBody ClientsVO cvo) throws Exception{ 
+			logger.debug("@@@ client_type : "+cvo.getClient_type());
+			
+			logger.debug("@@@ cnotroller type :"+clService.getClientCode(cvo.getClient_type()));
+			
+			return clService.getClientCode(cvo.getClient_type());
+		}
 	
 	// 거래처 삭제
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
