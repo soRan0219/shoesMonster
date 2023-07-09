@@ -287,7 +287,7 @@ body {
 					
 					$(this).addClass('selected');
 					//작업지시 코드 저장
-					let updateCode = $(this).find('#workCode').text().trim();
+					let updateCode = $(this).find('#workCode').text().substring(0,16).trim();
 					console.log(updateCode);
 	
 					var jsonData = {
@@ -404,7 +404,7 @@ body {
 				
 				// td 요소 중 첫번째 열 체크박스로 바꾸고 해당 행의 작업 지시 코드 저장
 				$('table tr').each(function() {
-					var code = $(this).find('td:nth-child(2)').text();
+					var code = $(this).find('td:nth-child(2)').text().substring(0,16).trim();
 	
 					var tbl = "<input type='checkbox' name='selected' value='";
 					tbl += code;
@@ -733,7 +733,7 @@ body {
 		<button id="delete" class="true B B-info">삭제</button>
 		<button type="reset" id="cancle" class="B B-info">취소</button>
 		<button type="submit" id="save" class="B B-info">저장</button>
-		<button onclick="location.href='/workorder/workOrderList'" class="B B-info">새로고침</button>
+		<button onclick="location.href='/workorder/workOrderList?input=${param.input }'" class="B B-info">새로고침</button>
 	</div>	
 		<script>
 		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
@@ -788,7 +788,9 @@ body {
 						<th>지시일</th>
 						<th>지시수량</th>
 						<th>공정</th>
-						<th>마감</th>
+						<c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}">
+							<th>마감</th>
+						</c:if>
 					</tr>
 				</thead>
 				
@@ -802,7 +804,9 @@ body {
 						<td>${w.work_date }</td>
 						<td id="workQt">${w.work_qt }</td>
 						<td id="linePlace">${w.line_place }</td>
-						<td><a href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a></td>
+						<c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}">
+							<td><a href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a></td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</table>
@@ -908,5 +912,4 @@ body {
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/forTest/sm.css"> 
-<!-- <link rel="stylesheet" href="/resources/forTest/workOrderList.css"> -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
