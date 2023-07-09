@@ -140,8 +140,8 @@
 	
 	<!-- 거래처 검색 -->
 	<select id="searchClientsList" parameterType="hashMap" resultType="com.sm.domain.ClientsVO">
-<!-- 		<bind name="client_code" value="'%' + search_client_code + '%'"/> -->
-<!-- 		<bind name="client_actname" value="'%' + search_client_actname + '%'"/> -->
+		<bind name="client_code" value="'%' + search_client_code + '%'"/>
+		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
 		
 		select * from clients
 		<where>
@@ -161,8 +161,8 @@
 	
 	<!-- 거래처 검색 개수 -->
 	<select id="searchClientCnt" parameterType="hashMap" resultType="int">
-<!-- 		<bind name="client_code" value="'%' + search_client_code + '%'"/> -->
-<!-- 		<bind name="client_actname" value="'%' + search_client_actname + '%'"/> -->
+		<bind name="client_code" value="'%' + search_client_code + '%'"/>
+		<bind name="client_actname" value="'%' + search_client_actname + '%'"/>
 	
 		select count(*) from clients
 		<where>
@@ -241,14 +241,14 @@
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
 		JOIN employees e ON e.emp_id = o.emp_id
+		order by order_code ASC
 		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
 	
 	<!-- 수주 현황 전체 개수 -->
 	<select id="orderStatusALLcnt" resultType="int">
-		select count(*) 
-		from orders 
+		select count(*) from orders 
 	</select>
 	<!-- 수주 현황 전체 개수 -->
 	
@@ -302,6 +302,7 @@
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
 			</if> 
 		</where>
+		order by order_code ASC
 		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 수주현황 검색 -->
