@@ -35,7 +35,7 @@ body {
 	
 	// 발주 팝업
 	function roPopup() {
-		window.open("roPopup","거래처 목록","width=800, height=700, left=500, top=150, location=no");
+		window.open("roPopup","거래처 목록","width=950, height=645, left=500, top=150, location=no");
 	}
 	
 	// 발주 현황 상세페이지
@@ -161,16 +161,15 @@ function toggleDiv(divId) {
 	
     </div>
 
-    <hr>
 
     <div id="list">
 	    <form action="" method="get" style="margin: 0 0 1% 1%; ">
-		    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요">
-		   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요">
-	<!-- 	   		품명 <input type="text" name="raw_name" placeholder="품명을 입력하세요"> -->
-		   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요"> 
-	<!-- 	   	발주 날짜 <input type="date" id="start_date" max=""> ~ <input type="date" id="end_date" max="2023-06-18"> -->
+    	<hr>
+		    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요."> &nbsp;
+		   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요."> &nbsp;
+		   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요."> &nbsp; &nbsp;
 		   	<input type="submit" class="B B-info" value="검색"></input>
+		 <hr>
 	    </form>
     
     <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
@@ -227,9 +226,30 @@ function toggleDiv(divId) {
 							</tbody>
 						</table>
 					</form>
-					
-					<button id="excelDownload">엑셀 다운로드</button>
+			<div style="display: inline;">
+			<div style="text-align: right;">
+				<c:if test="${count1 > 0 }">
+				<c:if test="${bp.prev}">
 	
+				    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+	
+				</c:if>
+				
+				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+				    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+				</c:forEach>
+				
+				<c:if test="${bp.next && bp.endPage > 0}">
+	
+				    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+	
+				</c:if>
+			</c:if>
+			</div>
+		
+					
+					<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
+			</div>
 	<script type="text/javascript">
 	function getToday() {
 		var date = new Date();
@@ -292,28 +312,14 @@ function toggleDiv(divId) {
         } //s2ab(s)
     </script>
     <!-- 엑셀 - 끝 -->
+			
+			
 					
 				</div>
 			</div>
 		</div>
 		<div>
-   		<c:if test="${count1 > 10 }">
-			<c:if test="${bp.prev}">
-
-			    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
-
-			</c:if>
-			
-			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-			    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-			</c:forEach>
-			
-			<c:if test="${bp.next && bp.endPage > 0}">
-
-			    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
-
-			</c:if>
-		</c:if>
+   		
 		
 		
 		
@@ -341,17 +347,17 @@ function toggleDiv(divId) {
 
 		<form action="" method="post" onsubmit="return check()">
 			<c:set var="today" value="<%=new Date()%>" />
-
+			<hr>
 			<table border="1">
 			<tr>
 				<th>입고 창고</th>
 				<td onclick="roPopup();"><input type="text" name="wh_code" id="wh_code" readonly></td>
 			</tr>
 		</table>
+		<hr>
 			<br>
 						<div class="table-responsive">
-							<table id="table"
-								class="table table-striped jambo_table bulk_action">
+							<table id="table" class="table table-striped jambo_table bulk_action">
 								<thead>
 									<tr class="headings">
 										<th class="column-title">발주일</th>
@@ -371,7 +377,7 @@ function toggleDiv(divId) {
 								<tbody>
 
 									<tr class="even pointer">
-										<td class=" "><input type="text" name="raw_order_date"
+										<td class=" "><input type="text" style="width: 100px;" name="raw_order_date"
 											value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>"
 											readonly></td>
 										<td class=" " onclick="roPopup();"><input type="text" 
@@ -384,7 +390,7 @@ function toggleDiv(divId) {
 											name="raw_name" id="raw_name" readonly></td>
 										<td class=" " onclick="roPopup();"><input type="text" 
 											name="raw_color" id="raw_color" readonly></td>
-										<td class=" "><input type="number"  min="1"
+										<td class=" "><input type="number"  min="1" 
 											id="raw_order_count" name="raw_order_count"
 											oninput="totalAmount()"></td>
 										<!-- CSS할 때 증감버튼 없애기 -->

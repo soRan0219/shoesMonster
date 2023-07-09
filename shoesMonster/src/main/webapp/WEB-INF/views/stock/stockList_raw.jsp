@@ -41,17 +41,17 @@ body {
 	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" ></input></a>
 	</div>
 	
-	<hr>
 	
 	<div style="margin-left: 2%;">    
+	<hr>
 		<form action="" method="get">
-	 		원자재 코드 : <input type="text" name="raw_code" placeholder="원자재 코드를 입력하세요">
-		   	원자재 품명 : <input type="text" name="raw_mat.raw_name" placeholder="원자재 품명을 입력하세요">
-		   	창고 코드 : <input type="text" name="wh_code" placeholder="창고 코드 입력하세요"> 
+	 		원자재 코드 <input type="text" name="raw_code" placeholder="원자재 코드를 입력하세요."> &nbsp;
+		   	원자재 품명 <input type="text" name="raw_mat.raw_name" placeholder="원자재 품명을 입력하세요."> &nbsp;
+		   	창고 코드 <input type="text" name="wh_code" placeholder="창고 코드를 입력하세요."> &nbsp; &nbsp;
 		   	<input type="submit" class="B B-info" value="검색"></input>
 		</form>
+	<hr>
 	</div>
-
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 			<form id="fr">
@@ -103,49 +103,32 @@ body {
 			   </table>
 			</div>
  		</form>
+ 		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+			<ul class="pagination">
+			    <c:if test="${countR3 > 0 }">
+					<li class="paginate_button previous disabled"> 
+						<c:if test="${bp.prev}">
+						    <span><a href="/stock/stockList_raw?page=${bp.startPage - 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">Previous</a></span>
+						</c:if>
+					</li>
+					<li class="paginate_button previous disabled">
+						<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+						    <a href="/stock/stockList_raw?page=${idx }&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">${idx }</a>
+						</c:forEach>
+					</li>
+					<li class="paginate_button previous disabled">
+						<c:if test="${bp.next && bp.endPage > 0}">
+						    <a href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">Next</a>
+						</c:if>
+					</li>
+				</c:if>
+			</ul>
+		</div>
 	</div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	      
            		
-<!-- ㅇㅇㅇㅇㅇ -->
-	<div>
-	    <c:if test="${countR3 > 0 }">
-			<c:if test="${bp.prev}">
-			    <span><a class="btn btn-secondary" href="/stock/stockList_raw?page=${bp.startPage - 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">이전</a></span>
-			</c:if>
-			
-			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-			    <a class="btn btn-secondary" href="/stock/stockList_raw?page=${idx }&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">${idx }</a>
-			</c:forEach>
-			
-			<c:if test="${bp.next && bp.endPage > 0}">
-			    <a class="btn btn-secondary" href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">다음</a>
-
-		</c:if>
-		</c:if>
-<!-- ㅇㅇㅇㅇㅇ -->
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-		<ul class="pagination">
-		    <c:if test="${countR3 > 10 }">
-				<li class="paginate_button previous disabled"> 
-					<c:if test="${bp.prev}">S
-					    <span><a href="/stock/stockList_raw?page=${bp.startPage - 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">Previous</a></span>
-					</c:if>
-				</li>
-				<li class="paginate_button previous disabled">
-					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-					    <a chref="/stock/stockList_raw?page=${idx }&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">${idx }</a>
-					</c:forEach>
-				</li>
-				<li class="paginate_button previous disabled">
-					<c:if test="${bp.next && bp.endPage > 0}">
-					    <a href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">Next</a>
-					</c:if>
-				</li>
-<!-- ㅇㅇㅇㅇㅇ -->
-			</c:if>
-		</ul>
-	</div>
+	
 	
 </div>
 
