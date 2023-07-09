@@ -185,7 +185,7 @@ body {
 	</div>
 </div>     
            		
-// ============  애령
+<!-- ㅇㅇㅇㅇㅇ -->
 	<div>
 	    <c:if test="${countP3 > 0 }">
 			<c:if test="${bp.prev}">
@@ -198,8 +198,9 @@ body {
 			
 			<c:if test="${bp.next && bp.endPage > 0}">
 			    <a class="btn btn-secondary" href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
-
-  // ============  
+			</c:if>
+		</c:if>
+  <!-- ㅇㅇㅇㅇㅇ -->  
         
 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
@@ -219,7 +220,7 @@ body {
 				    <a href="/stock/stockList_prod?page=${bp.endPage + 1}&prod_code=${svo.prod_code }&product.prod_name=${svo.prod_code }&wh_code=${svo.wh_code}">다음</a>
 				</c:if>
 			</li>
-// ============  
+<!-- ㅇㅇㅇㅇㅇ -->  
 			</c:if>
 		</ul>
 	</div>

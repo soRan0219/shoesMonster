@@ -188,7 +188,7 @@ body {
 			</div>
 		</div>
       
-// ============    
+<!-- ㅇㅇㅇㅇㅇ -->    
       
  <div>
            <c:if test="${count4 > 10 }">
@@ -211,7 +211,7 @@ body {
         </div>     
       
       
-// ============  
+<!-- ㅇㅇㅇㅇㅇ --> 
 		
 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
