@@ -171,19 +171,19 @@ $(function() {
 			tbl += " </td>";
 			// 사원번호
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_id' id='emp_id' readonly>";
+			tbl += "  <input type='text' name='emp_id' id='emp_id' readonly class='input-fielda'>";
 			tbl += " </td>";
 			// 비밀번호
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_pw' id='emp_pw' required>";
+			tbl += "  <input type='text' name='emp_pw' id='emp_pw' required class='input-fielda'>";
 			tbl += " </td>";
 			// 사원명
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_name' id='emp_name' required>";
+			tbl += "  <input type='text' name='emp_name' id='emp_name' required class='input-fielda'>";
 			tbl += " </td>";
 			// 부서
 			tbl += " <td>";
-			tbl += "  <select name='emp_department' id='emp_department'>";
+			tbl += "  <select name='emp_department' id='emp_department' class='input-fielda'>";
 			tbl += "   <option value='부서'>부서</option>";
 			tbl += "   <option value='영업팀'>영업팀</option>";
 			tbl += "   <option value='생산팀'>생산팀</option>";
@@ -194,23 +194,23 @@ $(function() {
 			tbl += " </td>";
 			// 직책
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_position' id='emp_position' required>";
+			tbl += "  <input type='text' name='emp_position' id='emp_position' required class='input-fielda'>";
 			tbl += " </td>";
 			// 이메일
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_email' id='emp_email' required>";
+			tbl += "  <input type='text' name='emp_email' id='emp_email' required class='input-fielda'>";
 			tbl += " </td>";
 			// 전화번호
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_phone' id='emp_phone' required>";
+			tbl += "  <input type='text' name='emp_phone' id='emp_phone' required class='input-fielda'>";
 			tbl += " </td>";
 			// 입사일자
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_hiredate' id='emp_hiredate' required>";
+			tbl += "  <input type='text' name='emp_hiredate' id='emp_hiredate' required class='input-fielda'>";
 			tbl += " </td>";
 			// 재직구분
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_work' id='emp_work' required>";
+			tbl += "  <input type='text' name='emp_work' id='emp_work' required class='input-fielda'>";
 			tbl += " </td>";
 			tbl += "</tr>";
 
@@ -489,7 +489,24 @@ $(function() {
 	color: white;
 }
 
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+}
 
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
 
 </style>
 
@@ -523,6 +540,7 @@ $(function() {
 		
 		<div class="col-md-12 col-sm-12 ">
 			<div class="x_panel">
+				<div class="table-wrapper">
 				<div class="x_title">
 					<h2>
 						사원 관리 <small> 총 ${pm.totalCount } 명 </small>
@@ -575,19 +593,19 @@ $(function() {
 					<div class="table-responsive">
 						<form id = "fr">
 							<table class="table table-striped jambo_table bulk_action" style="text-align:center">
-//								<colgroup>
-//								    <col style="width: 50px">
-//								    <col style="width: 100px">
-//								    <col style="width: 100px"> 
-//								    <col style="width: 75px">
-//								    <col style="width: 75px">
-//								    <col style="width: 75px">
-//								    <col style="width: 150px">
-//								    <col style="width: 150px">
-//								    <col style="width: 100px">
-//								    <col style="width: 75px">
-//								    <col style="width: 75px">
-//								</colgroup>
+								<colgroup>
+								    <col style="width: 50px">
+								    <col style="width: 100px">
+								    <col style="width: 100px"> 
+								    <col style="width: 75px">
+								    <col style="width: 75px">
+								    <col style="width: 75px">
+								    <col style="width: 150px">
+								    <col style="width: 150px">
+								    <col style="width: 100px">
+								    <col style="width: 75px">
+								    <col style="width: 75px">
+								</colgroup>
 								<tr id=titlebg>
 									<th>번</th>
 									<th>사원번호</th>
@@ -623,6 +641,7 @@ $(function() {
 							</table>
 						</form>
 					</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -647,8 +666,6 @@ $(function() {
 				</li>
 			</ul>
 		</div>
-		
-		
 		<!-- 페이징 -->
 		
 	<!-- 상세보기 모달창 -->
