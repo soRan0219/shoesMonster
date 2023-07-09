@@ -92,7 +92,7 @@
 										<li><a href="../workorder/workOrderList">작업지시 관리</a></li>
 										<li><a href="../performance/performList">생산실적 관리</a></li>
 										<li><a href="../performance/performStatus">생산실적 현황</a></li>
-									</ul></li>
+									</ul></li> 
 								<li><a><i class="fa fa-table"></i> 자재 관리 <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
