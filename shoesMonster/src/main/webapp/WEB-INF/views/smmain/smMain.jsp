@@ -125,17 +125,17 @@ body {
 							fontSize: 25,
 							bold: true
 						},
-						//부제목
-//						    subtitle:'오예',
 						//차트옵션
 						chartArea: {
-							backgroundColor: '#F7F7F7',
-							left: '10%',
+// 							backgroundColor: '#F7F7F7',
+							backgroundColor: '#fff',
+
 							width: '90%',
 							height: '80%'
 						},
 						//배경색
-						backgroundColor: '#F7F7F7',
+// 						backgroundColor: '#F7F7F7',
+						backgroundColor: '#fff',
 						//차트 막대 색
 						colors: ['#1ABB9C', 'rgb(173, 218, 209)', 'rgb(56, 170, 145)'],
 						//줌인 뭐 이런 기능인데 적용 안되는듯
@@ -146,14 +146,13 @@ body {
 						//폰트
 						fontSize: 20,
 						fontName: 'NexonLv2Gothic',
-//							forcelFrame: true
 						//가로축
 						hAxis: {
 							title: name,
 							titleTextStyle: {
 								color: 'gray',
 								fontName: 'NexonLv2Gothic',
-								fontSize: 20
+								fontSize: 15
 							},
 							textStyle: {
 								color: '#000',
@@ -161,7 +160,6 @@ body {
 								fontSize: 17
 							},
 							format: '#,###'
-//								viewWindowMode: 'maximized'
 						},
 						//세로축
 						vAxis: {
@@ -179,21 +177,20 @@ body {
 								fontSize: 13
 							},
 							format: '#,###'
-//								viewWindowMode: 'maximized'
 						},
 						//차트 범례 설정
 						legend: {
 							position: 'top',
 							textStyle: {
 								color: 'gray',
-								fontSize: 16,
+								fontSize: 13,
 								fontName: 'NexonLv2Gothic',
 								bold: true,
 								italic: true
 							},
 							alignment: 'center'
 						},
-//							bars: 'horizontal'  //가로차트 옵션
+//						bars: 'horizontal'  //가로차트 옵션
 				};
 				
 				console.log(options);
