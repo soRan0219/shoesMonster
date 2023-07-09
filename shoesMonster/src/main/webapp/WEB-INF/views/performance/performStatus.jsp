@@ -237,5 +237,4 @@ body {
 
 <%@ include file="../include/footer.jsp"%>
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
-
 <link rel="stylesheet" href="/resources/forTest/performStatus.css">

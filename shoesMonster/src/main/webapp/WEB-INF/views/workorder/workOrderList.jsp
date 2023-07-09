@@ -594,34 +594,12 @@ body {
 		});
 		
 		
-		//검색 결과 없을 때 표, 버튼 다 숨기기
+		//검색 결과 없을 때
 		if(Number($('#total').text())==0) {
 			$('#searchCnt').html("검색 결과가 없습니다.");
 		}
 		
 		//============================ 검색 =========================================//
-		
-		
-		
-		//n건씩 표시
-		$('#perPage').on('change', function() {
-			var pageSize = $(this).val();
-			$('#pageSize').val(pageSize);
-			
-			var queryString = window.location.search;
-			var urlParams = new URLSearchParams(queryString);
-			var isPop = urlParams.get("search_state");
-			$('#search_state').val(isPop);
-			
-			$('#searchForm').submit();
-		});
-		
-		$('#perPage').find('option').each(function(){
-			if($(this).val()===$('#pageSize').val()) {
-				$(this).prop("selected", true);
-			}
-		});
-		//n건씩 표시
 		
 		
 		//작업지시코드 클릭시 상세조회
@@ -720,7 +698,7 @@ body {
 				<div class="x_title">
 					<h2>작업지시 관리</h2>
 					
-					<span id="searchCnt" style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span>
+<%-- 					<span id="searchCnt" style="float: right; margin-top: 1%;">총 ${pm.totalCount } 건</span> --%>
 					<div class="clearfix"></div>
 				</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
@@ -757,10 +735,8 @@ body {
 		<!-- 버튼 제어 -->
 		
 		
-	<div id="body">
-	
+	<div id="searchCnt">
 		총 <span id="total">${pm.totalCount }</span>건
-		
 	</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->			
 	<div style="overflow-x: auto;">

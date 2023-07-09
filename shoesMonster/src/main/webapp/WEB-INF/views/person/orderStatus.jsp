@@ -208,7 +208,7 @@ $(function(){
 			tbl += "<input type='text' name='order_date' id='order_date' required>";
 			tbl += "</td>";
 			// 담당자 코드 히든
-			tbl += "<input type='hidden' name='emp_id' id='emp_id' required readonly>";
+			tbl += "<input type='hidden' name='emp_id' id='emp_id' value=<c:out value='${sessionScope.id.emp_id}'/> required readonly>";
 			// 담당자
 			tbl += "<td>";
 			tbl += "<input type='text' name='emp_name' id='emp_name' value=<c:out value='${sessionScope.id.emp_name}'/> required readonly>";
