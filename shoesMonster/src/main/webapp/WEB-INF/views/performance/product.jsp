@@ -477,6 +477,8 @@ body {
 	</form>
 </div>	
 
+<hr>
+
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
 	
