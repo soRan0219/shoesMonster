@@ -6,8 +6,13 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 
 <%@ include file="../include/header.jsp"%>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweetalert -->
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
@@ -60,13 +65,28 @@ body {
 	// 체크
 	function check() {
 		if(document.getElementById("client_actname").value === "") {
-			alert("발주 항목을 선택해주세요.");
+// 			alert("발주 항목을 선택해주세요.");
+			Swal.fire({
+				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "발주 항목을 선택해주세요"+ "</div>",
+				icon: 'warning',
+				width: '300px',
+			})
 			return false;
 		} else if(document.getElementById("raw_order_count").value === "") {
-			alert("발주 수량을 입력해주세요.");
+// 			alert("발주 수량을 입력해주세요.");
+			Swal.fire({
+				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "발주 수량을 입력해주세요"+ "</div>",
+				icon: 'warning',
+				width: '300px',
+			})
 			return false;
 		} else if(document.getElementById("wh_code").value === "") {
-			alert("입고 창고를 선택해주세요.");
+// 			alert("입고 창고를 선택해주세요.");
+			Swal.fire({
+				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "입고 창고를 선택해주세요"+ "</div>",
+				icon: 'warning',
+				width: '300px',
+			})
 			return false;
 		}
 	}
@@ -166,7 +186,7 @@ function toggleDiv(divId) {
 				
 				<div>
 					<form action="" method="post">
-						<table class="table table-striped jambo_table bulk_action">
+						<table id="data-table" class="table table-striped jambo_table bulk_action">
 							<thead>
 								<tr class="headings">
 									<th></th>
@@ -207,7 +227,72 @@ function toggleDiv(divId) {
 							</tbody>
 						</table>
 					</form>
-
+					
+					<button id="excelDownload">엑셀 다운로드</button>
+	
+	<script type="text/javascript">
+	function getToday() {
+		var date = new Date();
+		
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		
+		return year + "-" + month + "-" + day;
+	} //getToday()
+	
+	
+        //엑셀
+        const excelDownload = document.querySelector('#excelDownload');
+        
+        document.addEventListener('DOMContentLoaded', ()=> {
+            excelDownload.addEventListener('click', exportExcel);
+        });
+        
+        function exportExcel() {
+            //1. workbook 생성
+            var wb = XLSX.utils.book_new();
+            
+            //2. 시트 만들기
+            var newWorksheet = excelHandler.getWorksheet();
+            
+            //3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+            
+            //4. 엑셀 파일 만들기
+            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+            
+            //5. 엑셀 파일 내보내기
+            saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+            
+        } //exportExcel()
+        
+        var excelHandler = {
+            getExcelFileName : function() {
+                return 'performanceList'+getToday()+'.xlsx'; //파일명
+            },
+            getSheetName : function() {
+                return 'Performance Sheet'; //시트명
+            },
+            getExcelData : function() {
+                return document.getElementById('data-table'); //table id
+            },
+            getWorksheet : function() {
+                return XLSX.utils.table_to_sheet(this.getExcelData());
+            }
+        } //excelHandler
+        
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+            var view = new Uint8Array(buf);  
+            for(var i=0; i<s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xFF;
+            }
+            return buf;
+        } //s2ab(s)
+    </script>
+    <!-- 엑셀 - 끝 -->
+					
 				</div>
 			</div>
 		</div>
@@ -229,7 +314,12 @@ function toggleDiv(divId) {
 
 			</c:if>
 		</c:if>
+		
+		
+		
 		</div>
+		
+		
 
 	</div>
     
@@ -312,6 +402,7 @@ function toggleDiv(divId) {
 								</tbody>
 							</table>
 							<input type="submit" class="btn btn-info" value="발주 신청">
+							
 							</div>
 							
 							</form>

@@ -27,7 +27,7 @@ body {
 <script type="text/javascript">
 	
 	function stockPopup(code) {
-		window.open("stockPopup?code=" + code, "재고 상세", "width=600, height=300, left=200, top=150, location=no");
+		window.open("stockPopup?code=" + code, "재고 상세", "width=700, height=300, left=200, top=150, location=no");
 	}
 	
 </script>
@@ -82,20 +82,20 @@ body {
 					 		<th>재고 수량</th>
 					 		<th>창고 코드</th>
 					 		<th>담당자</th>
-					 		<th>수정 버튼</th>
+					 		<th>실수량</th>
 					 	</tr>
 			 		</thead>
 			 	
 			 	<c:forEach var="s" items="${stock_ListR}">
 			             <tr>
-			                 <th>${s.warehouse.wh_dv}</th>
+			                 <td>${s.warehouse.wh_dv}</td>
 			                 <td>${s.raw_code}</td>
 			                 <td>${s.raw_mat.raw_name}</td>
 			                 <td>${s.raw_mat.raw_color}</td>
 			                 <td style="color: ${s.stock_count <= 50 ? 'red' : 'inherit'}">${s.stock_count}</td>
 			                 <td>${s.wh_code}</td>
 			                 <td>${s.warehouse.emp_id}</td>
-			                 <c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
+			                 <c:if test = "${sessionScope.id.emp_department eq '자재팀' or sessionScope.id.emp_department eq '관리자'}">
 			                 	<td><input type="button" onclick="stockPopup('${s.raw_code}')" class="B B-info" value="수정"></td>
 			                 </c:if>
 			             </tr>

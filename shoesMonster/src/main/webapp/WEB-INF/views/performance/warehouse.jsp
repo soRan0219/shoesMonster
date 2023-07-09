@@ -31,6 +31,43 @@ body {
 .selected {
 	background-color: #ccc;
 }
+
+/* 셀렉트 옵션을 가로로 나열하여 버튼으로 꾸미기 위한 스타일 */
+  .custom-select {
+    display: flex;
+  }
+
+  .custom-select select {
+    display: none;
+  }
+
+  .custom-select button {
+    flex: 1;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #000;
+    transition: background-color 0.3s;
+  }
+
+  .custom-select button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    background-image: none;
+  }
+
+
+
 </style>
 
 
@@ -201,11 +238,8 @@ body {
 			})//ajax
 			
 			function someFunction(data) {
-// 				alert("someFunction");
 				 codeNum = data; // 외부에서의 codeNum: [받아온 데이터]
-// 				 alert("codeNum"+codeNum);
 				 var num = parseInt(codeNum.substring(2)) + counter+1; // 문자열을 숫자로 변환하여 1 증가
-// 				 alert("num : "+num);
 				 var paddedNum = padNumber(num, codeNum.length - 2); // 숫자를 패딩하여 길이 유지
 	             whCode = codeNum.charAt(0)+ codeNum.charAt(1) + paddedNum.toString(); // 패딩된 숫자를 다시 문자열로 변환
 	             if ($('#add').hasClass('true')) {
@@ -216,7 +250,6 @@ body {
 			} // someFunction(data)
 			 
 			function padNumber(number, length) {
-// 				alert("padNum");
                 var paddedNumber = number.toString();
                 while (paddedNumber.length < length) {
                     paddedNumber = "0" + paddedNumber;
@@ -246,7 +279,6 @@ body {
 						width: '300px',
 					})
 					
-// 					alert("항목을 모두 입력하세요");
 					
 				}else{
 					$('#fr').attr("action", "/performance/whadd");
@@ -632,6 +664,29 @@ body {
 <div style="margin-left: 1%;">
 	<form method="get">
 		
+		
+		<div class="custom-select">
+					<select name="wh_dv">
+						<option value="전체" ${wvo.wh_dv == null ? 'selected' : ''}>전체</option>
+						<option value="원자재" ${wvo.wh_dv == '원자재' ? 'selected' : ''}>원자재</option>
+						<option value="완제품" ${wvo.wh_dv == '완제품' ? 'selected' : ''}>완제품</option>
+					</select>
+					
+					<button onclick="selectOption(0)">전체</button>
+					<button onclick="selectOption(1)">원자재</button>
+					<button onclick="selectOption(2)">완제품</button>
+				</div>
+
+				<script>
+				  function selectOption(index) {
+				    var select = document.querySelector('.custom-select select');
+				    select.selectedIndex = index;
+				    select.dispatchEvent(new Event('change'));
+				  }
+				</script>
+	
+	
+		
 		<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
 			
@@ -650,12 +705,12 @@ body {
 			<br>
 			
 			<div style="margin-top: 0.5%;">
-				<label>창고유형 : </label>	
-					<select name="wh_dv">
-					  <option value="전체">전체</option>
-					  <option value="원자재">원자재</option>
-					  <option value="완제품">완제품</option>
-					</select>
+<!-- 				<label>창고유형 : </label>	 -->
+<!-- 					<select name="wh_dv"> -->
+<!-- 					  <option value="전체">전체</option> -->
+<!-- 					  <option value="원자재">원자재</option> -->
+<!-- 					  <option value="완제품">완제품</option> -->
+<!-- 					</select> -->
 					
 				<label>사용여부 : </label>
 					<input type="radio" name="wh_use" value="3" checked>전 체
@@ -702,7 +757,7 @@ body {
 	<script>
 	    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
 	
-	    if (team === "물류팀" || team === "관리자") {
+	    if (team === "자재팀" || team === "관리자") {
 	        document.getElementById("add").disabled = false;
 	        document.getElementById("modify").disabled = false;
 	        document.getElementById("delete").disabled = false;
