@@ -37,10 +37,7 @@
 
 <!-- Custom Theme Style -->
 <link href="../resources/build/css/custom.min.css" rel="stylesheet">
-
-<!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
 <link href="../vendors/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
-
 <link href="../vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
 <meta name="robots" content="noindex, nofollow">
 <script defer="" referrerpolicy="origin" src="/cdn-cgi/zaraz/s.js?z=JTdCJTIyZXhlY3V0ZWQlMjIlM0ElNUIlNUQlMkMlMjJ0JTIyJTNBJTIyR2VudGVsZWxsYSUyMEFsZWxhISUyMCU3QyUyMCUyMiUyQyUyMnglMjIlM0EwLjEzMjM0Nzk1ODExNjgxMSUyQyUyMnclMjIlM0ExOTIwJTJDJTIyaCUyMiUzQTEwODAlMkMlMjJqJTIyJTNBOTM3JTJDJTIyZSUyMiUzQTE5MjAlMkMlMjJsJTIyJTNBJTIyaHR0cHMlM0ElMkYlMkZjb2xvcmxpYi5jb20lMkZwb2x5Z29uJTJGZ2VudGVsZWxsYSUyRmNhbGVuZGFyLmh0bWwlMjIlMkMlMjJyJTIyJTNBJTIyaHR0cHMlM0ElMkYlMkZjb2xvcmxpYi5jb20lMkZwb2x5Z29uJTJGZ2VudGVsZWxsYSUyRmluYm94Lmh0bWwlMjIlMkMlMjJrJTIyJTNBMjQlMkMlMjJuJTIyJTNBJTIyVVRGLTglMjIlMkMlMjJvJTIyJTNBLTU0MCUyQyUyMnElMjIlM0ElNUIlNUQlN0Q="></script>

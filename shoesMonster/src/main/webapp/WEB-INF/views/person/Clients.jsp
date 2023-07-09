@@ -648,7 +648,7 @@ body {
 				</script>
 		<!-- 버튼 제어 -->
 
-				<div style="overflow-x: auto;">
+				<div class="table-responsive">
 <!-- 				<div> 화면 벗어나서 일단 스크롤 넣어둠-->
 					<table border="1" id="clientsTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 						<colgroup>
