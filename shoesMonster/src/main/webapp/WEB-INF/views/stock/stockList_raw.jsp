@@ -107,6 +107,20 @@ body {
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	      
            		
+// ============  
+	<div>
+	    <c:if test="${countR3 > 0 }">
+			<c:if test="${bp.prev}">
+			    <span><a class="btn btn-secondary" href="/stock/stockList_raw?page=${bp.startPage - 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">이전</a></span>
+			</c:if>
+			
+			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+			    <a class="btn btn-secondary" href="/stock/stockList_raw?page=${idx }&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">${idx }</a>
+			</c:forEach>
+			
+			<c:if test="${bp.next && bp.endPage > 0}">
+			    <a class="btn btn-secondary" href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">다음</a>
+// ============  
 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
 		    <c:if test="${countR3 > 10 }">
@@ -125,6 +139,7 @@ body {
 					    <a href="/stock/stockList_raw?page=${bp.endPage + 1}&raw_code=${svo.raw_code }&raw_mat.raw_name=${svo.raw_code }&wh_code=${svo.wh_code}">Next</a>
 					</c:if>
 				</li>
+// ============  
 			</c:if>
 		</ul>
 	</div>

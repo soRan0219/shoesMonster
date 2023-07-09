@@ -588,34 +588,12 @@ body {
 		});
 		
 		
-		//검색 결과 없을 때 표, 버튼 다 숨기기
+		//검색 결과 없을 때
 		if(Number($('#total').text())==0) {
 			$('#searchCnt').html("검색 결과가 없습니다.");
 		}
 		
 		//============================ 검색 =========================================//
-		
-		
-		
-		//n건씩 표시
-		$('#perPage').on('change', function() {
-			var pageSize = $(this).val();
-			$('#pageSize').val(pageSize);
-			
-			var queryString = window.location.search;
-			var urlParams = new URLSearchParams(queryString);
-			var isPop = urlParams.get("search_state");
-			$('#search_state').val(isPop);
-			
-			$('#searchForm').submit();
-		});
-		
-		$('#perPage').find('option').each(function(){
-			if($(this).val()===$('#pageSize').val()) {
-				$(this).prop("selected", true);
-			}
-		});
-		//n건씩 표시
 		
 		
 		//작업지시코드 클릭시 상세조회
@@ -713,7 +691,7 @@ body {
 		
 				<div class="x_title">
 					<h2>작업지시 관리<small>총 ${pm.totalCount } 건</small></h2>
-					
+				
 					<div style="float: left;  margin-top: 1.5px;">
 						<c:if test="${empty param.input }">
 							<button onclick="location.href='/workorder/workOrderList'" class="B2 B2-info">↻</button>
@@ -751,13 +729,48 @@ body {
 					    }
 					</script>
 					<!-- 버튼 제어 -->
+
 					<div class="clearfix"></div>
 				</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 
   
+
+    <!-- 버튼 제어 -->
+	<div style="margin-bottom: 1%;">
+		<button id="add" class="true B B-info">추가</button>
+		<button id="modify"class="B B-info">수정</button>
+		<button id="delete" class="true B B-info">삭제</button>
+		<button type="reset" id="cancle" class="B B-info">취소</button>
+		<button type="submit" id="save" class="B B-info">저장</button>
+		<button onclick="location.href='/workorder/workOrderList?input=${param.input }'" class="B B-info">새로고침</button>
+	</div>	
+		<script>
+		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+		
+		    if (team === "생산팀" || team === "관리자") {
+		        document.getElementById("add").disabled = false;
+		        document.getElementById("modify").disabled = false;
+		        document.getElementById("delete").disabled = false;
+		        document.getElementById("cancle").disabled = false;
+		        document.getElementById("save").disabled = false;
+		        document.querySelector("[onclick^='location.href']").disabled = false;
+		    } else {
+		        document.getElementById("add").hidden = true;
+		        document.getElementById("modify").hidden = true;
+		        document.getElementById("delete").hidden = true;
+		        document.getElementById("cancle").hidden = true;
+		        document.getElementById("save").hidden = true;
+		        document.querySelector("[onclick^='location.href']").hidden = true;
+		    }
+		</script>
+		<!-- 버튼 제어 -->
 		
 		
+	<div id="searchCnt">
+		총 <span id="total">${pm.totalCount }</span>건
+	</div>
+
 <!-- //////////////////////////////////////////////////////////////////////// -->			
 	<div style="overflow-x: auto;">
 	

@@ -36,15 +36,14 @@ body {
 <!-- page content -->
 <div class="right_col" role="main">
 	
-<%-- 	아이디 확인용 : ${id.emp_id } <br> --%>
 	<h1 style="margin-left: 1%;"> 출고 관리 </h1>
 	
 	
 	<!-- 버튼 제어 -->	
 	<div style="margin-left: 1%;">
-		<input type="button" value="전체" class="B B-info" onclick="showAll()"></input>
-	    <input type="button" value="미출고" class="B B-info" onclick="show1()" id="noMat"></input>
-	    <input type="button" value="출고완료" class="B B-info" onclick="show2()" id="yesMat"></input>
+<!--		<input type="button" value="전체" class="B B-info" onclick="showAll()"></input> -->
+<!--	    <input type="button" value="미출고" class="B B-info" onclick="show1()" id="noMat"></input> -->
+<!--	    <input type="button" value="출고완료" class="B B-info" onclick="show2()" id="yesMat"></input> -->
 	</div>
 	
 	<script>
@@ -107,16 +106,21 @@ body {
 
 </script>	
 	<hr>
+
 		<form method="get" style="margin-left: 1%;">
-			<fieldset>
-	       		<label>출고 번호:</label>
-	        	<input type="text" name="out_num" value="" placeholder="출고 번호를 입력하세요.">
-	        	<label>품명:</label>
-	        	<input type="text" name="prod.prod_name" value="" placeholder="품명을 입력하세요.">
-	        	<label>거래처명:</label>
-	        	<input type="text" name="clients.client_actname" value="" placeholder="거래처명을 입력하세요."> 
-	        	<input type="submit" class="B B-info" value="검색">
-			</fieldset>
+		<fieldset>
+			<button type="submit" value="" class="B B-info" name="orders.out_YN">전체</button>
+	        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" ></input> 
+	        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" ></input> 
+		
+       		<label>출고 번호:</label>
+        	<input type="text" name="out_num" value="" placeholder="출고 번호를 입력하세요.">
+        	<label>품명:</label>
+        	<input type="text" name="prod.prod_name" value="" placeholder="품명을 입력하세요.">
+        	<label>거래처명:</label>
+        	<input type="text" name="clients.client_actname" value="" placeholder="거래처명을 입력하세요."> 
+        	<input type="submit" class="btn btn-info" value="검색">
+		</fieldset>
 		</form>
 
   <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
@@ -166,7 +170,7 @@ body {
 										<td class=" "><fmt:formatNumber value=" ${out.prod.prod_price}" />원</td>
 										<td class=" ">${out.orders.order_deliveryDate}</td>
 										<td class=" ">${out.out_date}</td>
-										<td class=" ">${out.out_YN}</td>
+										<td class=" ">${out.orders.out_YN}</td>
 										<td class=" ">${out.o_emp_id}</td>
 										<td class=" ">
 											<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
@@ -183,10 +187,35 @@ body {
 				</div>
 			</div>
 		</div>
-	</div>	
+      
+// ============    
+      
+ <div>
+           <c:if test="${count4 > 10 }">
+        <c:if test="${bp.prev}">
+
+            <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">이전</a>
+
+        </c:if>
+        
+        <c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+            <a class="btn btn-secondary" href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">${idx}</a>
+        </c:forEach>
+        
+        <c:if test="${bp.next && bp.endPage > 0}">
+
+            <a class="btn btn-secondary" href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">다음</a>
+
+        </c:if>
+        </c:if>
+        </div>     
+      
+      
+// ============  
 		
 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
+      
 		   	<c:if test="${count4 > 10 }">
 			<li class="paginate_button previous disabled">
 				<c:if test="${bp.prev}">

@@ -239,7 +239,15 @@ body {
 				
 				if(wh_code == "" || wh_name == "" || wh_dv == "" ||
 				  emp_id == "" || wh_addr == "" || wh_tel == "" || wh_use == ""){
-					alert("항목을 모두 입력하세요");
+					
+					Swal.fire({
+						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						icon: 'info',
+						width: '300px',
+					})
+					
+// 					alert("항목을 모두 입력하세요");
+					
 				}else{
 					$('#fr').attr("action", "/performance/whadd");
 					$('#fr').attr("method", "POST");
@@ -432,12 +440,34 @@ body {
 				
 				////////////////////////////////////////////////////
 				
+				
 				// 저장 -> 수정완료
 				$('#save').click(function () {
 					
-					$('#fr').attr("action", "/performance/whmodify");
-					$('#fr').attr("method", "POST");
-					$('#fr').submit();
+					var wh_code = $('#wh_code').val();
+					var wh_name = $('#wh_name').val();
+					var wh_dv = $('#wh_dv').val();
+					var wh_addr = $('#wh_addr').val();
+					var wh_tel = $('#wh_tel').val();
+					var wh_use = $('#wh_use').val();
+					var emp_id = $('#emp_id').val();
+					var emp_name = $('#emp_name').val();
+					var wh_note = $('#wh_note').val();
+					
+					if(wh_code == "" || wh_name == "" || wh_dv == "" ||
+					emp_id == "" || wh_addr == "" || wh_tel == "" || wh_use == ""){
+								
+					Swal.fire({
+						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						icon: 'info',
+						width: '300px',
+					})
+					
+					}else{
+						$('#fr').attr("action", "/performance/whmodify");
+						$('#fr').attr("method", "POST");
+						$('#fr').submit();
+					}
 					
 				});//save				
 ///////////////////////////////////////////////////////////////////				

@@ -331,6 +331,8 @@ $(function() {
 							dropDown += "<option value='영업팀'>영업팀</option>";
 							dropDown += "<option value='생산팀'>생산팀</option>";
 							dropDown += "<option value='인사팀'>인사팀</option>";
+							dropDown += "<option value='자재팀'>자재팀</option>";
+							dropDown += "<option value='물류팀'>물류팀</option>";
 							dropDown += "</select>";
 							$(this).html(dropDown);
 							$(this).find('option').each(function() {
@@ -508,6 +510,8 @@ $(function() {
 				    <option value="영업팀">영업팀</option>    
 				    <option value="생산팀">생산팀</option>
 				    <option value="인사팀">인사팀</option>
+				    <option value="자재팀">자재팀</option>
+				    <option value="물류팀">물류팀</option>
 				</select>
 				<input type="submit" class="B B-info" value="조회"> 
 			</form>
@@ -571,7 +575,7 @@ $(function() {
 								<colgroup>
 								    <col style="width: 50px">
 								    <col style="width: 100px">
-								    <col style="width: 100px">
+								    <col style="width: 100px"> 
 								    <col style="width: 75px">
 								    <col style="width: 75px">
 								    <col style="width: 75px">
@@ -595,7 +599,7 @@ $(function() {
 									<th>상세보기</th>
 								</tr>
 								<c:forEach var="vo" items="${empList }">
-									<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀'}">
+									<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀' || vo.emp_department == '자재팀' || vo.emp_department == '물류팀'}">
 										<tr>
 											<td></td>
 											<td id="empCode">${vo.emp_id}</td> <!-- 혦넣 -->

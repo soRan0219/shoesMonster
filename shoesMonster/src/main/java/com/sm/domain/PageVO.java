@@ -10,7 +10,7 @@ public class PageVO {
 	
 	public PageVO() {
 		this.page = 1;
-		this.pageSize = 10;
+		this.pageSize = 8;
 	}
 	
 	public int getPage() {

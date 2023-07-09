@@ -650,8 +650,7 @@ body {
 				실적일 : 
 				<input type="text" id="search_fromDate" name="search_fromDate"> ~ 
 				<input type="text" id="search_toDate" name="search_toDate">
-				<input type="submit" class="B B-info" value="조회">
-				<br>
+				<br><br>
 				라인코드 : <input type="text" id="search_line_code" name="search_line_code">
 				품번 : <input type="text" id="search_prod_code" name="search_prod_code">
 				<br>
@@ -660,6 +659,7 @@ body {
 						  <input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
 						  <input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
 				</div>
+				<input type="submit" class="B B-info" value="조회">
 			</fieldset>
 		</form>
 	</div>
@@ -671,7 +671,7 @@ body {
 		
 			<div class="x_title">
 				<div id="searchCnt">
-					<h2>생산 실적 목록<small id="total">총 ${pm.totalCount }건</small></h2>
+					<h2>생산 실적 목록 총 <small id="total">${pm.totalCount }</small>건</h2>
 				</div>
 				
 			<div style="float: left;  margin-top: 1.5px;">
@@ -860,11 +860,207 @@ body {
 		</div>
 	</div>
 	<!-- 상세보기 모달창 -->
-
+	
+	<br><br><br><br><br><br><br><br><br>
+	
+	<script type="text/javascript">
+	
+		$(function(){
+			
+			let perLineArr = [ ['라인명', '생산수량', '양품', '불량'] ];
+			let perProdArr = [ ['품목명', '생산수량', '양품', '불량'] ];
+			let perDateArr = [ ['생산일자', '생산수량', '양품', '불량'] ];
+			
+			$.ajax({
+				url: "/performance/status",
+				type: "post",
+				success: function(data) {
+					var line = data.perLine;
+					var prod = data.perProd;
+					var date = data.perDate;
+					
+					for(var i=0; i<line.length; i++) {
+						var arr = [
+							line[i].workOrder.line_code,
+							line[i].perform_qt,
+							line[i].perform_fair,
+							line[i].perform_defect
+						];
+						perLineArr.push(arr);
+					}
+					for(var i=0; i<prod.length; i++) {
+						var arr = [
+							prod[i].prod_code,
+							prod[i].perform_qt,
+							prod[i].perform_fair,
+							prod[i].perform_defect
+						];
+						perProdArr.push(arr);
+					}
+					for(var i=0; i<date.length; i++) {
+						var arr = [
+							getDate(date[i].perform_date),
+							date[i].perform_qt,
+							date[i].perform_fair,
+							date[i].perform_defect
+						];
+						perDateArr.push(arr);
+					}
+					
+					console.log("라인별: " + perLineArr);
+					console.log("품목별: " + perProdArr);
+					console.log("일자별: " + perDateArr);
+					
+					drawGoogleChart("라인", perLineArr, 'chart_line');
+					drawGoogleChart("품목", perProdArr, 'chart_prod');
+					drawGoogleChart("생산일자", perDateArr, 'chart_date');
+					
+				},
+				error: function() {
+					alert("실패실패실패");
+				}
+			}); //ajax
+			
+			function drawGoogleChart(name, array, id) {
+				
+				// Load the Vis ualization API and the piechart package.
+				google.charts.load('current', {'packages':['bar']});
+				
+				// Set a callback to run when the Google Visualization API is loaded.
+				google.charts.setOnLoadCallback(drawChart);
+				
+				// Callback that creates and populates a data table, 
+				// instantiates the pie chart, passes in the data and draws it.
+				function drawChart() {
+					
+					// Create the data table.
+					var data = new google.visualization.arrayToDataTable(array);
+					
+					// Set chart options
+					var options = {
+							width: 800,
+							height: 500,
+							padding: {
+								top: 10,
+								bottom: 10,
+							},
+							//차트 제목
+							title: name + '별 생산실적 현황',
+							titlePosition: 'out',
+							titleTextStyle: {
+								fontSize: 25,
+								bold: true
+							},
+							//차트옵션
+							chartArea: {
+								backgroundColor: '#F7F7F7',
+								left: '10%',
+								width: '90%',
+								height: '80%'
+							},
+							//배경색
+							backgroundColor: '#F7F7F7',
+							//차트 막대 색
+							colors: ['#1ABB9C', 'rgb(173, 218, 209)', 'rgb(56, 170, 145)'],
+							//줌인 뭐 이런 기능인데 적용 안되는듯
+// 							explorer: {
+// 								axis: 'horizontal',
+// 								actions: ['dragToZoom', 'rightClickToReset']
+// 							},
+							//폰트
+							fontSize: 20,
+							fontName: 'NexonLv2Gothic',
+							//가로축
+							hAxis: {
+								title: name,
+								titleTextStyle: {
+									color: 'gray',
+									fontName: 'NexonLv2Gothic',
+									fontSize: 20
+								},
+								textStyle: {
+									color: '#000',
+									fontName: 'NexonLv2Gothic',
+									fontSize: 17
+								},
+								format: '#,###'
+							},
+							//세로축
+							vAxis: {
+								titleTextStyle: {
+									fontSize: 20
+								},
+								//세로축 선(=> 가로선)
+								gridlines: {
+// 									color: 'red',
+// 									minSpacing: 2
+								},
+								textStyle: {
+									color: '#000',
+									fontName: 'NexonLv2Gothic',
+									fontSize: 13
+								},
+								format: '#,###'
+							},
+							//차트 범례 설정
+							legend: {
+								position: 'top',
+								textStyle: {
+									color: 'gray',
+									fontSize: 16,
+									fontName: 'NexonLv2Gothic',
+									bold: true,
+									italic: true
+								},
+								alignment: 'center'
+							},
+// 							bars: 'horizontal'  //가로차트 옵션
+					};
+					
+					console.log(options);
+					
+					// Instantiate and draw our chart, passing in some options.
+					var chart = new google.charts.Bar(document.getElementById(id));
+					chart.draw(data, google.charts.Bar.convertOptions(options));
+				} //drawChart()
+				
+			} //drawGoogleChart()
+			
+			
+			$('ul.tabs li').click(function() {
+				var tab_id = $(this).attr('data-tab');
+				
+				$('ul.tabs li').removeClass('current');
+				$('.tab-content').removeClass('current');
+				
+				$(this).addClass('current');
+				$('#'+tab_id).addClass('current');
+			});
+			
+		}); //jQuery
+	</script>
+	
+	
+	<div class="tabContainer">
+		
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="chart_line">라인별 생산현황</li>
+			<li class="tab-link" data-tab="chart_prod">품목별 생산현황</li>
+			<li class="tab-link" data-tab="chart_date">일자별 생산현황</li>
+		</ul>
+		
+		<div id="chart_line" class="tab-content current"></div>
+		<div id="chart_prod"  class="tab-content"></div>
+		<div id="chart_date"  class="tab-content"></div>
+	</div>
+	
 	
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/forTest/sm.css"> 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="/resources/forTest/sm.css">
+<link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
+<link rel="stylesheet" href="/resources/forTest/performStatus.css"> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

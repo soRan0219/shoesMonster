@@ -444,7 +444,7 @@ public class stockController {
 						bp.setTotalCount(countP3);
 						
 						model.addAttribute("stock_ListP", stock_ListP);
-						model.addAttribute("count3", countP3);
+						model.addAttribute("countP3", countP3);
 						model.addAttribute("bp", bp);
 						request.setAttribute("svo", svo);
 				}
@@ -625,6 +625,7 @@ public class stockController {
 
     	    o_service.deleteStock(order_count, prod_code); // 재고 빠짐
     	    o_service.omButton(order_code, emp_id); // 출고 처리 메서드 호출
+    	    o_service.updateYN(order_code);
 
     	    return "redirect:/stock/Out_material";
     	}
@@ -637,6 +638,7 @@ public class stockController {
     	public void Out_material(PageVO vo, HttpServletRequest request, Model model ,Out_materialVO rvo) throws Exception {
             
     		if((rvo.getOut_num() !=null && !rvo.getOut_num().equals("")) ||
+    		   (rvo.getOrders().getOut_YN() !=null && !rvo.getOrders().getOut_YN().equals("")) ||
     		   (rvo.getProd().getProd_name() != null && !rvo.getProd().getProd_name().equals("")) ||
     		   (rvo.getClients().getClient_actname() != null && !rvo.getClients().getClient_actname().contentEquals(""))) {
     			
