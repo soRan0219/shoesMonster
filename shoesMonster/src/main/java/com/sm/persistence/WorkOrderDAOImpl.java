@@ -125,8 +125,19 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 		} //if(완제품에 필요한 원자재 재고 있없)
 		
 		return rawExist;
-	} //updateWorkOrder()
+	} //insertWorkOrder()
 
+	//작업지시 등록 - 1차공정 사용 가능 라인코드 가져오기
+	@Override
+	public String getLineCode() throws Exception {
+		logger.debug("##### DAO: getLineCode() 호출");
+		
+		String lineCode = sqlSession.selectOne(NAMESPACE + ".selectLine");
+		logger.debug("##### DAO: lineCode ===> " + lineCode);
+		
+		return lineCode;
+	} //getLineCode()
+	
 	//작업지시 삭제
 	@Override
 	public void deleteWorkOrder(List<String> checked) throws Exception {
@@ -274,5 +285,6 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 		logger.debug("##### DAO: updateStatus() 호출");
 		sqlSession.update(NAMESPACE + ".updateStatus", vo);
 	} //updateStatus()
+
 
 } //WorkOrderDAOImpl
