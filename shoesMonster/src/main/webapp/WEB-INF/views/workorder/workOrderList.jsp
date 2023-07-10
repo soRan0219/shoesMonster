@@ -703,11 +703,11 @@ body {
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				<span>라인코드 : </span> <input type="text" name="search_line" id="search_line" class="searchInputText"> 
+				<span>라인코드 : </span> <input type="text" name="search_line" id="search_line" class="searchInputText" placeholder="라인코드를 선택하세요."> 
 				<span>지시일자 : </span> 
-					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off"> ~ 
-					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off"> 
-				<span>품번 : </span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
+					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
+					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요."> 
+				<span>품번 : </span> <input type="text" name="search_prod" id="search_prod" class="searchInputText" placeholder="품목을 선택하세요">
 				<input type="submit" value="조회" class="B B-info"> 
 				<br><br>
 				<span>지시상태 : </span> 

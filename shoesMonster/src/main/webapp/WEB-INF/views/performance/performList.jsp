@@ -672,13 +672,13 @@ body {
 		<form id="searchForm" method="get">
 			<fieldset>
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				작업지시코드 : <input type="text" id="search_work_code" name="search_work_code">
+				작업지시코드 : <input type="text" id="search_work_code" name="search_work_code" placeholder="작업지시코드를 선택하세요.">
 				실적일 : 
-				<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off"> ~ 
-				<input type="text" id="search_toDate" name="search_toDate" autocomplete="off">
+				<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
+				<input type="text" id="search_toDate" name="search_toDate" autocomplete="off" placeholder="기간을 선택하세요">
 				<br><br>
-				라인코드 : <input type="text" id="search_line_code" name="search_line_code">
-				품번 : <input type="text" id="search_prod_code" name="search_prod_code">
+				라인코드 : <input type="text" id="search_line_code" name="search_line_code" placeholder="라인코드를 선택하세요.">
+				품목코드 : <input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요">
 				<input type="submit" class="B B-info" value="조회">
 				<br>
 				<div style="margin-top: 0.5%;">

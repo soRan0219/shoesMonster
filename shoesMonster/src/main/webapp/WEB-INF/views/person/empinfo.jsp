@@ -526,9 +526,9 @@ $(function() {
 	       		<input type="hidden" name="input" id="input" value="${input }">
 	       		<input type="hidden" name="pageSize" id="pageSize" value="${pm.clientPageVO.pageSize }">
 	       		사원번호
-	        	<input type="text" name="search_emp_id" id="search_emp_id">
+	        	<input type="text" name="search_emp_id" id="search_emp_id" placeholder="사원번호를 입력하세요.">
 	        	사원명
-	        	<input type="text" name="search_emp_name" id="search_emp_name">
+	        	<input type="text" name="search_emp_name" id="search_emp_name" placeholder="사원명을 입력하세요.">
 	        	부서
 	       		<select name="search_emp_department">           
 					<option selected value="전체">전체</option>    

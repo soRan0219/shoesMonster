@@ -533,14 +533,15 @@ body {
 		<form action="" method="get">
 			<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
-	       		<label>품번 : </label>
-	        	<input type="text" name="raw_code" id="searchCode">
+	       		<label>원자재코드 : </label>
+	        	<input type="text" name="raw_code" id="searchCode" placeholder="원자재코드를 입력하세요.">
+	        	<label>원자재명 : </label>
+	        	<input type="text" name="raw_name" id="searchCategory" placeholder="원자재명을 입력하세요."> 
 	        	<label>거래처명 : </label>
-	        	<input type="hidden" name="client_code" id="client_code9999">
-	        	<input type="text" name="clients.client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-	        	<label>품명 : </label>
-	        	<input type="text" name="raw_name" id="searchCategory"> 
-	        	<input type="submit" class="B B-info" value="검색">
+	        	<input type="hidden" name="client_code" id="client_code9999" >
+	        	<input type="text" name="clients.client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')">
+	        	<input type="submit" class="B B-info" value="조회">
+	        	
 			</fieldset>
 		</form>
 	</div>	
