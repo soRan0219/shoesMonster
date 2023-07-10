@@ -11,7 +11,13 @@
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
+<link href="../resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<!-- bootstrap-progressbar -->
+<link
+	href="../resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
+	rel="stylesheet">
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
 
 <!-- Custom Theme Style -->
@@ -24,6 +30,7 @@
 
 body {
 	font-family: 'NexonLv2Gothic';
+	background-color: #fff;
 }
 </style>
 <!-- 폰트 -->
@@ -51,8 +58,9 @@ body {
 // 					window.opener.location.reload();
 					
 					Swal.fire({
-						title : "<div style='color:#3085d6;font-size:15px;font-weight:lighter'>"+obj.name + "의 재고 수량이 \n " 
+						title : "<div style='color:#495057;font-size:15px;font-weight:lighter'>"+obj.name + "의 재고 수량이 \n " 
 																						+ obj.stock_count +" 개로 수정되었습니다",
+						
 						icon : 'success',
 						width: '250px',
 
@@ -68,7 +76,7 @@ body {
 				error : function(){
 // 					alert("올바른 수량을 입력해주세요.");
 					Swal.fire({
-						title : "<div style='color:#3085d6;font-size:15 px;font-weight:lighter'>"+ "올바른 수량을 입력해주세요",
+						title : "<div style='color:#495057;font-size:15 px;font-weight:lighter'>"+ "올바른 수량을 입력해주세요",
 						icon : 'question',
 						width: '250px',
 						});
@@ -89,9 +97,9 @@ body {
 	
 	<!-- 여기까지 삭제 -->
 <div class="x_panel" style="margin-bottom: -1%;">
-<div class="x_title">
-	<h1 style="width: 110px;">재고 상세</h1>
-</div>	
+
+	<h1 style="margin-left: 1%;">재고 상세</h1>
+
 <!-- 	<form action="" method="post"> -->
 	
 	<div class="table-responsive">
@@ -110,10 +118,10 @@ body {
 			 		<th class="column-title">창고 코드</th>
 			 		<th class="column-title">담당자</th>
 			 	</tr>
-			 </thead>
+			</thead>
 			<tbody>
-				<tr class="even pointer" onclick="select(this);">
-					<th>${s.warehouse.wh_dv}</th>
+				<tr>
+					<td class=" ">${s.warehouse.wh_dv}</td>
 					<td id="code" class=" ">${s.prod_code}</td>
 					<td id="name" class=" ">${s.product.prod_name}</td>
 					<td class=" ">${s.product.prod_color}</td>
@@ -125,35 +133,42 @@ body {
 				</tr>
 			</c:if>
 			<c:if test="${s.warehouse.wh_dv == '원자재'}">
-				<tr>
-			 		<th>유형</th>
-			 		<th>제품 코드</th>
-			 		<th>제품명</th>
-			 		<th>색상</th>
-			 		<th>재고 수량</th>
-			 		<th>실제 수량</th>
-			 		<th>창고 코드</th>
-			 		<th>담당자</th>
+				<thead>
+				<tr class="headings">
+			 		<th class="column-title">유형</th>
+			 		<th class="column-title">제품 코드</th>
+			 		<th class="column-title">제품명</th>
+			 		<th class="column-title">색상</th>
+			 		<th class="column-title">재고 수량</th>
+			 		<th class="column-title">실제 수량</th>
+			 		<th class="column-title">창고 코드</th>
+			 		<th class="column-title">담당자</th>
 			 	</tr>
-				<tr>
-					<th>${s.warehouse.wh_dv}</th>
-					<td id="code">${s.raw_code}</td>
-					<td id="name">${s.raw_mat.raw_name}</td>
-					<td>${s.raw_mat.raw_color}</td>
-					<td>${s.stock_count}</td>
-					<td><input type="number" id="newCount" name="newCount" min="0"></td>
-					<td>${s.wh_code}</td>
-					<td>${s.warehouse.emp_id}</td>
+			 	</thead>
+			 	<tbody>
+				<tr class="headings">
+					<td class=" ">${s.warehouse.wh_dv}</td>
+					<td id="code" class=" ">${s.raw_code}</td>
+					<td id="name" class=" ">${s.raw_mat.raw_name}</td>
+					<td class=" ">${s.raw_mat.raw_color}</td>
+					<td class=" ">${s.stock_count}</td>
+					<td class=" "><input type="number" id="newCount" name="newCount" min="0"></td>
+					<td class=" ">${s.wh_code}</td>
+					<td class=" ">${s.warehouse.emp_id}</td>
 				</tr>
+				</tbody>
 			</c:if>
 		</c:forEach>
-	</table>
-	<hr>
+		</table>
+
+
 <!-- 	실제 수량 <input type="number" id="newCount" name="newCount" min="0"> -->
 <%-- 	<button type="submit" id="modify" name="code" value="${s.raw_code}">수정</button> --%>
 	<input type="button" class="B B-info" value="수정" id="modify">
 <!-- 	</form> -->
-	
+<br>
+	</div>
+</div>
 	
 </body>
 </html>

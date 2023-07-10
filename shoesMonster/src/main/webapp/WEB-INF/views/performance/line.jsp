@@ -29,6 +29,10 @@
 	.selected {
 		background-color: #ccc;
 	}
+	
+	div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
+	background-color: #868e96;
+	}
 
 	/* 셀렉트 옵션을 가로로 나열하여 버튼으로 꾸미기 위한 스타일 */
 	.custom-select1 {
@@ -299,7 +303,7 @@
 						|| emp_id == ""){
 //	 				alert("항목을 모두 입력하세요");
 					Swal.fire({
-							title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+							title: "<div style='color:##495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
 							icon: 'info',
 							width: '300px',
 						})	
@@ -469,7 +473,7 @@
 					|| emp_id == ""){
 // 				alert("항목을 모두 입력하세요");
 				Swal.fire({
-						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+						title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
 						icon: 'info',
 						width: '300px',
 					})	
@@ -604,12 +608,12 @@
 					
 					
 					Swal.fire({
-						  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+						  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
 								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 						  icon: 'info', // 아이콘! 느낌표 색? 표시?
 						  showDenyButton: true,
-						  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
-						  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+						  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
+						  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 						  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
 // 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
 						  width : '300px', // alert창 크기 조절
@@ -627,7 +631,7 @@
 	 						dataType: "text",	
 	 						success: function () {
 	 							Swal.fire({
-									  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
+									  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
 									  icon: 'success',
 									  width : '300px',
 									}).then((result) => {
@@ -638,7 +642,7 @@
 							},
 							error: function () {
 								Swal.fire({
-									title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
+									title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
 									icon : 'question',
 									width: '300px',
 									});
@@ -647,7 +651,7 @@
 						});//ajax
 						  } else if (result.isDenied) {
 								Swal.fire({
-								title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+								title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
 								icon : 'error',
 								width: '300px',
 								});
@@ -657,7 +661,7 @@
 				}// 체크OOO
 				else{
 					Swal.fire({
-						title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+						title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
 						icon : 'warning',
 						width: '300px',
 						});
