@@ -699,7 +699,7 @@
 			
 			<span>지역&nbsp;</span>
 				<input type="text" name="wh_addr" placeholder="지역을 입력하세요."> &nbsp;&nbsp;
-			
+			  
 			<span>담당자&nbsp;</span>
 				<input type="hidden" id="s_emp_id" name="emp_id">
 				<input type="text" id="s_emp_name" name="emp_name" placeholder="담당자를 선택하세요."> &nbsp;&nbsp;
