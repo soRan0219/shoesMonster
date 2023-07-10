@@ -333,30 +333,7 @@ function toggleDiv(divId) {
         } //s2ab(s)
     </script>
     <!-- 엑셀 - 끝 -->
-			
-    
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers"> 
-	<ul class="pagination"> 
-<!--     			<div style="text-align: right;"> -->
-				<c:if test="${count1 > 0 }">
-				<li class="paginate_button previous disabled">
-					<c:if test="${bp.prev}">
-					    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a>
-					</c:if>
-					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-					    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-					</c:forEach>
-					<c:if test="${bp.next && bp.endPage > 0}">
-					    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
-					</c:if>
-				</li>
-				</c:if>
-<!-- 			</div> -->
-    </ul>
-    </div>
-    
-			
-					
+		
 				</div>
 			</div>
 		</div>

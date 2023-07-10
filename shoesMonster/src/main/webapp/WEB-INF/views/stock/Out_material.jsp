@@ -315,32 +315,6 @@ body {
         } //s2ab(s)
     </script>
     <!-- 엑셀 - 끝 -->
-    	
-    
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers">
-	<ul class="pagination">
-  
-	   	<c:if test="${count4 > 0 }">
-		<li class="paginate_button previous disabled">
-			<c:if test="${bp.prev}">
-			    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Previous</a>
-			</c:if>
-		</li>
-		<li class="paginate_button previous disabled">
-			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-			    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">${idx}</a>
-			</c:forEach>
-		</li>
-		<li class="paginate_button previous disabled">
-			<c:if test="${bp.next && bp.endPage > 0}">
-			    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Next</a>
-			</c:if>
-		</li>
-		</c:if>
-	</ul>
-</div>
-    
-    
     
 				</div>
 			</div>
