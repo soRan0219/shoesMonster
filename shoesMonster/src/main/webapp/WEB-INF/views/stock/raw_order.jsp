@@ -40,7 +40,7 @@ body {
 	
 	// 발주 현황 상세페이지
 	function detailPopup(rawCode, raw_order_num) {
-		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=750, height=420, left=200, top=150");
+		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=800, height=420, left=200, top=150");
 	}
 	
 	// 총액
@@ -252,6 +252,27 @@ function toggleDiv(divId) {
 						
 					</form>
 					<div style="display: inline;">
+					
+					<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;"> 
+		<ul class="pagination"> 
+	<!--     			<div style="text-align: right;"> -->
+					<c:if test="${count1 > 0 }">
+					<li class="paginate_button previous disabled">
+						<c:if test="${bp.prev}">
+						    <a href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a>
+						</c:if>
+						<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+						    <a href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+						</c:forEach>
+						<c:if test="${bp.next && bp.endPage > 0}">
+						    <a href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
+						</c:if>
+					</li>
+					</c:if>
+	<!-- 			</div> -->
+	    </ul>
+	    </div>
+					
 					<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
 					</div>
 			
@@ -326,25 +347,7 @@ function toggleDiv(divId) {
 		
 		<div>
 		
-		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;"> 
-		<ul class="pagination"> 
-	<!--     			<div style="text-align: right;"> -->
-					<c:if test="${count1 > 0 }">
-					<li class="paginate_button previous disabled">
-						<c:if test="${bp.prev}">
-						    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a>
-						</c:if>
-						<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-						    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-						</c:forEach>
-						<c:if test="${bp.next && bp.endPage > 0}">
-						    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
-						</c:if>
-					</li>
-					</c:if>
-	<!-- 			</div> -->
-	    </ul>
-	    </div>
+		
 		
 		
 		</div>
