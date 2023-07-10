@@ -92,15 +92,50 @@ body {
 		}
 		
 
-		function go(raw_name,raw_order_count) {
-// 			alert("입고 처리가 완료되었습니다.");
-			Swal.fire({
-				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 입고 처리가 되었습니다."+ "</div>",
-				icon: 'success',
-				width: '300px',
-			})
+// 		function go(raw_name,raw_order_count,raw_order_num,raw_code,rawMaterial.wh_code ) {
+			
+// 			Swal.fire({
+// 				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 입고 처리가 되었습니다."+ "</div>",
+// 				icon: 'success',
+// 				width: '300px',
+// 			}).then((result) => {
+// 				  if (result.isConfirmed) {
+// 				}
+// 			});
 
-		}
+// 		}
+		
+		function go(raw_name, raw_order_count, raw_order_num, raw_code, wh_code) {
+			  
+			var data = {
+				rawOrderCount: raw_order_count,
+			    rawOrderNum: raw_order_num,
+			    rawCode: raw_code,
+			    whCode: wh_code
+			  };
+
+			  $.ajax({
+			    type: 'POST',
+			    url: '/stock/In_material',
+			    data: data,
+			    success: function(response) {
+			    	Swal.fire({
+						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 \n입고 처리가 되었습니다."+ "</div>",
+						icon: 'success',
+						width: '300px',
+					}).then((result) => {
+						  if (result.isConfirmed) {
+							  location.reload();
+						}
+					});
+			    },
+			    error: function(xhr, status, error) {
+			      alert('실패');
+			    }
+			  });
+			}
+		
+		
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -192,7 +227,7 @@ body {
 										<td class=" ">
 										<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 											<c:if test="${rvo.in_mat.in_num == null}">
-												<button type="submit" name="in_Button" onclick="go('${rvo.rawMaterial.raw_name }','${rvo.raw_order_count}')" class="B B-info" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+												<button type="button" name="in_Button" onclick="go('${rvo.rawMaterial.raw_name }','${rvo.raw_order_count}', '${rvo.raw_order_num}','${rvo.raw_code}','${rvo.rawMaterial.wh_code }')" class="B B-info" >입고 처리</button>
 											</c:if>
 										</c:if>
 										</td>

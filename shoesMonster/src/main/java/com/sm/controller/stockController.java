@@ -268,17 +268,13 @@ public class stockController {
 	//http://localhost:8080/stock/In_material
 	//http://localhost:8088/stock/In_material
     @RequestMapping(value = "/In_material" , method = RequestMethod.POST)
-    public String inRegist(
-//    						@RequestBody Map<String, String> requestData, PageVO vo,
-    						@RequestParam("in_Button") String in_Button, 
+    public String inRegist( @RequestParam("rawOrderCount") Integer raw_order_count,
+				            @RequestParam("rawOrderNum") String raw_order_num,
+				            @RequestParam("rawCode") String rawCode,
+				            @RequestParam("whCode") String wh_code,
     						PageVO vo,
     					   Raw_orderVO rvo, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, Model model) throws Exception{
         
-    	String[] values = in_Button.split(",");
-    	String raw_order_num = values[0];
-    	String rawCode = values[1];
-    	int raw_order_count = Integer.parseInt(values[2]);
-    	String wh_code = values[3];
 
 //    	String raw_order_num = requestData.get("raw_order_num");
 //    	String rawCode = requestData.get("raw_code");
