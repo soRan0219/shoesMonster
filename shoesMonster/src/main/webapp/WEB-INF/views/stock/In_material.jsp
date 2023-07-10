@@ -150,17 +150,18 @@ body {
 <div style="margin: 1% 0 1% 1%;">
 
 	<form action="" method="get">
-		<button type="submit" value="" class="B B-info" name="in_YN">전체</button>
-		<input type="submit" value="미입고" class="B B-info" name="in_YN" ></input> 
-        <input type="submit" value="입고완료" class="B B-info" name="in_YN" ></input> 
 		<hr>
 
 		<label>입고 번호</label> <input type="text" name="in_mat.in_num" placeholder="입고 번호를 입력해주세요."> &nbsp;
 		<label>품명</label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요."> &nbsp;
 		<label>거래처명</label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요."> &nbsp; &nbsp;
 
-		<input type="submit" class="B B-info" value="검색">
+		<input type="submit" class="B B-info" value="검색"> <br>
+		
 	<hr>
+		<button type="submit" value="" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 450;">전체</span></button>
+		<input type="submit" value="미입고" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
+        <input type="submit" value="입고완료" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
 	</form>
 </div>
 
