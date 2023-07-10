@@ -35,7 +35,7 @@ body {
 	    if (orderCount > stockCount) {
 // 	        alert("재고 수량이 부족합니다. 물량을 확인해 주세요.");
      	Swal.fire({
-			title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "재고 수량이 부족합니다 \n 물량을 확인해 주세요"+ "</div>",
+			title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "재고 수량이 부족합니다 \n 물량을 확인해 주세요"+ "</div>",
 			icon: 'warning',
 			width: '300px',
 		})

@@ -11,8 +11,17 @@
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
+<link href="../resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<!-- bootstrap-progressbar -->
+<link
+	href="../resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
+	rel="stylesheet">
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+
+<!-- Custom Theme Style -->
+<link href="../resources/build/css/custom.min.css" rel="stylesheet">
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
@@ -21,7 +30,19 @@
 
 body {
 	font-family: 'NexonLv2Gothic';
+	background-color: #fff;
 }
+.table-11 table{
+	margin-bottom: 0;
+}
+
+.table-12 table{
+  margin-top: 0;
+}
+div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
+	background-color: #868e96;
+}
+
 </style> 
 <!-- 폰트 -->
 
@@ -62,11 +83,11 @@ body {
 		$("#roCancel").click(function () {
 			
 			Swal.fire({
-			  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" +raw_order_num+"\n 발주를 취소하시겠습니까?"+ "</div>",
+			  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" +raw_order_num+"\n 발주를 취소하시겠습니까?"+ "</div>",
 			  icon: 'info', 
 			  showDenyButton: true,
-			  confirmButtonColor: '#3085d6', 
-			  cancelButtonColor: '#d33', 
+			  confirmButtonColor: '#17A2B8', 
+			  cancelButtonColor: '#73879C', 
 			  confirmButtonText: 'Yes', 
 			  width : '300px',
 			
@@ -83,7 +104,7 @@ body {
 						success: function () {
 	
 							Swal.fire({
-								  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "발주가 정상적으로 \n취소되었습니다",
+								  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "발주가 정상적으로 \n취소되었습니다",
 								  icon: 'success',
 								  width : '300px',
 								}).then((result) => {
@@ -95,7 +116,7 @@ body {
 						}, //success
 						error: function () {
 							Swal.fire({
-								title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "취소 중 오류가 발생했습니다",
+								title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "취소 중 오류가 발생했습니다",
 								icon : 'question',
 								width: '300px',
 								});
@@ -114,36 +135,57 @@ body {
 </script>
 </head>
 <body>
-	<h1>발주 상세</h1>
-	<table border="1">
-		<tr>
-			<th>발주 번호</th>
-			<td>${raw_order_num }</td>
+<div class="x_panel" style="margin-bottom: -1%;">
+
+	<h1 style="margin-left: 1%;">발주 상세</h1>
+<div class="table-11">
+	<div class="table-responsive">
+		<table class="table table-striped jambo_table bulk_action" 
+			   id="data-table" style="text-align:center;">
+		<thead>
+		<tr class="headings">
+			<th class="column-title">발주 번호</th>
 		</tr>
+		</thead>
+		<tbody>	
+			<tr>	
+			<td  class=" ">${raw_order_num }</td>
+			</tr>
+		</tbody>
 	</table>
-	<br>
-	<table border="1">
-	    <tr>
-	 		<th>거래처 코드</th>
-	 		<th>거래처명</th>
-	 		<th>거래처 담당자</th>
-	 		<th>거래처 번호</th>
-	 		<th>담당자 번호</th>
-	 		<th>팩스 번호</th>
+	</div>
+</div>
+<!-- ////////////////////////////////// -->
+<div class="table-12">
+	<div class="table-responsive">
+	<table class="table table-striped jambo_table bulk_action" id="data-table" style="text-align:center;">
+	   <thead>
+	    <tr class="headings">
+	 		<th class="column-title">거래처 코드</th>
+	 		<th class="column-title">거래처명</th>
+	 		<th class="column-title">거래처 담당자</th>
+	 		<th class="column-title">거래처 번호</th>
+	 		<th class="column-title">담당자 번호</th>
+	 		<th class="column-title">팩스 번호</th>
 	    </tr>
+	    </thead>
+	    <tbody>
 	    <c:forEach var="ro" items="${ro_detail }">
 			<tr>
-		 		<td>${ro.clients.client_code }</td>
-		 		<td>${ro.clients.client_actname }</td>
-		 		<td>${ro.clients.client_name }</td>
-		 		<td>${ro.clients.client_tel }</td>
-		 		<td>${ro.clients.client_phone }</td>
-		 		<td>${ro.clients.client_fax }</td>
+		 		<td class=" ">${ro.clients.client_code }</td>
+		 		<td class=" ">${ro.clients.client_actname }</td>
+		 		<td class=" ">${ro.clients.client_name }</td>
+		 		<td class=" ">${ro.clients.client_tel }</td>
+		 		<td class=" ">${ro.clients.client_phone }</td>
+		 		<td class=" ">${ro.clients.client_fax }</td>
 		    </tr>
 	    </c:forEach>
+	    </tbody>
 	</table>
 	<hr>
 	<button type="submit" id="roCancel" name="roCancel" class="B B-info"  value="${raw_order_num }">발주 취소</button>
-	
+	</div>
+</div>
+</div>	
 </body>
 </html>

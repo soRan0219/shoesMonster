@@ -35,12 +35,12 @@ body {
 	
 	// 발주 팝업
 	function roPopup() {
-		window.open("roPopup","거래처 목록","width=950, height=645, left=500, top=150, location=no");
+		 window.open("roPopup","거래처 목록","width=950, height=645, left=500, top=150, location=no");
 	}
 	
 	// 발주 현황 상세페이지
 	function detailPopup(rawCode, raw_order_num) {
-		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=680, height=420, left=200, top=150");
+		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=750, height=420, left=200, top=150");
 	}
 	
 	// 총액
@@ -67,7 +67,7 @@ body {
 		if(document.getElementById("client_actname").value === "") {
 // 			alert("발주 항목을 선택해주세요.");
 			Swal.fire({
-				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "발주 항목을 선택해주세요"+ "</div>",
+				title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "발주 항목을 선택해주세요"+ "</div>",
 				icon: 'warning',
 				width: '300px',
 			})
@@ -75,7 +75,7 @@ body {
 		} else if(document.getElementById("raw_order_count").value === "") {
 // 			alert("발주 수량을 입력해주세요.");
 			Swal.fire({
-				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "발주 수량을 입력해주세요"+ "</div>",
+				title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "발주 수량을 입력해주세요"+ "</div>",
 				icon: 'warning',
 				width: '300px',
 			})
@@ -83,7 +83,7 @@ body {
 		} else if(document.getElementById("wh_code").value === "") {
 // 			alert("입고 창고를 선택해주세요.");
 			Swal.fire({
-				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "입고 창고를 선택해주세요"+ "</div>",
+				title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "입고 창고를 선택해주세요"+ "</div>",
 				icon: 'warning',
 				width: '300px',
 			})

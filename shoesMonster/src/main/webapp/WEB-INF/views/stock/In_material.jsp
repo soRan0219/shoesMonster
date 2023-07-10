@@ -120,7 +120,7 @@ body {
 			    data: data,
 			    success: function(response) {
 			    	Swal.fire({
-						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 \n입고 처리가 되었습니다."+ "</div>",
+						title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 \n입고 처리가 되었습니다."+ "</div>",
 						icon: 'success',
 						width: '300px',
 					}).then((result) => {
