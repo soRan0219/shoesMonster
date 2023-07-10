@@ -589,7 +589,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				<div class="table-wrapper" >
 <%-- 		완제품 목록 총 ${paging.total}건 --%>
 		<table id="productTable"
-		class="table table-striped jambo_table bulk_action" style="text-align:center;">
+		class="table table-striped jambo_table bulk_action" style="text-align-last:center;">
 			<thead>
 				<tr class="headings">
 					<th>번호</th>

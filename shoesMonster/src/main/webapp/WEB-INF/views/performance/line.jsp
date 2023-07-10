@@ -816,7 +816,7 @@
 	<div class="x_content">
 			<div class="table-responsive">
 				<div class="table-wrapper" >
-					<table id="lineTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+					<table id="lineTable" class="table table-striped jambo_table bulk_action" style="text-align-last:center;">
 						<thead>
 							<tr class="headings">	
 								<th>번호</th>
