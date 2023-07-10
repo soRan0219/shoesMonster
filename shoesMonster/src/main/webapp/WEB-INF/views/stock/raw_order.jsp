@@ -171,7 +171,11 @@ function toggleDiv(divId) {
 		        document.getElementById("matAdd").hidden = true;
 		    }
 		</script>
-	<!-- 버튼 제어 -->
+    <!-- 버튼 제어 -->
+    <form action="" name="ro">
+	    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input>
+	    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input>
+    </form>
 	
     <div id="list">
 	    <form action="" method="get">
@@ -183,11 +187,6 @@ function toggleDiv(divId) {
 	    </form>
 	    <hr>
 	    
-	    <!-- 버튼 제어 -->
-	    <form action="" name="ro">
-		    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input>
-		    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input>
-	    </form>
     
 	    </div>
 	</div>
