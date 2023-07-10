@@ -184,7 +184,7 @@
 				tbl += " </td>";
 				// 거래처 코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_code'' id='client_code2' readonly class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_code'' id='client_code2' readonly>";
 				tbl += " </td>";
 				// 거래처명
 				tbl += " <td>";
@@ -192,7 +192,7 @@
 				tbl += " </td>";
 				// 거래처 구분
 				tbl += " <td>";
-				tbl += "  <select name='client_type' id='client_type' class='input-fieldb'>";
+				tbl += "  <select name='client_type' id='client_type'>";
 				tbl += "   <option>선택</option>";
 				tbl += "   <option>수주처</option>";
 				tbl += "   <option>발주처</option>";
@@ -200,47 +200,47 @@
 				tbl += " </td>";
 				// 사업자 번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_number' id='client_number' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_number' id='client_number' required>";
 				tbl += " </td>";
 				// 업태
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_sort' id='client_sort' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_sort' id='client_sort' required>";
 				tbl += " </td>";
 				// 대표자
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_ceo' id='client_ceo' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_ceo' id='client_ceo' required>";
 				tbl += " </td>";
 				// 담당자
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_name' id='client_name' value=<c:out value='${sessionScope.id.emp_name}'/> required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_name' id='client_name' value=<c:out value='${sessionScope.id.emp_name}'/> required>";
 				tbl += " </td>";
 				// 주소
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_addr' id='client_addr' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_addr' id='client_addr' required>";
 				tbl += " </td>";
 				// 상세주소
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_addr2' id='client_addr2' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_addr2' id='client_addr2' required>";
 				tbl += " </td>";
 				// 전화번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_tel' id='client_tel' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_tel' id='client_tel' required>";
 				tbl += " </td>";
 				// 휴대폰번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_phone' id='client_phone' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_phone' id='client_phone' required>";
 				tbl += " </td>";
 				// 팩스번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_fax' id='client_fax' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_fax' id='client_fax' required>";
 				tbl += " </td>";
 				// email
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_email' id='client_email' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_email' id='client_email' required>";
 				tbl += " </td>";
 				// 비고
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_note' id='client_note' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_note' id='client_note' required>";
 				tbl += " </td>";
 				tbl += "</tr>";
 
@@ -595,7 +595,6 @@
 </script>
 
 <style>
-
 .table-wrapper {
     overflow-x: auto; /* 테이블 직접 조절 */
     overflow-y: hidden;
@@ -603,18 +602,14 @@
 .table-wrapper table {
     width: 100%; /* 테이블 직접 조절 */
     white-space: nowrap; 
+    text-align: center;
 }
 
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
-.input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
-}
-
 </style>
 
 <!-- page content -->
@@ -622,7 +617,7 @@
 	
 	<h1 style="margin-left: 1%;">거래처 정보 관리</h1>
 
-	<div style="margin-left: 1%;">
+	<div style="margin:1% 1%;">
 		<form method="get" >
 		
 			<input type="hidden" name="input" id="input" value="${input }">
@@ -665,74 +660,58 @@
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<div class="table-wrapper">
-				<div class="x_title">
-					<h2>거래처 목록<small>총 ${pm.totalCount } 건</small></h2>
-					
-					<div style="float: left;  margin-top: 1.5px;">
-						<c:if test="${empty param.input }">
-							<button onclick="location.href='/person/Clients'" class="B2 B2-info">↻</button>
-						</c:if>
-						<c:if test="${!empty param.input && empty param.search_client_type}">
-							<button onclick="location.href='/person/Clients?input=${param.input }'" class="B2 B2-info">↻</button>
-						</c:if>
-						<c:if test="${!empty param.input && !empty param.search_client_type }">
-							<button onclick="location.href='/person/Clients?input=${param.input }&search_client_type=${param.search_client_type }'" class="B2 B2-info">↻</button>
-						</c:if>
-					</div>
+			<div class="x_title">
+				<h2>거래처 목록<small>총 ${pm.totalCount } 건</small></h2>
+				
+				<div style="float: left;  margin-top: 1.5px;">
+					<c:if test="${empty param.input }">
+						<button onclick="location.href='/person/Clients'" class="B2 B2-info">↻</button>
+					</c:if>
+					<c:if test="${!empty param.input && empty param.search_client_type}">
+						<button onclick="location.href='/person/Clients?input=${param.input }'" class="B2 B2-info">↻</button>
+					</c:if>
+					<c:if test="${!empty param.input && !empty param.search_client_type }">
+						<button onclick="location.href='/person/Clients?input=${param.input }&search_client_type=${param.search_client_type }'" class="B2 B2-info">↻</button>
+					</c:if>
+				</div>
 
-					<div style="float: right;">
-						<input type="button" value="추가" id="addButton" class="true B B-info">
-						<input type="button" value="수정" id="updateButton" class="B B-info"> 
-						<input type="button" value="삭제" id="deleteButton" class="true B B-info"> 
-						<input type="button" value="취소" id="cancelButton" class="B B-info"> 
-						<input type="button" value="저장" id="saveButton" class="B B-info">
-					</div>
-				
-				<!-- 버튼 제어 -->
-				<script>
-				    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
-				
-				    if (team === "인사팀" || team === "관리자") {
-				        document.getElementById("addButton").disabled = false;
-				        document.getElementById("updateButton").disabled = false;
-				        document.getElementById("deleteButton").disabled = false;
-				        document.getElementById("cancelButton").disabled = false;
-				        document.getElementById("saveButton").disabled = false;
-				        document.querySelector("[onclick^='location.href']").disabled = false;
-				    } else {
-				        document.getElementById("addButton").hidden = true;
-				        document.getElementById("updateButton").hidden = true;
-				        document.getElementById("deleteButton").hidden = true;
-				        document.getElementById("cancelButton").hidden = true;
-				        document.getElementById("saveButton").hidden = true;
-				        document.querySelector("[onclick^='location.href']").hidden = true;
-				    }
-				</script>
-				<!-- 버튼 제어 -->
-				
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<form id="fr">
-				<div class="table-responsive">
-					<table border="1" id="clientsTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
-						<colgroup>
-						    <col style="width: 50px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 75px">
-						    <col style="width: 75px">
-						    <col style="width: 75px">
-						    <col style="width: 75px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 75px">
-						</colgroup>
+				<div style="float: right;">
+					<input type="button" value="추가" id="addButton" class="true B B-info">
+					<input type="button" value="수정" id="updateButton" class="B B-info"> 
+					<input type="button" value="삭제" id="deleteButton" class="true B B-info"> 
+					<input type="button" value="취소" id="cancelButton" class="B B-info"> 
+					<input type="button" value="저장" id="saveButton" class="B B-info">
+				</div>
+			
+			<!-- 버튼 제어 -->
+			<script>
+			    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+			
+			    if (team === "인사팀" || team === "관리자") {
+			        document.getElementById("addButton").disabled = false;
+			        document.getElementById("updateButton").disabled = false;
+			        document.getElementById("deleteButton").disabled = false;
+			        document.getElementById("cancelButton").disabled = false;
+			        document.getElementById("saveButton").disabled = false;
+			        document.querySelector("[onclick^='location.href']").disabled = false;
+			    } else {
+			        document.getElementById("addButton").hidden = true;
+			        document.getElementById("updateButton").hidden = true;
+			        document.getElementById("deleteButton").hidden = true;
+			        document.getElementById("cancelButton").hidden = true;
+			        document.getElementById("saveButton").hidden = true;
+			        document.querySelector("[onclick^='location.href']").hidden = true;
+			    }
+			</script>
+			<!-- 버튼 제어 -->
+			
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+					<form id="fr">
+					<table id="clientsTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 						<thead>
 							<tr class="headings">
 								<th></th>
@@ -752,98 +731,57 @@
 								<th>비고</th>
 							</tr>
 						</thead>
-						<tr type="hidden" style="display: none;"></tr>
-						<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
-							<c:if test="${vo.client_type == '전체' || vo.client_type == '발주처' || vo.client_type == '수주처' }">
-								<tr>
-									<td></td>
-									<td id="client_code">${vo.client_code}</td>
-									<td id="client_actname">${vo.client_actname}</td>
-									<td>${vo.client_type}</td>
-									<td>${vo.client_number}</td>
-									<td>${vo.client_sort}</td>
-									<td>${vo.client_ceo}</td>
-									<td>${vo.client_name}</td>
-									<td>${vo.client_addr}</td>
-									<td>${vo.client_addr2}</td>
-									<td>${vo.client_tel}</td>
-									<td>${vo.client_phone}</td>
-									<td>${vo.client_fax}</td>
-									<td>${vo.client_email}</td>
-									<td>${vo.client_note}</td>
-								</tr>
-							</c:if>
-
-<%-- 							<c:if test="${vo.client_type == '발주처' }"> --%>
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<%-- 									<td id="client_code">${vo.client_code}</td> --%>
-<%-- 									<td id="client_actname">${vo.client_actname}</td> --%>
-<%-- 									<td>${vo.client_type}</td> --%>
-<%-- 									<td>${vo.client_number}</td> --%>
-<%-- 									<td>${vo.client_sort}</td> --%>
-<%-- 									<td>${vo.client_ceo}</td> --%>
-<%-- 									<td>${vo.client_name}</td> --%>
-<%-- 									<td>${vo.client_addr}</td> --%>
-<%-- 									<td>${vo.client_addr2}</td> --%>
-<%-- 									<td>${vo.client_tel}</td> --%>
-<%-- 									<td>${vo.client_phone}</td> --%>
-<%-- 									<td>${vo.client_fax}</td> --%>
-<%-- 									<td>${vo.client_email}</td> --%>
-<%-- 									<td>${vo.client_note}</td> --%>
-<!-- 								</tr> -->
-<%-- 							</c:if> --%>
-
-<%-- 							<c:if test="${vo.client_type == '수주처' }"> --%>
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<%-- 									<td id="client_code">${vo.client_code}</td> --%>
-<%-- 									<td id="client_actname">${vo.client_actname}</td> --%>
-<%-- 									<td>${vo.client_type}</td> --%>
-<%-- 									<td>${vo.client_number}</td> --%>
-<%-- 									<td>${vo.client_sort}</td> --%>
-<%-- 									<td>${vo.client_ceo}</td> --%>
-<%-- 									<td>${vo.client_name}</td> --%>
-<%-- 									<td>${vo.client_addr}</td> --%>
-<%-- 									<td>${vo.client_addr2}</td> --%>
-<%-- 									<td>${vo.client_tel}</td> --%>
-<%-- 									<td>${vo.client_phone}</td> --%>
-<%-- 									<td>${vo.client_fax}</td> --%>
-<%-- 									<td>${vo.client_email}</td> --%>
-<%-- 									<td>${vo.client_note}</td> --%>
-<!-- 								</tr> -->
-<%-- 							</c:if> --%>
-							</c:forEach>
-						</table>
+							<tr type="hidden" style="display: none;"></tr>
+								<c:forEach var="vo" items="${searchClientsList }" varStatus="i">
+									<c:if test="${vo.client_type == '전체' || vo.client_type == '발주처' || vo.client_type == '수주처' }">
+										<tr>
+											<td></td>
+											<td id="client_code" >${vo.client_code}</td>
+											<td id="client_actname">${vo.client_actname}</td>
+											<td>${vo.client_type}</td>
+											<td>${vo.client_number}</td>
+											<td>${vo.client_sort}</td>
+											<td>${vo.client_ceo}</td>
+											<td>${vo.client_name}</td>
+											<td>${vo.client_addr}</td>
+											<td>${vo.client_addr2}</td>
+											<td>${vo.client_tel}</td>
+											<td>${vo.client_phone}</td>
+											<td>${vo.client_fax}</td>
+											<td>${vo.client_email}</td>
+											<td>${vo.client_note}</td>
+										</tr>
+									</c:if>
+								</c:forEach>
+							</table>
+						</form>
 					</div>
-				</form>
 				</div>
 			</div>
+		
+		<!-- 페이징 -->
+		<div id="pagination" class="dataTables_paginate paging_simple_numbers">
+			<ul class="pagination">
+				<li class="paginate_button previous disabled">
+					<c:if test="${pm.prev }">
+						<a href="/person/Clients?page=${pm.startPage - 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> Previous </a>
+					</c:if>
+				</li>
+				<li class="paginate_button previous disabled">
+					<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+						<a href="/person/Clients?page=${page }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}">${page }</a>
+					</c:forEach>
+				</li>
+				<li class="paginate_button previous disabled">
+					<c:if test="${pm.next }">
+						<a href="/person/Clients?page=${pm.endPage + 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> Next </a>
+					</c:if>
+				</li>
+			</ul>
+		</div>
+		<!-- 페이징 -->
 		</div>
 	</div>
-	
-	<!-- 페이징 -->
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-		<ul class="pagination">
-			<li class="paginate_button previous disabled">
-				<c:if test="${pm.prev }">
-					<a href="/person/Clients?page=${pm.startPage - 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> Previous </a>
-				</c:if>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-					<a href="/person/Clients?page=${page }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}">${page }</a>
-				</c:forEach>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:if test="${pm.next }">
-					<a href="/person/Clients?page=${pm.endPage + 1 }&search_client_code=${search.search_client_code}&search_client_actname=${search.search_client_actname}&search_client_type=${search.search_client_type}"> Next </a>
-				</c:if>
-			</li>
-		</ul>
-	</div>
-	<!-- 페이징 -->
-
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>

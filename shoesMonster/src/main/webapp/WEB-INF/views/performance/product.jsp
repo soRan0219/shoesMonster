@@ -203,19 +203,19 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
             function addRow() {
             	
                 var row = '<tr>' +
-                	'<td></td>'+
-                    '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" readonly required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_name" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_category" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_unit" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_color" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_size" required></td>' +
+                	'<td style="width: 75px"></td>'+
+                    '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" readonly required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_name" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_category" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_unit" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_size" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_color" required class="input-fieldb"></td>' +
                     '<input type="hidden" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required>' +
-                    '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); required></td>' +
+                    '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); required class="input-fielda"></td>' +
                     '<td type="hidden" style="display: none;"><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_code'+counter+'"); readonly required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_price" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_note"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_code'+counter+'"); readonly required class="input-fielda"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_price" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_note" class="input-fieldb"></td>' +
                     '</tr>';
 
                 $('#productTable').append(row);
@@ -483,33 +483,57 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
             
         });
     </script>
-    
+   
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+.input-fielda {
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldb {
+    display: inline-block;
+    text-align-last: center;
+}
+</style>
+   
+   
 <!-- page content -->
 <div class="right_col" role="main">
 
 	<h1 style="margin-left: 1%;">품목 관리</h1>
 	
-<div style="margin-left: 1%;">
+	<div style="margin: 1% 1%;">
+	<hr>
 	<form action="" method="get">
 		<fieldset>
        		
-       		<input type="hidden" name="input" id="input" value="${input }">
-       		
-       		<label>품번:</label>
-        	<input type="text" name="prod_code" id="searchCode" placeholder="품목코드를 입력하세요.">
-        	<label>품명:</label>
-        	<input type="text" name="prod_name" id="searchName" placeholder="품명을 입력하세요.">
-        	<label>카테고리:</label>
-        	<input type="text" name="prod_category" id="searchCategory" placeholder="카테고리를 입력하세요."> 
-        	<label>거래처 : </label>
+       		<input type="hidden" name="input" id="input" value="${input }">   		
+
+       		<label>품번&nbsp;</label>
+        	<input type="text" name="prod_code" id="searchCode" placeholder="품목코드를 입력하세요."> &nbsp;&nbsp;
+        	<label>품명&nbsp;</label>
+        	<input type="text" name="prod_name" id="searchName" placeholder="품명을 입력하세요."> &nbsp;&nbsp;
+        	<label>카테고리&nbsp;</label>
+        	<input type="text" name="prod_category" id="searchCategory" placeholder="카테고리를 입력하세요."> &nbsp;&nbsp;
+        	<label>거래처&nbsp;</label>
         	<input type="hidden" name="client_code" id="client_code9999">
-        	<input type="text" name="client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')">
+        	<input type="text" name="client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')"> &nbsp;&nbsp;
         	<input type="submit" class="B B-info" value="조회">
+
 		</fieldset>
 	</form>
+<hr>
 </div>	
 
-<hr>
 
 <div class="col-md-12 col-sm-12">
 	<div class="x_panel">
@@ -559,25 +583,13 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 		    }
 		</script>
 		<!-- 버튼 제어 -->
-		<br>
 	
-	<div style="overflow-x: auto;">
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
 <%-- 		완제품 목록 총 ${paging.total}건 --%>
-		<table border="1" id="productTable"
+		<table id="productTable"
 		class="table table-striped jambo_table bulk_action" style="text-align:center;">
-		<colgroup>
-		    <col style="width: 55px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 150px">
-		</colgroup>
 			<thead>
 				<tr class="headings">
 					<th>번호</th>
@@ -616,7 +628,35 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 			</c:forEach>
 		</table>
 		</div>
+		</div>
+		</div>
 	</form>
+	
+	<!-- //////////////////////////////////////////////////////////////////////// -->	
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">	
+				<c:if test="${paging.startPage != 1 }">
+					<a href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">Previous</a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+							<a href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<a href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">Next</a>
+				</c:if>
+			</li>
+		</ul>
+	</div>
+	<!-- //////////////////////////////////////////////////////////////////////// -->
+	
+</div>
+</div>
+
 <button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 </div>
 </div>
@@ -683,29 +723,6 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
         } //s2ab(s)
         
     </script>
-
-<!-- //////////////////////////////////////////////////////////////////////// -->	
-<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-	<ul class="pagination">
-		<li class="paginate_button previous disabled">	
-			<c:if test="${paging.startPage != 1 }">
-				<a href="/performance/product?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">Previous</a>
-			</c:if>
-		</li>
-		<li class="paginate_button previous disabled">	
-			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-						<a href="/performance/product?nowPage=${p }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">${p }</a>
-			</c:forEach>
-		</li>
-		<li class="paginate_button previous disabled">	
-			<c:if test="${paging.endPage != paging.lastPage}">
-				<a href="/performance/product?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&prod_code=${vo.prod_code }&prod_name=${vo.prod_name }&prod_category=${vo.prod_category }&client_code=${vo.client_code }">Next</a>
-			</c:if>
-		</li>
-	</ul>
-</div>
-
-<!-- //////////////////////////////////////////////////////////////////////// -->	
 </div>
 <!-- /page content -->
 

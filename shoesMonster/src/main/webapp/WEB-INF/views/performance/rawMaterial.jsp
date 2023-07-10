@@ -201,18 +201,18 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
             // 추가 버튼 클릭 시 row 생성
             function addRow() {
                 var row = '<tr>' +
-                	'<td></td>'+
-                    '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" readonly required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_name" required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_color" required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_unit" required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_size" required></td>' +
+                	'<td style="width: 75px"></td>'+
+                    '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" readonly required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_name" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_color" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_unit" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_size" required class="input-fieldb"></td>' +
                     '<input type="hidden" name="raws[' + counter + '].client_code" id="client_code'+counter+'" required required>' +
-                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'");></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); class="input-fielda"></td>' +
                     '<input type="hidden" name="raws[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required>' +
-                    '<td><input type="text" name="raws[' + counter + '].wh.wh_name" id="wh_name'+counter+'" readonly onclick=serchWh("wh_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_price" required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_note"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].wh.wh_name" id="wh_name'+counter+'" readonly onclick=serchWh("wh_code'+counter+'"); required class="input-fielda"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_price" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_note" class="input-fieldb"></td>' +
                     '</tr>';
 
                 $('#rawTable').append(row);
@@ -529,29 +529,54 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
         });
     </script>
 
+
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldb {
+    display: inline-block;
+    text-align-last: center;
+}
+</style>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 
 	<h1 style="margin-left: 1%;">원자재 관리</h1>
 
-	<div style="margin-left: 1%;">	
+	<div style="margin: 1% 1%;">
+		<hr>
 		<form action="" method="get">
 			<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
-	       		<label>원자재코드 : </label>
-	        	<input type="text" name="raw_code" id="searchCode" placeholder="원자재코드를 입력하세요.">
-	        	<label>원자재명 : </label>
-	        	<input type="text" name="raw_name" id="searchCategory" placeholder="원자재명을 입력하세요."> 
-	        	<label>거래처명 : </label>
+	       		<label>원자재코드&nbsp;</label>
+	        	<input type="text" name="raw_code" id="searchCode" placeholder="원자재코드를 입력하세요."> &nbsp;&nbsp;
+	        	<label>원자재명&nbsp;</label>
+	        	<input type="text" name="raw_name" id="searchCategory" placeholder="원자재명을 입력하세요."> &nbsp;&nbsp;
+	        	<label>거래처명&nbsp;</label>
 	        	<input type="hidden" name="client_code" id="client_code9999" >
-	        	<input type="text" name="clients.client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')">
+	        	<input type="text" name="clients.client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')"> &nbsp;&nbsp;
 	        	<input type="submit" class="B B-info" value="조회">
 	        	
 			</fieldset>
 		</form>
+		<hr>
 	</div>	
 
-<hr>
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
@@ -601,20 +626,10 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	</script>
 	<!-- 버튼 제어 -->
 		
-	<br>
-	<div style="overflow-x: auto;">
-		<table border="1" id="rawTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
-		<colgroup>
-		    <col style="width: 55px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 150px">
-		    <col style="width: 100px">
-		    <col style="width: 150px">
-		</colgroup>
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+		<table id="rawTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 		<thead>
 				<tr class="headings">
 					<th class="column-title">번호</th>
@@ -651,7 +666,10 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 			</c:forEach>
 		</table>
 		</div>
+		</div>
+		</div>
 	</form>
+
 	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 	</div>
 </div>
@@ -719,8 +737,6 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
         } //s2ab(s)
         
     </script>
-		
-
 	
 	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 		<ul class="pagination">
@@ -741,6 +757,11 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 			</li>
 		</ul>
 	</div>
+	
+	
+	
+	</div>
+</div>
 </div>
 	
 <!-- /page content -->

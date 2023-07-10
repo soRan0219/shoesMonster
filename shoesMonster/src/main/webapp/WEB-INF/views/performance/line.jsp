@@ -493,7 +493,7 @@
 			var row = "<tr>";
 			
 			// 번호
-			row += "<td>";
+			row += "<td style='width: 75px'>";
 			row += "</td>";
 			
 			// 공정
@@ -507,12 +507,12 @@
 			
 			// 라인코드 
 			row += "<td>";
-			row += "<input type='text' name='line_code' id='line_code' required value='"+lineCode+"'>";
+			row += "<input type='text' name='line_code' id='line_code' required readonly value='"+lineCode+"' class='input-fieldb'>";
 			row += "</td>";
 			
 			// 라인명
 			row += "<td>";
-			row += "<input type='text' name='line_name' id='line_name' required>";
+			row += "<input type='text' name='line_name' id='line_name' required class='input-fieldb'>";
 			row += "</td>";
 			
 			// 사용여부
@@ -526,19 +526,19 @@
 			// 등록자	
 			row += "<td>";
 			row += " <input type='hidden' name='emp_id' id='emp_id' value = '<c:out value='${id.emp_id}'/>' required>";
-			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required>";
+			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required readonly class='input-fieldb'>";
 			row += "</td>";
 			
 			// 등록일
 			row += " <td>";
 			row += " <input type='text' name='insert_date' readonly value='";
 			row += today;
-			row += "'>";
+			row += "'class='input-fieldb'>";
 			row += " </td>";
 			
 			// 비고
 			row += "<td>";
-			row += "<input type='text' name='line_note' id='line_note'>";
+			row += "<input type='text' name='line_note' id='line_note' class='input-fieldb'>";
 			row += "</td>";
 			row += "</tr>";
 			
@@ -684,32 +684,55 @@
 </script>
 
 
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldb {
+    display: inline-block;
+    text-align-last: center;
+}
+</style>
+
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1 style="margin-left: 1%;">라인관리</h1>
+<h1 style="margin-left: 1%;">라인관리</h1>
 
-<div style="margin-left: 1%;">
+<div style="margin: 1% 1%;">
+	<hr>
 	<form action="" method="get">
 	<fieldset>
 		<input type="hidden" name="input" id="input" value="${input}">
 				
-		<label>라인코드 : </label>
-			<input type="text" name="line_code" placeholder="라인코드를 입력하세요.">
+		<label>라인코드&nbsp;</label>
+			<input type="text" name="line_code" placeholder="라인코드를 입력하세요."> &nbsp;&nbsp;
 			
-		<label>라인명 : </label>
-			<input type="text" name="line_name" placeholder="라인명을 입력하세요.">
+		<label>라인명&nbsp;</label>
+			<input type="text" name="line_name" placeholder="라인명을 입력하세요."> &nbsp;&nbsp;
 			
 		<input type="submit" class="B B-info" value="조회">
 		
-		<br>
+		<br><br>
 		
-		<label>사용여부 : </label>
-			<input type="radio" name="line_use" value="3" checked> 전체
-			<input type="radio" name="line_use" value="1"> Y
-			<input type="radio" name="line_use" value="2"> N
+		<label>사용여부&nbsp;</label>
+			&nbsp;<input type="radio" name="line_use" value="3" checked> 전체
+			&nbsp;<input type="radio" name="line_use" value="1"> Y
+			&nbsp;<input type="radio" name="line_use" value="2"> N
 			
 			<hr>
 				
@@ -790,66 +813,55 @@
 	</script>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 	
-	<div style="overflow-x: auto;">
-	
-	<table border="1" id="lineTable"
-	class="table table-striped jambo_table bulk_action" style="text-align:center;">
-		<colgroup>
-		    <col style="width: 50px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 150px">
-		</colgroup>
-		<thead>
-			<tr class="headings">	
-				<th>번호</th>
-				<th>공정</th>
-				<th>라인코드</th>
-				<th>라인명</th>
-				<th>사용여부</th>
-				<th type='hidden' style='display: none;'>등록자 코드</th>
-				<th>등록자</th>
-				<th>등록일</th>
-				<th>비고</th>
-			</tr>
-		</thead>
-		<tr type='hidden' style='display: none;'></tr>
-		
-		<c:forEach var="vo" items="${boardList }" varStatus="i">
-				<tr>
-					<td>${i.count}</td>
-					<td>${vo.line_place}</td>
-					<td id="lineCode">${vo.line_code}</td>
-					<td>${vo.line_name}</td>
-					
-					<c:choose>
-						<c:when test="${vo.line_use == 1 }">
-							<td>Y</td>
-						</c:when>
-						<c:when test="${vo.line_use == 2 }">
-							<td>N</td>
-						</c:when>
-					</c:choose>
-					
-					<td type='hidden' style='display: none;'><c:out value='${id.emp_id}'/></td>
-					<td>${vo.emp.emp_name}</td>
-					<td>${vo.insert_date}</td>
-					<td>${vo.line_note}</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
-</form>
-</div>
-</div>
+	<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+					<table id="lineTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+						<thead>
+							<tr class="headings">	
+								<th>번호</th>
+								<th>공정</th>
+								<th>라인코드</th>
+								<th>라인명</th>
+								<th>사용여부</th>
+								<th type='hidden' style='display: none;'>등록자 코드</th>
+								<th>등록자</th>
+								<th>등록일</th>
+								<th>비고</th>
+							</tr>
+						</thead>
+						<tr type='hidden' style='display: none;'></tr>
+				
+						<c:forEach var="vo" items="${boardList }" varStatus="i">
+							<tr>
+								<td>${i.count}</td>
+								<td>${vo.line_place}</td>
+								<td id="lineCode">${vo.line_code}</td>
+								<td>${vo.line_name}</td>
+								
+								<c:choose>
+									<c:when test="${vo.line_use == 1 }">
+										<td>Y</td>
+									</c:when>
+									<c:when test="${vo.line_use == 2 }">
+										<td>N</td>
+									</c:when>
+								</c:choose>
+								
+								<td type='hidden' style='display: none;'><c:out value='${id.emp_id}'/></td>
+								<td>${vo.emp.emp_name}</td>
+								<td>${vo.insert_date}</td>
+								<td>${vo.line_note}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 
-	
-<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+<div id="pagination" class="dataTables_paginate paging_simple_numbers">
 	<ul class="pagination">
 		<li class="paginate_button previous disabled">
 		<c:if test="${lwpm.prev }">
@@ -870,6 +882,8 @@
 </div>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
+</div>
+</div>
 
 </div>
 <!-- /page content -->

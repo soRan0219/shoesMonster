@@ -94,6 +94,31 @@ body {
 		
 </script>
 
+<style>
+
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+
+</style>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 
@@ -183,7 +208,7 @@ function toggleDiv(divId) {
 			</div>
 			<div class="x_content" >
 				
-				<div>
+				<div class="table-wrapper" >
 					<form action="" method="post">
 						<table id="data-table" class="table table-striped jambo_table bulk_action">
 							<thead>
@@ -226,28 +251,7 @@ function toggleDiv(divId) {
 							</tbody>
 						</table>
 					</form>
-			
-			<div style="text-align: right;">
-				<c:if test="${count1 > 0 }">
-				<c:if test="${bp.prev}">
 	
-				    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
-	
-				</c:if>
-				
-				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-				    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-				</c:forEach>
-				
-				<c:if test="${bp.next && bp.endPage > 0}">
-	
-				    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
-	
-				</c:if>
-			</c:if>
-			</div>
-		
-					
 					<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
 			
 	<script type="text/javascript">
@@ -318,20 +322,31 @@ function toggleDiv(divId) {
 				</div>
 			</div>
 		</div>
+		
 		<div>
-   		
-		
-		
 		
 		</div>
-		
-		
 
 	</div>
     
 	</div>
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
+    
+    			<div style="text-align: right;">
+				<c:if test="${count1 > 0 }">
+					<c:if test="${bp.prev}">
+					    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
+					</c:if>
+					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+					    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+					</c:forEach>
+					<c:if test="${bp.next && bp.endPage > 0}">
+					    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
+		
+					</c:if>
+				</c:if>
+			</div>
     
     
 	
@@ -345,8 +360,6 @@ function toggleDiv(divId) {
 
 	<br>
 	<div id="regist">
-		
-			
 		<form action="" method="post" onsubmit="return check()">
 		<div class="col-md-12 col-sm-12" >
 			<div class="x_panel" style="height: 400px">
@@ -356,6 +369,7 @@ function toggleDiv(divId) {
 			</div>
 			<c:set var="today" value="<%=new Date()%>" />
 			<br>
+					<div class="table-wrapper" >
 						<div class="table-responsive">
 							<table id="table"
 								class="table table-striped jambo_table bulk_action">

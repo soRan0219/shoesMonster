@@ -145,14 +145,14 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
             
             function addRow() {
                 var row = '<tr>' +
-                	'<td></td>'+
+                	'<td style="width: 75px"></td>'+
                 	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" required>' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" readonly required></td>' +
-                    '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" >' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'");></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'");></td>' +
-                    '<td><input type="number" name="reqs[' + counter + '].req_dan" required></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_note"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" readonly required class="input-fieldb"></td>' +
+                    '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'">' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'"); class="input-fielda"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'"); class="input-fielda"></td>' +
+                    '<td><input type="number" name="reqs[' + counter + '].req_dan" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_note" class="input-fieldb"></td>' +
                     '</tr>';
                     
                 $('#reqTable').append(row);
@@ -461,29 +461,55 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
         });
     </script>
 
+
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldb {
+    display: inline-block;
+    text-align-last: center;
+}
+</style>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 
 	<h1 style="margin-left: 1%;">소요량 관리</h1>
 
-	<div style="margin-left: 1%;">
+	<div style="margin: 1% 1%;">
+		<hr>
 		<form method="get">
 			<fieldset>
-				<label>소요코드 : </label> 
-				<input type="text" name="req_code" id="searchCode" placeholder="소요량코드를 입력하세요."> 
-				<label>완제품 : </label> 
+				<label>소요코드&nbsp;</label> 
+				<input type="text" name="req_code" id="searchCode" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
+				<label>완제품&nbsp;</label> 
 				<input type="hidden"name="prod_code" id="prod_code9999"> 
-				<input type="text"name="prod_name" id="prod_name9999" placeholder="완제품을 선택하세요." readonly onclick="serchProd('prod_code9999')"> 
-				<label>원자재 : </label>
+				<input type="text"name="prod_name" id="prod_name9999" placeholder="완제품을 선택하세요." readonly onclick="serchProd('prod_code9999')"> &nbsp;&nbsp;
+				<label>원자재&nbsp;</label>
 				<input type="hidden" name="raw_code" id="raw_code9999"> 
-				<input type="text" name="raw_name" id="raw_name9999" placeholder="원자재를 선택하세요." readonly onclick="serchRaw('raw_code9999')"> 
+				<input type="text" name="raw_name" id="raw_name9999" placeholder="원자재를 선택하세요." readonly onclick="serchRaw('raw_code9999')"> &nbsp;&nbsp;
 				<input type="submit" class="B B-info" value="조회">
 			</fieldset>
 		</form>
 		
+	<hr>
+
 	</div>
 
-	<hr>
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
@@ -535,19 +561,12 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 					}
 				</script>
 				<!-- 버튼 제어 -->
-
-				<div style="overflow-x: auto;">
-					<table border="1" id="reqTable"
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+					<table id="reqTable"
 						class="table table-striped jambo_table bulk_action"
 						style="text-align: center;">
-						<colgroup>
-							<col style="width: 50px">
-							<col style="width: 100px">
-							<col style="width: 100px">
-							<col style="width: 100px">
-							<col style="width: 100px">
-							<col style="width: 150px">
-						</colgroup>
 						<thead>
 							<tr class="headings">
 								<th>번호</th>
@@ -573,28 +592,30 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 						</c:forEach>
 					</table>
 					</div>
-				</form>
+					</div>
+				</div>
+			</form>
+			
+			<div id="pagination" class="dataTables_paginate paging_simple_numbers">
+				<ul class="pagination">
+					<li class="paginate_button previous disabled">
+						<c:if test="${paging.startPage != 1 }">
+							<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Previous</a>
+						</c:if>
+					</li>
+					<li class="paginate_button previous disabled">
+						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+							<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
+						</c:forEach>
+					</li>
+					<li class="paginate_button previous disabled">
+						<c:if test="${paging.endPage != paging.lastPage}">
+							<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Next</a>
+						</c:if>
+					</li>
+				</ul>
+			</div>
 		</div>
-	</div>
-
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-		<ul class="pagination">
-			<li class="paginate_button previous disabled">
-				<c:if test="${paging.startPage != 1 }">
-					<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Previous</a>
-				</c:if>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-					<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
-				</c:forEach>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:if test="${paging.endPage != paging.lastPage}">
-					<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Next</a>
-				</c:if>
-			</li>
-		</ul>
 	</div>
 </div>
 <!-- /page content -->

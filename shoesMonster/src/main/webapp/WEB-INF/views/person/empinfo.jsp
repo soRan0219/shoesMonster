@@ -505,6 +505,7 @@ $(function() {
 .table-wrapper table {
     width: 100%; /* 테이블 직접 조절 */
     white-space: nowrap; 
+    text-align: center;
 }
 
 .input-fielda {
@@ -526,7 +527,7 @@ $(function() {
 
 	<h1 style="margin-left: 1%;">사원 관리</h1>
 	
-		<div style="margin-left: 1%;">
+		<div style="margin: 1% 1%;">
 			<form id="searchForm" method="get">
 	       		<input type="hidden" name="input" id="input" value="${input }">
 	       		<input type="hidden" name="pageSize" id="pageSize" value="${pm.clientPageVO.pageSize }">
@@ -545,11 +546,11 @@ $(function() {
 				</select>
 				<input type="submit" class="B B-info" value="조회"> 
 			</form>
+			<hr>
 		</div>
 		
 		<div class="col-md-12 col-sm-12 ">
 			<div class="x_panel">
-				<div class="table-wrapper">
 				<div class="x_title">
 					<h2>
 						사원 관리 <small> 총 ${pm.totalCount } 명 </small>
@@ -571,7 +572,7 @@ $(function() {
 						<button type="reset" id="cancleEmp" class="B B-info">취소</button>
 						<button type="submit" id="saveEmp" class="B B-info">저장</button>
 					</div>
-					
+				
 					<!-- 버튼 제어 -->
 					<script>
 						//권한 설정
@@ -594,69 +595,56 @@ $(function() {
 						}
 					</script>
 					<!-- 버튼 제어 -->
-					
+				
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<%-- <p>&nbsp;&nbsp;발주 테이블 <code>Shoes Monseter</code> since 2023 </p> --%>
 					<div class="table-responsive">
-						<form id = "fr">
-							<table class="table table-striped jambo_table bulk_action" style="text-align:center">
-								<colgroup>
-								    <col style="width: 50px">
-								    <col style="width: 100px">
-								    <col style="width: 100px"> 
-								    <col style="width: 75px">
-								    <col style="width: 75px">
-								    <col style="width: 75px">
-								    <col style="width: 150px">
-								    <col style="width: 150px">
-								    <col style="width: 100px">
-								    <col style="width: 75px">
-								    <col style="width: 75px">
-								</colgroup>
-								<tr id=titlebg>
-									<th>번</th>
-									<th>사원번호</th>
-									<th>비밀번호</th>
-									<th>사원명</th>
-									<th>부서</th>
-									<th>직책</th>
-									<th>이메일</th>
-									<th>전화번호</th>
-									<th>입사일자</th>
-									<th>재직구분</th>
-									<th>상세보기</th>
-								</tr>
-								<c:forEach var="vo" items="${empList }">
-									<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀' || vo.emp_department == '자재팀' || vo.emp_department == '물류팀'}">
-										<tr>
-											<td></td>
-											<td id="empCode">${vo.emp_id}</td> <!-- 혦넣 -->
-											<td>${vo.emp_pw}</td> 
-											<td id="empName">${vo.emp_name}</td> <!-- 혦넣 -->
-											<td>${vo.emp_department}</td>
-											<td>${vo.emp_position}</td>
-											<td>${vo.emp_email}</td>
-											<td>${vo.emp_phone}</td>
-											<td>${vo.emp_hiredate}</td>
-											<td>${vo.emp_work}</td>
-											<td>
-												<input type="button" class="B B-info" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
-											</td>
+						<div class="table-wrapper" >
+							<form id = "fr">
+								<table class="table table-striped jambo_table bulk_action" style="text-align:center">
+									<thead>
+										<tr class="headings">
+											<th></th>
+											<th>사원번호</th>
+											<th>비밀번호</th>
+											<th>사원명</th>
+											<th>부서</th>
+											<th>직책</th>
+											<th>이메일</th>
+											<th>전화번호</th>
+											<th>입사일자</th>
+											<th>재직구분</th>
+											<th></th>
 										</tr>
-									</c:if>
-								</c:forEach>
-							</table>
-						</form>
-					</div>
+									</thead>
+									<c:forEach var="vo" items="${empList }">
+										<c:if test="${vo.emp_department == '전체' || vo.emp_department == '영업팀' || vo.emp_department == '생산팀' || vo.emp_department == '인사팀' || vo.emp_department == '자재팀' || vo.emp_department == '물류팀'}">
+											<tr>
+												<td></td>
+												<td id="empCode">${vo.emp_id}</td> <!-- 혦넣 -->
+												<td>${vo.emp_pw}</td> 
+												<td id="empName">${vo.emp_name}</td> <!-- 혦넣 -->
+												<td>${vo.emp_department}</td>
+												<td>${vo.emp_position}</td>
+												<td>${vo.emp_email}</td>
+												<td>${vo.emp_phone}</td>
+												<td>${vo.emp_hiredate}</td>
+												<td>${vo.emp_work}</td>
+												<td>
+													<input type="button" class="B B-info" value="상세보기" onclick="popupEmp(${vo.emp_id})"/>
+												</td>
+											</tr>
+										</c:if>
+									</c:forEach>
+								</table>
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		
+				
 		<!-- 페이징 -->
-		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<div id="pagination" class="dataTables_paginate paging_simple_numbers">
 			<ul class="pagination">
 				<li class="paginate_button previous disabled">
 					<c:if test="${pm.prev }">
@@ -676,6 +664,10 @@ $(function() {
 			</ul>
 		</div> 
 		<!-- 페이징 -->
+		
+			</div>
+		</div>
+		
 		
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">

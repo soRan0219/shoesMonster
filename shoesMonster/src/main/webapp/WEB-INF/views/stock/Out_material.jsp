@@ -44,6 +44,29 @@ body {
 	}
 </script>
 	
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+</style>
+
+	
 <!-- page content -->
 <div class="right_col" role="main">
 	
@@ -117,7 +140,8 @@ body {
 
 </script>	
 
-		<form method="get" style="margin-left: 1%;">
+
+		<form method="get" style="margin-left: 1%;  margin-right: 1%;">
 
 			<hr>
        		출고 번호 <input type="text" name="out_num" value="" placeholder="출고 번호를 입력하세요."> &nbsp;
@@ -141,8 +165,9 @@ body {
 				
 				<div class="clearfix"></div>
 			</div>
-			<div class="x_content">
-				<div class="table-responsive">
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
 					<form action="" method="post">
 						<table class="table table-striped jambo_table bulk_action" id="data-table">
 							<thead>
@@ -178,7 +203,7 @@ body {
 										<td class=" "><fmt:formatNumber value=" ${out.prod.prod_price}" />원</td>
 										<td class=" ">${out.orders.order_deliveryDate}</td>
 										<td class=" ">${out.out_date}</td>
-										<td class=" ">${out.o_emp_id}</td>
+										<td class=" ">${out.o_emp_id}</tb>
 										<td class=" ">${out.orders.out_YN}</td>
 										<td class=" ">
 											<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
@@ -198,29 +223,8 @@ body {
 							</c:if>
 						</div>
 					</form>
+					</div>
 					<div style="display: inline;">
-					<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-					<ul class="pagination">
-			      
-					   	<c:if test="${count4 > 0 }">
-						<li class="paginate_button previous disabled">
-							<c:if test="${bp.prev}">
-							    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Previous</a>
-							</c:if>
-						</li>
-						<li class="paginate_button previous disabled">
-							<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-							    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">${idx}</a>
-							</c:forEach>
-						</li>
-						<li class="paginate_button previous disabled">
-							<c:if test="${bp.next && bp.endPage > 0}">
-							    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Next</a>
-							</c:if>
-						</li>
-						</c:if>
-					</ul>
-			</div>
 			
 		<!-- 엑셀 - 시작 -->
 		<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
@@ -235,7 +239,6 @@ body {
 			
 			return year + "-" + month + "-" + day;
 		} //getToday()
-	
 	
         //엑셀
         const excelDownload = document.querySelector('#excelDownload');
@@ -291,9 +294,33 @@ body {
 				</div>
 			</div>
 		</div>
-
+	</div>
+	
+		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+      
+		   	<c:if test="${count4 > 0 }">
+			<li class="paginate_button previous disabled">
+				<c:if test="${bp.prev}">
+				    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Previous</a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+				    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">${idx}</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${bp.next && bp.endPage > 0}">
+				    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Next</a>
+				</c:if>
+			</li>
+			</c:if>
+		</ul>
+	</div>
+	
+	
 </div>
-    
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
 

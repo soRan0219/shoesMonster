@@ -21,6 +21,27 @@
 body {
 	font-family: 'NexonLv2Gothic';
 }
+
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+
 </style>
 <!-- 폰트 -->
 
@@ -36,10 +57,10 @@ body {
 
 	<h1 style="margin-left: 1%;"> 재고 관리 </h1>
 
-	
-	
-	
-	<div style="margin-left: 2%;">    
+
+	<div style="margin-left: 1%; margin-right: 1%;">
+		<a href="/stock/stockList_raw"><input type="button" value="원자재" class="B B-info" ></input></a>
+	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" ></input></a>
 	<hr>
 		<form action="" method="get">
 	 		원자재 코드 <input type="text" name="raw_code" placeholder="원자재 코드를 입력하세요."> &nbsp;
@@ -50,12 +71,6 @@ body {
 	<hr>
 	</div>
 	
-	 <div style="margin-left: 1%;">
-	    <a href="/stock/stockList_raw" ><input type="button" value="원자재" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input></a>
-	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input></a>
-    </div>
-	x
-	
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
 			<form id="fr">
@@ -65,18 +80,10 @@ body {
 					
 					<div class="clearfix"></div>
 				</div>
-				<div style="overflow-x: auto;">
-				<table id="data-table" border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;">
-					<colgroup>
-					    <col style="width: 100px">
-					    <col style="width: 100px">
-					    <col style="width: 100px">
-					    <col style="width: 100px">
-					    <col style="width: 100px">
-					    <col style="width: 100px">
-					    <col style="width: 100px">
-					    <col style="width: 100px">
-					</colgroup>
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+				<table id="data-table" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 					<thead>    
 					    <tr class="headings">
 					 		<th>유형</th>
@@ -106,8 +113,14 @@ body {
 				 </c:forEach>
 			   </table>
 			</div>
+			</div>
+			</div>
  		</form>
- 		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	</div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	      
+
+		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 			<ul class="pagination">
 			    <c:if test="${countR3 > 0 }">
 					<li class="paginate_button previous disabled"> 
@@ -128,10 +141,8 @@ body {
 				</c:if>
 			</ul>
 		</div>
-	</div>
-</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->	      
-           		
+
+  		
 	
 </div>
 
