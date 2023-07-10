@@ -166,9 +166,6 @@
 	$(document).ready(function(){
 		
 	$('#addButton').click(function() {
-		
-		
-// 			alert("제발");
 			$('#updateButton').attr("disabled", true);
 			$('#deleteButton').attr("disabled", true);
 			
@@ -180,7 +177,7 @@
 
 				var tbl = "<tr>";
 				// 번호
-				tbl += " <td>";
+				tbl += " <td style='width:75px'>";
 				tbl += " </td>";
 				// 거래처 코드
 				tbl += " <td>";
@@ -200,47 +197,47 @@
 				tbl += " </td>";
 				// 사업자 번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_number' id='client_number' required>";
+				tbl += "  <input type='text' name='client_number' id='client_number' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 업태
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_sort' id='client_sort' required>";
+				tbl += "  <input type='text' name='client_sort' id='client_sort' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 대표자
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_ceo' id='client_ceo' required>";
+				tbl += "  <input type='text' name='client_ceo' id='client_ceo' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 담당자
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_name' id='client_name' value=<c:out value='${sessionScope.id.emp_name}'/> required>";
+				tbl += "  <input type='text' name='client_name' id='client_name' value=<c:out value='${sessionScope.id.emp_name}'/> required class='input-fieldb'>";
 				tbl += " </td>";
 				// 주소
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_addr' id='client_addr' required>";
+				tbl += "  <input type='text' name='client_addr' id='client_addr' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 상세주소
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_addr2' id='client_addr2' required>";
+				tbl += "  <input type='text' name='client_addr2' id='client_addr2' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 전화번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_tel' id='client_tel' required>";
+				tbl += "  <input type='text' name='client_tel' id='client_tel' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 휴대폰번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_phone' id='client_phone' required>";
+				tbl += "  <input type='text' name='client_phone' id='client_phone' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 팩스번호
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_fax' id='client_fax' required>";
+				tbl += "  <input type='text' name='client_fax' id='client_fax' required class='input-fieldb'>";
 				tbl += " </td>";
 				// email
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_email' id='client_email' required>";
+				tbl += "  <input type='text' name='client_email' id='client_email' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 비고
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_note' id='client_note' required>";
+				tbl += "  <input type='text' name='client_note' id='client_note' required class='input-fieldb'>";
 				tbl += " </td>";
 				tbl += "</tr>";
 
@@ -253,6 +250,7 @@
 // 				} else if($("#client_type option:selected").val() === '발주처' ){
 // 					$('input[name="client_code"]').val('CL'+clientCode);
 // 				}
+ 				
 					
 					var selectedOption = "";
 				    $('#client_type').on('change', function() {
@@ -417,8 +415,6 @@
 
 					// sweetalert
 					if(checked.length > 0){
-						
-						
 						Swal.fire({
 							  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
 									  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
@@ -434,8 +430,6 @@
 						
 						 /* confirm => 예 눌렀을 때  */
 						  if (result.isConfirmed) {
-							  
-						  
 							$.ajax({
 		 						url: "/person/delete",
 		 						type: "POST",
@@ -604,9 +598,12 @@
     white-space: nowrap; 
     text-align: center;
 }
-
 .input-fielda {
     cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldb {
     display: inline-block;
     text-align-last: center;
 }
@@ -618,22 +615,17 @@
 	<h1 style="margin-left: 1%;">거래처 정보 관리</h1>
 
 	<div style="margin:1% 1%;">
+	<hr>
 		<form method="get" >
 		
 			<input type="hidden" name="input" id="input" value="${input }">
-			거래처코드 : 
-			<input type="text" name="search_client_code" id="search_client_code" placeholder="거래처 코드를 입력하세요."> 
-			거래처명 : 
-			<input type="text" name="search_client_actname" id="search_client_actname" placeholder="거래처명을 입력하세요.">
-			거래처구분 : 
-<!-- 			<select name="search_client_type"> -->
-<!-- 				<option selected value= "전체">전체</option> -->
-<!-- 				<option value= "발주처">발주처</option> -->
-<!-- 				<option value= "수주처">수주처</option> -->
-<!-- 			</select>  -->
+			거래처코드&nbsp;
+			<input type="text" name="search_client_code" id="search_client_code" placeholder="거래처 코드를 입력하세요."> &nbsp;&nbsp;
+			거래처명&nbsp;
+			<input type="text" name="search_client_actname" id="search_client_actname" placeholder="거래처명을 입력하세요."> &nbsp;&nbsp;
 			<input type="submit" class="B B-info" value="조회">
 			
-				<hr>
+			<hr>
 			
 			<div class="custom-select1">
 				<select name="search_client_type">
@@ -711,10 +703,10 @@
 			<div class="table-responsive">
 				<div class="table-wrapper" >
 					<form id="fr">
-					<table id="clientsTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+					<table id="clientsTable" class="table table-striped jambo_table bulk_action" style="text-align-last:center;">
 						<thead>
 							<tr class="headings">
-								<th></th>
+								<th>번호</th>
 								<th>거래처코드</th>
 								<th>거래처명</th>
 								<th>거래처구분</th>

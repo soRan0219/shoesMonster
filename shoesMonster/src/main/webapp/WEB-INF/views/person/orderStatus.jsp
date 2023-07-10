@@ -198,13 +198,13 @@ $(function(){
 
 			var tbl = "<tr>";
 			// 번호
-			tbl += "<td>";
+			tbl += "<td style='width:75px'>";
 			tbl += "</td>";
 			// 수주번호
 			tbl += "<td>";
 			tbl += "<input type='text' name='order_code' id='order_code' readonly value='";
 			tbl += 'O' + date;
-			tbl += "' class='input-fielda'>";
+			tbl += "' class='input-fieldb'>";
 			tbl += "</td>";
 			// 수주업체코드
 			tbl += "<td>";
@@ -222,7 +222,7 @@ $(function(){
 			tbl += "<input type='hidden' name='emp_id' id='emp_id' value=<c:out value='${sessionScope.id.emp_id}'/> required readonly>";
 			// 담당자
 			tbl += "<td>";
-			tbl += "<input type='text' name='emp_name' id='emp_name' value=<c:out value='${sessionScope.id.emp_name}'/> required readonly class='input-fielda'>";
+			tbl += "<input type='text' name='emp_name' id='emp_name' value=<c:out value='${sessionScope.id.emp_name}'/> required readonly class='input-fieldb'>";
 			tbl += "</td>";
 			// 품번
 			tbl += "<td>";
@@ -242,7 +242,7 @@ $(function(){
 			tbl += "</td>";
 			// 수주량
 			tbl += "<td>";
-			tbl += "<input type='number' name='order_count' id='order_count' required class='input-fielda'>";
+			tbl += "<input type='number' name='order_count' id='order_count' required class='input-fieldb'>";
 			tbl += "</td>";
 			tbl += "</tr>";
 			
@@ -633,7 +633,6 @@ $(function(){
 </script>
 
 <style>
-
 .table-wrapper {
     overflow-x: auto; /* 테이블 직접 조절 */
     overflow-y: hidden;
@@ -643,17 +642,15 @@ $(function(){
     white-space: nowrap; 
     text-align: center;
 }
-
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
-}
-
 </style>
 
 
@@ -663,21 +660,25 @@ $(function(){
 	<h1 style="margin-left: 1%;">수주 관리</h1>
 	
 	<div style="margin: 1% 1%;">
+	<hr>
 		<form method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="client_code" id="client_code9999" >
-				업체 : <input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')" placeholder="업체를 선택하세요.">
-				수주 일자 : <input type="text" name="order_date_fromDate" id="order_date_fromDate" placeholder="기간을 선택하세요."> ~
-						  <input type="text" name="order_date_toDate" id="order_date_toDate" placeholder="기간을 선택하세요.">
-				<input type="hidden" name="prod_code" id="prod_code9999">
-				품목 : <input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')" placeholder="품목을 선택하세요.">
-				<input type="submit" class="B B-info" value="조회">
-				<br>
+				업체&nbsp;<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')" placeholder="업체를 선택하세요."> &nbsp;&nbsp;
 				<input type="hidden" name="emp_id" id="s_emp_id"> 
-				담당자 : <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')" placeholder="담당자를 선택하세요.">
-				납품 예정일 : <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate" placeholder="기간을 선택하세요."> ~ 
-						    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate" placeholder="기간을 선택하세요.">
+				담당자&nbsp;<input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')" placeholder="담당자를 선택하세요."> &nbsp;&nbsp;
+				수주 일자&nbsp;<input type="text" name="order_date_fromDate" id="order_date_fromDate" placeholder="기간을 선택하세요."> ~
+				<input type="text" name="order_date_toDate" id="order_date_toDate" placeholder="기간을 선택하세요.">
+
+				<br><br>
+				
+				<input type="hidden" name="prod_code" id="prod_code9999">
+				품목&nbsp;<input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')" placeholder="품목을 선택하세요."> &nbsp;&nbsp;
+				납품 예정일&nbsp;<input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate" placeholder="기간을 선택하세요."> ~ 
+						    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate" placeholder="기간을 선택하세요."> &nbsp;&nbsp;
+				
+				<input type="submit" class="B B-info" value="조회">
 			</fieldset>
 		</form>
 		<hr>
@@ -735,10 +736,10 @@ $(function(){
 			<div class="table-responsive">
 				<div class="table-wrapper" >
 					<form id="fr">
-						<table class="table table-striped jambo_table bulk_action" id="data-table">
+						<table class="table table-striped jambo_table bulk_action" id="data-table" style="text-align-last:center;">
 							<thead>
 								<tr class="headings">
-									<th></th>
+									<th>번호</th>
 									<th>수주번호</th>
 									<th>수주업체코드</th>
 									<th>수주업체명</th>

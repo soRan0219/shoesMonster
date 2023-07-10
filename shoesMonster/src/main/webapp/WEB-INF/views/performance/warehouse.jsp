@@ -656,7 +656,7 @@
 	
 	
 	
-	</script>
+</script>
 
 
 <style>
@@ -669,15 +669,12 @@
     white-space: nowrap; 
     text-align: center;
 }
-
 .input-fielda {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
     cursor: pointer;
     display: inline-block;
     text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
     display: inline-block;
     text-align-last: center;
 }
@@ -690,34 +687,35 @@
 
 <h1 style="margin-left: 1%;">창고관리</h1>
 
-<div style="margin-left: 1%; margin-right: 1%">
+<div style="margin: 1% 1%">
+	<hr>
 	<form method="get">
 		
 		<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
 			
-			<label>창고코드 : </label>
-				<input type="text" name="wh_code" placeholder="창고코드를 입력하세요.">
+			<span>창고코드&nbsp;</span>
+				<input type="text" name="wh_code" placeholder="창고코드를 입력하세요."> &nbsp;&nbsp;
 			
-			<label>지역 : </label>
-				<input type="text" name="wh_addr" placeholder="지역을 입력하세요.">
+			<span>지역&nbsp;</span>
+				<input type="text" name="wh_addr" placeholder="지역을 입력하세요."> &nbsp;&nbsp;
 			
-			<label>담당자 : </label>
+			<span>담당자&nbsp;</span>
 				<input type="hidden" id="s_emp_id" name="emp_id">
-				<input type="text" id="s_emp_name" name="emp_name" placeholder="담당자를 선택하세요.">
+				<input type="text" id="s_emp_name" name="emp_name" placeholder="담당자를 선택하세요."> &nbsp;&nbsp;
 			
 			<input type="submit" class="B B-info" value="조회">
 				
-			<br>
+			<br><br>
 			
 			<div style="margin-top: 0.5%;">
 					
-				<label>사용여부 : </label>
-					<input type="radio" name="wh_use" value="3" checked>전 체
-					<input type="radio" name="wh_use" value="1">Y
-					<input type="radio" name="wh_use" value="2">N
+			<span>사용여부&nbsp;</span>
+				&nbsp;<input type="radio" name="wh_use" value="3" checked>&nbsp;전 체
+				&nbsp;<input type="radio" name="wh_use" value="1">&nbsp;Y
+				&nbsp;<input type="radio" name="wh_use" value="2">&nbsp;N
 			</div>
-	<hr>	
+			<hr>	
 						
 		<div class="custom-select1">
 			<select name="wh_dv">
@@ -797,7 +795,7 @@
 <div class="x_content">
 	<div class="table-responsive">
 		<div class="table-wrapper" >
-		<table id="whTable" class="table table-striped jambo_table bulk_action" style="text-align:center;"> 
+		<table id="whTable" class="table table-striped jambo_table bulk_action" style="text-align-last:center;"> 
 			<thead>
 				<tr class="headings">
 					<td></td>

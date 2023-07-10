@@ -172,23 +172,23 @@ $(function() {
 			
 			var tbl = "<tr>";
 			// 번호
-			tbl += " <td>";
+			tbl += " <td style='width:75px'>";
 			tbl += " </td>";
 			// 사원번호
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_id' id='emp_id' readonly class='input-fielda'>";
+			tbl += "  <input type='text' name='emp_id' id='emp_id' readonly class='input-fieldb'>";
 			tbl += " </td>";
 			// 비밀번호
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_pw' id='emp_pw' required class='input-fielda'>";
+			tbl += "  <input type='text' name='emp_pw' id='emp_pw' required class='input-fieldb'>";
 			tbl += " </td>";
 			// 사원명
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_name' id='emp_name' required class='input-fielda'>";
+			tbl += "  <input type='text' name='emp_name' id='emp_name' required class='input-fieldb'>";
 			tbl += " </td>";
 			// 부서
 			tbl += " <td>";
-			tbl += "  <select name='emp_department' id='emp_department' class='input-fielda'>";
+			tbl += "  <select name='emp_department' id='emp_department'>";
 			tbl += "   <option value='부서'>부서</option>";
 			tbl += "   <option value='영업팀'>영업팀</option>";
 			tbl += "   <option value='생산팀'>생산팀</option>";
@@ -199,23 +199,23 @@ $(function() {
 			tbl += " </td>";
 			// 직책
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_position' id='emp_position' required class='input-fielda'>";
+			tbl += "  <input type='text' name='emp_position' id='emp_position' required class='input-fieldb'>";
 			tbl += " </td>";
 			// 이메일
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_email' id='emp_email' required class='input-fielda'>";
+			tbl += "  <input type='text' name='emp_email' id='emp_email' required class='input-fieldb'>";
 			tbl += " </td>";
 			// 전화번호
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_phone' id='emp_phone' required class='input-fielda'>";
+			tbl += "  <input type='text' name='emp_phone' id='emp_phone' required class='input-fieldb'>";
 			tbl += " </td>";
 			// 입사일자
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_hiredate' id='emp_hiredate' required class='input-fielda'>";
+			tbl += "  <input type='text' name='emp_hiredate' id='emp_hiredate' required class='input-fieldb'>";
 			tbl += " </td>";
 			// 재직구분
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_work' id='emp_work' required class='input-fielda'>";
+			tbl += "  <input type='text' name='emp_work' id='emp_work' required class='input-fieldb'>";
 			tbl += " </td>";
 			tbl += "</tr>";
 
@@ -507,15 +507,14 @@ $(function() {
     white-space: nowrap; 
     text-align: center;
 }
-
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
 
 </style>
@@ -528,14 +527,15 @@ $(function() {
 	<h1 style="margin-left: 1%;">사원 관리</h1>
 	
 		<div style="margin: 1% 1%;">
+		<hr>
 			<form id="searchForm" method="get">
 	       		<input type="hidden" name="input" id="input" value="${input }">
 	       		<input type="hidden" name="pageSize" id="pageSize" value="${pm.clientPageVO.pageSize }">
-	       		사원번호
-	        	<input type="text" name="search_emp_id" id="search_emp_id" placeholder="사원번호를 입력하세요.">
-	        	사원명
-	        	<input type="text" name="search_emp_name" id="search_emp_name" placeholder="사원명을 입력하세요.">
-	        	부서
+	       		사원번호&nbsp;
+	        	<input type="text" name="search_emp_id" id="search_emp_id" placeholder="사원번호를 입력하세요."> &nbsp;&nbsp;
+	        	사원명&nbsp;
+	        	<input type="text" name="search_emp_name" id="search_emp_name" placeholder="사원명을 입력하세요."> &nbsp;&nbsp;
+	        	부서&nbsp;
 	       		<select name="search_emp_department">           
 					<option selected value="전체">전체</option>    
 				    <option value="영업팀">영업팀</option>    
@@ -544,7 +544,7 @@ $(function() {
 				    <option value="자재팀">자재팀</option>
 				    <option value="물류팀">물류팀</option>
 				</select>
-				<input type="submit" class="B B-info" value="조회"> 
+				&nbsp;&nbsp;&nbsp;<input type="submit" class="B B-info" value="조회"> 
 			</form>
 			<hr>
 		</div>
@@ -602,10 +602,10 @@ $(function() {
 					<div class="table-responsive">
 						<div class="table-wrapper" >
 							<form id = "fr">
-								<table class="table table-striped jambo_table bulk_action" style="text-align:center">
+								<table class="table table-striped jambo_table bulk_action" style="text-align-last:center">
 									<thead>
 										<tr class="headings">
-											<th></th>
+											<th>번호</th>
 											<th>사원번호</th>
 											<th>비밀번호</th>
 											<th>사원명</th>

@@ -719,17 +719,17 @@
 	<fieldset>
 		<input type="hidden" name="input" id="input" value="${input}">
 				
-		<label>라인코드&nbsp;</label>
+		<span>라인코드&nbsp;</span>
 			<input type="text" name="line_code" placeholder="라인코드를 입력하세요."> &nbsp;&nbsp;
 			
-		<label>라인명&nbsp;</label>
+		<span>라인명&nbsp;</span>
 			<input type="text" name="line_name" placeholder="라인명을 입력하세요."> &nbsp;&nbsp;
 			
 		<input type="submit" class="B B-info" value="조회">
 		
 		<br><br>
 		
-		<label>사용여부&nbsp;</label>
+		<span>사용여부&nbsp;</span>
 			&nbsp;<input type="radio" name="line_use" value="3" checked> 전체
 			&nbsp;<input type="radio" name="line_use" value="1"> Y
 			&nbsp;<input type="radio" name="line_use" value="2"> N

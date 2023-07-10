@@ -710,7 +710,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 
 				<input type="submit" class="B B-info" value="조회">
 				<br><br>
-				<div style="margin-top: 0.5%;">
+				<div>
 					현황&nbsp;&nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
 						 &nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
 						  &nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
