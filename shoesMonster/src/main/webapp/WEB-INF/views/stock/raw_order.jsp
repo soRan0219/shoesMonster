@@ -141,8 +141,8 @@ function toggleDiv(divId) {
     
     <!-- 버튼 제어 -->
     <form action="" name="ro">
-	    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList"></input>
-	    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd"></input>
+	    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input>
+	    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input>
     </form>
     
   		<script>

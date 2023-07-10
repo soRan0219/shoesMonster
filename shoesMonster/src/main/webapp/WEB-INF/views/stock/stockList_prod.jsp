@@ -121,10 +121,7 @@ body {
 
 	<h1 style="margin-left: 1%;"> 재고 관리 </h1>
 	
-	<div style="margin-left: 1%;">
-	    <a href="/stock/stockList_raw" ><input type="button" value="원자재" class="B B-info" ></input></a>
-	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" ></input></a>
-    </div>
+	
     
     
     <div style="margin-left: 2%;">  
@@ -137,7 +134,11 @@ body {
 	  	</form>
 	<hr>
   	</div>
-	
+	 
+	 <div style="margin-left: 1%;">
+	    <a href="/stock/stockList_raw" ><input type="button" value="원자재" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input></a>
+	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input></a>
+    </div>
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
