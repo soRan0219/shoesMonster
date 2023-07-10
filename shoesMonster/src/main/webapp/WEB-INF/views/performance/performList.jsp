@@ -784,7 +784,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 		<div class="table-responsive">
 			<div class="table-wrapper" >	
 			<input type="hidden" name="emp_id" value="${sessionScope.id.emp_id }">
-			<table class="table table-striped jambo_table bulk_action"  id="data-table">
+			<table class="table table-striped jambo_table bulk_action"  id="data-table" style="text-align-last:center;">
 				<thead>
 					<tr class="headings">
 						<th class="column-title">번호</th>

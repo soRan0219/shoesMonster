@@ -629,7 +629,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 		<div class="x_content">
 			<div class="table-responsive">
 				<div class="table-wrapper" >
-		<table id="rawTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+		<table id="rawTable" class="table table-striped jambo_table bulk_action" style="text-align-last:center;">
 		<thead>
 				<tr class="headings">
 					<th class="column-title">번호</th>
