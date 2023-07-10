@@ -343,17 +343,18 @@ function toggleDiv(divId) {
 	
 	<!-- ============================ 발주 등록 ============================ -->
 
+	<br>
 	<div id="regist">
-
+		
+			
 		<form action="" method="post" onsubmit="return check()">
+		<div class="col-md-12 col-sm-12" >
+			<div class="x_panel" style="height: 400px">
+			<div class="x_title">
+				<h2>발주 등록</h2>
+				<div class="clearfix"></div>
+			</div>
 			<c:set var="today" value="<%=new Date()%>" />
-
-			<table border="1">
-			<tr>
-				<th >입고 창고</th>
-				<td onclick="roPopup();"><input type="text" name="wh_code" id="wh_code" readonly></td>
-			</tr>
-		</table>
 			<br>
 						<div class="table-responsive">
 							<table id="table"
@@ -366,6 +367,7 @@ function toggleDiv(divId) {
 										<th class="column-title">품번</th>
 										<th class="column-title">품명</th>
 										<th class="column-title">색상</th>
+										<th class="column-title">입고 창고</th>
 										<th class="column-title">발주 수량</th>
 										<th class="column-title">재고 수량</th>
 										<th class="column-title">단가</th>
@@ -390,6 +392,7 @@ function toggleDiv(divId) {
 											name="raw_name" id="raw_name" readonly></td>
 										<td class=" " onclick="roPopup();"><input type="text" 
 											name="raw_color" id="raw_color" readonly></td>
+										<td onclick="roPopup();" ><input type="text" name="wh_code" id="wh_code" readonly></td>
 										<td class=" "><input type="number"  min="1"
 											id="raw_order_count" name="raw_order_count"
 											oninput="totalAmount()"></td>
@@ -406,12 +409,17 @@ function toggleDiv(divId) {
 
 
 								</tbody>
-							</table>
+							</table> 
+							<br><br>
+							</div >
 							<input type="submit" class="btn btn-info" value="발주 신청">
 							
 							</div>
-							
+							<br><br><br>
+		</div>
+		<br><br><br>
 							</form>
+							<br><br><br>
 						</div>
 
 	
