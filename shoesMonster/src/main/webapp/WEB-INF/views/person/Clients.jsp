@@ -184,7 +184,7 @@
 				tbl += " </td>";
 				// 거래처명
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_actname' id='client_actname' required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_actname' id='client_actname2' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 거래처 구분
 				tbl += " <td>";
@@ -301,7 +301,7 @@
 			$('#saveButton').click(function() {
 
 				var client_code = $('#client_code2').val();
-				var client_actname = $('#client_actname').val();
+				var client_actname = $('#client_actname2').val();
 				var client_type = $('#client_type').val();
 				var client_number = $('#client_number').val();
 				var client_sort = $('#client_sort').val();
@@ -318,12 +318,15 @@
 				if (client_code == "" || client_actname == "" || client_type == "" || client_number == "" || client_sort == "" 
 						|| client_ceo == "" || client_name == "" || client_addr == "" || client_addr2 == "" || client_tel == "" 
 						|| client_phone == "" || client_fax == "" || client_email == "") {
-// 					alert("client_code"+client_code);
+					
 					Swal.fire({
 						title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
 						icon: 'info',
 						width: '300px',
-					})
+					});
+					
+					
+					
 				} else {
 					$('#fr').attr("action", "/person/addClient");
 					$('#fr').attr("method", "post");
