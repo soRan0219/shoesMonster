@@ -60,8 +60,18 @@
 					<!-- menu profile quick info -->
 					<div class="profile clearfix" style="margin-top: 30%; margin-left: 15%;">
 						<div class="profile_pic">
-							<img src="/imgDown?fileName=${id.file }" alt="..."
+						
+							<c:if test="${!empty id.file }">
+								<img src="/imgDown?fileName=${id.file }" alt="..."
 								class="img-circle profile_img">
+							</c:if>
+							
+							<c:if test="${empty id.file }">
+								<img src="../resources/images/person.png" alt="..."
+								class="img-circle profile_img">
+							</c:if>
+								
+								
 						</div>
 						<div class="profile_info">
 							<span>${id.emp_position }</span>

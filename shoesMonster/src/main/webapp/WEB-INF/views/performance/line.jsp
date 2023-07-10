@@ -697,10 +697,10 @@
 		<input type="hidden" name="input" id="input" value="${input}">
 				
 		<label>라인코드 : </label>
-			<input type="text" name="line_code" >
+			<input type="text" name="line_code" placeholder="라인코드를 입력하세요.">
 			
 		<label>라인명 : </label>
-			<input type="text" name="line_name">
+			<input type="text" name="line_name" placeholder="라인명을 입력하세요.">
 			
 		<input type="submit" class="B B-info" value="조회">
 		

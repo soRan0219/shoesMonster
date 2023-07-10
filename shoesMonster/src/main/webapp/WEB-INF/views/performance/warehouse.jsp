@@ -672,14 +672,14 @@
 			<input type="hidden" name="input" id="input" value="${input }">
 			
 			<label>창고코드 : </label>
-				<input type="text" name="wh_code">
+				<input type="text" name="wh_code" placeholder="창고코드를 입력하세요.">
 			
 			<label>지역 : </label>
-				<input type="text" name="wh_addr" >
+				<input type="text" name="wh_addr" placeholder="지역을 입력하세요.">
 			
 			<label>담당자 : </label>
 				<input type="hidden" id="s_emp_id" name="emp_id">
-				<input type="text" id="s_emp_name" name="emp_name">
+				<input type="text" id="s_emp_name" name="emp_name" placeholder="담당자를 선택하세요.">
 			
 			<input type="submit" class="B B-info" value="조회">
 				

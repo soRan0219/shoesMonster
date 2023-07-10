@@ -6,8 +6,12 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- SheetJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
 
@@ -29,6 +33,8 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 }
 </style>
 <!-- 폰트 -->
+
+  
 
 <script>
     
@@ -58,6 +64,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
     	openWindow("wh_p",inputId);
     }
     
+    // 유효성 검사 후 폼 제출
     function submitForm() {
     	  var isValid = true;
 
@@ -489,15 +496,15 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
        		<input type="hidden" name="input" id="input" value="${input }">
        		
        		<label>품번:</label>
-        	<input type="text" name="prod_code" id="searchCode">
+        	<input type="text" name="prod_code" id="searchCode" placeholder="품목코드를 입력하세요.">
         	<label>품명:</label>
-        	<input type="text" name="prod_name" id="searchName">
+        	<input type="text" name="prod_name" id="searchName" placeholder="품명을 입력하세요.">
         	<label>카테고리:</label>
-        	<input type="text" name="prod_category" id="searchCategory"> 
+        	<input type="text" name="prod_category" id="searchCategory" placeholder="카테고리를 입력하세요."> 
         	<label>거래처 : </label>
         	<input type="hidden" name="client_code" id="client_code9999">
-        	<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-        	<input type="submit" class="B B-info" value="검색">
+        	<input type="text" name="client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')">
+        	<input type="submit" class="B B-info" value="조회">
 		</fieldset>
 	</form>
 </div>	
@@ -610,8 +617,72 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 		</table>
 		</div>
 	</form>
+<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 </div>
 </div>
+
+<script type="text/javascript">
+
+		//오늘 날짜 yyyy-mm-dd
+		function getToday() {
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = ("0" + (1 + date.getMonth())).slice(-2);
+			var day = ("0" + date.getDate()).slice(-2);
+		
+			return year + "-" + month + "-" + day;
+		} //getToday()
+        
+        //엑셀
+        var excelDownload = document.querySelector('#excelDownload');
+        
+        document.addEventListener('DOMContentLoaded', ()=> {
+            excelDownload.addEventListener('click', exportExcel);
+        });
+        
+        function exportExcel() {
+            //1. workbook 생성
+            var wb = XLSX.utils.book_new();
+            
+            //2. 시트 만들기
+            var newWorksheet = excelHandler.getWorksheet();
+            
+            //3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+            
+            //4. 엑셀 파일 만들기
+            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+            
+            //5. 엑셀 파일 내보내기
+            saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+            
+        } //exportExcel()
+        
+        var excelHandler = {
+            getExcelFileName : function() {
+                return 'product_list'+getToday()+'.xlsx'; //파일명
+            },
+            getSheetName : function() {
+                return 'product Sheet'; //시트명
+            },
+            getExcelData : function() {
+                return document.getElementById('productTable'); //table id
+            },
+            getWorksheet : function() {
+                return XLSX.utils.table_to_sheet(this.getExcelData());
+            }
+        } //excelHandler
+        
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+            var view = new Uint8Array(buf);  
+            for(var i=0; i<s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xFF;
+            }
+            return buf;
+        } //s2ab(s)
+        
+    </script>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 <div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">

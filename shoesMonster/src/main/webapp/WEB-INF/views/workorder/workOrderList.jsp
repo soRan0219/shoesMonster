@@ -29,8 +29,24 @@ body {
 	background-color: #ccc;
 }
 
+
 div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	background-color: #868e96;
+  }
+
+#magamBtn {
+	border: 1px solid;
+	border-radius: 5px;
+	padding: 5px;
+	background-color: #17a2b8;
+	color: #fff;
+}
+#magamBtn:hover {
+	border: 1px solid;
+	border-radius: 5px;
+	padding: 5px;
+	background-color: #04B486;
+	color: #fff;
 }
 </style>
 <!-- 폰트 -->
@@ -174,7 +190,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 			let today = getToday();
 
 			if ($(this).hasClass('true')) {
-
+				
 				var tbl = "<tr>";
 				// 번호
 				tbl += " <td>";
@@ -218,7 +234,17 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				tbl += "</tr>";
 
 				$('table').append(tbl);
-
+				
+				//1차공정 라인 중 사용 가능한 라인 입력
+				$.ajax({
+					url: "/workorder/getLine",
+					type: "post",
+					dataType: "text",
+					success: function(data) {
+						$('#line_code').val(data);
+					}
+				});
+				
 				//수주코드 검색
 				$('#order_code_work').click(function() {
 					openWindow("order", "order_code_work");
@@ -682,11 +708,11 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				<span>라인코드 : </span> <input type="text" name="search_line" id="search_line" class="searchInputText"> 
+				<span>라인코드 : </span> <input type="text" name="search_line" id="search_line" class="searchInputText" placeholder="라인코드를 선택하세요."> 
 				<span>지시일자 : </span> 
-					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off"> ~ 
-					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off"> 
-				<span>품번 : </span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
+					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
+					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요."> 
+				<span>품번 : </span> <input type="text" name="search_prod" id="search_prod" class="searchInputText" placeholder="품목을 선택하세요">
 				<input type="submit" value="조회" class="B B-info"> 
 				<br><br>
 				<span>지시상태 : </span> 
@@ -798,7 +824,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 						<td id="workQt">${w.work_qt }</td>
 						<td id="linePlace">${w.line_place }</td>
 						<c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}">
-							<td><a href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a></td>
+							<td><a id="magamBtn" href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a></td>
 						</c:if>
 					</tr>
 				</c:forEach>

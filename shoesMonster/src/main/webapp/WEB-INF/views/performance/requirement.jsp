@@ -470,14 +470,14 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 		<form method="get">
 			<fieldset>
 				<label>소요코드 : </label> 
-				<input type="text" name="req_code" id="searchCode"> 
+				<input type="text" name="req_code" id="searchCode" placeholder="소요량코드를 입력하세요."> 
 				<label>완제품 : </label> 
 				<input type="hidden"name="prod_code" id="prod_code9999"> 
-				<input type="text"name="prod_name" id="prod_name9999" readonly onclick="serchProd('prod_code9999')"> 
+				<input type="text"name="prod_name" id="prod_name9999" placeholder="완제품을 선택하세요." readonly onclick="serchProd('prod_code9999')"> 
 				<label>원자재 : </label>
 				<input type="hidden" name="raw_code" id="raw_code9999"> 
-				<input type="text" name="raw_name" id="raw_name9999" readonly onclick="serchRaw('raw_code9999')"> 
-				<input type="submit" class="B B-info" value="검색">
+				<input type="text" name="raw_name" id="raw_name9999" placeholder="원자재를 선택하세요." readonly onclick="serchRaw('raw_code9999')"> 
+				<input type="submit" class="B B-info" value="조회">
 			</fieldset>
 		</form>
 		

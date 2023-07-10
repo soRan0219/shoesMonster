@@ -627,9 +627,9 @@
 		
 			<input type="hidden" name="input" id="input" value="${input }">
 			거래처코드 : 
-			<input type="text" name="search_client_code" id="search_client_code"> 
+			<input type="text" name="search_client_code" id="search_client_code" placeholder="거래처 코드를 입력하세요."> 
 			거래처명 : 
-			<input type="text" name="search_client_actname" id="search_client_actname">
+			<input type="text" name="search_client_actname" id="search_client_actname" placeholder="거래처명을 입력하세요.">
 			거래처구분 : 
 <!-- 			<select name="search_client_type"> -->
 <!-- 				<option selected value= "전체">전체</option> -->
