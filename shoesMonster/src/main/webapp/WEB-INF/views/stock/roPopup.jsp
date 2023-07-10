@@ -81,8 +81,8 @@ body {
 	<div style="margin-left: 1%;">
 		<form action="" method="get">
 			품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요."> &nbsp;
-			거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요."> &nbsp;
-			<input type="submit" class="B B-info" value="검색"></input> &nbsp; &nbsp;
+			거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요."> &nbsp; &nbsp;
+			<input type="submit" class="B B-info" value="검색"></input>
 	    </form>
 	</div>   
 	 <!-- ///////////////////////////////////////////////// -->

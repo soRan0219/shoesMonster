@@ -35,7 +35,7 @@ body {
 	
 	// 발주 팝업
 	function roPopup() {
-		 window.open("roPopup","거래처 목록","width=950, height=645, left=500, top=150, location=no");
+		 window.open("roPopup","거래처 목록","width=950, height=653, left=500, top=150, location=no");
 	}
 	
 	// 발주 현황 상세페이지
@@ -163,15 +163,14 @@ function toggleDiv(divId) {
 
     <div style="margin-left: 1%;">
     
-    
     <!-- 버튼 제어 -->
     <form action="" name="ro">
-	    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input>
-	    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input>
+	    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450; margin-top: 0.5%;"></input>
+	    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450; margin-top: 0.5%;"></input>
     </form>
     
   		<script>
-		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정 
 		
 		    if (team === "영업팀" || team === "관리자") {
 		        document.getElementById("matList").disabled = false;
@@ -193,7 +192,7 @@ function toggleDiv(divId) {
 		    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요."> &nbsp;
 		   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요."> &nbsp;
 		   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요."> &nbsp; &nbsp;
-		   	<input type="submit" class="B B-info" value="검색"></input>
+		   	<input type="submit" class="B B-info" value="조회"></input>
 		 <hr>
 	    </form>
     
@@ -250,9 +249,11 @@ function toggleDiv(divId) {
 								</c:forEach>
 							</tbody>
 						</table>
+						
 					</form>
-	
+					<div style="display: inline;">
 					<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
+					</div>
 			
 	<script type="text/javascript">
 	function getToday() {
@@ -325,6 +326,27 @@ function toggleDiv(divId) {
 		
 		<div>
 		
+		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;"> 
+		<ul class="pagination"> 
+	<!--     			<div style="text-align: right;"> -->
+					<c:if test="${count1 > 0 }">
+					<li class="paginate_button previous disabled">
+						<c:if test="${bp.prev}">
+						    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a>
+						</c:if>
+						<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+						    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+						</c:forEach>
+						<c:if test="${bp.next && bp.endPage > 0}">
+						    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
+						</c:if>
+					</li>
+					</c:if>
+	<!-- 			</div> -->
+	    </ul>
+	    </div>
+		
+		
 		</div>
 
 	</div>
@@ -333,21 +355,8 @@ function toggleDiv(divId) {
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
     
-    			<div style="text-align: right;">
-				<c:if test="${count1 > 0 }">
-					<c:if test="${bp.prev}">
-					    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">이전</a>
-					</c:if>
-					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-					    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-					</c:forEach>
-					<c:if test="${bp.next && bp.endPage > 0}">
-					    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">다음</a>
-		
-					</c:if>
-				</c:if>
-			</div>
     
+	
     
 	
 	<!-- ============================ 발주 현황 ============================ -->
@@ -362,7 +371,7 @@ function toggleDiv(divId) {
 	<div id="regist">
 		<form action="" method="post" onsubmit="return check()">
 		<div class="col-md-12 col-sm-12" >
-			<div class="x_panel" style="height: 400px">
+			<div class="x_panel" style="height: 382px">
 			<div class="x_title">
 				<h2>발주 등록</h2>
 				<div class="clearfix"></div>
@@ -387,7 +396,6 @@ function toggleDiv(divId) {
 										<th class="column-title">단가</th>
 										<th class="column-title">총액</th>
 										<th class="column-title">담당자</th>
-										<!-- 발주번호처럼 '발주 신청' 버튼 눌렀을 때 저장하기 -->
 									</tr>
 								</thead>
 								<tbody>
@@ -407,12 +415,12 @@ function toggleDiv(divId) {
 										<td class=" " onclick="roPopup();"><input type="text" 
 											name="raw_color" id="raw_color" readonly></td>
 										<td onclick="roPopup();" ><input type="text" name="wh_code" id="wh_code" readonly></td>
-										<td class=" "><input type="number"  min="1"
+										<td class=" "><input type="number" min="1"
 											id="raw_order_count" name="raw_order_count"
 											oninput="totalAmount()"></td>
 										<!-- CSS할 때 증감버튼 없애기 -->
-										<td class=" ">
-											<input type="text" style="color: ${inputValue <= 50 ? 'red' : 'inherit'}" name="stock_count" id="stock_count" readonly>
+										<td class=" "><input type="text" style="color: ${inputValue <= 50 ? 'red' : 'inherit'}" 
+											name="stock_count" id="stock_count" readonly >
 										</td>
 										<td class=" "><input type="text"  name="raw_price"
 											id="raw_price" readonly></td>
@@ -421,28 +429,22 @@ function toggleDiv(divId) {
 
 									</tr>
 
-
 								</tbody>
 							</table> 
 							<br><br>
-							</div >
-							<input type="submit" class="btn btn-info" value="발주 신청">
+							</div>
+							<input type="submit" class="B B-info" value="발주 신청" style="margin-top: 2%; padding: 2px; width: 75px;">
 							
 							</div>
-							<br><br><br>
-		</div>
-		<br><br><br>
+							</div>
+							</div>
 							</form>
-							<br><br><br>
 						</div>
 
 	
 	<!-- ============================ 발주 등록 ============================ -->
-	
 
-	<!-- ============================ 발주 등록 ============================ -->
 	
-<!-- ============================ 발주 등록 ============================ -->
 	</div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>

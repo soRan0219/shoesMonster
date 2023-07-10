@@ -147,11 +147,13 @@ body {
        		출고 번호 <input type="text" name="out_num" value="" placeholder="출고 번호를 입력하세요."> &nbsp;
         	품명 <input type="text" name="prod.prod_name" value="" placeholder="품명을 입력하세요."> &nbsp;
         	거래처명 <input type="text" name="clients.client_actname" value="" placeholder="거래처명을 입력하세요."> &nbsp; &nbsp;
-        	<input type="submit" class="B B-info" value="검색"></input>
+        	<input type="submit" class="B B-info" value="조회"></input>
         	<hr>
-			<button type="submit" value="" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 450;">전체</span></button>
-	        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
-	        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
+        	<div style="margin-bottom: 1%;">
+				<button type="submit" value="" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 450;">전체</span></button>
+		        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
+		        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
+        	</div>
 		</form>
 
   <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
