@@ -35,12 +35,12 @@ body {
 	
 	// 발주 팝업
 	function roPopup() {
-		window.open("roPopup","거래처 목록","width=950, height=645, left=500, top=150, location=no");
+		 window.open("roPopup","거래처 목록","width=950, height=645, left=500, top=150, location=no");
 	}
 	
 	// 발주 현황 상세페이지
 	function detailPopup(rawCode, raw_order_num) {
-		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=680, height=420, left=200, top=150");
+		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=750, height=420, left=200, top=150");
 	}
 	
 	// 총액
@@ -67,7 +67,7 @@ body {
 		if(document.getElementById("client_actname").value === "") {
 // 			alert("발주 항목을 선택해주세요.");
 			Swal.fire({
-				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "발주 항목을 선택해주세요"+ "</div>",
+				title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "발주 항목을 선택해주세요"+ "</div>",
 				icon: 'warning',
 				width: '300px',
 			})
@@ -75,7 +75,7 @@ body {
 		} else if(document.getElementById("raw_order_count").value === "") {
 // 			alert("발주 수량을 입력해주세요.");
 			Swal.fire({
-				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "발주 수량을 입력해주세요"+ "</div>",
+				title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "발주 수량을 입력해주세요"+ "</div>",
 				icon: 'warning',
 				width: '300px',
 			})
@@ -83,7 +83,7 @@ body {
 		} else if(document.getElementById("wh_code").value === "") {
 // 			alert("입고 창고를 선택해주세요.");
 			Swal.fire({
-				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "입고 창고를 선택해주세요"+ "</div>",
+				title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "입고 창고를 선택해주세요"+ "</div>",
 				icon: 'warning',
 				width: '300px',
 			})
@@ -166,8 +166,8 @@ function toggleDiv(divId) {
     
     <!-- 버튼 제어 -->
     <form action="" name="ro">
-	    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList"></input>
-	    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd"></input>
+	    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input>
+	    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input>
     </form>
     
   		<script>
@@ -358,16 +358,16 @@ function toggleDiv(divId) {
 	
 	<!-- ============================ 발주 등록 ============================ -->
 
+	<br>
 	<div id="regist">
 		<form action="" method="post" onsubmit="return check()">
+		<div class="col-md-12 col-sm-12" >
+			<div class="x_panel" style="height: 400px">
+			<div class="x_title">
+				<h2>발주 등록</h2>
+				<div class="clearfix"></div>
+			</div>
 			<c:set var="today" value="<%=new Date()%>" />
-
-			<table border="1">
-			<tr>
-				<th >입고 창고</th>
-				<td onclick="roPopup();"><input type="text" name="wh_code" id="wh_code" readonly></td>
-			</tr>
-		</table>
 			<br>
 					<div class="table-wrapper" >
 						<div class="table-responsive">
@@ -381,6 +381,7 @@ function toggleDiv(divId) {
 										<th class="column-title">품번</th>
 										<th class="column-title">품명</th>
 										<th class="column-title">색상</th>
+										<th class="column-title">입고 창고</th>
 										<th class="column-title">발주 수량</th>
 										<th class="column-title">재고 수량</th>
 										<th class="column-title">단가</th>
@@ -405,6 +406,7 @@ function toggleDiv(divId) {
 											name="raw_name" id="raw_name" readonly></td>
 										<td class=" " onclick="roPopup();"><input type="text" 
 											name="raw_color" id="raw_color" readonly></td>
+										<td onclick="roPopup();" ><input type="text" name="wh_code" id="wh_code" readonly></td>
 										<td class=" "><input type="number"  min="1"
 											id="raw_order_count" name="raw_order_count"
 											oninput="totalAmount()"></td>
@@ -421,12 +423,17 @@ function toggleDiv(divId) {
 
 
 								</tbody>
-							</table>
+							</table> 
+							<br><br>
+							</div >
 							<input type="submit" class="btn btn-info" value="발주 신청">
 							
 							</div>
-							</div>
+							<br><br><br>
+		</div>
+		<br><br><br>
 							</form>
+							<br><br><br>
 						</div>
 
 	

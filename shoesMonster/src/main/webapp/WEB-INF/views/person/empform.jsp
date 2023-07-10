@@ -119,6 +119,9 @@ $(document).ready(function() {
 	});
 
 </script>
+
+
+
 </head>
 <body>
 	<div class="right_col" role="main">
@@ -127,6 +130,23 @@ $(document).ready(function() {
 			<button id="modifyEmp" class="B B-info">수정</button>
 			<button type="reset" id="cancelEmp" class="B B-info">취소</button>
 			<button type="submit" id="saveEmp" class="B B-info">저장</button>
+			
+			<!-- 버튼 제어 -->
+				<script>
+					//권한 설정
+					var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+					if (team === "인사팀" || team === "관리자") {
+					    document.getElementById("modifyEmp").disabled = false;
+					    document.getElementById("cancelEmp").disabled = false;
+					    document.getElementById("saveEmp").disabled = false;
+					} else {
+					    document.getElementById("modifyEmp").hidden = true;
+					    document.getElementById("cancelEmp").hidden = true;
+					    document.getElementById("saveEmp").hidden = true;
+					}
+				</script>
+			<!-- 버튼 제어 -->
+			
 		</div>
 		<div>
 			<h1>상세보기</h1>

@@ -48,7 +48,7 @@ body {
 <script type="text/javascript">
 	
 	function stockPopup(code) {
-		window.open("stockPopup?code=" + code, "재고 상세", "width=700, height=300, left=200, top=150, location=no");
+		window.open("stockPopup?code=" + code, "재고 상세", "width=800, height=320, left=200, top=150, location=no");
 	}
 	
 </script>
@@ -56,6 +56,7 @@ body {
 <div class="right_col" role="main">
 
 	<h1 style="margin-left: 1%;"> 재고 관리 </h1>
+
 
 	<div style="margin-left: 1%; margin-right: 1%;">
 		<a href="/stock/stockList_raw"><input type="button" value="원자재" class="B B-info" ></input></a>

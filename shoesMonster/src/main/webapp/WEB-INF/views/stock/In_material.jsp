@@ -92,15 +92,50 @@ body {
 		}
 		
 
-		function go(raw_name,raw_order_count) {
-// 			alert("입고 처리가 완료되었습니다.");
-			Swal.fire({
-				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 입고 처리가 되었습니다."+ "</div>",
-				icon: 'success',
-				width: '300px',
-			})
+// 		function go(raw_name,raw_order_count,raw_order_num,raw_code,rawMaterial.wh_code ) {
+			
+// 			Swal.fire({
+// 				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 입고 처리가 되었습니다."+ "</div>",
+// 				icon: 'success',
+// 				width: '300px',
+// 			}).then((result) => {
+// 				  if (result.isConfirmed) {
+// 				}
+// 			});
 
-		}
+// 		}
+		
+		function go(raw_name, raw_order_count, raw_order_num, raw_code, wh_code) {
+			  
+			var data = {
+				rawOrderCount: raw_order_count,
+			    rawOrderNum: raw_order_num,
+			    rawCode: raw_code,
+			    whCode: wh_code
+			  };
+
+			  $.ajax({
+			    type: 'POST',
+			    url: '/stock/In_material',
+			    data: data,
+			    success: function(response) {
+			    	Swal.fire({
+						title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "품명("+raw_name+")이 "+raw_order_count+"개 \n입고 처리가 되었습니다."+ "</div>",
+						icon: 'success',
+						width: '300px',
+					}).then((result) => {
+						  if (result.isConfirmed) {
+							  location.reload();
+						}
+					});
+			    },
+			    error: function(xhr, status, error) {
+			      alert('실패');
+			    }
+			  });
+			}
+		
+		
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -135,18 +170,20 @@ body {
 <div style="margin: 1% 1% 1% 1%;">
 
 	<form action="" method="get">
-		<button type="submit" value="" class="B B-info" name="in_YN">전체</button>
-		<input type="submit" value="미입고" class="B B-info" name="in_YN" ></input> 
-        <input type="submit" value="입고완료" class="B B-info" name="in_YN" ></input> 
 		<hr>
 
 		<label>입고 번호</label> <input type="text" name="in_mat.in_num" placeholder="입고 번호를 입력해주세요."> &nbsp;
 		<label>품명</label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요."> &nbsp;
 		<label>거래처명</label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요."> &nbsp; &nbsp;
-
-		<input type="submit" class="B B-info" value="검색">
-		<hr>
-	</form>
+    
+		<input type="submit" class="B B-info" value="검색"> <br>
+    
+	<hr>
+		<button type="submit" value="" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 450;">전체</span></button>
+		<input type="submit" value="미입고" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
+        <input type="submit" value="입고완료" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
+	
+  </form>
 </div>
 
 
@@ -213,7 +250,7 @@ body {
 										<td class=" ">
 										<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 											<c:if test="${rvo.in_mat.in_num == null}">
-												<button type="submit" name="in_Button" onclick="go('${rvo.rawMaterial.raw_name }','${rvo.raw_order_count}')" class="B B-info" value="${rvo.raw_order_num},${rvo.raw_code},${rvo.raw_order_count},${rvo.rawMaterial.wh_code }">입고 처리</button>
+												<button type="button" name="in_Button" onclick="go('${rvo.rawMaterial.raw_name }','${rvo.raw_order_count}', '${rvo.raw_order_num}','${rvo.raw_code}','${rvo.rawMaterial.wh_code }')" class="B B-info" >입고 처리</button>
 											</c:if>
 										</c:if>
 										</td>

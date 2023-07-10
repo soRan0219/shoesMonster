@@ -77,6 +77,7 @@ body {
 
 	<h1 style="margin-left: 1%;">발주 정보</h1>
 	
+	 <!-- ///////////////////////////////////////////////// -->
 	<div style="margin-left: 1%;">
 		<form action="" method="get">
 			품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요."> &nbsp;
@@ -84,14 +85,15 @@ body {
 			<input type="submit" class="B B-info" value="검색"></input> &nbsp; &nbsp;
 	    </form>
 	</div>   
-	 
+	 <!-- ///////////////////////////////////////////////// -->
 	<div class="x_title">
 		<h2 style="width: 110px;"> 발주 정보 목록 </h2>
 		
 		<span style="float:left; margin-top: 0.5%;">총 ${countPop}건</span>
 		<div class="clearfix"></div>
 	</div>
-			
+	<!-- ///////////////////////////////////////////////// -->	
+	
 	<div class="table-responsive">
 		<form action="" method="post">
 			<table class="table table-striped jambo_table bulk_action" id="data-table" style="text-align:center;">
@@ -146,7 +148,7 @@ body {
             </c:if>
         </ul>
     </div>
-		
+	<!-- ///////////////////////////////////////////////// -->	
 	</div>
 </div>
 		

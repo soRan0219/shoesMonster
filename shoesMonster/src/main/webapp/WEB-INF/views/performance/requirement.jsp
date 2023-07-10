@@ -25,6 +25,10 @@
 body {
 	font-family: 'NexonLv2Gothic';
 }
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
+	background-color: #868e96;
+}
 </style>
 <!-- 폰트 -->
 
@@ -60,6 +64,30 @@ body {
         function serchRaw(inputId){
         	openWindow2("raw",inputId);
         }
+      	
+        function submitForm() {
+      	  var isValid = true;
+
+      	  // 유효성 검사
+      	  $('#reqTable input[required]').each(function() {
+      	    if ($(this).val().trim() === '') {
+      	      isValid = false;
+      	      return false; // 유효성 검사 실패 시 반복문 종료
+      	    }
+      	  });
+
+      	  if (isValid) {
+      	    $('#fr').submit();
+      	  } else {
+     		 	 Swal.fire({
+  				title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+  				icon: 'info',
+  				width: '300px',
+  			 });
+      	  }
+      	}
+	
+	   		
 	    	
 	  	
         $(document).ready(function() {
@@ -110,9 +138,7 @@ body {
   				} // someFunction(data)
   				
   				$('#save').click(function() {
-            		
-						$('#fr').submit();
-
+  					submitForm();
 				}); //save
 				
             });
@@ -198,12 +224,12 @@ body {
 					
 					if(checked.length > 0) {
 						Swal.fire({
-							  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+							  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
 									  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 							  icon: 'info', // 아이콘! 느낌표 색? 표시?
 							  showDenyButton: true,
-							  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
-							  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+							  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
+							  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 							  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
 //	 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
 							  width : '300px', // alert창 크기 조절
@@ -221,7 +247,7 @@ body {
 		 						dataType: "text",	
 		 						success: function () {
 		 							Swal.fire({
-										  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
+										  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
 										  icon: 'success',
 										  width : '300px',
 										}).then((result) => {
@@ -232,7 +258,7 @@ body {
 								},
 								error: function () {
 									Swal.fire({
-										title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
+										title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
 										icon : 'question',
 										width: '300px',
 										});
@@ -241,7 +267,7 @@ body {
 							});//ajax
 							  } else if (result.isDenied) {
 									Swal.fire({
-									title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+									title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
 									icon : 'error',
 									width: '300px',
 									});
@@ -251,7 +277,7 @@ body {
 					}// 체크OOO
 					else{
 						Swal.fire({
-							title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
 							icon : 'warning',
 							width: '300px',
 							});
@@ -469,14 +495,14 @@ body {
 		<form method="get">
 			<fieldset>
 				<label>소요코드&nbsp;</label> 
-				<input type="text" name="req_code" id="searchCode"> &nbsp;&nbsp;
+				<input type="text" name="req_code" id="searchCode" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
 				<label>완제품&nbsp;</label> 
-				<input type="hidden"name="prod_code" id="prod_code9999">
-				<input type="text"name="prod_name" id="prod_name9999" readonly onclick="serchProd('prod_code9999')"> &nbsp;&nbsp;
+				<input type="hidden"name="prod_code" id="prod_code9999"> 
+				<input type="text"name="prod_name" id="prod_name9999" placeholder="완제품을 선택하세요." readonly onclick="serchProd('prod_code9999')"> &nbsp;&nbsp;
 				<label>원자재&nbsp;</label>
 				<input type="hidden" name="raw_code" id="raw_code9999"> 
-				<input type="text" name="raw_name" id="raw_name9999" readonly onclick="serchRaw('raw_code9999')"> &nbsp;&nbsp;
-				<input type="submit" class="B B-info" value="검색">
+				<input type="text" name="raw_name" id="raw_name9999" placeholder="원자재를 선택하세요." readonly onclick="serchRaw('raw_code9999')"> &nbsp;&nbsp;
+				<input type="submit" class="B B-info" value="조회">
 			</fieldset>
 		</form>
 		

@@ -6,8 +6,12 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- SheetJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<!--FileSaver [savaAs 함수 이용] -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
 
@@ -23,8 +27,14 @@
 body {
 	font-family: 'NexonLv2Gothic';
 }
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
+	background-color: #868e96;
+}
 </style>
 <!-- 폰트 -->
+
+  
 
 <script>
     
@@ -53,6 +63,29 @@ body {
     function serchWh(inputId){
     	openWindow("wh_p",inputId);
     }
+    
+    // 유효성 검사 후 폼 제출
+    function submitForm() {
+    	  var isValid = true;
+
+    	  // 유효성 검사
+    	  $('#productTable input[required]').each(function() {
+    	    if ($(this).val().trim() === '') {
+    	      isValid = false;
+    	      return false; // 유효성 검사 실패 시 반복문 종료
+    	    }
+    	  });
+
+    	  if (isValid) {
+    	    $('#fr').submit();
+    	  } else {
+   		 	 Swal.fire({
+				title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+				icon: 'info',
+				width: '300px',
+			 });
+    	  }
+    	}
 	
     	
 	function popUp() {
@@ -131,7 +164,6 @@ body {
             
          // 버튼 클릭시 addRow() 기능 불러오기
             $('#addButton').click(function() {
-            	event.preventDefault();
             	$('#modify').attr("disabled", true);
     			$('#delete').attr("disabled", true);
     			
@@ -159,8 +191,7 @@ body {
     				} // someFunction(data)
     				
     				$('#save').click(function() {
-		
-							$('#fr').submit();
+    					submitForm();
 		
 					}); //save
     				
@@ -208,13 +239,6 @@ body {
             // =============================================================================================================
             
         	
-
-            // 저장 버튼 클릭 시 페이지 이동
-            $('form').submit(function() {
-               return true;
-            });
-            
-
         	//취소버튼 -> 리셋
 			$('#cancle').click(function(){
 				$('#fr').each(function(){
@@ -269,12 +293,12 @@ body {
 						
 						 
 						Swal.fire({
-						  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
+						  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
 								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 						  icon: 'info', // 아이콘! 느낌표 색? 표시?
 						  showDenyButton: true,
-						  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
-						  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+						  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
+						  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 						  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
 // 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
 						  width : '300px' // alert창 크기 조절
@@ -290,7 +314,7 @@ body {
 									dataType: "text",
 									success: function() {
 										Swal.fire({
-											  title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
+											  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
 											  icon: 'success',
 											}).then((result) => {
 											  if (result.isConfirmed) {
@@ -300,7 +324,7 @@ body {
 									},
 									error: function() {
 										Swal.fire({
-											title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
+											title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제 중 오류가 발생했습니다",
 											icon : 'question',
 											width: '300px',
 											});
@@ -310,7 +334,7 @@ body {
 							  
 						  } else if (result.isDenied) {
 								Swal.fire({
-									title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
+									title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "삭제가 취소되었습니다",
 									icon : 'error',
 									width: '300px',
 									});
@@ -322,7 +346,7 @@ body {
 					} //체크된거 있을대
 					else {
 						Swal.fire({
-							title : "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
+							title : "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "선택된 항목이 없습니다",
 							icon : 'warning',
 							width: '300px',
 							});
@@ -492,18 +516,19 @@ body {
 	<form action="" method="get">
 		<fieldset>
        		
-       		<input type="hidden" name="input" id="input" value="${input }">
-       		
+       		<input type="hidden" name="input" id="input" value="${input }">   		
+
        		<label>품번&nbsp;</label>
-        	<input type="text" name="prod_code" id="searchCode"> &nbsp;&nbsp;
+        	<input type="text" name="prod_code" id="searchCode" placeholder="품목코드를 입력하세요."> &nbsp;&nbsp;
         	<label>품명&nbsp;</label>
-        	<input type="text" name="prod_name" id="searchName"> &nbsp;&nbsp;
+        	<input type="text" name="prod_name" id="searchName" placeholder="품명을 입력하세요."> &nbsp;&nbsp;
         	<label>카테고리&nbsp;</label>
-        	<input type="text" name="prod_category" id="searchCategory"> &nbsp;&nbsp;
+        	<input type="text" name="prod_category" id="searchCategory" placeholder="카테고리를 입력하세요."> &nbsp;&nbsp;
         	<label>거래처&nbsp;</label>
         	<input type="hidden" name="client_code" id="client_code9999">
-        	<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')"> &nbsp;&nbsp;
-        	<input type="submit" class="B B-info" value="검색">
+        	<input type="text" name="client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')"> &nbsp;&nbsp;
+        	<input type="submit" class="B B-info" value="조회">
+
 		</fieldset>
 	</form>
 <hr>
@@ -530,7 +555,7 @@ body {
 					<button id="modify" class="B B-info">수정</button>
 					<button id="delete" class="B B-info">삭제</button>
 					<button type="reset" id="cancle" class="B B-info">취소</button>
-					<input type="submit" class="B B-info" value="저장" id="save">
+					<input type="button" class="B B-info" value="저장" id="save">
 				</div>
 				
 				<div class="clearfix"></div>
@@ -629,9 +654,75 @@ body {
 	</div>
 	<!-- //////////////////////////////////////////////////////////////////////// -->
 	
-	
 </div>
 </div>
+
+<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
+</div>
+</div>
+
+<script type="text/javascript">
+
+		//오늘 날짜 yyyy-mm-dd
+		function getToday() {
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = ("0" + (1 + date.getMonth())).slice(-2);
+			var day = ("0" + date.getDate()).slice(-2);
+		
+			return year + "-" + month + "-" + day;
+		} //getToday()
+        
+        //엑셀
+        var excelDownload = document.querySelector('#excelDownload');
+        
+        document.addEventListener('DOMContentLoaded', ()=> {
+            excelDownload.addEventListener('click', exportExcel);
+        });
+        
+        function exportExcel() {
+            //1. workbook 생성
+            var wb = XLSX.utils.book_new();
+            
+            //2. 시트 만들기
+            var newWorksheet = excelHandler.getWorksheet();
+            
+            //3. workbook에 새로 만든 워크시트에 이름을 주고 붙이기
+            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+            
+            //4. 엑셀 파일 만들기
+            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+            
+            //5. 엑셀 파일 내보내기
+            saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), excelHandler.getExcelFileName());
+            
+        } //exportExcel()
+        
+        var excelHandler = {
+            getExcelFileName : function() {
+                return 'product_list'+getToday()+'.xlsx'; //파일명
+            },
+            getSheetName : function() {
+                return 'product Sheet'; //시트명
+            },
+            getExcelData : function() {
+                return document.getElementById('productTable'); //table id
+            },
+            getWorksheet : function() {
+                return XLSX.utils.table_to_sheet(this.getExcelData());
+            }
+        } //excelHandler
+        
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);  // s -> arrayBuffer
+            var view = new Uint8Array(buf);  
+            for(var i=0; i<s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xFF;
+            }
+            return buf;
+        } //s2ab(s)
+        
+    </script>
 </div>
 <!-- /page content -->
 

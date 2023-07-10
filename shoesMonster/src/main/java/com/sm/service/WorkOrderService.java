@@ -14,6 +14,9 @@ public interface WorkOrderService {
 	//작업지시 등록
 	public int regWorkOrder(WorkOrderVO vo) throws Exception;
 	
+	//작업지시 등록시 1차공정 라인코드 가져오기
+	public String getLineCode() throws Exception;
+	
 	//작업지시 삭제
 	public void removeWorkOrder(List<String> checked) throws Exception;
 	

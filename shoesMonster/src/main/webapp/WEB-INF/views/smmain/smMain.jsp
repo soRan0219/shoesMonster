@@ -7,10 +7,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-   
+   <script type="text/javascript" src="../resources/main/fullcalendar.main.min.css"></script>
+   <script type="text/javascript" src="../resources/main/fullcalendar.main.min.js"></script>
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
-
 
 <style type="text/css">
 
@@ -21,7 +21,6 @@ body {
 <!-- 폰트 -->
  
 <!-- 달력 -->
-
  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js"></script>
 <!-- 달력 -->
@@ -301,85 +300,122 @@ body {
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
   
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          headerToolbar: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-			  },
-			  googleCalendarApiKey: 'AIzaSyBPa51EObVoBELfBVUs0dD0fIeVMi9mWiU',
-			  events: {
-			  googleCalendarId: '51b8bc2598553b3389ff4300005fbc3afa52f0fa582543ef2fcca04dc2dcf799@group.calendar.google.com',
-			  className: 'gcal-event' // an option!
-			  },
-        });
-        calendar.render();
-      });
+//       document.addEventListener('DOMContentLoaded', function() {
+// 			  googleCalendarApiKey: 'AIzaSyBPa51EObVoBELfBVUs0dD0fIeVMi9mWiU';
+//         var calendarEl = document.getElementById('calendar');
+//         var calendar = new FullCalendar.Calendar(calendarEl, {
+//           initialView: 'dayGridMonth',
+//           headerToolbar: {
+// 				left: 'prev,next today',
+// 				center: 'title',
+// 				right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+// 			  },
+// 			  eventSources: [{
+// 			  googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com' },
+//         		{
+// 				  className: '대한민국의 휴일' } ,// an option!
+// 			  {color: 'red'
+// 			  }	
+// 			  ]
+//         });
+//         calendar.render();
+//       });
   
+    
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+  	  googleCalendarApiKey: 'AIzaSyBPa51EObVoBELfBVUs0dD0fIeVMi9mWiU';
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: 'dayGridMonth',
+  headerToolbar: {
+  		left: 'prev,next today',
+  		center: 'title',
+  		right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+  	  },
+  	  eventSources: [{
+  	  googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com' },
+  		{
+  		  className: '대한민국의 휴일' } ,// an option!
+  	  {color: 'red'
+  	  }	
+  	  ]
+  });
+  calendar.render();
+  });
     </script>
 
 
 <!-- page content -->
 <div class="right_col" role="main">
 
-
+	
+	<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	
 	<!-- 애령 날씨 테스트중 ~ ~ -->
-<!-- 	<script defer src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" integrity="sha384-vuFJ2JiSdUpXLKGK+tDteQZBqNlMwAjhZ3TvPaDfN9QmbPb7Q8qUpbSNapQev3YF" crossorigin="anonymous"></script> -->
 	<script type="text/javascript">
-		
-	var weatherIcon = {
-	    '01' : 'fas fa-sun',
-	    '02' : 'fas fa-cloud-sun',
-	    '03' : 'fas fa-cloud',
-	    '04' : 'fas fa-cloud-meatball',
-	    '09' : 'fas fa-cloud-sun-rain',
-	    '10' : 'fas fa-cloud-showers-heavy',
-	    '11' : 'fas fa-poo-storm',
-	    '13' : 'far fa-snowflake',
-	    '50' : 'fas fa-smog'
-	};
+			
+// 			var weatherIcon = {
+// 				    '01': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas id="clear-day" width="84" height="84"></canvas></div></div></div></div></div></div>',
+// 				    '02': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="partly-cloudy-day"></canvas></div></div></div></div></div></div>',
+// 				    '03': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="cloudy"></canvas></div></div></div></div></div></div>',
+// 				    '04': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="cloudy"></canvas></div></div></div></div></div></div>',
+// 				    '09': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="sleet"></canvas></div></div></div></div></div></div>',
+// 				    '10': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="rain"></canvas></div></div></div></div></div></div>',
+// 				    '11': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="wind"></canvas></div></div></div></div></div></div>',
+// 				    '13': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="snow"></canvas></div></div></div></div></div></div>',
+// 				    '50': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="cloudy"></canvas></div></div></div></div></div></div>'
+// 				};
+				
 
-	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+'busan'+"&appid="+"aa7d2badb9c5e8ad659a0b018df246c1";
-	$.ajax({
-	    url: apiURI,
-	    dataType: "json",
-	    type: "GET",
-	    async: "false",
-	    success: function(resp) {
+				var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=" + 'busan' + "&appid=" + "aa7d2badb9c5e8ad659a0b018df246c1";
+				
+				$.ajax({
+				    url: apiURI,
+				    dataType: "json",
+				    type: "GET",
+				    async: "false",
+				    success: function(resp) {
 
-	        var $Icon = (resp.weather[0].icon).substr(0,2);
-	        var $weather_description = resp.weather[0].main;
-	        var $Temp = Math.floor(resp.main.temp- 273.15) + 'º';
-	        var $humidity = '습도&nbsp;&nbsp;&nbsp;&nbsp;' + resp.main.humidity+ ' %';
-	        var $wind = '바람&nbsp;&nbsp;&nbsp;&nbsp;' +resp.wind.speed + ' m/s';
-	        var $city = '부산';
-	        var $cloud = '구름&nbsp;&nbsp;&nbsp;&nbsp;' + resp.clouds.all +"%";
-	        var $temp_min = '최저 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_min- 273.15) + 'º';
-	        var $temp_max = '최고 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_max- 273.15) + 'º';
-	        
+				        var $Icon = (resp.weather[0].icon).substr(0, 2);
+				        var $weather_description = resp.weather[0].main;
+				        var $Temp = Math.floor(resp.main.temp - 273.15) + 'º';
+				        var $humidity = '습도&nbsp;&nbsp;&nbsp;&nbsp;' + resp.main.humidity + ' %';
+				        var $wind = '바람&nbsp;&nbsp;&nbsp;&nbsp;' + resp.wind.speed + ' m/s';
+				        var $city = '부산';
+				        var $cloud = '구름&nbsp;&nbsp;&nbsp;&nbsp;' + resp.clouds.all + "%";
+				        var $temp_min = '최저 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_min - 273.15) + 'º';
+				        var $temp_max = '최고 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_max - 273.15) + 'º';
+				        
+// 				        $('.result').append(weatherIcon[$Icon]);
+// 				        $('.result').append($Icon);
+				        alert("Icon : " + $Icon);
+				        $('.weather_description').prepend($weather_description);
+				        $('.current_temp').prepend($Temp);
+				        $('.humidity').prepend($humidity);
+				        $('.wind').prepend($wind);
+				        $('.city').append($city);
+				        $('.cloud').append($cloud);
+				        $('.temp_min').append($temp_min);
+				        $('.temp_max').append($temp_max);
+				        
+				var value = $Icon;
+				if (value === '04') {
+				    var innerHTML = '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="cloudy"></canvas></div></div></div></div></div></div>';
+				    $('.result').append(innerHTML);
+				}
+				
+				    }
+				});
+				
+				
 
-	        $('.weather_icon').append('<i class="' + weatherIcon[$Icon] +' fa-5x" style="height : 70px; width : 70px; top : 60px;"></i>');
-	        $('.weather_description').prepend($weather_description);
-	        $('.current_temp').prepend($Temp);
-	        $('.humidity').prepend($humidity);
-	        $('.wind').prepend($wind);
-	        $('.city').append($city);
-	        $('.cloud').append($cloud);
-	        $('.temp_min').append($temp_min);
-	        $('.temp_max').append($temp_max);               
-	    }
-	})
-
-	</script>
+		</script>
 	
 	
 	<div style="background-color : rgb(255, 255, 255); padding : 40px; color : #66b3ff; width : 400px; height : 200px; top: 40px;">
-    <div style="float : left; margin : 30px auto;">
-        <div class="weather_icon"></div>
-    </div><br>
 
     <div style="float : right; margin : 10px 5px; font-size : 11pt">
             <div class="temp_min"></div>
@@ -390,13 +426,20 @@ body {
     </div>
     <div style="float : right; margin : -10px 5px; padding: 15px;">
         <div class="current_temp" style="font-size : 25pt"></div>
-        <div class="weather_description" style="font-size : 20pt"></div>
+        <div class="weather_description" name="weather_description" id="weather_description" style="font-size : 20pt"></div>
         <div class="city" style="font-size : 13pt"></div>
     </div>
+    
 	</div>
 	
 	
-	<!-- 날씨 테스트 -->
+	   	<div class="result" style="z-index: 999;">
+	   	</div>
+	
+    
+	
+	<!-- 날씨 테스트 - 끝 -->
+	
 
 
 	<div class="row">
@@ -504,10 +547,13 @@ body {
 
 	</div>
 
-	
+	<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FSeoul&src=NTFiOGJjMjU5ODU1M2IzMzg5ZmY0MzAwMDA1ZmJjM2FmYTUyZjBmYTU4MjU0M2VmMmZjY2EwNGRjMmRjZjc5OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=a28uc291dGhfa29yZWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23009688&color=%230B8043" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 	<!-- /page content -->
 <!-- 달력  -->
-<div id='calendar' style="width: 70%  ; height: 70%;"></div>
+<!-- <div id='calendar	' style="width: 70%  ; height: 70%;"></div> -->
+<script type="text/javascript">
+
+</script>
 <!-- 달력  -->
 
 

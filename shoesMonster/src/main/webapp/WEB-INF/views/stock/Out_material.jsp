@@ -35,7 +35,7 @@ body {
 	    if (orderCount > stockCount) {
 // 	        alert("재고 수량이 부족합니다. 물량을 확인해 주세요.");
      	Swal.fire({
-			title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "재고 수량이 부족합니다 \n 물량을 확인해 주세요"+ "</div>",
+			title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "재고 수량이 부족합니다 \n 물량을 확인해 주세요"+ "</div>",
 			icon: 'warning',
 			width: '300px',
 		})
@@ -143,15 +143,15 @@ body {
 
 		<form method="get" style="margin-left: 1%;  margin-right: 1%;">
 
-			<button type="submit" value="" class="B B-info" name="orders.out_YN">전체</button>
-	        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" ></input> 
-	        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" ></input> 
 			<hr>
        		출고 번호 <input type="text" name="out_num" value="" placeholder="출고 번호를 입력하세요."> &nbsp;
         	품명 <input type="text" name="prod.prod_name" value="" placeholder="품명을 입력하세요."> &nbsp;
         	거래처명 <input type="text" name="clients.client_actname" value="" placeholder="거래처명을 입력하세요."> &nbsp; &nbsp;
         	<input type="submit" class="B B-info" value="검색"></input>
         	<hr>
+			<button type="submit" value="" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 450;">전체</span></button>
+	        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
+	        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
 		</form>
 
   <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
@@ -199,7 +199,7 @@ body {
 										<td class=" ">${out.prod.prod_code}</td>
 										<td class=" ">${out.prod.prod_name}</td>
 										<td class=" ">${out.orders.order_count}</td>
-										<td class=" " style="color: ${out.stock.stock_count <= 20 ? 'red' : 'inherit'}">${out.stock.stock_count}</td>
+										<td class=" " style="color: ${out.stock.stock_count <= 50 ? 'red' : 'inherit'}">${out.stock.stock_count}</td>
 										<td class=" "><fmt:formatNumber value=" ${out.prod.prod_price}" />원</td>
 										<td class=" ">${out.orders.order_deliveryDate}</td>
 										<td class=" ">${out.out_date}</td>
@@ -225,22 +225,20 @@ body {
 					</form>
 					</div>
 					<div style="display: inline;">
-					
-					<!-- 엑셀 - 시작 -->
-
-	<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
-	</div>
-	<script type="text/javascript">
-	function getToday() {
-		var date = new Date();
-		
-		var year = date.getFullYear();
-		var month = ("0" + (1 + date.getMonth())).slice(-2);
-		var day = ("0" + date.getDate()).slice(-2);
-		
-		return year + "-" + month + "-" + day;
-	} //getToday()
-	
+			
+		<!-- 엑셀 - 시작 -->
+		<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
+		</div>
+		<script type="text/javascript">
+		function getToday() {
+			var date = new Date();
+			
+			var year = date.getFullYear();
+			var month = ("0" + (1 + date.getMonth())).slice(-2);
+			var day = ("0" + date.getDate()).slice(-2);
+			
+			return year + "-" + month + "-" + day;
+		} //getToday()
 	
         //엑셀
         const excelDownload = document.querySelector('#excelDownload');
