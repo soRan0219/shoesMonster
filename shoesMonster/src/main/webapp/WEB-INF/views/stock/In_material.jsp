@@ -139,7 +139,7 @@ body {
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-	</script>
+</script>
 
 <style>
 .table-wrapper {
@@ -151,17 +151,18 @@ body {
     white-space: nowrap; 
     text-align: center;
 }
-
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
 </style>
+
+
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
 <!-- page content -->
@@ -179,9 +180,9 @@ body {
 		<input type="submit" class="B B-info" value="조회"> <br>
     
 	<hr>
-		<button type="submit" value="" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 450;">전체</span></button>
-		<input type="submit" value="미입고" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
-        <input type="submit" value="입고완료" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
+		<button type="submit" value="" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 500; font-size: 15px;">전체</span></button>
+		<input type="submit" value="미입고" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input> 
+        <input type="submit" value="입고완료" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input> 
 	
   </form>
 </div>
@@ -203,10 +204,9 @@ body {
 				<div class="table-wrapper" >
 					<form action="" method="post" id="fr">
 						<table class="table table-striped jambo_table bulk_action"
-							id="data-table">
+							id="data-table" style="text-align-last:center;">
 							<thead>
 								<tr class="headings">
-									
 									<th>입고 번호</th>
 									<th>발주 번호</th>
 									<th>입고 창고</th>
@@ -232,22 +232,22 @@ body {
 							<c:if test="${count1 > 0}">
 								<c:forEach var="rvo" items="${ro_List }">
 									<tr class="even pointer">
-										<td class=" ">${rvo.in_mat.in_num }</td>
-										<td class=" ">${rvo.raw_order_num }</td>
-										<td class=" ">${rvo.rawMaterial.wh_code }</td>
-										<td class=" ">${rvo.clients.client_actname }</td>
-										<td class=" ">${rvo.raw_code }</td>
-										<td class=" ">${rvo.rawMaterial.raw_name }</td>
-										<td class=" ">${rvo.rawMaterial.raw_color }</td>
-										<td class=" ">${rvo.raw_order_count}</td>
-										<td class=" " style="color: ${rvo.stock.stock_count <= 20 ? 'red' : 'inherit'}">${rvo.stock.stock_count != null ? rvo.stock.stock_count : 0}</td>
-										<td class=" "><fmt:formatNumber value=" ${rvo.rawMaterial.raw_price}" />원</td>
-										<td class=" "><fmt:formatNumber value=" ${rvo.rawMaterial.raw_price*rvo.raw_order_count}" />원</td>
-										<td class=" ">${rvo.in_mat.in_date }</td>
-										<td class=" ">${rvo.in_mat.i_emp_id }</td>
-<%-- 										<td class="a-right a-right ">${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td> --%>
-										<td class="a-right a-right ">${rvo.in_YN}</td>
-										<td class=" ">
+										<td>${rvo.in_mat.in_num }</td>
+										<td>${rvo.raw_order_num }</td>
+										<td>${rvo.rawMaterial.wh_code }</td>
+										<td>${rvo.clients.client_actname }</td>
+										<td>${rvo.raw_code }</td>
+										<td>${rvo.rawMaterial.raw_name }</td>
+										<td>${rvo.rawMaterial.raw_color }</td>
+										<td>${rvo.raw_order_count}</td>
+										<td style="color: ${rvo.stock.stock_count <= 20 ? 'red' : 'inherit'}">${rvo.stock.stock_count != null ? rvo.stock.stock_count : 0}</td>
+										<td><fmt:formatNumber value=" ${rvo.rawMaterial.raw_price}" />원</td>
+										<td><fmt:formatNumber value=" ${rvo.rawMaterial.raw_price*rvo.raw_order_count}" />원</td>
+										<td>${rvo.in_mat.in_date }</td>
+										<td>${rvo.in_mat.i_emp_id }</td>
+<%-- 										<td>${rvo.in_mat.in_YN eq null ? '미입고' : rvo.in_mat.in_YN}</td> --%>
+										<td>${rvo.in_YN}</td>
+										<td>
 										<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 											<c:if test="${rvo.in_mat.in_num == null}">
 												<button type="button" name="in_Button" onclick="go('${rvo.rawMaterial.raw_name }','${rvo.raw_order_count}', '${rvo.raw_order_num}','${rvo.raw_code}','${rvo.rawMaterial.wh_code }')" class="B B-info" >입고 처리</button>
@@ -337,53 +337,37 @@ body {
     <!-- 엑셀 - 끝 -->
 	
 
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers">
+	<ul class="pagination">
+        <c:if test="${count1 > 0 }">
+		<li class="paginate_button previous disabled">
+            <c:if test="${bp.prev}">
+                <span><a href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a></span>
+            </c:if>
+        </li>
+		<li class="paginate_button previous disabled">
+            <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
+                step="1">
+                <a href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
+            </c:forEach>
+		</li>
+		<li class="paginate_button previous disabled">
+            <c:if test="${bp.next && bp.endPage > 0}">
+                <a href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
+            </c:if>
+        </li>
+        </c:if>
+     </ul>
+	</div>	
+    
+    
+    
+					</div>
 				</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->	
-	
-	
-</div>
-
-
-</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->	
-	
-	
-      
-      
-      
-  </div>
-	
-	
-				<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-					<ul class="pagination">
-			            <c:if test="${count1 > 0 }">
-						<li class="paginate_button previous disabled">
-			                <c:if test="${bp.prev}">
-			                    <span><a href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a></span>
-			                </c:if>
-			            </li>
-						<li class="paginate_button previous disabled">
-			                <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
-			                    step="1">
-			                    <a href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
-			                </c:forEach>
-						</li>
-						<li class="paginate_button previous disabled">
-			                <c:if test="${bp.next && bp.endPage > 0}">
-			                    <a href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
-			                </c:if>
-			            </li>
-			            </c:if>
-			         </ul>
-     			</div>	
-
-	
-	
-</div>
-
+	      </div>
+	  </div>
 	<!--//////////////////////////////////////////// 테이블 템플릿 ////////////////////////////////////////////////////// -->
-
-
+</div> 
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
 

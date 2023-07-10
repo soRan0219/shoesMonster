@@ -44,29 +44,6 @@ body {
 	}
 </script>
 	
-<style>
-.table-wrapper {
-    overflow-x: auto; /* 테이블 직접 조절 */
-    overflow-y: hidden;
-}
-.table-wrapper table {
-    width: 100%; /* 테이블 직접 조절 */
-    white-space: nowrap; 
-    text-align: center;
-}
-
-.input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
-}
-</style>
-
-	
 <!-- page content -->
 <div class="right_col" role="main">
 	
@@ -140,6 +117,28 @@ body {
 
 </script>	
 
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+.input-fielda {
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldb {
+    display: inline-block;
+    text-align-last: center;
+}
+</style>
+
+
 
 		<form method="get" style="margin-left: 1%;  margin-right: 1%;">
 
@@ -150,9 +149,9 @@ body {
         	<input type="submit" class="B B-info" value="조회"></input>
         	<hr>
         	<div style="margin-bottom: 1%;">
-				<button type="submit" value="" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 450;">전체</span></button>
-		        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
-		        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input> 
+				<button type="submit" value="" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 500; font-size: 15px;">전체</span></button>
+		        <input type="submit" value="미출고" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input> 
+		        <input type="submit" value="출고완료" class="B B-info" name="orders.out_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input> 
         	</div>
 		</form>
 
@@ -171,43 +170,43 @@ body {
 			<div class="table-responsive">
 				<div class="table-wrapper" >
 					<form action="" method="post">
-						<table class="table table-striped jambo_table bulk_action" id="data-table">
+						<table class="table table-striped jambo_table bulk_action" id="data-table" style="text-align-last:center;">
 							<thead>
 								<tr class="headings">
-									<th class="column-title">출고 번호</th>
-									<th class="column-title">수주번호</th>
-									<th class="column-title">거래처명</th>
-									<th class="column-title">거래처코드</th>
-									<th class="column-title">제품 코드</th>
-									<th class="column-title">제품 이름</th>
-									<th class="column-title">주문 수량</th>
-									<th class="column-title">재고 수량</th>
-									<th class="column-title">납품가</th>
-									<th class="column-title">납품예정일</th>
-									<th class="column-title">출고 날짜</th>
-									<th class="column-title">담당자</th>
-									<th class="column-title">출고 여부</th>
-									<th class="column-title">출고 처리</th>
+									<th>출고 번호</th>
+									<th>수주번호</th>
+									<th>거래처명</th>
+									<th>거래처코드</th>
+									<th>제품 코드</th>
+									<th>제품 이름</th>
+									<th>주문 수량</th>
+									<th>재고 수량</th>
+									<th>납품가</th>
+									<th>납품예정일</th>
+									<th>출고 날짜</th>
+									<th>담당자</th>
+									<th>출고 여부</th>
+									<th>출고 처리</th>
 								</tr>
 							</thead>
 							<tbody>
 							<c:if test="${count4 > 0}">
 								<c:forEach var="out" items="${out_List }">
 									<tr class="even pointer">
-										<td class=" ">${out.out_num}</td>
-										<td class=" ">${out.orders.order_code}</td>
-										<td class=" ">${out.clients.client_actname}</td>
-										<td class=" ">${out.orders.client_code}</td>
-										<td class=" ">${out.prod.prod_code}</td>
-										<td class=" ">${out.prod.prod_name}</td>
-										<td class=" ">${out.orders.order_count}</td>
-										<td class=" " style="color: ${out.stock.stock_count <= 50 ? 'red' : 'inherit'}">${out.stock.stock_count}</td>
-										<td class=" "><fmt:formatNumber value=" ${out.prod.prod_price}" />원</td>
-										<td class=" ">${out.orders.order_deliveryDate}</td>
-										<td class=" ">${out.out_date}</td>
-										<td class=" ">${out.o_emp_id}</tb>
-										<td class=" ">${out.orders.out_YN}</td>
-										<td class=" ">
+										<td>${out.out_num}</td>
+										<td>${out.orders.order_code}</td>
+										<td>${out.clients.client_actname}</td>
+										<td>${out.orders.client_code}</td>
+										<td>${out.prod.prod_code}</td>
+										<td>${out.prod.prod_name}</td>
+										<td>${out.orders.order_count}</td>
+										<td style="color: ${out.stock.stock_count <= 50 ? 'red' : 'inherit'}">${out.stock.stock_count}</td>
+										<td><fmt:formatNumber value=" ${out.prod.prod_price}" />원</td>
+										<td>${out.orders.order_deliveryDate}</td>
+										<td>${out.out_date}</td>
+										<td>${out.o_emp_id}</tb>
+										<td>${out.orders.out_YN}</td>
+										<td>
 											<c:if test = "${sessionScope.id.emp_department eq '물류팀' or sessionScope.id.emp_department eq '관리자'}">
 												<c:if test="${out.out_num == null}">
 													<button type="submit" name="out_Button" value="${out.orders.order_code},${out.orders.order_count},${out.prod.prod_code}" class="B B-info" id="matYN" onclick="return checkStock(${out.orders.order_count}, ${out.stock.stock_count})">출고 처리</button>
@@ -292,36 +291,37 @@ body {
         } //s2ab(s)
     </script>
     <!-- 엑셀 - 끝 -->
-					
+    	
+    
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers">
+	<ul class="pagination">
+  
+	   	<c:if test="${count4 > 0 }">
+		<li class="paginate_button previous disabled">
+			<c:if test="${bp.prev}">
+			    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Previous</a>
+			</c:if>
+		</li>
+		<li class="paginate_button previous disabled">
+			<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+			    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">${idx}</a>
+			</c:forEach>
+		</li>
+		<li class="paginate_button previous disabled">
+			<c:if test="${bp.next && bp.endPage > 0}">
+			    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Next</a>
+			</c:if>
+		</li>
+		</c:if>
+	</ul>
+</div>
+    
+    
+    
 				</div>
 			</div>
 		</div>
 	</div>
-	
-		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-		<ul class="pagination">
-      
-		   	<c:if test="${count4 > 0 }">
-			<li class="paginate_button previous disabled">
-				<c:if test="${bp.prev}">
-				    <a href="/stock/Out_material?page=${bp.startPage - 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Previous</a>
-				</c:if>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-				    <a href="/stock/Out_material?page=${idx}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">${idx}</a>
-				</c:forEach>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:if test="${bp.next && bp.endPage > 0}">
-				    <a href="/stock/Out_material?page=${bp.endPage + 1}&out_num=${param.out_num}&prod.prod_name=${rvo.prod.prod_name}&clients.client_actname=${rvo.clients.client_actname}&orders.out_YN=${rvo.orders.out_YN}">Next</a>
-				</c:if>
-			</li>
-			</c:if>
-		</ul>
-	</div>
-	
-	
 </div>
     
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->

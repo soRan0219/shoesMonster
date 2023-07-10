@@ -95,7 +95,6 @@ body {
 </script>
 
 <style>
-
 .table-wrapper {
     overflow-x: auto; /* 테이블 직접 조절 */
     overflow-y: hidden;
@@ -105,17 +104,15 @@ body {
     white-space: nowrap; 
     text-align: center;
 }
-
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
-}
-
 </style>
 
 
@@ -161,13 +158,7 @@ function toggleDiv(divId) {
 	
 	<h1 style="margin-left: 1%;"> 발주 관리 </h1>
 
-    <div style="margin-left: 1%;">
-    
-    <!-- 버튼 제어 -->
-    <form action="" name="ro">
-	    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450; margin-top: 0.5%;"></input>
-	    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450; margin-top: 0.5%;"></input>
-    </form>
+    <div style="margin: 1% 1%">
     
   		<script>
 		    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정 
@@ -182,20 +173,24 @@ function toggleDiv(divId) {
 		</script>
 	<!-- 버튼 제어 -->
 	
-	
-    </div>
-
-
     <div id="list">
-	    <form action="" method="get" style="margin: 0 0 1% 1%; ">
+	    <form action="" method="get">
     	<hr>
 		    발주 번호 <input type="text" name="raw_order_num" placeholder="발주 번호를 입력하세요."> &nbsp;
 		   	품명 <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력하세요."> &nbsp;
 		   	거래처명 <input type="text" name="clients.client_actname" placeholder="거래처명을 입력하세요."> &nbsp; &nbsp;
 		   	<input type="submit" class="B B-info" value="조회"></input>
-		 <hr>
+	    </form>
+	    <hr>
+	    
+	    <!-- 버튼 제어 -->
+	    <form action="" name="ro">
+		    <input type="button" value="발주 현황" class="B B-info"  onclick="toggleDiv('list')" id="matList" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input>
+		    <input type="button" value="발주 등록" class="B B-info" onclick="toggleDiv('regist')"id="matAdd" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input>
 	    </form>
     
+	    </div>
+	</div>
     <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     
     <div class="col-md-12 col-sm-12">
@@ -209,40 +204,40 @@ function toggleDiv(divId) {
 				
 				<div class="table-wrapper" >
 					<form action="" method="post">
-						<table id="data-table" class="table table-striped jambo_table bulk_action">
+						<table id="data-table" class="table table-striped jambo_table bulk_action" style="text-align-last:center;">
 							<thead>
 								<tr class="headings">
 									<th></th>
-									<th class="column-title">발주 번호</th>
-									<th class="column-title">거래처명</th>
-									<th class="column-title">품번</th>
-									<th class="column-title">품명</th>
-									<th class="column-title">색상</th>
-									<th class="column-title">발주 수량</th>
-									<th class="column-title">재고 수량</th>
-									<th class="column-title">단가</th>
-									<th class="column-title">총액</th>
-									<th class="column-title">입고 창고</th>
-									<th class="column-title">발주일</th>
-									<th class="column-title">담당자</th>
+									<th>발주 번호</th>
+									<th>거래처명</th>
+									<th>품번</th>
+									<th>품명</th>
+									<th>색상</th>
+									<th>발주 수량</th>
+									<th>재고 수량</th>
+									<th>단가</th>
+									<th>총액</th>
+									<th>입고 창고</th>
+									<th>발주일</th>
+									<th>담당자</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="vo" items="${ro_List }">
 									<tr class="even pointer">
 										<td><a onclick="detailPopup('${vo.raw_code}', '${vo.raw_order_num }')" style="font-size:15px">&#128269;</a></td>
-										<td class=" ">${vo.raw_order_num }</td>
-										<td class=" ">${vo.clients.client_actname }</td>
-										<td class=" ">${vo.raw_code }</td>
-										<td class=" ">${vo.rawMaterial.raw_name }</td>
-										<td class=" ">${vo.rawMaterial.raw_color }</td>
-										<td class=" ">${vo.raw_order_count}</td>
-										<td class=" " style="color: ${vo.stock.stock_count <= 50 ? 'red' : 'inherit'}">${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
-										<td class=" "><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}" />원</td>
-										<td class=" "><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}" />원</td>
-										<td class=" ">${vo.rawMaterial.wh_code }</td>
-										<td class=" ">${vo.raw_order_date}</td>
-										<td class=" ">${vo.emp_id }</td>
+										<td>${vo.raw_order_num }</td>
+										<td>${vo.clients.client_actname }</td>
+										<td>${vo.raw_code }</td>
+										<td>${vo.rawMaterial.raw_name }</td>
+										<td>${vo.rawMaterial.raw_color }</td>
+										<td>${vo.raw_order_count}</td>
+										<td style="color: ${vo.stock.stock_count <= 50 ? 'red' : 'inherit'}">${vo.stock.stock_count != null ? vo.stock.stock_count : 0}</td>
+										<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price}" />원</td>
+										<td><fmt:formatNumber value=" ${vo.rawMaterial.raw_price*vo.raw_order_count}" />원</td>
+										<td>${vo.rawMaterial.wh_code }</td>
+										<td>${vo.raw_order_date}</td>
+										<td>${vo.emp_id }</td>
 										
 									</tr>
 
@@ -318,6 +313,27 @@ function toggleDiv(divId) {
     </script>
     <!-- 엑셀 - 끝 -->
 			
+    
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers"> 
+	<ul class="pagination"> 
+<!--     			<div style="text-align: right;"> -->
+				<c:if test="${count1 > 0 }">
+				<li class="paginate_button previous disabled">
+					<c:if test="${bp.prev}">
+					    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a>
+					</c:if>
+					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
+					    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
+					</c:forEach>
+					<c:if test="${bp.next && bp.endPage > 0}">
+					    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
+					</c:if>
+				</li>
+				</c:if>
+<!-- 			</div> -->
+    </ul>
+    </div>
+    
 			
 					
 				</div>
@@ -325,27 +341,6 @@ function toggleDiv(divId) {
 		</div>
 		
 		<div>
-		
-		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;"> 
-		<ul class="pagination"> 
-	<!--     			<div style="text-align: right;"> -->
-					<c:if test="${count1 > 0 }">
-					<li class="paginate_button previous disabled">
-						<c:if test="${bp.prev}">
-						    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.startPage - 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a>
-						</c:if>
-						<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" var="idx">
-						    <a class="btn btn-secondary" href="/stock/raw_order?page=${idx}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${idx}</a>
-						</c:forEach>
-						<c:if test="${bp.next && bp.endPage > 0}">
-						    <a class="btn btn-secondary" href="/stock/raw_order?page=${bp.endPage + 1}&raw_order_num=${param.raw_order_num}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
-						</c:if>
-					</li>
-					</c:if>
-	<!-- 			</div> -->
-	    </ul>
-	    </div>
-		
 		
 		</div>
 
@@ -381,51 +376,51 @@ function toggleDiv(divId) {
 					<div class="table-wrapper" >
 						<div class="table-responsive">
 							<table id="table"
-								class="table table-striped jambo_table bulk_action">
+								class="table table-striped jambo_table bulk_action" style="text-align-last:center;">
 								<thead>
 									<tr class="headings">
-										<th class="column-title">발주일</th>
-										<th class="column-title">거래처 코드</th>
-										<th class="column-title">거래처명</th>
-										<th class="column-title">품번</th>
-										<th class="column-title">품명</th>
-										<th class="column-title">색상</th>
-										<th class="column-title">입고 창고</th>
-										<th class="column-title">발주 수량</th>
-										<th class="column-title">재고 수량</th>
-										<th class="column-title">단가</th>
-										<th class="column-title">총액</th>
-										<th class="column-title">담당자</th>
+										<th>발주일</th>
+										<th>거래처 코드</th>
+										<th>거래처명</th>
+										<th>품번</th>
+										<th>품명</th>
+										<th>색상</th>
+										<th>입고 창고</th>
+										<th>발주 수량</th>
+										<th>재고 수량</th>
+										<th>단가</th>
+										<th>총액</th>
+										<th>담당자</th>
 									</tr>
 								</thead>
 								<tbody>
 
 									<tr class="even pointer">
-										<td class=" "><input type="text" name="raw_order_date"
+										<td><input type="text" name="raw_order_date"
 											value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>"
 											readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
+										<td onclick="roPopup();"><input type="text" 
 											name="client_code" id="client_code" readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
+										<td onclick="roPopup();"><input type="text" 
 											name="client_actname" id="client_actname" required readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
+										<td onclick="roPopup();"><input type="text" 
 											name="raw_code" id="raw_code" readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
+										<td onclick="roPopup();"><input type="text" 
 											name="raw_name" id="raw_name" readonly></td>
-										<td class=" " onclick="roPopup();"><input type="text" 
+										<td onclick="roPopup();"><input type="text" 
 											name="raw_color" id="raw_color" readonly></td>
 										<td onclick="roPopup();" ><input type="text" name="wh_code" id="wh_code" readonly></td>
-										<td class=" "><input type="number" min="1"
+										<td><input type="number" min="1"
 											id="raw_order_count" name="raw_order_count"
 											oninput="totalAmount()"></td>
 										<!-- CSS할 때 증감버튼 없애기 -->
-										<td class=" "><input type="text" style="color: ${inputValue <= 50 ? 'red' : 'inherit'}" 
+										<td><input type="text" style="color: ${inputValue <= 50 ? 'red' : 'inherit'}" 
 											name="stock_count" id="stock_count" readonly >
 										</td>
-										<td class=" "><input type="text"  name="raw_price"
+										<td><input type="text"  name="raw_price"
 											id="raw_price" readonly></td>
-										<td id="total_amount" class=" "></td>
-										<td class=" ">${sessionScope.id.emp_id }</td>
+										<td id="total_amount"></td>
+										<td>${sessionScope.id.emp_id }</td>
 
 									</tr>
 
