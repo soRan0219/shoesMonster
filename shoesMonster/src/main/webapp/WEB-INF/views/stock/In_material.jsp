@@ -267,8 +267,33 @@ body {
 						</div>
 					</form>
 				</div>			
-						
+				<br>
 				<div style="display: inline;">
+				
+				<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+					<ul class="pagination">
+			            <c:if test="${count1 > 0 }">
+						<li class="paginate_button previous disabled">
+			                <c:if test="${bp.prev}">
+			                    <span><a href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a></span>
+			                </c:if>
+			            </li>
+						<li class="paginate_button previous disabled">
+			                <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
+			                    step="1">
+			                    <a href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
+			                </c:forEach>
+						</li>
+						<li class="paginate_button previous disabled">
+			                <c:if test="${bp.next && bp.endPage > 0}">
+			                    <a href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
+			                </c:if>
+			            </li>
+			            </c:if>
+			         </ul>
+     			</div>	
+				
+				
 				<!-- 엑셀 - 시작 -->
 					<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
 				</div>
@@ -364,8 +389,19 @@ body {
     
 					</div>
 				</div>
-	      </div>
-	  </div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+	
+	
+</div>
+
+
+</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	
+      
+      
+</div>
+</div>
+
 	<!--//////////////////////////////////////////// 테이블 템플릿 ////////////////////////////////////////////////////// -->
 </div> 
 <!-- /page content -->

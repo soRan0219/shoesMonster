@@ -183,9 +183,9 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	    </tbody>
 	</table>
 	<hr>
-	<button type="submit" id="roCancel" name="roCancel" class="B B-info"  value="${raw_order_num }">발주 취소</button>
 	</div>
-</div>
+	</div>
+	<button type="submit" id="roCancel" name="roCancel" class="B B-info"  value="${raw_order_num }" style="width: 80px;">발주 취소</button>
 </div>	
 </body>
 </html>

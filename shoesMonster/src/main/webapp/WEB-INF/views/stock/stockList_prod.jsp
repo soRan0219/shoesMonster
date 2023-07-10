@@ -206,10 +206,6 @@ body {
 			</div>
 		</form>
 		
-	</div>
-</div>
-
-
 		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 			<ul class="pagination">
 			    <c:if test="${countP3 > 0 }">
@@ -231,6 +227,12 @@ body {
 				</c:if>
 			</ul>
 		</div>
+		
+	</div>
+</div>
+
+
+		
  
            		
 </div>

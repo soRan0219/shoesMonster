@@ -116,11 +116,8 @@ body {
 			</div>
 			</div>
  		</form>
-	</div>
-</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->	      
-
-		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+ 		
+ 		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 			<ul class="pagination">
 			    <c:if test="${countR3 > 0 }">
 					<li class="paginate_button previous disabled"> 
@@ -141,6 +138,12 @@ body {
 				</c:if>
 			</ul>
 		</div>
+ 		
+	</div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////// -->	      
+
+		
 
   		
 	
