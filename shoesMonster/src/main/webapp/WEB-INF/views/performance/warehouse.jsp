@@ -301,12 +301,12 @@
 			
 			// 창고코드
 			row += "<td>";
-			row += "<input type='text' name='wh_code' id='wh_code' required value='"+whCode+"'>";
+			row += "<input type='text' name='wh_code' id='wh_code' required value='"+whCode+"' class='input-fieldb'>";
 			row += "</td>";
 			
 			// 창고명
 			row += "<td>";
-			row += "<input type='text' name='wh_name' id='wh_name' required>";
+			row += "<input type='text' name='wh_name' id='wh_name' required class='input-fieldb'>";
 			row += "</td>";
 			
 			// 창고유형
@@ -319,12 +319,12 @@
 			
 			// 지역
 			row += "<td>";
-			row += "<input type='text' name='wh_addr' id='wh_addr' required>";
+			row += "<input type='text' name='wh_addr' id='wh_addr' required class='input-fieldb'>";
 			row += "</td>";
 			
 			// 전화번호
 			row += "<td>";
-			row += "<input type='text' name='wh_tel' id='wh_tel' required>";
+			row += "<input type='text' name='wh_tel' id='wh_tel' required class='input-fieldb'>";
 			row += "</td>";
 			
 			// 사용여부
@@ -338,12 +338,12 @@
 			// 담당자
 			row += "<td>";
 			row += " <input type='hidden' name='emp_id' id='emp_id' value = '<c:out value='${id.emp_id}'/>' required>";
-			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required>";
+			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required class='input-fieldb'>";
 			row += "</td>";
 			
 			// 비고
 			row += "<td>";
-			row += "<input type='text' name='wh_note' id='wh_note'>";
+			row += "<input type='text' name='wh_note' id='wh_note' class='input-fieldb'>";
 			row += "</td>";
 			row += "</tr>";
 			
@@ -655,13 +655,45 @@
 	</script>
 
 
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+</style>
+
+
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 <!-- page content -->
 <div class="right_col" role="main">
 
 <h1 style="margin-left: 1%;">창고관리</h1>
 
-<div style="margin-left: 1%;">
+<div style="margin-left: 1%; margin-right: 1%">
 	<form method="get">
 		
 		<fieldset>
@@ -764,24 +796,14 @@
 	    }
 	</script>
 	<!-- 버튼 제어 -->
-
-	<div style="overflow-x: auto;">
-		<table border="1" id="whTable" 
-		class="table table-striped jambo_table bulk_action" style="text-align:center;"> 
-			<colgroup>
-			    <col style="width: 50px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 100px">
-			    <col style="width: 150px">
-			</colgroup>
+	
+<div class="x_content">
+	<div class="table-responsive">
+		<div class="table-wrapper" >
+		<table id="whTable" class="table table-striped jambo_table bulk_action" style="text-align:center;"> 
 			<thead>
 				<tr class="headings">
-					<td>번호</td>
+					<td></td>
 					<td>창고코드</td>
 					<td>창고명</td>
 					<td>구분</td>
@@ -818,7 +840,9 @@
 				</tr>
 				</c:forEach>
 			</table>
+			</div>
 		</div>
+	</div>
 	</form>
 	</div>
 </div>

@@ -179,37 +179,37 @@ body {
 				tbl += " <td>";
 				tbl += "  <input type='text' name='work_code' id='work_code' readonly value='";
 				tbl += "WO" + codeCreation();
-				tbl += "'>";
+				tbl += "' class='input-fielda'>";
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='line_code' id='line_code' required readonly>";
+				tbl += "  <input type='text' name='line_code' id='line_code' required readonly class='input-fielda'>";
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='order_code' id='order_code_work' required readonly>";
+				tbl += "  <input type='text' name='order_code' id='order_code_work' required readonly class='input-fielda'>";
 				tbl += " </td>";
 				// 품번
 				tbl += " <td>";
-				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly>";
+				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly class='input-fielda'>";
 				tbl += " </td>";
 				// 지시일
 				tbl += " <td>";
 				tbl += "  <input type='text' name='work_date' id='work_date' readonly value='";
 				tbl += today;
-				tbl += "'>";
+				tbl += "' class='input-fielda'>";
 				tbl += " </td>";
 				// 지시수량
 				tbl += " <td>";
-				tbl += "  <input type='text' name='work_qt' id='work_qt' required>";
+				tbl += "  <input type='text' name='work_qt' id='work_qt' required class='input-fielda'>";
 				tbl += " </td>";
 				//공정
 				tbl += " <td>";
-				tbl += "  <input type='text' value='1차공정' readonly>";
+				tbl += "  <input type='text' value='1차공정' readonly class='input-fielda'>";
 				tbl += " </td>";
  				// 지시상태
 				tbl += " <td>";
-				tbl += "  <input type='text' value='1공정지시' readonly>";
+				tbl += "  <input type='text' value='1공정지시' readonly class='input-fielda'>";
 				tbl += " </td>";
 				tbl += "</tr>";
 
@@ -668,6 +668,29 @@ body {
 	
 </script>
 
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+</style>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 
@@ -751,25 +774,16 @@ body {
 
 
 <!-- //////////////////////////////////////////////////////////////////////// -->			
-	<div style="overflow-x: auto;">
-	
+<div class="x_content">
+	<div class="table-responsive">
+		<div class="table-wrapper" >
+
 		<form id="fr">
 			<input type="hidden" name="emp_id" value="${sessionScope.id.emp_id }">
-			<table border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
-				<colgroup>
-				    <col style="width: 50px">
-				    <col style="width: 110px">
-				    <col style="width: 100px">
-				    <col style="width: 100px">
-				    <col style="width: 100px">
-				    <col style="width: 100px">
-				    <col style="width: 100px">
-				    <col style="width: 100px">
-				    <col style="width: 100px">
-				</colgroup>
+			<table class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
 				<thead>
 					<tr class="headings">
-						<th>번호</th>
+						<th></th>
 						<th>작업지시코드</th>
 						<th>라인코드</th>
 						<th>수주코드</th>
@@ -801,7 +815,8 @@ body {
 			</table>
 		</form>
 		</div>
-<!-- 	</div> -->
+	</div>
+</div>
 	
 	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 		

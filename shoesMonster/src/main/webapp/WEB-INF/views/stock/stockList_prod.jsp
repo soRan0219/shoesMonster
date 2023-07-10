@@ -115,19 +115,36 @@ body {
     }); // JQuery
     </script>
   
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+</style>
     
 
 <div class="right_col" role="main">
 
 	<h1 style="margin-left: 1%;"> 재고 관리 </h1>
 	
-	<div style="margin-left: 1%;">
+	<div style="margin-left: 1%; margin-right: 1%;">
 	    <a href="/stock/stockList_raw" ><input type="button" value="원자재" class="B B-info" ></input></a>
 	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" ></input></a>
-    </div>
-    
-    
-    <div style="margin-left: 2%;">  
     <hr>
 	    <form action="" method="get">
 	 		완제품 코드 <input type="text" name="prod_code" placeholder="완제품 코드를 입력하세요."> &nbsp;
@@ -149,8 +166,10 @@ body {
 						<div class="clearfix"></div>
 				</div>	
 					
-				<div style="overflow-x: auto;">
-				<table id="data-table" border="1" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+				<table id="data-table" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 					<thead> 
 					    <tr>
 					 		<th>유형</th>
@@ -181,8 +200,14 @@ body {
 					</c:forEach>
 				</table>
 			</div>
+			</div>
+			</div>
 		</form>
 		
+	</div>
+</div>
+
+
 		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
 			<ul class="pagination">
 			    <c:if test="${countP3 > 0 }">
@@ -204,9 +229,7 @@ body {
 				</c:if>
 			</ul>
 		</div>
-		
-	</div>
-</div>     
+ 
            		
 </div>
 

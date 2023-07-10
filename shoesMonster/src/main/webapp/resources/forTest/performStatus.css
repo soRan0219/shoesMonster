@@ -38,9 +38,9 @@ ul.tabs li.current {
 
 .tab-content {
 	background: #F7F7F7;
-	padding: 2px 5em 2px 7em;
+	padding: 0px 3.5em 0px 3.5em;
 	height: 2px;
-	border: 2px solid #73879C;
+	border: 1px solid #73879C;
 	border-top-color: transparent;
 	border-radius: 0 4px 4px 4px;
 	overflow: hidden;
@@ -49,6 +49,6 @@ ul.tabs li.current {
 }
 .tab-content.current {
 	height: auto;
-	overflow: auto;
+/* 	overflow: auto; */
 	visibility: visible;
 }

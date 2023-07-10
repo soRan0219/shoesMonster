@@ -122,49 +122,49 @@ body {
 				tbl += " <td>";
 				tbl += "  <input type='text' name='perform_code' id='perform_code' readonly value='";
 				tbl += "PF" + codeCreation();
-				tbl += "'>";
+				tbl += "' class='input-fielda'>";
 				tbl += " </td>";
 				// 작업지시코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='work_code' id='work_code' required>";
+				tbl += "  <input type='text' name='work_code' id='work_code' required class='input-fielda'>";
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='line_code' id='line_code' required readonly>";
+				tbl += "  <input type='text' name='line_code' id='line_code' required readonly class='input-fielda'>";
 				tbl += " </td>";
 				// 품번
 				tbl += " <td>";
-				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly>";
+				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly class='input-fielda'>";
 				tbl += " </td>";
 				// 실적일
 				tbl += " <td>";
 				tbl += "  <input type='text' name='perform_date' id='perform_date' readonly value='";
 				tbl += today;
-				tbl += "'>";
+				tbl += "' class='input-fielda'>";
 				tbl += " </td>";
 				// 실적수량
 				tbl += " <td>";
-				tbl += "  <input type='number' name='perform_qt' id='perform_qt' required>";
+				tbl += "  <input type='number' name='perform_qt' id='perform_qt' required class='input-fielda'>";
 				tbl += " </td>";
 				// 양품수
 				tbl += " <td>";
-				tbl += "  <input type='number' name='perform_fair' id='perform_fair' required>";
+				tbl += "  <input type='number' name='perform_fair' id='perform_fair' required class='input-fielda'>";
 				tbl += " </td>";
 				// 불량수
 				tbl += " <td>";
-				tbl += "  <input type='number' name='perform_defect' id='perform_defect' required>";
+				tbl += "  <input type='number' name='perform_defect' id='perform_defect' required class='input-fielda'>";
 				tbl += " </td>";
 				// 불량사유
 				tbl += " <td>";
-				tbl += "  <input type='text' name='defect_note' id='defect_note' required>";
+				tbl += "  <input type='text' name='defect_note' id='defect_note' required class='input-fielda'>";
 				tbl += " </td>";
 				// 현황
 				tbl += " <td>";
-				tbl += "  <input type='text' name='perform_status' id='perform_status' value='진행' readonly>";
+				tbl += "  <input type='text' name='perform_status' id='perform_status' value='진행' readonly class='input-fielda'>";
 				tbl += " </td>";
 				// 비고
 				tbl += " <td>";
-				tbl += "  <textarea name='perform_note' id='perform_note'></textarea>";
+				tbl += "  <input type='text' name='perform_note' id='perform_note' required class='input-fielda'>";
 				tbl += " </td>";
 				tbl += "</tr>";
 				
@@ -663,6 +663,29 @@ body {
 	
 </script>
 
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+</style>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 
@@ -745,9 +768,11 @@ body {
 		
 		
 	
-	<div class="table-responsive">	
+	<div class="x_content">
+		<div class="table-responsive">
+			<div class="table-wrapper" >	
 			<input type="hidden" name="emp_id" value="${sessionScope.id.emp_id }">
-			<table border="1" class="table table-striped jambo_table bulk_action"  id="data-table">
+			<table class="table table-striped jambo_table bulk_action"  id="data-table">
 				<thead>
 					<tr class="headings">
 						<th class="column-title">번호</th>
@@ -789,6 +814,8 @@ body {
 					</tr>
 				</c:forEach>
 			</table>
+			</div>
+			</div>
 		</div>
 	</form>
 	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>

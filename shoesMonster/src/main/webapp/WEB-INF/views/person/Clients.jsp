@@ -588,7 +588,6 @@
 </script>
 
 <style>
-
 .table-wrapper {
     overflow-x: auto; /* 테이블 직접 조절 */
     overflow-y: hidden;
@@ -596,6 +595,7 @@
 .table-wrapper table {
     width: 100%; /* 테이블 직접 조절 */
     white-space: nowrap; 
+    text-align: center;
 }
 
 .input-fielda {
@@ -607,7 +607,6 @@
 .input-fieldc {
     width: 150px; /* 원하는 입력란의 너비로 설정 */
 }
-
 </style>
 
 <!-- page content -->
@@ -658,74 +657,58 @@
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-			<div class="table-wrapper">
-				<div class="x_title">
-					<h2>거래처 목록<small>총 ${pm.totalCount } 건</small></h2>
-					
-					<div style="float: left;  margin-top: 1.5px;">
-						<c:if test="${empty param.input }">
-							<button onclick="location.href='/person/Clients'" class="B2 B2-info">↻</button>
-						</c:if>
-						<c:if test="${!empty param.input && empty param.search_client_type}">
-							<button onclick="location.href='/person/Clients?input=${param.input }'" class="B2 B2-info">↻</button>
-						</c:if>
-						<c:if test="${!empty param.input && !empty param.search_client_type }">
-							<button onclick="location.href='/person/Clients?input=${param.input }&search_client_type=${param.search_client_type }'" class="B2 B2-info">↻</button>
-						</c:if>
-					</div>
+			<div class="x_title">
+				<h2>거래처 목록<small>총 ${pm.totalCount } 건</small></h2>
+				
+				<div style="float: left;  margin-top: 1.5px;">
+					<c:if test="${empty param.input }">
+						<button onclick="location.href='/person/Clients'" class="B2 B2-info">↻</button>
+					</c:if>
+					<c:if test="${!empty param.input && empty param.search_client_type}">
+						<button onclick="location.href='/person/Clients?input=${param.input }'" class="B2 B2-info">↻</button>
+					</c:if>
+					<c:if test="${!empty param.input && !empty param.search_client_type }">
+						<button onclick="location.href='/person/Clients?input=${param.input }&search_client_type=${param.search_client_type }'" class="B2 B2-info">↻</button>
+					</c:if>
+				</div>
 
-					<div style="float: right;">
-						<input type="button" value="추가" id="addButton" class="true B B-info">
-						<input type="button" value="수정" id="updateButton" class="B B-info"> 
-						<input type="button" value="삭제" id="deleteButton" class="true B B-info"> 
-						<input type="button" value="취소" id="cancelButton" class="B B-info"> 
-						<input type="button" value="저장" id="saveButton" class="B B-info">
-					</div>
-				
-				<!-- 버튼 제어 -->
-				<script>
-				    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
-				
-				    if (team === "인사팀" || team === "관리자") {
-				        document.getElementById("addButton").disabled = false;
-				        document.getElementById("updateButton").disabled = false;
-				        document.getElementById("deleteButton").disabled = false;
-				        document.getElementById("cancelButton").disabled = false;
-				        document.getElementById("saveButton").disabled = false;
-				        document.querySelector("[onclick^='location.href']").disabled = false;
-				    } else {
-				        document.getElementById("addButton").hidden = true;
-				        document.getElementById("updateButton").hidden = true;
-				        document.getElementById("deleteButton").hidden = true;
-				        document.getElementById("cancelButton").hidden = true;
-				        document.getElementById("saveButton").hidden = true;
-				        document.querySelector("[onclick^='location.href']").hidden = true;
-				    }
-				</script>
-				<!-- 버튼 제어 -->
-				
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<form id="fr">
-				<div class="table-responsive">
-					<table border="1" id="clientsTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
-						<colgroup>
-						    <col style="width: 50px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 75px">
-						    <col style="width: 75px">
-						    <col style="width: 75px">
-						    <col style="width: 75px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 100px">
-						    <col style="width: 75px">
-						</colgroup>
+				<div style="float: right;">
+					<input type="button" value="추가" id="addButton" class="true B B-info">
+					<input type="button" value="수정" id="updateButton" class="B B-info"> 
+					<input type="button" value="삭제" id="deleteButton" class="true B B-info"> 
+					<input type="button" value="취소" id="cancelButton" class="B B-info"> 
+					<input type="button" value="저장" id="saveButton" class="B B-info">
+				</div>
+			
+			<!-- 버튼 제어 -->
+			<script>
+			    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+			
+			    if (team === "인사팀" || team === "관리자") {
+			        document.getElementById("addButton").disabled = false;
+			        document.getElementById("updateButton").disabled = false;
+			        document.getElementById("deleteButton").disabled = false;
+			        document.getElementById("cancelButton").disabled = false;
+			        document.getElementById("saveButton").disabled = false;
+			        document.querySelector("[onclick^='location.href']").disabled = false;
+			    } else {
+			        document.getElementById("addButton").hidden = true;
+			        document.getElementById("updateButton").hidden = true;
+			        document.getElementById("deleteButton").hidden = true;
+			        document.getElementById("cancelButton").hidden = true;
+			        document.getElementById("saveButton").hidden = true;
+			        document.querySelector("[onclick^='location.href']").hidden = true;
+			    }
+			</script>
+			<!-- 버튼 제어 -->
+			
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+					<form id="fr">
+					<table id="clientsTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 						<thead>
 							<tr class="headings">
 								<th></th>
@@ -806,10 +789,10 @@
 <%-- 									<td>${vo.client_note}</td> --%>
 <!-- 								</tr> -->
 <%-- 							</c:if> --%>
-							</c:forEach>
-						</table>
-					</div>
-				</form>
+								</c:forEach>
+							</table>
+						</form>
+<!-- 				</div> -->
 				</div>
 			</div>
 		</div>
@@ -836,7 +819,7 @@
 		</ul>
 	</div>
 	<!-- 페이징 -->
-
+	</div>
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>

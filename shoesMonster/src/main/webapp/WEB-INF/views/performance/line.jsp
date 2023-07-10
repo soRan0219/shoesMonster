@@ -503,12 +503,12 @@
 			
 			// 라인코드 
 			row += "<td>";
-			row += "<input type='text' name='line_code' id='line_code' required value='"+lineCode+"'>";
+			row += "<input type='text' name='line_code' id='line_code' required value='"+lineCode+"' class='input-fielda'>";
 			row += "</td>";
 			
 			// 라인명
 			row += "<td>";
-			row += "<input type='text' name='line_name' id='line_name' required>";
+			row += "<input type='text' name='line_name' id='line_name' required class='input-fielda'>";
 			row += "</td>";
 			
 			// 사용여부
@@ -522,19 +522,19 @@
 			// 등록자	
 			row += "<td>";
 			row += " <input type='hidden' name='emp_id' id='emp_id' value = '<c:out value='${id.emp_id}'/>' required>";
-			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required>";
+			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required class='input-fielda'>";
 			row += "</td>";
 			
 			// 등록일
 			row += " <td>";
 			row += " <input type='text' name='insert_date' readonly value='";
 			row += today;
-			row += "'>";
+			row += "' class='input-fielda'>";
 			row += " </td>";
 			
 			// 비고
 			row += "<td>";
-			row += "<input type='text' name='line_note' id='line_note'>";
+			row += "<input type='text' name='line_note' id='line_note' class='input-fielda'>";
 			row += "</td>";
 			row += "</tr>";
 			
@@ -680,6 +680,28 @@
 </script>
 
 
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+</style>
+
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
 <!-- page content -->
@@ -786,60 +808,52 @@
 	</script>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 	
-	<div style="overflow-x: auto;">
-	
-	<table border="1" id="lineTable"
-	class="table table-striped jambo_table bulk_action" style="text-align:center;">
-		<colgroup>
-		    <col style="width: 50px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 150px">
-		</colgroup>
-		<thead>
-			<tr class="headings">	
-				<th>번호</th>
-				<th>공정</th>
-				<th>라인코드</th>
-				<th>라인명</th>
-				<th>사용여부</th>
-				<th type='hidden' style='display: none;'>등록자 코드</th>
-				<th>등록자</th>
-				<th>등록일</th>
-				<th>비고</th>
-			</tr>
-		</thead>
-		<tr type='hidden' style='display: none;'></tr>
-		
-		<c:forEach var="vo" items="${boardList }" varStatus="i">
-				<tr>
-					<td>${i.count}</td>
-					<td>${vo.line_place}</td>
-					<td id="lineCode">${vo.line_code}</td>
-					<td>${vo.line_name}</td>
-					
-					<c:choose>
-						<c:when test="${vo.line_use == 1 }">
-							<td>Y</td>
-						</c:when>
-						<c:when test="${vo.line_use == 2 }">
-							<td>N</td>
-						</c:when>
-					</c:choose>
-					
-					<td type='hidden' style='display: none;'><c:out value='${id.emp_id}'/></td>
-					<td>${vo.emp.emp_name}</td>
-					<td>${vo.insert_date}</td>
-					<td>${vo.line_note}</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
-</form>
+	<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+					<table id="lineTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
+						<thead>
+							<tr class="headings">	
+								<th></th>
+								<th>공정</th>
+								<th>라인코드</th>
+								<th>라인명</th>
+								<th>사용여부</th>
+								<th type='hidden' style='display: none;'>등록자 코드</th>
+								<th>등록자</th>
+								<th>등록일</th>
+								<th>비고</th>
+							</tr>
+						</thead>
+						<tr type='hidden' style='display: none;'></tr>
+				
+						<c:forEach var="vo" items="${boardList }" varStatus="i">
+							<tr>
+								<td>${i.count}</td>
+								<td>${vo.line_place}</td>
+								<td id="lineCode">${vo.line_code}</td>
+								<td>${vo.line_name}</td>
+								
+								<c:choose>
+									<c:when test="${vo.line_use == 1 }">
+										<td>Y</td>
+									</c:when>
+									<c:when test="${vo.line_use == 2 }">
+										<td>N</td>
+									</c:when>
+								</c:choose>
+								
+								<td type='hidden' style='display: none;'><c:out value='${id.emp_id}'/></td>
+								<td>${vo.emp.emp_name}</td>
+								<td>${vo.insert_date}</td>
+								<td>${vo.line_note}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	

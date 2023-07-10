@@ -173,17 +173,17 @@ body {
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                    '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" readonly required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_name" required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_color" required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_unit" required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_size" required></td>' +
-                    '<input type="hidden" name="raws[' + counter + '].client_code" id="client_code'+counter+'" required required>' +
-                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'");></td>' +
-                    '<input type="hidden" name="raws[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required>' +
-                    '<td><input type="text" name="raws[' + counter + '].wh.wh_name" id="wh_name'+counter+'" readonly onclick=serchWh("wh_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_price" required></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_note"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" readonly required class="input-fielda"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_name" required class="input-fielda"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_color" required class="input-fielda"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_unit" required class="input-fielda"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_size" required class="input-fielda"></td>' +
+                    '<input type="hidden" name="raws[' + counter + '].client_code" id="client_code'+counter+'" required required class="input-fielda">' +
+                    '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); class="input-fielda"></td>' +
+                    '<input type="hidden" name="raws[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required class="input-fielda">' +
+                    '<td><input type="text" name="raws[' + counter + '].wh.wh_name" id="wh_name'+counter+'" readonly onclick=serchWh("wh_code'+counter+'"); required class="input-fielda"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_price" required class="input-fielda"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_note" class="input-fielda"></td>' +
                     '</tr>';
 
                 $('#rawTable').append(row);
@@ -500,6 +500,30 @@ body {
         });
     </script>
 
+
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+</style>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 
@@ -571,23 +595,13 @@ body {
 	</script>
 	<!-- 버튼 제어 -->
 		
-	<br>
-	<div style="overflow-x: auto;">
-		<table border="1" id="rawTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
-		<colgroup>
-		    <col style="width: 55px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 150px">
-		    <col style="width: 100px">
-		    <col style="width: 150px">
-		</colgroup>
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+		<table id="rawTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 		<thead>
 				<tr class="headings">
-					<th class="column-title">번호</th>
+					<th class="column-title"></th>
 					<th>품번</th>
 					<th>품명</th>
 					<th>색상</th>
@@ -620,6 +634,8 @@ body {
 					</tr>
 			</c:forEach>
 		</table>
+		</div>
+		</div>
 		</div>
 	</form>
 	</div>

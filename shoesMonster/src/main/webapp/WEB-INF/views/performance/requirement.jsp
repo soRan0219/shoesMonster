@@ -120,13 +120,13 @@ body {
             function addRow() {
                 var row = '<tr>' +
                 	'<td></td>'+
-                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" required>' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" readonly required></td>' +
-                    '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" >' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'");></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'");></td>' +
-                    '<td><input type="number" name="reqs[' + counter + '].req_dan" required></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].req_note"></td>' +
+                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" required class="input-fieldb">' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" readonly required class="input-fieldb"></td>' +
+                    '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" class="input-fieldb">' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'"); class="input-fieldb"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'"); class="input-fieldb"></td>' +
+                    '<td><input type="number" name="reqs[' + counter + '].req_dan" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].req_note" class="input-fieldb"></td>' +
                     '</tr>';
                     
                 $('#reqTable').append(row);
@@ -435,6 +435,30 @@ body {
         });
     </script>
 
+
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 200px; /* 원하는 입력란의 너비로 설정 */
+}
+</style>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 
@@ -509,22 +533,15 @@ body {
 					}
 				</script>
 				<!-- 버튼 제어 -->
-
-				<div style="overflow-x: auto;">
-					<table border="1" id="reqTable"
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+					<table id="reqTable"
 						class="table table-striped jambo_table bulk_action"
 						style="text-align: center;">
-						<colgroup>
-							<col style="width: 50px">
-							<col style="width: 100px">
-							<col style="width: 100px">
-							<col style="width: 100px">
-							<col style="width: 100px">
-							<col style="width: 150px">
-						</colgroup>
 						<thead>
 							<tr class="headings">
-								<th>번호</th>
+								<th></th>
 								<th>소요코드</th>
 								<th type='hidden' style='display: none;'>품번</th>
 								<th>완제품</th>
@@ -547,7 +564,9 @@ body {
 						</c:forEach>
 					</table>
 					</div>
-				</form>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 

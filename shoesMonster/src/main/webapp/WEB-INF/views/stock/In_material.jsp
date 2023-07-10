@@ -106,13 +106,33 @@ body {
 		
 	</script>
 
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
 
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+</style>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
 <!-- page content -->
 	
 
-<div style="margin: 1% 0 1% 1%;">
+<div style="margin: 1% 1% 1% 1%;">
 
 	<form action="" method="get">
 		<button type="submit" value="" class="B B-info" name="in_YN">전체</button>
@@ -125,7 +145,7 @@ body {
 		<label>거래처명</label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요."> &nbsp; &nbsp;
 
 		<input type="submit" class="B B-info" value="검색">
-	<hr>
+		<hr>
 	</form>
 </div>
 
@@ -141,29 +161,30 @@ body {
 			
 				<div class="clearfix"></div>
 			</div>
-			<div class="x_content">
-				<div class="table-responsive">
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
 					<form action="" method="post" id="fr">
 						<table class="table table-striped jambo_table bulk_action"
 							id="data-table">
 							<thead>
 								<tr class="headings">
 									
-									<th class="column-title">입고 번호</th>
-									<th class="column-title">발주 번호</th>
-									<th class="column-title">입고 창고</th>
-									<th class="column-title">거래처명</th>
-									<th class="column-title">품번</th>
-									<th class="column-title">품명</th>
-									<th class="column-title">색상</th>
-									<th class="column-title">발주 수량</th>
-									<th class="column-title">재고 수량</th>
-									<th class="column-title">단가</th>
-									<th class="column-title">총액</th>
-									<th class="column-title">입고일</th>
-									<th class="column-title">입고 담당자</th>
-									<th class="column-title">입고 확인</th>
-									<th class="column-title">입고 버튼</th>
+									<th>입고 번호</th>
+									<th>발주 번호</th>
+									<th>입고 창고</th>
+									<th>거래처명</th>
+									<th>품번</th>
+									<th>품명</th>
+									<th>색상</th>
+									<th>발주 수량</th>
+									<th>재고 수량</th>
+									<th>단가</th>
+									<th>총액</th>
+									<th>입고일</th>
+									<th>입고 담당자</th>
+									<th>입고 확인</th>
+									<th>입고 버튼</th>
 									<th class="bulk-actions" colspan="7"><a class="antoo"
 										style="color: #fff; font-weight: 500;">Bulk Actions ( <span
 											class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
@@ -207,35 +228,13 @@ body {
 								해당되는 항목이 없습니다.
 							</c:if>
 						</div>
-						
 					</form>
-					
-					<div style="display: inline;">
-					<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-					<ul class="pagination">
-			            <c:if test="${count1 > 0 }">
-						<li class="paginate_button previous disabled">
-			                <c:if test="${bp.prev}">
-			                    <span><a href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a></span>
-			                </c:if>
-			            </li>
-						<li class="paginate_button previous disabled">
-			                <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
-			                    step="1">
-			                    <a href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
-			                </c:forEach>
-						</li>
-						<li class="paginate_button previous disabled">
-			                <c:if test="${bp.next && bp.endPage > 0}">
-			                    <a href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
-			                </c:if>
-			            </li>
-			            </c:if>
-			         </ul>
-      </div>
-	<!-- 엑셀 - 시작 -->
-	<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
-	</div>
+				</div>			
+						
+				<div style="display: inline;">
+				<!-- 엑셀 - 시작 -->
+					<button id="excelDownload" class="B B-info">엑셀 ⬇️ </button>
+				</div>
 
 	<script type="text/javascript">
 	function getToday() {
@@ -318,7 +317,29 @@ body {
   </div>
 	
 	
-	
+				<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+					<ul class="pagination">
+			            <c:if test="${count1 > 0 }">
+						<li class="paginate_button previous disabled">
+			                <c:if test="${bp.prev}">
+			                    <span><a href="/stock/In_material?page=${bp.startPage -1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Previous</a></span>
+			                </c:if>
+			            </li>
+						<li class="paginate_button previous disabled">
+			                <c:forEach var="i" begin="${bp.startPage}" end="${bp.endPage}"
+			                    step="1">
+			                    <a href="/stock/In_material?page=${i }&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">${i }</a>
+			                </c:forEach>
+						</li>
+						<li class="paginate_button previous disabled">
+			                <c:if test="${bp.next && bp.endPage > 0}">
+			                    <a href="/stock/In_material?page=${bp.endPage + 1}&in_mat.in_num=${rvo.in_mat.in_num}&in_YN=${rvo.in_YN}&rawMaterial.raw_name=${rvo.rawMaterial.raw_name}&clients.client_actname=${rvo.clients.client_actname}">Next</a>
+			                </c:if>
+			            </li>
+			            </c:if>
+			         </ul>
+     			</div>	
+
 	
 	
 </div>

@@ -173,18 +173,18 @@ body {
             	
                 var row = '<tr>' +
                 	'<td></td>'+
-                    '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" readonly required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_name" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_category" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_unit" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_size" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_color" required></td>' +
-                    '<input type="hidden" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required>' +
-                    '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); required></td>' +
-                    '<td type="hidden" style="display: none;"><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_code'+counter+'"); readonly required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_price" required></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_note"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" readonly required class="input-fielda"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_name" required class="input-fielda"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_category" required class="input-fielda"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_unit" required class="input-fielda"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_size" required class="input-fielda"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_color" required class="input-fielda"></td>' +
+                    '<input type="hidden" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required class="input-fielda">' +
+                    '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); required class="input-fielda"></td>' +
+                    '<td type="hidden" style="display: none;"><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required class="input-fielda"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_code'+counter+'"); readonly required class="input-fielda"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_price" required class="input-fielda"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_note" class="input-fielda"></td>' +
                     '</tr>';
 
                 $('#productTable').append(row);
@@ -459,7 +459,30 @@ body {
             
         });
     </script>
-    
+   
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+</style>
+   
+   
 <!-- page content -->
 <div class="right_col" role="main">
 
@@ -535,28 +558,16 @@ body {
 		    }
 		</script>
 		<!-- 버튼 제어 -->
-		<br>
 	
-	<div style="overflow-x: auto;">
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
 <%-- 		완제품 목록 총 ${paging.total}건 --%>
-		<table border="1" id="productTable"
+		<table id="productTable"
 		class="table table-striped jambo_table bulk_action" style="text-align:center;">
-		<colgroup>
-		    <col style="width: 55px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 100px">
-		    <col style="width: 150px">
-		</colgroup>
 			<thead>
 				<tr class="headings">
-					<th>번호</th>
+					<th></th>
 					<th>품번</th>
 					<th>품명</th>
 					<th>카테고리</th>
@@ -591,6 +602,8 @@ body {
 					</tr>
 			</c:forEach>
 		</table>
+		</div>
+		</div>
 		</div>
 	</form>
 </div>

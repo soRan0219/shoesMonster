@@ -50,7 +50,7 @@ function codeCreation() {
     var minute = ("0" + date.getMinutes()).slice(-2);
     var second = ("0" + date.getSeconds()).slice(-2);
 
-    return year + month + day + time + minute + second;
+    return YY_year + month + day + time + minute + second;
 }
 
 // input으로 바꾸기
@@ -200,45 +200,45 @@ $(function(){
 			tbl += "<td>";
 			tbl += "<input type='text' name='order_code' id='order_code' readonly value='";
 			tbl += 'O' + date;
-			tbl += "'>";
+			tbl += "' class='input-fielda'>";
 			tbl += "</td>";
 			// 수주업체코드
 			tbl += "<td>";
-			tbl += '<input type="text" name="client_code" id="client_code" onclick=serchClient("client_code"); required readonly>';
+			tbl += '<input type="text" name="client_code" id="client_code" onclick=serchClient("client_code"); required readonly class="input-fielda">';
 			tbl += "</td>";
 			// 수주업체명
 			tbl += "<td>";
-			tbl += "<input type='text' name='client_actname' id='client_actname' onclick=serchClient('client_code'); required>";
+			tbl += "<input type='text' name='client_actname' id='client_actname' onclick=serchClient('client_code'); required class='input-fielda'>";
 			tbl += "</td>";
 			// 수주일자
 			tbl += "<td>";
-			tbl += "<input type='text' name='order_date' id='order_date' required>";
+			tbl += "<input type='text' name='order_date' id='order_date' required class='input-fielda'>";
 			tbl += "</td>";
 			// 담당자 코드 히든
 			tbl += "<input type='hidden' name='emp_id' id='emp_id' value=<c:out value='${sessionScope.id.emp_id}'/> required readonly>";
 			// 담당자
 			tbl += "<td>";
-			tbl += "<input type='text' name='emp_name' id='emp_name' value=<c:out value='${sessionScope.id.emp_name}'/> required readonly>";
+			tbl += "<input type='text' name='emp_name' id='emp_name' value=<c:out value='${sessionScope.id.emp_name}'/> required readonly class='input-fielda'>";
 			tbl += "</td>";
 			// 품번
 			tbl += "<td>";
-			tbl += "<input type='text' name='prod_code' id='prod_code' onclick=serchProd('prod_code'); required readonly>";
+			tbl += "<input type='text' name='prod_code' id='prod_code' onclick=serchProd('prod_code'); required readonly class='input-fielda'>";
 			tbl += "</td>";
 			// 품명
 			tbl += "<td>";
-			tbl += "<input type='text' name='prod_name' id='prod_name' onclick=serchProd('prod_code'); required>";
+			tbl += "<input type='text' name='prod_name' id='prod_name' onclick=serchProd('prod_code'); required class='input-fielda'>";
 			tbl += "</td>";
 			// 단위
 			tbl += "<td>";
-			tbl += "<input type='text' name='prod_unit' id='prod_unit' onclick='serchEmp('prod_code')' required>";
+			tbl += "<input type='text' name='prod_unit' id='prod_unit' onclick='serchEmp('prod_code')' required class='input-fielda'>";
 			tbl += "</td>";
 			// 납품예정일
 			tbl += "<td>";
-			tbl += "<input type='text' name='order_deliveryDate' id='order_deliveryDate' required>";
+			tbl += "<input type='text' name='order_deliveryDate' id='order_deliveryDate' required class='input-fielda'>";
 			tbl += "</td>";
 			// 수주량
 			tbl += "<td>";
-			tbl += "<input type='text' name='order_count' id='order_count' required>";
+			tbl += "<input type='text' name='order_count' id='order_count' required class='input-fielda'>";
 			tbl += "</td>";
 			tbl += "</tr>";
 			
@@ -628,6 +628,31 @@ $(function(){
 });
 </script>
 
+<style>
+
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+
+.input-fielda {
+    width: 100px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldb {
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
+}
+.input-fieldc {
+    width: 150px; /* 원하는 입력란의 너비로 설정 */
+}
+
+</style>
+
+
 <!-- page content -->
 <div class="right_col" role="main">
 	
@@ -657,93 +682,90 @@ $(function(){
 	
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
-
-		
-				<div class="x_title">
-					<h2> 수주 목록<small>총 ${pm.totalCount } 건</small></h2>
-					
-					<div style="float: left;  margin-top: 1.5px;">
-						<c:if test="${empty param.input }">
-							<button onclick="location.href='/person/orderStatus'" class="B2 B2-info">↻</button>
-						</c:if>
-						<c:if test="${!empty param.input }">
-							<button onclick="location.href='/person/orderStatus?input=${param.input }'" class="B2 B2-info">↻</button>
-						</c:if>
-					</div>
-					
-					<div style="float: right;">
-						<button id="add" class="true B B-info">추가</button>
-						<button id="modify" class="B B-info">수정</button>
-						<button id="delete" class="true B B-info">삭제</button>
-						<button type="reset" id="cancle" class="B B-info">취소</button>
-						<button type="submit" id="save" class="B B-info">저장</button>
-					</div>
-					
-					<div class="clearfix"></div>
-				</div>
-			<!-- 버튼 제어 -->
-			<script>
-			    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
-			
-			    if (team === "영업팀" || team === "관리자") {
-			        document.getElementById("add").disabled = false;
-			        document.getElementById("modify").disabled = false;
-			        document.getElementById("delete").disabled = false;
-			        document.getElementById("cancle").disabled = false;
-			        document.getElementById("save").disabled = false;
-			        document.querySelector("[onclick^='location.href']").disabled = false;
-			    } else {
-			        document.getElementById("add").hidden = true;
-			        document.getElementById("modify").hidden = true;
-			        document.getElementById("delete").hidden = true;
-			        document.getElementById("cancle").hidden = true;
-			        document.getElementById("save").hidden = true;
-			        document.querySelector("[onclick^='location.href']").hidden = true;
-			    }
-			</script>
-			<!-- 버튼 제어 -->
-			
-			<br>
-			
-			<div style="overflow-x: auto;">
-				<form id="fr">
-				<table border="1" class="table table-striped jambo_table bulk_action" id="data-table">
-				<thead>
-					<tr class="headings">
-						<th></th>
-						<th>수주번호</th>
-						<th>수주업체코드</th>
-						<th>수주업체명</th>
-						<th>수주일자</th>
-						<th type='hidden' style='display: none;'>담당자id</th>
-						<th>담당자</th>
-						<th>품번</th>
-						<th>품명</th>
-						<th>단위</th>
-						<th>납품예정일</th>
-						<th>수주량</th>
-			    	</tr>
-			    </thead>
-					
-					<c:forEach var="vo" items="${searchOrderStatusList }">
-						<tr>
-							<td></td>
-							<td id="l_orderCode">${vo.order_code}</td>
-							<td id="l_clientCode">${vo.client_code}</td>
-							<td>${vo.clients.client_actname}</td>
-							<td>${vo.order_date}</td>
-							<td type='hidden' style='display: none;'>${vo.emp_id}</td>
-							<td id="L_empName">${vo.employees.emp_name}</td>
-							<td id="l_prodCode">${vo.prod_code}</td>
-							<td>${vo.prod.prod_name}</td>
-							<td>${vo.prod.prod_unit}</td>
-							<td>${vo.order_deliveryDate}</td>
-							<td>${vo.order_count}</td>
-						</tr>
-					</c:forEach>
-				</table>
-				</form>
+			<div class="x_title">
+				<h2> 수주 목록<small>총 ${pm.totalCount } 건</small></h2>
 				
+				<div style="float: left;  margin-top: 1.5px;">
+					<c:if test="${empty param.input }">
+						<button onclick="location.href='/person/orderStatus'" class="B2 B2-info">↻</button>
+					</c:if>
+					<c:if test="${!empty param.input }">
+						<button onclick="location.href='/person/orderStatus?input=${param.input }'" class="B2 B2-info">↻</button>
+					</c:if>
+				</div>
+				
+				<div style="float: right;">
+					<button id="add" class="true B B-info">추가</button>
+					<button id="modify" class="B B-info">수정</button>
+					<button id="delete" class="true B B-info">삭제</button>
+					<button type="reset" id="cancle" class="B B-info">취소</button>
+					<button type="submit" id="save" class="B B-info">저장</button>
+				</div>
+				
+				<!-- 버튼 제어 -->
+				<script>
+				    var team = "${sessionScope.id.emp_department }"; // 팀 조건에 따라 변수 설정
+				
+				    if (team === "영업팀" || team === "관리자") {
+				        document.getElementById("add").disabled = false;
+				        document.getElementById("modify").disabled = false;
+				        document.getElementById("delete").disabled = false;
+				        document.getElementById("cancle").disabled = false;
+				        document.getElementById("save").disabled = false;
+				        document.querySelector("[onclick^='location.href']").disabled = false;
+				    } else {
+				        document.getElementById("add").hidden = true;
+				        document.getElementById("modify").hidden = true;
+				        document.getElementById("delete").hidden = true;
+				        document.getElementById("cancle").hidden = true;
+				        document.getElementById("save").hidden = true;
+				        document.querySelector("[onclick^='location.href']").hidden = true;
+				    }
+				</script>
+				<!-- 버튼 제어 -->
+				
+				<div class="clearfix"></div>
+			</div>
+			
+		<div class="x_content">
+			<div class="table-responsive">
+				<div class="table-wrapper" >
+					<form id="fr">
+						<table class="table table-striped jambo_table bulk_action" id="data-table">
+							<thead>
+								<tr class="headings">
+									<th></th>
+									<th>수주번호</th>
+									<th>수주업체코드</th>
+									<th>수주업체명</th>
+									<th>수주일자</th>
+									<th type='hidden' style='display: none;'>담당자id</th>
+									<th>담당자</th>
+									<th>품번</th>
+									<th>품명</th>
+									<th>단위</th>
+									<th>납품예정일</th>
+									<th>수주량</th>
+						    	</tr>
+						    </thead>
+							<c:forEach var="vo" items="${searchOrderStatusList }">
+								<tr>
+									<td></td>
+									<td id="l_orderCode">${vo.order_code}</td>
+									<td id="l_clientCode">${vo.client_code}</td>
+									<td>${vo.clients.client_actname}</td>
+									<td>${vo.order_date}</td>
+									<td type='hidden' style='display: none;'>${vo.emp_id}</td>
+									<td id="L_empName">${vo.employees.emp_name}</td>
+									<td id="l_prodCode">${vo.prod_code}</td>
+									<td>${vo.prod.prod_name}</td>
+									<td>${vo.prod.prod_unit}</td>
+									<td>${vo.order_deliveryDate}</td>
+									<td>${vo.order_count}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</form>
 				<!-- 엑셀 - 시작 -->
 				<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 				
@@ -809,7 +831,7 @@ $(function(){
 			        } //s2ab(s)
 			    </script>
 		    	<!-- 엑셀 - 끝 -->				
-				
+				</div>
 			</div>
 		</div>
 	</div>
@@ -833,7 +855,7 @@ $(function(){
 			</li>
 		</ul>
 	</div>
-
+	</div>
 </div>
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
