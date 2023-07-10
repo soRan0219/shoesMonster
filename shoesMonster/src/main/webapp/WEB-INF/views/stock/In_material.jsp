@@ -176,7 +176,7 @@ body {
 		<label>품명</label> <input type="text" name="rawMaterial.raw_name" placeholder="품명을 입력해주세요."> &nbsp;
 		<label>거래처명</label> <input type="text" name="clients.client_actname" placeholder="거래처명을 입력해주세요."> &nbsp; &nbsp;
     
-		<input type="submit" class="B B-info" value="검색"> <br>
+		<input type="submit" class="B B-info" value="조회"> <br>
     
 	<hr>
 		<button type="submit" value="" class="B B-info" name="in_YN" style="background-color: #EFEFEF; color: #73879c; width: 8%;"><span style="font-weight: 450;">전체</span></button>
