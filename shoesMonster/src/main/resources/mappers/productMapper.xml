@@ -113,7 +113,7 @@
 		insert into product
 		values
 		(#{prod_code},#{prod_name},#{prod_category},#{prod_unit},#{prod_size},
-		#{prod_color},#{client_code},#{prod_price},#{prod_note},#{wh_code})
+		#{prod_color},#{client_code},#{wh_code},#{prod_price},#{prod_note})
 	</insert>
 	<!-- 품목관리 정보 다중 입력 -->
 
@@ -248,7 +248,7 @@
 	<insert id="rawIn">
 		insert into raw_material
 		values
-		(#{raw_code},#{raw_name},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{raw_note},#{wh_code})
+		(#{raw_code},#{raw_name},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{wh_code},#{raw_note})
 	</insert>
 	<!-- 원자재관리 정보 다중 입력 -->
 

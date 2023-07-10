@@ -207,14 +207,14 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
                     '<td><input type="text" name="products[' + counter + '].prod_code" id="" value="'+ prodCode +'" readonly required class="input-fieldb"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_name" required class="input-fieldb"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_category" required class="input-fieldb"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_unit" required class="input-fieldb"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_size" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_unit" required class="input-fieldb" value="EA"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_color" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="products[' + counter + '].prod_size" required class="input-fieldb"></td>' +
                     '<input type="hidden" name="products[' + counter + '].client_code" id="client_code'+counter+'" onclick=serchClient("client_code'+counter+'"); required>' +
                     '<td><input type="text" name="products[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); required class="input-fielda"></td>' +
                     '<td type="hidden" style="display: none;"><input type="text" name="products[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required></td>' +
                     '<td><input type="text" name="products[' + counter + '].wh.wh_name" id="wh_name'+counter+'" onclick=serchWh("wh_code'+counter+'"); readonly required class="input-fielda"></td>' +
-                    '<td><input type="text" name="products[' + counter + '].prod_price" required class="input-fieldb"></td>' +
+                    '<td><input type="number" name="products[' + counter + '].prod_price" required class="input-fieldb"></td>' +
                     '<td><input type="text" name="products[' + counter + '].prod_note" class="input-fieldb"></td>' +
                     '</tr>';
 
