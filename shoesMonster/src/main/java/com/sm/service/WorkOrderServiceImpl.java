@@ -71,4 +71,10 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 		wdao.updateStatus(vo);
 	} //modifyStatus()
 
+	@Override
+	public String getLineCode() throws Exception {
+		// DAO - 작업지시 등록 시 1차공정 라인 가져오기
+		return wdao.getLineCode();
+	}
+
 } //WorkOrderServiceImpl

@@ -99,6 +99,17 @@ public class WorkOrderController {
 		
 	} //workOrderListGET()
 	
+	
+	//라인코드 - 처음 등록할 때 1차공정 라인 중 사용가능한 라인 하나
+	@ResponseBody
+	@RequestMapping(value = "/getLine", method = RequestMethod.POST)
+	public String getLine(Model model) throws Exception {
+		logger.debug("@@@@@ CONTROLLER: getLine() 호출");
+		
+		return wService.getLineCode();
+	} //getLine()
+	
+	
 	//라인, 품목, 수주 검색
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String popUpGET(Model model, @RequestParam("type") String type, 
@@ -113,7 +124,6 @@ public class WorkOrderController {
 		
 		else if(type.equals("prod")) {
 			return "redirect:/performance/product?input="+input;
-
 		}
 		
 		else if(type.equals("client")) {

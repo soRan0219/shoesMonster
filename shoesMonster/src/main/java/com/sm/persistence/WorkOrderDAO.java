@@ -14,6 +14,9 @@ public interface WorkOrderDAO {
 	//작업지시 등록
 	public int insertWorkOrder(WorkOrderVO vo) throws Exception;
 	
+	//작업지시 등록 - 1차공정 사용 가능한 라인코드
+	public String getLineCode() throws Exception;
+	
 	//작업지시 삭제
 	public void deleteWorkOrder(List<String> checked) throws Exception;
 	

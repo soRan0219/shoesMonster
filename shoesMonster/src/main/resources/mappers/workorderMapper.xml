@@ -65,19 +65,21 @@
 	</update>
 	<!-- 재고에서 원자재 지시수량*소요량만큼 차감 -->
 	
-	<sql id="selectLine">
-		(SELECT line_code 
+	<!-- 1차공정 사용 가능 라인 -->
+	<select id="selectLine" resultType="String">
+		SELECT line_code 
 		FROM line 
 		WHERE line_use=2 
 		AND line_place='1차공정' 
 		ORDER BY line_code DESC 
-		LIMIT 1) 
-	</sql>
+		LIMIT 1 
+	</select>
+	<!-- 1차공정 사용 가능 라인 -->
 	
 	<!-- 작업지시 등록 -->
 	<insert id="insertWorkOrder">
 		INSERT INTO work_order (work_code,prod_code,order_code,work_date,line_code,work_qt,work_state,emp_id,line_place)
-		VALUES (#{work_code},#{prod_code},#{order_code},now(),<include refid="selectLine"/>,#{work_qt},'1공정지시',#{emp_id},'1차공정') 
+		VALUES (#{work_code},#{prod_code},#{order_code},now(),#{line_code},#{work_qt},'1공정지시',#{emp_id},'1차공정') 
 	</insert>
 	<!-- 작업지시 등록 -->
 	
