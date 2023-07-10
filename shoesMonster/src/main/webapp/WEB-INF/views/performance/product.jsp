@@ -492,15 +492,15 @@ body {
        		<input type="hidden" name="input" id="input" value="${input }">
        		
        		<label>품번:</label>
-        	<input type="text" name="prod_code" id="searchCode">
+        	<input type="text" name="prod_code" id="searchCode" placeholder="품목코드를 입력하세요.">
         	<label>품명:</label>
-        	<input type="text" name="prod_name" id="searchName">
+        	<input type="text" name="prod_name" id="searchName" placeholder="품명을 입력하세요.">
         	<label>카테고리:</label>
-        	<input type="text" name="prod_category" id="searchCategory"> 
+        	<input type="text" name="prod_category" id="searchCategory" placeholder="카테고리를 입력하세요."> 
         	<label>거래처 : </label>
         	<input type="hidden" name="client_code" id="client_code9999">
-        	<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-        	<input type="submit" class="B B-info" value="검색">
+        	<input type="text" name="client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')">
+        	<input type="submit" class="B B-info" value="조회">
 		</fieldset>
 	</form>
 </div>	
