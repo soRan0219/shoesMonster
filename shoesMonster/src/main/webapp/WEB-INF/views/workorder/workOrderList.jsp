@@ -795,7 +795,9 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				    <col style="width: 100px">
 				    <col style="width: 100px">
 				    <col style="width: 100px">
+				    <c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}">
 				    <col style="width: 100px">
+				    </c:if>
 				</colgroup>
 				<thead>
 					<tr class="headings">
@@ -824,7 +826,11 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 						<td id="workQt">${w.work_qt }</td>
 						<td id="linePlace">${w.line_place }</td>
 						<c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}">
-							<td><a id="magamBtn" href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a></td>
+							<td>
+								<c:if test="${w.line_place != '마감'}">
+									<a id="magamBtn" href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a>
+								</c:if>
+							</td>
 						</c:if>
 					</tr>
 				</c:forEach>
