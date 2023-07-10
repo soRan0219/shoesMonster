@@ -767,7 +767,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 			        document.getElementById("cancle").disabled = false;
 			        document.getElementById("save").disabled = false;
 			        document.querySelector("[onclick^='location.href']").disabled = false;
-			    } else {
+			    } else { 
 			        document.getElementById("add").hidden = true;
 			        document.getElementById("modify").hidden = true;
 			        document.getElementById("delete").hidden = true;
