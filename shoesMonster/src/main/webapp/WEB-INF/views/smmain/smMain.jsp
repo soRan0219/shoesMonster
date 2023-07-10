@@ -7,10 +7,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-   
+   <script type="text/javascript" src="../resources/main/fullcalendar.main.min.css"></script>
+   <script type="text/javascript" src="../resources/main/fullcalendar.main.min.js"></script>
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
-
 
 <style type="text/css">
 
@@ -21,7 +21,6 @@ body {
 <!-- 폰트 -->
  
 <!-- 달력 -->
-
  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js"></script>
 <!-- 달력 -->
@@ -301,24 +300,50 @@ body {
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
   
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          headerToolbar: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-			  },
-			  googleCalendarApiKey: 'AIzaSyBPa51EObVoBELfBVUs0dD0fIeVMi9mWiU',
-			  events: {
-			  googleCalendarId: '51b8bc2598553b3389ff4300005fbc3afa52f0fa582543ef2fcca04dc2dcf799@group.calendar.google.com',
-			  className: 'gcal-event' // an option!
-			  },
-        });
-        calendar.render();
-      });
+//       document.addEventListener('DOMContentLoaded', function() {
+// 			  googleCalendarApiKey: 'AIzaSyBPa51EObVoBELfBVUs0dD0fIeVMi9mWiU';
+//         var calendarEl = document.getElementById('calendar');
+//         var calendar = new FullCalendar.Calendar(calendarEl, {
+//           initialView: 'dayGridMonth',
+//           headerToolbar: {
+// 				left: 'prev,next today',
+// 				center: 'title',
+// 				right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+// 			  },
+// 			  eventSources: [{
+// 			  googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com' },
+//         		{
+// 				  className: '대한민국의 휴일' } ,// an option!
+// 			  {color: 'red'
+// 			  }	
+// 			  ]
+//         });
+//         calendar.render();
+//       });
   
+    
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+  	  googleCalendarApiKey: 'AIzaSyBPa51EObVoBELfBVUs0dD0fIeVMi9mWiU';
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: 'dayGridMonth',
+  headerToolbar: {
+  		left: 'prev,next today',
+  		center: 'title',
+  		right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+  	  },
+  	  eventSources: [{
+  	  googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com' },
+  		{
+  		  className: '대한민국의 휴일' } ,// an option!
+  	  {color: 'red'
+  	  }	
+  	  ]
+  });
+  calendar.render();
+  });
     </script>
 
 
@@ -504,10 +529,13 @@ body {
 
 	</div>
 
-	
+	<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FSeoul&src=NTFiOGJjMjU5ODU1M2IzMzg5ZmY0MzAwMDA1ZmJjM2FmYTUyZjBmYTU4MjU0M2VmMmZjY2EwNGRjMmRjZjc5OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=a28uc291dGhfa29yZWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23009688&color=%230B8043" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 	<!-- /page content -->
 <!-- 달력  -->
-<div id='calendar' style="width: 70%  ; height: 70%;"></div>
+<!-- <div id='calendar	' style="width: 70%  ; height: 70%;"></div> -->
+<script type="text/javascript">
+
+</script>
 <!-- 달력  -->
 
 
