@@ -53,6 +53,28 @@ body {
     function serchWh(inputId){
     	openWindow("wh_p",inputId);
     }
+    
+    function submitForm() {
+    	  var isValid = true;
+
+    	  // 유효성 검사
+    	  $('#productTable input[required]').each(function() {
+    	    if ($(this).val().trim() === '') {
+    	      isValid = false;
+    	      return false; // 유효성 검사 실패 시 반복문 종료
+    	    }
+    	  });
+
+    	  if (isValid) {
+    	    $('#fr').submit();
+    	  } else {
+   		 	 Swal.fire({
+				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+				icon: 'info',
+				width: '300px',
+			 });
+    	  }
+    	}
 	
     	
 	function popUp() {
@@ -131,7 +153,6 @@ body {
             
          // 버튼 클릭시 addRow() 기능 불러오기
             $('#addButton').click(function() {
-            	event.preventDefault();
             	$('#modify').attr("disabled", true);
     			$('#delete').attr("disabled", true);
     			
@@ -159,8 +180,7 @@ body {
     				} // someFunction(data)
     				
     				$('#save').click(function() {
-		
-							$('#fr').submit();
+    					submitForm();
 		
 					}); //save
     				
@@ -208,13 +228,6 @@ body {
             // =============================================================================================================
             
         	
-
-            // 저장 버튼 클릭 시 페이지 이동
-            $('form').submit(function() {
-               return true;
-            });
-            
-
         	//취소버튼 -> 리셋
 			$('#cancle').click(function(){
 				$('#fr').each(function(){
@@ -507,7 +520,7 @@ body {
 					<button id="modify" class="B B-info">수정</button>
 					<button id="delete" class="B B-info">삭제</button>
 					<button type="reset" id="cancle" class="B B-info">취소</button>
-					<input type="submit" class="B B-info" value="저장" id="save">
+					<input type="button" class="B B-info" value="저장" id="save">
 				</div>
 				
 				<div class="clearfix"></div>
