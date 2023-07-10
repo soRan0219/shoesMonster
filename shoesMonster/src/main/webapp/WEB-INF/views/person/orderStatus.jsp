@@ -658,27 +658,27 @@ $(function(){
 	
 	<h1 style="margin-left: 1%;">수주 관리</h1>
 	
-	<div style="margin-left: 1%;">
+	<div style="margin: 1% 1%;">
 		<form method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="client_code" id="client_code9999" >
 				업체 : <input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-				수주 일자 : <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
-						  <input type="text" name="order_date_toDate" id="order_date_toDate">
+				<input type="hidden" name="emp_id" id="s_emp_id"> 
+				담당자 : <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')">
 				<input type="hidden" name="prod_code" id="prod_code9999">
 				품명 : <input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')">
 				<input type="submit" class="B B-info" value="조회">
 				<br>
-				<input type="hidden" name="emp_id" id="s_emp_id"> 
-				담당자 : <input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')">
+				수주 일자 : <input type="text" name="order_date_fromDate" id="order_date_fromDate"> ~
+						  <input type="text" name="order_date_toDate" id="order_date_toDate">
 				납품 예정일 : <input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate"> ~ 
 						    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate">
 			</fieldset>
 		</form>
+		<hr>
 	</div>
 	
-	<hr>
 	
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
@@ -766,6 +766,31 @@ $(function(){
 							</c:forEach>
 						</table>
 					</form>
+				</div>
+			</div>
+			
+		</div>
+			<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<ul class="pagination">
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.prev }">
+					<a href="/person/orderStatus?page=${pm.startPage - 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
+				</c:if>
+			</li>
+			<li class="paginate_button previous disabled">	
+				<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
+					<a href="/person/orderStatus?page=${page }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
+				</c:forEach>
+			</li>
+			<li class="paginate_button previous disabled">
+				<c:if test="${pm.next }">
+					<a href="/person/orderStatus?page=${pm.endPage + 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
+				</c:if>
+			</li>
+		</ul>
+	</div>
+	
+			<div style="float:left;">
 				<!-- 엑셀 - 시작 -->
 				<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 				
@@ -830,31 +855,9 @@ $(function(){
 			            return buf;
 			        } //s2ab(s)
 			    </script>
-		    	<!-- 엑셀 - 끝 -->				
-				</div>
-			</div>
+		    	<!-- 엑셀 - 끝 -->	
+	    	</div>	
 		</div>
-	</div>
-	
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-		<ul class="pagination">
-			<li class="paginate_button previous disabled">
-				<c:if test="${pm.prev }">
-					<a href="/person/orderStatus?page=${pm.startPage - 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏪ </a>
-				</c:if>
-			</li>
-			<li class="paginate_button previous disabled">	
-				<c:forEach var="page" begin="${pm.startPage }" end="${pm.endPage }" step="1">
-					<a href="/person/orderStatus?page=${page }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}">${page }</a>
-				</c:forEach>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:if test="${pm.next }">
-					<a href="/person/orderStatus?page=${pm.endPage + 1 }&client_code=${search.client_code}&order_date_fromDate=${search.order_date_fromDate}&order_date_toDate=${search.order_date_toDate}&prod_code=${search.prod_code}&emp_id=${search.emp_id}&order_deliveryDate_fromDate=${search.order_deliveryDate_fromDate}&order_deliveryDate_toDate=${search.order_deliveryDate_toDate}"> ⏩ </a>
-				</c:if>
-			</li>
-		</ul>
-	</div>
 	</div>
 </div>
 <!-- /page content -->

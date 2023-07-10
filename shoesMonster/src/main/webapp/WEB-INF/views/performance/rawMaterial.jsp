@@ -172,18 +172,18 @@ body {
             // 추가 버튼 클릭 시 row 생성
             function addRow() {
                 var row = '<tr>' +
-                	'<td></td>'+
-                    '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" readonly required class="input-fielda"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_name" required class="input-fielda"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_color" required class="input-fielda"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_unit" required class="input-fielda"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_size" required class="input-fielda"></td>' +
-                    '<input type="hidden" name="raws[' + counter + '].client_code" id="client_code'+counter+'" required required class="input-fielda">' +
+                	'<td style="width: 75px"></td>'+
+                    '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" readonly required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_name" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_color" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_unit" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_size" required class="input-fieldb"></td>' +
+                    '<input type="hidden" name="raws[' + counter + '].client_code" id="client_code'+counter+'" required required>' +
                     '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); class="input-fielda"></td>' +
-                    '<input type="hidden" name="raws[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required class="input-fielda">' +
+                    '<input type="hidden" name="raws[' + counter + '].wh_code" id="wh_code'+counter+'" onclick=serchWh("wh_code'+counter+'"); required>' +
                     '<td><input type="text" name="raws[' + counter + '].wh.wh_name" id="wh_name'+counter+'" readonly onclick=serchWh("wh_code'+counter+'"); required class="input-fielda"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_price" required class="input-fielda"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_note" class="input-fielda"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_price" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_note" class="input-fieldb"></td>' +
                     '</tr>';
 
                 $('#rawTable').append(row);
@@ -513,13 +513,13 @@ body {
 }
 
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
 </style>
 
@@ -529,23 +529,24 @@ body {
 
 	<h1 style="margin-left: 1%;">원자재 관리</h1>
 
-	<div style="margin-left: 1%;">	
+	<div style="margin: 1% 1%;">
+		<hr>
 		<form action="" method="get">
 			<fieldset>
 			<input type="hidden" name="input" id="input" value="${input }">
-	       		<label>품번 : </label>
-	        	<input type="text" name="raw_code" id="searchCode">
-	        	<label>거래처명 : </label>
-	        	<input type="hidden" name="client_code" id="client_code9999">
-	        	<input type="text" name="clients.client_actname" id="client_actname9999" onclick="serchClient('client_code9999')">
-	        	<label>품명 : </label>
-	        	<input type="text" name="raw_name" id="searchCategory"> 
+	       		<label>품번&nbsp;</label>
+	        	<input type="text" name="raw_code" id="searchCode"> &nbsp;&nbsp;
+	        	<label>품명&nbsp;</label>
+	        	<input type="text" name="raw_name" id="searchCategory"> &nbsp;&nbsp;
+	        	<label>거래처명&nbsp;</label>
+	        	<input type="hidden" name="client_code" id="client_code9999"> 
+	        	<input type="text" name="clients.client_actname" id="client_actname9999" onclick="serchClient('client_code9999')"> &nbsp;&nbsp;
 	        	<input type="submit" class="B B-info" value="검색">
 			</fieldset>
 		</form>
+		<hr>
 	</div>	
 
-<hr>
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
@@ -601,7 +602,7 @@ body {
 		<table id="rawTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 		<thead>
 				<tr class="headings">
-					<th class="column-title"></th>
+					<th class="column-title">번호</th>
 					<th>품번</th>
 					<th>품명</th>
 					<th>색상</th>
@@ -638,10 +639,8 @@ body {
 		</div>
 		</div>
 	</form>
-	</div>
-</div>
 	
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers">
 		<ul class="pagination">
 			<li class="paginate_button previous disabled">	
 				<c:if test="${paging.startPage != 1 }">
@@ -660,6 +659,11 @@ body {
 			</li>
 		</ul>
 	</div>
+	
+	
+	
+	</div>
+</div>
 </div>
 	
 <!-- /page content -->

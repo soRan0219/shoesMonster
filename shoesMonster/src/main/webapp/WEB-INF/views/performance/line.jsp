@@ -489,7 +489,7 @@
 			var row = "<tr>";
 			
 			// 번호
-			row += "<td>";
+			row += "<td style='width: 75px'>";
 			row += "</td>";
 			
 			// 공정
@@ -503,12 +503,12 @@
 			
 			// 라인코드 
 			row += "<td>";
-			row += "<input type='text' name='line_code' id='line_code' required value='"+lineCode+"' class='input-fielda'>";
+			row += "<input type='text' name='line_code' id='line_code' required readonly value='"+lineCode+"' class='input-fieldb'>";
 			row += "</td>";
 			
 			// 라인명
 			row += "<td>";
-			row += "<input type='text' name='line_name' id='line_name' required class='input-fielda'>";
+			row += "<input type='text' name='line_name' id='line_name' required class='input-fieldb'>";
 			row += "</td>";
 			
 			// 사용여부
@@ -522,19 +522,19 @@
 			// 등록자	
 			row += "<td>";
 			row += " <input type='hidden' name='emp_id' id='emp_id' value = '<c:out value='${id.emp_id}'/>' required>";
-			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required class='input-fielda'>";
+			row += " <input type='text' name='emp_name' id='emp_name' value = '<c:out value='${id.emp_name}'/>' required readonly class='input-fieldb'>";
 			row += "</td>";
 			
 			// 등록일
 			row += " <td>";
 			row += " <input type='text' name='insert_date' readonly value='";
 			row += today;
-			row += "' class='input-fielda'>";
+			row += "'class='input-fieldb'>";
 			row += " </td>";
 			
 			// 비고
 			row += "<td>";
-			row += "<input type='text' name='line_note' id='line_note' class='input-fielda'>";
+			row += "<input type='text' name='line_note' id='line_note' class='input-fieldb'>";
 			row += "</td>";
 			row += "</tr>";
 			
@@ -692,13 +692,13 @@
 }
 
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
 </style>
 
@@ -707,27 +707,28 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<h1 style="margin-left: 1%;">라인관리</h1>
+<h1 style="margin-left: 1%;">라인관리</h1>
 
-<div style="margin-left: 1%;">
+<div style="margin: 1% 1%;">
+	<hr>
 	<form action="" method="get">
 	<fieldset>
 		<input type="hidden" name="input" id="input" value="${input}">
 				
-		<label>라인코드 : </label>
-			<input type="text" name="line_code" >
+		<label>라인코드&nbsp;</label>
+			<input type="text" name="line_code" > &nbsp;&nbsp;
 			
-		<label>라인명 : </label>
-			<input type="text" name="line_name">
+		<label>라인명&nbsp;</label>
+			<input type="text" name="line_name"> &nbsp;&nbsp;
 			
 		<input type="submit" class="B B-info" value="조회">
 		
-		<br>
+		<br><br>
 		
-		<label>사용여부 : </label>
-			<input type="radio" name="line_use" value="3" checked> 전체
-			<input type="radio" name="line_use" value="1"> Y
-			<input type="radio" name="line_use" value="2"> N
+		<label>사용여부&nbsp;</label>
+			&nbsp;<input type="radio" name="line_use" value="3" checked> 전체
+			&nbsp;<input type="radio" name="line_use" value="1"> Y
+			&nbsp;<input type="radio" name="line_use" value="2"> N
 			
 			<hr>
 				
@@ -814,7 +815,7 @@
 					<table id="lineTable" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 						<thead>
 							<tr class="headings">	
-								<th></th>
+								<th>번호</th>
 								<th>공정</th>
 								<th>라인코드</th>
 								<th>라인명</th>
@@ -854,12 +855,9 @@
 			</div>
 		</div>
 	</form>
-</div>
-</div>
 <!-- //////////////////////////////////////////////////////////////////////// -->	
 
-	
-<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+<div id="pagination" class="dataTables_paginate paging_simple_numbers">
 	<ul class="pagination">
 		<li class="paginate_button previous disabled">
 		<c:if test="${lwpm.prev }">
@@ -880,6 +878,8 @@
 </div>
 
 <!-- //////////////////////////////////////////////////////////////////////// -->
+</div>
+</div>
 
 </div>
 <!-- /page content -->

@@ -522,7 +522,7 @@ $(function() {
 
 	<h1 style="margin-left: 1%;">사원 관리</h1>
 	
-		<div style="margin-left: 1%;">
+		<div style="margin: 1% 1%;">
 			<form id="searchForm" method="get">
 	       		<input type="hidden" name="input" id="input" value="${input }">
 	       		<input type="hidden" name="pageSize" id="pageSize" value="${pm.clientPageVO.pageSize }">
@@ -541,6 +541,7 @@ $(function() {
 				</select>
 				<input type="submit" class="B B-info" value="조회"> 
 			</form>
+			<hr>
 		</div>
 		
 		<div class="col-md-12 col-sm-12 ">
@@ -636,11 +637,9 @@ $(function() {
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		
+				
 		<!-- 페이징 -->
-		<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+		<div id="pagination" class="dataTables_paginate paging_simple_numbers">
 			<ul class="pagination">
 				<li class="paginate_button previous disabled">
 					<c:if test="${pm.prev }">
@@ -660,6 +659,10 @@ $(function() {
 			</ul>
 		</div> 
 		<!-- 페이징 -->
+		
+			</div>
+		</div>
+		
 		
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">

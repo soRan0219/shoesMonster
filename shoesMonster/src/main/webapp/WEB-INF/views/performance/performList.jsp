@@ -116,13 +116,13 @@ body {
 				
 				var tbl = "<tr>";
 				// 번호
-				tbl += " <td>"; 
+				tbl += " <td style='width: 75px'>"; 
 				tbl += " </td>";
 				// 생산실적코드
 				tbl += " <td>";
 				tbl += "  <input type='text' name='perform_code' id='perform_code' readonly value='";
 				tbl += "PF" + codeCreation();
-				tbl += "' class='input-fielda'>";
+				tbl += "' class='input-fieldb'>";
 				tbl += " </td>";
 				// 작업지시코드
 				tbl += " <td>";
@@ -130,29 +130,29 @@ body {
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='line_code' id='line_code' required readonly class='input-fielda'>";
+				tbl += "  <input type='text' name='line_code' id='line_code' required readonly class='input-fieldb'>";
 				tbl += " </td>";
 				// 품번
 				tbl += " <td>";
-				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly class='input-fielda'>";
+				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly class='input-fieldb'>";
 				tbl += " </td>";
 				// 실적일
 				tbl += " <td>";
 				tbl += "  <input type='text' name='perform_date' id='perform_date' readonly value='";
 				tbl += today;
-				tbl += "' class='input-fielda'>";
+				tbl += "' class='input-fieldb'>";
 				tbl += " </td>";
 				// 실적수량
 				tbl += " <td>";
-				tbl += "  <input type='number' name='perform_qt' id='perform_qt' required class='input-fielda'>";
+				tbl += "  <input type='number' name='perform_qt' id='perform_qt' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 양품수
 				tbl += " <td>";
-				tbl += "  <input type='number' name='perform_fair' id='perform_fair' required class='input-fielda'>";
+				tbl += "  <input type='number' name='perform_fair' id='perform_fair' requiredclass='input-fieldb'>";
 				tbl += " </td>";
 				// 불량수
 				tbl += " <td>";
-				tbl += "  <input type='number' name='perform_defect' id='perform_defect' required class='input-fielda'>";
+				tbl += "  <input type='number' name='perform_defect' id='perform_defect' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 불량사유
 				tbl += " <td>";
@@ -160,11 +160,11 @@ body {
 				tbl += " </td>";
 				// 현황
 				tbl += " <td>";
-				tbl += "  <input type='text' name='perform_status' id='perform_status' value='진행' readonly class='input-fielda'>";
+				tbl += "  <input type='text' name='perform_status' id='perform_status' value='진행' readonly class='input-fieldb'>";
 				tbl += " </td>";
 				// 비고
 				tbl += " <td>";
-				tbl += "  <input type='text' name='perform_note' id='perform_note' required class='input-fielda'>";
+				tbl += "  <input type='text' name='perform_note' id='perform_note' required class='input-fieldb'>";
 				tbl += " </td>";
 				tbl += "</tr>";
 				
@@ -675,13 +675,13 @@ body {
 }
 
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
 </style>
 
@@ -691,29 +691,30 @@ body {
 
 	<h1 style="margin-left: 1%;"> 생산실적 관리 </h1>
 	
-	<div style="margin-left: 1%;">
+	<div style="margin: 1% 1%;">
+		<hr>
 		<form id="searchForm" method="get">
 			<fieldset>
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				작업지시코드 : <input type="text" id="search_work_code" name="search_work_code">
-				실적일 : 
+				작업지시코드&nbsp;<input type="text" id="search_work_code" name="search_work_code"> &nbsp;&nbsp;
+				실적일&nbsp;
 				<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off"> ~ 
 				<input type="text" id="search_toDate" name="search_toDate" autocomplete="off">
 				<br><br>
-				라인코드 : <input type="text" id="search_line_code" name="search_line_code">
-				품번 : <input type="text" id="search_prod_code" name="search_prod_code">
+				라인코드&nbsp;<input type="text" id="search_line_code" name="search_line_code"> &nbsp;&nbsp;
+				품번&nbsp;<input type="text" id="search_prod_code" name="search_prod_code"> &nbsp;&nbsp;
 				<input type="submit" class="B B-info" value="조회">
-				<br>
+				<br><br>
 				<div style="margin-top: 0.5%;">
-					현황 : <input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
-						  <input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
-						  <input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
+					현황&nbsp;&nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
+						 &nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
+						  &nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
 				</div>
 			</fieldset>
 		</form>
+		<hr>
 	</div>
 		
-	<hr>
 		
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
@@ -818,6 +819,8 @@ body {
 			</div>
 		</div>
 	</form>
+	
+	<div style="float:left;">
 	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 		
 	<script type="text/javascript">
@@ -873,9 +876,8 @@ body {
 		
 	</script>
 	</div>
-</div>
-		
-<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers">
 	<ul class="pagination">
 		<li class="paginate_button previous disabled">
 			<c:if test="${pm.prev }">
@@ -895,6 +897,12 @@ body {
 	</ul>
 </div>
 	
+	
+	
+	
+	</div>
+</div>
+		
 	
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">

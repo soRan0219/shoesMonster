@@ -173,17 +173,17 @@ body {
 
 				var tbl = "<tr>";
 				// 번호
-				tbl += " <td>";
+				tbl += " <td style='width: 75px'>";
 				tbl += " </td>";
 				// 작업지시코드
 				tbl += " <td>";
 				tbl += "  <input type='text' name='work_code' id='work_code' readonly value='";
 				tbl += "WO" + codeCreation();
-				tbl += "' class='input-fielda'>";
+				tbl += "' class='input-fieldb'>";
 				tbl += " </td>";
 				// 라인코드
 				tbl += " <td>";
-				tbl += "  <input type='text' name='line_code' id='line_code' required readonly class='input-fielda'>";
+				tbl += "  <input type='text' name='line_code' id='line_code' required readonly class='input-fieldb'>";
 				tbl += " </td>";
 				// 수주코드
 				tbl += " <td>";
@@ -191,25 +191,25 @@ body {
 				tbl += " </td>";
 				// 품번
 				tbl += " <td>";
-				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly class='input-fielda'>";
+				tbl += "  <input type='text' name='prod_code' id='prod_code' required readonly class='input-fieldb'>";
 				tbl += " </td>";
 				// 지시일
 				tbl += " <td>";
 				tbl += "  <input type='text' name='work_date' id='work_date' readonly value='";
 				tbl += today;
-				tbl += "' class='input-fielda'>";
+				tbl += "' class='input-fieldb'>";
 				tbl += " </td>";
 				// 지시수량
 				tbl += " <td>";
-				tbl += "  <input type='text' name='work_qt' id='work_qt' required class='input-fielda'>";
+				tbl += "  <input type='text' name='work_qt' id='work_qt' required class='input-fieldb'>";
 				tbl += " </td>";
 				//공정
 				tbl += " <td>";
-				tbl += "  <input type='text' value='1차공정' readonly class='input-fielda'>";
+				tbl += "  <input type='text' value='1차공정' readonly class='input-fieldb'>";
 				tbl += " </td>";
  				// 지시상태
 				tbl += " <td>";
-				tbl += "  <input type='text' value='1공정지시' readonly class='input-fielda'>";
+				tbl += "  <input type='text' value='1공정지시' readonly class='input-fieldb'>";
 				tbl += " </td>";
 				tbl += "</tr>";
 
@@ -680,13 +680,13 @@ body {
 }
 
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
 </style>
 
@@ -696,30 +696,29 @@ body {
 
 	<h1 style="margin-left: 1%;">작업지시 관리</h1>
 	
-	<div style="margin-left: 1%;">
+	<div style="margin: 1% 1%;">
+		<hr>
 		<form id="searchForm" method="get">
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
-				<span>라인코드 : </span> <input type="text" name="search_line" id="search_line" class="searchInputText"> 
-				<span>지시일자 : </span> 
+				<span>라인코드&nbsp;</span> <input type="text" name="search_line" id="search_line" class="searchInputText"> &nbsp;&nbsp;
+				<span>지시일자&nbsp;</span> 
 					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off"> ~ 
-					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off"> 
-				<span>품번 : </span> <input type="text" name="search_prod" id="search_prod" class="searchInputText">
+					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off"> &nbsp;&nbsp;
+				<span>품번&nbsp;</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText"> &nbsp;&nbsp;
 				<input type="submit" value="조회" class="B B-info"> 
 				<br><br>
-				<span>지시상태 : </span> 
-					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="전체" checked> 전체 
-					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="1차공정"> 1차공정 
-					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="2차공정"> 2차공정 
-					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="3차공정"> 3차공정 
-					<input type="radio" name="search_place" id="search_place" class="searchRadio" value="마감"> 마감 
+				<span>지시상태&nbsp;</span> 
+					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="전체" checked> 전체 
+					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="1차공정"> 1차공정 
+					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="2차공정"> 2차공정 
+					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="3차공정"> 3차공정 
+					&nbsp;<input type="radio" name="search_place" id="search_place" class="searchRadio" value="마감"> 마감 
 			</fieldset>
 		</form>
+		<hr>
 	</div>
-
-	<hr>
-	
 
 
 	<div class="col-md-12 col-sm-12">	
@@ -768,12 +767,8 @@ body {
 
 					<div class="clearfix"></div>
 				</div>
-<!-- //////////////////////////////////////////////////////////////////////// -->	
-
-  
-
-
-<!-- //////////////////////////////////////////////////////////////////////// -->			
+				
+				
 <div class="x_content">
 	<div class="table-responsive">
 		<div class="table-wrapper" >
@@ -783,7 +778,7 @@ body {
 			<table class="table table-striped jambo_table bulk_action" style="text-align:center;" id="data-table">
 				<thead>
 					<tr class="headings">
-						<th></th>
+						<th>번호</th>
 						<th>작업지시코드</th>
 						<th>라인코드</th>
 						<th>수주코드</th>
@@ -817,7 +812,8 @@ body {
 		</div>
 	</div>
 </div>
-	
+
+	<div style="float:left;">
 	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
 		
 	<script type="text/javascript">
@@ -870,14 +866,10 @@ body {
 			}
 			return buf;
 		} //s2ab(s)
-		
 	</script>
-		
-</div>
-</div>
-		
-		
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	</div>
+	
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers">
 		<ul class="pagination">
 			<li class="paginate_button previous disabled">
 				<c:if test="${pm.prev }">
@@ -896,7 +888,12 @@ body {
 			</li>
 		</ul>
 	</div>
-
+	
+	
+	
+</div>
+</div>
+		
 	<!-- 상세보기 모달창 -->
 	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
 		<div class="modal-dialog modal-lg">

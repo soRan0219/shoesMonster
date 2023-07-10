@@ -667,20 +667,13 @@
 }
 
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    width: 125px; /* 원하는 입력란의 너비로 설정 */
     cursor: pointer;
     display: inline-block;
     text-align-last: center;
 }
 .input-fieldb {
     width: 125px; /* 원하는 입력란의 너비로 설정 */
-    cursor: pointer;
-    display: inline-block;
-    text-align-last: center;
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
-    cursor: pointer;
     display: inline-block;
     text-align-last: center;
 }
@@ -844,17 +837,9 @@
 		</div>
 	</div>
 	</form>
-	</div>
-</div>
-		
-
-
-
-
 
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
-	
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
+	<div id="pagination" class="dataTables_paginate paging_simple_numbers">
 		<ul class="pagination">
 			<li class="paginate_button previous disabled">
 				<c:if test="${lwpm.prev  }"> 
@@ -875,6 +860,10 @@
 	</div><!--id="pagination"  --> 
 </div>
 <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+
+	</div>
+</div>
+		
 
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>

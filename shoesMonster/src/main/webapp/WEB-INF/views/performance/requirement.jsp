@@ -119,12 +119,12 @@ body {
             
             function addRow() {
                 var row = '<tr>' +
-                	'<td></td>'+
-                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" required class="input-fieldb">' +
+                	'<td style="width: 75px"></td>'+
+                	'<input type="hidden" name="reqs[' + counter + '].raw_code" id = "raw_code'+counter+'" required>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_code" " value="'+ reqCode +'" readonly required class="input-fieldb"></td>' +
-                    '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'" class="input-fieldb">' +
-                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'"); class="input-fieldb"></td>' +
-                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'"); class="input-fieldb"></td>' +
+                    '<input type="hidden" name="reqs[' + counter + '].prod_code" id= "prod_code'+counter+'">' +
+                    '<td><input type="text" name="reqs[' + counter + '].prod.prod_name" id = "prod_name'+counter+'" readonly onclick=serchProd("prod_code'+counter+'"); class="input-fielda"></td>' +
+                    '<td><input type="text" name="reqs[' + counter + '].raw.raw_name" id="raw_name'+counter+'" readonly onclick=serchRaw("raw_code'+counter+'"); class="input-fielda"></td>' +
                     '<td><input type="number" name="reqs[' + counter + '].req_dan" required class="input-fieldb"></td>' +
                     '<td><input type="text" name="reqs[' + counter + '].req_note" class="input-fieldb"></td>' +
                     '</tr>';
@@ -448,13 +448,13 @@ body {
 }
 
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 200px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
 </style>
 
@@ -464,24 +464,26 @@ body {
 
 	<h1 style="margin-left: 1%;">소요량 관리</h1>
 
-	<div style="margin-left: 1%;">
+	<div style="margin: 1% 1%;">
+		<hr>
 		<form method="get">
 			<fieldset>
-				<label>소요코드 : </label> 
-				<input type="text" name="req_code" id="searchCode"> 
-				<label>완제품 : </label> 
-				<input type="hidden"name="prod_code" id="prod_code9999"> 
-				<input type="text"name="prod_name" id="prod_name9999" readonly onclick="serchProd('prod_code9999')"> 
-				<label>원자재 : </label>
+				<label>소요코드&nbsp;</label> 
+				<input type="text" name="req_code" id="searchCode"> &nbsp;&nbsp;
+				<label>완제품&nbsp;</label> 
+				<input type="hidden"name="prod_code" id="prod_code9999">
+				<input type="text"name="prod_name" id="prod_name9999" readonly onclick="serchProd('prod_code9999')"> &nbsp;&nbsp;
+				<label>원자재&nbsp;</label>
 				<input type="hidden" name="raw_code" id="raw_code9999"> 
-				<input type="text" name="raw_name" id="raw_name9999" readonly onclick="serchRaw('raw_code9999')"> 
+				<input type="text" name="raw_name" id="raw_name9999" readonly onclick="serchRaw('raw_code9999')"> &nbsp;&nbsp;
 				<input type="submit" class="B B-info" value="검색">
 			</fieldset>
 		</form>
 		
+	<hr>
+
 	</div>
 
-	<hr>
 
 	<div class="col-md-12 col-sm-12">
 		<div class="x_panel">
@@ -541,7 +543,7 @@ body {
 						style="text-align: center;">
 						<thead>
 							<tr class="headings">
-								<th></th>
+								<th>번호</th>
 								<th>소요코드</th>
 								<th type='hidden' style='display: none;'>품번</th>
 								<th>완제품</th>
@@ -567,27 +569,27 @@ body {
 					</div>
 				</div>
 			</form>
+			
+			<div id="pagination" class="dataTables_paginate paging_simple_numbers">
+				<ul class="pagination">
+					<li class="paginate_button previous disabled">
+						<c:if test="${paging.startPage != 1 }">
+							<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Previous</a>
+						</c:if>
+					</li>
+					<li class="paginate_button previous disabled">
+						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+							<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
+						</c:forEach>
+					</li>
+					<li class="paginate_button previous disabled">
+						<c:if test="${paging.endPage != paging.lastPage}">
+							<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Next</a>
+						</c:if>
+					</li>
+				</ul>
+			</div>
 		</div>
-	</div>
-
-	<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">
-		<ul class="pagination">
-			<li class="paginate_button previous disabled">
-				<c:if test="${paging.startPage != 1 }">
-					<a href="/performance/requirement?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Previous</a>
-				</c:if>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-					<a href="/performance/requirement?nowPage=${p }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">${p }</a>
-				</c:forEach>
-			</li>
-			<li class="paginate_button previous disabled">
-				<c:if test="${paging.endPage != paging.lastPage}">
-					<a href="/performance/requirement?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&req_code=${vo.req_code }&prod_code=${vo.prod_code }&raw_code=${vo.raw_code }">Next</a>
-				</c:if>
-			</li>
-		</ul>
 	</div>
 </div>
 <!-- /page content -->
