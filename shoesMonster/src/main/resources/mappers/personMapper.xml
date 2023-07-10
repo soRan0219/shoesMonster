@@ -252,7 +252,7 @@
 		JOIN clients c ON c.client_code = o.client_code
 		JOIN product p ON p.prod_code = o.prod_code
 		JOIN employees e ON e.emp_id = o.emp_id
-		order by order_code ASC
+		order by order_code desc
 		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 수주 현황 목록 불러오기 -->
@@ -314,7 +314,7 @@
 				AND (order_deliveryDate &gt;= #{order_deliveryDate_fromDate} AND order_deliveryDate &lt;= #{order_deliveryDate_toDate}) 
 			</if> 
 		</where>
-		order by order_code ASC
+		order by order_code desc
 		LIMIT #{startPage}, #{pageSize}
 	</select>
 	<!-- 수주현황 검색 -->
@@ -372,34 +372,5 @@
 	</update>
  	<!-- 수주 수정 --> 
 <!-- ===================================================== 수주 현황 ================================================================== -->
-	
-	
-<!-- ===================================================== 수주 관리 ================================================================== -->
-	<!-- 수주 관리 조회 -->
-	<resultMap type="com.sm.domain.ClientsVO" id="Client_order_ManageList">
-		<result column="client_code" property="client_code"/>
-		<result column="client_actname" property="client_actname"/>
-		
-		<collection property="orders" ofType="com.sm.domain.OrderStatusVO">
-			<result column="order_date" property="order_date"/>
-			<result column="order_deliveryDate" property="order_deliveryDate"/>
-		</collection>
-		<collection property="employees" ofType="com.sm.domain.EmployeesVO">
-			<result column="emp_id" property="emp_id"/>
-			<result column="emp_name" property="emp_name"/>
-		</collection>
-	</resultMap>
-	
-	<select id="orderManageList" resultMap="Client_order_ManageList">
-		select c.client_code, c.client_actname, o.order_date, o.order_deliveryDate,
-				e.emp_id, e.emp_name
-		from clients c
-		join orders o on o.client_code = c.client_code
-        join employees e on e.emp_id = o.emp_id;
-	</select>
-	<!-- 수주 관리 조회 -->
-<!-- ===================================================== 수주 관리 ================================================================== -->
-	
-	
 	
 </mapper>
