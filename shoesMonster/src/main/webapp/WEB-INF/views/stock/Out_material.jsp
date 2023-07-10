@@ -174,7 +174,7 @@ body {
 										<td class=" ">${out.prod.prod_code}</td>
 										<td class=" ">${out.prod.prod_name}</td>
 										<td class=" ">${out.orders.order_count}</td>
-										<td class=" " style="color: ${out.stock.stock_count <= 20 ? 'red' : 'inherit'}">${out.stock.stock_count}</td>
+										<td class=" " style="color: ${out.stock.stock_count <= 50 ? 'red' : 'inherit'}">${out.stock.stock_count}</td>
 										<td class=" "><fmt:formatNumber value=" ${out.prod.prod_price}" />원</td>
 										<td class=" ">${out.orders.order_deliveryDate}</td>
 										<td class=" ">${out.out_date}</td>
