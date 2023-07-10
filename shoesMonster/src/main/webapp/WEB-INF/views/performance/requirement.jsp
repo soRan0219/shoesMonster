@@ -60,6 +60,30 @@ body {
         function serchRaw(inputId){
         	openWindow2("raw",inputId);
         }
+      	
+        function submitForm() {
+      	  var isValid = true;
+
+      	  // 유효성 검사
+      	  $('#reqTable input[required]').each(function() {
+      	    if ($(this).val().trim() === '') {
+      	      isValid = false;
+      	      return false; // 유효성 검사 실패 시 반복문 종료
+      	    }
+      	  });
+
+      	  if (isValid) {
+      	    $('#fr').submit();
+      	  } else {
+     		 	 Swal.fire({
+  				title: "<div style='color:#3085d6;font-size:20px;font-weight:lighter'>" + "항목을 모두 입력하세요"+ "</div>",
+  				icon: 'info',
+  				width: '300px',
+  			 });
+      	  }
+      	}
+	
+	   		
 	    	
 	  	
         $(document).ready(function() {
@@ -110,9 +134,7 @@ body {
   				} // someFunction(data)
   				
   				$('#save').click(function() {
-            		
-						$('#fr').submit();
-
+  					submitForm();
 				}); //save
 				
             });
