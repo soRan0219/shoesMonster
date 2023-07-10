@@ -248,7 +248,7 @@
 	<insert id="rawIn">
 		insert into raw_material
 		values
-		(#{raw_code},#{raw_name},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{raw_note},#{wh_code})
+		(#{raw_code},#{raw_name},#{raw_color},#{raw_unit},#{raw_size},#{raw_price},#{client_code},#{wh_code},#{raw_note})
 	</insert>
 	<!-- 원자재관리 정보 다중 입력 -->
 
