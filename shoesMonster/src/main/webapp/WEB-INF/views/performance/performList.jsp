@@ -22,25 +22,32 @@
 </c:if>
 
 <style type="text/css">
-
-body {
-	font-family: 'NexonLv2Gothic';
-}
-div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
-	background-color: #868e96;
-}
-
-.searchBox {
-	display: inline-block;
-	width: 25em;
-}
-
-.searchBoxDate {
-	display: inline-block;
-	width: 30em;
-}
-
-
+	
+	body {
+		font-family: 'NexonLv2Gothic';
+	}
+	div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
+		background-color: #868e96;
+	}
+	
+	.searchBox {
+		display: inline-block;
+		width: 25em;
+	}
+	.searchBox span {
+		display: inline-block;
+		width: 6em;
+	}
+	.date {
+		display: inline-block;
+		width: 35em;
+	}
+	
+	.submitBtn {
+/* 		padding-left: 10em; */
+		padding-left: 34%;
+	}
+	
 </style>
 <!-- 폰트 -->
 
@@ -713,28 +720,29 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 
 				<div class="searchBox">
-					작업지시코드&nbsp;<input type="text" id="search_work_code" name="search_work_code" placeholder="작업지시코드를 선택하세요."> &nbsp;&nbsp;
+					<span>작업지시코드</span>&nbsp;<input type="text" id="search_work_code" name="search_work_code" placeholder="작업지시코드를 선택하세요."> &nbsp;&nbsp;
 				</div>
-				<div class="searchBoxDate">
-					실적일&nbsp;
+				<div class="searchBox date">
+					<span>실적일</span>&nbsp;
 					<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
 					<input type="text" id="search_toDate" name="search_toDate" autocomplete="off" placeholder="기간을 선택하세요">
 				</div>
 				<br><br>
 				<div class="searchBox">
-					라인코드&nbsp;<input type="text" id="search_line_code" name="search_line_code" placeholder="라인코드를 선택하세요."> &nbsp;&nbsp;
+					<span>라인코드</span>&nbsp;<input type="text" id="search_line_code" name="search_line_code" placeholder="라인코드를 선택하세요."> &nbsp;&nbsp;
 				</div>
 				<div class="searchBox">
-					품목코드&nbsp;<input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요"> &nbsp;&nbsp;
+					<span>품목코드</span>&nbsp;<input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요"> &nbsp;&nbsp;
 				</div>
 
-				<input type="submit" class="B B-info" value="조회">
 				<br><br>
-				<div>
-					현황&nbsp;&nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
+				<div class="searchBox">
+					<span>현황</span>
+						&nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
 						 &nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
 						  &nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
 				</div>
+				<div class="searchBox submitBtn"><input type="submit" class="B B-info" value="조회"></div>
 			</fieldset>
 		</form>
 		<hr>
