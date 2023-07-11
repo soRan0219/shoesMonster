@@ -612,7 +612,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 	
-	<h1 style="margin-left: 1%;">거래처 정보 관리</h1>
+	<h1 style="margin-left: 1%;">거래처 관리</h1>
 
 	<div style="margin:1% 1%;">
 	<hr>

@@ -671,9 +671,6 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	</form>
 
 	<button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
-	</div>
-</div>
-	
 	
 	<script type="text/javascript">
 
@@ -757,11 +754,13 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 			</li>
 		</ul>
 	</div>
-	
-	
-	
 	</div>
 </div>
+	
+	
+	
+	
+	
 </div>
 	
 <!-- /page content -->

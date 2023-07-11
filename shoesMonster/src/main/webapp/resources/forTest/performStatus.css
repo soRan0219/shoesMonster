@@ -40,7 +40,7 @@ ul.tabs li.current {
 	background: #F7F7F7;
 	padding: 0px 7.5em 0px 7.5em;
 	height: 2px;
-	border: 1px solid #73879C;
+	border: 2px solid #73879C;
 	border-top-color: transparent;
 	border-radius: 0 4px 4px 4px;
 	overflow: hidden;

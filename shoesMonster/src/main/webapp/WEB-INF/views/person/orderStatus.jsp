@@ -216,7 +216,7 @@ $(function(){
 			tbl += "</td>";
 			// 수주일자
 			tbl += "<td>";
-			tbl += "<input type='text' name='order_date' id='order_date' required class='input-fielda'>";
+			tbl += "<input type='text' name='order_date' id='order_date' autocomplete='off' required class='input-fielda'>";
 			tbl += "</td>";
 			// 담당자 코드 히든
 			tbl += "<input type='hidden' name='emp_id' id='emp_id' value=<c:out value='${sessionScope.id.emp_id}'/> required readonly>";
@@ -238,7 +238,7 @@ $(function(){
 			tbl += "</td>";
 			// 납품예정일
 			tbl += "<td>";
-			tbl += "<input type='text' name='order_deliveryDate' id='order_deliveryDate' required class='input-fielda'>";
+			tbl += "<input type='text' name='order_deliveryDate' id='order_deliveryDate' autocomplete='off' required class='input-fielda'>";
 			tbl += "</td>";
 			// 수주량
 			tbl += "<td>";
@@ -251,8 +251,9 @@ $(function(){
 			
 			// 수주일자
 			$('#order_date').datepicker({
-				changeMonth:'true',
-				changeYear:'true',
+				showOn: 'focus',
+				changeMonth:false,
+				changeYear:false,
 				nextText:'다음달',
 				prevText:'이전달',
 				showButtonPanel:'true',
@@ -261,6 +262,7 @@ $(function(){
 				dateFormat:'yy-mm-dd',
 				dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 				dayNamesMin:['월','화','수','목','금','토','일'],
+				monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 				onSelect: function(date, inst) {
 					$('#order_deliveryDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
@@ -268,8 +270,9 @@ $(function(){
 			});
 			// 납품예정일
 			$('#order_deliveryDate').datepicker({
-				changeMonth:'true',
-				changeYear:'true',
+				showOn: 'focus',
+				changeMonth:false,
+				changeYear:false,
 				nextText:'다음달',
 				prevText:'이전달',
 				showButtonPanel:'true',
@@ -278,6 +281,7 @@ $(function(){
 				dateFormat:'yy-mm-dd',
 				dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 				dayNamesMin:['월','화','수','목','금','토','일'],
+				monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			});
 			
@@ -564,8 +568,9 @@ $(function(){
 // ========================================= 검색 ===================================================
 	// 수주 일자 이날부터
 	$('#order_date_fromDate').datepicker({
-		changeMonth:'true',
-		changeYear:'true',
+		showOn: 'focus',
+		changeMonth:false,
+		changeYear:false,
 		nextText:'다음달',
 		prevText:'이전달',
 		showButtonPanel:'true',
@@ -574,6 +579,7 @@ $(function(){
 		dateFormat:'yy-mm-dd',
 		dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 		dayNamesMin:['월','화','수','목','금','토','일'],
+		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 		onSelect: function(date, inst) {
 			$('#order_date_toDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
@@ -582,8 +588,9 @@ $(function(){
 	
 	// 이날까지
 	$('#order_date_toDate').datepicker({
-		changeMonth:'true',
-		changeYear:'true',
+		showOn: 'focus',
+		changeMonth:false,
+		changeYear:false,
 		nextText:'다음달',	
 		prevText:'이전달',
 		showButtonPanel:'true',
@@ -592,13 +599,15 @@ $(function(){
 		dateFormat:'yy-mm-dd',
 		dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 		dayNamesMin:['월','화','수','목','금','토','일'],
+		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 	});
 	
 	// 납품 예정일 이날부터
 	$('#order_deliveryDate_fromDate').datepicker({
-		changeMonth:'true',
-		changeYear:'true',
+		showOn: 'focus',
+		changeMonth:false,
+		changeYear:false,
 		nextText:'다음달',
 		prevText:'이전달',
 		showButtonPanel:'true',
@@ -615,8 +624,9 @@ $(function(){
 	
 	// 이날까지
 	$('#order_deliveryDate_toDate').datepicker({
-		changeMonth:'true',
-		changeYear:'true',
+		showOn: 'focus',
+		changeMonth:false,
+		changeYear:false,
 		nextText:'다음달',
 		prevText:'이전달',
 		showButtonPanel:'true',
@@ -625,6 +635,7 @@ $(function(){
 		dateFormat:'yy-mm-dd',
 		dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 		dayNamesMin:['월','화','수','목','금','토','일'],
+		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 	});
 	
@@ -668,15 +679,15 @@ $(function(){
 				업체&nbsp;<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')" placeholder="업체를 선택하세요."> &nbsp;&nbsp;
 				<input type="hidden" name="emp_id" id="s_emp_id"> 
 				담당자&nbsp;<input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')" placeholder="담당자를 선택하세요."> &nbsp;&nbsp;
-				수주 일자&nbsp;<input type="text" name="order_date_fromDate" id="order_date_fromDate" placeholder="기간을 선택하세요."> ~
-				<input type="text" name="order_date_toDate" id="order_date_toDate" placeholder="기간을 선택하세요.">
+				수주 일자&nbsp;<input type="text" name="order_date_fromDate" id="order_date_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~
+				<input type="text" name="order_date_toDate" id="order_date_toDate" autocomplete="off" placeholder="기간을 선택하세요.">
 
 				<br><br>
 				
 				<input type="hidden" name="prod_code" id="prod_code9999">
 				품목&nbsp;<input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')" placeholder="품목을 선택하세요."> &nbsp;&nbsp;
-				납품 예정일&nbsp;<input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate" placeholder="기간을 선택하세요."> ~ 
-						    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate" placeholder="기간을 선택하세요."> &nbsp;&nbsp;
+				납품 예정일&nbsp;<input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
+						    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate" autocomplete="off" placeholder="기간을 선택하세요."> &nbsp;&nbsp;
 				
 				<input type="submit" class="B B-info" value="조회">
 			</fieldset>
@@ -869,4 +880,4 @@ $(function(){
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+<link rel="stylesheet" href="/resources/forTest/datepicker.css"> 

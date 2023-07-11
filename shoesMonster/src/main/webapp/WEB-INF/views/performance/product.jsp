@@ -654,12 +654,8 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	</div>
 	<!-- //////////////////////////////////////////////////////////////////////// -->
 	
-</div>
-</div>
 
 <button id="excelDownload" class="B B-info">엑셀 ⬇️</button>
-</div>
-</div>
 
 <script type="text/javascript">
 
@@ -723,6 +719,8 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
         } //s2ab(s)
         
     </script>
+</div>
+</div>
 </div>
 <!-- /page content -->
 
