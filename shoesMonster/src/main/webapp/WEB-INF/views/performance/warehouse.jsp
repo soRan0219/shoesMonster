@@ -718,6 +718,7 @@
 			<hr>	
 						
 		<div class="custom-select1">
+		<c:if test="${empty param.input }">
 			<select name="wh_dv">
 				<option value="전체" ${wvo.wh_dv == null ? 'selected' : ''}>전체</option>
 				<option value="원자재" ${wvo.wh_dv == '원자재' ? 'selected' : ''}>원자재</option>
@@ -727,6 +728,7 @@
 			<button onclick="selectOption(0)">전 체</button>
 			<button onclick="selectOption(1)">원자재</button>
 			<button onclick="selectOption(2)">완제품</button>
+		</c:if>
 		</div>
 
 		<script>

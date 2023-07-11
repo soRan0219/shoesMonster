@@ -205,7 +205,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
                     '<td><input type="text" name="raws[' + counter + '].raw_code" value="'+ rawCode +'" readonly required class="input-fieldb"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_name" required class="input-fieldb"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_color" required class="input-fieldb"></td>' +
-                    '<td><input type="text" name="raws[' + counter + '].raw_unit" required class="input-fieldb"></td>' +
+                    '<td><input type="text" name="raws[' + counter + '].raw_unit" required class="input-fieldb" value="EA"></td>' +
                     '<td><input type="text" name="raws[' + counter + '].raw_size" required class="input-fieldb"></td>' +
                     '<input type="hidden" name="raws[' + counter + '].client_code" id="client_code'+counter+'" required required>' +
                     '<td><input type="text" name="raws[' + counter + '].clients.client_actname" id="client_actname'+counter+'" readonly onclick=serchClient("client_code'+counter+'"); class="input-fielda"></td>' +
