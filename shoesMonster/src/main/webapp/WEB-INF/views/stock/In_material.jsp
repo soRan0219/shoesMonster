@@ -267,7 +267,6 @@ body {
 						</div>
 					</form>
 				</div>			
-				<br>
 				<div style="display: inline;">
 				
 				<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;">

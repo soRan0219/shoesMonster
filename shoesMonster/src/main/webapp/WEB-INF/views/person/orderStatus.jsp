@@ -75,7 +75,7 @@ function getToday() {
 } //getToday()
 
 // 팝업 옵션
-const popupOpt = "top=60,left=140,width=600,height=600";
+const popupOpt = "top=60,left=140,width=777,height=677";
 
 //검색 팝업
 function openWindow(search, inputId) {

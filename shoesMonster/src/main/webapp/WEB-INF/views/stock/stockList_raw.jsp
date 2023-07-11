@@ -47,7 +47,7 @@ body {
 <script type="text/javascript">
 	
 	function stockPopup(code) {
-		window.open("stockPopup?code=" + code, "재고 상세", "width=800, height=320, left=200, top=150, location=no");
+		window.open("stockPopup?code=" + code, "재고 상세", "top=60,left=140,width=977,height=377, location=no");
 	}
 	
 </script>
