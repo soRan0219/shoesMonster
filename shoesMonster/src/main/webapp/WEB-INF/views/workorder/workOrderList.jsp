@@ -289,19 +289,33 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 		let urlParams = new URLSearchParams(queryString);
 		var fromController = urlParams.get("woInsert");
 		
-// 		console.log(fromController);
-		
 		if(fromController==0) {
-			if(confirm("재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?")) {
-				location.href = "/stock/raw_order";
-			} else {
-				var url = new URL(window.location.href);
-				var searchParams = new URLSearchParams(url.search);
-				searchParams.delete("woInsert");
-				var newUrl = url.origin + url.pathname;
+			
+			Swal.fire({
+				  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" +"재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?"+ "</div>",
+				  icon: 'info', 
+				  showDenyButton: true,
+				  confirmButtonColor: '#17A2B8', 
+				  cancelButtonColor: '#73879C', 
+				  confirmButtonText: 'Yes', 
+				  width : '300px',
 				
-				window.location.href = newUrl;
-			}
+				}).then((result) => {
+					
+					// confirm => 예를 눌렀을 때
+					if(result.isConfirmed){
+						location.href = "/stock/raw_order";
+					}//if
+					//취소 눌렀을 때
+					else {
+						var url = new URL(window.location.href);
+						var searchParams = new URLSearchParams(url.search);
+						searchParams.delete("woInsert");
+						var newUrl = url.origin + url.pathname;
+						
+						window.location.href = newUrl;
+					}
+				});//then
 		}
 		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
 		
@@ -417,19 +431,34 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 // 		console.log(fromController);
 		
 		if(fromController==0) {
-			if(confirm("재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?")) {
-				location.href = "/stock/raw_order";
-			} else {
-				var url = new URL(window.location.href);
-				var searchParams = new URLSearchParams(url.search);
-				searchParams.delete("woInsert");
-				var newUrl = url.origin + url.pathname;
+			
+			Swal.fire({
+				  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" +"재고가 부족합니다. 발주등록 페이지로 이동하시겠습니까?"+ "</div>",
+				  icon: 'info', 
+				  showDenyButton: true,
+				  confirmButtonColor: '#17A2B8', 
+				  cancelButtonColor: '#73879C', 
+				  confirmButtonText: 'Yes', 
+				  width : '300px',
 				
-				window.location.href = newUrl;
-			}
+				}).then((result) => {
+					
+					// confirm => 예를 눌렀을 때
+					if(result.isConfirmed){
+						location.href = "/stock/raw_order";
+					}//if
+					//취소 눌렀을 때
+					else {
+						var url = new URL(window.location.href);
+						var searchParams = new URLSearchParams(url.search);
+						searchParams.delete("woInsert");
+						var newUrl = url.origin + url.pathname;
+						
+						window.location.href = newUrl;
+					}
+				});//then
 		}
 		//재고 부족시 등록 방지, 발주페이지 이동 confirm창
-		
 		
 		/////////////// 삭제 //////////////////////////////
 		$('#delete').click(function() {
@@ -837,7 +866,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 						<c:if test="${id.emp_department eq '생산팀' || id.emp_department eq '관리자'}">
 							<td>
 								<c:if test="${w.line_place != '마감'}">
-									<a id="magamBtn" href="/workorder/updateStatus?work_code=${w.work_code }&line_place=${w.line_place}">공정마감</a>
+									<a id="magamBtn" href="/workorder/updateStatus?work_code=${w.work_code }&line_code=${w.line_code }&line_place=${w.line_place}">공정마감</a>
 								</c:if>
 							</td>
 						</c:if>

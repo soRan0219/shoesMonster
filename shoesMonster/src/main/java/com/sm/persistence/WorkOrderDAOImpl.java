@@ -111,8 +111,11 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 				int result = sqlSession.insert(NAMESPACE + ".insertWorkOrder", vo);
 				logger.debug("##### DAO: insert 결과 ====> " + result);
 				
+				//라인상태 변경
+				String line_code = getLineCode();
+				sqlSession.update(NAMESPACE + ".updateLine", line_code);
+				
 				rawExist = 1;
-//				return rawExist;
 			} //if(원자재 모두 있을 때만)
 			
 			
@@ -284,6 +287,20 @@ public class WorkOrderDAOImpl implements WorkOrderDAO {
 	public void updateStatus(WorkOrderVO vo) throws Exception {
 		logger.debug("##### DAO: updateStatus() 호출");
 		sqlSession.update(NAMESPACE + ".updateStatus", vo);
+		
+		sqlSession.update(NAMESPACE + ".lineUseY", vo.getLine_code());
+		
+		String line_place = vo.getLine_place();
+		if(line_place.equals("1차공정")) {
+			String line_code = sqlSession.selectOne(NAMESPACE + ".selectLine2");
+			sqlSession.update(NAMESPACE + ".updateLine", line_code);
+		} else if(line_place.equals("2차공정")) {
+			String line_code = sqlSession.selectOne(NAMESPACE + ".selectLine3");
+			sqlSession.update(NAMESPACE + ".updateLine", line_code);
+		} else if(line_place.equals("3차공정")) {
+			
+		}
+		
 	} //updateStatus()
 
 

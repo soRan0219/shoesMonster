@@ -74,7 +74,6 @@
 		ORDER BY line_code DESC 
 		LIMIT 1 
 	</select>
-	<!-- 1차공정 사용 가능 라인 -->
 	
 	<!-- 작업지시 등록 -->
 	<insert id="insertWorkOrder">
@@ -83,7 +82,13 @@
 	</insert>
 	<!-- 작업지시 등록 -->
 	
-	
+	<!-- 생산 들어간 라인 사용여부 변경 -->
+	<update id="updateLine">
+		UPDATE line 
+		SET line_use=1 
+		WHERE line_code=#{line_code}
+	</update>
+	<!-- 생산 들어간 라인 사용여부 변경 -->
 	
 	
 	
@@ -187,6 +192,31 @@
 	</update>
 	<!-- 작업지시 현재 작업공정 변경 -->
 	
+	
+	<select id="selectLine2" resultType="String">
+		SELECT line_code 
+		FROM line 
+		WHERE line_use=2 
+		AND line_place='2차공정' 
+		ORDER BY line_code DESC 
+		LIMIT 1 
+	</select>
+	<select id="selectLine3" resultType="String">
+		SELECT line_code 
+		FROM line 
+		WHERE line_use=2 
+		AND line_place='3차공정' 
+		ORDER BY line_code DESC 
+		LIMIT 1 
+	</select>
+	
+	<!-- 라인 사용여부 다시 사용가능으로 -->
+	<update id="lineUseY">
+		UPDATE line 
+		SET line_use=2 
+		WHERE line_code=#{line_code}
+	</update>
+	<!-- 라인 사용여부 다시 사용가능으로 -->
 	
 	
 </mapper>
