@@ -268,6 +268,7 @@ $(function(){
 					$('#order_deliveryDate').datepicker('option', 'minDate', $(this).datepicker('getDate'));
 				}
 			});
+			
 			// 납품예정일
 			$('#order_deliveryDate').datepicker({
 				showOn: 'focus',
@@ -283,6 +284,7 @@ $(function(){
 				dayNamesMin:['월','화','수','목','금','토','일'],
 				monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+				}
 			});
 			
 			

@@ -191,8 +191,8 @@
 				tbl += " <td>";
 				tbl += "  <select name='client_type' id='client_type'>";
 				tbl += "   <option>선택</option>";
-				tbl += "   <option>수주처</option>";
 				tbl += "   <option>발주처</option>";
+				tbl += "   <option>수주처</option>";
 				tbl += "  </select>"
 				tbl += " </td>";
 				// 사업자 번호
@@ -209,7 +209,7 @@
 				tbl += " </td>";
 				// 담당자
 				tbl += " <td>";
-				tbl += "  <input type='text' name='client_name' id='client_name' value=<c:out value='${sessionScope.id.emp_name}'/> required class='input-fieldb'>";
+				tbl += "  <input type='text' name='client_name' id='client_name' value=<c:out value='${sessionScope.id.emp_name}'/> readonly class='input-fieldb'>";
 				tbl += " </td>";
 				// 주소
 				tbl += " <td>";
@@ -386,44 +386,16 @@
 						checked.push($(this).val());
 					});
 	
-					// 	alert(checked);
-	
-// 					if (checked.length > 0) {
-	
-
-// 						$.ajax({
-// 							url : "/person/delete",
-// 							type : "post",
-// 							data : {checked : checked},
-// 							dataType : "text",
-// 							success : function() {
-// 								alert("삭제");
-// 								location.reload();
-// 							},
-// 							error : function() {
-// 								alert("삭제 실패");
-// 							}
-// 						}); //ajax
-
-	
-// 					} //체크된거 있을대
-// 					else {
-// 						alert("선택된 항목이 없습니다.");
-// 					} //체크된거 없을때
-	
-// 				}); //save
 
 					// sweetalert
 					if(checked.length > 0){
 						Swal.fire({
 							  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
-									  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 							  icon: 'info', // 아이콘! 느낌표 색? 표시?
 							  showDenyButton: true,
 							  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
 							  cancelButtonColor: '#73879C', // cancel 버튼 색깔 지정
 							  confirmButtonText: 'Yes', // confirm 버튼 텍스트 지정
-//	 						  cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
 							  width : '300px', // alert창 크기 조절
 							  
 							}).then((result) => {
@@ -639,18 +611,6 @@
 				</div>
 			</c:if>
 					
-<!-- 			<div class="custom-select1"> -->
-<!-- 				<select name="search_client_type"> -->
-<%-- 					<option value="전체" ${search.search_client_type == null ? 'selected' : ''}>전체</option> --%>
-<%-- 					<option value="수주처" ${search.search_client_type == '수주처' ? 'selected' : ''}>수주처</option> --%>
-<%-- 					<option value="발주처" ${search.search_client_type == '발주처' ? 'selected' : ''}>"발주처"</option> --%>
-<!-- 				</select> -->
-					
-<!-- 				<button onclick="selectOption(0)">전 체</button> -->
-<!-- 				<button onclick="selectOption(1)">수주처</button> -->
-<!-- 				<button onclick="selectOption(2)">발주처</button> -->
-<!-- 			</div> -->
-
 			<script>
 			  function selectOption(index) {
 			    var select = document.querySelector('.custom-select1 select');
