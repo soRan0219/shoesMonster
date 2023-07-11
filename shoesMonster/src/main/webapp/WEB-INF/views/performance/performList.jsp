@@ -1114,7 +1114,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 		}); //jQuery
 	</script>
 	
-	<div class="tabContainer" style="margin-top: 20%;">
+	<div class="tabContainer" style="margin-top: 35%;">
 	
 		<h2><b>생산실적 현황</b></h2>
 		
