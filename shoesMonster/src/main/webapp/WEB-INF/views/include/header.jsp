@@ -122,7 +122,7 @@
 									</ul></li>
 							</ul>
 						</div>
-					</div>
+					</div> 
 					<!-- /sidebar menu -->
 					
 					<!-- /menu footer buttons -->
