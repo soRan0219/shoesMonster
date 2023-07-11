@@ -9,6 +9,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- 템플릿 -->
+<link href="../resources/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../resources/build/css/custom.min.css" rel="stylesheet">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
@@ -24,7 +28,13 @@
 
 body {
 	font-family: 'NexonLv2Gothic';
+	background-color: #F7F7F7;
+	padding: 0px;
+	margin: 0px;
 }
+
+
+
 </style>
 <!-- 폰트 -->
 
@@ -35,7 +45,7 @@ $(document).ready(function() {
 	  $('#modifyEmp').click(function() {
 		$(this).prop('disabled', true);
 	    // 첫 번째 테이블 처리
-	    $('#empImg').append("<input type='file' name = 'file' accept='image/*'>");
+	    $('#empImg').append("<br><br><input type='file' name = 'file' accept='image/*'>");
 	    $('#empTable tr').each(function(rowIndex) {
 	      var $cells = $(this).find('td'); // 현재 행의 셀들을 선택
 	      
@@ -120,13 +130,41 @@ $(document).ready(function() {
 
 </script>
 
-
+<style>
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+.input-fielda {
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldb {
+    display: inline-block;
+    text-align-last: center;
+}
+</style>
 
 </head>
 <body>
-	<div class="right_col" role="main">
-	<div style="margin: 5% 12% 0% 12%;">
-		<div style="float: right;">
+
+<div class="right_col" role="main">
+	
+<div class="col-md-12 col-sm-12" style="margin-top: 10%;">
+	<div class="x_panel">
+		<div class="x_title">
+
+	
+	<div style="margin: 1% 1%;">
+		<h1>상세보기</h1>
+			<div style="float: right;">
+			<br>
 			<button id="modifyEmp" class="B B-info">수정</button>
 			<button type="reset" id="cancelEmp" class="B B-info">취소</button>
 			<button type="submit" id="saveEmp" class="B B-info">저장</button>
@@ -148,8 +186,9 @@ $(document).ready(function() {
 			<!-- 버튼 제어 -->
 			
 		</div>
-		<div>
-			<h1>상세보기</h1>
+	<div class="x_content">
+		<div class="table-responsive">
+			<div class="table-wrapper" >
 			<form id="fr" action="/person/modifyEmp" method="post" enctype="multipart/form-data">
 			<div id="empImg" style="border: 1px solid; width: 300px; height: 230px;">
 				<c:if test="${!empty id.file }">
@@ -159,13 +198,11 @@ $(document).ready(function() {
 							
 							<c:if test="${empty vo.file }">
 								<img src="../resources/images/person.png" alt="..." width="270px" height="200px"
-								style="margin-top: 5%; margin-left: 5%;"
 								class="img-circle profile_img">
 							</c:if>
-			</div>
-			
-				<table border="1" style="width: 100%" id="empTable">
-					<tr>
+			</div><br><br>
+				<table border="1" id="empTable" style="width: 100%; text-align-last: center; margin-bottom: 1%;">
+					<tr style="background-color:#2A3F54; color:#E7E7E7;">
 						<th>사원번호</th> 
 						<th>비밀번호</th>
 						<th>이름</th>
@@ -173,7 +210,7 @@ $(document).ready(function() {
 						<th>직책</th>
 						<th>이메일</th>
 					</tr>
-					<tr>
+					<tr style="color:#212529 ">
 						<td>${vo.emp_id}</td>
 						<td>${vo.emp_pw}</td>
 						<td>${vo.emp_name}</td>
@@ -182,8 +219,8 @@ $(document).ready(function() {
 						<td>${vo.emp_email}</td>
 					</tr>
 					</table>
-					<table border="1" style="width: 100%" id="empTable2">
-					<tr>
+					<table border="1" style="width: 100%; text-align-last: center; margin-bottom: 1%;" id="empTable2">
+					<tr style="background-color:#2A3F54; color:#E7E7E7;">
 						<th>입사일자</th>
 						<th>재직구분</th>
 						<th>내선번호</th>
@@ -191,7 +228,7 @@ $(document).ready(function() {
 						<th>생년월일</th>
 						<th>성별</th>
 					</tr>
-					<tr>
+					<tr style="color:#212529 ">
 						<td id="emp_hiredate">${vo.emp_hiredate}</td>
 						<td id="emp_work">${vo.emp_work}</td>
 						<td id="emp_tel">${vo.emp_tel}</td>
@@ -201,8 +238,14 @@ $(document).ready(function() {
 					</tr>
 				</table>
 			</form>
+			</div>
 		</div>
 	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	
 </div>
 
 
