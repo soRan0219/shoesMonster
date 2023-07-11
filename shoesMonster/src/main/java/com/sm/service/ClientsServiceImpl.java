@@ -47,7 +47,7 @@ public class ClientsServiceImpl implements ClientsService {
 		cldao.insertClient(cvo);
 	}
 	
-	// 
+	// 거래처 추가 코드
 	@Override
 	public String getClientCode(String client_type) throws Exception {
 		return cldao.getClientCode(client_type);

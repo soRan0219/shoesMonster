@@ -65,7 +65,7 @@ public class ClientsDAOImpl implements ClientsDAO {
 		logger.debug("@@@ DAO insert 결과 : "+result);
 	}
 	
-	//
+	// 거래처 추가 코드
 	@Override
 	public String getClientCode(String client_type) throws Exception {
 //		String code = "L000";

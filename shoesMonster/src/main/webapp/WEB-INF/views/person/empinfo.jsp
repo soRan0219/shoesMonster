@@ -211,7 +211,7 @@ $(function() {
 			tbl += " </td>";
 			// 입사일자
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_hiredate' id='emp_hiredate' required class='input-fieldb'>";
+			tbl += "  <input type='text' name='emp_hiredate' id='emp_hiredate' autocomplete='off' required class='input-fieldb'>";
 			tbl += " </td>";
 			// 재직구분
 			tbl += " <td>";
@@ -246,11 +246,9 @@ $(function() {
 			
 			//입사일자 달력
 			$('#emp_hiredate').datepicker({
-// 				showOn:'both',
-// 				buttonImage:'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
-// 				buttonImageOnly:'true',
-				changeMonth:'true',
-				changeYear:'true',
+				showOn: 'focus',
+				changeMonth:false,
+				changeYear:false,
 				nextText:'다음달',
 				prevText:'이전달',
 				showButtonPanel:'true',
@@ -720,4 +718,4 @@ $(function() {
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+<link rel="stylesheet" href="/resources/forTest/datepicker.css"> 
