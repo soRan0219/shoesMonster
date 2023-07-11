@@ -16,7 +16,15 @@
 
 body {
 	font-family: 'NexonLv2Gothic';
+	
+	
+	
 }
+
+#main_box {display:flex; flex-direction:column; gap:20px; padding:20px;}
+#main_box .top_area {width:100% !important; border-radius:7px; background: linear-gradient(165deg, #04B486, #217a75); display: flex; justify-content: center; align-items: center; color: #fff !important;}
+.dashboard_graph {background:transparent !important;}
+
 </style>
 <!-- 폰트 -->
  
@@ -111,18 +119,20 @@ body {
 				
 				// Set chart options
 				var options = {
-						width: 300,
+						width: 327,
 						height: 400,
 						padding: {
-							top: 10,
-							bottom: 10,
+							top: 15,
+							bottom: 15,
 						},
 						//차트 제목
 						title: name + ' 생산실적 현황',
 						titlePosition: 'out',
 						titleTextStyle: {
-							fontSize: 25,
-							bold: true
+							fontSize: 18,
+							bold: true,
+							
+							
 						},
 						//차트옵션
 						chartArea: {
@@ -348,7 +358,7 @@ body {
 
 
 <!-- page content -->
-<div class="right_col" role="main">
+<div class="right_col" role="main" id="main_box">
 
 	
 	<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
@@ -415,7 +425,7 @@ body {
 		</script>
 	
 	
-	<div style="background-color : rgb(255, 255, 255); padding : 40px; color : #66b3ff; width : 400px; height : 200px; top: 40px;">
+	<div class="top_area" style="background-color : rgb(255, 255, 255); padding : 40px; color : #66b3ff; width : 400px; height : 200px; top: 40px;">
 
     <div style="float : right; margin : 10px 5px; font-size : 11pt">
             <div class="temp_min"></div>
@@ -425,46 +435,23 @@ body {
             <div class="cloud"></div>
     </div>
     <div style="float : right; margin : -10px 5px; padding: 15px;">
-        <div class="current_temp" style="font-size : 25pt"></div>
-        <div class="weather_description" name="weather_description" id="weather_description" style="font-size : 20pt"></div>
-        <div class="city" style="font-size : 13pt"></div>
+        <div class="current_temp" style="font-size: 26px; font-weight: 500;"></div>
+        <div class="weather_description" name="weather_description" id="weather_description" style="font-size: 26px; font-weight: 500;"></div>
+        <div class="city" style="font-size: 26px; font-weight: 500;"></div>
     </div>
     
 	</div>
 	
-	
+	<!-- 
 	   	<div class="result" style="z-index: 999;">
 	   	</div>
+	   	 -->
 	
     
 	
 	<!-- 날씨 테스트 - 끝 -->
-	
-
-
-	<div class="row">
-		<div class="col-md-12 col-sm-12 ">
-			<div class="dashboard_graph">
-
-				<div class="row x_title">
-				</div>
-
-				<div> <!--  class="col-md-9 col-sm-9 " -->
-						<span id="chart_prod" style="width:300px;display:inline-block; margin-right: 2em;"></span>
-						<span id="chart_date" style="width:300px;display:inline-block;"></span>
-						<span id="chart_line" style="width:300px;display:inline-block;"></span> <!--  class="tab-content current" -->
-						
-				</div>
-				
-
-				<div class="clearfix"></div>
-			</div>
-		</div>
-
-	</div>
-	<br />
-
-	<div class="row">
+	<div class="row" style="gap:20px; padding:0 10px;">
+		<!-- 
 		<div class="col-md-4 col-sm-4 ">
 			<div class="x_panel tile fixed_height_320">
 				<div class="x_title">
@@ -483,15 +470,15 @@ body {
 					</ul>
 					<div class="clearfix"></div>
 				</div>
-			<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->	
-<!-- 				<div id="chart_line" class="tab-content current"></div> -->
-<!-- 				<div id="chart_prod"  class="tab-content"></div> -->
-<!-- 				<div id="chart_date"  class="tab-content"></div> -->
+			
+<div id="chart_line" class="tab-content current"></div> 
+<div id="chart_prod"  class="tab-content"></div>
+<div id="chart_date"  class="tab-content"></div>
 			</div>
 		</div>
-
-		<div class="col-md-4 col-sm-4 ">
-			<div class="x_panel tile fixed_height_320 overflow_hidden">
+		 -->
+		<div class="col-md-4 col-sm-4" style="padding:0; flex-basis: calc((100% - 20px)/2); max-width:initial;">
+			<div class="x_panel tile fixed_height_320 overflow_hidden" style="margin-bottom:0; padding-bottom:0; box-shadow:0px 0px 5px rgba(0,0,0,0.2); border-radius:7px;">
 				<div class="x_title">
 					<h2>창고별 재고 현황</h2>
 					<ul class="nav navbar-right panel_toolbox">
@@ -515,8 +502,8 @@ body {
 		</div>
 
 
-		<div class="col-md-4 col-sm-4 ">
-			<div class="x_panel tile fixed_height_320">
+		<div class="col-md-4 col-sm-4 " style="padding: 0; flex-basis: calc((100% - 20px)/2); max-width:initial;">
+			<div class="x_panel tile fixed_height_320" style="margin-bottom:0; padding-bottom:0; box-shadow:0px 0px 5px rgba(0,0,0,0.2); border-radius:7px;">
 				<div class="x_title">
 					<h2>유형별 재고 개수 현황</h2>
 					<ul class="nav navbar-right panel_toolbox">
@@ -547,7 +534,32 @@ body {
 
 	</div>
 
-	<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FSeoul&src=NTFiOGJjMjU5ODU1M2IzMzg5ZmY0MzAwMDA1ZmJjM2FmYTUyZjBmYTU4MjU0M2VmMmZjY2EwNGRjMmRjZjc5OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=a28uc291dGhfa29yZWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23009688&color=%230B8043" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 ">
+			<div class="dashboard_graph" style="padding:0;">
+				<!-- 
+				<div class="row x_title">
+				</div>
+				 -->
+				<div style="display:flex; flex-direction:row; gap:20px;"> <!--  class="col-md-9 col-sm-9 " -->
+						<span id="chart_prod" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)"></span>
+						<span id="chart_date" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)"></span>
+						<span id="chart_line" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)"></span> <!--  class="tab-content current" -->
+						
+				</div>
+				
+
+				<div class="clearfix"></div>
+			</div>
+		</div>
+
+	</div>
+
+
+	
+
+	<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FSeoul&src=NTFiOGJjMjU5ODU1M2IzMzg5ZmY0MzAwMDA1ZmJjM2FmYTUyZjBmYTU4MjU0M2VmMmZjY2EwNGRjMmRjZjc5OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=a28uc291dGhfa29yZWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23009688&color=%230B8043" style="padding:30px; background:#fff; border-radius:7px; box-shadow:0px 0px 5px rgba(0,0,0,0.2);" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
 	<!-- /page content -->
 <!-- 달력  -->
 <!-- <div id='calendar	' style="width: 70%  ; height: 70%;"></div> -->
