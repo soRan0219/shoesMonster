@@ -84,7 +84,7 @@
 	} //inputCng
 	
 	//팝업창 옵션
-	const popupOpt = "top=60,left=140,width=600,height=600";
+	const popupOpt = "top=60,left=140,width=777,height=677";
 	
 	//검색 팝업
 	function openWindow(search, inputId) {
@@ -702,7 +702,7 @@
 			  
 			<span>담당자&nbsp;</span>
 				<input type="hidden" id="s_emp_id" name="emp_id">
-				<input type="text" id="s_emp_name" name="emp_name" placeholder="담당자를 선택하세요."> &nbsp;&nbsp;
+				<input type="text" id="s_emp_name" name="emp_name" placeholder="담당자를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 			
 			<input type="submit" class="B B-info" value="조회">
 				

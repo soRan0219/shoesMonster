@@ -85,7 +85,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	} //inputCng
 
 	//팝업창 옵션
-	const popupOpt = "top=60,left=140,width=977,height=677";
+	const popupOpt = "top=60,left=140,width=800,height=677";
 
 	//검색 팝업
 	function openWindow(search, inputId) {
@@ -763,11 +763,11 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 
-				<span>라인코드&nbsp;</span> <input type="text" name="search_line" id="search_line" class="searchInputText" placeholder="라인코드를 선택하세요."> &nbsp;&nbsp;
+				<span>라인코드&nbsp;</span> <input type="text" name="search_line" id="search_line" class="searchInputText" placeholder="라인코드를 선택하세요." style="cursor: pointer;"> &nbsp;&nbsp;
 				<span>지시일자&nbsp;</span> 
-					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
-					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요."> &nbsp;&nbsp;
-				<span>품번&nbsp;</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText" placeholder="품목을 선택하세요"> &nbsp;&nbsp;
+					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"> ~ 
+					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"> &nbsp;&nbsp;
+				<span>품번&nbsp;</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText" placeholder="품목을 선택하세요" style="cursor: pointer;"> &nbsp;&nbsp;
 
 				<input type="submit" value="조회" class="B B-info"> 
 				<br><br>

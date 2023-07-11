@@ -100,7 +100,7 @@
 	} //inputCng
 	
 	//팝업창 옵션
-	const popupOpt = "top=60,left=140,width=777,height=677";
+	const popupOpt = "top=60,left=140,width=787,height=677";
 	
 	//검색 팝업
 	function openWindow(search, inputId) {
@@ -721,20 +721,20 @@
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 
 				<div class="searchBox">
-					<span>작업지시코드</span>&nbsp;<input type="text" id="search_work_code" name="search_work_code" placeholder="작업지시코드를 선택하세요."> &nbsp;&nbsp;
+					<span>작업지시코드</span>&nbsp;<input type="text" id="search_work_code" name="search_work_code" placeholder="작업지시코드를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
 				<div class="searchBox">
-					<span>품목코드</span>&nbsp;<input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요"> &nbsp;&nbsp;
+					<span>품목코드</span>&nbsp;<input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요" class="input-fieldc"> &nbsp;&nbsp;
 				</div>
 				
 				<br><br>
 				<div class="searchBox">
-					<span>라인코드</span>&nbsp;<input type="text" id="search_line_code" name="search_line_code" placeholder="라인코드를 선택하세요."> &nbsp;&nbsp;
+					<span>라인코드</span>&nbsp;<input type="text" id="search_line_code" name="search_line_code" placeholder="라인코드를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
 				<div class="searchBox date">
 					<span>실적일</span>
-					<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
-					<input type="text" id="search_toDate" name="search_toDate" autocomplete="off" placeholder="기간을 선택하세요">
+					<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> ~ 
+					<input type="text" id="search_toDate" name="search_toDate" autocomplete="off" placeholder="기간을 선택하세요" class="input-fieldc">
 				</div>
 
 				<br><br>

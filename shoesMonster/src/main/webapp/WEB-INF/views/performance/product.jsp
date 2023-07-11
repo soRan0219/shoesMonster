@@ -526,9 +526,9 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
         	<input type="text" name="prod_name" id="searchName" placeholder="품명을 입력하세요."> &nbsp;&nbsp;
         	<label>카테고리&nbsp;</label>
         	<input type="text" name="prod_category" id="searchCategory" placeholder="카테고리를 입력하세요."> &nbsp;&nbsp;
-        	<label>거래처&nbsp;</label>
+        	<label>거래처명&nbsp;</label>
         	<input type="hidden" name="client_code" id="client_code9999">
-        	<input type="text" name="client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')"> &nbsp;&nbsp;
+        	<input type="text" name="client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')" class="input-fieldc"> &nbsp;&nbsp;
         	<input type="submit" class="B B-info" value="조회">
 
 		</fieldset>
