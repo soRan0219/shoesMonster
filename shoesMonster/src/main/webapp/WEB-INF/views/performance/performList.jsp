@@ -13,6 +13,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+<link href="../resources/build/css/custom.css" rel="stylesheet">
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
@@ -722,17 +723,18 @@
 				<div class="searchBox">
 					<span>작업지시코드</span>&nbsp;<input type="text" id="search_work_code" name="search_work_code" placeholder="작업지시코드를 선택하세요."> &nbsp;&nbsp;
 				</div>
-				<div class="searchBox date">
-					<span>실적일</span>&nbsp;
-					<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
-					<input type="text" id="search_toDate" name="search_toDate" autocomplete="off" placeholder="기간을 선택하세요">
+				<div class="searchBox">
+					<span>품목코드</span>&nbsp;<input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요"> &nbsp;&nbsp;
 				</div>
+				
 				<br><br>
 				<div class="searchBox">
 					<span>라인코드</span>&nbsp;<input type="text" id="search_line_code" name="search_line_code" placeholder="라인코드를 선택하세요."> &nbsp;&nbsp;
 				</div>
-				<div class="searchBox">
-					<span>품목코드</span>&nbsp;<input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요"> &nbsp;&nbsp;
+				<div class="searchBox date">
+					<span>실적일</span>
+					<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
+					<input type="text" id="search_toDate" name="search_toDate" autocomplete="off" placeholder="기간을 선택하세요">
 				</div>
 
 				<br><br>
