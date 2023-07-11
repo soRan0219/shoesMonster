@@ -1008,7 +1008,7 @@
     display: block; } }
 
 .nav-md .container.body .col-md-3.left_col {
-  min-height: 135%;
+  min-height: 130vw;
   width: 230px;
   padding: 0;
   position: absolute;
@@ -2243,14 +2243,23 @@ span.right {
   text-overflow: ellipsis; }
 
 .sidebar-footer {
-  bottom: 0px;
+  bottom: 10px;
+  left:9px;
   clear: both;
   display: block;
   padding: 5px 0 0 0;
   position: fixed;
-  width: 230px;
-  background: #2A3F54; }
-
+  width: 210px;
+  background: #2A3F54;
+  overflow:hidden;
+  border-radius:7px !important; }
+  
+.sidebar-footer button {display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;    background: #be4545;
+    color: #fff; border-radius:30px; font-size:15px; font-weight:500;
+    }
 .sidebar-footer a {
   padding: 7px 0 3px;
   text-align: center;
