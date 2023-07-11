@@ -11,7 +11,7 @@
 	<select id="empList" resultType="EmployeesVO"> 
 		select * from employees
 		where emp_name != '관리자'
-		order by emp_department, emp_id desc
+		order by emp_department, emp_id asc
 		limit #{startPage}, #{pageSize}
 	</select>	
 	<!-- 사원 목록 조회 -->

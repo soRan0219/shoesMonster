@@ -748,7 +748,6 @@
 					<button onclick="selectOption(2)">2차공정 </button>
 					<button onclick="selectOption(3)">3차공정</button>
 				</div>
-
 				<script>
 				  function selectOption(index) {
 				    var select = document.querySelector('.custom-select1 select');

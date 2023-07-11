@@ -339,12 +339,6 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 						var inserted = Number($(this).val());
 						var maxVal = Number($(this).attr("max"));
 						
-						alert($(this).attr("placeholder"));
-						
-						if($(this).attr("max")==null || $(this).attr("max")==="") {
-							maxVal = $(this).attr("placeholder");
-						}
-						
 						if(inserted > maxVal) {
 // 							alert("작업지시 수량보다 더 큰 수를 입력할 수 없습니다.");
 							Swal.fire({
@@ -1114,7 +1108,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 		}); //jQuery
 	</script>
 	
-	<div class="tabContainer" style="margin-top: 20%;">
+	<div class="tabContainer" style="margin-top: 35%;">
 	
 		<h2><b>생산실적 현황</b></h2>
 		

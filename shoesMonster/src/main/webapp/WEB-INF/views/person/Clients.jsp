@@ -612,7 +612,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 	
-	<h1 style="margin-left: 1%;">거래처 정보 관리</h1>
+	<h1 style="margin-left: 1%;">거래처 관리</h1>
 
 	<div style="margin:1% 1%;">
 	<hr>
@@ -626,18 +626,30 @@
 			<input type="submit" class="B B-info" value="조회">
 			
 			<hr>
-			
+			<c:if test="${empty param.input }">
 			<div class="custom-select1">
 				<select name="search_client_type">
 					<option value="전체" ${search.search_client_type == null ? 'selected' : ''}>전체</option>
 					<option value="수주처" ${search.search_client_type == '수주처' ? 'selected' : ''}>수주처</option>
 					<option value="발주처" ${search.search_client_type == '발주처' ? 'selected' : ''}>"발주처"</option>
 				</select>
+					<button onclick="selectOption(0)">전 체</button>
+					<button onclick="selectOption(1)">수주처</button>
+					<button onclick="selectOption(2)">발주처</button>
+				</div>
+			</c:if>
 					
-				<button onclick="selectOption(0)">전 체</button>
-				<button onclick="selectOption(1)">수주처</button>
-				<button onclick="selectOption(2)">발주처</button>
-			</div>
+<!-- 			<div class="custom-select1"> -->
+<!-- 				<select name="search_client_type"> -->
+<%-- 					<option value="전체" ${search.search_client_type == null ? 'selected' : ''}>전체</option> --%>
+<%-- 					<option value="수주처" ${search.search_client_type == '수주처' ? 'selected' : ''}>수주처</option> --%>
+<%-- 					<option value="발주처" ${search.search_client_type == '발주처' ? 'selected' : ''}>"발주처"</option> --%>
+<!-- 				</select> -->
+					
+<!-- 				<button onclick="selectOption(0)">전 체</button> -->
+<!-- 				<button onclick="selectOption(1)">수주처</button> -->
+<!-- 				<button onclick="selectOption(2)">발주처</button> -->
+<!-- 			</div> -->
 
 			<script>
 			  function selectOption(index) {
