@@ -700,31 +700,31 @@ $(function(){
 				<input type="hidden" name="client_code" id="client_code9999" >
 				
 				<div class="searchBox">
-					<span>업체</span>&nbsp;<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')" placeholder="업체를 선택하세요."> &nbsp;&nbsp;
+					<span>업체</span>&nbsp;<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')" placeholder="업체를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
 				<input type="hidden" name="emp_id" id="s_emp_id"> 
 				<div class="searchBox date">
-					<span>수주 일자</span>&nbsp;<input type="text" name="order_date_fromDate" id="order_date_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~
-					<input type="text" name="order_date_toDate" id="order_date_toDate" autocomplete="off" placeholder="기간을 선택하세요.">
+					<span>수주 일자</span>&nbsp;<input type="text" name="order_date_fromDate" id="order_date_fromDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> ~
+					<input type="text" name="order_date_toDate" id="order_date_toDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc">
 				</div>
 				
 				<br><br>
 				
 				<div class="searchBox">
-					<span>담당자</span>&nbsp;<input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')" placeholder="담당자를 선택하세요."> &nbsp;&nbsp;
+					<span>담당자</span>&nbsp;<input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')" placeholder="담당자를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
 				
 				<input type="hidden" name="prod_code" id="prod_code9999">
 				
 				<div class="searchBox date">
-					<span>납품 예정일</span>&nbsp;<input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
-							    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate" autocomplete="off" placeholder="기간을 선택하세요."> &nbsp;&nbsp;
+					<span>납품 예정일</span>&nbsp;<input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> ~ 
+							    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
 				
 				<br><br>
 				
 				<div class="searchBox">
-					<span>품목</span>&nbsp;<input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')" placeholder="품목을 선택하세요."> &nbsp;&nbsp;
+					<span>품목</span>&nbsp;<input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')" placeholder="품목을 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
 				
 				<div class="searchBox submitBtn"><input type="submit" class="B B-info" value="조회"></div>

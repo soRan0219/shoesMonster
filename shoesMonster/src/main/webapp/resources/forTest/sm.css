@@ -52,7 +52,27 @@
     background-color: #20c997;
 }
 
-
+.table-wrapper {
+    overflow-x: auto; /* 테이블 직접 조절 */
+    overflow-y: hidden;
+}
+.table-wrapper table {
+    width: 100%; /* 테이블 직접 조절 */
+    white-space: nowrap; 
+    text-align: center;
+}
+.input-fielda {
+    cursor: pointer; /* 마우스 포인터 클릭시 팝업 */
+    display: inline-block;
+    text-align-last: center;
+}
+.input-fieldb {
+    display: inline-block; /* 사이즈 및 중앙 정렬 */
+    text-align-last: center;
+}
+.input-fieldc {
+   	cursor: pointer; /* 마우스 포인터 */
+}
 
 
 

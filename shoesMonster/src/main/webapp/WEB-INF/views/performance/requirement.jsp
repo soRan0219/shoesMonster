@@ -43,6 +43,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
     
 		// 팝업 옵션
 		const popupOpt = "top=60,left=140,width=777,height=677";
+		const popupOpt2 = "top=60,left=140,width=977,height=677";
 	
 		//검색 팝업
 	  	function openWindow(search, inputId) {
@@ -53,7 +54,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	    //검색 팝업2
 		function openWindow2(search, inputId) {
 			var url = "/performance/whsearch?type=" + search + "&input=" + inputId;
-			var popup = window.open(url, "", popupOpt);
+			var popup = window.open(url, "", popupOpt2);
 		} //openWindow()
 		
 		//추가 시 품번 검색 
@@ -499,10 +500,10 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				<input type="text" name="req_code" id="searchCode" placeholder="소요량코드를 입력하세요."> &nbsp;&nbsp;
 				<label>완제품&nbsp;</label> 
 				<input type="hidden"name="prod_code" id="prod_code9999"> 
-				<input type="text"name="prod_name" id="prod_name9999" placeholder="완제품을 선택하세요." readonly onclick="serchProd('prod_code9999')"> &nbsp;&nbsp;
+				<input type="text"name="prod_name" id="prod_name9999" placeholder="완제품을 선택하세요." readonly onclick="serchProd('prod_code9999')" class="input-fieldc"> &nbsp;&nbsp;
 				<label>원자재&nbsp;</label>
 				<input type="hidden" name="raw_code" id="raw_code9999"> 
-				<input type="text" name="raw_name" id="raw_name9999" placeholder="원자재를 선택하세요." readonly onclick="serchRaw('raw_code9999')"> &nbsp;&nbsp;
+				<input type="text" name="raw_name" id="raw_name9999" placeholder="원자재를 선택하세요." readonly onclick="serchRaw('raw_code9999')" class="input-fieldc"> &nbsp;&nbsp;
 				<input type="submit" class="B B-info" value="조회">
 			</fieldset>
 		</form>

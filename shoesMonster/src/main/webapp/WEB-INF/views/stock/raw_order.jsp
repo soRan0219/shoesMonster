@@ -37,7 +37,7 @@ body {
 	
 	// 발주 팝업
 	function roPopup() {
-		 window.open("roPopup","거래처 목록","top=60,left=140,width=977,height=677, location=no");
+		 window.open("roPopup","거래처 목록","top=60,left=140,width=877,height=677, location=no");
 	}
 	
 	// 발주 현황 상세페이지
