@@ -316,6 +316,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 										Swal.fire({
 											  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>"+ "총" +checked.length+"건 삭제 완료",
 											  icon: 'success',
+											  width: '300px',
 											}).then((result) => {
 											  if (result.isConfirmed) {
 											    location.reload();
