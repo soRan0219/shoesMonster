@@ -156,7 +156,7 @@ $(document).ready(function() {
 
 <div class="right_col" role="main">
 	
-<div class="col-md-12 col-sm-12" style="margin-top: 10%;">
+<div class="col-md-12 col-sm-12" style="margin-top: 5%;">
 	<div class="x_panel">
 		<div class="x_title">
 
