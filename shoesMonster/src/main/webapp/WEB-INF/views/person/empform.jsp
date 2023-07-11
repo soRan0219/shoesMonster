@@ -43,6 +43,15 @@ body {
 $(document).ready(function() {
 	  // 수정 버튼 클릭 시
 	  $('#modifyEmp').click(function() {
+		  
+		  
+		  
+		  // 저장버튼 활성화 
+		  $('#saveEmp').attr("disabled", false);
+		  
+		  
+		  
+		  
 		$(this).prop('disabled', true);
 	    // 첫 번째 테이블 처리
 	    $('#empImg').append("<br><br><input type='file' name = 'file' accept='image/*'>");
@@ -209,7 +218,8 @@ $(document).ready(function() {
 			<br>
 			<button id="modifyEmp" class="B B-info">수정</button>
 			<button type="reset" id="cancelEmp" class="B B-info">취소</button>
-			<button type="submit" id="saveEmp" class="B B-info">저장</button>
+			<button type="submit" id="saveEmp" class="B B-info" disabled>저장</button>
+															<!-- 저장버튼 수정 누르기 전에는 비활성화 -->
 			
 			<!-- 버튼 제어 -->
 				<script>
@@ -218,7 +228,9 @@ $(document).ready(function() {
 					if (team === "인사팀" || team === "관리자") {
 					    document.getElementById("modifyEmp").disabled = false;
 					    document.getElementById("cancelEmp").disabled = false;
-					    document.getElementById("saveEmp").disabled = false;
+					    
+					    // 저장버튼 수정 누르기 전에는 비활성화
+// 					    document.getElementById("saveEmp").disabled = false;
 					} else {
 					    document.getElementById("modifyEmp").hidden = true;
 					    document.getElementById("cancelEmp").hidden = true;
