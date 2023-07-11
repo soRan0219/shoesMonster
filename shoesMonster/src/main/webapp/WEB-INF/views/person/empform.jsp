@@ -56,22 +56,28 @@ $(document).ready(function() {
 	        // 종류에 따라 <input> 태그 생성 및 값 설정
 	        switch (index) {
 	          case 0:
-	            inputHTML = '<input type="text" name="emp_id" value="' + cellData + '">';
+	            inputHTML = '<input type="text" name="emp_id" value="' + cellData + '" readonly class="input-fieldb">';
 	            break;
 	          case 1:
-	            inputHTML = '<input type="text" name="emp_pw" value="' + cellData + '">';
+	            inputHTML = '<input type="text" name="emp_pw" value="' + cellData + '" required class="input-fieldb">';
 	            break;
 	          case 2:
-	            inputHTML = '<input type="text" name="emp_name" value="' + cellData + '">';
+	            inputHTML = '<input type="text" name="emp_name" value="' + cellData + '" required class="input-fieldb">';
 	            break;
 	          case 3:
-	            inputHTML = '<input type="text" name="emp_department" value="' + cellData + '">';
+	            inputHTML = '<select style="width: 180px; text-align-last:center;" name="emp_department" id="emp_department" value="' + cellData + '">';
+	            inputHTML += ' <option style="text-align-last:center;" value="영업팀">영업팀</option>';
+	            inputHTML += ' <option style="text-align-last:center;" value="생산팀">생산팀</option>';
+	            inputHTML += ' <option style="text-align-last:center;" value="인사팀">인사팀</option>';
+	            inputHTML += ' <option style="text-align-last:center;" value="자재팀">자재팀</option>';
+	            inputHTML += ' <option style="text-align-last:center;" value="물류팀">물류팀</option>';
+	            inputHTML += '</select>';
 	            break;
 	          case 4:
-	            inputHTML = '<input type="text" name="emp_position" value="' + cellData + '">';
+	            inputHTML = '<input type="text" name="emp_position" value="' + cellData + '" required class="input-fieldb">';
 	            break;
 	          case 5:
-	            inputHTML = '<input type="email" name="emp_email" value="' + cellData + '">';
+	            inputHTML = '<input type="email" name="emp_email" value="' + cellData + '"required class="input-fieldb">';
 	            break;
 	        }
 	        
@@ -90,28 +96,63 @@ $(document).ready(function() {
 	        // 종류에 따라 <input> 태그 생성 및 값 설정
 	        switch (index) {
 	          case 0:
-	            inputHTML = '<input type="text" name="emp_hiredate" value="' + cellData + '">';
+	            inputHTML = '<input type="text" name="emp_hiredate" id="search_hiredate" value="' + cellData + '"readonly id="search_hiredate" class="input-fielda" autocomplete="off">';
 	            break;
 	          case 1:
-	            inputHTML = '<input type="text" name="emp_work" value="' + cellData + '">';
+	            inputHTML = '<select style="width: 180px; text-align-last:center;" name="emp_work" id="emp_work" value="' + cellData + '"><option style="text-align-last:center;" value="재직">재직</option><option style="text-align-last:center;" value="휴가">휴가</option><option style="text-align-last:center;" value="퇴사">퇴사</option></select>';
 	            break;
 	          case 2:
-	            inputHTML = '<input type="text" name="emp_tel" value="' + cellData + '">';
+	            inputHTML = '<input type="text" name="emp_tel" value="' + cellData + '" required class="input-fieldb">';
 	            break;
 	          case 3:
-	            inputHTML = '<input type="text" name="emp_phone" value="' + cellData + '">';
+	            inputHTML = '<input type="text" name="emp_phone" value="' + cellData + '" required class="input-fieldb">';
 	            break;
 	          case 4:
-	            inputHTML = '<input type="text" name="emp_birth" value="' + cellData + '">';
+	            inputHTML = '<input type="text" name="emp_birth" id="search_birth" value="' + cellData + '" readonly id="search_birth" class="input-fielda" autocomplete="off">';
 	            break;
 	          case 5:
-	            inputHTML = '<input type="text" name="emp_gender" value="' + cellData + '">';
+	            inputHTML = '<input type="text" name="emp_gender" value="' + cellData + '" readonly class="input-fieldb">';
 	            break;
 	        }
 	        
 	        $(this).empty().append(inputHTML); // 현재 셀의 내용을 지우고 <input> 태그로 대체
 	      });
 	    });
+	    
+	    $('#search_hiredate').datepicker({
+			showOn: 'focus',
+			changeMonth:false,
+			changeYear:false,
+			nextText:'다음달',
+			prevText:'이전달',
+			showButtonPanel:'true',
+			currentText:'오늘',
+			closeText:'닫기',
+			dateFormat:'yy-mm-dd',
+			yearSuffix: '년',
+			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		});
+  	
+		$('#search_birth').datepicker({
+			showOn: 'focus',
+			changeMonth:false,
+			changeYear:false,
+			nextText:'다음달',
+			prevText:'이전달',
+			showButtonPanel:'true',
+			currentText:'오늘',
+			closeText:'닫기',
+			dateFormat:'yy-mm-dd',
+			yearSuffix: '년',
+			dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		});
+	    
 	  });
 	  
 	  $('#cancelEmp').click(function() {
@@ -120,11 +161,12 @@ $(document).ready(function() {
 	  
 	  $('#saveEmp').click(function() {
 		$('#fr').submit();
-
+		
 	  });//save
 	  
 	  //==================모달==================================
 		  
+	
 	  
 	});
 
@@ -190,9 +232,9 @@ $(document).ready(function() {
 		<div class="table-responsive">
 			<div class="table-wrapper" >
 			<form id="fr" action="/person/modifyEmp" method="post" enctype="multipart/form-data">
-			<div id="empImg" style="border: 1px solid; width: 300px; height: 230px;">
+			<div id="empImg" style="width: 300px; height: 230px; margin-left:33%; padding: 0%;">
 				<c:if test="${!empty vo.file }">
-								<img src="/imgDown?fileName=${vo.file }" alt="..." width="380px" height="220px"
+								<img src="/imgDown?fileName=${vo.file }" alt="..." width="270px" height="200px"
 								class="img-circle profile_img">
 							</c:if>
 							
@@ -252,4 +294,9 @@ $(document).ready(function() {
 	
 	
 </body>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/forTest/datepicker.css"> 
+
+
 </html>

@@ -215,7 +215,11 @@ $(function() {
 			tbl += " </td>";
 			// 재직구분
 			tbl += " <td>";
-			tbl += "  <input type='text' name='emp_work' id='emp_work' required class='input-fieldb'>";
+			tbl += "  <select name='emp_work' id='emp_work'>";
+			tbl += "   <option value='재직'>재직</option>";
+			tbl += "   <option value='휴가'>휴가</option>";
+			tbl += "   <option value='퇴사'>퇴사</option>";
+			tbl += "  </select>"
 			tbl += " </td>";
 			tbl += "</tr>";
 
@@ -354,6 +358,29 @@ $(function() {
 						} //사원부서 - select
 					} //사원 아이디부터 다 수정 가능하게
 				}); // self.find(~~)
+				
+				
+				
+				//tr안의 td 요소들 input으로 바꾸고 기존 값 띄우기
+				self.find('td').each(function(idx,item) {
+					if (idx > 0) {
+						inputCng($(this),"text",names[idx - 1], $(this).text());
+						if (idx == 9) {
+							var dropDown = "<select id='emp_work' name='emp_work'>";
+							dropDown += "<option value='재직'>재직</option>";
+							dropDown += "<option value='휴가'>휴가</option>";
+							dropDown += "<option value='퇴사'>퇴사</option>";
+							dropDown += "</select>";
+							$(this).html(dropDown);
+							$(this).find('option').each(function() {
+								if (this.value == $(this).text()) {
+									$(this).attr("selected",true);
+								}
+							}); //option이 emp_department와 일치하면 선택된 상태로
+						} //사원부서 - select
+					} //사원 아이디부터 다 수정 가능하게
+				}); // self.find(~~)
+				
 				
 
 				//저장버튼 -> form 제출
