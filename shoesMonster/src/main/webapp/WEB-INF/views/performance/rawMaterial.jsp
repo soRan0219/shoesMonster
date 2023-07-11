@@ -46,7 +46,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	} //inputCng
 	
 	// 팝업 옵션
-	const popupOpt = "top=60,left=140,width=600,height=600";
+	const popupOpt = "top=60,left=140,width=877,height=677";
 	
 	//검색 팝업(거래처,창고)
   	function openWindow(search, inputId) {
@@ -611,7 +611,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	    if (team === "물류팀" || team === "관리자") {
 	        document.getElementById("addButton").disabled = false;
 	        document.getElementById("modify").disabled = false;
-	        document.getElementById("delete").disabled = false;
+	        document.getElementB yId("delete").disabled = false;
 	        document.getElementById("cancle").disabled = false;
 	        document.getElementById("save").disabled = false;
 	        document.querySelector("[onclick^='location.href']").disabled = false;

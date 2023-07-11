@@ -35,12 +35,12 @@ body {
 	
 	// 발주 팝업
 	function roPopup() {
-		 window.open("roPopup","거래처 목록","width=950, height=653, left=500, top=150, location=no");
+		 window.open("roPopup","거래처 목록","top=60,left=140,width=977,height=677, location=no");
 	}
 	
 	// 발주 현황 상세페이지
 	function detailPopup(rawCode, raw_order_num) {
-		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "width=800, height=420, left=200, top=150");
+		window.open("detailPopup?rawCode=" + rawCode + "&raw_order_num=" + raw_order_num, "거래처 상세", "top=60,left=140,width=977,height=377");
 	}
 	
 	// 총액
@@ -59,7 +59,7 @@ body {
 	
 	// 창고
 	function warehouse() {
-		window.open("whPopup","창고 목록","width=400, height=400, left=550, top=150, location=no");
+		window.open("whPopup","창고 목록","top=60,left=140,width=977,height=677, location=no");
 	}
 	
 	// 체크
@@ -247,7 +247,7 @@ function toggleDiv(divId) {
 					</form>
 					<div style="display: inline;">
 					
-					<div id="pagination" class="dataTables_paginate paging_simple_numbers" style="margin-right: 1%;"> 
+					<div id="pagination" class="dataTables_paginate paging_simple_numbers"> 
 		<ul class="pagination"> 
 	<!--     			<div style="text-align: right;"> -->
 					<c:if test="${count1 > 0 }">
@@ -394,16 +394,16 @@ function toggleDiv(divId) {
 											value="<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>"
 											readonly></td>
 										<td onclick="roPopup();"><input type="text" 
-											name="client_code" id="client_code" readonly></td>
+											name="client_code" id="client_code" readonly class="input-fielda"></td>
 										<td onclick="roPopup();"><input type="text" 
-											name="client_actname" id="client_actname" required readonly></td>
+											name="client_actname" id="client_actname" required readonly class="input-fielda"></td>
 										<td onclick="roPopup();"><input type="text" 
-											name="raw_code" id="raw_code" readonly></td>
+											name="raw_code" id="raw_code" readonly class="input-fielda"></td>
 										<td onclick="roPopup();"><input type="text" 
-											name="raw_name" id="raw_name" readonly></td>
+											name="raw_name" id="raw_name" readonly class="input-fielda"></td>
 										<td onclick="roPopup();"><input type="text" 
-											name="raw_color" id="raw_color" readonly></td>
-										<td onclick="roPopup();" ><input type="text" name="wh_code" id="wh_code" readonly></td>
+											name="raw_color" id="raw_color" readonly class="input-fielda"></td>
+										<td onclick="roPopup();" ><input type="text" name="wh_code" id="wh_code" readonly class="input-fielda"></td>
 										<td><input type="number" min="1"
 											id="raw_order_count" name="raw_order_count"
 											oninput="totalAmount()"></td>
@@ -415,9 +415,7 @@ function toggleDiv(divId) {
 											id="raw_price" readonly></td>
 										<td id="total_amount"></td>
 										<td>${sessionScope.id.emp_id }</td>
-
 									</tr>
-
 								</tbody>
 							</table> 
 							<br><br>

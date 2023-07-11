@@ -16,9 +16,6 @@
 
 body {
 	font-family: 'NexonLv2Gothic';
-	
-	
-	
 }
 
 #main_box {display:flex; flex-direction:column; gap:20px; padding:20px;}
@@ -136,22 +133,14 @@ body {
 						},
 						//차트옵션
 						chartArea: {
-// 							backgroundColor: '#F7F7F7',
 							backgroundColor: '#fff',
-
 							width: '90%',
 							height: '80%'
 						},
 						//배경색
-// 						backgroundColor: '#F7F7F7',
 						backgroundColor: '#fff',
 						//차트 막대 색
 						colors: ['#1ABB9C', 'rgb(173, 218, 209)', 'rgb(56, 170, 145)'],
-						//줌인 뭐 이런 기능인데 적용 안되는듯
-//							explorer: {
-//								axis: 'horizontal',
-//								actions: ['dragToZoom', 'rightClickToReset']
-//							},
 						//폰트
 						fontSize: 20,
 						fontName: 'NexonLv2Gothic',
@@ -177,8 +166,6 @@ body {
 							},
 							//세로축 선(=> 가로선)
 							gridlines: {
-//									color: 'red',
-//									minSpacing: 2
 							},
 							textStyle: {
 								color: '#000',
@@ -199,7 +186,6 @@ body {
 							},
 							alignment: 'center'
 						},
-//						bars: 'horizontal'  //가로차트 옵션
 				};
 				
 				console.log(options);
@@ -224,11 +210,6 @@ body {
 		
 	}); //jQuery
     
-    
-    
-    
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     $(function(){
         
@@ -281,12 +262,7 @@ body {
       }); // ajax
         
       
-      
-      
-   
-      function drawGoogleChart(name, array, id) {
-    
-    
+    function drawGoogleChart(name, array, id) {
     
     google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
@@ -305,33 +281,6 @@ body {
       
       } //drawGoogleChart
     }); // JQuery
-    
-    
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  
-//       document.addEventListener('DOMContentLoaded', function() {
-// 			  googleCalendarApiKey: 'AIzaSyBPa51EObVoBELfBVUs0dD0fIeVMi9mWiU';
-//         var calendarEl = document.getElementById('calendar');
-//         var calendar = new FullCalendar.Calendar(calendarEl, {
-//           initialView: 'dayGridMonth',
-//           headerToolbar: {
-// 				left: 'prev,next today',
-// 				center: 'title',
-// 				right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-// 			  },
-// 			  eventSources: [{
-// 			  googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com' },
-//         		{
-// 				  className: '대한민국의 휴일' } ,// an option!
-// 			  {color: 'red'
-// 			  }	
-// 			  ]
-//         });
-//         calendar.render();
-//       });
-  
-    
     
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -358,7 +307,7 @@ body {
 
 
 <!-- page content -->
-<div class="right_col" role="main" id="main_box">
+<div class="right_col" role="main" id="main_box" style="min-height: 1px !important;">
 
 	
 	<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
@@ -366,19 +315,6 @@ body {
 	
 	<!-- 애령 날씨 테스트중 ~ ~ -->
 	<script type="text/javascript">
-			
-// 			var weatherIcon = {
-// 				    '01': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas id="clear-day" width="84" height="84"></canvas></div></div></div></div></div></div>',
-// 				    '02': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="partly-cloudy-day"></canvas></div></div></div></div></div></div>',
-// 				    '03': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="cloudy"></canvas></div></div></div></div></div></div>',
-// 				    '04': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="cloudy"></canvas></div></div></div></div></div></div>',
-// 				    '09': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="sleet"></canvas></div></div></div></div></div></div>',
-// 				    '10': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="rain"></canvas></div></div></div></div></div></div>',
-// 				    '11': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="wind"></canvas></div></div></div></div></div></div>',
-// 				    '13': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="snow"></canvas></div></div></div></div></div></div>',
-// 				    '50': '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="cloudy"></canvas></div></div></div></div></div></div>'
-// 				};
-				
 
 				var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=" + 'busan' + "&appid=" + "aa7d2badb9c5e8ad659a0b018df246c1";
 				
@@ -399,9 +335,6 @@ body {
 				        var $temp_min = '최저 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_min - 273.15) + 'º';
 				        var $temp_max = '최고 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_max - 273.15) + 'º';
 				        
-// 				        $('.result').append(weatherIcon[$Icon]);
-// 				        $('.result').append($Icon);
-				        alert("Icon : " + $Icon);
 				        $('.weather_description').prepend($weather_description);
 				        $('.current_temp').prepend($Temp);
 				        $('.humidity').prepend($humidity);
@@ -420,10 +353,7 @@ body {
 				    }
 				});
 				
-				
-
 		</script>
-	
 	
 	<div class="top_area" style="background-color : rgb(255, 255, 255); padding : 40px; color : #66b3ff; width : 400px; height : 200px; top: 40px;">
 
@@ -442,57 +372,12 @@ body {
     
 	</div>
 	
-	<!-- 
-	   	<div class="result" style="z-index: 999;">
-	   	</div>
-	   	 -->
-	
-    
-	
 	<!-- 날씨 테스트 - 끝 -->
 	<div class="row" style="gap:20px; padding:0 10px;">
-		<!-- 
-		<div class="col-md-4 col-sm-4 ">
-			<div class="x_panel tile fixed_height_320">
-				<div class="x_title">
-					<h2>휴가</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a> <a
-									class="dropdown-item" href="#">Settings 2</a>
-							</div></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-			
-<div id="chart_line" class="tab-content current"></div> 
-<div id="chart_prod"  class="tab-content"></div>
-<div id="chart_date"  class="tab-content"></div>
-			</div>
-		</div>
-		 -->
 		<div class="col-md-4 col-sm-4" style="padding:0; flex-basis: calc((100% - 20px)/2); max-width:initial;">
 			<div class="x_panel tile fixed_height_320 overflow_hidden" style="margin-bottom:0; padding-bottom:0; box-shadow:0px 0px 5px rgba(0,0,0,0.2); border-radius:7px;">
 				<div class="x_title">
 					<h2>창고별 재고 현황</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a> <a
-									class="dropdown-item" href="#">Settings 2</a>
-							</div></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
 					<div class="clearfix"></div>
 				</div>
 				<div id="graph">
@@ -506,18 +391,6 @@ body {
 			<div class="x_panel tile fixed_height_320" style="margin-bottom:0; padding-bottom:0; box-shadow:0px 0px 5px rgba(0,0,0,0.2); border-radius:7px;">
 				<div class="x_title">
 					<h2>유형별 재고 개수 현황</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#">Settings 1</a> <a
-									class="dropdown-item" href="#">Settings 2</a>
-							</div></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
@@ -526,43 +399,28 @@ body {
 					<div id="graph">
 						<span id="wh_dv" style="width: 50px; height: 50px;"></span>
 					</div>
-
-
 				</div>
 			</div>
 		</div>
-
 	</div>
-
 
 	<div class="row">
 		<div class="col-md-12 col-sm-12 ">
 			<div class="dashboard_graph" style="padding:0;">
-				<!-- 
-				<div class="row x_title">
-				</div>
-				 -->
 				<div style="display:flex; flex-direction:row; gap:20px;"> <!--  class="col-md-9 col-sm-9 " -->
 						<span id="chart_prod" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)"></span>
 						<span id="chart_date" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)"></span>
 						<span id="chart_line" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)"></span> <!--  class="tab-content current" -->
-						
 				</div>
-				
-
 				<div class="clearfix"></div>
 			</div>
 		</div>
-
 	</div>
 
-
-	
 
 	<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FSeoul&src=NTFiOGJjMjU5ODU1M2IzMzg5ZmY0MzAwMDA1ZmJjM2FmYTUyZjBmYTU4MjU0M2VmMmZjY2EwNGRjMmRjZjc5OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=a28uc291dGhfa29yZWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23009688&color=%230B8043" style="padding:30px; background:#fff; border-radius:7px; box-shadow:0px 0px 5px rgba(0,0,0,0.2);" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
 	<!-- /page content -->
 <!-- 달력  -->
-<!-- <div id='calendar	' style="width: 70%  ; height: 70%;"></div> -->
 <script type="text/javascript">
 
 </script>

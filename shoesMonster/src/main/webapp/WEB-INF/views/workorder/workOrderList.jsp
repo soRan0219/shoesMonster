@@ -84,7 +84,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	} //inputCng
 
 	//팝업창 옵션
-	const popupOpt = "top=60,left=140,width=600,height=600";
+	const popupOpt = "top=60,left=140,width=977,height=677";
 
 	//검색 팝업
 	function openWindow(search, inputId) {

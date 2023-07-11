@@ -159,7 +159,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				tbl += " </td>";
 				// 불량사유
 				tbl += " <td>";
-				tbl += "  <input type='text' name='defect_note' id='defect_note' required class='input-fielda'>";
+				tbl += "  <input type='text' name='defect_note' id='defect_note' required class='input-fieldb'>";
 				tbl += " </td>";
 				// 현황
 				tbl += " <td>";
