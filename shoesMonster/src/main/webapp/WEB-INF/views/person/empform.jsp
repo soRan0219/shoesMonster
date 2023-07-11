@@ -152,7 +152,16 @@ $(document).ready(function() {
 			<h1>상세보기</h1>
 			<form id="fr" action="/person/modifyEmp" method="post" enctype="multipart/form-data">
 			<div id="empImg" style="border: 1px solid; width: 300px; height: 230px;">
-				<img alt="" src="/imgDown?fileName=${vo.file }" width="300px" height="200px">
+				<c:if test="${!empty id.file }">
+								<img src="/imgDown?fileName=${vo.file }" alt="..." width="380px" height="220px"
+								class="img-circle profile_img">
+							</c:if>
+							
+							<c:if test="${empty vo.file }">
+								<img src="../resources/images/person.png" alt="..." width="270px" height="200px"
+								style="margin-top: 5%; margin-left: 5%;"
+								class="img-circle profile_img">
+							</c:if>
 			</div>
 			
 				<table border="1" style="width: 100%" id="empTable">

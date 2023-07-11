@@ -86,7 +86,7 @@ function openWindow(search, inputId) {
 
 // 거래처 검색 
 function serchClient(inputId){
-  	openWindow("client",inputId);
+  	openWindow("client_p",inputId);
 }
 
 // 완제품 검색
