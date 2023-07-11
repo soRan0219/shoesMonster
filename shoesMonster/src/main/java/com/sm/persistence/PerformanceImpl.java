@@ -642,7 +642,7 @@ public class PerformanceImpl implements PerformanceDAO {
 		
 		//비교결과 해당 작업지시수량보다 생산한 양품수가 같거나 많으면 생산현황 마감으로 변경
 		// => 마감으로 변경됐을 경우 해당 작업지시 양품수 합해서 재고에 더하기
-		if(updateStatus != null) {
+		if(updateStatus != null || uvo.getPerform_status().equals("마감")) {
 			sqlSession.update(NAMESPACE + ".updateStatus", work_code);
 			
 			int perform_fair = sqlSession.selectOne(NAMESPACE + ".sumFair", work_code);
