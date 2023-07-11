@@ -46,10 +46,10 @@ body {
       <a class="hiddenanchor" id="signin"></a>
 
       <div class="login_wrapper">
-        <div class="animate form login_form">
+        <div class="animate form login_form" style="text-align-last:center;">
           <section class="login_content">
             <form action="" method="post">
-              <h1> Employee Login </h1>
+              <h1> ShoesMonster Login </h1>
               <div>
                 <input type="text" id="ID" name="emp_id" class="form-control" placeholder="Username" required="" />
               </div>
@@ -60,17 +60,12 @@ body {
                 <input type="submit" id="submit" class="btn btn-default submit" value="Log in"
                 	style="color: #73879C;">
               </div>
-
               <div class="clearfix"></div>
-
               <div class="separator">
-                <p class="change_link"> Switch Account ?
-                  <a href="#signup" class="to_register"> Admin Login </a>
-                </p>
-
+              	<div>
+              		<a href="/smmain/smLogin"><img src="/resources/images/shoes1.png" height="230" width="230" style="margin-left: 5%;"></a>
+              	</div>
                 <div class="clearfix"></div>
-                <br />
-
                 <div>
                   <h1><i class="fa fa-paw"></i> Shoes Monster!!</h1>
                   <p>Shoes Monster Co., Ltd. CEO: Park Eon-hyo Address: Samhan Golden Gate 7th floor, 109 Dongcheon-ro, Bujeon-dong, Busanjin-gu, Busan</p>
@@ -80,39 +75,6 @@ body {
           </section>
         </div>
 
-        <div id="register" class="animate form registration_form">
-          <section class="login_content">
-            <form action="" method="post">
-              <h1> Admin Login </h1>
-              <div>
-                <input type="text" id="ID" name="emp_id" class="form-control" placeholder="Username" />
-              </div>
-              <div>
-                <input type="password" id="password" name="emp_pw" class="form-control" placeholder="Password" />
-              </div>
-              <div>
-                <input type="submit" id="submit" class="btn btn-default submit" value="Log in"
-               		style="color: #73879C;">
-              </div>
-
-              <div class="clearfix"></div>
-
-              <div class="separator">
-                <p class="change_link"> Switch Account ?
-                  <a href="#signin" class="to_register"> Eployee Login </a>
-                </p>
-
-                <div class="clearfix"></div>
-                <br />
-
-                <div>
-                  <h1><i class="fa fa-paw"></i> Shoes Monster!!</h1>
-                  <p>Shoes Monster Co., Ltd. CEO: Park Eon-hyo Address: Samhan Golden Gate 7th floor, 109 Dongcheon-ro, Bujeon-dong, Busanjin-gu, Busan</p>
-                </div>
-              </div>
-            </form>
-          </section>
-        </div>
       </div>
     </div>
   </body>
