@@ -489,7 +489,8 @@
 
 	<select id="searchLinePage" resultType="com.sm.domain.LineVO"
 		parameterType="hashMap" resultMap="lineEmp">
-		SELECT * FROM line
+		SELECT * , e.emp_name FROM line l
+		Left join employees e on l.emp_id = e.emp_id
 		<where>
 			<if test="line_code != ''">
 				AND line_code LIKE CONCAT('%', #{line_code}, '%')
