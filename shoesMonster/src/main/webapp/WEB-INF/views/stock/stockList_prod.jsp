@@ -125,15 +125,14 @@ body {
     white-space: nowrap; 
     text-align: center;
 }
-
 .input-fielda {
-    width: 100px; /* 원하는 입력란의 너비로 설정 */
+    cursor: pointer;
+    display: inline-block;
+    text-align-last: center;
 }
 .input-fieldb {
-    width: 125px; /* 원하는 입력란의 너비로 설정 */
-}
-.input-fieldc {
-    width: 150px; /* 원하는 입력란의 너비로 설정 */
+    display: inline-block;
+    text-align-last: center;
 }
 </style>
     
@@ -170,7 +169,7 @@ body {
 					
 		<div class="x_content">
 			<div class="table-responsive">
-				<div class="table-wrapper" >
+				<div class="table-wrapper">
 				<table id="data-table" class="table table-striped jambo_table bulk_action" style="text-align:center;">
 					<thead> 
 					    <tr>
