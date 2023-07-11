@@ -188,8 +188,8 @@ function toggleDiv(divId) {
 	    <hr>
 	    
     
-	    </div>
-	</div>
+	   
+	
     <!-- ///////////////////////////////////////////////목록 템플릿  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     
     <div class="col-md-12 col-sm-12">
@@ -286,7 +286,7 @@ function toggleDiv(divId) {
         const excelDownload = document.querySelector('#excelDownload');
         
         document.addEventListener('DOMContentLoaded', ()=> {
-            excelDownload.addEventListener('click', exportExcel);
+           excelDownload.addEventListener('click', exportExcel);
         });
         
         function exportExcel() {
@@ -340,7 +340,7 @@ function toggleDiv(divId) {
 	</div>
     
 	</div>
-    
+	
     <!-- //////////////////////////////////목록 템플릿  /////////////////////////////////////// -->
     
     
@@ -356,6 +356,7 @@ function toggleDiv(divId) {
 	<!-- ============================ 발주 등록 ============================ -->
 
 	<br>
+	
 	<div id="regist">
 		<form action="" method="post" onsubmit="return check()">
 		<div class="col-md-12 col-sm-12" >
@@ -429,10 +430,11 @@ function toggleDiv(divId) {
 							</form>
 						</div>
 
-	
+	 </div>
+     </div>
 	<!-- ============================ 발주 등록 ============================ -->
 
 	
-	</div>
+	
 <!-- /page content -->
 <%@ include file="../include/footer.jsp"%>
