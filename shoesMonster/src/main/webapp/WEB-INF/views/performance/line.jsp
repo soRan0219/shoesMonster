@@ -735,7 +735,7 @@
 			&nbsp;<input type="radio" name="line_use" value="2"> N
 			
 			<hr>
-				<c:if test="${empty param.input }">
+				
 				<div class="custom-select1">
 					<select name="line_place">
 						<option value="전체" ${lvo.line_place == null ? 'selected' : ''}>1차공정</option>
@@ -748,7 +748,6 @@
 					<button onclick="selectOption(2)">2차공정 </button>
 					<button onclick="selectOption(3)">3차공정</button>
 				</div>
-				</c:if>
 				<script>
 				  function selectOption(index) {
 				    var select = document.querySelector('.custom-select1 select');
