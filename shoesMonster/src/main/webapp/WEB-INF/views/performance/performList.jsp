@@ -22,34 +22,6 @@
     <c:redirect url="/smmain/smMain" />
 </c:if>
 
-<style type="text/css">
-	
-	body {
-		font-family: 'NexonLv2Gothic';
-	}
-	div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
-		background-color: #868e96;
-	}
-	
-	.searchBox {
-		display: inline-block;
-		width: 25em;
-	}
-	.searchBox span {
-		display: inline-block;
-		width: 6em;
-	}
-	.date {
-		display: inline-block;
-		width: 35em;
-	}
-	
-	.submitBtn {
-/* 		padding-left: 10em; */
-		padding-left: 34%;
-	}
-	
-</style>
 <!-- 폰트 -->
 
 <script type="text/javascript">
@@ -727,7 +699,7 @@
 					<span>품목코드</span>&nbsp;<input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요" class="input-fieldc"> &nbsp;&nbsp;
 				</div>
 				
-				<br><br>
+				<br>
 				<div class="searchBox">
 					<span>라인코드</span>&nbsp;<input type="text" id="search_line_code" name="search_line_code" placeholder="라인코드를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
@@ -737,7 +709,7 @@
 					<input type="text" id="search_toDate" name="search_toDate" autocomplete="off" placeholder="기간을 선택하세요" class="input-fieldc">
 				</div>
 
-				<br><br>
+				<br>
 				<div class="searchBox">
 					<span>현황</span>
 						&nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
@@ -1165,4 +1137,6 @@
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 <link rel="stylesheet" href="/resources/forTest/performStatus.css"> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<link rel="stylesheet" href="/resources/forTest/performList.css"> 
 <link rel="stylesheet" href="/resources/forTest/datepicker.css"> 
