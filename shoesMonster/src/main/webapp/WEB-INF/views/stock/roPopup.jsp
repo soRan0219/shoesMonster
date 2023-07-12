@@ -4,6 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <head>
+<link rel="icon" href="../resources/images/favicon-32x32.png">
+
 <link href="../resources/vendors/bootstrap/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- Font Awesome -->

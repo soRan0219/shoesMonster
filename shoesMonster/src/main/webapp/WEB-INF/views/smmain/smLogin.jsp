@@ -4,6 +4,9 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
+<link rel="icon" href="../resources/images/favicon-32x32.png">
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 

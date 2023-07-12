@@ -9,6 +9,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- sweetalert -->
 
+<link rel="icon" href="../resources/images/favicon-32x32.png">
+
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link href="../resources/vendors/bootstrap/dist/css/bootstrap.min.css"
