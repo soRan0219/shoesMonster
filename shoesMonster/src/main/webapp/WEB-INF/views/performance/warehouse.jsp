@@ -125,7 +125,7 @@
     	$('#save').hide();
     	$('#cancle').hide();
     	
-   		$('table tr:not(:first-child)').click(function(){
+   		$('table tr').click(function(){
    			
    			$(this).css('background', '#ccc');
     		

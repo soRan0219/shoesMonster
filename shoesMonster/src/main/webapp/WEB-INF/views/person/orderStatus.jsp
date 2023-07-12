@@ -455,36 +455,11 @@ $(function(){
 					checked.push($(this).val());
 				});
 				
-// 				if(confirm("총 " + checked.length + "행 선택\n정말 삭제하시겠습니까?")) {
-
-// 					if (checked.length > 0) {
-	
-// 						$.ajax({
-// 							url : "/person/deleteOrder",
-// 							type : "post",
-// 							data : {checked : checked},
-// 							dataType : "text",
-// 							success : function() {
-// 								alert("총 " + checked.length + "건 삭제 완료");
-// 								location.reload();
-// 							}, 
-// 							error : function() {
-// 								alert("삭제 실패했습니다");
-// 							}
-// 						}); //ajax
-// 					} //체크된거 있을대
-// 					else {
-// 						alert("선택된 항목이 없습니다.");
-// 					} //체크된거 없을때
-// 				}
-// 			}); //save
-				
 				// sweetalert
 				if(checked.length > 0){
 					
 					Swal.fire({
 						  title: "<div style='color:#495057;font-size:20px;font-weight:lighter'>" + "총" +checked.length+"건\n정말 삭제하시겠습니까?"+ "</div>",
-								  // “<div style=’color:#f00;font-size:15px’>” + msg + “</div>”,    //  HTML & CSS 로 직접수정
 						  icon: 'info', // 아이콘! 느낌표 색? 표시?
 						  showDenyButton: true,
 						  confirmButtonColor: '#17A2B8', // confrim 버튼 색깔 지정
@@ -497,7 +472,6 @@ $(function(){
 					
 					 /* confirm => 예 눌렀을 때  */
 					  if (result.isConfirmed) {
-						  
 					  
 						$.ajax({
 	 						url: "/person/deleteOrder",
