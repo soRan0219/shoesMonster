@@ -555,7 +555,7 @@
 		JOIN employees e ON e.emp_id = o.emp_id
 		LEFT JOIN out_material om ON om.order_code = o.order_code
 		LEFT JOIN stock s on s.prod_code = p.prod_code
-        order by o.out_YN asc, om.out_num desc
+        order by o.out_YN asc, o.order_code desc, om.out_num desc
         limit #{startPage}, #{pageSize}
     </select>
 	<!-- 출고 목록 조회 -->

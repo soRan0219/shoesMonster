@@ -51,8 +51,7 @@
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
 						<a href="../smmain/smMain" class="site_title" style="text-align: center; margin-top: 10%;">
-							<img src="https://www.gbpestates.co.uk/images/site-logo.png" width="200" height="100" style="    width: 170px;
-    filter: hue-rotate(714deg) grayscale(0.67);"> </i>
+							<img src="/resources/images/smlogo.png" width="200" height="100" style=" z-index: 999;   width: 170px;"> </i>
 						</a>
 					</div>
 					
