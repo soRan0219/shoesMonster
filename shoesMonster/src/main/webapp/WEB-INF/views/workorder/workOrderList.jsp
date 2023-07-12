@@ -763,11 +763,17 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 
-				<span>라인코드&nbsp;</span> <input type="text" name="search_line" id="search_line" class="searchInputText" placeholder="라인코드를 선택하세요." style="cursor: pointer;"> &nbsp;&nbsp;
-				<span>지시일자&nbsp;</span> 
-					<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"> ~ 
-					<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"> &nbsp;&nbsp;
-				<span>품번&nbsp;</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText" placeholder="품목을 선택하세요" style="cursor: pointer;"> &nbsp;&nbsp;
+				<div class="searchBoxWO">
+					<span>라인코드&nbsp;</span> <input type="text" name="search_line" id="search_line" class="searchInputText" placeholder="라인코드를 선택하세요." style="cursor: pointer;"> &nbsp;&nbsp;
+				</div>
+				<div class="searchBoxWO dateWO">
+					<span>지시일자&nbsp;</span> 
+						<input type="text" name="search_fromDate" id="search_fromDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"> ~ 
+						<input type="text" name="search_toDate" id="search_toDate" class="searchInputText" autocomplete="off" placeholder="기간을 선택하세요." style="cursor: pointer;"> &nbsp;&nbsp;
+				</div>
+				<div class="searchBoxWO">
+					<span>품번&nbsp;</span> <input type="text" name="search_prod" id="search_prod" class="searchInputText" placeholder="품목을 선택하세요" style="cursor: pointer;"> &nbsp;&nbsp;
+				</div>
 
 				<input type="submit" value="조회" class="B B-info"> 
 				<br><br>
@@ -986,4 +992,6 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/forTest/sm.css"> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<link rel="stylesheet" href="/resources/forTest/performList.css"> 
 <link rel="stylesheet" href="/resources/forTest/datepicker.css"> 

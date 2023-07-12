@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+body { font-family: 'NexonLv2Gothic'; }
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
+	background-color: #868e96;
+}
+
+/* 생산관리, 수주관리 */
+.searchBox {
+	display: inline-block;
+	width: 25em;
+	padding-bottom: 14px;
+}
+.searchBox span {
+	display: inline-block;
+	width: 6em;
+}
+.date {
+	display: inline-block;
+	width: 35em;
+}
+
+.submitBtn { padding-left: 26em; }
+
+@media screen and (max-width: 1000px) {
+	.searchBox { display: block; }
+	.date { display: block;	}
+}
+
+/* 작업지시 */
+.searchBoxWO {
+	display: inline-block;
+	width: 19em;
+	padding-bottom: 14px;
+}
+.searchBoxWO span {
+	display: inline-block;
+	width: 4em;
+}
+.dateWO {
+	display: inline-block;
+	width: 32em;
+}
+
+@media screen and (max-width: 1000px) {
+	.searchBoxWO { display: block; }
+	.dateWO { display: block;	}
+}

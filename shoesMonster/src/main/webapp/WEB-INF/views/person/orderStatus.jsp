@@ -24,37 +24,6 @@
     <c:redirect url="/smmain/smMain" />
 </c:if>
 
-<style type="text/css">
-	
-	body {
-		font-family: 'NexonLv2Gothic';
-	}
-	
-	div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
-		background-color: #868e96;
-	}
-	
-	.searchBox {
-		display: inline-block;
-		width: 25em;
-	}
-	.searchBox span {
-		display: inline-block;
-		width: 6em;
-	}
-	.date {
-		display: inline-block;
-		width: 35em;
-	}
-	
-	.submitBtn {
-/* 		padding-left: 10em; */
-		padding-left: 34%;
-	}
-	
-	
-</style>
-<!-- 폰트 -->
 
 <script type="text/javascript">
 //========================================= 함수, 상수 ===================================================	
@@ -707,22 +676,16 @@ $(function(){
 					<span>수주 일자</span>&nbsp;<input type="text" name="order_date_fromDate" id="order_date_fromDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> ~
 					<input type="text" name="order_date_toDate" id="order_date_toDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc">
 				</div>
-				
-				<br><br>
-				
+				<br>
 				<div class="searchBox">
 					<span>담당자</span>&nbsp;<input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')" placeholder="담당자를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
-				
 				<input type="hidden" name="prod_code" id="prod_code9999">
-				
 				<div class="searchBox date">
 					<span>납품 예정일</span>&nbsp;<input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> ~ 
 							    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
-				
-				<br><br>
-				
+				<br>
 				<div class="searchBox">
 					<span>품목</span>&nbsp;<input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')" placeholder="품목을 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
@@ -918,4 +881,6 @@ $(function(){
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<link rel="stylesheet" href="/resources/forTest/performList.css"> 
 <link rel="stylesheet" href="/resources/forTest/datepicker.css"> 
