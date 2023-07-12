@@ -202,7 +202,7 @@
 				r.raw_code like concat ('%', #{raw_code}, '%')
 			</if>
 			<if test="raw_name != ''">
-				and r.raw_code like concat ('%', #{raw_code}, '%')
+				and r.raw_name like concat ('%', #{raw_name}, '%')
 			</if>
 			<if test="client_actname != null">
 				and c.client_actname like concat ('%', #{client_actname},
@@ -225,7 +225,7 @@
 				r.raw_code like concat ('%', #{raw_code}, '%')
 			</if>
 			<if test="raw_name != ''">
-				and r.raw_code like concat ('%', #{raw_code}, '%')
+				and r.raw_name like concat ('%', #{raw_name}, '%')
 			</if>
 			<if test="client_actname != ''">
 				and c.client_actname like concat ('%', #{client_actname},
