@@ -8,6 +8,7 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+<link href="../resources/build/css/custom.css" rel="stylesheet">
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">

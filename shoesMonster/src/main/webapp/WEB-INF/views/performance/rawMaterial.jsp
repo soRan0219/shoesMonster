@@ -16,6 +16,7 @@
 <link href="./resources/build/css/custom.css" rel="stylesheet" type="text/css">
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+<link href="../resources/build/css/custom.css" rel="stylesheet">
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
@@ -569,7 +570,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	        	<input type="text" name="raw_name" id="searchCategory" placeholder="원자재명을 입력하세요."> &nbsp;&nbsp;
 	        	<label>거래처명&nbsp;</label>
 	        	<input type="hidden" name="client_code" id="client_code9999" >
-	        	<input type="text" name="clients.client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')"> &nbsp;&nbsp;
+	        	<input type="text" name="clients.client_actname" id="client_actname9999" placeholder="거래처를 선택하세요." onclick="serchClient('client_code9999')" class="input-fieldc"> &nbsp;&nbsp;
 	        	<input type="submit" class="B B-info" value="조회">
 	        	
 			</fieldset>

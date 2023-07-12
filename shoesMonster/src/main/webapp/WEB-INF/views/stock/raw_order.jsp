@@ -14,6 +14,8 @@
 <!--FileSaver [savaAs 함수 이용] -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
+<link href="../resources/build/css/custom.css" rel="stylesheet">
+
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 
@@ -35,7 +37,7 @@ body {
 	
 	// 발주 팝업
 	function roPopup() {
-		 window.open("roPopup","거래처 목록","top=60,left=140,width=977,height=677, location=no");
+		 window.open("roPopup","거래처 목록","top=60,left=140,width=877,height=677, location=no");
 	}
 	
 	// 발주 현황 상세페이지

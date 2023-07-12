@@ -6,6 +6,7 @@
 <%@ include file="../include/header.jsp"%>
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+<link href="../resources/build/css/custom.css" rel="stylesheet">
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">

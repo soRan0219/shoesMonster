@@ -369,12 +369,12 @@ body {
 	<!-- 날씨 테스트 - 끝 -->
 	<div class="row" style="gap:20px; padding:0 10px;">
 		<div class="col-md-4 col-sm-4" style="padding:0; flex-basis: calc((100% - 20px)/2); max-width:initial;">
-			<div class="x_panel tile fixed_height_320 overflow_hidden" style="margin-bottom:0; padding-bottom:0; box-shadow:0px 0px 5px rgba(0,0,0,0.2); border-radius:7px;">
+			<div class="x_panel tile fixed_height_320 overflow_hidden" style="margin-bottom:0; padding-bottom:0; box-shadow:0px 0px 5px rgba(0,0,0,0.2); border-radius:7px; text-align:-webkit-center;">
 				<div class="x_title">
 					<h2>창고별 재고 현황</h2>
 					<div class="clearfix"></div>
 				</div>
-				<div id="graph">
+				<div id="graph" style="padding: 4% 1%;">
 					<span id="wh_code" style="width: 50px; height: 50px;"></span>
 				</div>
 			</div>
@@ -382,14 +382,13 @@ body {
 
 
 		<div class="col-md-4 col-sm-4 " style="padding: 0; flex-basis: calc((100% - 20px)/2); max-width:initial;">
-			<div class="x_panel tile fixed_height_320" style="margin-bottom:0; padding-bottom:0; box-shadow:0px 0px 5px rgba(0,0,0,0.2); border-radius:7px;">
+			<div class="x_panel tile fixed_height_320" style="margin-bottom:0; padding-bottom:0; box-shadow:0px 0px 5px rgba(0,0,0,0.2); border-radius:7px; text-align:-webkit-center;">
 				<div class="x_title">
 					<h2>유형별 재고 개수 현황</h2>
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-
-					<div id="graph">
+					<div id="graph" style="padding: 3% 1%;">
 						<span id="wh_dv" style="width: 50px; height: 50px;"></span>
 					</div>
 				</div>
@@ -401,9 +400,9 @@ body {
 		<div class="col-md-12 col-sm-12 ">
 			<div class="dashboard_graph" style="padding:0;">
 				<div style="display:flex; flex-direction:row; gap:20px;"> <!--  class="col-md-9 col-sm-9 " -->
-						<span id="chart_prod" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)"></span>
-						<span id="chart_date" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)"></span>
-						<span id="chart_line" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2)"></span> <!--  class="tab-content current" -->
+						<span id="chart_prod" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2); text-align:-webkit-center;"></span>
+						<span id="chart_date" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2); text-align:-webkit-center;"></span>
+						<span id="chart_line" style="border-radius:7px; flex-basis:calc((100% - 30px)/3); display:inline-block; padding:15px; box-sizing:border-box; background:#fff; box-shadow: 0px 0px 5px rgba(0,0,0,0.2); text-align:-webkit-center;"></span> <!--  class="tab-content current" -->
 				</div>
 				<div class="clearfix"></div>
 			</div>

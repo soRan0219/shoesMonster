@@ -917,7 +917,7 @@
   display: block; }
 
 .profile_pic {
-  width: 35%;
+  width: 45%;
   float: left; }
 
 .img-circle.profile_img {
@@ -931,8 +931,8 @@
   padding: 4px; }
 
 .profile_info {
-  padding: 25px 10px 10px;
-  width: 65%;
+  padding: 35px 10px 10px;
+  width: 50%;
   float: left; }
 
 .profile_info span {
@@ -1418,7 +1418,7 @@ a:hover, a:focus {
   display: block;
   height: 115px;
   margin: 0;
-  padding-left: 10px; }
+  }
 
 .site_title:hover, .site_title:focus {
   text-decoration: none; }
@@ -4096,7 +4096,7 @@ a.hiddenanchor {
 
 .login_content {
   margin: 0 auto;
-  padding: 25px 0 0;
+  padding: 60px 0 0;
   position: relative;
   text-align: center;
   text-shadow: 0 1px 0 #fff;

@@ -15,6 +15,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+<link href="../resources/build/css/custom.css" rel="stylesheet">
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
@@ -23,17 +24,6 @@
     <c:redirect url="/smmain/smMain" />
 </c:if>
 
-<style type="text/css">
-
-body {
-	font-family: 'NexonLv2Gothic';
-}
-
-div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
-	background-color: #868e96;
-}
-</style>
-<!-- 폰트 -->
 
 <script type="text/javascript">
 //========================================= 함수, 상수 ===================================================	
@@ -283,8 +273,7 @@ $(function(){
 				dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 				dayNamesMin:['월','화','수','목','금','토','일'],
 				monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-				}
+				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 			});
 			
 			
@@ -602,7 +591,7 @@ $(function(){
 		dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 		dayNamesMin:['월','화','수','목','금','토','일'],
 		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 	});
 	
 	// 납품 예정일 이날부터
@@ -638,7 +627,7 @@ $(function(){
 		dayNames:['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
 		dayNamesMin:['월','화','수','목','금','토','일'],
 		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 	});
 	
 // ========================================= 검색 ===================================================
@@ -678,20 +667,30 @@ $(function(){
 			<fieldset>
 				<input type="hidden" name="input" id="input" value="${input }">
 				<input type="hidden" name="client_code" id="client_code9999" >
-				업체&nbsp;<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')" placeholder="업체를 선택하세요."> &nbsp;&nbsp;
+				
+				<div class="searchBox">
+					<span>업체</span>&nbsp;<input type="text" name="client_actname" id="client_actname9999" onclick="serchClient('client_code9999')" placeholder="업체를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
+				</div>
 				<input type="hidden" name="emp_id" id="s_emp_id"> 
-				담당자&nbsp;<input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')" placeholder="담당자를 선택하세요."> &nbsp;&nbsp;
-				수주 일자&nbsp;<input type="text" name="order_date_fromDate" id="order_date_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~
-				<input type="text" name="order_date_toDate" id="order_date_toDate" autocomplete="off" placeholder="기간을 선택하세요.">
-
-				<br><br>
-				
+				<div class="searchBox date">
+					<span>수주 일자</span>&nbsp;<input type="text" name="order_date_fromDate" id="order_date_fromDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> ~
+					<input type="text" name="order_date_toDate" id="order_date_toDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc">
+				</div>
+				<br>
+				<div class="searchBox">
+					<span>담당자</span>&nbsp;<input type="text" name="emp_name" id="s_emp_name" onclick="serchEmp('emp_id9999')" placeholder="담당자를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
+				</div>
 				<input type="hidden" name="prod_code" id="prod_code9999">
-				품목&nbsp;<input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')" placeholder="품목을 선택하세요."> &nbsp;&nbsp;
-				납품 예정일&nbsp;<input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
-						    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate" autocomplete="off" placeholder="기간을 선택하세요."> &nbsp;&nbsp;
+				<div class="searchBox date">
+					<span>납품 예정일</span>&nbsp;<input type="text" name="order_deliveryDate_fromDate" id="order_deliveryDate_fromDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> ~ 
+							    <input type="text" name="order_deliveryDate_toDate" id="order_deliveryDate_toDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
+				</div>
+				<br>
+				<div class="searchBox">
+					<span>품목</span>&nbsp;<input type="text" name="prod_name" id = "prod_name9999" onclick="serchProd('prod_code9999')" placeholder="품목을 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
+				</div>
 				
-				<input type="submit" class="B B-info" value="조회">
+				<div class="searchBox submitBtn"><input type="submit" class="B B-info" value="조회"></div>
 			</fieldset>
 		</form>
 		<hr>
@@ -882,4 +881,6 @@ $(function(){
 <%@ include file="../include/footer.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<link rel="stylesheet" href="/resources/forTest/performList.css"> 
 <link rel="stylesheet" href="/resources/forTest/datepicker.css"> 

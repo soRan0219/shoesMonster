@@ -6,6 +6,7 @@
 <%@ include file="../include/header.jsp"%>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<link href="../resources/build/css/custom.css" rel="stylesheet">
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
@@ -153,8 +154,8 @@ body {
   	</div>
 	 
 	 <div style="margin-bottom: 1%; margin-left: 1%;">
-	    <a href="/stock/stockList_raw" ><input type="button" value="원자재" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input></a>
-	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 450;"></input></a>
+	    <a href="/stock/stockList_raw" ><input type="button" value="원자재" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input></a>
+	    <a href="/stock/stockList_prod"><input type="button" value="완제품" class="B B-info" style="background-color: #EFEFEF; color: #73879c; width: 8%; font-weight: 500; font-size: 15px;"></input></a>
     </div>
 
 	<div class="col-md-12 col-sm-12">

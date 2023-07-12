@@ -13,6 +13,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
 <link rel="stylesheet" href="/resources/forTest/sm.css"> <!-- 버튼css -->
+<link href="../resources/build/css/custom.css" rel="stylesheet">
 
 <!-- 폰트 -->
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
@@ -21,27 +22,6 @@
     <c:redirect url="/smmain/smMain" />
 </c:if>
 
-<style type="text/css">
-
-body {
-	font-family: 'NexonLv2Gothic';
-}
-div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
-	background-color: #868e96;
-}
-
-.searchBox {
-	display: inline-block;
-	width: 25em;
-}
-
-.searchBoxDate {
-	display: inline-block;
-	width: 30em;
-}
-
-
-</style>
 <!-- 폰트 -->
 
 <script type="text/javascript">
@@ -92,7 +72,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 	} //inputCng
 	
 	//팝업창 옵션
-	const popupOpt = "top=60,left=140,width=777,height=677";
+	const popupOpt = "top=60,left=140,width=787,height=677";
 	
 	//검색 팝업
 	function openWindow(search, inputId) {
@@ -713,28 +693,30 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 				<input type="hidden" name="pageSize" id="pageSize" value="${pm.lwPageVO.pageSize }">
 
 				<div class="searchBox">
-					작업지시코드&nbsp;<input type="text" id="search_work_code" name="search_work_code" placeholder="작업지시코드를 선택하세요."> &nbsp;&nbsp;
-				</div>
-				<div class="searchBoxDate">
-					실적일&nbsp;
-					<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off" placeholder="기간을 선택하세요."> ~ 
-					<input type="text" id="search_toDate" name="search_toDate" autocomplete="off" placeholder="기간을 선택하세요">
-				</div>
-				<br><br>
-				<div class="searchBox">
-					라인코드&nbsp;<input type="text" id="search_line_code" name="search_line_code" placeholder="라인코드를 선택하세요."> &nbsp;&nbsp;
+					<span>작업지시코드</span>&nbsp;<input type="text" id="search_work_code" name="search_work_code" placeholder="작업지시코드를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
 				</div>
 				<div class="searchBox">
-					품목코드&nbsp;<input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요"> &nbsp;&nbsp;
+					<span>품목코드</span>&nbsp;<input type="text" id="search_prod_code" name="search_prod_code" placeholder="품목코드를 선택하세요" class="input-fieldc"> &nbsp;&nbsp;
+				</div>
+				
+				<br>
+				<div class="searchBox">
+					<span>라인코드</span>&nbsp;<input type="text" id="search_line_code" name="search_line_code" placeholder="라인코드를 선택하세요." class="input-fieldc"> &nbsp;&nbsp;
+				</div>
+				<div class="searchBox date">
+					<span>실적일</span>
+					<input type="text" id="search_fromDate" name="search_fromDate" autocomplete="off" placeholder="기간을 선택하세요." class="input-fieldc"> ~ 
+					<input type="text" id="search_toDate" name="search_toDate" autocomplete="off" placeholder="기간을 선택하세요" class="input-fieldc">
 				</div>
 
-				<input type="submit" class="B B-info" value="조회">
-				<br><br>
-				<div>
-					현황&nbsp;&nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
+				<br>
+				<div class="searchBox">
+					<span>현황</span>
+						&nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="전체" checked>전체
 						 &nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="진행">진행
 						  &nbsp;<input type="radio" id="search_perform_status" name="search_perform_status" value="마감">마감
 				</div>
+				<div class="searchBox submitBtn"><input type="submit" class="B B-info" value="조회"></div>
 			</fieldset>
 		</form>
 		<hr>
@@ -1155,4 +1137,6 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{
 <link href="https://webfontworld.github.io/NexonLv2Gothic/NexonLv2Gothic.css" rel="stylesheet">
 <link rel="stylesheet" href="/resources/forTest/performStatus.css"> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<link rel="stylesheet" href="/resources/forTest/performList.css"> 
 <link rel="stylesheet" href="/resources/forTest/datepicker.css"> 
