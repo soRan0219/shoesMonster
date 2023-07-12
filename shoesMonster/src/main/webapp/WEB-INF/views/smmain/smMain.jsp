@@ -343,12 +343,6 @@ body {
 				        $('.cloud').append($cloud);
 				        $('.temp_min').append($temp_min);
 				        $('.temp_max').append($temp_max);
-				        
-				var value = $Icon;
-				if (value === '04') {
-				    var innerHTML = '<div class="col-md-6 col-sm-6"><div class="x_panel"><div class="x_content"><div class="row weather-days"><div class="col-sm-2"><div class="daily-weather"><canvas height="84" width="84" id="cloudy"></canvas></div></div></div></div></div></div>';
-				    $('.result').append(innerHTML);
-				}
 				
 				    }
 				});
