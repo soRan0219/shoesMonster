@@ -34,7 +34,7 @@ Shoes Monster는
 <img width="630" src="https://github.com/soRan0219/parkIT/assets/124494718/0b71f01c-0b24-4093-9531-2e994d7c75ff"/>
 
 #### 작업지시 관리 페이지 
-<img width="630" src="https://github.com/soRan0219/parkIT/assets/124494718/ea54047c-e769-49ac-8170-8b6f132f7f38"/>
+<img width="630" src="https://github.com/soRan0219/parkIT/assets/124494718/7305ec0f-a53c-4d74-a886-094060ebb4cb"/>
 <img width="630" src="https://github.com/soRan0219/parkIT/assets/124494718/17624eaf-fdd2-4993-88ae-7996748fe3fb"/>
 
 #### 생산실적 관리 페이지
